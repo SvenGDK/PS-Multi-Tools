@@ -34,6 +34,7 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
   - This will unlock downloads for :
   - Games
   - Updates
+  - Demos
   - DLCs
   - Themes
   - Avatars
@@ -86,6 +87,13 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
 #### PS Vita changes
 - Improved support for the PS Vita console
 - The backup manager now supports loading PSV encrypted/decrypted game folders & ".pkg" files and displays informations about it, including game art
+- Supports now ".tsv" files from NPS (Files need to be placed in the "Database" folder but you can also load the latest one within the app)
+  - This will unlock downloads for :
+  - Games
+  - Updates
+  - DLCs
+  - Themes
+  - Demos
 - RCO Extractor
 - Decrypt and extract ".pkg" files
 - psvimgtools
