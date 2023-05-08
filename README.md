@@ -27,7 +27,7 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
 - Updated & new Windows Tools downloads
 #### PS3 changes
 - Improved support for the PS3 console
-- The backup manager now supports ".bin" and ".pkg" files. (Backup folders with PS3_GAME, .iso & .pkg are now supported)
+- The backup manager now supports ".iso" and ".pkg" files. (Backup folders with PS3_GAME, .iso & .pkg are now supported)
 - The backup manager is now able to play the soundtrack of the selected game
 - ISO Tools and operations are now available (Create, Extract, Split & Patch)
 - Supports now ".tsv" files from NPS (Files need to be placed in the "Database" folder but you can also load the latest one within the app)
