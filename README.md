@@ -3,7 +3,7 @@ Backup manager for PS1, PS2, PS3, PS4 &amp; PS5 (later), PSP &amp; PS Vita.</br>
 Includes homebrew, firmwares, Windows tools downloads and integrated tools for all mentioned consoles and handhelds.
 
 ## v1-12
-All Builds below v13 are not working anymore due to the mising "ps-menu.dll" that doesn't exist anymore.</br>
+All Builds below v13 are not working properly anymore due to the mising "ps-menu.dll" that doesn't exist anymore.</br>
 It deletes "ps-menu.dll" and tries to download the latest version but the old server is not available anymore.
 
 ## v13 Changelog
@@ -46,6 +46,10 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
 - Fix Tar for 3.72+
 - RCO Dumper
 - PS2 Classics [Upcoming]
+- Updated emulator downloads
+- Updated & new firmware downloads
+- Updated & new homebrew downloads
+- Updated & new Windows Tools downloads
 #### PS4
 - Support for the PS4 console added for the first time
 - The backup manager is able to load ".pkg" files and display informations about it, including game art & soundtrack
@@ -75,10 +79,10 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
 - Convert ".iso" files to ".PBP" or ".PBP" to ".iso"
 - Extract ".PBP" files
 - Open, create & view ".PBP" files
-- Emulator downloads
-- Firmware downloads
-- Homebrew downloads
-- Windows Tools downloads
+- Updated & new emulator downloads
+- Updated & new firmware downloads
+- Updated & new homebrew downloads
+- Updated & new Windows Tools downloads
 #### PS Vita changes
 - Improved support for the PS Vita console
 - The backup manager now supports loading PSV encrypted/decrypted game folders & ".pkg" files and displays informations about it, including game art
@@ -86,7 +90,7 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
 - Decrypt and extract ".pkg" files
 - psvimgtools
 - EML File Generator [Upcoming]
-- Emulator downloads
-- Firmware downloads
-- Homebrew downloads
-- Windows Tools downloads
+- New Emulator downloads
+- New Firmware downloads
+- New Homebrew downloads
+- New Windows Tools downloads
