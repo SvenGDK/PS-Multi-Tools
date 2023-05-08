@@ -9,7 +9,7 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
 ## v13 Changelog
 #### General changes
 - PS Multi Tools v13 is completely rewritten from scratch in WPF and uses now .NET Framework 4.8.1 (WinForms & .NET Framework 3.5 previously).
-- The previous library "ps-menu" is now called "psmt-lib" and is now shared library that can be used in your tools too (very limited previously).
+- The previous library "ps-menu" is now called "psmt-lib" and is now a shared library that can be used in your tools too (very limited previously).
 - PS Multi Tools works now without the need/check for updates - if no update is available it will keep your current "psmt-lib.dll".
 - MyPS & Bug Sender removed, please use GitHub for reporting bugs.
 #### PS1 changes
