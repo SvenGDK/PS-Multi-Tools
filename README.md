@@ -1,5 +1,5 @@
 # PS Multi Tools
-Backup manager for PS1, PS2, PS3, PS4 &amp; PS5 (later), PSP &amp; PS Vita.</br>
+Backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5 (later), PSP &amp; PS Vita.</br>
 Includes homebrew, firmwares, Windows tools downloads and integrated tools for all mentioned consoles and handhelds.
 
 ## v1-12
@@ -20,6 +20,7 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
 - Updated Windows Tools downloads
 #### PS2 changes
 - Improved support for the PS2 console
+- Now includes PSX DVR tools and downloads
 - The backup manager is now able to display more game informations including game art.
 - ... (Still working on it)
 - Updated emulator downloads
