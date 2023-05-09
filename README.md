@@ -106,7 +106,7 @@ It deletes "ps-menu.dll" and tries to download the latest version but the old se
 ## PS Menu Library
 The "PS Menu" is the top menu of every single window in PS Multi Tools that contains the tools & downloads. (PS Multi Tools will only act as backup manager without it.)
 Like in the previous releases, PS Multi Tools will load the latest available tools & downloads from the "ps-menu.dll" library.
-The source code can be found in the other repository: ... (Still working on it)
+The source code can be found in the other repository: [PSMT Library](https://github.com/SvenGDK/PSMT-Library)
 
 ## PS Multi Tools uses the following utilities from other developers:
 - Will be added at release
