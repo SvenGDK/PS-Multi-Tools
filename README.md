@@ -11,7 +11,7 @@ The "PS Menu" is the top menu of every single window in PS Multi Tools that cont
 Like in the previous releases, PS Multi Tools will load the latest available tools & downloads from the "psmt-lib.dll" library.</br>
 The source code can be found in the other repository: [PSMT Library](https://github.com/SvenGDK/PSMT-Library)
 
-## PS Multi Tools currently uses the following utilities or libraries from other developers
+## PS Multi Tools currently uses the following utilities/libraries from other developers
 | Tool / Library | Created by | Repository |
 | --- | --- | --- |
 | `bchunk` | extramaster | https://github.com/extramaster/bchunk
