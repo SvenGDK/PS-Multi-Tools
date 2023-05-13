@@ -1,0 +1,436 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DiscUtils.Iso9660</name>
+    </assembly>
+    <members>
+        <member name="T:DiscUtils.Iso9660.BootDeviceEmulation">
+            <summary>
+            Enumeration of boot device emulation modes.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Iso9660.BootDeviceEmulation.NoEmulation">
+            <summary>
+            No emulation, the boot image is just loaded and executed.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Iso9660.BootDeviceEmulation.Diskette1200KiB">
+            <summary>
+            Emulates 1.2MB diskette image as drive A.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Iso9660.BootDeviceEmulation.Diskette1440KiB">
+            <summary>
+            Emulates 1.44MB diskette image as drive A.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Iso9660.BootDeviceEmulation.Diskette2880KiB">
+            <summary>
+            Emulates 2.88MB diskette image as drive A.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Iso9660.BootDeviceEmulation.HardDisk">
+            <summary>
+            Emulates hard disk image as drive C.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Iso9660.BuildDirectoryInfo">
+            <summary>
+            Represents a directory that will be built into the ISO image.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.BuildDirectoryInfo.Parent">
+            <summary>
+            The parent directory, or <c>null</c> if none.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Iso9660.BuildDirectoryInfo.TryGetMember(System.String,DiscUtils.Iso9660.BuildDirectoryMember@)">
+            <summary>
+            Gets the specified child directory or file.
+            </summary>
+            <param name="name">The name of the file or directory to get.</param>
+            <param name="member">The member found (or <c>null</c>).</param>
+            <returns><c>true</c> if the specified member was found.</returns>
+        </member>
+        <member name="T:DiscUtils.Iso9660.BuildDirectoryMember">
+            <summary>
+            Provides the base class for <see cref="T:DiscUtils.Iso9660.BuildFileInfo"/> and
+            <see cref="T:DiscUtils.Iso9660.BuildDirectoryInfo"/> objects that will be built into an
+            ISO image.
+            </summary>
+            <remarks>Instances of this class have two names, a <see cref="P:DiscUtils.Iso9660.BuildDirectoryMember.Name"/>,
+            which is the full-length Joliet name and a <see cref="P:DiscUtils.Iso9660.BuildDirectoryMember.ShortName"/>,
+            which is the strictly compliant ISO 9660 name.</remarks>
+        </member>
+        <member name="M:DiscUtils.Iso9660.BuildDirectoryMember.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the BuildDirectoryMember class.
+            </summary>
+            <param name="name">The Joliet compliant name of the file or directory.</param>
+            <param name="shortName">The ISO 9660 compliant name of the file or directory.</param>
+        </member>
+        <member name="P:DiscUtils.Iso9660.BuildDirectoryMember.CreationTime">
+            <summary>
+            Gets or sets the creation date for the file or directory, in UTC.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.BuildDirectoryMember.Name">
+            <summary>
+            Gets the Joliet compliant name of the file or directory.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.BuildDirectoryMember.Parent">
+            <summary>
+            Gets the parent directory, or <c>null</c> if this is the root directory.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.BuildDirectoryMember.ShortName">
+            <summary>
+            Gets the ISO 9660 compliant name of the file or directory.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Iso9660.BuildFileInfo">
+            <summary>
+            Represents a file that will be built into the ISO image.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.BuildFileInfo.Parent">
+            <summary>
+            The parent directory, or <c>null</c> if none.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Iso9660.CDBuilder">
+            <summary>
+            Class that creates ISO images.
+            </summary>
+            <example>
+            <code>
+              CDBuilder builder = new CDBuilder();
+              builder.VolumeIdentifier = "MYISO";
+              builder.UseJoliet = true;
+              builder.AddFile("Hello.txt", Encoding.ASCII.GetBytes("hello world!"));
+              builder.Build(@"C:\TEMP\myiso.iso");
+            </code>
+            </example>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the CDBuilder class.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDBuilder.UpdateIsolinuxBootTable">
+            <summary>
+            Gets or sets a value indicating whether to update the ISOLINUX info table at the
+            start of the boot image.  Use with ISOLINUX only.
+            </summary>
+            <remarks>
+            ISOLINUX has an 'information table' at the start of the boot loader that verifies
+            the CD has been loaded correctly by the BIOS.  This table needs to be updated
+            to match the actual ISO.
+            </remarks>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDBuilder.UseJoliet">
+            <summary>
+            Gets or sets a value indicating whether Joliet file-system extensions should be used.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDBuilder.VolumeIdentifier">
+            <summary>
+            Gets or sets the Volume Identifier for the ISO file.
+            </summary>
+            <remarks>
+            Must be a valid identifier, i.e. max 32 characters in the range A-Z, 0-9 or _.
+            Lower-case characters are not permitted.
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDBuilder.SetBootImage(System.IO.Stream,DiscUtils.Iso9660.BootDeviceEmulation,System.Int32)">
+            <summary>
+            Sets the boot image for the ISO image.
+            </summary>
+            <param name="image">Stream containing the boot image.</param>
+            <param name="emulation">The type of emulation requested of the BIOS.</param>
+            <param name="loadSegment">The memory segment to load the image to (0 for default).</param>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDBuilder.AddDirectory(System.String)">
+            <summary>
+            Adds a directory to the ISO image.
+            </summary>
+            <param name="name">The name of the directory on the ISO image.</param>
+            <returns>The object representing this directory.</returns>
+            <remarks>
+            The name is the full path to the directory, for example:
+            <example><code>
+              builder.AddDirectory(@"DIRA\DIRB\DIRC");
+            </code></example>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDBuilder.AddFile(System.String,System.Byte[])">
+            <summary>
+            Adds a byte array to the ISO image as a file.
+            </summary>
+            <param name="name">The name of the file on the ISO image.</param>
+            <param name="content">The contents of the file.</param>
+            <returns>The object representing this file.</returns>
+            <remarks>
+            The name is the full path to the file, for example:
+            <example><code>
+              builder.AddFile(@"DIRA\DIRB\FILE.TXT;1", new byte[]{0,1,2});
+            </code></example>
+            <para>Note the version number at the end of the file name is optional, if not
+            specified the default of 1 will be used.</para>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDBuilder.AddFile(System.String,System.String)">
+            <summary>
+            Adds a disk file to the ISO image as a file.
+            </summary>
+            <param name="name">The name of the file on the ISO image.</param>
+            <param name="sourcePath">The name of the file on disk.</param>
+            <returns>The object representing this file.</returns>
+            <remarks>
+            The name is the full path to the file, for example:
+            <example><code>
+              builder.AddFile(@"DIRA\DIRB\FILE.TXT;1", @"C:\temp\tempfile.bin");
+            </code></example>
+            <para>Note the version number at the end of the file name is optional, if not
+            specified the default of 1 will be used.</para>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDBuilder.AddFile(System.String,System.IO.Stream)">
+            <summary>
+            Adds a stream to the ISO image as a file.
+            </summary>
+            <param name="name">The name of the file on the ISO image.</param>
+            <param name="source">The contents of the file.</param>
+            <returns>The object representing this file.</returns>
+            <remarks>
+            The name is the full path to the file, for example:
+            <example><code>
+              builder.AddFile(@"DIRA\DIRB\FILE.TXT;1", stream);
+            </code></example>
+            <para>Note the version number at the end of the file name is optional, if not
+            specified the default of 1 will be used.</para>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDBuilder.PatchBootImage(System.IO.Stream,System.UInt32,System.UInt32)">
+            <summary>
+            Patches a boot image (esp. for ISOLINUX) before it is written to the disk.
+            </summary>
+            <param name="bootImage">The original (master) boot image.</param>
+            <param name="pvdLba">The logical block address of the primary volume descriptor.</param>
+            <param name="bootImageLba">The logical block address of the boot image itself.</param>
+            <returns>A stream containing the patched boot image - does not need to be disposed.</returns>
+        </member>
+        <member name="T:DiscUtils.Iso9660.CDReader">
+            <summary>
+            Class for reading existing ISO images.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.#ctor(System.IO.Stream,System.Boolean)">
+            <summary>
+            Initializes a new instance of the CDReader class.
+            </summary>
+            <param name="data">The stream to read the ISO image from.</param>
+            <param name="joliet">Whether to read Joliet extensions.</param>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.#ctor(System.IO.Stream,System.Boolean,System.Boolean)">
+            <summary>
+            Initializes a new instance of the CDReader class.
+            </summary>
+            <param name="data">The stream to read the ISO image from.</param>
+            <param name="joliet">Whether to read Joliet extensions.</param>
+            <param name="hideVersions">Hides version numbers (e.g. ";1") from the end of files.</param>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDReader.ActiveVariant">
+            <summary>
+            Gets which of the Iso9660 variants is being used.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDReader.BootEmulation">
+            <summary>
+            Gets the emulation requested of BIOS when the image is loaded.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDReader.BootImageStart">
+            <summary>
+            Gets the absolute start position (in bytes) of the boot image, or zero if not found.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDReader.BootLoadSegment">
+            <summary>
+            Gets the memory segment the image should be loaded into (0 for default).
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDReader.HasBootImage">
+            <summary>
+            Gets a value indicating whether a boot image is present.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDReader.ClusterSize">
+            <summary>
+            Gets the size (in bytes) of each cluster.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.CDReader.TotalClusters">
+            <summary>
+            Gets the total number of clusters managed by the file system.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.ClusterToOffset(System.Int64)">
+            <summary>
+            Converts a cluster (index) into an absolute byte position in the underlying stream.
+            </summary>
+            <param name="cluster">The cluster to convert.</param>
+            <returns>The corresponding absolute byte position.</returns>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.OffsetToCluster(System.Int64)">
+            <summary>
+            Converts an absolute byte position in the underlying stream to a cluster (index).
+            </summary>
+            <param name="offset">The byte position to convert.</param>
+            <returns>The cluster containing the specified byte.</returns>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.PathToClusters(System.String)">
+            <summary>
+            Converts a file name to the list of clusters occupied by the file's data.
+            </summary>
+            <param name="path">The path to inspect.</param>
+            <returns>The clusters.</returns>
+            <remarks>Note that in some file systems, small files may not have dedicated
+            clusters.  Only dedicated clusters will be returned.</remarks>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.PathToExtents(System.String)">
+            <summary>
+            Converts a file name to the extents containing its data.
+            </summary>
+            <param name="path">The path to inspect.</param>
+            <returns>The file extents, as absolute byte positions in the underlying stream.</returns>
+            <remarks>Use this method with caution - not all file systems will store all bytes
+            directly in extents.  Files may be compressed, sparse or encrypted.  This method
+            merely indicates where file data is stored, not what's stored.</remarks>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.BuildClusterMap">
+            <summary>
+            Gets an object that can convert between clusters and files.
+            </summary>
+            <returns>The cluster map.</returns>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.GetUnixFileInfo(System.String)">
+            <summary>
+            Retrieves Unix-specific information about a file or directory.
+            </summary>
+            <param name="path">Path to the file or directory.</param>
+            <returns>Information about the owner, group, permissions and type of the
+            file or directory.</returns>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.Detect(System.IO.Stream)">
+            <summary>
+            Detects if a stream contains a valid ISO file system.
+            </summary>
+            <param name="data">The stream to inspect.</param>
+            <returns><c>true</c> if the stream contains an ISO file system, else false.</returns>
+        </member>
+        <member name="M:DiscUtils.Iso9660.CDReader.OpenBootImage">
+            <summary>
+            Opens a stream containing the boot image.
+            </summary>
+            <returns>The boot image as a stream.</returns>
+        </member>
+        <member name="T:DiscUtils.Iso9660.Iso9660Variant">
+            <summary>
+            Enumeration of known file system variants.
+            </summary>
+            <remarks>
+            <para>ISO9660 has a number of significant limitations, and over time
+            multiple schemes have been devised for extending the standard
+            to support the richer file system semantics typical of most modern
+            operating systems.  These variants differ functionally and (in the
+            case of RockRidge) may represent a logically different directory
+            hierarchy to that encoded in the vanilla iso9660 standard.</para>
+            <para>Use this enum to control which variants to honour / prefer
+            when accessing an ISO image.</para>
+            </remarks>
+        </member>
+        <member name="F:DiscUtils.Iso9660.Iso9660Variant.None">
+            <summary>
+            No known variant.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Iso9660.Iso9660Variant.Iso9660">
+            <summary>
+            Vanilla ISO9660.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Iso9660.Iso9660Variant.Joliet">
+            <summary>
+            Joliet file system (Windows).
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Iso9660.Iso9660Variant.RockRidge">
+            <summary>
+            Rock Ridge (Unix).
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Iso9660.IsoUtilities.ToUTCDateTimeFromDirectoryTime(System.Byte[],System.Int32)">
+            <summary>
+            Converts a DirectoryRecord time to UTC.
+            </summary>
+            <param name="data">Buffer containing the time data.</param>
+            <param name="offset">Offset in buffer of the time data.</param>
+            <returns>The time in UTC.</returns>
+        </member>
+        <member name="M:DiscUtils.Iso9660.VfsCDReader.#ctor(System.IO.Stream,System.Boolean,System.Boolean)">
+            <summary>
+            Initializes a new instance of the VfsCDReader class.
+            </summary>
+            <param name="data">The stream to read the ISO image from.</param>
+            <param name="joliet">Whether to read Joliet extensions.</param>
+            <param name="hideVersions">Hides version numbers (e.g. ";1") from the end of files.</param>
+        </member>
+        <member name="M:DiscUtils.Iso9660.VfsCDReader.#ctor(System.IO.Stream,DiscUtils.Iso9660.Iso9660Variant[],System.Boolean)">
+            <summary>
+            Initializes a new instance of the VfsCDReader class.
+            </summary>
+            <param name="data">The stream to read the ISO image from.</param>
+            <param name="variantPriorities">Which possible file system variants to use, and with which priority.</param>
+            <param name="hideVersions">Hides version numbers (e.g. ";1") from the end of files.</param>
+            <remarks>
+            <para>
+            The implementation considers each of the file system variants in <c>variantProperties</c> and selects
+            the first which is determined to be present.  In this example Joliet, then Rock Ridge, then vanilla
+            Iso9660 will be considered:
+            </para>
+            <code lang="cs">
+            VfsCDReader(stream, new Iso9660Variant[] {Joliet, RockRidge, Iso9660}, true);
+            </code>
+            <para>The Iso9660 variant should normally be specified as the final entry in the list.  Placing it earlier
+            in the list will effectively mask later items and not including it may prevent some ISOs from being read.</para>
+            </remarks>
+        </member>
+        <member name="P:DiscUtils.Iso9660.VfsCDReader.FriendlyName">
+            <summary>
+            Provides the friendly name for the CD filesystem.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.VfsCDReader.VolumeLabel">
+            <summary>
+            Gets the Volume Identifier.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.VfsCDReader.Size">
+            <summary>
+            Size of the Filesystem in bytes
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.VfsCDReader.UsedSpace">
+            <summary>
+            Used space of the Filesystem in bytes
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Iso9660.VfsCDReader.AvailableSpace">
+            <summary>
+            Available space of the Filesystem in bytes
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,1806 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DiscUtils.Streams</name>
+    </assembly>
+    <members>
+        <member name="T:DiscUtils.Streams.AligningStream">
+            <summary>
+            Aligns I/O to a given block size.
+            </summary>
+            <remarks>Uses the read-modify-write pattern to align I/O.</remarks>
+        </member>
+        <member name="T:DiscUtils.Streams.BlockCacheSettings">
+            <summary>
+            Settings controlling BlockCache instances.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheSettings.#ctor">
+            <summary>
+            Initializes a new instance of the BlockCacheSettings class.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheSettings.#ctor(DiscUtils.Streams.BlockCacheSettings)">
+            <summary>
+            Initializes a new instance of the BlockCacheSettings class.
+            </summary>
+            <param name="settings">The cache settings.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheSettings.BlockSize">
+            <summary>
+            Gets or sets the size (in bytes) of each cached block.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheSettings.LargeReadSize">
+            <summary>
+            Gets or sets the maximum read size that will be cached.
+            </summary>
+            <remarks>Large reads are not cached, on the assumption they will not
+            be repeated.  This setting controls what is considered 'large'.
+            Any read that is more than this many bytes will not be cached.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheSettings.OptimumReadSize">
+            <summary>
+            Gets or sets the optimum size of a read to the wrapped stream.
+            </summary>
+            <remarks>This value must be a multiple of BlockSize.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheSettings.ReadCacheSize">
+            <summary>
+            Gets or sets the size (in bytes) of the read cache.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.BlockCacheStatistics">
+            <summary>
+            Statistical information about the effectiveness of a BlockCache instance.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.FreeReadBlocks">
+            <summary>
+            Gets the number of free blocks in the read cache.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.LargeReadsIn">
+            <summary>
+            Gets the number of requested 'large' reads, as defined by the LargeReadSize setting.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.ReadCacheHits">
+            <summary>
+            Gets the number of times a read request was serviced (in part or whole) from the cache.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.ReadCacheMisses">
+            <summary>
+            Gets the number of time a read request was serviced (in part or whole) from the wrapped stream.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.TotalReadsIn">
+            <summary>
+            Gets the total number of requested reads.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.TotalReadsOut">
+            <summary>
+            Gets the total number of reads passed on by the cache.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.TotalWritesIn">
+            <summary>
+            Gets the total number of requested writes.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.UnalignedReadsIn">
+            <summary>
+            Gets the number of requested unaligned reads.
+            </summary>
+            <remarks>Unaligned reads are reads where the read doesn't start on a multiple of
+            the block size.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStatistics.UnalignedWritesIn">
+            <summary>
+            Gets the number of requested unaligned writes.
+            </summary>
+            <remarks>Unaligned writes are writes where the write doesn't start on a multiple of
+            the block size.</remarks>
+        </member>
+        <member name="T:DiscUtils.Streams.BlockCacheStream">
+            <summary>
+            A stream implementing a block-oriented read cache.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.#ctor(DiscUtils.Streams.SparseStream,DiscUtils.Streams.Ownership)">
+            <summary>
+            Initializes a new instance of the BlockCacheStream class.
+            </summary>
+            <param name="toWrap">The stream to wrap.</param>
+            <param name="ownership">Whether to assume ownership of <c>toWrap</c>.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.#ctor(DiscUtils.Streams.SparseStream,DiscUtils.Streams.Ownership,DiscUtils.Streams.BlockCacheSettings)">
+            <summary>
+            Initializes a new instance of the BlockCacheStream class.
+            </summary>
+            <param name="toWrap">The stream to wrap.</param>
+            <param name="ownership">Whether to assume ownership of <c>toWrap</c>.</param>
+            <param name="settings">The cache settings.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStream.CanRead">
+            <summary>
+            Gets an indication as to whether the stream can be read.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStream.CanSeek">
+            <summary>
+            Gets an indication as to whether the stream position can be changed.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStream.CanWrite">
+            <summary>
+            Gets an indication as to whether the stream can be written to.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStream.Extents">
+            <summary>
+            Gets the parts of the stream that are stored.
+            </summary>
+            <remarks>This may be an empty enumeration if all bytes are zero.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStream.Length">
+            <summary>
+            Gets the length of the stream.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStream.Position">
+            <summary>
+            Gets and sets the current stream position.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BlockCacheStream.Statistics">
+            <summary>
+            Gets the performance statistics for this instance.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a stream that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads data from the stream.
+            </summary>
+            <param name="buffer">The buffer to fill.</param>
+            <param name="offset">The buffer offset to start from.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.Flush">
+            <summary>
+            Flushes the stream.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            Moves the stream position.
+            </summary>
+            <param name="offset">The origin-relative location.</param>
+            <param name="origin">The base location.</param>
+            <returns>The new absolute stream position.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.SetLength(System.Int64)">
+            <summary>
+            Sets the length of the stream.
+            </summary>
+            <param name="value">The new length.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes data to the stream at the current location.
+            </summary>
+            <param name="buffer">The data to write.</param>
+            <param name="offset">The first byte to write from buffer.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.BlockCacheStream.Dispose(System.Boolean)">
+            <summary>
+            Disposes of this instance, freeing up associated resources.
+            </summary>
+            <param name="disposing"><c>true</c> if invoked from <c>Dispose</c>, else <c>false</c>.</param>
+        </member>
+        <member name="T:DiscUtils.Streams.Buffer">
+            <summary>
+            Abstract base class for implementations of IBuffer.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.Buffer.CanRead">
+            <summary>
+            Gets a value indicating whether this buffer can be read.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.Buffer.CanWrite">
+            <summary>
+            Gets a value indicating whether this buffer can be modified.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.Buffer.Capacity">
+            <summary>
+            Gets the current capacity of the buffer, in bytes.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.Buffer.Extents">
+            <summary>
+            Gets the parts of the stream that are stored.
+            </summary>
+            <remarks>This may be an empty enumeration if all bytes are zero.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.Buffer.Read(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads from the buffer into a byte array.
+            </summary>
+            <param name="pos">The offset within the buffer to start reading.</param>
+            <param name="buffer">The destination byte array.</param>
+            <param name="offset">The start offset within the destination buffer.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The actual number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.Buffer.Write(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a byte array into the buffer.
+            </summary>
+            <param name="pos">The start offset within the buffer.</param>
+            <param name="buffer">The source byte array.</param>
+            <param name="offset">The start offset within the source byte array.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.Buffer.Clear(System.Int64,System.Int32)">
+            <summary>
+            Clears bytes from the buffer.
+            </summary>
+            <param name="pos">The start offset within the buffer.</param>
+            <param name="count">The number of bytes to clear.</param>
+            <remarks>
+            <para>Logically equivalent to writing <c>count</c> null/zero bytes to the buffer, some
+            implementations determine that some (or all) of the range indicated is not actually
+            stored.  There is no direct, automatic, correspondence to clearing bytes and them
+            not being represented as an 'extent' - for example, the implementation of the underlying
+            stream may not permit fine-grained extent storage.</para>
+            <para>It is always safe to call this method to 'zero-out' a section of a buffer, regardless of
+            the underlying buffer implementation.</para>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.Buffer.Flush">
+            <summary>
+            Flushes all data to the underlying storage.
+            </summary>
+            <remarks>The default behaviour, implemented by this class, is to take no action.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.Buffer.SetCapacity(System.Int64)">
+            <summary>
+            Sets the capacity of the buffer, truncating if appropriate.
+            </summary>
+            <param name="value">The desired capacity of the buffer.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.Buffer.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a buffer that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="T:DiscUtils.Streams.BufferStream">
+            <summary>
+            Converts a Buffer into a Stream.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BufferStream.#ctor(DiscUtils.Streams.IBuffer,System.IO.FileAccess)">
+            <summary>
+            Initializes a new instance of the BufferStream class.
+            </summary>
+            <param name="buffer">The buffer to use.</param>
+            <param name="access">The access permitted to clients.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.BufferStream.CanRead">
+            <summary>
+            Gets an indication of whether read access is permitted.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BufferStream.CanSeek">
+            <summary>
+            Gets an indication of whether seeking is permitted.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BufferStream.CanWrite">
+            <summary>
+            Gets an indication of whether write access is permitted.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BufferStream.Extents">
+            <summary>
+            Gets the stored extents within the sparse stream.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BufferStream.Length">
+            <summary>
+            Gets the length of the stream (the capacity of the underlying buffer).
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.BufferStream.Position">
+            <summary>
+            Gets and sets the current position within the stream.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BufferStream.Flush">
+            <summary>
+            Flushes all data to the underlying storage.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BufferStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a number of bytes from the stream.
+            </summary>
+            <param name="buffer">The destination buffer.</param>
+            <param name="offset">The start offset within the destination buffer.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.BufferStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            Changes the current stream position.
+            </summary>
+            <param name="offset">The origin-relative stream position.</param>
+            <param name="origin">The origin for the stream position.</param>
+            <returns>The new stream position.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.BufferStream.SetLength(System.Int64)">
+            <summary>
+            Sets the length of the stream (the underlying buffer's capacity).
+            </summary>
+            <param name="value">The new length of the stream.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.BufferStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a buffer to the stream.
+            </summary>
+            <param name="buffer">The buffer to write.</param>
+            <param name="offset">The starting offset within buffer.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.BufferStream.Clear(System.Int32)">
+            <summary>
+            Clears bytes from the stream.
+            </summary>
+            <param name="count">The number of bytes (from the current position) to clear.</param>
+            <remarks>
+            <para>Logically equivalent to writing <c>count</c> null/zero bytes to the stream, some
+            implementations determine that some (or all) of the range indicated is not actually
+            stored.  There is no direct, automatic, correspondence to clearing bytes and them
+            not being represented as an 'extent' - for example, the implementation of the underlying
+            stream may not permit fine-grained extent storage.</para>
+            <para>It is always safe to call this method to 'zero-out' a section of a stream, regardless of
+            the underlying stream implementation.</para>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.BufferStream.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a stream that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="T:DiscUtils.Streams.IBuffer">
+            <summary>
+            Interface shared by all buffers.
+            </summary>
+            <remarks>
+            Buffers are very similar to streams, except the buffer has no notion of
+            'current position'.  All I/O operations instead specify the position, as
+            needed.  Buffers also support sparse behaviour.
+            </remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.IBuffer.CanRead">
+            <summary>
+            Gets a value indicating whether this buffer can be read.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.IBuffer.CanWrite">
+            <summary>
+            Gets a value indicating whether this buffer can be modified.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.IBuffer.Capacity">
+            <summary>
+            Gets the current capacity of the buffer, in bytes.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.IBuffer.Extents">
+            <summary>
+            Gets the parts of the buffer that are stored.
+            </summary>
+            <remarks>This may be an empty enumeration if all bytes are zero.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.IBuffer.Read(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads from the buffer into a byte array.
+            </summary>
+            <param name="pos">The offset within the buffer to start reading.</param>
+            <param name="buffer">The destination byte array.</param>
+            <param name="offset">The start offset within the destination buffer.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The actual number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.IBuffer.Write(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a byte array into the buffer.
+            </summary>
+            <param name="pos">The start offset within the buffer.</param>
+            <param name="buffer">The source byte array.</param>
+            <param name="offset">The start offset within the source byte array.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.IBuffer.Clear(System.Int64,System.Int32)">
+            <summary>
+            Clears bytes from the buffer.
+            </summary>
+            <param name="pos">The start offset within the buffer.</param>
+            <param name="count">The number of bytes to clear.</param>
+            <remarks>
+            <para>Logically equivalent to writing <c>count</c> null/zero bytes to the buffer, some
+            implementations determine that some (or all) of the range indicated is not actually
+            stored.  There is no direct, automatic, correspondence to clearing bytes and them
+            not being represented as an 'extent' - for example, the implementation of the underlying
+            stream may not permit fine-grained extent storage.</para>
+            <para>It is always safe to call this method to 'zero-out' a section of a buffer, regardless of
+            the underlying buffer implementation.</para>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.IBuffer.Flush">
+            <summary>
+            Flushes all data to the underlying storage.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.IBuffer.SetCapacity(System.Int64)">
+            <summary>
+            Sets the capacity of the buffer, truncating if appropriate.
+            </summary>
+            <param name="value">The desired capacity of the buffer.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.IBuffer.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a buffer that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="T:DiscUtils.Streams.SubBuffer">
+            <summary>
+            Class representing a portion of an existing buffer.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SubBuffer.#ctor(DiscUtils.Streams.IBuffer,System.Int64,System.Int64)">
+            <summary>
+            Initializes a new instance of the SubBuffer class.
+            </summary>
+            <param name="parent">The parent buffer.</param>
+            <param name="first">The first byte in <paramref name="parent"/> represented by this sub-buffer.</param>
+            <param name="length">The number of bytes of <paramref name="parent"/> represented by this sub-buffer.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.SubBuffer.CanRead">
+            <summary>
+            Can this buffer be read.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SubBuffer.CanWrite">
+            <summary>
+            Can this buffer be modified.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SubBuffer.Capacity">
+            <summary>
+            Gets the current capacity of the buffer, in bytes.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SubBuffer.Extents">
+            <summary>
+            Gets the parts of the buffer that are stored.
+            </summary>
+            <remarks>This may be an empty enumeration if all bytes are zero.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SubBuffer.Flush">
+            <summary>
+            Flushes all data to the underlying storage.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SubBuffer.Read(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads from the buffer into a byte array.
+            </summary>
+            <param name="pos">The offset within the buffer to start reading.</param>
+            <param name="buffer">The destination byte array.</param>
+            <param name="offset">The start offset within the destination buffer.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The actual number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.SubBuffer.Write(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a byte array into the buffer.
+            </summary>
+            <param name="pos">The start offset within the buffer.</param>
+            <param name="buffer">The source byte array.</param>
+            <param name="offset">The start offset within the source byte array.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.SubBuffer.SetCapacity(System.Int64)">
+            <summary>
+            Sets the capacity of the buffer, truncating if appropriate.
+            </summary>
+            <param name="value">The desired capacity of the buffer.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.SubBuffer.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a buffer that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="P:DiscUtils.Streams.BuilderExtent.StreamExtents">
+            <summary>
+            Gets the parts of the stream that are stored.
+            </summary>
+            <remarks>This may be an empty enumeration if all bytes are zero.</remarks>
+        </member>
+        <member name="T:DiscUtils.Streams.StreamBuilder">
+            <summary>
+            Base class for objects that can dynamically construct a stream.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuilder.Build">
+            <summary>
+            Builds a new stream.
+            </summary>
+            <returns>The stream created by the StreamBuilder instance.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuilder.Build(System.IO.Stream)">
+            <summary>
+            Writes the stream contents to an existing stream.
+            </summary>
+            <param name="output">The stream to write to.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuilder.Build(System.String)">
+            <summary>
+            Writes the stream contents to a file.
+            </summary>
+            <param name="outputFile">The file to write to.</param>
+        </member>
+        <member name="T:DiscUtils.Streams.CircularStream">
+            <summary>
+            Represents a stream that is circular, so reads and writes off the end of the stream wrap.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.ConcatStream">
+            <summary>
+            The concatenation of multiple streams (read-only, for now).
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.IByteArraySerializable">
+            <summary>
+            Common interface for reading structures to/from byte arrays.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.IByteArraySerializable.Size">
+            <summary>
+            Gets the total number of bytes the structure occupies.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.IByteArraySerializable.ReadFrom(System.Byte[],System.Int32)">
+            <summary>
+            Reads the structure from a byte array.
+            </summary>
+            <param name="buffer">The buffer to read from.</param>
+            <param name="offset">The buffer offset to start reading from.</param>
+            <returns>The number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.IByteArraySerializable.WriteTo(System.Byte[],System.Int32)">
+            <summary>
+            Writes a structure to a byte array.
+            </summary>
+            <param name="buffer">The buffer to write to.</param>
+            <param name="offset">The buffer offset to start writing at.</param>
+        </member>
+        <member name="T:DiscUtils.Streams.LengthWrappingStream">
+            <summary>
+            Represents a stream with a specified length
+            </summary>
+            <remarks>
+            since the wrapped stream may not support <see cref="P:System.IO.Stream.Position"/>
+            there is  no validation of the specified length
+            </remarks>
+        </member>
+        <member name="T:DiscUtils.Streams.MappedStream">
+            <summary>
+            Base class for streams that are essentially a mapping onto a parent stream.
+            </summary>
+            <remarks>
+            This class provides access to the mapping underlying the stream, enabling
+            callers to convert a byte range in this stream into one or more ranges in
+            the parent stream.
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.MappedStream.FromStream(System.IO.Stream,DiscUtils.Streams.Ownership)">
+            <summary>
+            Converts any stream into a non-linear stream.
+            </summary>
+            <param name="stream">The stream to convert.</param>
+            <param name="takeOwnership"><c>true</c> to have the new stream dispose the wrapped
+            stream when it is disposed.</param>
+            <returns>A sparse stream.</returns>
+            <remarks>The wrapped stream is assumed to be a linear stream (such that any byte range
+            maps directly onto the parent stream).</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.MappedStream.FromStream(System.IO.Stream,DiscUtils.Streams.Ownership,System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent})">
+            <summary>
+            Converts any stream into a non-linear stream.
+            </summary>
+            <param name="stream">The stream to convert.</param>
+            <param name="takeOwnership"><c>true</c> to have the new stream dispose the wrapped
+            stream when it is disposed.</param>
+            <param name="extents">The set of extents actually stored in <c>stream</c>.</param>
+            <returns>A sparse stream.</returns>
+            <remarks>The wrapped stream is assumed to be a linear stream (such that any byte range
+            maps directly onto the parent stream).</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.MappedStream.MapContent(System.Int64,System.Int64)">
+            <summary>
+            Maps a logical range down to storage locations.
+            </summary>
+            <param name="start">The first logical range to map.</param>
+            <param name="length">The length of the range to map.</param>
+            <returns>One or more stream extents specifying the storage locations that correspond
+            to the identified logical extent range.</returns>
+            <remarks>
+            <para>As far as possible, the stream extents are returned in logical disk order -
+            however, due to the nature of non-linear streams, not all of the range may actually
+            be stored, or some or all of the range may be compressed - thus reading the
+            returned stream extents is not equivalent to reading the logical disk range.</para>
+            </remarks>
+        </member>
+        <member name="T:DiscUtils.Streams.PositionWrappingStream">
+            <summary>
+            Stream wrapper to allow forward only seeking on not seekable streams
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.PumpProgressEventArgs">
+            <summary>
+            Event arguments indicating progress on pumping a stream.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.PumpProgressEventArgs.BytesRead">
+            <summary>
+            Gets or sets the number of bytes read from <c>InputStream</c>.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.PumpProgressEventArgs.BytesWritten">
+            <summary>
+            Gets or sets the number of bytes written to <c>OutputStream</c>.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.PumpProgressEventArgs.DestinationPosition">
+            <summary>
+            Gets or sets the absolute position in <c>OutputStream</c>.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.PumpProgressEventArgs.SourcePosition">
+            <summary>
+            Gets or sets the absolute position in <c>InputStream</c>.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.DataReader">
+            <summary>
+            Base class for reading binary data from a stream.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.LittleEndianDataReader">
+            <summary>
+            Class for reading little-endian data from a stream.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.SnapshotStream">
+            <summary>
+            A wrapper stream that enables you to take a snapshot, pushing changes into a side buffer.
+            </summary>
+            <remarks>Once a snapshot is taken, you can discard subsequent changes or merge them back
+            into the wrapped stream.</remarks>
+        </member>
+        <member name="F:DiscUtils.Streams.SnapshotStream._diffExtents">
+            <summary>
+            Records which byte ranges in diffStream hold changes.
+            </summary>
+            <remarks>Can't use _diffStream's own tracking because that's based on it's
+            internal block size, not on the _actual_ bytes stored.</remarks>
+        </member>
+        <member name="F:DiscUtils.Streams.SnapshotStream._diffStream">
+            <summary>
+            Captures changes to the base stream (when enabled).
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Streams.SnapshotStream._frozen">
+            <summary>
+            Indicates that no writes should be permitted.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Streams.SnapshotStream._savedPosition">
+            <summary>
+            The saved stream position (if the diffStream is active).
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.#ctor(System.IO.Stream,DiscUtils.Streams.Ownership)">
+            <summary>
+            Initializes a new instance of the SnapshotStream class.
+            </summary>
+            <param name="baseStream">The stream to wrap.</param>
+            <param name="owns">Indicates if this stream should control the lifetime of baseStream.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.SnapshotStream.CanRead">
+            <summary>
+            Gets an indication as to whether the stream can be read.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SnapshotStream.CanSeek">
+            <summary>
+            Gets an indication as to whether the stream position can be changed.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SnapshotStream.CanWrite">
+            <summary>
+            Gets an indication as to whether the stream can be written to.
+            </summary>
+            <remarks>This property is orthogonal to Freezing/Thawing, it's
+            perfectly possible for a stream to be frozen and this method
+            return <c>true</c>.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.SnapshotStream.Extents">
+            <summary>
+            Returns an enumeration over the parts of the stream that contain real data.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SnapshotStream.Length">
+            <summary>
+            Gets the length of the stream.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SnapshotStream.Position">
+            <summary>
+            Gets and sets the current stream position.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.Freeze">
+            <summary>
+            Prevents any write operations to the stream.
+            </summary>
+            <remarks>Useful to prevent changes whilst inspecting the stream.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.Thaw">
+            <summary>
+            Re-permits write operations to the stream.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.Snapshot">
+            <summary>
+            Takes a snapshot of the current stream contents.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.RevertToSnapshot">
+            <summary>
+            Reverts to a previous snapshot, discarding any changes made to the stream.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.ForgetSnapshot">
+            <summary>
+            Discards the snapshot any changes made after the snapshot was taken are kept.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.Flush">
+            <summary>
+            Flushes the stream.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads data from the stream.
+            </summary>
+            <param name="buffer">The buffer to fill.</param>
+            <param name="offset">The buffer offset to start from.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            Moves the stream position.
+            </summary>
+            <param name="offset">The origin-relative location.</param>
+            <param name="origin">The base location.</param>
+            <returns>The new absolute stream position.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.SetLength(System.Int64)">
+            <summary>
+            Sets the length of the stream.
+            </summary>
+            <param name="value">The new length.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes data to the stream at the current location.
+            </summary>
+            <param name="buffer">The data to write.</param>
+            <param name="offset">The first byte to write from buffer.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.SnapshotStream.Dispose(System.Boolean)">
+            <summary>
+            Disposes of this instance.
+            </summary>
+            <param name="disposing"><c>true</c> if called from Dispose(), else <c>false</c>.</param>
+        </member>
+        <member name="T:DiscUtils.Streams.SparseMemoryBuffer">
+            <summary>
+            A sparse in-memory buffer.
+            </summary>
+            <remarks>This class is useful for storing large sparse buffers in memory, unused
+            chunks of the buffer are not stored (assumed to be zero).</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseMemoryBuffer.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the SparseMemoryBuffer class.
+            </summary>
+            <param name="chunkSize">The size of each allocation chunk.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.SparseMemoryBuffer.AllocatedChunks">
+            <summary>
+            Gets the (sorted) list of allocated chunks, as chunk indexes.
+            </summary>
+            <returns>An enumeration of chunk indexes.</returns>
+            <remarks>This method returns chunks as an index rather than absolute stream position.
+            For example, if ChunkSize is 16KB, and the first 32KB of the buffer is actually stored,
+            this method will return 0 and 1.  This indicates the first and second chunks are stored.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.SparseMemoryBuffer.CanRead">
+            <summary>
+            Indicates this stream can be read (always <c>true</c>).
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SparseMemoryBuffer.CanWrite">
+            <summary>
+            Indicates this stream can be written (always <c>true</c>).
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SparseMemoryBuffer.Capacity">
+            <summary>
+            Gets the current capacity of the sparse buffer (number of logical bytes stored).
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SparseMemoryBuffer.ChunkSize">
+            <summary>
+            Gets the size of each allocation chunk.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.SparseMemoryBuffer.Item(System.Int64)">
+            <summary>
+            Accesses this memory buffer as an infinite byte array.
+            </summary>
+            <param name="pos">The buffer position to read.</param>
+            <returns>The byte stored at this position (or Zero if not explicitly stored).</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseMemoryBuffer.Read(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a section of the sparse buffer into a byte array.
+            </summary>
+            <param name="pos">The offset within the sparse buffer to start reading.</param>
+            <param name="buffer">The destination byte array.</param>
+            <param name="offset">The start offset within the destination buffer.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The actual number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseMemoryBuffer.Write(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a byte array into the sparse buffer.
+            </summary>
+            <param name="pos">The start offset within the sparse buffer.</param>
+            <param name="buffer">The source byte array.</param>
+            <param name="offset">The start offset within the source byte array.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseMemoryBuffer.Clear(System.Int64,System.Int32)">
+            <summary>
+            Clears bytes from the buffer.
+            </summary>
+            <param name="pos">The start offset within the buffer.</param>
+            <param name="count">The number of bytes to clear.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseMemoryBuffer.SetCapacity(System.Int64)">
+            <summary>
+            Sets the capacity of the sparse buffer, truncating if appropriate.
+            </summary>
+            <param name="value">The desired capacity of the buffer.</param>
+            <remarks>This method does not allocate any chunks, it merely records the logical
+            capacity of the sparse buffer.  Writes beyond the specified capacity will increase
+            the capacity.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseMemoryBuffer.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a buffer that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="T:DiscUtils.Streams.SparseMemoryStream">
+            <summary>
+            Provides a sparse equivalent to MemoryStream.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseMemoryStream.#ctor">
+            <summary>
+            Initializes a new instance of the SparseMemoryStream class.
+            </summary>
+            <remarks>The created instance permits read and write access.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseMemoryStream.#ctor(DiscUtils.Streams.SparseMemoryBuffer,System.IO.FileAccess)">
+            <summary>
+            Initializes a new instance of the SparseMemoryStream class.
+            </summary>
+            <param name="buffer">The buffer to use.</param>
+            <param name="access">The access permitted to clients.</param>
+        </member>
+        <member name="T:DiscUtils.Streams.SparseStream">
+            <summary>
+            Represents a sparse stream.
+            </summary>
+            <remarks>A sparse stream is a logically contiguous stream where some parts of the stream
+            aren't stored.  The unstored parts are implicitly zero-byte ranges.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.SparseStream.Extents">
+            <summary>
+            Gets the parts of the stream that are stored.
+            </summary>
+            <remarks>This may be an empty enumeration if all bytes are zero.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseStream.FromStream(System.IO.Stream,DiscUtils.Streams.Ownership)">
+            <summary>
+            Converts any stream into a sparse stream.
+            </summary>
+            <param name="stream">The stream to convert.</param>
+            <param name="takeOwnership"><c>true</c> to have the new stream dispose the wrapped
+            stream when it is disposed.</param>
+            <returns>A sparse stream.</returns>
+            <remarks>The returned stream has the entire wrapped stream as a
+            single extent.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseStream.FromStream(System.IO.Stream,DiscUtils.Streams.Ownership,System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent})">
+            <summary>
+            Converts any stream into a sparse stream.
+            </summary>
+            <param name="stream">The stream to convert.</param>
+            <param name="takeOwnership"><c>true</c> to have the new stream dispose the wrapped
+            stream when it is disposed.</param>
+            <param name="extents">The set of extents actually stored in <c>stream</c>.</param>
+            <returns>A sparse stream.</returns>
+            <remarks>The returned stream has the entire wrapped stream as a
+            single extent.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseStream.Pump(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Efficiently pumps data from a sparse stream to another stream.
+            </summary>
+            <param name="inStream">The sparse stream to pump from.</param>
+            <param name="outStream">The stream to pump to.</param>
+            <remarks><paramref name="outStream"/> must support seeking.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseStream.Pump(System.IO.Stream,System.IO.Stream,System.Int32)">
+            <summary>
+            Efficiently pumps data from a sparse stream to another stream.
+            </summary>
+            <param name="inStream">The stream to pump from.</param>
+            <param name="outStream">The stream to pump to.</param>
+            <param name="chunkSize">The smallest sequence of zero bytes that will be skipped when writing to <paramref name="outStream"/>.</param>
+            <remarks><paramref name="outStream"/> must support seeking.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseStream.ReadOnly(DiscUtils.Streams.SparseStream,DiscUtils.Streams.Ownership)">
+            <summary>
+            Wraps a sparse stream in a read-only wrapper, preventing modification.
+            </summary>
+            <param name="toWrap">The stream to make read-only.</param>
+            <param name="ownership">Whether to transfer responsibility for calling Dispose on <c>toWrap</c>.</param>
+            <returns>The read-only stream.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseStream.Clear(System.Int32)">
+            <summary>
+            Clears bytes from the stream.
+            </summary>
+            <param name="count">The number of bytes (from the current position) to clear.</param>
+            <remarks>
+            <para>Logically equivalent to writing <c>count</c> null/zero bytes to the stream, some
+            implementations determine that some (or all) of the range indicated is not actually
+            stored.  There is no direct, automatic, correspondence to clearing bytes and them
+            not being represented as an 'extent' - for example, the implementation of the underlying
+            stream may not permit fine-grained extent storage.</para>
+            <para>It is always safe to call this method to 'zero-out' a section of a stream, regardless of
+            the underlying stream implementation.</para>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.SparseStream.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a stream that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="T:DiscUtils.Streams.StreamBuffer">
+            <summary>
+            Converts a Stream into an IBuffer instance.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuffer.#ctor(System.IO.Stream,DiscUtils.Streams.Ownership)">
+            <summary>
+            Initializes a new instance of the StreamBuffer class.
+            </summary>
+            <param name="stream">The stream to wrap.</param>
+            <param name="ownership">Whether to dispose stream, when this object is disposed.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamBuffer.CanRead">
+            <summary>
+            Can this buffer be read.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamBuffer.CanWrite">
+            <summary>
+            Can this buffer be written.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamBuffer.Capacity">
+            <summary>
+            Gets the current capacity of the buffer, in bytes.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamBuffer.Extents">
+            <summary>
+            Gets the parts of the stream that are stored.
+            </summary>
+            <remarks>This may be an empty enumeration if all bytes are zero.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuffer.Dispose">
+            <summary>
+            Disposes of this instance.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuffer.Read(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads from the buffer into a byte array.
+            </summary>
+            <param name="pos">The offset within the buffer to start reading.</param>
+            <param name="buffer">The destination byte array.</param>
+            <param name="offset">The start offset within the destination buffer.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The actual number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuffer.Write(System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a byte array into the buffer.
+            </summary>
+            <param name="pos">The start offset within the buffer.</param>
+            <param name="buffer">The source byte array.</param>
+            <param name="offset">The start offset within the source byte array.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuffer.Flush">
+            <summary>
+            Flushes all data to the underlying storage.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuffer.SetCapacity(System.Int64)">
+            <summary>
+            Sets the capacity of the buffer, truncating if appropriate.
+            </summary>
+            <param name="value">The desired capacity of the buffer.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamBuffer.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a buffer that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="T:DiscUtils.Streams.StreamExtent">
+            <summary>
+            Represents a range of bytes in a stream.
+            </summary>
+            <remarks>This is normally used to represent regions of a SparseStream that
+            are actually stored in the underlying storage medium (rather than implied
+            zero bytes).  Extents are stored as a zero-based byte offset (from the
+            beginning of the stream), and a byte length.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.#ctor(System.Int64,System.Int64)">
+            <summary>
+            Initializes a new instance of the StreamExtent class.
+            </summary>
+            <param name="start">The start of the extent.</param>
+            <param name="length">The length of the extent.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamExtent.Length">
+            <summary>
+            Gets the start of the extent (in bytes).
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamExtent.Start">
+            <summary>
+            Gets the start of the extent (in bytes).
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.CompareTo(DiscUtils.Streams.StreamExtent)">
+            <summary>
+            Compares this stream extent to another.
+            </summary>
+            <param name="other">The extent to compare.</param>
+            <returns>Value greater than zero if this extent starts after
+            <c>other</c>, zero if they start at the same position, else
+            a value less than zero.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Equals(DiscUtils.Streams.StreamExtent)">
+            <summary>
+            Indicates if this StreamExtent is equal to another.
+            </summary>
+            <param name="other">The extent to compare.</param>
+            <returns><c>true</c> if the extents are equal, else <c>false</c>.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Union(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent},DiscUtils.Streams.StreamExtent)">
+            <summary>
+            Calculates the union of a list of extents with another extent.
+            </summary>
+            <param name="extents">The list of extents.</param>
+            <param name="other">The other extent.</param>
+            <returns>The union of the extents.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Union(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent}[])">
+            <summary>
+            Calculates the union of the extents of multiple streams.
+            </summary>
+            <param name="streams">The stream extents.</param>
+            <returns>The union of the extents from multiple streams.</returns>
+            <remarks>A typical use of this method is to calculate the combined set of
+            stored extents from a number of overlayed sparse streams.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Intersect(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent},DiscUtils.Streams.StreamExtent)">
+            <summary>
+            Calculates the intersection of the extents of a stream with another extent.
+            </summary>
+            <param name="extents">The stream extents.</param>
+            <param name="other">The extent to intersect.</param>
+            <returns>The intersection of the extents.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Intersect(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent}[])">
+            <summary>
+            Calculates the intersection of the extents of multiple streams.
+            </summary>
+            <param name="streams">The stream extents.</param>
+            <returns>The intersection of the extents from multiple streams.</returns>
+            <remarks>A typical use of this method is to calculate the extents in a
+            region of a stream..</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Subtract(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent},DiscUtils.Streams.StreamExtent)">
+            <summary>
+            Calculates the subtraction of the extents of a stream by another extent.
+            </summary>
+            <param name="extents">The stream extents.</param>
+            <param name="other">The extent to subtract.</param>
+            <returns>The subtraction of <c>other</c> from <c>extents</c>.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Subtract(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent},System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent})">
+            <summary>
+            Calculates the subtraction of the extents of a stream by another stream.
+            </summary>
+            <param name="a">The stream extents to subtract from.</param>
+            <param name="b">The stream extents to subtract.</param>
+            <returns>The subtraction of the extents of b from a.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Invert(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent})">
+            <summary>
+            Calculates the inverse of the extents of a stream.
+            </summary>
+            <param name="extents">The stream extents to inverse.</param>
+            <returns>The inverted extents.</returns>
+            <remarks>
+            This method assumes a logical stream addressable from <c>0</c> to <c>long.MaxValue</c>, and is undefined
+            should any stream extent start at less than 0.  To constrain the extents to a specific range, use the
+            <c>Intersect</c> method.
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Offset(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent},System.Int64)">
+            <summary>
+            Offsets the extents of a stream.
+            </summary>
+            <param name="stream">The stream extents.</param>
+            <param name="delta">The amount to offset the extents by.</param>
+            <returns>The stream extents, offset by delta.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.BlockCount(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent},System.Int64)">
+            <summary>
+            Returns the number of blocks containing stream data.
+            </summary>
+            <param name="stream">The stream extents.</param>
+            <param name="blockSize">The size of each block.</param>
+            <returns>The number of blocks containing stream data.</returns>
+            <remarks>This method logically divides the stream into blocks of a specified
+            size, then indicates how many of those blocks contain actual stream data.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Blocks(System.Collections.Generic.IEnumerable{DiscUtils.Streams.StreamExtent},System.Int64)">
+            <summary>
+            Returns all of the blocks containing stream data.
+            </summary>
+            <param name="stream">The stream extents.</param>
+            <param name="blockSize">The size of each block.</param>
+            <returns>Ranges of blocks, as block indexes.</returns>
+            <remarks>This method logically divides the stream into blocks of a specified
+            size, then indicates ranges of blocks that contain stream data.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.op_Equality(DiscUtils.Streams.StreamExtent,DiscUtils.Streams.StreamExtent)">
+            <summary>
+            The equality operator.
+            </summary>
+            <param name="a">The first extent to compare.</param>
+            <param name="b">The second extent to compare.</param>
+            <returns>Whether the two extents are equal.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.op_Inequality(DiscUtils.Streams.StreamExtent,DiscUtils.Streams.StreamExtent)">
+            <summary>
+            The inequality operator.
+            </summary>
+            <param name="a">The first extent to compare.</param>
+            <param name="b">The second extent to compare.</param>
+            <returns>Whether the two extents are different.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.op_LessThan(DiscUtils.Streams.StreamExtent,DiscUtils.Streams.StreamExtent)">
+            <summary>
+            The less-than operator.
+            </summary>
+            <param name="a">The first extent to compare.</param>
+            <param name="b">The second extent to compare.</param>
+            <returns>Whether a is less than b.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.op_GreaterThan(DiscUtils.Streams.StreamExtent,DiscUtils.Streams.StreamExtent)">
+            <summary>
+            The greater-than operator.
+            </summary>
+            <param name="a">The first extent to compare.</param>
+            <param name="b">The second extent to compare.</param>
+            <returns>Whether a is greater than b.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.ToString">
+            <summary>
+            Returns a string representation of the extent as [start:+length].
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.Equals(System.Object)">
+            <summary>
+            Indicates if this stream extent is equal to another object.
+            </summary>
+            <param name="obj">The object to test.</param>
+            <returns><c>true</c> if <c>obj</c> is equivalent, else <c>false</c>.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamExtent.GetHashCode">
+            <summary>
+            Gets a hash code for this extent.
+            </summary>
+            <returns>The extent's hash code.</returns>
+        </member>
+        <member name="T:DiscUtils.Streams.StreamPump">
+            <summary>
+            Utility class for pumping the contents of one stream into another.
+            </summary>
+            <remarks>
+            This class is aware of sparse streams, and will avoid copying data that is not
+            valid in the source stream.  This functionality should normally only be used
+            when the destination stream is known not to contain any existing data.
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamPump.#ctor">
+            <summary>
+            Initializes a new instance of the StreamPump class.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamPump.#ctor(System.IO.Stream,System.IO.Stream,System.Int32)">
+            <summary>
+            Initializes a new instance of the StreamPump class.
+            </summary>
+            <param name="inStream">The stream to read from.</param>
+            <param name="outStream">The stream to write to.</param>
+            <param name="sparseChunkSize">The size of each sparse chunk.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamPump.BufferSize">
+            <summary>
+            Gets or sets the amount of data to read at a time from <c>InputStream</c>.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamPump.BytesRead">
+            <summary>
+            Gets the number of bytes read from <c>InputStream</c>.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamPump.BytesWritten">
+            <summary>
+            Gets the number of bytes written to <c>OutputStream</c>.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamPump.InputStream">
+            <summary>
+            Gets or sets the stream that will be read from.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamPump.OutputStream">
+            <summary>
+            Gets or sets the stream that will be written to.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamPump.SparseChunkSize">
+            <summary>
+            Gets or sets, for sparse transfers, the size of each chunk.
+            </summary>
+            <remarks>
+            A chunk is transfered if any byte in the chunk is valid, otherwise it is not.
+            This value should normally be set to reflect the underlying storage granularity
+            of <c>OutputStream</c>.
+            </remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.StreamPump.SparseCopy">
+            <summary>
+            Gets or sets a value indicating whether to enable the sparse copy behaviour (default true).
+            </summary>
+        </member>
+        <member name="E:DiscUtils.Streams.StreamPump.ProgressEvent">
+            <summary>
+            Event raised periodically through the pump operation.
+            </summary>
+            <remarks>
+            This event is signalled synchronously, so to avoid slowing the pumping activity
+            implementations should return quickly.
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamPump.Run">
+            <summary>
+            Performs the pump activity, blocking until complete.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.ThreadSafeStream">
+            <summary>
+            Provides a thread-safe wrapping around a sparse stream.
+            </summary>
+            <remarks>
+            <para>Streams are inherently not thread-safe (because read/write is not atomic w.r.t. Position).
+            This method enables multiple 'views' of a stream to be created (each with their own Position), and ensures
+            only a single operation is executing on the wrapped stream at any time.</para>
+            <para>This example shows the pattern of use:</para>
+            <example>
+            <code>
+            SparseStream baseStream = ...;
+            ThreadSafeStream tss = new ThreadSafeStream(baseStream);
+            for(int i = 0; i &lt; 10; ++i)
+            {
+              SparseStream streamForThread = tss.OpenView();
+            }
+            </code>
+            </example>
+            <para>This results in 11 streams that can be used in different streams - <c>tss</c> and ten 'views' created from <c>tss</c>.</para>
+            <para>Note, the stream length cannot be changed.</para>
+            </remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.#ctor(DiscUtils.Streams.SparseStream)">
+            <summary>
+            Initializes a new instance of the ThreadSafeStream class.
+            </summary>
+            <param name="toWrap">The stream to wrap.</param>
+            <remarks>Do not directly modify <c>toWrap</c> after wrapping it, unless the thread-safe views
+            will no longer be used.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.#ctor(DiscUtils.Streams.SparseStream,DiscUtils.Streams.Ownership)">
+            <summary>
+            Initializes a new instance of the ThreadSafeStream class.
+            </summary>
+            <param name="toWrap">The stream to wrap.</param>
+            <param name="ownership">Whether to transfer ownership of <c>toWrap</c> to the new instance.</param>
+            <remarks>Do not directly modify <c>toWrap</c> after wrapping it, unless the thread-safe views
+            will no longer be used.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.ThreadSafeStream.CanRead">
+            <summary>
+            Gets a value indicating if this stream supports reads.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.ThreadSafeStream.CanSeek">
+            <summary>
+            Gets a value indicating if this stream supports seeking (always true).
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.ThreadSafeStream.CanWrite">
+            <summary>
+            Gets a value indicating if this stream supports writes (currently, always false).
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.ThreadSafeStream.Extents">
+            <summary>
+            Gets the parts of the stream that are stored.
+            </summary>
+            <remarks>This may be an empty enumeration if all bytes are zero.</remarks>
+        </member>
+        <member name="P:DiscUtils.Streams.ThreadSafeStream.Length">
+            <summary>
+            Gets the length of the stream.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.ThreadSafeStream.Position">
+            <summary>
+            Gets the current stream position - each 'view' has it's own Position.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.OpenView">
+            <summary>
+            Opens a new thread-safe view on the stream.
+            </summary>
+            <returns>The new view.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.GetExtentsInRange(System.Int64,System.Int64)">
+            <summary>
+            Gets the parts of a stream that are stored, within a specified range.
+            </summary>
+            <param name="start">The offset of the first byte of interest.</param>
+            <param name="count">The number of bytes of interest.</param>
+            <returns>An enumeration of stream extents, indicating stored bytes.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.Flush">
+            <summary>
+            Causes the stream to flush all changes.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads data from the stream.
+            </summary>
+            <param name="buffer">The buffer to fill.</param>
+            <param name="offset">The first byte in buffer to fill.</param>
+            <param name="count">The requested number of bytes to read.</param>
+            <returns>The actual number of bytes read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            Changes the current stream position (each view has it's own Position).
+            </summary>
+            <param name="offset">The relative location to move to.</param>
+            <param name="origin">The origin of the location.</param>
+            <returns>The new location as an absolute position.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.SetLength(System.Int64)">
+            <summary>
+            Sets the length of the stream (not supported).
+            </summary>
+            <param name="value">The new length.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes data to the stream (not currently supported).
+            </summary>
+            <param name="buffer">The data to write.</param>
+            <param name="offset">The first byte to write.</param>
+            <param name="count">The number of bytes to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.ThreadSafeStream.Dispose(System.Boolean)">
+            <summary>
+            Disposes of this instance, invalidating any remaining views.
+            </summary>
+            <param name="disposing"><c>true</c> if disposing, lese <c>false</c>.</param>
+        </member>
+        <member name="T:DiscUtils.Streams.BitCounter">
+            <summary>
+            Helper to count the number of bits set in a byte or byte[]
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.BitCounter.Count(System.Byte)">
+            <summary>
+            count the number of bits set in <paramref name="value"/>
+            </summary>
+            <returns>the number of bits set in <paramref name="value"/></returns>
+        </member>
+        <member name="M:DiscUtils.Streams.BitCounter.Count(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            count the number of bits set in each entry of <paramref name="values"/>
+            </summary>
+            <param name="values">the <see cref="T:System.Array"/> to process</param>
+            <param name="offset">the values offset to start from</param>
+            <param name="count">the number of bytes to count</param>
+            <returns></returns>
+        </member>
+        <member name="M:DiscUtils.Streams.EndianUtilities.StringToBytes(System.String,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Primitive conversion from Unicode to ASCII that preserves special characters.
+            </summary>
+            <param name="value">The string to convert.</param>
+            <param name="dest">The buffer to fill.</param>
+            <param name="offset">The start of the string in the buffer.</param>
+            <param name="count">The number of characters to convert.</param>
+            <remarks>The built-in ASCIIEncoding converts characters of codepoint > 127 to ?,
+            this preserves those code points by removing the top 16 bits of each character.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.EndianUtilities.BytesToString(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Primitive conversion from ASCII to Unicode that preserves special characters.
+            </summary>
+            <param name="data">The data to convert.</param>
+            <param name="offset">The first byte to convert.</param>
+            <param name="count">The number of bytes to convert.</param>
+            <returns>The string.</returns>
+            <remarks>The built-in ASCIIEncoding converts characters of codepoint > 127 to ?,
+            this preserves those code points.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.EndianUtilities.BytesToZString(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Primitive conversion from ASCII to Unicode that stops at a null-terminator.
+            </summary>
+            <param name="data">The data to convert.</param>
+            <param name="offset">The first byte to convert.</param>
+            <param name="count">The number of bytes to convert.</param>
+            <returns>The string.</returns>
+            <remarks>The built-in ASCIIEncoding converts characters of codepoint > 127 to ?,
+            this preserves those code points.</remarks>
+        </member>
+        <member name="M:DiscUtils.Streams.MathUtilities.RoundUp(System.Int64,System.Int64)">
+            <summary>
+            Round up a value to a multiple of a unit size.
+            </summary>
+            <param name="value">The value to round up.</param>
+            <param name="unit">The unit (the returned value will be a multiple of this number).</param>
+            <returns>The rounded-up value.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.MathUtilities.RoundUp(System.Int32,System.Int32)">
+            <summary>
+            Round up a value to a multiple of a unit size.
+            </summary>
+            <param name="value">The value to round up.</param>
+            <param name="unit">The unit (the returned value will be a multiple of this number).</param>
+            <returns>The rounded-up value.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.MathUtilities.RoundDown(System.Int64,System.Int64)">
+            <summary>
+            Round down a value to a multiple of a unit size.
+            </summary>
+            <param name="value">The value to round down.</param>
+            <param name="unit">The unit (the returned value will be a multiple of this number).</param>
+            <returns>The rounded-down value.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.MathUtilities.Ceil(System.Int32,System.Int32)">
+            <summary>
+            Calculates the CEIL function.
+            </summary>
+            <param name="numerator">The value to divide.</param>
+            <param name="denominator">The value to divide by.</param>
+            <returns>The value of CEIL(numerator/denominator).</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.MathUtilities.Ceil(System.UInt32,System.UInt32)">
+            <summary>
+            Calculates the CEIL function.
+            </summary>
+            <param name="numerator">The value to divide.</param>
+            <param name="denominator">The value to divide by.</param>
+            <returns>The value of CEIL(numerator/denominator).</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.MathUtilities.Ceil(System.Int64,System.Int64)">
+            <summary>
+            Calculates the CEIL function.
+            </summary>
+            <param name="numerator">The value to divide.</param>
+            <param name="denominator">The value to divide by.</param>
+            <returns>The value of CEIL(numerator/denominator).</returns>
+        </member>
+        <member name="T:DiscUtils.Streams.Ownership">
+            <summary>
+            Enumeration used to indicate transfer of disposable objects.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Streams.Ownership.None">
+            <summary>
+            Indicates there is no transfer of ownership.
+            </summary>
+        </member>
+        <member name="F:DiscUtils.Streams.Ownership.Dispose">
+            <summary>
+            Indicates ownership of the stream is transfered, the owner should dispose of the stream when appropriate.
+            </summary>
+        </member>
+        <member name="T:DiscUtils.Streams.Range`2">
+            <summary>
+            Represents a range of values.
+            </summary>
+            <typeparam name="TOffset">The type of the offset element.</typeparam>
+            <typeparam name="TCount">The type of the size element.</typeparam>
+        </member>
+        <member name="M:DiscUtils.Streams.Range`2.#ctor(`0,`1)">
+            <summary>
+            Initializes a new instance of the Range class.
+            </summary>
+            <param name="offset">The offset (i.e. start) of the range.</param>
+            <param name="count">The size of the range.</param>
+        </member>
+        <member name="P:DiscUtils.Streams.Range`2.Count">
+            <summary>
+            Gets the size of the range.
+            </summary>
+        </member>
+        <member name="P:DiscUtils.Streams.Range`2.Offset">
+            <summary>
+            Gets the offset (i.e. start) of the range.
+            </summary>
+        </member>
+        <member name="M:DiscUtils.Streams.Range`2.Equals(DiscUtils.Streams.Range{`0,`1})">
+            <summary>
+            Compares this range to another.
+            </summary>
+            <param name="other">The range to compare.</param>
+            <returns><c>true</c> if the ranges are equivalent, else <c>false</c>.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.Range`2.Chunked``1(System.Collections.Generic.IEnumerable{DiscUtils.Streams.Range{``0,``0}},``0)">
+            <summary>
+            Merges sets of ranges into chunks.
+            </summary>
+            <param name="ranges">The ranges to merge.</param>
+            <param name="chunkSize">The size of each chunk.</param>
+            <returns>Ranges combined into larger chunks.</returns>
+            <typeparam name="T">The type of the offset and count in the ranges.</typeparam>
+        </member>
+        <member name="M:DiscUtils.Streams.Range`2.ToString">
+            <summary>
+            Returns a string representation of the extent as [start:+length].
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.AssertBufferParameters(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Validates standard buffer, offset, count parameters to a method.
+            </summary>
+            <param name="buffer">The byte array to read from / write to.</param>
+            <param name="offset">The starting offset in <c>buffer</c>.</param>
+            <param name="count">The number of bytes to read / write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadExact(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read bytes until buffer filled or throw EndOfStreamException.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <param name="buffer">The buffer to populate.</param>
+            <param name="offset">Offset in the buffer to start.</param>
+            <param name="count">The number of bytes to read.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadExact(System.IO.Stream,System.Int32)">
+            <summary>
+            Read bytes until buffer filled or throw EndOfStreamException.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The data read from the stream.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadExact(DiscUtils.Streams.IBuffer,System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read bytes until buffer filled or throw EndOfStreamException.
+            </summary>
+            <param name="buffer">The stream to read.</param>
+            <param name="pos">The position in buffer to read from.</param>
+            <param name="data">The buffer to populate.</param>
+            <param name="offset">Offset in the buffer to start.</param>
+            <param name="count">The number of bytes to read.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadExact(DiscUtils.Streams.IBuffer,System.Int64,System.Int32)">
+            <summary>
+            Read bytes until buffer filled or throw EndOfStreamException.
+            </summary>
+            <param name="buffer">The buffer to read.</param>
+            <param name="pos">The position in buffer to read from.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The data read from the stream.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadMaximum(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read bytes until buffer filled or EOF.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <param name="buffer">The buffer to populate.</param>
+            <param name="offset">Offset in the buffer to start.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The number of bytes actually read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadMaximum(DiscUtils.Streams.IBuffer,System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read bytes until buffer filled or EOF.
+            </summary>
+            <param name="buffer">The stream to read.</param>
+            <param name="pos">The position in buffer to read from.</param>
+            <param name="data">The buffer to populate.</param>
+            <param name="offset">Offset in the buffer to start.</param>
+            <param name="count">The number of bytes to read.</param>
+            <returns>The number of bytes actually read.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadAll(DiscUtils.Streams.IBuffer)">
+            <summary>
+            Read bytes until buffer filled or throw EndOfStreamException.
+            </summary>
+            <param name="buffer">The buffer to read.</param>
+            <returns>The data read from the stream.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadSector(System.IO.Stream)">
+            <summary>
+            Reads a disk sector (512 bytes).
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The sector data as a byte array.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadStruct``1(System.IO.Stream)">
+            <summary>
+            Reads a structure from a stream.
+            </summary>
+            <typeparam name="T">The type of the structure.</typeparam>
+            <param name="stream">The stream to read.</param>
+            <returns>The structure.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.ReadStruct``1(System.IO.Stream,System.Int32)">
+            <summary>
+            Reads a structure from a stream.
+            </summary>
+            <typeparam name="T">The type of the structure.</typeparam>
+            <param name="stream">The stream to read.</param>
+            <param name="length">The number of bytes to read.</param>
+            <returns>The structure.</returns>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.WriteStruct``1(System.IO.Stream,``0)">
+            <summary>
+            Writes a structure to a stream.
+            </summary>
+            <typeparam name="T">The type of the structure.</typeparam>
+            <param name="stream">The stream to write to.</param>
+            <param name="obj">The structure to write.</param>
+        </member>
+        <member name="M:DiscUtils.Streams.StreamUtilities.PumpStreams(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Copies the contents of one stream to another.
+            </summary>
+            <param name="source">The stream to copy from.</param>
+            <param name="dest">The destination stream.</param>
+            <remarks>Copying starts at the current stream positions.</remarks>
+        </member>
+        <member name="T:DiscUtils.Streams.WrappingMappedStream`1">
+            <summary>
+            Base class for streams that wrap another stream.
+            </summary>
+            <typeparam name="T">The type of stream to wrap.</typeparam>
+            <remarks>
+            Provides the default implementation of methods &amp; properties, so
+            wrapping streams need only override the methods they need to intercept.
+            </remarks>
+        </member>
+        <member name="T:DiscUtils.Streams.WrappingStream">
+            <summary>
+            Base class for streams that wrap another stream.
+            </summary>
+            <remarks>
+            Provides the default implementation of methods &amp; properties, so
+            wrapping streams need only override the methods they need to intercept.
+            </remarks>
+        </member>
+        <member name="T:DiscUtils.Streams.ZeroStream">
+            <summary>
+            A stream that returns Zero's.
+            </summary>
+        </member>
+    </members>
+</doc>
