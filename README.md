@@ -32,8 +32,8 @@ The source code can be found in the other repository: [PSMT Library](https://git
 | `hdl_dump` |  | https://github.com/ps2homebrew/hdl-dump
 | `hexdump` | di-mgt | https://www.di-mgt.com.au/hexdump-for-windows.html
 | `HtmlAgilityPack` | ZZZ Projects | https://html-agility-pack.net/
-| `IsoPbpConverter` | LMAN | https://github.com/evilsperm/fwtool
-| `klicencebruteforce` | MAGiC333X | https://github.com/evilsperm/fwtool
+| `IsoPbpConverter` | LMAN | 
+| `klicencebruteforce` | MAGiC333X | 
 | `make_fself` |  | 
 | `maxcso` | unknownbrackets | https://github.com/unknownbrackets/maxcso
 | `mCiso` | sindastra | https://github.com/sindastra/psp-mciso
