@@ -29,6 +29,7 @@ The source code can be found in the other repository: [PSMT Library](https://git
 | `ffplay` | FFmpeg | https://github.com/FFmpeg/FFmpeg
 | `fix_tar` | KaKaRoTo & cfwprpht | 
 | `fwpkg` | evilsperm | https://github.com/evilsperm/fwtool
+| `hdl_dump` |  | https://github.com/ps2homebrew/hdl-dump
 | `hexdump` | di-mgt | https://www.di-mgt.com.au/hexdump-for-windows.html
 | `HtmlAgilityPack` | ZZZ Projects | https://html-agility-pack.net/
 | `IsoPbpConverter` | LMAN | https://github.com/evilsperm/fwtool
@@ -40,6 +41,7 @@ The source code can be found in the other repository: [PSMT Library](https://git
 | `nQuant` | matt wrock | https://www.nuget.org/packages/nQuant
 | `PARAM.SFO Library` | xXxTheDarkprogramerxXx | https://github.com/xXxTheDarkprogramerxXx/PS4_Tools
 | `pbppacker` |  | 
+| `pfsshell & pfsfuse` |  | https://github.com/ps2homebrew/pfsshell
 | `pkg2zip` | lusid1 | https://github.com/lusid1/pkg2zip
 | `ps3iso-utils` | bucanero | https://github.com/bucanero/ps3iso-utils
 | `PS4_Tools Library` | xXxTheDarkprogramerxXx | https://github.com/xXxTheDarkprogramerxXx/PS4_Tools
