@@ -13,10 +13,10 @@ Public Class SFONew
         Dim Count As UInteger = ReadUInt32(ParamSFO)
 
         If Magic = 1179865088 Then
-            For i As Integer = 0 To Count - 1
+            For i As Integer = 0 To CInt(Count - 1)
                 Dim NameOffset As UShort = ReadUInt16(ParamSFO)
-                Dim Alignment As Byte = ParamSFO.ReadByte()
-                Dim Type As Byte = ParamSFO.ReadByte()
+                Dim Alignment As Byte = CByte(ParamSFO.ReadByte())
+                Dim Type As Byte = CByte(ParamSFO.ReadByte())
                 Dim ValueSize As UInteger = ReadUInt32(ParamSFO)
                 Dim TotalSize As UInteger = ReadUInt32(ParamSFO)
                 Dim DataOffset As UInteger = ReadUInt32(ParamSFO)
@@ -130,7 +130,7 @@ Public Class SFONew
         Dim ms As New MemoryStream()
 
         While True
-            Dim c As Byte = Str.ReadByte()
+            Dim c As Byte = CByte(Str.ReadByte())
             If c = 0 Then Exit While
             ms.WriteByte(c)
         End While

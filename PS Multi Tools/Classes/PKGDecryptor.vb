@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Windows.Media.Imaging
 
 Public Class PKGDecryptor
 
@@ -13,12 +14,12 @@ Public Class PKGDecryptor
     Private PBPBytes As Byte()
     Private PackageType As PKGType
     Private PKGContentID As String
-    Public isDecError As Boolean
+    Public IsDecError As Boolean
     Public Shared PSPAesKey As Byte() = New Byte(15) {7, 242, 198, 130, 144, 181, 13, 44, 51, 129, 141, 112, 155, 96, 230, 43}
     Public Shared PS3AesKey As Byte() = New Byte(15) {46, 123, 113, 215, 201, 201, 161, 78, 163, 34, 31, 24, 136, 40, 184, 248}
     Public Shared AesKey As Byte() = New Byte(15) {}
     Public Shared PKGFileKey As Byte() = New Byte(15) {}
-    Public Shared uiEncryptedFileStartOffset As UInteger = 0
+    Public Shared UIEncryptedFileStartOffset As UInteger = 0
     Public IsSupportedFiles As Boolean
 
     Public Sub New()
@@ -104,36 +105,36 @@ Public Class PKGDecryptor
 
     Public Function DecryptPKGFileRead(PKGFileName As String) As Byte()
         Try
-            Dim moltiplicator As Integer = 65536
-            Dim numArray1 As Byte() = New Byte(1048576 - 1 + 1 - 1) {}
-            Dim EncryptedData As Byte() = New Byte(AesKey.Length * moltiplicator - 1) {}
-            Dim DecryptedData As Byte() = New Byte(AesKey.Length * moltiplicator - 1) {}
+            Dim Multiplicator As Integer = 65536
+            Dim ByteArray As Byte() = New Byte(1048576 - 1 + 1 - 1) {}
+            Dim EncryptedData As Byte() = New Byte(AesKey.Length * Multiplicator - 1) {}
+            Dim DecryptedData As Byte() = New Byte(AesKey.Length * Multiplicator - 1) {}
             Dim PKGXorKey As Byte() = New Byte(AesKey.Length - 1) {}
             Dim EncryptedFileStartOffset As Byte() = New Byte(3) {}
             Dim EncryptedFileLenght As Byte() = New Byte(3) {}
 
             Using PKGReadStream As New FileStream(PKGFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
-                Using brPKG As New BinaryReader(PKGReadStream)
+                Using PKGBinaryReader As New BinaryReader(PKGReadStream)
 
-                    Dim pkgMagic As Byte() = brPKG.ReadBytes(4)
+                    Dim PKGMagic As Byte() = PKGBinaryReader.ReadBytes(4)
                     If pkgMagic(0) <> 127 OrElse pkgMagic(1) <> 80 OrElse pkgMagic(2) <> 75 OrElse pkgMagic(3) <> 71 Then
                         'Selected file isn't a Pkg file. Error!
                     End If
 
                     'Finalized byte
                     PKGReadStream.Seek(4, SeekOrigin.Begin)
-                    Dim pkgFinalized As Byte = brPKG.ReadByte()
+                    Dim PKGFinalized As Byte = PKGBinaryReader.ReadByte()
 
                     If pkgFinalized <> 128 Then
                         'This is debug PKG and is not supported!
                     End If
 
                     PKGReadStream.Seek(48, SeekOrigin.Begin)
-                    PKGContentID = Encoding.ASCII.GetString(brPKG.ReadBytes(36))
+                    PKGContentID = Encoding.ASCII.GetString(PKGBinaryReader.ReadBytes(36))
 
                     'PKG Type PSP/PS3
                     PKGReadStream.Seek(7, SeekOrigin.Begin)
-                    Dim pkgType As Byte = brPKG.ReadByte()
+                    Dim PKGType As Byte = PKGBinaryReader.ReadByte()
 
                     Select Case pkgType
                         Case 1
@@ -149,67 +150,66 @@ Public Class PKGDecryptor
                     End Select
 
                     PKGReadStream.Seek(36, SeekOrigin.Begin)
-                    EncryptedFileStartOffset = brPKG.ReadBytes(EncryptedFileStartOffset.Length)
+                    EncryptedFileStartOffset = PKGBinaryReader.ReadBytes(EncryptedFileStartOffset.Length)
                     Array.Reverse(EncryptedFileStartOffset)
                     uiEncryptedFileStartOffset = BitConverter.ToUInt32(EncryptedFileStartOffset, 0)
 
                     PKGReadStream.Seek(44, SeekOrigin.Begin)
-                    EncryptedFileLenght = brPKG.ReadBytes(EncryptedFileLenght.Length)
+                    EncryptedFileLenght = PKGBinaryReader.ReadBytes(EncryptedFileLenght.Length)
                     Array.Reverse(EncryptedFileLenght)
-                    Dim uiEncryptedFileLenght As UInteger = BitConverter.ToUInt32(EncryptedFileLenght, 0)
+                    Dim UIEncryptedFileLenght As UInteger = BitConverter.ToUInt32(EncryptedFileLenght, 0)
 
                     PKGReadStream.Seek(112, SeekOrigin.Begin)
-                    PKGFileKey = brPKG.ReadBytes(16)
-                    Dim incPKGFileKey As Byte() = New Byte(15) {}
+                    PKGFileKey = PKGBinaryReader.ReadBytes(16)
+                    Dim IncPKGFileKey As Byte() = New Byte(15) {}
                     Array.Copy(PKGFileKey, incPKGFileKey, PKGFileKey.Length)
 
                     PKGXorKey = AESEngine.Encrypt(PKGFileKey, AesKey, AesKey, CipherMode.ECB, PaddingMode.None)
 
-                    Dim division As Double = uiEncryptedFileLenght / AesKey.Length
-                    Dim pieces As ULong = Convert.ToUInt64(Math.Floor(division))
-                    Dim CustomMod As ULong = Convert.ToUInt64(uiEncryptedFileLenght) / Convert.ToUInt64(AesKey.Length)
+                    Dim Division As Double = UIEncryptedFileLenght / AesKey.Length
+                    Dim Pieces As ULong = Convert.ToUInt64(Math.Floor(Division))
+                    Dim CustomMod As ULong = CULng(Convert.ToUInt64(uiEncryptedFileLenght) / Convert.ToUInt64(AesKey.Length))
                     If CustomMod > 0 Then
-                        pieces += 1
+                        pieces += CULng(1)
                     End If
 
-                    Using bwDecryptedFile As New MemoryStream()
+                    Using DecryptedFileMemoryStream As New MemoryStream()
                         PKGReadStream.Seek(uiEncryptedFileStartOffset, SeekOrigin.Begin)
 
-                        Dim filedivision As Double = uiEncryptedFileLenght / (AesKey.Length * moltiplicator)
-                        Dim filepieces As ULong = Convert.ToUInt64(Math.Floor(filedivision))
-                        Dim filemod As ULong = Convert.ToUInt64(uiEncryptedFileLenght) Mod Convert.ToUInt64(AesKey.Length * moltiplicator)
-                        If filemod > 0 Then
-                            filepieces += 1
+                        Dim FileDivision As Double = UIEncryptedFileLenght / (AesKey.Length * Multiplicator)
+                        Dim FilePieces As ULong = Convert.ToUInt64(Math.Floor(FileDivision))
+                        Dim FileMod As ULong = Convert.ToUInt64(UIEncryptedFileLenght) Mod Convert.ToUInt64(AesKey.Length * Multiplicator)
+                        If FileMod > 0 Then
+                            FilePieces += CULng(1)
                         End If
 
-                        Dim muint64 As ULong = Convert.ToUInt64(Decimal.Subtract(New Decimal(filedivision), 1D))
-                        Dim num7 As ULong = 0
-                        If num7 <= muint64 Then
-                            If (filemod > 0) AndAlso (num7 = (filepieces - 1)) Then
-                                EncryptedData = New Byte(filemod - 1) {}
-                                DecryptedData = New Byte(filemod - 1) {}
+                        Dim MUInt64 As ULong = Convert.ToUInt64(Decimal.Subtract(New Decimal(FileDivision), 1D))
+                        If 0 <= MUInt64 Then
+                            If (FileMod > 0) AndAlso ((FilePieces - 1) = 0) Then
+                                EncryptedData = New Byte(CInt(FileMod - 1)) {}
+                                DecryptedData = New Byte(CInt(FileMod - 1)) {}
                             End If
 
                             'Read 16 bytes of Encrypted data
-                            EncryptedData = brPKG.ReadBytes(EncryptedData.Length)
+                            EncryptedData = PKGBinaryReader.ReadBytes(EncryptedData.Length)
 
                             'In order to retrieve a fast AES Encryption we pre-Increment the array
                             Dim PKGFileKeyConsec As Byte() = New Byte(EncryptedData.Length - 1) {}
                             Dim PKGXorKeyConsec As Byte() = New Byte(EncryptedData.Length - 1) {}
 
-                            Dim pos As Integer = 0
-                            While pos < EncryptedData.Length
-                                Array.Copy(incPKGFileKey, 0, PKGFileKeyConsec, pos, PKGFileKey.Length)
-                                Utils.IncrementArray(incPKGFileKey, PKGFileKey.Length - 1)
-                                pos += AesKey.Length
+                            Dim Position As Integer = 0
+                            While Position < EncryptedData.Length
+                                Array.Copy(IncPKGFileKey, 0, PKGFileKeyConsec, Position, PKGFileKey.Length)
+                                Utils.IncrementArray(IncPKGFileKey, PKGFileKey.Length - 1)
+                                Position += AesKey.Length
                             End While
 
                             PKGXorKeyConsec = AESEngine.Encrypt(PKGFileKeyConsec, AesKey, AesKey, CipherMode.ECB, PaddingMode.None)
                             DecryptedData = XOREngine.GetXOR(EncryptedData, 0, PKGXorKeyConsec.Length, PKGXorKeyConsec)
-                            bwDecryptedFile.Write(DecryptedData, 0, DecryptedData.Length)
+                            DecryptedFileMemoryStream.Write(DecryptedData, 0, DecryptedData.Length)
 
                             If DecryptedData.Length >= 1048576 Then
-                                numArray1 = bwDecryptedFile.ToArray()
+                                ByteArray = DecryptedFileMemoryStream.ToArray()
                             End If
                         End If
 
@@ -221,42 +221,43 @@ Public Class PKGDecryptor
                 End Using
             End Using
 
-            Return numArray1
+            Return ByteArray
         Catch ex As Exception
+            Return Nothing
             'Could not read decrypt PKG file.
         End Try
     End Function
 
-    Public Function DecryptPKGDataRead(dataSize As Integer, dataRelativeOffset As Long, pkgEncryptedFileStartOffset As Long, AesKey As Byte(), encrPKGReadStream As Stream, brEncrPKG As Stream) As Byte()
+    Public Function DecryptPKGDataRead(DataSize As Integer, DataRelativeOffset As Long, PKGEncryptedFileStartOffset As Long, AESKey As Byte(), EncryptedPKGReadStream As Stream, EncryptedPKGStream As Stream) As Byte()
         Try
-            Dim size As Integer = dataSize Mod 16
-            If size > 0 Then
-                size = ((dataSize \ 16) + 1) * 16
+            Dim InputSize As Integer = DataSize Mod 16
+            If InputSize > 0 Then
+                InputSize = ((DataSize \ 16) + 1) * 16
             Else
-                size = dataSize
+                InputSize = DataSize
             End If
 
-            Dim EncryptedData As Byte() = New Byte(size - 1) {}
-            Dim DecryptedData As Byte() = New Byte(size - 1) {}
-            Dim PKGFileKeyConsec As Byte() = New Byte(size - 1) {}
-            Dim PKGXorKeyConsec As Byte() = New Byte(size - 1) {}
-            Dim incPKGFileKey As Byte() = New Byte(PKGFileKey.Length - 1) {}
-            Array.Copy(PKGFileKey, incPKGFileKey, PKGFileKey.Length)
+            Dim EncryptedData As Byte() = New Byte(InputSize - 1) {}
+            Dim DecryptedData As Byte() = New Byte(InputSize - 1) {}
+            Dim PKGFileKeyBytes As Byte() = New Byte(InputSize - 1) {}
+            Dim PKGXorKeyBytes As Byte() = New Byte(InputSize - 1) {}
+            Dim IncPKGFileKey As Byte() = New Byte(PKGFileKey.Length - 1) {}
+            Array.Copy(PKGFileKey, IncPKGFileKey, PKGFileKey.Length)
 
-            encrPKGReadStream.Seek(dataRelativeOffset + pkgEncryptedFileStartOffset, SeekOrigin.Begin)
-            brEncrPKG.Read(EncryptedData, 0, size)
+            EncryptedPKGReadStream.Seek(DataRelativeOffset + PKGEncryptedFileStartOffset, SeekOrigin.Begin)
+            EncryptedPKGStream.Read(EncryptedData, 0, InputSize)
 
-            For pos As Integer = 0 To dataRelativeOffset - 1 Step 16
-                Utils.IncrementArray(incPKGFileKey, PKGFileKey.Length - 1)
+            For Position As Integer = 0 To CInt(DataRelativeOffset - 1) Step 16
+                Utils.IncrementArray(IncPKGFileKey, PKGFileKey.Length - 1)
             Next
 
-            For pos As Integer = 0 To size - 1 Step 16
-                Array.Copy(incPKGFileKey, 0, PKGFileKeyConsec, pos, PKGFileKey.Length)
-                Utils.IncrementArray(incPKGFileKey, PKGFileKey.Length - 1)
+            For Position As Integer = 0 To InputSize - 1 Step 16
+                Array.Copy(IncPKGFileKey, 0, PKGFileKeyBytes, Position, PKGFileKey.Length)
+                Utils.IncrementArray(IncPKGFileKey, PKGFileKey.Length - 1)
             Next
 
-            PKGXorKeyConsec = AESEngine.Encrypt(PKGFileKeyConsec, AesKey, AesKey, CipherMode.ECB, PaddingMode.None)
-            DecryptedData = XOREngine.GetXOR(EncryptedData, 0, PKGXorKeyConsec.Length, PKGXorKeyConsec)
+            PKGXorKeyBytes = AESEngine.Encrypt(PKGFileKeyBytes, AESKey, AESKey, CipherMode.ECB, PaddingMode.None)
+            DecryptedData = XOREngine.GetXOR(EncryptedData, 0, PKGXorKeyBytes.Length, PKGXorKeyBytes)
             Return DecryptedData
         Catch ex As Exception
             MsgBox("Could not decrypt PKG data.", MsgBoxStyle.Critical, "Error")
@@ -264,85 +265,84 @@ Public Class PKGDecryptor
         End Try
     End Function
 
-    Public Function ExtractPKGFilesRead(decryptedPKGFileName As Byte(), encryptedPKGFileName As Byte()) As Boolean
+    Public Function ExtractPKGFilesRead(DecryptedPKGFileName As Byte(), EncryptedPKGFileName As Byte()) As Boolean
         Try
-            Dim twentyMb As Integer = 20971520
+            Dim TwentyMB As Integer = 20971520
             Dim ExtractedFileOffset As UInteger = 0
             Dim ExtractedFileSize As UInteger = 0
             Dim OffsetShift As UInteger = 0
-            Dim positionIdx As Long = 0
+            Dim PositionIndex As Long = 0
             Dim FileTable As Byte() = New Byte(319999) {}
-            Dim sdkVer As Byte() = New Byte(7) {}
-            Dim firstFileOffset As Byte() = New Byte(3) {}
-            Dim firstNameOffset As Byte() = New Byte(3) {}
-            Dim fileNr As Byte() = New Byte(3) {}
-            Dim isDir As Byte() = New Byte(3) {}
+            Dim SDKVer As Byte() = New Byte(7) {}
+            Dim FirstFileOffset As Byte() = New Byte(3) {}
+            Dim FirstNameOffset As Byte() = New Byte(3) {}
+            Dim FileNr As Byte() = New Byte(3) {}
+            Dim IsDir As Byte() = New Byte(3) {}
             Dim Offset As Byte() = New Byte(3) {}
             Dim Size As Byte() = New Byte(3) {}
             Dim NameOffset As Byte() = New Byte(3) {}
             Dim NameSize As Byte() = New Byte(3) {}
             Dim Name As Byte() = New Byte(31) {}
-            Dim bootMagic As Byte() = New Byte(7) {}
-            Dim contentType As Byte = 0
-            Dim fileType As Byte = 0
-            Dim isFile As Boolean = False
-            Dim dumpFile As Byte()
-            Dim decrPKGReadStream As New MemoryStream(decryptedPKGFileName)
-            Dim brDecrPKG As MemoryStream = decrPKGReadStream
-            Dim encrPKGReadStream As New MemoryStream(encryptedPKGFileName)
-            Dim brEncrPKG As MemoryStream = encrPKGReadStream
+            Dim BootMagic As Byte() = New Byte(7) {}
+            Dim ContentType As Byte = 0
+            Dim FileType As Byte = 0
+            Dim IsFile As Boolean = False
+            Dim DumpFile As Byte()
+            Dim DecryptedPKGReadStream As New MemoryStream(DecryptedPKGFileName)
+            Dim DecryptedPKGMemoryStream As MemoryStream = DecryptedPKGReadStream
+            Dim EncryptedPKGReadStream As New MemoryStream(EncryptedPKGFileName)
+            Dim EncryptedPKGMemoryStream As MemoryStream = EncryptedPKGReadStream
 
             'Read the file table
-            decrPKGReadStream.Seek(0, SeekOrigin.Begin)
-            brDecrPKG.Read(FileTable, 0, FileTable.Length)
+            DecryptedPKGReadStream.Seek(0, SeekOrigin.Begin)
+            DecryptedPKGMemoryStream.Read(FileTable, 0, FileTable.Length)
 
-            positionIdx = 0
+            PositionIndex = 0
             OffsetShift = 0
 
             'Shift Relative to os.raw
             Array.Copy(FileTable, 0, firstNameOffset, 0, firstNameOffset.Length)
             Array.Reverse(firstNameOffset)
 
-            Dim uifirstNameOffset As UInteger = BitConverter.ToUInt32(firstNameOffset, 0)
-            Dim uiFileNr As UInteger = uifirstNameOffset \ 32
+            Dim UIFirstNameOffset As UInteger = BitConverter.ToUInt32(FirstNameOffset, 0)
+            Dim UIFileNr As UInteger = CUInt(UIfirstNameOffset \ 32)
 
             Array.Copy(FileTable, 12, firstFileOffset, 0, firstFileOffset.Length)
             Array.Reverse(firstFileOffset)
 
-            Dim uifirstFileOffset As UInteger = BitConverter.ToUInt32(firstFileOffset, 0)
+            Dim UIfirstFileOffset As UInteger = BitConverter.ToUInt32(FirstFileOffset, 0)
 
             'Read the file table
-            decrPKGReadStream.Seek(0, SeekOrigin.Begin)
-            brDecrPKG.Read(FileTable, 0, uifirstFileOffset)
+            DecryptedPKGReadStream.Seek(0, SeekOrigin.Begin)
+            DecryptedPKGMemoryStream.Read(FileTable, 0, CInt(uifirstFileOffset))
 
             If CInt(uiFileNr) < 0 Then
                 'Unsupported PKG file
                 Return False
             End If
 
-            Dim myInt As Integer = 0
-
-            While myInt <= CInt(uiFileNr) - 1
-                Array.Copy(FileTable, positionIdx + 12, Offset, 0, Offset.Length)
+            Dim WhileInt As Integer = 0
+            While WhileInt <= CInt(UIFileNr) - 1
+                Array.Copy(FileTable, PositionIndex + 12, Offset, 0, Offset.Length)
                 Array.Reverse(Offset)
                 ExtractedFileOffset = BitConverter.ToUInt32(Offset, 0) + OffsetShift
 
-                Array.Copy(FileTable, positionIdx + 20, Size, 0, Size.Length)
+                Array.Copy(FileTable, PositionIndex + 20, Size, 0, Size.Length)
                 Array.Reverse(Size)
                 ExtractedFileSize = BitConverter.ToUInt32(Size, 0)
 
-                Array.Copy(FileTable, positionIdx, NameOffset, 0, NameOffset.Length)
+                Array.Copy(FileTable, PositionIndex, NameOffset, 0, NameOffset.Length)
                 Array.Reverse(NameOffset)
                 Dim ExtractedFileNameOffset As UInteger = BitConverter.ToUInt32(NameOffset, 0)
 
-                Array.Copy(FileTable, positionIdx + 4, NameSize, 0, NameSize.Length)
+                Array.Copy(FileTable, PositionIndex + 4, NameSize, 0, NameSize.Length)
                 Array.Reverse(NameSize)
                 Dim ExtractedFileNameSize As UInteger = BitConverter.ToUInt32(NameSize, 0)
 
-                contentType = FileTable(positionIdx + 24)
-                fileType = FileTable(positionIdx + 27)
+                ContentType = FileTable(CInt(PositionIndex + 24))
+                FileType = FileTable(CInt(PositionIndex + 27))
 
-                Name = New Byte(ExtractedFileNameSize - 1) {}
+                Name = New Byte(CInt(ExtractedFileNameSize - 1)) {}
                 Array.Copy(FileTable, ExtractedFileNameOffset, Name, 0, ExtractedFileNameSize)
                 Dim ExtractedFileName As String = Utils.ByteArrayToAscii(Name, 0, Name.Length, True)
 
@@ -356,26 +356,26 @@ Public Class PKGDecryptor
                     If ExtractedFileName = "PARAM.SFO" Or ExtractedFileName = "ICON0.PNG" Or ExtractedFileName = "PIC0.PNG" Or ExtractedFileName = "PIC1.PNG" Or ExtractedFileName = "PIC2.PNG" Or ExtractedFileName = "SND0.AT3" Then
                         Using FileMemoryStream As New MemoryStream()
                             'Read File
-                            decrPKGReadStream.Seek(ExtractedFileOffset, SeekOrigin.Begin)
+                            DecryptedPKGReadStream.Seek(ExtractedFileOffset, SeekOrigin.Begin)
 
                             'Pieces calculation
-                            Dim division As Double = ExtractedFileSize / twentyMb
-                            Dim pieces As ULong = Convert.ToUInt64(Math.Floor(division))
+                            Dim Division As Double = ExtractedFileSize / TwentyMb
+                            Dim Pieces As ULong = Convert.ToUInt64(Math.Floor(Division))
                             Dim CustomMod As ULong = Convert.ToUInt64(ExtractedFileSize) Mod Convert.ToUInt64(twentyMb)
                             If CustomMod > 0 Then
-                                pieces += 1
+                                pieces += CULng(1)
                             End If
 
                             dumpFile = New Byte(twentyMb - 1) {}
-                            Dim elapsed As Long = 0
+                            Dim Elapsed As Long = 0
 
-                            For i As ULong = 0 To pieces - 1
+                            For i As ULong = 0 To CULng(pieces - 1)
                                 If (CustomMod > 0) AndAlso (i = (pieces - 1)) Then
-                                    dumpFile = New Byte(CustomMod - 1) {}
+                                    dumpFile = New Byte(CInt(CustomMod - 1)) {}
                                 End If
 
                                 'Fill buffer
-                                Dim DecryptedData As Byte() = DecryptPKGDataRead(dumpFile.Length, ExtractedFileOffset + elapsed, uiEncryptedFileStartOffset, PS3AesKey, encrPKGReadStream, brEncrPKG)
+                                Dim DecryptedData As Byte() = DecryptPKGDataRead(DumpFile.Length, ExtractedFileOffset + elapsed, uiEncryptedFileStartOffset, PS3AesKey, EncryptedPKGReadStream, EncryptedPKGMemoryStream)
 
                                 elapsed = +dumpFile.Length
                                 FileMemoryStream.Write(DecryptedData, 0, dumpFile.Length)
@@ -401,16 +401,16 @@ Public Class PKGDecryptor
                     End If
                 End If
 
-                positionIdx += +32
-                myInt += 1
+                PositionIndex += +32
+                WhileInt += 1
             End While
 
             'Close File
-            encrPKGReadStream.Close()
-            brEncrPKG.Close()
+            EncryptedPKGReadStream.Close()
+            EncryptedPKGMemoryStream.Close()
 
-            decrPKGReadStream.Close()
-            brDecrPKG.Close()
+            DecryptedPKGReadStream.Close()
+            DecryptedPKGMemoryStream.Close()
 
             Return True
         Catch ex As Exception
@@ -418,35 +418,35 @@ Public Class PKGDecryptor
         End Try
     End Function
 
-    Public Function GetBytesFromFile(fileName As String) As Byte()
-        Dim bytesFromFile As Byte()
+    Public Function GetBytesFromFile(FileName As String) As Byte()
+        Dim BytesFromFile As Byte()
 
         Try
-            Dim array As Byte() = Nothing
+            Dim ByteArray As Byte() = Nothing
 
-            Using fileStream As New FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
-                array = New Byte(CInt(1048576 - 1L) + 1 - 1) {}
-                fileStream.Read(array, 0, array.Length)
+            Using FileStream As New FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+                ByteArray = New Byte(CInt(1048576 - 1L) + 1 - 1) {}
+                FileStream.Read(ByteArray, 0, ByteArray.Length)
             End Using
 
-            bytesFromFile = array
+            BytesFromFile = ByteArray
         Catch ex As Exception
-            bytesFromFile = Nothing
+            BytesFromFile = Nothing
         End Try
 
-        Return bytesFromFile
+        Return BytesFromFile
     End Function
 
-    Public Shared Function ExtractFiles(decryptedPKGFileName As String, encryptedPKGFileName As String) As Boolean
+    Public Shared Function ExtractFiles(DecryptedPKGFileName As String, EncryptedPKGFileName As String) As Boolean
         Try
-            Dim twentyMb As Integer = 1024 * 1024 * 20
+            Dim TwentyMB As Integer = 1024 * 1024 * 20
             Dim ExtractedFileOffset As UInteger = 0
             Dim ExtractedFileSize As UInteger = 0
             Dim OffsetShift As UInteger = 0
-            Dim positionIdx As Long = 0
+            Dim PositionIndex As Long = 0
             Dim WorkDir As String = ""
 
-            WorkDir = decryptedPKGFileName & ".EXT"
+            WorkDir = DecryptedPKGFileName & ".EXT"
 
             If Directory.Exists(WorkDir) Then
                 Directory.Delete(WorkDir, True)
@@ -456,49 +456,49 @@ Public Class PKGDecryptor
             End If
 
             Dim FileTable As Byte() = New Byte(319999) {}
-            Dim dumpFile As Byte()
-            Dim sdkVer As Byte() = New Byte(7) {}
-            Dim firstFileOffset As Byte() = New Byte(3) {}
-            Dim firstNameOffset As Byte() = New Byte(3) {}
-            Dim fileNr As Byte() = New Byte(3) {}
-            Dim isDir As Byte() = New Byte(3) {}
+            Dim DumpFile As Byte()
+            Dim SDKVer As Byte() = New Byte(7) {}
+            Dim FirstFileOffset As Byte() = New Byte(3) {}
+            Dim FirstNameOffset As Byte() = New Byte(3) {}
+            Dim FileNr As Byte() = New Byte(3) {}
+            Dim IsDir As Byte() = New Byte(3) {}
             Dim Offset As Byte() = New Byte(3) {}
             Dim Size As Byte() = New Byte(3) {}
             Dim NameOffset As Byte() = New Byte(3) {}
             Dim NameSize As Byte() = New Byte(3) {}
             Dim Name As Byte() = New Byte(31) {}
-            Dim bootMagic As Byte() = New Byte(7) {}
-            Dim contentType As Byte = 0
-            Dim fileType As Byte = 0
-            Dim isFile As Boolean = False
+            Dim BootMagic As Byte() = New Byte(7) {}
+            Dim ContentType As Byte = 0
+            Dim FileType As Byte = 0
+            Dim IsFile As Boolean = False
 
-            Dim decrPKGReadStream As Stream = New FileStream(decryptedPKGFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
-            Dim brDecrPKG As New BinaryReader(decrPKGReadStream)
+            Dim DecryptedPKGReadStream As Stream = New FileStream(DecryptedPKGFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            Dim DecryptedPKGBinaryReader As New BinaryReader(DecryptedPKGReadStream)
 
-            Dim encrPKGReadStream As Stream = New FileStream(encryptedPKGFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
-            Dim brEncrPKG As New BinaryReader(encrPKGReadStream)
+            Dim EncryptedPKGReadStream As Stream = New FileStream(EncryptedPKGFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            Dim EncryptedPKGBinaryReader As New BinaryReader(EncryptedPKGReadStream)
 
             'Read the file Table
-            decrPKGReadStream.Seek(CLng(0), SeekOrigin.Begin)
-            FileTable = brDecrPKG.ReadBytes(FileTable.Length)
+            DecryptedPKGReadStream.Seek(CLng(0), SeekOrigin.Begin)
+            FileTable = DecryptedPKGBinaryReader.ReadBytes(FileTable.Length)
 
-            positionIdx = 0
+            PositionIndex = 0
             OffsetShift = 0
 
             'Shift Relative to os.raw
             Array.Copy(FileTable, 0, firstNameOffset, 0, firstNameOffset.Length)
             Array.Reverse(firstNameOffset)
-            Dim uifirstNameOffset As UInteger = BitConverter.ToUInt32(firstNameOffset, 0)
+            Dim UIfirstNameOffset As UInteger = BitConverter.ToUInt32(firstNameOffset, 0)
 
-            Dim uiFileNr As UInteger = uifirstNameOffset \ 32
+            Dim UIFileNr As UInteger = CUInt(UIfirstNameOffset \ 32)
 
             Array.Copy(FileTable, 12, firstFileOffset, 0, firstFileOffset.Length)
             Array.Reverse(firstFileOffset)
-            Dim uifirstFileOffset As UInteger = BitConverter.ToUInt32(firstFileOffset, 0)
+            Dim UIFirstFileOffset As UInteger = BitConverter.ToUInt32(firstFileOffset, 0)
 
             'Read the file Table
-            decrPKGReadStream.Seek(CLng(0), SeekOrigin.Begin)
-            FileTable = brDecrPKG.ReadBytes(CInt(uifirstFileOffset))
+            DecryptedPKGReadStream.Seek(CLng(0), SeekOrigin.Begin)
+            FileTable = DecryptedPKGBinaryReader.ReadBytes(CInt(UIFirstFileOffset))
 
             'If number of files is negative then something is wrong...
             If CInt(uiFileNr) < 0 Then
@@ -511,26 +511,26 @@ Public Class PKGDecryptor
             '|name loc | |name size| |   NULL  | |file loc | |  NULL   | |file size| |cont type| |   NULL  |
 
             For ii As Integer = 0 To CInt(uiFileNr) - 1
-                Array.Copy(FileTable, positionIdx + 12, Offset, 0, Offset.Length)
+                Array.Copy(FileTable, PositionIndex + 12, Offset, 0, Offset.Length)
                 Array.Reverse(Offset)
                 ExtractedFileOffset = BitConverter.ToUInt32(Offset, 0) + OffsetShift
 
-                Array.Copy(FileTable, positionIdx + 20, Size, 0, Size.Length)
+                Array.Copy(FileTable, PositionIndex + 20, Size, 0, Size.Length)
                 Array.Reverse(Size)
                 ExtractedFileSize = BitConverter.ToUInt32(Size, 0)
 
-                Array.Copy(FileTable, positionIdx, NameOffset, 0, NameOffset.Length)
+                Array.Copy(FileTable, PositionIndex, NameOffset, 0, NameOffset.Length)
                 Array.Reverse(NameOffset)
                 Dim ExtractedFileNameOffset As UInteger = BitConverter.ToUInt32(NameOffset, 0)
 
-                Array.Copy(FileTable, positionIdx + 4, NameSize, 0, NameSize.Length)
+                Array.Copy(FileTable, PositionIndex + 4, NameSize, 0, NameSize.Length)
                 Array.Reverse(NameSize)
                 Dim ExtractedFileNameSize As UInteger = BitConverter.ToUInt32(NameSize, 0)
 
-                contentType = FileTable(positionIdx + 24)
-                fileType = FileTable(positionIdx + 27)
+                contentType = FileTable(CInt(PositionIndex + 24))
+                fileType = FileTable(CInt(PositionIndex + 27))
 
-                Name = New Byte(ExtractedFileNameSize - 1) {}
+                Name = New Byte(CInt(ExtractedFileNameSize - 1)) {}
                 Array.Copy(FileTable, ExtractedFileNameOffset, Name, 0, ExtractedFileNameSize)
                 Dim ExtractedFileName As String = Utils.ByteArrayToAscii(Name, 0, Name.Length, True)
 
@@ -566,7 +566,7 @@ Public Class PKGDecryptor
                     'fileType == 0x04 = Directory
 
                     'Decrypt PS3 Filename
-                    Dim DecryptedData As Byte() = DecryptData(ExtractedFileNameSize, ExtractedFileNameOffset, uiEncryptedFileStartOffset, PS3AesKey, encrPKGReadStream, brEncrPKG)
+                    Dim DecryptedData As Byte() = DecryptData(CInt(ExtractedFileNameSize), ExtractedFileNameOffset, uiEncryptedFileStartOffset, PS3AesKey, EncryptedPKGReadStream, EncryptedPKGBinaryReader)
                     Array.Copy(DecryptedData, 0, Name, 0, ExtractedFileNameSize)
                     ExtractedFileName = Utils.ByteArrayToAscii(Name, 0, Name.Length, True)
 
@@ -596,25 +596,25 @@ Public Class PKGDecryptor
                 If contentType = 144 AndAlso isFile Then
                     'Read/Write File
                     Dim ExtractedFile As New BinaryWriter(ExtractedFileWriteStream)
-                    decrPKGReadStream.Seek(ExtractedFileOffset, SeekOrigin.Begin)
+                    DecryptedPKGReadStream.Seek(ExtractedFileOffset, SeekOrigin.Begin)
 
                     ' Pieces calculation
-                    Dim division As Double = ExtractedFileSize / twentyMb
-                    Dim pieces As ULong = Convert.ToUInt64(Math.Floor(division))
-                    Dim [mod] As ULong = Convert.ToUInt64(ExtractedFileSize) Mod Convert.ToUInt64(twentyMb)
-                    If [mod] > 0 Then
-                        pieces += 1
+                    Dim Division As Double = ExtractedFileSize / TwentyMB
+                    Dim Pieces As ULong = Convert.ToUInt64(Math.Floor(Division))
+                    Dim Modi As ULong = Convert.ToUInt64(ExtractedFileSize) Mod Convert.ToUInt64(twentyMb)
+                    If Modi > 0 Then
+                        pieces += CULng(1)
                     End If
 
                     dumpFile = New Byte(twentyMb - 1) {}
-                    For i As ULong = 0 To pieces - 1
+                    For i As ULong = 0 To CULng(pieces - 1)
                         'If we have a mod and this is the last piece then...
-                        If ([mod] > 0) AndAlso (i = (pieces - 1)) Then
-                            dumpFile = New Byte([mod] - 1) {}
+                        If (Modi > 0) AndAlso (i = (pieces - 1)) Then
+                            dumpFile = New Byte(CInt(Modi - 1)) {}
                         End If
 
                         'Fill buffer
-                        brDecrPKG.Read(dumpFile, 0, dumpFile.Length)
+                        DecryptedPKGBinaryReader.Read(DumpFile, 0, DumpFile.Length)
                         ExtractedFile.Write(dumpFile)
                     Next
 
@@ -625,28 +625,28 @@ Public Class PKGDecryptor
                 If contentType <> &H90 AndAlso isFile Then
                     'Read/Write File
                     Dim ExtractedFile As New BinaryWriter(ExtractedFileWriteStream)
-                    decrPKGReadStream.Seek(ExtractedFileOffset, SeekOrigin.Begin)
+                    DecryptedPKGReadStream.Seek(ExtractedFileOffset, SeekOrigin.Begin)
 
                     ' Pieces calculation
-                    Dim division As Double = ExtractedFileSize / twentyMb
+                    Dim Division As Double = ExtractedFileSize / TwentyMB
 
-                    Dim pieces As ULong = Convert.ToUInt64(Math.Floor(division))
-                    Dim [mod] As ULong = Convert.ToUInt64(ExtractedFileSize) Mod Convert.ToUInt64(twentyMb)
-                    If [mod] > 0 Then
-                        pieces += 1
+                    Dim Pieces As ULong = Convert.ToUInt64(Math.Floor(Division))
+                    Dim Modi As ULong = Convert.ToUInt64(ExtractedFileSize) Mod Convert.ToUInt64(twentyMb)
+                    If Modi > 0 Then
+                        pieces += CULng(1)
                     End If
 
                     dumpFile = New Byte(twentyMb - 1) {}
-                    Dim elapsed As Long = 0
-                    For i As ULong = 0 To pieces - 1
+                    Dim Elapsed As Long = 0
+                    For i As ULong = 0 To CULng(pieces - 1)
                         'If we have a mod and this is the last piece then...
-                        If ([mod] > 0) AndAlso (i = (pieces - 1)) Then
-                            dumpFile = New Byte([mod] - 1) {}
+                        If (Modi > 0) AndAlso (i = (pieces - 1)) Then
+                            dumpFile = New Byte(CInt(Modi - 1)) {}
                         End If
 
                         'Fill buffer
-                        Dim DecryptedData As Byte() = DecryptData(dumpFile.Length, ExtractedFileOffset + elapsed, uiEncryptedFileStartOffset, PS3AesKey, encrPKGReadStream, brEncrPKG)
-                        elapsed = +dumpFile.Length
+                        Dim DecryptedData As Byte() = DecryptData(DumpFile.Length, ExtractedFileOffset + Elapsed, uiEncryptedFileStartOffset, PS3AesKey, EncryptedPKGReadStream, EncryptedPKGBinaryReader)
+                        Elapsed = +dumpFile.Length
 
                         'To avoid decryption pad we use dumpFile.Length that's the actual decrypted file size!
                         ExtractedFile.Write(DecryptedData, 0, dumpFile.Length)
@@ -656,19 +656,19 @@ Public Class PKGDecryptor
                     ExtractedFile.Close()
                 End If
 
-                positionIdx += 32
+                PositionIndex += 32
             Next
 
             'Close File
-            encrPKGReadStream.Close()
-            brEncrPKG.Close()
+            EncryptedPKGReadStream.Close()
+            EncryptedPKGBinaryReader.Close()
 
-            decrPKGReadStream.Close()
-            brDecrPKG.Close()
+            DecryptedPKGReadStream.Close()
+            DecryptedPKGBinaryReader.Close()
 
             'Delete decrypted file
-            If File.Exists(decryptedPKGFileName) Then
-                File.Delete(decryptedPKGFileName)
+            If File.Exists(DecryptedPKGFileName) Then
+                File.Delete(DecryptedPKGFileName)
             End If
 
             If MsgBox("Pkg extracted successfully." + vbNewLine + "Open folder?", MsgBoxStyle.OkCancel, "Done") = MsgBoxResult.Ok Then
@@ -682,32 +682,32 @@ Public Class PKGDecryptor
         End Try
     End Function
 
-    Public Shared Function DecryptData(dataSize As Integer, dataRelativeOffset As Long, pkgEncryptedFileStartOffset As Long, AesKey As Byte(), encrPKGReadStream As Stream, brEncrPKG As BinaryReader) As Byte()
-        Dim size As Integer = dataSize Mod 16
-        If size > 0 Then
-            size = ((dataSize \ 16) + 1) * 16
+    Public Shared Function DecryptData(DataSize As Integer, DataRelativeOffset As Long, PKGEncryptedFileStartOffset As Long, AesKey As Byte(), EncryptedPKGReadStream As Stream, EncryptedPKGBinaryReader As BinaryReader) As Byte()
+        Dim InputSize As Integer = DataSize Mod 16
+        If InputSize > 0 Then
+            InputSize = ((DataSize \ 16) + 1) * 16
         Else
-            size = dataSize
+            InputSize = DataSize
         End If
 
-        Dim EncryptedData As Byte() = New Byte(size - 1) {}
-        Dim DecryptedData As Byte() = New Byte(size - 1) {}
-        Dim PKGFileKeyConsec As Byte() = New Byte(size - 1) {}
-        Dim PKGXorKeyConsec As Byte() = New Byte(size - 1) {}
-        Dim incPKGFileKey As Byte() = New Byte(PKGFileKey.Length - 1) {}
-        Array.Copy(PKGFileKey, incPKGFileKey, PKGFileKey.Length)
+        Dim EncryptedData As Byte()
+        Dim DecryptedData As Byte()
+        Dim PKGFileKeyConsec As Byte() = New Byte(InputSize - 1) {}
+        Dim PKGXorKeyConsec As Byte()
+        Dim IncPKGFileKey As Byte() = New Byte(PKGFileKey.Length - 1) {}
+        Array.Copy(PKGFileKey, IncPKGFileKey, PKGFileKey.Length)
 
-        encrPKGReadStream.Seek(dataRelativeOffset + pkgEncryptedFileStartOffset, SeekOrigin.Begin)
-        EncryptedData = brEncrPKG.ReadBytes(size)
+        EncryptedPKGReadStream.Seek(DataRelativeOffset + PKGEncryptedFileStartOffset, SeekOrigin.Begin)
+        EncryptedData = EncryptedPKGBinaryReader.ReadBytes(InputSize)
 
-        For pos As Integer = 0 To dataRelativeOffset - 1 Step 16
-            Utils.IncrementArray(incPKGFileKey, PKGFileKey.Length - 1)
+        For Position As Integer = 0 To CInt(DataRelativeOffset - 1) Step 16
+            Utils.IncrementArray(IncPKGFileKey, PKGFileKey.Length - 1)
         Next
 
-        For pos As Integer = 0 To size - 1 Step 16
-            Array.Copy(incPKGFileKey, 0, PKGFileKeyConsec, pos, PKGFileKey.Length)
+        For Position As Integer = 0 To InputSize - 1 Step 16
+            Array.Copy(IncPKGFileKey, 0, PKGFileKeyConsec, Position, PKGFileKey.Length)
 
-            Utils.IncrementArray(incPKGFileKey, PKGFileKey.Length - 1)
+            Utils.IncrementArray(IncPKGFileKey, PKGFileKey.Length - 1)
         Next
 
         PKGXorKeyConsec = AESEngine.Encrypt(PKGFileKeyConsec, AesKey, AesKey, CipherMode.ECB, PaddingMode.None)
@@ -718,19 +718,19 @@ Public Class PKGDecryptor
 
     Public Shared Function DecryptPKGFile(PKGFileName As String) As String
         Try
-            Dim moltiplicator As Integer = 65536
-            Dim EncryptedData As Byte() = New Byte(AesKey.Length * moltiplicator - 1) {}
-            Dim DecryptedData As Byte() = New Byte(AesKey.Length * moltiplicator - 1) {}
+            Dim Multiplicator As Integer = 65536
+            Dim EncryptedData As Byte() = New Byte(AesKey.Length * Multiplicator - 1) {}
+            Dim DecryptedData As Byte() = New Byte(AesKey.Length * Multiplicator - 1) {}
 
             Dim PKGXorKey As Byte() = New Byte(AesKey.Length - 1) {}
             Dim EncryptedFileStartOffset As Byte() = New Byte(3) {}
             Dim EncryptedFileLenght As Byte() = New Byte(3) {}
 
             Using PKGReadStream As Stream = New FileStream(PKGFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
-                Using brPKG As New BinaryReader(PKGReadStream)
+                Using PKGBinaryReader As New BinaryReader(PKGReadStream)
 
                     PKGReadStream.Seek(&H0, SeekOrigin.Begin)
-                    Dim pkgMagic As Byte() = brPKG.ReadBytes(4)
+                    Dim PKGMagic As Byte() = PKGBinaryReader.ReadBytes(4)
                     If pkgMagic(&H0) <> &H7F OrElse pkgMagic(&H1) <> &H50 OrElse pkgMagic(&H2) <> &H4B OrElse pkgMagic(&H3) <> &H47 Then
 
                         Return String.Empty
@@ -738,7 +738,7 @@ Public Class PKGDecryptor
 
                     'Finalized byte
                     PKGReadStream.Seek(&H4, SeekOrigin.Begin)
-                    Dim pkgFinalized As Byte = brPKG.ReadByte()
+                    Dim PKGFinalized As Byte = PKGBinaryReader.ReadByte()
 
                     If pkgFinalized <> 128 Then
 
@@ -747,7 +747,7 @@ Public Class PKGDecryptor
 
                     'PKG Type PSP/PS3
                     PKGReadStream.Seek(&H7, SeekOrigin.Begin)
-                    Dim pkgType As Byte = brPKG.ReadByte()
+                    Dim PKGType As Byte = PKGBinaryReader.ReadByte()
 
                     Select Case pkgType
                         Case &H1
@@ -764,27 +764,27 @@ Public Class PKGDecryptor
                     End Select
 
                     PKGReadStream.Seek(&H24, SeekOrigin.Begin)
-                    EncryptedFileStartOffset = brPKG.ReadBytes(EncryptedFileStartOffset.Length)
+                    EncryptedFileStartOffset = PKGBinaryReader.ReadBytes(EncryptedFileStartOffset.Length)
                     Array.Reverse(EncryptedFileStartOffset)
                     uiEncryptedFileStartOffset = BitConverter.ToUInt32(EncryptedFileStartOffset, 0)
 
                     PKGReadStream.Seek(&H2C, SeekOrigin.Begin)
-                    EncryptedFileLenght = brPKG.ReadBytes(CInt(EncryptedFileLenght.Length))
+                    EncryptedFileLenght = PKGBinaryReader.ReadBytes(EncryptedFileLenght.Length)
                     Array.Reverse(EncryptedFileLenght)
-                    Dim uiEncryptedFileLenght As UInteger = BitConverter.ToUInt32(EncryptedFileLenght, 0)
+                    Dim UIEncryptedFileLenght As UInteger = BitConverter.ToUInt32(EncryptedFileLenght, 0)
 
                     PKGReadStream.Seek(&H70, SeekOrigin.Begin)
-                    PKGFileKey = brPKG.ReadBytes(16)
+                    PKGFileKey = PKGBinaryReader.ReadBytes(16)
                     Dim incPKGFileKey As Byte() = New Byte(15) {}
                     Array.Copy(PKGFileKey, incPKGFileKey, PKGFileKey.Length)
 
                     PKGXorKey = AESEngine.Encrypt(PKGFileKey, AesKey, AesKey, CipherMode.ECB, PaddingMode.None)
 
-                    Dim division As Double = uiEncryptedFileLenght / AesKey.Length
-                    Dim pieces As ULong = Convert.ToUInt64(Math.Floor(division))
-                    Dim [mod] As ULong = Convert.ToUInt64(uiEncryptedFileLenght) / Convert.ToUInt64(AesKey.Length)
-                    If [mod] > 0 Then
-                        pieces += 1
+                    Dim Division As Double = UIEncryptedFileLenght / AesKey.Length
+                    Dim Pieces As ULong = Convert.ToUInt64(Math.Floor(Division))
+                    Dim Modi As ULong = CULng(Convert.ToUInt64(UIEncryptedFileLenght) / Convert.ToUInt64(AesKey.Length))
+                    If Modi > 0 Then
+                        Pieces += CULng(1)
                     End If
 
                     If File.Exists(PKGFileName & ".Dec") Then
@@ -792,46 +792,46 @@ Public Class PKGDecryptor
                     End If
 
                     Dim DecryptedFileWriteStream As New FileStream(PKGFileName & ".Dec", FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite)
-                    Dim bwDecryptedFile As New BinaryWriter(DecryptedFileWriteStream)
+                    Dim DecryptedFileBinaryWriter As New BinaryWriter(DecryptedFileWriteStream)
 
                     PKGReadStream.Seek(uiEncryptedFileStartOffset, SeekOrigin.Begin)
 
-                    Dim filedivision As Double = uiEncryptedFileLenght / (AesKey.Length * moltiplicator)
-                    Dim filepieces As ULong = Convert.ToUInt64(Math.Floor(filedivision))
-                    Dim filemod As ULong = Convert.ToUInt64(uiEncryptedFileLenght) Mod Convert.ToUInt64(AesKey.Length * moltiplicator)
-                    If filemod > 0 Then
-                        filepieces += 1
+                    Dim FileDivision As Double = uiEncryptedFileLenght / (AesKey.Length * Multiplicator)
+                    Dim FilePieces As ULong = Convert.ToUInt64(Math.Floor(FileDivision))
+                    Dim FileMod As ULong = Convert.ToUInt64(uiEncryptedFileLenght) Mod Convert.ToUInt64(AesKey.Length * Multiplicator)
+                    If FileMod > 0 Then
+                        FilePieces += CULng(1)
                     End If
 
-                    For i As ULong = 0 To filepieces - 1
+                    For i As ULong = 0 To CULng(FilePieces - 1)
                         'If we have a mod and this is the last piece then...
-                        If (filemod > 0) AndAlso (i = (filepieces - 1)) Then
-                            EncryptedData = New Byte(filemod - 1) {}
-                            DecryptedData = New Byte(filemod - 1) {}
+                        If (FileMod > 0) AndAlso (i = (FilePieces - 1)) Then
+                            EncryptedData = New Byte(CInt(FileMod - 1)) {}
+                            DecryptedData = New Byte(CInt(FileMod - 1)) {}
                         End If
 
                         'Read 16 bytes of Encrypted data
-                        EncryptedData = brPKG.ReadBytes(EncryptedData.Length)
+                        EncryptedData = PKGBinaryReader.ReadBytes(EncryptedData.Length)
 
                         'In order to retrieve a fast AES Encryption we pre-Increment the array
-                        Dim PKGFileKeyConsec As Byte() = New Byte(EncryptedData.Length - 1) {}
-                        Dim PKGXorKeyConsec As Byte() = New Byte(EncryptedData.Length - 1) {}
+                        Dim PKGFileKeyBytes As Byte() = New Byte(EncryptedData.Length - 1) {}
+                        Dim PKGXorKeyBytes As Byte() = New Byte(EncryptedData.Length - 1) {}
 
-                        Dim pos As Integer = 0
-                        While pos < EncryptedData.Length
-                            Array.Copy(incPKGFileKey, 0, PKGFileKeyConsec, pos, PKGFileKey.Length)
+                        Dim Position As Integer = 0
+                        While Position < EncryptedData.Length
+                            Array.Copy(incPKGFileKey, 0, PKGFileKeyBytes, Position, PKGFileKey.Length)
 
                             Utils.IncrementArray(incPKGFileKey, PKGFileKey.Length - 1)
-                            pos += AesKey.Length
+                            Position += AesKey.Length
                         End While
 
-                        PKGXorKeyConsec = AESEngine.Encrypt(PKGFileKeyConsec, AesKey, AesKey, CipherMode.ECB, PaddingMode.None)
-                        DecryptedData = XOREngine.GetXOR(EncryptedData, 0, PKGXorKeyConsec.Length, PKGXorKeyConsec)
-                        bwDecryptedFile.Write(DecryptedData)
+                        PKGXorKeyBytes = AESEngine.Encrypt(PKGFileKeyBytes, AesKey, AesKey, CipherMode.ECB, PaddingMode.None)
+                        DecryptedData = XOREngine.GetXOR(EncryptedData, 0, PKGXorKeyBytes.Length, PKGXorKeyBytes)
+                        DecryptedFileBinaryWriter.Write(DecryptedData)
                     Next
 
                     DecryptedFileWriteStream.Close()
-                    bwDecryptedFile.Close()
+                    DecryptedFileBinaryWriter.Close()
                 End Using
             End Using
 

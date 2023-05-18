@@ -58,10 +58,10 @@ Public Class Utils
     End Sub
 
     Public Shared Function IncrementArray(ByRef sourceArray As Byte(), position As Integer) As Boolean
-        If sourceArray(position) = &HFF Then
+        If sourceArray(position) = 255 Then
             If position <> 0 Then
                 If IncrementArray(sourceArray, position - 1) Then
-                    sourceArray(position) = &H0
+                    sourceArray(position) = 0
                     Return True
                 Else
                     Return False
@@ -70,7 +70,7 @@ Public Class Utils
                 Return False
             End If
         Else
-            sourceArray(position) += &H1
+            sourceArray(position) += CByte(1)
             Return True
         End If
     End Function
@@ -187,7 +187,7 @@ Public Class Utils
         Dim PKGDate As Date
         Date.TryParseExact(TheDate, "yyyy-MM-dd HH:mm:ss", Nothing, DateTimeStyles.None, PKGDate)
 
-        Return New Structures.PackageInfo With {.FileSize = GetFileSize(PKGSizeStr), .FileDate = PKGDate.Date}
+        Return New Structures.PackageInfo With {.FileSize = GetFileSize(PKGSizeStr), .FileDate = CStr(PKGDate.Date)}
     End Function
 
     Public Shared Function GetPKGTitleID(PKGFilePath As String) As String

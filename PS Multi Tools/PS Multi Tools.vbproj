@@ -23,8 +23,10 @@
     <IncrementalBuild>true</IncrementalBuild>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>PS Multi Tools.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,7 +38,9 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>PS Multi Tools.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -45,7 +49,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
@@ -56,10 +60,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin\x64\Debug\</OutputPath>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin\x64\Release\</OutputPath>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -84,7 +90,7 @@
     <Reference Include="PS4_Tools">
       <HintPath>..\..\..\..\Desktop\Debug\PS4_Tools.dll</HintPath>
     </Reference>
-    <Reference Include="psmt-lib, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="psmt-lib, Version=1.0.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\psmt-lib\psmt-lib\bin\x64\Release\psmt-lib.dll</HintPath>
     </Reference>
@@ -123,9 +129,6 @@
       <DependentUpon>CopyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\PS1Game.vb" />
-    <Compile Include="PKGInfo.xaml.vb">
-      <DependentUpon>PKGInfo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PS1\PS1Library.xaml.vb">
       <DependentUpon>PS1Library.xaml</DependentUpon>
     </Compile>
@@ -174,10 +177,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PKGInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="PS1\PS1Library.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

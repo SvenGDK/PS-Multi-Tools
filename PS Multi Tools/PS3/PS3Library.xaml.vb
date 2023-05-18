@@ -402,6 +402,84 @@ Public Class PS3Library
 
 #End Region
 
+#Region "Contextmenu Actions"
+
+    Private Sub ExtractPKGMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles ExtractPKGMenuItem.Click
+        If SimpleGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
+            Dim NewPKGExtractor As New PS3PKGExtractor() With {.SelectedPKG = SelectedPS3Game.GameFilePath}
+            NewPKGExtractor.Show()
+        End If
+    End Sub
+
+    Private Sub PlayMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayMenuItem.Click
+        If SimpleGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
+
+            If SelectedPS3Game.GameBackgroundSoundFile IsNot Nothing Then
+                If IsSoundPlaying Then
+                    Utils.StopPS3SND()
+                    IsSoundPlaying = False
+                Else
+                    Utils.PlayPS3SND(SelectedPS3Game.GameBackgroundSoundFile)
+                    IsSoundPlaying = True
+                End If
+            Else
+                If IsSoundPlaying Then
+                    Utils.StopPS3SND()
+                    IsSoundPlaying = False
+                Else
+                    MsgBox("No game soundtrack found.", MsgBoxStyle.Information)
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub PKGInfoMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PKGInfoMenuItem.Click
+        If SimpleGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
+            If Not String.IsNullOrEmpty(SelectedPS3Game.ContentID) Then
+                If MsgBox("Load from NPS?", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
+                    Dim SelectedPackage As New psmt_lib.Structures.Package() With {.PackageContentID = SelectedPS3Game.ContentID, .PackageTitleID = SelectedPS3Game.GameID}
+                    Dim NewPackageInfoWindow As New DownloadPackageInfoWindow() With {.ShowActivated = True, .Title = SelectedPS3Game.GameTitle, .CurrentPackage = SelectedPackage, .PackageConsole = "PS3"}
+                    NewPackageInfoWindow.Show()
+                Else
+                    Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPS3Game.GameFilePath}
+                    NewPKGInfo.Show()
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
+        If SimpleGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
+            Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
+
+            If FBD.ShowDialog() = Forms.DialogResult.OK Then
+                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
+                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    .BackupDestinationPath = FBD.SelectedPath + "\",
+                    .Title = "Copying " + SelectedPS3Game.GameTitle + " to " + FBD.SelectedPath + "\" + Path.GetFileName(SelectedPS3Game.GameFilePath)}
+
+                If SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.Backup Then
+                    NewCopyWindow.BackupPath = SelectedPS3Game.GameFolderPath
+                ElseIf SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.ISO Then
+                    NewCopyWindow.BackupPath = SelectedPS3Game.GameFilePath
+                ElseIf SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.PKG Then
+                    NewCopyWindow.BackupPath = SelectedPS3Game.GameFilePath
+                End If
+
+                If NewCopyWindow.ShowDialog() = True Then
+                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
+                End If
+            End If
+
+        End If
+    End Sub
+
+#End Region
+
     Private Sub SimpleGamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles SimpleGamesListView.SelectionChanged
         If SimpleGamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
@@ -443,82 +521,6 @@ Public Class PS3Library
 
     Private Sub SimpleGamesListView_ContextMenuClosing(sender As Object, e As ContextMenuEventArgs) Handles SimpleGamesListView.ContextMenuClosing
         NewContextMenu.Items.Clear()
-    End Sub
-
-    Private Sub ExtractPKGMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles ExtractPKGMenuItem.Click
-        If SimpleGamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
-            Dim NewPKGExtractor As New PS3PKGExtractor() With {.SelectedPKG = SelectedPS3Game.GameFilePath}
-            NewPKGExtractor.Show()
-        End If
-    End Sub
-
-    Private Sub PlayMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayMenuItem.Click
-        If SimpleGamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
-
-            If SelectedPS3Game.GameBackgroundSoundFile IsNot Nothing Then
-                If IsSoundPlaying Then
-                    Utils.StopPS3SND()
-                    IsSoundPlaying = False
-                Else
-                    Utils.PlayPS3SND(SelectedPS3Game.GameBackgroundSoundFile)
-                    IsSoundPlaying = True
-                End If
-            Else
-                If IsSoundPlaying Then
-                    Utils.StopPS3SND()
-                    IsSoundPlaying = False
-                Else
-                    MsgBox("No game soundtrack found.", MsgBoxStyle.Information)
-                End If
-            End If
-        End If
-    End Sub
-
-    Private Sub PKGInfoMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PKGInfoMenuItem.Click
-        If SimpleGamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
-            If Not String.IsNullOrEmpty(SelectedPS3Game.ContentID) Then
-
-                If MsgBox("Load from network ?", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-                    Dim SelectedPackage As New psmt_lib.Structures.Package() With {.PackageContentID = SelectedPS3Game.ContentID, .PackageTitleID = SelectedPS3Game.GameID}
-                    Dim NewPackageInfoWindow As New PackageInfoWindow() With {.ShowActivated = True, .Title = SelectedPS3Game.GameTitle, .CurrentPackage = SelectedPackage, .PackageConsole = "PS3"}
-                    NewPackageInfoWindow.Show()
-                Else
-                    Dim GamePKG As PS4_Tools.PKG.SceneRelated.Unprotected_PKG = PS4_Tools.PKG.SceneRelated.Read_PKG(SelectedPS3Game.GameFilePath)
-
-                End If
-
-            End If
-        End If
-    End Sub
-
-    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
-        If SimpleGamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
-            Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
-
-            If FBD.ShowDialog() = Forms.DialogResult.OK Then
-                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
-                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    .BackupDestinationPath = FBD.SelectedPath + "\",
-                    .Title = "Copying " + SelectedPS3Game.GameTitle + " to " + FBD.SelectedPath + "\" + Path.GetFileName(SelectedPS3Game.GameFilePath)}
-
-                If SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.Backup Then
-                    NewCopyWindow.BackupPath = SelectedPS3Game.GameFolderPath
-                ElseIf SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.ISO Then
-                    NewCopyWindow.BackupPath = SelectedPS3Game.GameFilePath
-                ElseIf SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.PKG Then
-                    NewCopyWindow.BackupPath = SelectedPS3Game.GameFilePath
-                End If
-
-                If NewCopyWindow.ShowDialog() = True Then
-                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
-                End If
-            End If
-
-        End If
     End Sub
 
 End Class

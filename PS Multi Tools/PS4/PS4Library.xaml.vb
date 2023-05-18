@@ -158,8 +158,16 @@ Public Class PS4Library
                 Dim NewPSNInfo As New PSNInfo() With {.ShowActivated = True, .CurrentGameContentID = SelectedPS4Game.GameContentID}
                 NewPSNInfo.Show()
             Else
-                MsgBox("Selected pkg requires a content ID", MsgBoxStyle.Critical, "Cannot display information from PSN")
+                MsgBox("Selected game requires a Content ID to display infos from PSN.", MsgBoxStyle.Information)
             End If
+        End If
+    End Sub
+
+    Private Sub PKGInfoMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PKGInfoMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS4Game As PS4Game = CType(GamesListView.SelectedItem, PS4Game)
+            Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPS4Game.GameFilePath}
+            NewPKGInfo.Show()
         End If
     End Sub
 
