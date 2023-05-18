@@ -29,10 +29,11 @@ The source code can be found in the other repository: [PSMT Library](https://git
 | `ffplay` | FFmpeg | https://github.com/FFmpeg/FFmpeg
 | `fix_tar` | KaKaRoTo & cfwprpht | 
 | `fwpkg` | evilsperm | https://github.com/evilsperm/fwtool
+| `hdl_dump` |  | https://github.com/ps2homebrew/hdl-dump
 | `hexdump` | di-mgt | https://www.di-mgt.com.au/hexdump-for-windows.html
 | `HtmlAgilityPack` | ZZZ Projects | https://html-agility-pack.net/
-| `IsoPbpConverter` | LMAN | https://github.com/evilsperm/fwtool
-| `klicencebruteforce` | MAGiC333X | https://github.com/evilsperm/fwtool
+| `IsoPbpConverter` | LMAN | 
+| `klicencebruteforce` | MAGiC333X | 
 | `make_fself` |  | 
 | `maxcso` | unknownbrackets | https://github.com/unknownbrackets/maxcso
 | `mCiso` | sindastra | https://github.com/sindastra/psp-mciso
@@ -40,6 +41,7 @@ The source code can be found in the other repository: [PSMT Library](https://git
 | `nQuant` | matt wrock | https://www.nuget.org/packages/nQuant
 | `PARAM.SFO Library` | xXxTheDarkprogramerxXx | https://github.com/xXxTheDarkprogramerxXx/PS4_Tools
 | `pbppacker` |  | 
+| `pfsshell & pfsfuse` |  | https://github.com/ps2homebrew/pfsshell
 | `pkg2zip` | lusid1 | https://github.com/lusid1/pkg2zip
 | `ps3iso-utils` | bucanero | https://github.com/bucanero/ps3iso-utils
 | `PS4_Tools Library` | xXxTheDarkprogramerxXx | https://github.com/xXxTheDarkprogramerxXx/PS4_Tools
@@ -50,6 +52,7 @@ The source code can be found in the other repository: [PSMT Library](https://git
 | `pupunpack` |  | 
 | `rcomage` | ZiNgA BuRgA | 
 | `readself` | Team fail0verflow | https://github.com/daryl317/fail0verflow-PS3-tools/tree/master
+| `SCEDoormat_NoME` | krHACKen | 
 | `scetool` | naehrwert | https://github.com/naehrwert/scetool
 | `sfo` | hippie68 | https://github.com/hippie68/sfo
 | `sngre` | cfwprophet | https://github.com/cfwprpht/Simply_Vita_RCO_Extractor
