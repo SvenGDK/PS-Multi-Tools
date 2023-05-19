@@ -48,27 +48,6 @@ Public Class PSVLibrary
 
 #Region "Game Loader"
 
-    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
-        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PSV backup folder"}
-
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
-            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.sfo", SearchOption.AllDirectories).Count
-
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS Vita files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = PKGCount + FoldersCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (PKGCount + FoldersCount).ToString()
-            NewLoadingWindow.Show()
-
-            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
-        End If
-    End Sub
-
-    Private Sub LoadLibraryMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadLibraryMenuItem.Click
-        GamesListView.Visibility = Visibility.Visible
-        DLListView.Visibility = Visibility.Hidden
-    End Sub
-
     Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
 
         'PSV encrypted/decrypted folders
@@ -92,7 +71,7 @@ Public Class PSVLibrary
                     'Load game infos
                     For Each Line In ProcessOutput
                         If Line.StartsWith("TITLE=") Then
-                            NewPSVGame.GameTitle = Line.Split("="c)(1).Trim(""""c).Trim()
+                            NewPSVGame.GameTitle = Utils.CleanTitle(Line.Split("="c)(1).Trim(""""c).Trim())
                         ElseIf Line.StartsWith("TITLE_ID=") Then
                             NewPSVGame.GameID = Line.Split("="c)(1).Trim(""""c).Trim()
                         ElseIf Line.StartsWith("CATEGORY=") Then
@@ -161,7 +140,7 @@ Public Class PSVLibrary
                     'Load game infos
                     For Each Line In ProcessOutput
                         If Line.StartsWith("Title:") Then
-                            NewPSVGame.GameTitle = Line.Split(":"c)(1).Trim(""""c).Trim()
+                            NewPSVGame.GameTitle = Utils.CleanTitle(Line.Split(":"c)(1).Trim(""""c).Trim())
                         ElseIf Line.StartsWith("Title ID:") Then
                             NewPSVGame.GameID = Line.Split(":"c)(1).Trim(""""c).Trim()
                         ElseIf Line.StartsWith("NPS Type:") Then
@@ -314,8 +293,60 @@ Public Class PSVLibrary
     Private Sub PKGInfoMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PKGInfoMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPSVGame As PSVGame = CType(GamesListView.SelectedItem, PSVGame)
-            Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPSVGame.GameFilePath}
+            Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPSVGame.GameFilePath, .Console = "PSV"}
             NewPKGInfo.Show()
+        End If
+    End Sub
+
+    Private Sub GamesListView_ContextMenuOpening(sender As Object, e As ContextMenuEventArgs) Handles GamesListView.ContextMenuOpening
+        NewContextMenu.Items.Clear()
+
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPSVGame As PSVGame = CType(GamesListView.SelectedItem, PSVGame)
+
+            NewContextMenu.Items.Add(CopyToMenuItem)
+
+            If SelectedPSVGame.GameFileType = PS3Game.GameFileTypes.Backup Then
+                NewContextMenu.Items.Add(PSNInfoMenuItem)
+            ElseIf SelectedPSVGame.GameFileType = PS3Game.GameFileTypes.PKG Then
+                NewContextMenu.Items.Add(PSNInfoMenuItem)
+                NewContextMenu.Items.Add(PKGInfoMenuItem)
+            End If
+        End If
+    End Sub
+
+    Private Sub GamesListView_ContextMenuClosing(sender As Object, e As ContextMenuEventArgs) Handles GamesListView.ContextMenuClosing
+        NewContextMenu.Items.Clear()
+    End Sub
+
+#End Region
+
+#Region "Menu Actions"
+
+    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
+        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PSV backup folder"}
+
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
+            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
+            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.sfo", SearchOption.AllDirectories).Count
+
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS Vita files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = PKGCount + FoldersCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (PKGCount + FoldersCount).ToString()
+            NewLoadingWindow.Show()
+
+            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
+        End If
+    End Sub
+
+    Private Sub LoadLibraryMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadLibraryMenuItem.Click
+        GamesListView.Visibility = Visibility.Visible
+        DLListView.Visibility = Visibility.Hidden
+    End Sub
+
+    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
+        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
+            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
         End If
     End Sub
 

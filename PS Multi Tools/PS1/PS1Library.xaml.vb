@@ -18,6 +18,7 @@ Public Class PS1Library
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
+    Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
     Private Sub PS1Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
@@ -27,40 +28,13 @@ Public Class PS1Library
         'Add supplemental library menu items that will be handled in the app
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS1Menu.Items(0), Controls.MenuItem)
         LibraryMenuItem.Items.Add(LoadFolderMenuItem)
+        LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
         NewContextMenu.Items.Add(CopyToMenuItem)
         GamesListView.ContextMenu = NewContextMenu
     End Sub
 
 #Region "Game Loader"
-
-    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
-
-        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS1 backup folder"}
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-
-            For Each GameBIN In Directory.GetFiles(FBD.SelectedPath, "*.bin", SearchOption.AllDirectories)
-                If GameBIN.Contains("Track") Then
-                    If Not GameBIN.Contains("(Track 1).bin") Then
-                        'Skip
-                        Continue For
-                    Else
-                        BINCount += 1
-                    End If
-                Else
-                    BINCount += 1
-                End If
-            Next
-
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS1 files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = BINCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + BINCount.ToString()
-            NewLoadingWindow.Show()
-
-            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
-        End If
-
-    End Sub
 
     Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
 
@@ -275,6 +249,68 @@ Public Class PS1Library
 
 #End Region
 
+#Region "Menu Actions"
+
+    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
+
+        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS1 backup folder"}
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
+
+            For Each GameBIN In Directory.GetFiles(FBD.SelectedPath, "*.bin", SearchOption.AllDirectories)
+                If GameBIN.Contains("Track") Then
+                    If Not GameBIN.Contains("(Track 1).bin") Then
+                        'Skip
+                        Continue For
+                    Else
+                        BINCount += 1
+                    End If
+                Else
+                    BINCount += 1
+                End If
+            Next
+
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS1 files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = BINCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + BINCount.ToString()
+            NewLoadingWindow.Show()
+
+            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
+        End If
+
+    End Sub
+
+    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
+        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
+            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        End If
+    End Sub
+
+#End Region
+
+#Region "Contextmenu Actions"
+
+    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
+            Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
+
+            If FBD.ShowDialog() = Forms.DialogResult.OK Then
+                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
+                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    .BackupPath = SelectedPS1Game.GameFilePath,
+                    .BackupDestinationPath = FBD.SelectedPath + "\",
+                    .Title = "Copying " + SelectedPS1Game.GameID + " to " + FBD.SelectedPath}
+
+                If NewCopyWindow.ShowDialog() = True Then
+                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
+                End If
+            End If
+
+        End If
+    End Sub
+
+#End Region
+
     Public Shared Function GetRegionChar(GameID As String) As String
         If GameID.StartsWith("SLES", StringComparison.OrdinalIgnoreCase) Then
             Return "P"
@@ -296,25 +332,5 @@ Public Class PS1Library
             Return ""
         End If
     End Function
-
-    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
-            Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
-
-            If FBD.ShowDialog() = Forms.DialogResult.OK Then
-                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
-                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    .BackupPath = SelectedPS1Game.GameFilePath,
-                    .BackupDestinationPath = FBD.SelectedPath + "\",
-                    .Title = "Copying " + SelectedPS1Game.GameID + " to " + FBD.SelectedPath}
-
-                If NewCopyWindow.ShowDialog() = True Then
-                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
-                End If
-            End If
-
-        End If
-    End Sub
 
 End Class

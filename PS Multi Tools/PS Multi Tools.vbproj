@@ -90,7 +90,7 @@
     <Reference Include="PS4_Tools">
       <HintPath>..\..\..\..\Desktop\Debug\PS4_Tools.dll</HintPath>
     </Reference>
-    <Reference Include="psmt-lib, Version=1.0.1.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="psmt-lib, Version=1.0.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\psmt-lib\psmt-lib\bin\x64\Release\psmt-lib.dll</HintPath>
     </Reference>

@@ -25,15 +25,16 @@ Public Class PS2Library
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
+    Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
     Private Sub PS2Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-
         'Set the controls in the shared library
         NewPS2Menu.GamesLView = GamesListView
 
         'Add supplemental library menu items that will be handled in the app
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS2Menu.Items(0), Controls.MenuItem)
         LibraryMenuItem.Items.Add(LoadFolderMenuItem)
+        LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
         NewContextMenu.Items.Add(CopyToMenuItem)
         NewContextMenu.Items.Add(SendToMenuItem)
@@ -43,21 +44,6 @@ Public Class PS2Library
     End Sub
 
 #Region "Game Loader"
-
-    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
-        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS2 backup folder"}
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
-            CSOCount = Directory.GetFiles(FBD.SelectedPath, "*.cso", SearchOption.AllDirectories).Count
-
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS2 files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = ISOCount + CSOCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (ISOCount + CSOCount).ToString()
-            NewLoadingWindow.Show()
-
-            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
-        End If
-    End Sub
 
     Public Function GetGameID(GameISO As String) As String
         Dim GameID As String = ""
@@ -316,6 +302,33 @@ Public Class PS2Library
 
 #End Region
 
+#Region "Menu Actions"
+
+    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
+        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS2 backup folder"}
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
+            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
+            CSOCount = Directory.GetFiles(FBD.SelectedPath, "*.cso", SearchOption.AllDirectories).Count
+
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS2 files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = ISOCount + CSOCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (ISOCount + CSOCount).ToString()
+            NewLoadingWindow.Show()
+
+            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
+        End If
+    End Sub
+
+    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
+        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
+            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        End If
+    End Sub
+
+#End Region
+
+#Region "Contextmenu Actions"
+
     Private Sub SendToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles SendToMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
@@ -344,5 +357,7 @@ Public Class PS2Library
 
         End If
     End Sub
+
+#End Region
 
 End Class

@@ -59,29 +59,6 @@ Public Class PS3Library
 
 #Region "Game Loader"
 
-    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
-        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS3 backup folder"}
-
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Count
-            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
-            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
-
-            'Show the loading progress window
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS3 files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = FoldersCount + ISOCount + PKGCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (FoldersCount + ISOCount + PKGCount).ToString()
-            NewLoadingWindow.Show()
-
-            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
-        End If
-    End Sub
-
-    Private Sub LoadLibraryMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadLibraryMenuItem.Click
-        SelectedListView.Visibility = Visibility.Visible
-        DLListView.Visibility = Visibility.Hidden
-    End Sub
-
     Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
 
         'PS3 classic backup folders
@@ -443,10 +420,10 @@ Public Class PS3Library
                     Dim SelectedPackage As New psmt_lib.Structures.Package() With {.PackageContentID = SelectedPS3Game.ContentID, .PackageTitleID = SelectedPS3Game.GameID}
                     Dim NewPackageInfoWindow As New DownloadPackageInfoWindow() With {.ShowActivated = True, .Title = SelectedPS3Game.GameTitle, .CurrentPackage = SelectedPackage, .PackageConsole = "PS3"}
                     NewPackageInfoWindow.Show()
-                Else
-                    Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPS3Game.GameFilePath}
-                    NewPKGInfo.Show()
                 End If
+            Else
+                Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPS3Game.GameFilePath, .Console = "PS3"}
+                NewPKGInfo.Show()
             End If
         End If
     End Sub
@@ -480,6 +457,39 @@ Public Class PS3Library
 
 #End Region
 
+#Region "Menu Actions"
+
+    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
+        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS3 backup folder"}
+
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
+            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Count
+            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
+            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
+
+            'Show the loading progress window
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS3 files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = FoldersCount + ISOCount + PKGCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (FoldersCount + ISOCount + PKGCount).ToString()
+            NewLoadingWindow.Show()
+
+            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
+        End If
+    End Sub
+
+    Private Sub LoadLibraryMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadLibraryMenuItem.Click
+        SelectedListView.Visibility = Visibility.Visible
+        DLListView.Visibility = Visibility.Hidden
+    End Sub
+
+    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
+        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
+            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        End If
+    End Sub
+
+#End Region
+
     Private Sub SimpleGamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles SimpleGamesListView.SelectionChanged
         If SimpleGamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
@@ -501,7 +511,6 @@ Public Class PS3Library
             Dim SelectedPS3Game As PS3Game = CType(SimpleGamesListView.SelectedItem, PS3Game)
 
             NewContextMenu.Items.Add(CopyToMenuItem)
-
 
             If SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.Backup Then
                 NewContextMenu.Items.Add(PlayMenuItem)

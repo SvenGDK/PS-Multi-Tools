@@ -19,12 +19,15 @@ Public Class PS4Library
     Dim PKGCount As Integer = 0
     Dim IsSoundPlaying As Boolean = False
 
+    'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
+    Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
     Private Sub PS4Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Add supplemental library menu items that will be handled in the app
         Dim LibraryMenuItem As MenuItem = CType(NewPS4Menu.Items(0), MenuItem)
         LibraryMenuItem.Items.Add(LoadFolderMenuItem)
+        LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
         'Add the games context menu
         NewContextMenu.Items.Add(CopyToMenuItem)
@@ -36,26 +39,6 @@ Public Class PS4Library
     End Sub
 
 #Region "Game Loader"
-
-    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
-        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS4 backup folder"}
-
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-
-            'Set the count of pkg files
-            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
-
-            'Show the loading progress window
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS4 pkg files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = PKGCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + PKGCount.ToString()
-            NewLoadingWindow.Show()
-
-            'Load the pkg files
-            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
-        End If
-
-    End Sub
 
     Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
 
@@ -166,8 +149,38 @@ Public Class PS4Library
     Private Sub PKGInfoMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PKGInfoMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS4Game As PS4Game = CType(GamesListView.SelectedItem, PS4Game)
-            Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPS4Game.GameFilePath}
+            Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPS4Game.GameFilePath, .Console = "PS4"}
             NewPKGInfo.Show()
+        End If
+    End Sub
+
+#End Region
+
+#Region "Menu Actions"
+
+    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
+        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS4 backup folder"}
+
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
+
+            'Set the count of pkg files
+            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
+
+            'Show the loading progress window
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS4 pkg files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = PKGCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + PKGCount.ToString()
+            NewLoadingWindow.Show()
+
+            'Load the pkg files
+            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
+        End If
+
+    End Sub
+
+    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
+        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
+            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
         End If
     End Sub
 

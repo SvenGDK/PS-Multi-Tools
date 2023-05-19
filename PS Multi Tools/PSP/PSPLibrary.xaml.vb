@@ -16,33 +16,19 @@ Public Class PSPLibrary
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
+    Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
     Private Sub PSPLibrary_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-
         'Add supplemental library menu items that will be handled in the app
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPSPMenu.Items(0), Controls.MenuItem)
         LibraryMenuItem.Items.Add(LoadFolderMenuItem)
+        LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
         NewContextMenu.Items.Add(CopyToMenuItem)
         GamesListView.ContextMenu = NewContextMenu
     End Sub
 
 #Region "Game Loader"
-
-    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
-        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PSP backup folder"}
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Count
-            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
-
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PSP files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = FoldersCount + ISOCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (FoldersCount + ISOCount).ToString()
-            NewLoadingWindow.Show()
-
-            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
-        End If
-    End Sub
 
     Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
 
@@ -66,7 +52,7 @@ Public Class PSPLibrary
                     'Load game infos
                     For Each Line In ProcessOutput
                         If Line.StartsWith("TITLE=") Then
-                            NewPSPGame.GameTitle = Line.Split("="c)(1).Trim(""""c)
+                            NewPSPGame.GameTitle = Utils.CleanTitle(Line.Split("="c)(1).Trim(""""c))
                         ElseIf Line.StartsWith("DISC_ID=") Then
                             NewPSPGame.GameID = Line.Split("="c)(1).Trim(""""c)
                         ElseIf Line.StartsWith("CATEGORY=") Then
@@ -156,7 +142,7 @@ Public Class PSPLibrary
                     'Load game infos
                     For Each Line In ProcessOutput
                         If Line.StartsWith("TITLE=") Then
-                            NewPSPGame.GameTitle = Line.Split("="c)(1).Trim(""""c)
+                            NewPSPGame.GameTitle = Utils.CleanTitle(Line.Split("="c)(1).Trim(""""c))
                         ElseIf Line.StartsWith("DISC_ID=") Then
                             NewPSPGame.GameID = Line.Split("="c)(1).Trim(""""c)
                         ElseIf Line.StartsWith("CATEGORY=") Then
@@ -213,6 +199,33 @@ Public Class PSPLibrary
 
 #End Region
 
+#Region "Menu Actions"
+
+    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
+        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PSP backup folder"}
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
+            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Count
+            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
+
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PSP files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = FoldersCount + ISOCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (FoldersCount + ISOCount).ToString()
+            NewLoadingWindow.Show()
+
+            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
+        End If
+    End Sub
+
+    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
+        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
+            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        End If
+    End Sub
+
+#End Region
+
+#Region "Contextmenu Actions"
+
     Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPSPGame As PSPGame = CType(GamesListView.SelectedItem, PSPGame)
@@ -237,5 +250,7 @@ Public Class PSPLibrary
 
         End If
     End Sub
+
+#End Region
 
 End Class
