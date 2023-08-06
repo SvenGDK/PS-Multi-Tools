@@ -21,7 +21,6 @@ Public Class PS1Library
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
     Private Sub PS1Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-
         'Set the controls in the shared library
         NewPS1Menu.GamesLView = GamesListView
 

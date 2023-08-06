@@ -7,6 +7,50 @@
         mc:Ignorable="d"
         Title="PS5 Library" Height="550" Width="1030" Background="#FF252525">
     <Grid>
-        <psmt_lib:PS5Menu Height="20" VerticalAlignment="Top"></psmt_lib:PS5Menu>
+        <psmt_lib:PS5Menu x:Name="NewPS5Menu" Height="20" VerticalAlignment="Top"></psmt_lib:PS5Menu>
+        <TabControl Margin="0,21,0,0" Background="{x:Null}" Foreground="White">
+            <TabItem Header="Games">
+                <ListView x:Name="GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=15}" >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="455">
+                                <Image Width="64" Height="64" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Applications">
+                <ListView x:Name="AppsListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=15}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="455">
+                                <Image Width="64" Height="64" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

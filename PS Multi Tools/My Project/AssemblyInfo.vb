@@ -16,8 +16,8 @@ Imports System.Windows
 <Assembly: AssemblyCompany("SvenGDK")>
 <Assembly: AssemblyProduct("PS Multi Tools")>
 <Assembly: AssemblyCopyright("Copyright © SvenGDK 2011-2023")>
-<Assembly: AssemblyTrademark("")>
-<Assembly: ComVisible(false)>
+<Assembly: AssemblyTrademark("SvenGDK")>
+<Assembly: ComVisible(False)>
 
 'In order to begin building localizable applications, set
 '<UICulture>CultureYouAreCodingWith</UICulture> in your .vbproj file
@@ -55,5 +55,5 @@ Imports System.Windows
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("13.0.2.0")>
-<Assembly: AssemblyFileVersion("13.0.2.0")>
+<Assembly: AssemblyVersion("13.0.5.0")>
+<Assembly: AssemblyFileVersion("13.0.5.0")>

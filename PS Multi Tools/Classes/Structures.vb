@@ -1,4 +1,6 @@
-﻿Public Class Structures
+﻿Imports Newtonsoft.Json
+
+Public Class Structures
 
     Public Structure PS3PKG
         Public FilePath As String
@@ -247,5 +249,167 @@
         End Property
 
     End Structure
+
+    Public Class Addcont
+
+        <JsonProperty("serviceIdForSharing")>
+        Public Property ServiceIdForSharing As String()
+    End Class
+
+    Public Class PermittedIntent
+
+        <JsonProperty("intentType")>
+        Public Property IntentType As String
+    End Class
+
+    Public Class GameIntent
+
+        <JsonProperty("permittedIntents")>
+        Public Property PermittedIntents As PermittedIntent()
+    End Class
+
+    Public Class EnUS
+
+        <JsonProperty("titleName")>
+        Public Property TitleName As String
+    End Class
+
+    Public Class EnGB
+
+        <JsonProperty("titleName")>
+        Public Property TitleName As String
+    End Class
+
+    Public Class DeDE
+
+        <JsonProperty("titleName")>
+        Public Property TitleName As String
+    End Class
+
+    Public Class FrFR
+
+        <JsonProperty("titleName")>
+        Public Property TitleName As String
+    End Class
+
+    Public Class LocalizedParameters
+
+        <JsonProperty("defaultLanguage")>
+        Public Property DefaultLanguage As String
+
+        <JsonProperty("en-US")>
+        Public Property EnUS As EnUS
+
+        <JsonProperty("en-GB")>
+        Public Property EnGB As EnGB
+
+        <JsonProperty("de-DE")>
+        Public Property DeDE As DeDE
+
+        <JsonProperty("fr-FR")>
+        Public Property FrFR As FrFR
+    End Class
+
+    Public Class Pubtools
+
+        <JsonProperty("creationDate")>
+        Public Property CreationDate As String
+
+        <JsonProperty("submission")>
+        Public Property Submission As Boolean
+
+        <JsonProperty("toolVersion")>
+        Public Property ToolVersion As String
+    End Class
+
+    Public Class PS5GameParamJson
+
+        <JsonProperty("addcont")>
+        Public Property Addcont As Addcont
+
+        <JsonProperty("applicationCategoryType")>
+        Public Property ApplicationCategoryType As Integer
+
+        <JsonProperty("applicationDrmType")>
+        Public Property ApplicationDrmType As String
+
+        <JsonProperty("attribute")>
+        Public Property Attribute As Integer
+
+        <JsonProperty("attribute2")>
+        Public Property Attribute2 As Integer
+
+        <JsonProperty("attribute3")>
+        Public Property Attribute3 As Integer
+
+        <JsonProperty("conceptId")>
+        Public Property ConceptId As String
+
+        <JsonProperty("contentBadgeType")>
+        Public Property ContentBadgeType As Integer
+
+        <JsonProperty("contentId")>
+        Public Property ContentId As String
+
+        <JsonProperty("contentVersion")>
+        Public Property ContentVersion As String
+
+        <JsonProperty("downloadDataSize")>
+        Public Property DownloadDataSize As Integer
+
+        <JsonProperty("gameIntent")>
+        Public Property GameIntent As GameIntent
+
+        <JsonProperty("localizedParameters")>
+        Public Property LocalizedParameters As LocalizedParameters
+
+        <JsonProperty("masterVersion")>
+        Public Property MasterVersion As String
+
+        <JsonProperty("pubtools")>
+        Public Property Pubtools As Pubtools
+
+        <JsonProperty("requiredSystemSoftwareVersion")>
+        Public Property RequiredSystemSoftwareVersion As String
+
+        <JsonProperty("sdkVersion")>
+        Public Property SdkVersion As String
+
+        <JsonProperty("titleId")>
+        Public Property TitleId As String
+
+        <JsonProperty("userDefinedParam1")>
+        Public Property UserDefinedParam1 As Integer
+
+        <JsonProperty("versionFileUri")>
+        Public Property VersionFileUri As String
+    End Class
+
+    Public Class AppParamJson
+
+        <JsonProperty("applicationCategoryType")>
+        Public Property ApplicationCategoryType As Integer
+
+        <JsonProperty("contentId")>
+        Public Property ContentId As String
+
+        <JsonProperty("titleId")>
+        Public Property TitleId As String
+
+        <JsonProperty("attribute")>
+        Public Property Attribute As Integer
+
+        <JsonProperty("attribute2")>
+        Public Property Attribute2 As Integer
+
+        <JsonProperty("attribute3")>
+        Public Property Attribute3 As Integer
+
+        <JsonProperty("downloadDataSize")>
+        Public Property DownloadDataSize As Integer
+
+        <JsonProperty("localizedParameters")>
+        Public Property LocalizedParameters As LocalizedParameters
+    End Class
 
 End Class
