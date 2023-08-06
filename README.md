@@ -1,6 +1,6 @@
 # PS Multi Tools
-Backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5 (later), PSP &amp; PS Vita.</br>
-Includes homebrew, firmwares, Windows tools downloads and integrated tools for all mentioned consoles and handhelds.
+Backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5 (FTP access only atm), PSP &amp; PS Vita.</br>
+Includes homebrew, firmwares, other Windows tools, many other downloads and integrated tools for all mentioned consoles and handhelds.
 
 ## v1-12
 All Builds below v13 are not working properly anymore due to the mising "ps-menu.dll" that doesn't exist anymore.</br>
