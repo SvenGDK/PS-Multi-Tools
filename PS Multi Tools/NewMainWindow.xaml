@@ -1,0 +1,280 @@
+﻿<Window x:Class="NewMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PS Multi Tools" Height="570" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+
+        <TextBlock HorizontalAlignment="Center" Margin="0,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
+
+        <Image x:Name="PS1Image" HorizontalAlignment="Left" Height="84" Margin="39,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS1.png" Cursor="Hand"/>
+        <Image x:Name="PS2Image" HorizontalAlignment="Left" Height="84" Margin="162,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS2.png" Cursor="Hand"/>
+        <Image x:Name="PS3Image" HorizontalAlignment="Left" Height="84" Margin="287,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS3.png" Cursor="Hand"/>
+        <Image x:Name="PS4Image" HorizontalAlignment="Center" Height="84" Margin="0,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/ps4.png" Cursor="Hand"/>
+        <Image x:Name="PS5Image" HorizontalAlignment="Left" Height="84" Margin="516,112,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS5.png" Cursor="Hand"/>
+        <Image x:Name="PSPImage" HorizontalAlignment="Left" Height="92" Margin="629,108,0,0" VerticalAlignment="Top" Width="92" Source="/Images/psp.png" Cursor="Hand"/>
+        <Image x:Name="PSVImage" HorizontalAlignment="Left" Height="92" Margin="752,133,0,0" VerticalAlignment="Top" Width="92" Source="/Images/PSV.png" Cursor="Hand"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="66,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS1" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="189,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS2" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS3" FontSize="20" Margin="315,205,0,0" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS4" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="543,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS5" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="660,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PSP" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="783,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PSV" FontSize="20" FontFamily="Calibri"/>
+
+        <!--PS1 Grid-->
+        <Grid x:Name="PS1Grid" Margin="39,242,46,62" Width="805" Height="230" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS1LibraryButton" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White">
+                <Button.Content>
+                    <WrapPanel Orientation="Vertical">
+                        <Image Width="42" Height="42" Source="/Images/gamelibrary.png"/>
+                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                        <TextBlock Text="Load and manage your PS1 games (.iso and .bin supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    </WrapPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="LoadPS1MergeBINButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="55" Background="#FF575757" Foreground="White">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/merge.png" Width="42" Height="42"/>
+                    <TextBlock Text="Merge .bin files" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="For games that have multiple .bin (Track x) files." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+        </Grid>
+
+        <!--PS2 Grid-->
+        <Grid x:Name="PS2Grid" Margin="39,242,46,62" Width="805" Height="230" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS2LibraryButton" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White">
+                <Button.Content>
+                    <WrapPanel Orientation="Vertical">
+                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                        <TextBlock Text="Load and manage your PS2 games (.iso files supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    </WrapPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="LoadPS2BINConverterButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="55" Background="#FF575757" Foreground="White">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/convert.png" Width="42" Height="42"/>
+                    <TextBlock Text=".BIN / .CUE to ISO Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="For PS2 CD games in .bin/.cue format." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPSXXMBManagerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,148,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/av.png" Width="42" Height="42"/>
+                    <TextBlock Text="PSX XMB Manager" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Install games and homebrew on the XMB (PSX DESR) - Uses build v1.3" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+        </Grid>
+
+        <!--PS3 Grid-->
+        <Grid x:Name="PS3Grid" Margin="39,242,46,39" Height="255" Width="805" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS3LibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,10,0,0">
+                <Button.Content>
+                    <WrapPanel Orientation="Vertical">
+                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                        <TextBlock Text="Load and manage your PS3 games (.iso, .pkg files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    </WrapPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="LoadPS3ISOToolsButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,70,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/av.png" Width="42" Height="42"/>
+                    <TextBlock Text="ISO Tools" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Create / Extract / Split / Patch PS3 .iso files" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS3PUPUnpackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,130,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/box.png" Width="42" Height="42"/>
+                    <TextBlock Text="PUP Unpacker" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Unpack PS3 .PUP files" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+        </Grid>
+
+        <!--PS4 Grid-->
+        <Grid x:Name="PS4Grid" Margin="39,242,46,39" Height="255" Width="805" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS4LibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,10,0,0">
+                <Button.Content>
+                    <WrapPanel Orientation="Vertical">
+                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                        <TextBlock Text="Load and manage your PS4 games, updates and DLCs (.pkg files supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    </WrapPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="LoadPS4PUPUnpackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,70,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/box.png" Width="42" Height="42"/>
+                    <TextBlock Text="PUP Unpacker" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Unpack decrypted PS4 update files (PUP.dec)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS4USBWriterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,130,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/usb.png" Width="42" Height="42"/>
+                    <TextBlock Text="USB Exploit Writer" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Write exfathax.img to a USB drive." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS4PKGMergerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,190,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/box.png" Width="42" Height="42"/>
+                    <TextBlock Text="PKG Merger" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Merge game or patch PKG files into a single one." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+        </Grid>
+
+        <!--PS5 Grid-->
+        <Grid x:Name="PS5Grid" Margin="39,242,46,30" Width="805" Height="262" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS5LibraryButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,10,0,0">
+                <Button.Content>
+                    <WrapPanel Orientation="Vertical">
+                        <Image Source="/Images/gamelibrary.png" Width="40" Height="40"/>
+                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                        <TextBlock Text="Load your PS5 games, applications and patches" FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                    </WrapPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="LoadPS5BDBurnerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,60,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/burn.png" Width="40" Height="40"/>
+                    <TextBlock Text="Blu Ray Disc Burner" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Burn the BD-JB .iso file on an empty Blu Ray disc." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5FTPGrabberButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,110,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/ftp.png" Width="40" Height="40"/>
+                    <TextBlock Text="FTP Grabber" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Grab specific directories from the PS5 via FTP." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5GP5CreatorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,160,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/av.png" Width="40" Height="40"/>
+                    <TextBlock Text="GP5 Project Creator" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Create a new .gp5 project and build a .pkg" FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5AT9ConverterButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,210,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/convert.png" Width="40" Height="40"/>
+                    <TextBlock Text="AT9 Audio Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Encode .wav to .at9 / Decode .at9 to .wav" FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5ModGamePatchesButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,10,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/gamepatches.png" Width="40" Height="40"/>
+                    <TextBlock Text="Game Patches (illusion)" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Run and control the game patches fork of Libhijacker" FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5NotificationManagerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,60,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/notifications.png" Width="40" Height="40"/>
+                    <TextBlock Text="Notification Manager" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Edit your notifications on the PS5, enabling more features." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5ParamEditorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,110,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/editor.png" Width="40" Height="40"/>
+                    <TextBlock Text="PARAM.JSON Creator / Editor" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Create a new param.json file or modify an existing one." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5RCOExtractorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,160,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/extract.png" Width="40" Height="40"/>
+                    <TextBlock Text="RCO Extractor" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Extract .rco files from the PS4, PS5 or PS Vita." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5SenderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,210,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/sendfile.png" Width="40" Height="40"/>
+                    <TextBlock Text="Payload / ELF / Mast1c0re Sender" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Send a .bin payload, .ELF file or PS2 .iso game." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+        </Grid>
+
+        <!--PSP Grid-->
+        <Grid x:Name="PSPGrid" Margin="39,242,46,39" Height="255" Width="805" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPSPLibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,10,0,0">
+                <Button.Content>
+                    <WrapPanel Orientation="Vertical">
+                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                        <TextBlock Text="Load and manage your PSP games (.iso files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    </WrapPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="LoadPSPISOCSOConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,70,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/convert.png" Width="42" Height="42"/>
+                    <TextBlock Text="ISO / CSO Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Convert to .cso or decompress to .iso file." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPSPISOPBPConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,130,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/convert.png" Width="42" Height="42"/>
+                    <TextBlock Text="ISO / PBP Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Conver .PBP to .iso or convert an .iso file with a STARTDAT image to a .PBP file." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPSPPBPPackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,190,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/box.png" Width="42" Height="42"/>
+                    <TextBlock Text="PBP Unpacker / Packer" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Unpack a .PBP file or create a new one from scratch." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+        </Grid>
+
+        <!--PSV Grid-->
+        <Grid x:Name="PSVGrid" Margin="39,242,46,39" Height="255" Width="805" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPSVLibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,35,0,0">
+                <Button.Content>
+                    <WrapPanel Orientation="Vertical">
+                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                        <TextBlock Text="Load and manage your PS Vita games (.pkg files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    </WrapPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="LoadPSVPKGExtractorButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,95,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/box.png" Width="42" Height="42"/>
+                    <TextBlock Text="PKG Extractor" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Extract .pkg files with a zRIF key." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPSVRCOExtractorButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,155,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/extract.png" Width="42" Height="42"/>
+                    <TextBlock Text="RCO Extractor" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Extract .rco files from the PS4, PS5 or PS Vita." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+        </Grid>
+
+        <StatusBar Height="27" VerticalAlignment="Bottom" Background="#FFE2E2E2" FontFamily="Calibri" Foreground="Black" FontSize="14">
+            <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.1  -  [DLL] PSMT-Library v1.1" Margin="5,0,0,0"/>
+            <Button x:Name="CheckUpdatesButton" Content="Check for updates" FontSize="12" Margin="395,0,0,0" Width="100" Height="20"/>
+        </StatusBar>
+
+    </Grid>
+</Window>

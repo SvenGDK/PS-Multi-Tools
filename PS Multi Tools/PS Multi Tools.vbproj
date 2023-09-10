@@ -58,7 +58,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>psmtlogo.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -94,6 +94,15 @@
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\..\..\Desktop\Debug\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.1901.177, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.1901.177\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.1901.177, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.1901.177\lib\net45\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.1901.177, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.1901.177\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -157,6 +166,9 @@
       <DependentUpon>CopyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\PS1Game.vb" />
+    <Compile Include="NewMainWindow.xaml.vb">
+      <DependentUpon>NewMainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PS1\PS1Library.xaml.vb">
       <DependentUpon>PS1Library.xaml</DependentUpon>
     </Compile>
@@ -193,18 +205,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="Application.xaml.vb">
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.vb">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="NewMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PS1\PS1Library.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -316,9 +324,6 @@
     <Resource Include="Images\PS5.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="psmtlogo.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\av.png" />
   </ItemGroup>
   <ItemGroup>
@@ -341,9 +346,6 @@
     <Resource Include="Images\information-button.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\extract.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\create.png" />
     <Resource Include="Images\patch.png" />
     <Resource Include="Images\split.png" />
@@ -364,6 +366,45 @@
     <Resource Include="Images\rename.png" />
     <Resource Include="Images\upload.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\gamelibrary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\merge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\convert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\usb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\burn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ftp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\gamepatches.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\notifications.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\editor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\extract.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sendfile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -373,8 +414,10 @@
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
     <Error Condition="!Exists('..\packages\WinSCP.6.1.1\build\WinSCP.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WinSCP.6.1.1\build\WinSCP.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.1901.177\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.1901.177\build\Microsoft.Web.WebView2.targets'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
   <Import Project="..\packages\WinSCP.6.1.1\build\WinSCP.targets" Condition="Exists('..\packages\WinSCP.6.1.1\build\WinSCP.targets')" />
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.1901.177\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.1901.177\build\Microsoft.Web.WebView2.targets')" />
 </Project>

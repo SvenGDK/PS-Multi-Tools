@@ -12,7 +12,7 @@ Imports System.Windows
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("PS Multi Tools")>
-<Assembly: AssemblyDescription("Backup manager for PS1, PS2, PSX, PS3, PS4, PS5 (later), PSP & PS Vita, containing homebrews, firmwares, tools (integrated) & other Windows tools.")>
+<Assembly: AssemblyDescription("Backup manager for PS1, PS2, PSX, PS3, PS4, PS5, PSP & PS Vita, containing homebrews, firmwares & tools.")>
 <Assembly: AssemblyCompany("SvenGDK")>
 <Assembly: AssemblyProduct("PS Multi Tools")>
 <Assembly: AssemblyCopyright("Copyright © SvenGDK 2011-2023")>
@@ -55,5 +55,5 @@ Imports System.Windows
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("13.0.5.0")>
-<Assembly: AssemblyFileVersion("13.0.5.0")>
+<Assembly: AssemblyVersion("13.1.0.0")>
+<Assembly: AssemblyFileVersion("13.1.0.0")>

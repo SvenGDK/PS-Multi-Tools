@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Net
 Imports System.Text
 Imports System.Threading
+Imports PS4_Tools.RCO
 
 Public Class Utils
 
