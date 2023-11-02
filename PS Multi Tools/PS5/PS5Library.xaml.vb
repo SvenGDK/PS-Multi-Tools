@@ -221,7 +221,14 @@ Public Class PS5Library
                             NewPS5Game.GameVersion = "Patch: " + ParamData.ContentVersion
                             NewPS5Game.GameRequiredFirmware = "Req.FW: " + ParamData.RequiredSystemSoftwareVersion.Replace("0x", "").Insert(2, "."c).Insert(5, "."c).Insert(8, "."c).Remove(11, 8)
 
-                            URLs.Add("https://prosperopatches.com/" + ParamData.TitleId.Trim()) 'Get the image from prosperopatches
+                            If File.Exists(Path.GetDirectoryName(PatchSCPKG) + "\icon0.png") Then
+                                Dispatcher.BeginInvoke(Sub() NewPS5Game.GameCoverSource = New BitmapImage(New Uri(Path.GetDirectoryName(PatchSCPKG) + "\icon0.png", UriKind.RelativeOrAbsolute)))
+                            Else
+                                If Utils.IsURLValid("https://prosperopatches.com/" + ParamData.TitleId.Trim()) Then
+                                    URLs.Add("https://prosperopatches.com/" + ParamData.TitleId.Trim()) 'Get the image from prosperopatches
+                                End If
+                            End If
+
                         End If
 
                         Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
@@ -245,7 +252,7 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameLoaderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles GameLoaderWorker.RunWorkerCompleted
-        If PKGCount > 0 Then
+        If URLs.Count > 0 Then
             NewLoadingWindow.LoadStatusTextBlock.Text = "Getting " + URLs.Count.ToString() + " available covers"
             NewLoadingWindow.LoadProgressBar.Value = 0
             NewLoadingWindow.LoadProgressBar.Maximum = URLs.Count

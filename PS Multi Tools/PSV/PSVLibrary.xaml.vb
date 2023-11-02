@@ -98,8 +98,9 @@ Public Class PSVLibrary
                     End If
 
                     If NewPSVGame.ContentID.Split("-"c)(2) IsNot Nothing Then
-                        Dim NPSURL As String = "https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1"
-                        URLs.Add(NPSURL)
+                        If Utils.IsURLValid("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1") Then
+                            URLs.Add("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1")
+                        End If
                     End If
 
                     Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
@@ -163,9 +164,13 @@ Public Class PSVLibrary
                     NewPSVGame.GameFileType = PSVGame.GameFileTypes.PKG
 
                     If NewPSVGame.GameCategory = "PSX GAME" Then
-                        URLs.Add("https://nopaystation.com/view/PSX/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/0")
+                        If Utils.IsURLValid("https://nopaystation.com/view/PSX/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/0") Then
+                            URLs.Add("https://nopaystation.com/view/PSX/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/0")
+                        End If
                     Else
-                        URLs.Add("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1")
+                        If Utils.IsURLValid("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1") Then
+                            URLs.Add("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1")
+                        End If
                     End If
 
                     Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)

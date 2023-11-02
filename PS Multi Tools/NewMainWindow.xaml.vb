@@ -19,16 +19,20 @@ Public Class NewMainWindow
 
         If Not File.Exists("psmt-lib.dll") Then
             If MsgBox("PS Multi Tools Library not found! Do you want to re-download it?") = MsgBoxResult.Yes Then
-                DownloadClient.DownloadFile(New Uri("http://X.X.X.X/psmt-lib.dll"), My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
+                If Utils.IsURLValid("http://X.X.X.X/psmt-lib.dll") Then
+                    DownloadClient.DownloadFile(New Uri("http://X.X.X.X/psmt-lib.dll"), My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
+                Else
+                    MsgBox("No internet connection available. PS Multi Tools will close.", MsgBoxStyle.Exclamation, "Could not load the PSMT library")
+                End If
             Else
                 Windows.Application.Current.Shutdown()
             End If
+        Else
+            Dim PSMTInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\PS Multi Tools.exe")
+            Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
+
+            BuildTextBlock.Text = "[Main] PS Multi Tools v" + PSMTInfo.FileVersion + "  -  [DLL] PSMT-Library v" + LibraryInfo.FileVersion
         End If
-
-        Dim PSMTInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\PS Multi Tools.exe")
-        Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
-
-        BuildTextBlock.Text = "[Main] PS Multi Tools v" + PSMTInfo.FileVersion + "  -  [DLL] PSMT-Library v" + LibraryInfo.FileVersion
 
     End Sub
 
@@ -40,21 +44,27 @@ Public Class NewMainWindow
     End Sub
 
     Private Sub CheckUpdatesButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckUpdatesButton.Click
-        Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
-        Dim CurrentLibraryVersion As String = LibraryInfo.FileVersion
 
-        Dim VerCheckClient As New WebClient()
-        Dim NewLibraryVersion As String = VerCheckClient.DownloadString("http://X.X.X.X/psmt-lib.txt")
-        Changelog = VerCheckClient.DownloadString("http://X.X.X.X/changelog.txt")
+        If Utils.IsURLValid("http://X.X.X.X/psmt-lib.txt") Then
+            Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
+            Dim CurrentLibraryVersion As String = LibraryInfo.FileVersion
 
-        If CurrentLibraryVersion < NewLibraryVersion Then
-            If MsgBox("An update is available, do you want to install it ?", MsgBoxStyle.YesNo, "Update found") = MsgBoxResult.Yes Then
-                Dim NewUpdater As New SyncLibrary() With {.ShowActivated = True}
-                NewUpdater.ShowDialog()
+            Dim VerCheckClient As New WebClient()
+            Dim NewLibraryVersion As String = VerCheckClient.DownloadString("http://X.X.X.X/psmt-lib.txt")
+            Changelog = VerCheckClient.DownloadString("http://X.X.X.X/changelog.txt")
+
+            If CurrentLibraryVersion < NewLibraryVersion Then
+                If MsgBox("An update is available, do you want to install it ?", MsgBoxStyle.YesNo, "Update found") = MsgBoxResult.Yes Then
+                    Dim NewUpdater As New SyncLibrary() With {.ShowActivated = True}
+                    NewUpdater.ShowDialog()
+                End If
+            Else
+                MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
             End If
         Else
-            MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
+            MsgBox("Could not check for updates. No internet connection available.", MsgBoxStyle.Exclamation)
         End If
+
     End Sub
 
 #Region "Menu Navigation"
@@ -270,7 +280,7 @@ Public Class NewMainWindow
     End Sub
 
     Private Sub LoadPS3PUPUnpackerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS3PUPUnpackerButton.Click
-        Dim NewPUPUnpacker As New SFOEditor() With {.ShowActivated = True}
+        Dim NewPUPUnpacker As New PS3PUPUnpacker() With {.ShowActivated = True}
         NewPUPUnpacker.Show()
     End Sub
 

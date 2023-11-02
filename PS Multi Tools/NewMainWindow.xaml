@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS Multi Tools" Height="570" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="PS Multi Tools" Height="575" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
 
         <TextBlock HorizontalAlignment="Center" Margin="0,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
