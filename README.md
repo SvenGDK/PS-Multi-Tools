@@ -2,7 +2,7 @@
 </p>
 
 # PS Multi Tools
-All-In-One Utility with backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5 (FTP access only atm), PSP &amp; PS Vita.</br>
+All-In-One Utility with backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 ## PS Multi Tools Library
 The PS Multi Tools .NET Library contains all tools, downloads and other stuff for almost any Playstation console or handheld.
