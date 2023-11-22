@@ -396,5 +396,4 @@ Public Class NewMainWindow
         NewXMBInstaller.Show()
     End Sub
 
-
 End Class

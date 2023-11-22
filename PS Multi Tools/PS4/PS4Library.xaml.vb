@@ -70,30 +70,27 @@ Public Class PS4Library
             Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
             Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading PKG " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + PKGCount.ToString())
 
+            'Add to the ListView
             Select Case GamePKG.Param.Category
                 Case "ac"
-                    'Add to the ListView
                     If DLCsListView.Dispatcher.CheckAccess() = False Then
                         DLCsListView.Dispatcher.BeginInvoke(Sub() DLCsListView.Items.Add(NewPS4Game))
                     Else
                         DLCsListView.Items.Add(NewPS4Game)
                     End If
                 Case "gd"
-                    'Add to the ListView
                     If GamesListView.Dispatcher.CheckAccess() = False Then
                         GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS4Game))
                     Else
                         GamesListView.Items.Add(NewPS4Game)
                     End If
                 Case "gp"
-                    'Add to the ListView
                     If UpdatesListView.Dispatcher.CheckAccess() = False Then
                         UpdatesListView.Dispatcher.BeginInvoke(Sub() UpdatesListView.Items.Add(NewPS4Game))
                     Else
                         UpdatesListView.Items.Add(NewPS4Game)
                     End If
                 Case Else
-                    'Add to the ListView
                     If OthersListView.Dispatcher.CheckAccess() = False Then
                         OthersListView.Dispatcher.BeginInvoke(Sub() OthersListView.Items.Add(NewPS4Game))
                     Else

@@ -405,6 +405,30 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\eu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\jp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\us.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\de.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\es.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\it.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\blu-ray.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

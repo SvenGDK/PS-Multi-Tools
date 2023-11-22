@@ -272,7 +272,7 @@
         </Grid>
 
         <StatusBar Height="27" VerticalAlignment="Bottom" Background="#FFE2E2E2" FontFamily="Calibri" Foreground="Black" FontSize="14">
-            <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.1  -  [DLL] PSMT-Library v1.1" Margin="5,0,0,0"/>
+            <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.2  -  [DLL] PSMT-Library v1.2" Margin="5,0,0,0"/>
             <Button x:Name="CheckUpdatesButton" Content="Check for updates" FontSize="12" Margin="395,0,0,0" Width="100" Height="20"/>
         </StatusBar>
 
