@@ -9,8 +9,7 @@
     <Grid>
         <ProgressBar x:Name="CopyProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,227,0,0" VerticalAlignment="Top" Width="520" Foreground="#FF00B8FF"/>
         <TextBlock x:Name="StatusTextBlock" HorizontalAlignment="Left" Margin="10,203,0,0" TextWrapping="Wrap" Text="Please wait ..." VerticalAlignment="Top" Foreground="White" FontSize="14" Width="520"/>
-        <Image x:Name="ICONImage" HorizontalAlignment="Left" Height="176" Margin="120,10,0,0" VerticalAlignment="Top" Width="320"/>
+        <Image x:Name="GameIconImage" Height="176" VerticalAlignment="Top" Width="320" Margin="120,15,120,0"/>
         <TextBlock x:Name="StatusTextBlock2" HorizontalAlignment="Left" Margin="10,252,0,0" TextWrapping="Wrap" Text="Please wait ..." VerticalAlignment="Top" Foreground="White" FontSize="14" Width="520"/>
-
     </Grid>
 </Window>

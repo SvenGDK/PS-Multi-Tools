@@ -429,6 +429,12 @@
   <ItemGroup>
     <Resource Include="Images\blu-ray.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Stop-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Refresh-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

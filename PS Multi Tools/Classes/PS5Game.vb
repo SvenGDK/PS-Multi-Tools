@@ -4,7 +4,7 @@
     Private _GameID As String
     Private _GameSize As String
     Private _GameRegion As String
-    Private _GameFilePath As String
+    Private _GameFileOrFolderPath As String
     Private _GameCoverSource As ImageSource
     Private _GameBGSource As ImageSource
     Private _GameContentID As String
@@ -17,6 +17,7 @@
     Private _ITGameTitle As String
     Private _FRGameTitle As String
     Private _GameBackgroundImageBrush As ImageBrush
+    Private _GameSoundFile As String
 
     Public Property GameTitle As String
         Get
@@ -54,12 +55,12 @@
         End Set
     End Property
 
-    Public Property GameFilePath As String
+    Public Property GameFileOrFolderPath As String
         Get
-            Return _GameFilePath
+            Return _GameFileOrFolderPath
         End Get
         Set
-            _GameFilePath = Value
+            _GameFileOrFolderPath = Value
         End Set
     End Property
 
@@ -123,6 +124,15 @@
         End Get
         Set
             _GameRequiredFirmware = Value
+        End Set
+    End Property
+
+    Public Property GameSoundFile As String
+        Get
+            Return _GameSoundFile
+        End Get
+        Set
+            _GameSoundFile = Value
         End Set
     End Property
 

@@ -18,7 +18,7 @@ Public Class PS3Library
 
     'Games context menu items
     Dim WithEvents NewContextMenu As New Controls.ContextMenu()
-    Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to"}
+    Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
     Dim WithEvents ExtractPKGMenuItem As New Controls.MenuItem() With {.Header = "Extract .pkg", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/extract.png", UriKind.Relative))}}
     Dim WithEvents PlayMenuItem As New Controls.MenuItem() With {.Header = "Play Soundtrack", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}}
     Dim WithEvents PKGInfoMenuItem As New Controls.MenuItem() With {.Header = "PKG Details", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/information-button.png", UriKind.Relative))}}
@@ -395,15 +395,15 @@ Public Class PS3Library
 
             If SelectedPS3Game.GameBackgroundSoundFile IsNot Nothing Then
                 If IsSoundPlaying Then
-                    Utils.StopPS3SND()
+                    Utils.StopGameSound()
                     IsSoundPlaying = False
                 Else
-                    Utils.PlayPS3SND(SelectedPS3Game.GameBackgroundSoundFile)
+                    Utils.PlayGameSound(SelectedPS3Game.GameBackgroundSoundFile)
                     IsSoundPlaying = True
                 End If
             Else
                 If IsSoundPlaying Then
-                    Utils.StopPS3SND()
+                    Utils.StopGameSound()
                     IsSoundPlaying = False
                 Else
                     MsgBox("No game soundtrack found.", MsgBoxStyle.Information)
@@ -445,6 +445,10 @@ Public Class PS3Library
                     NewCopyWindow.BackupPath = SelectedPS3Game.GameFilePath
                 ElseIf SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.PKG Then
                     NewCopyWindow.BackupPath = SelectedPS3Game.GameFilePath
+                End If
+
+                If SelectedPS3Game.GameCoverSource IsNot Nothing Then
+                    NewCopyWindow.GameIcon = SelectedPS3Game.GameCoverSource
                 End If
 
                 If NewCopyWindow.ShowDialog() = True Then

@@ -7,6 +7,7 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Security.Authentication
 Imports System.Text
+Imports System.Windows.Forms
 
 Public Class PS5Library
 
@@ -23,11 +24,20 @@ Public Class PS5Library
     Dim CurrentURL As Integer = 0
     Dim TotalSize As Long = 0
 
+    Dim IsSoundPlaying As Boolean = False
+
     'Supplemental library menu items
     Dim WithEvents OpenFolderMenuItem As New Controls.MenuItem() With {.Header = "Load folder with games and apps"}
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load installed games and apps over FTP"}
     Dim WithEvents LoadPKGFolderMenuItem As New Controls.MenuItem() With {.Header = "Load patches PKG folder"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
+
+    'Games context menu items
+    Dim WithEvents GamesContextMenu As New Controls.ContextMenu()
+    Dim WithEvents AppsContextMenu As New Controls.ContextMenu()
+    Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
+    Dim WithEvents PlayMenuItem As New Controls.MenuItem() With {.Header = "Play Soundtrack", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}}
+    Dim WithEvents CheckForUpdatesMenuItem As New Controls.MenuItem() With {.Header = "Check for updates", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Refresh-icon.png", UriKind.Relative))}}
 
     Private Sub PS5Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Will set the console IP and port when changing the console address in the settings
@@ -39,6 +49,15 @@ Public Class PS5Library
         LibraryMenuItem.Items.Add(LoadPKGFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
+
+        'Add context menu for games
+        GamesContextMenu.Items.Add(CopyToMenuItem)
+        GamesContextMenu.Items.Add(PlayMenuItem)
+        GamesContextMenu.Items.Add(CheckForUpdatesMenuItem)
+
+        'Set context menu
+        GamesListView.ContextMenu = GamesContextMenu
+        AppsListView.ContextMenu = AppsContextMenu
     End Sub
 
 #Region "Game Loader"
@@ -415,6 +434,7 @@ Public Class PS5Library
                         NewPS5Game.GameCategory = "Type: Unknown"
                     End If
 
+                    NewPS5Game.GameFileOrFolderPath = Directory.GetParent(ParamFileInfo.FullName).Parent.FullName
                     NewPS5Game.GameSize = "Size: " + FormatNumber(GetDirSize(Directory.GetParent(ParamFileInfo.FullName).Parent.FullName) / 1073741824, 2) + " GB" 'Will only display correct if all files are present.
 
                     If ParamData.ContentVersion IsNot Nothing Then
@@ -424,16 +444,22 @@ Public Class PS5Library
                         NewPS5Game.GameRequiredFirmware = "Required Firmware: " + ParamData.RequiredSystemSoftwareVersion.Replace("0x", "").Insert(2, "."c).Insert(5, "."c).Insert(8, "."c).Remove(11, 8)
                     End If
 
-                    If File.Exists(Path.GetDirectoryName(ParamFileInfo.FullName) + "\icon0.png") Then
-                        Dispatcher.BeginInvoke(Sub() NewPS5Game.GameCoverSource = New BitmapImage(New Uri(Path.GetDirectoryName(ParamFileInfo.FullName) + "\icon0.png", UriKind.RelativeOrAbsolute)))
+                    Dim SCESYSFolder As String = Path.GetDirectoryName(ParamFileInfo.FullName)
+
+                    If File.Exists(SCESYSFolder + "\icon0.png") Then
+                        Dispatcher.BeginInvoke(Sub() NewPS5Game.GameCoverSource = New BitmapImage(New Uri(SCESYSFolder + "\icon0.png", UriKind.RelativeOrAbsolute)))
                     Else
                         If Utils.IsURLValid("https://prosperopatches.com/" + ParamData.TitleId.Trim()) Then
                             URLs.Add("https://prosperopatches.com/" + ParamData.TitleId.Trim()) 'Get the image from prosperopatches
                         End If
                     End If
 
-                    If File.Exists(Path.GetDirectoryName(ParamFileInfo.FullName) + "\pic0.png") Then
-                        Dispatcher.BeginInvoke(Sub() NewPS5Game.GameBGSource = New BitmapImage(New Uri(Path.GetDirectoryName(ParamFileInfo.FullName) + "\pic0.png", UriKind.RelativeOrAbsolute)))
+                    If File.Exists(SCESYSFolder + "\pic0.png") Then
+                        Dispatcher.BeginInvoke(Sub() NewPS5Game.GameBGSource = New BitmapImage(New Uri(SCESYSFolder + "\pic0.png", UriKind.RelativeOrAbsolute)))
+                    End If
+
+                    If File.Exists(SCESYSFolder + "\snd0.at9") Then
+                        NewPS5Game.GameSoundFile = SCESYSFolder + "\snd0.at9"
                     End If
 
                 End If
@@ -595,6 +621,75 @@ Public Class PS5Library
             NewLoadingWindow.Show()
 
             GameLoaderWorker.RunWorkerAsync(New GameLoaderArgs() With {.Type = LoadType.LocalFolder, .FolderPath = FBD.SelectedPath})
+        End If
+    End Sub
+
+    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
+
+        If GamesListView.SelectedItem IsNot Nothing Then
+
+            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+
+                Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to copy the selected game ?"}
+                If FBD.ShowDialog() = Forms.DialogResult.OK Then
+
+                    Dim NewCopyWindow As New CopyWindow With {
+                        .ShowActivated = True,
+                        .WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                        .BackupDestinationPath = FBD.SelectedPath + "\",
+                        .Title = "Copying " + SelectedPS5Game.GameTitle + " to " + FBD.SelectedPath + Path.GetFileName(SelectedPS5Game.GameFileOrFolderPath),
+                        .BackupPath = SelectedPS5Game.GameFileOrFolderPath
+                    }
+
+                    If SelectedPS5Game.GameCoverSource IsNot Nothing Then
+                        NewCopyWindow.GameIcon = SelectedPS5Game.GameCoverSource
+                    End If
+
+                    If NewCopyWindow.ShowDialog() = True Then
+                        MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
+                    End If
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub PlayMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+            If SelectedPS5Game.GameSoundFile IsNot Nothing Then
+                If IsSoundPlaying Then
+                    Utils.StopGameSound()
+                    IsSoundPlaying = False
+                    PlayMenuItem.Header = "Play Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
+                Else
+                    Utils.PlayGameSound(SelectedPS5Game.GameSoundFile)
+                    IsSoundPlaying = True
+                    PlayMenuItem.Header = "Stop Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Stop-icon.png", UriKind.Relative))}
+                End If
+            Else
+                If IsSoundPlaying Then
+                    Utils.StopGameSound()
+                    IsSoundPlaying = False
+                    PlayMenuItem.Header = "Play Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
+                Else
+                    MsgBox("No game soundtrack found.", MsgBoxStyle.Information)
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub CheckForUpdatesMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CheckForUpdatesMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+            Dim NewPS5GamePatches As New PS5GamePatches With {.ShowActivated = True, .SearchForGamePatchWithID = SelectedPS5Game.GameID.Split(New String() {"Title ID: "}, StringSplitOptions.None)(1)}
+            NewPS5GamePatches.Show()
         End If
     End Sub
 

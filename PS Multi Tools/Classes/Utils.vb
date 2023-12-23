@@ -38,7 +38,7 @@ Public Class Utils
         PlaySound(Nothing, New IntPtr(), PlaySoundFlags.SND_NODEFAULT)
     End Sub
 
-    Public Shared Sub PlayPS3SND(SoundFile As String)
+    Public Shared Sub PlayGameSound(SoundFile As String)
         Using FFPlay As New Process()
             FFPlay.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ffplay.exe"
             FFPlay.StartInfo.Arguments = "-nodisp -autoexit """ + SoundFile + """"
@@ -48,7 +48,7 @@ Public Class Utils
         End Using
     End Sub
 
-    Public Shared Sub StopPS3SND()
+    Public Shared Sub StopGameSound()
         For Each p As Process In Process.GetProcessesByName("ffplay")
             Try
                 p.Kill()

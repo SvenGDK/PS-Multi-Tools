@@ -10,6 +10,7 @@ Public Class CopyWindow
 
     Public MultipleFileList As New List(Of PS3Game)()
     Public FilesCount As Integer
+    Public GameIcon As ImageSource
 
     Public Structure CopyWorkerArgs
         Public Property IsBackupDirectory As Boolean
@@ -17,14 +18,10 @@ Public Class CopyWindow
     End Structure
 
     Private Sub CopyWindow_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
-        'Set ICON0.PNG from PS3Library
-        For Each OpenWin In Windows.Application.Current.Windows()
-            If OpenWin.ToString = "PS_Multi_Tools.PS3Library" Then
-                Dim PS3Lib As PS3Library = CType(OpenWin, PS3Library)
-                ICONImage.Source = PS3Lib.GameIconImage.Source
-                Exit For
-            End If
-        Next
+
+        If GameIcon IsNot Nothing Then
+            GameIconImage.Source = GameIcon
+        End If
 
         BeginCopy()
     End Sub
@@ -130,25 +127,24 @@ Public Class CopyWindow
 
     Public Sub CopyDirectory(sourcePath As String, destinationPath As String)
         'Re-create the entire backup folder at the destination with recursive call
-        Dim sourceDirectoryInfo As New DirectoryInfo(sourcePath)
+        Dim SourceDirInfo As New DirectoryInfo(sourcePath)
 
         If Not Directory.Exists(destinationPath) Then
             Directory.CreateDirectory(destinationPath)
         End If
 
-        Dim fileSystemInfo As FileSystemInfo
-        For Each fileSystemInfo In sourceDirectoryInfo.GetFileSystemInfos
-            Dim destinationFileName As String = Path.Combine(destinationPath, fileSystemInfo.Name)
+        For Each FileSysInfo As FileSystemInfo In SourceDirInfo.GetFileSystemInfos
+            Dim destinationFileName As String = Path.Combine(destinationPath, FileSysInfo.Name)
 
-            If TypeOf fileSystemInfo Is FileInfo Then
-                File.Copy(fileSystemInfo.FullName, destinationFileName, True)
+            If TypeOf FileSysInfo Is FileInfo Then
+                File.Copy(FileSysInfo.FullName, destinationFileName, True)
                 If MultipleFileList.Count > 1 Then
-                    CopyWorker.ReportProgress(0, New Structures.CopyItem With {.FileName = fileSystemInfo.Name})
+                    CopyWorker.ReportProgress(0, New Structures.CopyItem With {.FileName = FileSysInfo.Name})
                 Else
-                    CopyWorker.ReportProgress(+1, New Structures.CopyItem With {.FileName = fileSystemInfo.Name})
+                    CopyWorker.ReportProgress(+1, New Structures.CopyItem With {.FileName = FileSysInfo.Name})
                 End If
             Else
-                CopyDirectory(fileSystemInfo.FullName, destinationFileName)
+                CopyDirectory(FileSysInfo.FullName, destinationFileName)
             End If
         Next
     End Sub
