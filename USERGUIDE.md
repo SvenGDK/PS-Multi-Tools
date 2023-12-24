@@ -4,11 +4,11 @@
 <summary>Requirements</summary>
 
 ### Windows
-- Windows 10 or 11 with .NET Framework 4.8.1
+- Windows 10 or 11 with .NET Framework 4.8.1 is recommended
 
 ### macOS
-- macOS 12.0 or higher
-- Homebrew packages :
+- macOS 12.0 or higher (Intel x86 or Apple ARM64)
+- Homebrew with following packages :
   - 'wget' (Used for mirroring directories from FTP)
   - 'jdk11' (Used for sending .jar payloads)
   - 'netcat' (Used to dump self files - more stable than macOS's 'nc')
@@ -91,12 +91,17 @@
 2. Select a folder containing your game/app backups.
 
 **Note:** Game or App backups must contain a /sce_sys/param.json file.</br>
-**Note 2:** Source .pkg files are also supported.
+**Note 2:** .pkg files are also supported.
 
 ### Load installed games & apps over FTP
 1. Enter your PS5 IP & Port in the Settings on the top menu (IP:PORT)
 2. Send a payload that enables FTP access
 3. Click on Library -> "Load installed games and apps over FTP" on the top menu
+
+#### Game Library Context Menu Options :
+- Copy To -> Copies the selected game to a destination drive or folder
+- Play Soundtrack -> Plays the included at9 soundtrack of the game (if available)
+- Check for updates -> Checks for available game patches
 
 ## Tools
 ### Payload & Mast1c0re PS2 Game Sender
@@ -185,7 +190,6 @@ The AT9 <-> WAV Converter allows you to convert .wav audio files to .at9 and vic
 - Create a new directory -> Creates a new folder at the current path
 
 ### FTP Grabber
-
 #### Options :
 1. **Create a full dump** (Windows) / **Create a full game dump including metadata** (macOS)
    - This option will :
@@ -232,5 +236,13 @@ The AT9 <-> WAV Converter allows you to convert .wav audio files to .at9 and vic
 #### RCO Extractor
 1. Select a folder containing .rco files or select a single .rco file
 2. Click on "Extract" and wait until the .rco file(s) is/are extracted.
+
+### Game Patches
+#### Search & Download Game Patches
+1. Enter a game ID (like PPSA02081) and click on "Search"
+2. A new window will be opened with a list of available patches
+3. Select the patch you want to download and download each piece pkg of this update (if there is more than 1 piece)
+   - You can add the download to the queue and download it later or together with other ones
+5. Downloads will be stored in the "Downloads" folder on the same location as PS Multi Tools.
 
 </details>
