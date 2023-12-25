@@ -16,3 +16,7 @@
 | Immortals Fenyx Rising | 1.00 | 4.03 | Crashes at some point while transferring files |
 | Spider-Man Miles Morales | 1.00 | 4.03 | Crashes at some point while transferring files |
 | UNCHARTED: Legacy of Thieves Collection | 1.00 | 4.03 | Crashes at some point while transferring files |
+
+### List by LightningMods
+
+https://docs.google.com/spreadsheets/d/1olP2JugXf2l3PGOw7Y7TosLqSilI_a-_r0GqCK9D1Tw/edit#gid=0
