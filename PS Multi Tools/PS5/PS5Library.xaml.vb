@@ -584,7 +584,7 @@ Public Class PS5Library
                     'Check if eboot is encrypted
                     If File.Exists(MainGamePath + "\eboot.bin") Then
                         Dim FirstStr As String = ""
-                        Using EBOOTReader As New FileStream(MainGamePath + "\sce_module\libc.prx", FileMode.Open)
+                        Using EBOOTReader As New FileStream(MainGamePath + "\eboot.bin", FileMode.Open)
                             Dim BinReader As New BinaryReader(EBOOTReader)
                             FirstStr = BinReader.ReadString()
                             EBOOTReader.Close()
