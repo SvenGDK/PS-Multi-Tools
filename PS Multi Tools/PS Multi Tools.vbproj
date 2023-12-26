@@ -435,6 +435,12 @@
   <ItemGroup>
     <Resource Include="Images\Refresh-icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Replace-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\OpenFolder-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

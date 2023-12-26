@@ -43,6 +43,11 @@
                                     <Image.Effect>
                                         <DropShadowEffect/>
                                     </Image.Effect>
+                                    <Image.ToolTip>
+                                        <WrapPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding DecFilesIncluded}" Foreground="Black" FontSize="16" FontFamily="Calibri"/>
+                                        </WrapPanel>
+                                    </Image.ToolTip>
                                 </Image>
                                 <TextBlock Height="28" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="22" FontWeight="Bold" Margin="156,11,0,0" HorizontalAlignment="Left" FontFamily="Calibri">
                                     <TextBlock.Effect>
@@ -74,29 +79,29 @@
                                     </TextBlock.Effect>
                                 </TextBlock>
                                 <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="18" TextAlignment="Left" Margin="451,44,0,0" HorizontalAlignment="Left" FontFamily="Calibri">
-                                     <TextBlock.Effect>
-                                       <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
-                                     </TextBlock.Effect>
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+                                    </TextBlock.Effect>
                                 </TextBlock>
                                 <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="18" TextAlignment="Left" Margin="451,71,0,0" HorizontalAlignment="Left" FontFamily="Calibri">
-                                     <TextBlock.Effect>
-                                       <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
-                                     </TextBlock.Effect>
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+                                    </TextBlock.Effect>
                                 </TextBlock>
                                 <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameVersion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="18" TextAlignment="Left" Margin="156,98,0,0" HorizontalAlignment="Left" FontFamily="Calibri">
-                                     <TextBlock.Effect>
-                                       <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
-                                     </TextBlock.Effect>
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+                                    </TextBlock.Effect>
                                 </TextBlock>
                                 <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRequiredFirmware}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="18" TextAlignment="Left" Margin="451,98,0,0" HorizontalAlignment="Left" FontFamily="Calibri">
-                                     <TextBlock.Effect>
-                                       <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
-                                     </TextBlock.Effect>
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+                                    </TextBlock.Effect>
                                 </TextBlock>
                                 <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameContentID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="18" TextAlignment="Left" Margin="156,125,0,0" HorizontalAlignment="Left" FontFamily="Calibri">
-                                     <TextBlock.Effect>
+                                    <TextBlock.Effect>
                                         <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
-                                     </TextBlock.Effect>
+                                    </TextBlock.Effect>
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>
@@ -114,11 +119,11 @@
                         <DataTemplate>
                             <Grid Width="455">
                                 <Image Width="64" Height="64" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}" FontSize="12" TextAlignment="Left" Margin="311,35,0,0" HorizontalAlignment="Left" Width="134"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" FontSize="12" TextAlignment="Left" Margin="311,55,0,0" HorizontalAlignment="Left" Width="134"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -135,13 +140,13 @@
                         <DataTemplate>
                             <Grid Width="455">
                                 <Image Width="64" Height="64" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameVersion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="339,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="339,75,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameContentID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="79,75,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRequiredFirmware}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="339,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameVersion}" FocusVisualStyle="{x:Null}" FontSize="12" TextAlignment="Left" Margin="303,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" FontSize="12" TextAlignment="Left" Margin="303,75,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameContentID}" FocusVisualStyle="{x:Null}" FontSize="12" TextAlignment="Left" Margin="79,75,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRequiredFirmware}" FocusVisualStyle="{x:Null}" FontSize="12" TextAlignment="Left" Margin="303,55,0,0" HorizontalAlignment="Left"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

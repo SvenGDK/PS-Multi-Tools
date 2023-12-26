@@ -18,6 +18,8 @@
     Private _FRGameTitle As String
     Private _GameBackgroundImageBrush As ImageBrush
     Private _GameSoundFile As String
+    Private _IsCompatibleFW As String 'Not used yet
+    Private _DecFilesIncluded As String
 
     Public Property GameTitle As String
         Get
@@ -178,6 +180,24 @@
         End Get
         Set
             _JPGameTitle = Value
+        End Set
+    End Property
+
+    Public Property IsCompatibleFW As String
+        Get
+            Return _IsCompatibleFW
+        End Get
+        Set
+            _IsCompatibleFW = Value
+        End Set
+    End Property
+
+    Public Property DecFilesIncluded As String
+        Get
+            Return _DecFilesIncluded
+        End Get
+        Set
+            _DecFilesIncluded = Value
         End Set
     End Property
 
