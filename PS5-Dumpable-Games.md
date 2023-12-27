@@ -4,7 +4,7 @@
 
 | Game ID | Type | Game Title | Game Version | Firmware | Used Option & Comments |
 | --- | --- | --- | --- | --- | --- |
-| PPSA01870 | Physical Disc | Far Cry 6 | 1.00 | 4.03 | Full Game Dump & SELF files dump (not tested yet) |
+| PPSA01870 | Physical Disc | Far Cry 6 | 1.00 | 4.03 | Full Game Dump. SELF files dump not tested yet |
 | PPSA08042 | Physical Disc | Farming Simulator 22 (Platinum Edition) | 1.00 | 4.03 | Full Game Dump & SELF files dump |
 | PPSA01349 | Physical Disc | Godfall | 1.00 | 4.03 | Full Game Dump & SELF files dump - Will require internet to play |
 | PPSA02177 | Physical Disc | Tony Hawk's Pro Skater 1 + 2 | 1.00 | 4.03 |Full Game Dump & SELF files dump |
