@@ -1,4 +1,4 @@
-### This is not a full list and only contains some tested games.
+### This is not a full list and only contains games that have been tested on dumping only!
 
 ### List of games that can be grabbed via FTP
 
