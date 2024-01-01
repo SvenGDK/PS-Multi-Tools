@@ -7,24 +7,23 @@
         mc:Ignorable="d"
         Title="PS Multi Tools" Height="575" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-
         <TextBlock HorizontalAlignment="Center" Margin="0,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
 
         <Image x:Name="PS1Image" HorizontalAlignment="Left" Height="84" Margin="39,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS1.png" Cursor="Hand"/>
         <Image x:Name="PS2Image" HorizontalAlignment="Left" Height="84" Margin="162,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS2.png" Cursor="Hand"/>
         <Image x:Name="PS3Image" HorizontalAlignment="Left" Height="84" Margin="287,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS3.png" Cursor="Hand"/>
-        <Image x:Name="PS4Image" HorizontalAlignment="Center" Height="84" Margin="0,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/ps4.png" Cursor="Hand"/>
+        <Image x:Name="PS4Image" HorizontalAlignment="Left" Height="84" Margin="403,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/ps4.png" Cursor="Hand"/>
         <Image x:Name="PS5Image" HorizontalAlignment="Left" Height="84" Margin="516,112,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS5.png" Cursor="Hand"/>
         <Image x:Name="PSPImage" HorizontalAlignment="Left" Height="92" Margin="629,108,0,0" VerticalAlignment="Top" Width="92" Source="/Images/psp.png" Cursor="Hand"/>
         <Image x:Name="PSVImage" HorizontalAlignment="Left" Height="92" Margin="752,133,0,0" VerticalAlignment="Top" Width="92" Source="/Images/PSV.png" Cursor="Hand"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="66,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS1" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="189,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS2" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS3" FontSize="20" Margin="315,205,0,0" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS4" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="543,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PS5" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="660,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PSP" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="783,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="PSV" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="66,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS1" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="189,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS2" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="315,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS3" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="430,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS4" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="543,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS5" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="660,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PSP" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="783,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PSV" FontSize="20" FontFamily="Calibri"/>
 
         <!--PS1 Grid-->
         <Grid x:Name="PS1Grid" Margin="39,242,46,62" Width="805" Height="230" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
@@ -272,8 +271,8 @@
         </Grid>
 
         <StatusBar Height="27" VerticalAlignment="Bottom" Background="#FFE2E2E2" FontFamily="Calibri" Foreground="Black" FontSize="14">
-            <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.2  -  [DLL] PSMT-Library v1.2" Margin="5,0,0,0"/>
-            <Button x:Name="CheckUpdatesButton" Content="Check for updates" FontSize="12" Margin="395,0,0,0" Width="100" Height="20"/>
+            <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.5" Margin="5,0,0,0"/>
+            <Button x:Name="CheckUpdatesButton" Content="Check for updates" FontSize="12" Width="100" Height="20" HorizontalAlignment="Right" Margin="395,0,0,0"/>
         </StatusBar>
 
     </Grid>

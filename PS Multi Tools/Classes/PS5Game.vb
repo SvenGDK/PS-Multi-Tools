@@ -18,8 +18,9 @@
     Private _FRGameTitle As String
     Private _GameBackgroundImageBrush As ImageBrush
     Private _GameSoundFile As String
-    Private _IsCompatibleFW As String 'Not used yet
+    Private _IsCompatibleFW As String
     Private _DecFilesIncluded As String
+    Private _GameContentIDs As String
 
     Public Property GameTitle As String
         Get
@@ -198,6 +199,15 @@
         End Get
         Set
             _DecFilesIncluded = Value
+        End Set
+    End Property
+
+    Public Property GameContentIDs As String
+        Get
+            Return _GameContentIDs
+        End Get
+        Set
+            _GameContentIDs = Value
         End Set
     End Property
 

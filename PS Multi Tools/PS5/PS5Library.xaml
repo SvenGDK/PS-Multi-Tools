@@ -12,10 +12,10 @@
         <wv2:WebView2 x:Name="ContentWebView" HorizontalAlignment="Center" Height="326" Margin="0,87,0,0" VerticalAlignment="Top" Width="830" Source="https://google.com" Visibility="Hidden"/>
         <TabControl Margin="0,21,0,0" Background="{x:Null}" Foreground="White">
             <TabItem Header="Games" FontSize="14">
-                <ListView x:Name="GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" >
+                <ListView x:Name="GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" VirtualizingStackPanel.VirtualizationMode="Recycling" >
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel/>
+                            <WrapPanel ItemHeight="158" ItemWidth="990"/>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
@@ -97,11 +97,21 @@
                                     <TextBlock.Effect>
                                         <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                                     </TextBlock.Effect>
+                                    <TextBlock.ToolTip>
+                                        <WrapPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding IsCompatibleFW}" Foreground="Black" FontSize="14" FontFamily="Calibri"/>
+                                        </WrapPanel>
+                                    </TextBlock.ToolTip>
                                 </TextBlock>
                                 <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameContentID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="18" TextAlignment="Left" Margin="156,125,0,0" HorizontalAlignment="Left" FontFamily="Calibri">
                                     <TextBlock.Effect>
                                         <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                                     </TextBlock.Effect>
+                                    <TextBlock.ToolTip>
+                                        <WrapPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding GameContentIDs}" Foreground="Black" FontSize="14" FontFamily="Calibri"/>
+                                        </WrapPanel>
+                                    </TextBlock.ToolTip>
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>

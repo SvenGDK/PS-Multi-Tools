@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Text.Encoding.CodePages</name>
+    </assembly>
+    <members>
+        <member name="M:System.Text.CodePagesEncodingProvider.GetNonNullPinnableReference``1(``0[])">
+            <summary>Gets a reference to the array's data suitable for pinning.</summary>
+            <remarks>The resulting pointer is guaranteed to be non-null.</remarks>
+        </member>
+        <member name="P:System.Text.CodePagesEncodingProvider.SystemDefaultCodePage">
+            <summary>Get the system default non-unicode code page, or 0 if not available.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_NeedNonNegNum">
+            <summary>Non-negative number required.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_IndexCount">
+            <summary>Index and count must refer to a location within the string.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_IndexCountBuffer">
+            <summary>Index and count must refer to a location within the buffer.</summary>
+        </member>
+        <member name="P:System.SR.NotSupported_NoCodepageData">
+            <summary>No data is available for encoding {0}.</summary>
+        </member>
+        <member name="P:System.SR.Argument_EncodingConversionOverflowBytes">
+            <summary>The output byte buffer is too small to contain the encoded data, encoding '{0}' fallback '{1}'.</summary>
+        </member>
+        <member name="P:System.SR.Argument_InvalidCharSequenceNoIndex">
+            <summary>String contains invalid Unicode code points.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_GetByteCountOverflow">
+            <summary>Too many characters. The resulting number of bytes is larger than what can be returned as an int.</summary>
+        </member>
+        <member name="P:System.SR.Argument_EncodingConversionOverflowChars">
+            <summary>The output char buffer is too small to contain the decoded characters, encoding '{0}' fallback '{1}'.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_GetCharCountOverflow">
+            <summary>Too many bytes. The resulting number of chars is larger than what can be returned as an int.</summary>
+        </member>
+        <member name="P:System.SR.Argument_EncoderFallbackNotEmpty">
+            <summary>Must complete Convert() operation or call Encoder.Reset() before calling GetBytes() or GetByteCount(). Encoder '{0}' fallback '{1}'.</summary>
+        </member>
+        <member name="P:System.SR.Argument_RecursiveFallback">
+            <summary>Recursive fallback not allowed for character \\u{0:X4}.</summary>
+        </member>
+        <member name="P:System.SR.Argument_RecursiveFallbackBytes">
+            <summary>Recursive fallback not allowed for bytes {0}.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_Range">
+            <summary>Valid values are between {0} and {1}, inclusive.</summary>
+        </member>
+        <member name="P:System.SR.Argument_CodepageNotSupported">
+            <summary>{0} is not a supported code page.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_IndexMustBeLess">
+            <summary>Index was out of range. Must be non-negative and less than the size of the collection.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_IndexMustBeLessOrEqual">
+            <summary>Index was out of range. Must be non-negative and less than or equal to the size of the collection.</summary>
+        </member>
+        <member name="P:System.SR.MissingEncodingNameResource">
+            <summary>Could not find a resource entry for the encoding codepage '{0} - {1}'</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_37">
+            <summary>IBM EBCDIC (US-Canada)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_437">
+            <summary>OEM United States</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_500">
+            <summary>IBM EBCDIC (International)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_708">
+            <summary>Arabic (ASMO 708)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_720">
+            <summary>Arabic (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_737">
+            <summary>Greek (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_775">
+            <summary>Baltic (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_850">
+            <summary>Western European (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_852">
+            <summary>Central European (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_855">
+            <summary>OEM Cyrillic</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_857">
+            <summary>Turkish (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_858">
+            <summary>OEM Multilingual Latin I</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_860">
+            <summary>Portuguese (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_861">
+            <summary>Icelandic (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_862">
+            <summary>Hebrew (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_863">
+            <summary>French Canadian (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_864">
+            <summary>Arabic (864)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_865">
+            <summary>Nordic (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_866">
+            <summary>Cyrillic (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_869">
+            <summary>Greek, Modern (DOS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_870">
+            <summary>IBM EBCDIC (Multilingual Latin-2)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_874">
+            <summary>Thai (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_875">
+            <summary>IBM EBCDIC (Greek Modern)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_932">
+            <summary>Japanese (Shift-JIS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_936">
+            <summary>Chinese Simplified (GB2312)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_949">
+            <summary>Korean</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_950">
+            <summary>Chinese Traditional (Big5)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1026">
+            <summary>IBM EBCDIC (Turkish Latin-5)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1047">
+            <summary>IBM Latin-1</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1140">
+            <summary>IBM EBCDIC (US-Canada-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1141">
+            <summary>IBM EBCDIC (Germany-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1142">
+            <summary>IBM EBCDIC (Denmark-Norway-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1143">
+            <summary>IBM EBCDIC (Finland-Sweden-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1144">
+            <summary>IBM EBCDIC (Italy-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1145">
+            <summary>IBM EBCDIC (Spain-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1146">
+            <summary>IBM EBCDIC (UK-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1147">
+            <summary>IBM EBCDIC (France-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1148">
+            <summary>IBM EBCDIC (International-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1149">
+            <summary>IBM EBCDIC (Icelandic-Euro)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1250">
+            <summary>Central European (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1251">
+            <summary>Cyrillic (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1252">
+            <summary>Western European (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1253">
+            <summary>Greek (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1254">
+            <summary>Turkish (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1255">
+            <summary>Hebrew (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1256">
+            <summary>Arabic (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1257">
+            <summary>Baltic (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1258">
+            <summary>Vietnamese (Windows)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_1361">
+            <summary>Korean (Johab)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10000">
+            <summary>Western European (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10001">
+            <summary>Japanese (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10002">
+            <summary>Chinese Traditional (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10003">
+            <summary>Korean (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10004">
+            <summary>Arabic (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10005">
+            <summary>Hebrew (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10006">
+            <summary>Greek (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10007">
+            <summary>Cyrillic (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10008">
+            <summary>Chinese Simplified (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10010">
+            <summary>Romanian (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10017">
+            <summary>Ukrainian (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10021">
+            <summary>Thai (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10029">
+            <summary>Central European (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10079">
+            <summary>Icelandic (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10081">
+            <summary>Turkish (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_10082">
+            <summary>Croatian (Mac)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20000">
+            <summary>Chinese Traditional (CNS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20001">
+            <summary>TCA Taiwan</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20002">
+            <summary>Chinese Traditional (Eten)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20003">
+            <summary>IBM5550 Taiwan</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20004">
+            <summary>TeleText Taiwan</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20005">
+            <summary>Wang Taiwan</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20105">
+            <summary>Western European (IA5)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20106">
+            <summary>German (IA5)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20107">
+            <summary>Swedish (IA5)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20108">
+            <summary>Norwegian (IA5)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20261">
+            <summary>T.61</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20269">
+            <summary>ISO-6937</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20273">
+            <summary>IBM EBCDIC (Germany)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20277">
+            <summary>IBM EBCDIC (Denmark-Norway)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20278">
+            <summary>IBM EBCDIC (Finland-Sweden)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20280">
+            <summary>IBM EBCDIC (Italy)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20284">
+            <summary>IBM EBCDIC (Spain)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20285">
+            <summary>IBM EBCDIC (UK)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20290">
+            <summary>IBM EBCDIC (Japanese katakana)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20297">
+            <summary>IBM EBCDIC (France)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20420">
+            <summary>IBM EBCDIC (Arabic)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20423">
+            <summary>IBM EBCDIC (Greek)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20424">
+            <summary>IBM EBCDIC (Hebrew)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20833">
+            <summary>IBM EBCDIC (Korean Extended)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20838">
+            <summary>IBM EBCDIC (Thai)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20866">
+            <summary>Cyrillic (KOI8-R)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20871">
+            <summary>IBM EBCDIC (Icelandic)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20880">
+            <summary>IBM EBCDIC (Cyrillic Russian)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20905">
+            <summary>IBM EBCDIC (Turkish)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20924">
+            <summary>IBM Latin-1</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20932">
+            <summary>Japanese (JIS 0208-1990 and 0212-1990)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20936">
+            <summary>Chinese Simplified (GB2312-80)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_20949">
+            <summary>Korean Wansung</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_21025">
+            <summary>IBM EBCDIC (Cyrillic Serbian-Bulgarian)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_21027">
+            <summary>Ext Alpha Lowercase</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_21866">
+            <summary>Cyrillic (KOI8-U)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28592">
+            <summary>Central European (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28593">
+            <summary>Latin 3 (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28594">
+            <summary>Baltic (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28595">
+            <summary>Cyrillic (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28596">
+            <summary>Arabic (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28597">
+            <summary>Greek (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28598">
+            <summary>Hebrew (ISO-Visual)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28599">
+            <summary>Turkish (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28603">
+            <summary>Estonian (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_28605">
+            <summary>Latin 9 (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_29001">
+            <summary>Europa</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_38598">
+            <summary>Hebrew (ISO-Logical)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50000">
+            <summary>User Defined</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50220">
+            <summary>Japanese (JIS)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50221">
+            <summary>Japanese (JIS-Allow 1 byte Kana)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50222">
+            <summary>Japanese (JIS-Allow 1 byte Kana - SO/SI)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50225">
+            <summary>Korean (ISO)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50227">
+            <summary>Chinese Simplified (ISO-2022)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50229">
+            <summary>Chinese Traditional (ISO-2022)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50930">
+            <summary>IBM EBCDIC (Japanese and Japanese Katakana)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50931">
+            <summary>IBM EBCDIC (Japanese and US-Canada)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50933">
+            <summary>IBM EBCDIC (Korean and Korean Extended)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50935">
+            <summary>IBM EBCDIC (Simplified Chinese)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50937">
+            <summary>IBM EBCDIC (Traditional Chinese)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_50939">
+            <summary>IBM EBCDIC (Japanese and Japanese-Latin)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_51932">
+            <summary>Japanese (EUC)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_51936">
+            <summary>Chinese Simplified (EUC)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_51949">
+            <summary>Korean (EUC)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_52936">
+            <summary>Chinese Simplified (HZ)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_54936">
+            <summary>Chinese Simplified (GB18030)</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57002">
+            <summary>ISCII Devanagari</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57003">
+            <summary>ISCII Bengali</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57004">
+            <summary>ISCII Tamil</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57005">
+            <summary>ISCII Telugu</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57006">
+            <summary>ISCII Assamese</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57007">
+            <summary>ISCII Oriya</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57008">
+            <summary>ISCII Kannada</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57009">
+            <summary>ISCII Malayalam</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57010">
+            <summary>ISCII Gujarati</summary>
+        </member>
+        <member name="P:System.SR.Globalization_cp_57011">
+            <summary>ISCII Punjabi</summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.LibraryImportAttribute">
+            <summary>
+            Attribute used to indicate a source generator should create a function for marshalling
+            arguments instead of relying on the runtime to generate an equivalent marshalling function at run-time.
+            </summary>
+            <remarks>
+            This attribute is meaningless if the source generator associated with it is not enabled.
+            The current built-in source generator only supports C# and only supplies an implementation when
+            applied to static, partial, non-generic methods.
+            </remarks>
+        </member>
+        <member name="M:System.Runtime.InteropServices.LibraryImportAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.LibraryImportAttribute"/>.
+            </summary>
+            <param name="libraryName">Name of the library containing the import.</param>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.LibraryName">
+            <summary>
+            Gets the name of the library containing the import.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.EntryPoint">
+            <summary>
+            Gets or sets the name of the entry point to be called.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshalling">
+            <summary>
+            Gets or sets how to marshal string arguments to the method.
+            </summary>
+            <remarks>
+            If this field is set to a value other than <see cref="F:System.Runtime.InteropServices.StringMarshalling.Custom" />,
+            <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType" /> must not be specified.
+            </remarks>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType">
+            <summary>
+            Gets or sets the <see cref="T:System.Type"/> used to control how string arguments to the method are marshalled.
+            </summary>
+            <remarks>
+            If this field is specified, <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshalling" /> must not be specified
+            or must be set to <see cref="F:System.Runtime.InteropServices.StringMarshalling.Custom" />.
+            </remarks>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.SetLastError">
+            <summary>
+            Gets or sets whether the callee sets an error (SetLastError on Windows or errno
+            on other platforms) before returning from the attributed method.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.StringMarshalling">
+            <summary>
+            Specifies how strings should be marshalled for generated p/invokes
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Custom">
+            <summary>
+            Indicates the user is suppling a specific marshaller in <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType"/>.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Utf8">
+            <summary>
+            Use the platform-provided UTF-8 marshaller.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Utf16">
+            <summary>
+            Use the platform-provided UTF-16 marshaller.
+            </summary>
+        </member>
+        <member name="T:Interop.BOOL">
+            <summary>
+            Blittable version of Windows BOOL type. It is convenient in situations where
+            manual marshalling is required, or to avoid overhead of regular bool marshalling.
+            </summary>
+            <remarks>
+            Some Windows APIs return arbitrary integer values although the return type is defined
+            as BOOL. It is best to never compare BOOL to TRUE. Always use bResult != BOOL.FALSE
+            or bResult == BOOL.FALSE .
+            </remarks>
+        </member>
+    </members>
+</doc>

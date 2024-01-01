@@ -1,0 +1,30 @@
+﻿<Window x:Class="PS5AssetsBrowser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PS5 Assets Browser" Height="720" Width="1280" Background="#FF252525" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ListView x:Name="AssetFilesListView" d:ItemsSource="{d:SampleData ItemCount=10}" Margin="0,0,810,0" Width="350" HorizontalAlignment="Left" Background="#FF474747" BorderBrush="Black" SelectionMode="Single" Foreground="White">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="30">
+                        <Image Height="16" VerticalAlignment="Top" Source="{Binding Icon}" Width="16" HorizontalAlignment="Left" Margin="0,5,0,0"></Image>
+                        <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding AssetFileName}" TextWrapping="NoWrap" FontSize="14" TextAlignment="Left" HorizontalAlignment="Left" FontFamily="Calibri" Margin="20,0,0,0"/>
+                        <TextBlock Height="10" VerticalAlignment="Top" Text="{Binding AssetFilePath}" TextWrapping="NoWrap" FontSize="8" TextAlignment="Left" HorizontalAlignment="Left" FontFamily="Calibri" Margin="20,20,0,0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <MediaElement x:Name="AssetPlayer" Height="700" Margin="350,0,0,0" MinHeight="680" MinWidth="950" LoadedBehavior="Manual" UnloadedBehavior="Manual"/>
+        <Image x:Name="ImageViewer" HorizontalAlignment="Left" Height="512" Margin="550,100,0,0" VerticalAlignment="Top" Width="512" Visibility="Hidden"/>
+        <TextBlock x:Name="FontPreviewTextBlock" HorizontalAlignment="Left" Margin="565,200,0,0" TextWrapping="Wrap" Text="Font Preview :&#10;&#10;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" VerticalAlignment="Top" Foreground="White" FontSize="36" Width="500" Height="300" TextAlignment="Center" Visibility="Hidden"/>
+    </Grid>
+</Window>

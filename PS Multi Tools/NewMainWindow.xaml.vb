@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Net
 Imports System.Windows.Media.Animation
+Imports PS_Multi_Tools.INI
 Imports psmt_lib
 
 Public Class NewMainWindow
@@ -11,12 +12,14 @@ Public Class NewMainWindow
     Dim NewVersion As String = String.Empty
     Dim Changelog As String = String.Empty
 
+    Dim ConsoleIP As String = String.Empty
+    Dim ConsolePort As String = String.Empty
+
     Dim CurrentGrid As Grid = Nothing
     Dim ShowAnimation As New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(300))}
     Dim HideAnimation As New DoubleAnimation With {.From = 1, .To = 0, .Duration = New Duration(TimeSpan.FromMilliseconds(300))}
 
     Private Sub NewMainWindow_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
-
         If Not File.Exists("psmt-lib.dll") Then
             If MsgBox("PS Multi Tools Library not found! Do you want to re-download it?") = MsgBoxResult.Yes Then
                 If Utils.IsURLValid("http://X.X.X.X/psmt-lib.dll") Then
@@ -34,6 +37,15 @@ Public Class NewMainWindow
             BuildTextBlock.Text = "[Main] PS Multi Tools v" + PSMTInfo.FileVersion + "  -  [DLL] PSMT-Library v" + LibraryInfo.FileVersion
         End If
 
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
+            Try
+                Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+                ConsoleIP = MainConfig.IniReadValue("PS5 Tools", "IP")
+                ConsolePort = MainConfig.IniReadValue("PS5 Tools", "Port")
+            Catch ex As FileNotFoundException
+                MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
+            End Try
+        End If
     End Sub
 
     Private Sub DownloadClient_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles DownloadClient.DownloadFileCompleted
@@ -44,7 +56,6 @@ Public Class NewMainWindow
     End Sub
 
     Private Sub CheckUpdatesButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckUpdatesButton.Click
-
         If Utils.IsURLValid("http://X.X.X.X/psmt-lib.txt") Then
             Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
             Dim CurrentLibraryVersion As String = LibraryInfo.FileVersion
@@ -54,7 +65,7 @@ Public Class NewMainWindow
             Changelog = VerCheckClient.DownloadString("http://X.X.X.X/changelog.txt")
 
             If CurrentLibraryVersion < NewLibraryVersion Then
-                If MsgBox("An update is available, do you want to install it ?", MsgBoxStyle.YesNo, "Update found") = MsgBoxResult.Yes Then
+                If MsgBox("A library update is available, do you want to install it now ?", MsgBoxStyle.YesNo, "Library Update found") = MsgBoxResult.Yes Then
                     Dim NewUpdater As New SyncLibrary() With {.ShowActivated = True}
                     NewUpdater.ShowDialog()
                 End If
@@ -64,7 +75,6 @@ Public Class NewMainWindow
         Else
             MsgBox("Could not check for updates. No internet connection available.", MsgBoxStyle.Exclamation)
         End If
-
     End Sub
 
 #Region "Menu Navigation"
@@ -225,43 +235,11 @@ Public Class NewMainWindow
     End Sub
 #End Region
 
-    Private Sub MainWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Windows.Application.Current.Shutdown()
-    End Sub
+#Region "PS1"
 
     Private Sub LoadPS1LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS1LibraryButton.Click
         Dim NewPS1Library As New PS1Library() With {.ShowActivated = True}
         NewPS1Library.Show()
-    End Sub
-
-    Private Sub LoadPS2LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS2LibraryButton.Click
-        Dim NewPS2Library As New PS2Library() With {.ShowActivated = True}
-        NewPS2Library.Show()
-    End Sub
-
-    Private Sub LoadPS3LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS3LibraryButton.Click
-        Dim NewPS3Library As New PS3Library() With {.ShowActivated = True}
-        NewPS3Library.Show()
-    End Sub
-
-    Private Sub LoadPS4LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS4LibraryButton.Click
-        Dim NewPS4Library As New PS4Library() With {.ShowActivated = True}
-        NewPS4Library.Show()
-    End Sub
-
-    Private Sub LoadPS5LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5LibraryButton.Click
-        Dim NewPS5Library As New PS5Library() With {.ShowActivated = True}
-        NewPS5Library.Show()
-    End Sub
-
-    Private Sub LoadPSPLibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSPLibraryButton.Click
-        Dim NewPSPLibrary As New PSPLibrary() With {.ShowActivated = True}
-        NewPSPLibrary.Show()
-    End Sub
-
-    Private Sub LoadPSVLibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSVLibraryButton.Click
-        Dim NewPSVLibrary As New PSVLibrary() With {.ShowActivated = True}
-        NewPSVLibrary.Show()
     End Sub
 
     Private Sub LoadPS1MergeBINButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS1MergeBINButton.Click
@@ -269,9 +247,32 @@ Public Class NewMainWindow
         NewMergeBINTool.Show()
     End Sub
 
+#End Region
+
+#Region "PS2"
+
+    Private Sub LoadPS2LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS2LibraryButton.Click
+        Dim NewPS2Library As New PS2Library() With {.ShowActivated = True}
+        NewPS2Library.Show()
+    End Sub
+
     Private Sub LoadPS2BINConverterButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS2BINConverterButton.Click
         Dim NewBINCUEConverter As New BINCUEConverter() With {.ShowActivated = True}
         NewBINCUEConverter.Show()
+    End Sub
+
+    Private Sub LoadPSXXMBManagerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSXXMBManagerButton.Click
+        Dim NewXMBInstaller As New XMBInstaller() With {.ShowActivated = True}
+        NewXMBInstaller.Show()
+    End Sub
+
+#End Region
+
+#Region "PS3"
+
+    Private Sub LoadPS3LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS3LibraryButton.Click
+        Dim NewPS3Library As New PS3Library() With {.ShowActivated = True}
+        NewPS3Library.Show()
     End Sub
 
     Private Sub LoadPS3ISOToolsButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS3ISOToolsButton.Click
@@ -282,6 +283,15 @@ Public Class NewMainWindow
     Private Sub LoadPS3PUPUnpackerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS3PUPUnpackerButton.Click
         Dim NewPUPUnpacker As New PS3PUPUnpacker() With {.ShowActivated = True}
         NewPUPUnpacker.Show()
+    End Sub
+
+#End Region
+
+#Region "PS4"
+
+    Private Sub LoadPS4LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS4LibraryButton.Click
+        Dim NewPS4Library As New PS4Library() With {.ShowActivated = True}
+        NewPS4Library.Show()
     End Sub
 
     Private Sub LoadPS4PKGMergerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS4PKGMergerButton.Click
@@ -297,6 +307,15 @@ Public Class NewMainWindow
     Private Sub LoadPS4USBWriterButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS4USBWriterButton.Click
         Dim NewUSBWriter As New USBWriter() With {.ShowActivated = True}
         NewUSBWriter.Show()
+    End Sub
+
+#End Region
+
+#Region "PS5"
+
+    Private Sub LoadPS5LibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5LibraryButton.Click
+        Dim NewPS5Library As New PS5Library() With {.ShowActivated = True}
+        NewPS5Library.Show()
     End Sub
 
     Private Sub LoadPS5AT9ConverterButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5AT9ConverterButton.Click
@@ -319,13 +338,18 @@ Public Class NewMainWindow
 
     Private Sub LoadPS5FTPGrabberButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5FTPGrabberButton.Click
         Dim NewFTPGrabber As New PS5FTPGrabber() With {.ShowActivated = True}
-        Dim ConsoleIP As String = InputBox("Enter your PS5 console IP without port:", "IP Address required", "")
 
         If Not String.IsNullOrEmpty(ConsoleIP) Then
             NewFTPGrabber.ConsoleIP = ConsoleIP
             NewFTPGrabber.Show()
         Else
-            MsgBox("No IP address entered!", MsgBoxStyle.Exclamation)
+            ConsoleIP = InputBox("Enter your PS5 console IP without port:", "IP Address required", "")
+            If Not String.IsNullOrEmpty(ConsoleIP) Then
+                NewFTPGrabber.ConsoleIP = ConsoleIP
+                NewFTPGrabber.Show()
+            Else
+                MsgBox("No IP address entered!", MsgBoxStyle.Exclamation)
+            End If
         End If
     End Sub
 
@@ -363,7 +387,21 @@ Public Class NewMainWindow
 
     Private Sub LoadPS5SenderButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5SenderButton.Click
         Dim NewPS5Sender As New PS5Sender() With {.ShowActivated = True}
+
+        If Not String.IsNullOrEmpty(ConsoleIP) Then
+            NewPS5Sender.ConsoleIP = ConsoleIP
+        End If
+
         NewPS5Sender.Show()
+    End Sub
+
+#End Region
+
+#Region "PSP"
+
+    Private Sub LoadPSPLibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSPLibraryButton.Click
+        Dim NewPSPLibrary As New PSPLibrary() With {.ShowActivated = True}
+        NewPSPLibrary.Show()
     End Sub
 
     Private Sub LoadPSPISOCSOConverterButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSPISOCSOConverterButton.Click
@@ -381,6 +419,15 @@ Public Class NewMainWindow
         NewPBPPacker.Show()
     End Sub
 
+#End Region
+
+#Region "PSV"
+
+    Private Sub LoadPSVLibraryButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSVLibraryButton.Click
+        Dim NewPSVLibrary As New PSVLibrary() With {.ShowActivated = True}
+        NewPSVLibrary.Show()
+    End Sub
+
     Private Sub LoadPSVPKGExtractorButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSVPKGExtractorButton.Click
         Dim NewPKGExtractor As New PKGExtractor() With {.ShowActivated = True}
         NewPKGExtractor.Show()
@@ -391,9 +438,10 @@ Public Class NewMainWindow
         NewPS5RcoExtractor.Show()
     End Sub
 
-    Private Sub LoadPSXXMBManagerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSXXMBManagerButton.Click
-        Dim NewXMBInstaller As New XMBInstaller() With {.ShowActivated = True}
-        NewXMBInstaller.Show()
+#End Region
+
+    Private Sub MainWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Windows.Application.Current.Shutdown()
     End Sub
 
 End Class

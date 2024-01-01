@@ -15,7 +15,7 @@ Imports System.Windows
 <Assembly: AssemblyDescription("Backup manager for PS1, PS2, PSX, PS3, PS4, PS5, PSP & PS Vita, containing homebrews, firmwares & tools.")>
 <Assembly: AssemblyCompany("SvenGDK")>
 <Assembly: AssemblyProduct("PS Multi Tools")>
-<Assembly: AssemblyCopyright("Copyright © SvenGDK 2011-2023")>
+<Assembly: AssemblyCopyright("Copyright © SvenGDK 2011-2024")>
 <Assembly: AssemblyTrademark("SvenGDK")>
 <Assembly: ComVisible(False)>
 
@@ -55,5 +55,5 @@ Imports System.Windows
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("13.4.0.0")>
-<Assembly: AssemblyFileVersion("13.4.0.0")>
+<Assembly: AssemblyVersion("13.5.0.0")>
+<Assembly: AssemblyFileVersion("13.5.0.0")>

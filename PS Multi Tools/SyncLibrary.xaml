@@ -9,6 +9,5 @@
     <Grid>
         <ProgressBar x:Name="LoadProgressBar" HorizontalAlignment="Left" Height="25" Margin="10,36,0,0" VerticalAlignment="Top" Width="400" Foreground="#FF0069FF"/>
         <TextBlock x:Name="LoadStatusTextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Checking for library updates" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="400"/>
-
     </Grid>
 </Window>
