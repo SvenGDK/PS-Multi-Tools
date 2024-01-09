@@ -288,6 +288,7 @@ The AT9 <-> WAV Converter allows you to convert .wav audio files to .at9 and vic
 1. Click on "Tools" -> "Build / Create" -> "Fake sign SELF files" on the top menu
 2. Select a dumped game backup folder that contains the decrypted SELF files (already unpacked and replaced)
 3. Click on "Make" and wait until done
+
 `macOS`
 1. Select the "make_fSELF" tab on the top
 2. Select a dumped game backup folder that contains the decrypted SELF files (already unpacked and replaced)
