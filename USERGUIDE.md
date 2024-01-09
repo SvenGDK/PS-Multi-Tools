@@ -98,13 +98,8 @@
 **Note:** Game or App backups must contain a /sce_sys/param.json file.</br>
 **Note 2:** .pkg files are also supported on Windows.
 
-### Load installed games & apps over FTP
-`Windows only`
-1. Enter your PS5 IP & Port in the Settings on the top menu (IP:PORT)
-2. Send a payload that enables FTP access
-3. Click on Library -> "Load installed games and apps over FTP" on the top menu
-
-#### Game Library Context Menu Options :
+### Game / App Library Context Menu Options :
+`Windows / macOS`
 - Copy (game/app) To -> Copies the selected game to a destination drive or folder
 - Play Soundtrack -> Plays the included at9 soundtrack of the game (if available)
 - Check for updates -> Checks for available game patches
@@ -117,6 +112,12 @@
 - Change game/app icon -> Replace the game or app's icon0.png file
 - Change game/app background -> Replace the game or app's pic0.png file
 - Change game/app soundtrack -> Replace the game or app's snd0.at9 file
+
+### Load installed games & apps over FTP
+`Windows only`
+1. Enter your PS5 IP & Port in the Settings on the top menu (IP:PORT)
+2. Send a payload that enables FTP access
+3. Click on Library -> "Load installed games and apps over FTP" on the top menu
 
 ## Tools
 ### Payload & Mast1c0re PS2 Game Sender
