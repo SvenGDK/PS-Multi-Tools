@@ -110,6 +110,7 @@
 - Check for updates -> Checks for available game patches
 - Open (game) folder -> Opens the folder containing the game files
 - Browse assets -> Opens the assets browser for the selected game
+
 `Windows only`
 - Change game/app type -> Changes the "applicationCategoryType" of the selected game or app
 - Rename game/app -> Renames the game or app to a desired title for all languages
