@@ -273,6 +273,7 @@ The AT9 <-> WAV Converter allows you to convert .wav audio files to .at9 and vic
 4. Select the patch you want to download and download each piece pkg of this update (if there is more than 1 piece)
    - You can add the download to the queue and download it later or together with other ones
 5. All downloads will be stored in the "Downloads" folder on the same location as PS Multi Tools
+
 `macOS`
 1. Simply do a right-click in the games library and select "Check for updates" on an empty selection or on a selected game
 2. Enter a game ID (like PPSA02081) and click on "Search"
