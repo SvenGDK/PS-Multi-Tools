@@ -12,22 +12,11 @@
 | PPSA02113 | Physical Disc | Werewolf: The Apocalypse - Earthblood | 01.000.000 </br> 01.005.000 | 4.03 | Full Game Dump & SELF files dump |
 | PPSA03589 | Physical Disc | WRC 10 | 01.000.000 | 4.03 | Full Game Dump & SELF files dump |
 
-### List of games that can be partially grabbed via FTP
-
-| Game ID | Type | Game Title | Game Version(s) | Firmware | Used Option & Comments |
-| --- | --- | --- | --- | --- | --- |
-| PPSA01870 | Physical Disc | Far Cry 6 | 01.000.000 | 4.03 | Full Game (files) dump only - Fails to dump self files |
-| PPSA01870 | Physical Disc | Iron Harvest | 01.000.000 | 4.03 | Full Game (files) dump only - Fails to dump self files |
-
-### List of games that cannot be grabbed via FTP
-
-| Game ID | Type | Game Title | Game Version(s) | Firmware | Comments |
-| --- | --- | --- | --- | --- | --- |
-| PPSA03803 | Physical Disc | Elex 2 | 01.000.000 | 4.03 | Crashes at some point while transferring game files. |
-| PPSA03208 | Physical Disc | Ghost Of Tsushima | 01.000.000 | 4.03 | Crashes at some point while transferring game files. |
-| PPSA01506 | Physical Disc | Immortals Fenyx Rising | 01.000.000 | 4.03 | Crashes at some point while transferring game files. |
-| PPSA01417 | Physical Disc | Spider-Man Miles Morales | 01.000.000 | 4.03 | Crashes at some point while transferring game files. |
-| PPSA05684 | Physical Disc | UNCHARTED: Legacy of Thieves Collection | 01.000.000 | 4.03 | Crashes at some point while transferring game files. |
+If you have any issues dumping a game:
+- Uninstall the game and remove the disc
+- Shut down your PS5
+- Do an additional reboot after restarting the PS5
+- Install the game again and retry
 
 ### List of playable dumps by LightningMods & Echo Stretch
 
