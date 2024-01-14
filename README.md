@@ -44,13 +44,13 @@ All-In-One Utility with backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PS
 - Mast1c0re ELF Payload & PS2 ISO Sender
 - APP.DB Modifier (Add the Internet Browser to the home menu for every profile with a simple click (requires FTPS5 loaded first))
 - Burn Blu Ray ISO images to Blu Ray discs
-- NOTIFICATION2.DB Manager (requires FTPS5 loaded first)
-- Clear the console's error history (requires FTPS5 loaded first)
+- NOTIFICATION2.DB Manager (requires running FTP server)
+- Clear the console's error history (requires running FTP server)
 - PARAM.JSON Creator & Editor
 - MANIFEST.JSON Creator & Editor
 - GP5 Project Creator (requires prospero-pub-cmd at \Tools\PS5\ )
 - PKG Builder (requires prospero-pub-cmd at \Tools\PS5\ )
-- RCO Dumper (requires FTPS5 loaded first)
+- RCO Dumper (requires running FTP server)
 - RCO Extractor
 - AT9 <-> WAV Audio Converter (requires at9tool at \Tools\PS5\ )
 - FTP Grabber
@@ -62,7 +62,7 @@ All-In-One Utility with backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PS
 - PKG Merger
 - Make fSELF tool to fake sign SELF files of created dumps
   - Based on EchoStretch's Make_FSELF_PY3.bat & LightningMods updated make_fself by Flatz
-- etaHEN Configurator
+- etaHEN Configurator (requires running FTP server)
 - klog Viewer
 
 ## PSP
