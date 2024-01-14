@@ -5,25 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS Multi Tools" Height="575" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="PS Multi Tools" Height="580" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
 
-        <Image x:Name="PS1Image" HorizontalAlignment="Left" Height="84" Margin="39,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS1.png" Cursor="Hand"/>
-        <Image x:Name="PS2Image" HorizontalAlignment="Left" Height="84" Margin="162,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS2.png" Cursor="Hand"/>
-        <Image x:Name="PS3Image" HorizontalAlignment="Left" Height="84" Margin="287,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS3.png" Cursor="Hand"/>
-        <Image x:Name="PS4Image" HorizontalAlignment="Left" Height="84" Margin="403,116,0,0" VerticalAlignment="Top" Width="84" Source="/Images/ps4.png" Cursor="Hand"/>
-        <Image x:Name="PS5Image" HorizontalAlignment="Left" Height="84" Margin="516,112,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS5.png" Cursor="Hand"/>
-        <Image x:Name="PSPImage" HorizontalAlignment="Left" Height="92" Margin="629,108,0,0" VerticalAlignment="Top" Width="92" Source="/Images/psp.png" Cursor="Hand"/>
-        <Image x:Name="PSVImage" HorizontalAlignment="Left" Height="92" Margin="752,133,0,0" VerticalAlignment="Top" Width="92" Source="/Images/PSV.png" Cursor="Hand"/>
+        <Image x:Name="PS1Image" HorizontalAlignment="Left" Height="84" Margin="38,104,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS1.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS2Image" HorizontalAlignment="Left" Height="84" Margin="161,104,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS2.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS3Image" HorizontalAlignment="Left" Height="84" Margin="286,104,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS3.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS4Image" HorizontalAlignment="Center" Height="84" Margin="0,104,0,0" VerticalAlignment="Top" Width="84" Source="/Images/ps4.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS5Image" HorizontalAlignment="Left" Height="84" Margin="515,100,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS5.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PSPImage" HorizontalAlignment="Left" Height="92" Margin="628,96,0,0" VerticalAlignment="Top" Width="92" Source="/Images/psp.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PSVImage" HorizontalAlignment="Left" Height="43" Margin="751,121,0,0" VerticalAlignment="Top" Width="92" Source="/Images/PSV.png" UseLayoutRounding="True" Cursor="Hand"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="66,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS1" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="189,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS2" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="315,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS3" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="430,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS4" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="543,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PS5" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="660,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PSP" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="783,205,0,0" VerticalAlignment="Top" Foreground="White" Text="PSV" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS1TextBlock" HorizontalAlignment="Left" Margin="65,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS1" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS2TextBlock" HorizontalAlignment="Left" Margin="188,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS2" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS3TextBlock" HorizontalAlignment="Left" Margin="313,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS3" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS4TextBlock" HorizontalAlignment="Center" Margin="0,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS4" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS5TextBlock" HorizontalAlignment="Left" Margin="542,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS5" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock x:Name="PSPTextBlock" HorizontalAlignment="Left" Margin="659,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PSP" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock x:Name="PSVTextBlock" HorizontalAlignment="Left" Margin="782,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PSV" FontSize="20" FontFamily="Calibri"/>
 
         <!--PS1 Grid-->
         <Grid x:Name="PS1Grid" Margin="39,242,46,62" Width="805" Height="230" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
@@ -134,77 +134,112 @@
         </Grid>
 
         <!--PS5 Grid-->
-        <Grid x:Name="PS5Grid" Margin="39,242,46,30" Width="805" Height="262" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
-            <Button x:Name="LoadPS5LibraryButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,10,0,0">
+        <Grid x:Name="PS5Grid" Margin="39,225,46,30" Width="810" Height="284" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS5LibraryButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
                 <Button.Content>
-                    <WrapPanel Orientation="Vertical">
-                        <Image Source="/Images/gamelibrary.png" Width="40" Height="40"/>
-                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                        <TextBlock Text="Load your PS5 games, applications and patches" FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+                    <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                        <Image Width="32" Height="32" Source="/Images/gamelibrary.png" UseLayoutRounding="True"></Image>
+                        <TextBlock Text="Game Library" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                        <TextBlock Text="Load your PS5 games, applications and patches" FontFamily="Calibri" Margin="8,3,0,0"/>
                     </WrapPanel>
                 </Button.Content>
             </Button>
-            <Button x:Name="LoadPS5BDBurnerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,60,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/burn.png" Width="40" Height="40"/>
-                    <TextBlock Text="Blu Ray Disc Burner" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Burn the BD-JB .iso file on an empty Blu Ray disc." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5BDBurnerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,55,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/burn.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="Blu Ray Disc Burner" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Burn the BD-JB .iso file on an empty Blu Ray disc" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPS5FTPGrabberButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,110,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/ftp.png" Width="40" Height="40"/>
-                    <TextBlock Text="FTP Grabber" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Grab specific directories from the PS5 via FTP." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5FTPGrabberButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,100,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/ftp.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="FTP Grabber" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Grab specific directories from the PS5 via FTP" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPS5GP5CreatorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,160,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/av.png" Width="40" Height="40"/>
-                    <TextBlock Text="GP5 Project Creator" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Create a new .gp5 project and build a .pkg" FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5GP5CreatorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="10,145,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/Tools.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="GP5 Project Creator" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Create a new .gp5 project" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPS5AT9ConverterButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="10,210,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/convert.png" Width="40" Height="40"/>
-                    <TextBlock Text="AT9 Audio Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Encode .wav to .at9 / Decode .at9 to .wav" FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5AT9ConverterButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,190,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/Update.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="AT9 Audio Converter" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Encode .wav to .at9 or decode .at9 to .wav" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPS5ModGamePatchesButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,10,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/gamepatches.png" Width="40" Height="40"/>
-                    <TextBlock Text="Game Patches (illusion)" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Run and control the game patches fork of Libhijacker" FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5ModGamePatchesButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="415,55,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/gamepatches.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="Game Patches (illusion)" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Run and control the game patches fork of libhijacker" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPS5NotificationManagerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,60,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/notifications.png" Width="40" Height="40"/>
-                    <TextBlock Text="Notification Manager" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Edit your notifications on the PS5, enabling more features." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5NotificationManagerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="415,100,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/notifications.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="Notification Manager" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Edit your notifications on the PS5, enabling more features" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPS5ParamEditorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,110,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/editor.png" Width="40" Height="40"/>
-                    <TextBlock Text="PARAM.JSON Creator / Editor" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Create a new param.json file or modify an existing one." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5ParamEditorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="415,145,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/editor.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="Param JSON Editor" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Create/Edit param.json" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPS5RCOExtractorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,160,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/extract.png" Width="40" Height="40"/>
-                    <TextBlock Text="RCO Extractor" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Extract .rco files from the PS4, PS5 or PS Vita." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5RCOExtractorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="415,190,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/extract.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="RCO Extractor" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Extract .rco files (PS4, PS5 &amp; Vita)" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPS5SenderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="45" Background="#FF575757" Foreground="White" Margin="415,210,0,0">
-                <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/sendfile.png" Width="40" Height="40"/>
-                    <TextBlock Text="Payload / ELF / Mast1c0re Sender" FontSize="18" FontFamily="Calibri" Height="21" Width="300" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Send a .bin payload, .ELF file or PS2 .iso game." FontFamily="Calibri" Height="15" Width="300" Margin="25,3,0,0"/>
+            <Button x:Name="LoadPS5SenderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="415,235,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/sendfile.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="BIN / ELF Payload &amp; Mast1c0re PS2 Game Sender" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Send a .BIN or .ELF payload or a PS2 .iso game to mast1c0re" FontFamily="Calibri" Margin="8,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5MakefSELFButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,235,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/Sign.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="Make fSELF" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Create fake signed SELF files from a dumped game backup" FontFamily="Calibri" Margin="8,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5GamePatchesDownloaderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="415,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/Downloader.png" UseLayoutRounding="True" Margin="0,2,0,0"></Image>
+                    <TextBlock Text="Game Patches Downloader" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Check for game patches &amp; download within PS Multi Tools" FontFamily="Calibri" Margin="8,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5RCODumperButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="610,190,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/Downloader.png" UseLayoutRounding="True" Margin="0,2,0,0"></Image>
+                    <TextBlock Text="RCO Dumper" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Dump .rco files from FTP" FontFamily="Calibri" Margin="8,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5PKGBuilderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="205,145,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/Tools.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="GP5 PKG Builder" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Build pkg from gp5 project" FontFamily="Calibri" Margin="8,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS5ManifestEditorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="610,145,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Image Width="32" Height="32" Source="/Images/editor.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="Manifest JSON Editor" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Create/Edit manifest.json" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
             </Button>
         </Grid>
@@ -271,7 +306,7 @@
         </Grid>
 
         <StatusBar Height="27" VerticalAlignment="Bottom" Background="#FFE2E2E2" FontFamily="Calibri" Foreground="Black" FontSize="14">
-            <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.5" Margin="5,0,0,0"/>
+            <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.6" Margin="5,0,0,0"/>
             <Button x:Name="CheckUpdatesButton" Content="Check for updates" FontSize="12" Width="100" Height="20" HorizontalAlignment="Right" Margin="395,0,0,0"/>
         </StatusBar>
 

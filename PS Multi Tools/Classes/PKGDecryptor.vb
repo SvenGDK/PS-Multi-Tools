@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
-Imports System.Windows.Media.Imaging
 
 Public Class PKGDecryptor
 

@@ -1,0 +1,104 @@
+﻿<Window x:Class="PS5Log"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PS5 klog Viewer" Height="650" Width="1000" Background="#FF252525" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <RichTextBox x:Name="LogRichTextBox" Margin="10,142,10,10" FontFamily="Calibri" Background="#FF474747" BorderBrush="White" Foreground="White">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+            <FlowDocument>
+            </FlowDocument>
+        </RichTextBox>
+        <Button x:Name="ReconnectButton" Content="Connect" HorizontalAlignment="Left" Margin="339,45,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="10,36,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Port :" Margin="45,60,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="84,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBox x:Name="PS5KlogPortTextBox" HorizontalAlignment="Left" Margin="84,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center" Text="9081"/>
+        <Button x:Name="ClearButton" Content="Clear klog" HorizontalAlignment="Left" Margin="34,110,0,0" VerticalAlignment="Top" Width="120" FontFamily="Calibri"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Log Settings :" Margin="438,11,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Font Size :" Margin="438,36,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox x:Name="FontSizeComboBox" HorizontalAlignment="Left" Margin="551,34,0,0" VerticalAlignment="Top" Width="157" FontFamily="Calibri" SelectedIndex="6">
+            <ComboBoxItem Content="6"/>
+            <ComboBoxItem Content="7"/>
+            <ComboBoxItem Content="8"/>
+            <ComboBoxItem Content="9"/>
+            <ComboBoxItem Content="10"/>
+            <ComboBoxItem Content="11"/>
+            <ComboBoxItem Content="12"/>
+            <ComboBoxItem Content="14"/>
+            <ComboBoxItem Content="16"/>
+            <ComboBoxItem Content="18"/>
+            <ComboBoxItem Content="20"/>
+        </ComboBox>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Highlight word :" Margin="438,62,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox x:Name="HighlightSelectionComboBox" HorizontalAlignment="Left" Margin="551,60,0,0" VerticalAlignment="Top" Width="157" FontFamily="Calibri" SelectedIndex="0" IsEditable="True">
+            <ComboBoxItem Content="[Amm]"/>
+            <ComboBoxItem Content="[AppMgr]"/>
+            <ComboBoxItem Content="[AppMgr Trace]"/>
+            <ComboBoxItem Content="[AutoMounterWrapper]"/>
+            <ComboBoxItem Content="[AvControl]"/>
+            <ComboBoxItem Content="[AppDb]"/>
+            <ComboBoxItem Content="[BAPM]"/>
+            <ComboBoxItem Content="[CRSUI]"/>
+            <ComboBoxItem Content="[DRIVEAUTH]"/>
+            <ComboBoxItem Content="[ERROR]"/>
+            <ComboBoxItem Content="[INF]"/>
+            <ComboBoxItem Content="[Info]"/>
+            <ComboBoxItem Content="[KERNEL]"/>
+            <ComboBoxItem Content="[libSceSaveData]"/>
+            <ComboBoxItem Content="[MediaEventListener]"/>
+            <ComboBoxItem Content="[NoticeScreenSkip]"/>
+            <ComboBoxItem Content="[NotificationDb]"/>
+            <ComboBoxItem Content="[NotifyGameDiscInserted]"/>
+            <ComboBoxItem Content="[NpPush]"/>
+            <ComboBoxItem Content="[PFAuthClient]"/>
+            <ComboBoxItem Content="[PFS]"/>
+            <ComboBoxItem Content="[PGraphics]"/>
+            <ComboBoxItem Content="[PlayGoCore]"/>
+            <ComboBoxItem Content="[PSM]"/>
+            <ComboBoxItem Content="[PSM/N video_csharp]"/>
+            <ComboBoxItem Content="[PPR PFS]"/>
+            <ComboBoxItem Content="[ProfileCacheManager]"/>
+            <ComboBoxItem Content="[PsvrUpdater]"/>
+            <ComboBoxItem Content="[PUBSUB]"/>
+            <ComboBoxItem Content="[ResArbitrator]"/>
+            <ComboBoxItem Content="[SceCdlgApp]"/>
+            <ComboBoxItem Content="[SceHidConfigService]"/>
+            <ComboBoxItem Content="[SceLncService]"/>
+            <ComboBoxItem Content="[SceLncUtil]"/>
+            <ComboBoxItem Content="[ScePatchChecker]"/>
+            <ComboBoxItem Content="[sceProcessStarter]"/>
+            <ComboBoxItem Content="[ScePs4AppCategory]"/>
+            <ComboBoxItem Content="[ScePsmUtil]"/>
+            <ComboBoxItem Content="[SceRnpsAppMgr]"/>
+            <ComboBoxItem Content="[SceShellCore]"/>
+            <ComboBoxItem Content="[SceShellUI]"/>
+            <ComboBoxItem Content="[SceSystemStateMgr]"/>
+            <ComboBoxItem Content="[SceWorkaroundCtl]"/>
+            <ComboBoxItem Content="[Syscore App]"/>
+            <ComboBoxItem Content="[Syscore Umd]"/>
+            <ComboBoxItem Content="[TTS Arbitrator]"/>
+        </ComboBox>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="with color :" Margin="713,62,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="ColorCodeTextBox" HorizontalAlignment="Left" Margin="782,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <Button x:Name="AddHightlightButton" Content="Add" HorizontalAlignment="Left" Margin="887,61,0,0" VerticalAlignment="Top" Width="75" FontFamily="Calibri"/>
+        <Button x:Name="ClearHighlightsButton" Content="Clear highlight rules" HorizontalAlignment="Left" Margin="159,110,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Background Color :" Margin="438,87,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="BackgroundColorTextBox" HorizontalAlignment="Left" Margin="551,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Text Color :" Margin="713,87,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="FontColorTextBox" HorizontalAlignment="Left" Margin="782,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Connection Settings :" Margin="10,11,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Button x:Name="ApplyBGColorButton" Content="Apply Color" HorizontalAlignment="Left" Margin="608,110,0,0" VerticalAlignment="Top" Width="100" FontFamily="Calibri"/>
+        <Button x:Name="ApplyTextColorButton" Content="Apply Color" HorizontalAlignment="Left" Margin="782,110,0,0" VerticalAlignment="Top" Width="100" FontFamily="Calibri"/>
+        <TextBlock FontFamily="Calibri" FontSize="10" Text="(changes by selection)" Margin="713,38,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Utilities :" Margin="10,85,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Button x:Name="ResetColorButton" Content="Reset BG &amp; Text color" HorizontalAlignment="Left" Margin="289,110,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri"/>
+    </Grid>
+</Window>

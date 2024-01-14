@@ -15,6 +15,7 @@ Public Class NewMainWindow
     Dim ConsoleIP As String = String.Empty
     Dim ConsolePort As String = String.Empty
 
+    Dim CurrentSelection As TextBlock = Nothing
     Dim CurrentGrid As Grid = Nothing
     Dim ShowAnimation As New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(300))}
     Dim HideAnimation As New DoubleAnimation With {.From = 1, .To = 0, .Duration = New Duration(TimeSpan.FromMilliseconds(300))}
@@ -75,6 +76,10 @@ Public Class NewMainWindow
         Else
             MsgBox("Could not check for updates. No internet connection available.", MsgBoxStyle.Exclamation)
         End If
+    End Sub
+
+    Private Sub MainWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Windows.Application.Current.Shutdown()
     End Sub
 
 #Region "Menu Navigation"
@@ -146,8 +151,13 @@ Public Class NewMainWindow
         PS1Grid.BeginAnimation(OpacityProperty, ShowAnimation)
 
         HideGrids("PS1")
+        If CurrentSelection IsNot Nothing Then
+            CurrentSelection.FontWeight = FontWeights.Regular
+        End If
 
         CurrentGrid = PS1Grid
+        CurrentSelection = PS1TextBlock
+        CurrentSelection.FontWeight = FontWeights.Bold
     End Sub
 
     Private Sub PS2Image_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles PS2Image.MouseLeftButtonDown
@@ -160,8 +170,13 @@ Public Class NewMainWindow
         PS2Grid.BeginAnimation(OpacityProperty, ShowAnimation)
 
         HideGrids("PS2")
+        If CurrentSelection IsNot Nothing Then
+            CurrentSelection.FontWeight = FontWeights.Regular
+        End If
 
         CurrentGrid = PS2Grid
+        CurrentSelection = PS2TextBlock
+        CurrentSelection.FontWeight = FontWeights.Bold
     End Sub
 
     Private Sub PS3Image_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles PS3Image.MouseLeftButtonDown
@@ -174,8 +189,13 @@ Public Class NewMainWindow
         PS3Grid.BeginAnimation(OpacityProperty, ShowAnimation)
 
         HideGrids("PS3")
+        If CurrentSelection IsNot Nothing Then
+            CurrentSelection.FontWeight = FontWeights.Regular
+        End If
 
         CurrentGrid = PS3Grid
+        CurrentSelection = PS3TextBlock
+        CurrentSelection.FontWeight = FontWeights.Bold
     End Sub
 
     Private Sub PS4Image_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles PS4Image.MouseLeftButtonDown
@@ -188,8 +208,13 @@ Public Class NewMainWindow
         PS4Grid.BeginAnimation(OpacityProperty, ShowAnimation)
 
         HideGrids("PS4")
+        If CurrentSelection IsNot Nothing Then
+            CurrentSelection.FontWeight = FontWeights.Regular
+        End If
 
         CurrentGrid = PS4Grid
+        CurrentSelection = PS4TextBlock
+        CurrentSelection.FontWeight = FontWeights.Bold
     End Sub
 
     Private Sub PS5Image_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles PS5Image.MouseLeftButtonDown
@@ -202,8 +227,13 @@ Public Class NewMainWindow
         PS5Grid.BeginAnimation(OpacityProperty, ShowAnimation)
 
         HideGrids("PS5")
+        If CurrentSelection IsNot Nothing Then
+            CurrentSelection.FontWeight = FontWeights.Regular
+        End If
 
         CurrentGrid = PS5Grid
+        CurrentSelection = PS5TextBlock
+        CurrentSelection.FontWeight = FontWeights.Bold
     End Sub
 
     Private Sub PSVImage_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles PSVImage.MouseLeftButtonDown
@@ -216,8 +246,13 @@ Public Class NewMainWindow
         PSVGrid.BeginAnimation(OpacityProperty, ShowAnimation)
 
         HideGrids("PSV")
+        If CurrentSelection IsNot Nothing Then
+            CurrentSelection.FontWeight = FontWeights.Regular
+        End If
 
         CurrentGrid = PSVGrid
+        CurrentSelection = PSVTextBlock
+        CurrentSelection.FontWeight = FontWeights.Bold
     End Sub
 
     Private Sub PSPImage_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles PSPImage.MouseLeftButtonDown
@@ -230,9 +265,15 @@ Public Class NewMainWindow
         PSPGrid.BeginAnimation(OpacityProperty, ShowAnimation)
 
         HideGrids("PSP")
+        If CurrentSelection IsNot Nothing Then
+            CurrentSelection.FontWeight = FontWeights.Regular
+        End If
 
         CurrentGrid = PSPGrid
+        CurrentSelection = PSPTextBlock
+        CurrentSelection.FontWeight = FontWeights.Bold
     End Sub
+
 #End Region
 
 #Region "PS1"
@@ -395,6 +436,43 @@ Public Class NewMainWindow
         NewPS5Sender.Show()
     End Sub
 
+    Private Sub LoadPS5MakefSELFButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5MakefSELFButton.Click
+        Dim NewMakefSELFWindow As New PS5MakefSelfs() With {.ShowActivated = True}
+        NewMakefSELFWindow.Show()
+    End Sub
+
+    Private Sub LoadPS5GamePatchesDownloaderButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5GamePatchesDownloaderButton.Click
+        Dim NewPS5GamePatches As New PS5GamePatches() With {.ShowActivated = True}
+        NewPS5GamePatches.Show()
+    End Sub
+
+    Private Sub LoadPS5PKGBuilderButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5PKGBuilderButton.Click
+        Dim NewPS5PKGBuilder As New PS5PKGBuilder() With {.ShowActivated = True}
+        NewPS5PKGBuilder.Show()
+    End Sub
+
+    Private Sub LoadPS5ManifestEditorButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5ManifestEditorButton.Click
+        Dim NewPS5ManifestEditor As New PS5ManifestEditor With {.ShowActivated = True}
+        NewPS5ManifestEditor.Show()
+    End Sub
+
+    Private Sub LoadPS5RCODumperButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5RCODumperButton.Click
+        Dim NewPS5RcoDumper As New PS5RcoDumper With {.ShowActivated = True}
+
+        If Not String.IsNullOrEmpty(ConsoleIP) Then
+            NewPS5RcoDumper.ConsoleIP = ConsoleIP
+            NewPS5RcoDumper.Show()
+        Else
+            ConsoleIP = InputBox("Enter your PS5 console IP without port:", "IP Address required", "")
+            If Not String.IsNullOrEmpty(ConsoleIP) Then
+                NewPS5RcoDumper.ConsoleIP = ConsoleIP
+                NewPS5RcoDumper.Show()
+            Else
+                MsgBox("No IP address entered!", MsgBoxStyle.Exclamation)
+            End If
+        End If
+    End Sub
+
 #End Region
 
 #Region "PSP"
@@ -439,9 +517,5 @@ Public Class NewMainWindow
     End Sub
 
 #End Region
-
-    Private Sub MainWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Windows.Application.Current.Shutdown()
-    End Sub
 
 End Class

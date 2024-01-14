@@ -33,6 +33,7 @@ Public Class PS5Library
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load installed games and apps over FTP"}
     Dim WithEvents LoadPKGFolderMenuItem As New Controls.MenuItem() With {.Header = "Load patches PKG folder"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
+    Dim WithEvents NewSettingsMenuItem As New Controls.MenuItem() With {.Header = "Open Settings"}
 
     'Games context menu items
     Dim GamesContextMenu As New Controls.ContextMenu()
@@ -83,12 +84,14 @@ Public Class PS5Library
         'Will set the console IP and port when changing the console address in the settings
         AddHandler NewPS5Menu.IPTextChanged, AddressOf PS5MenuIPTextChanged
 
-        'Add supplemental library menu items that will be handled in the app
+        'Add supplemental menu items that will be handled in PS Multi Tools
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(0), Controls.MenuItem)
+        Dim SettingsMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(5), Controls.MenuItem)
         LibraryMenuItem.Items.Add(OpenFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadPKGFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
+        SettingsMenuItem.Items.Add(NewSettingsMenuItem)
 
         'Add context menu for games
         GamesContextMenu.Items.Add(GameOpenLocationMenuItem)
@@ -142,6 +145,19 @@ Public Class PS5Library
         AppsListView.ContextMenu = AppsContextMenu
     End Sub
 
+    Private Sub PS5Library_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
+        'Load config if exists
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
+            Try
+                Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+                ConsoleIP = MainConfig.IniReadValue("PS5 Tools", "IP")
+                ConsolePort = MainConfig.IniReadValue("PS5 Tools", "Port")
+            Catch ex As FileNotFoundException
+                MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
+            End Try
+        End If
+    End Sub
+
 #Region "Game Loader"
 
     Public Enum LoadType
@@ -176,6 +192,30 @@ Public Class PS5Library
     Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
 
         Dim WorkerArgs As GameLoaderArgs = CType(e.Argument, GameLoaderArgs)
+        Dim LoadIcons As Boolean = True
+        Dim LoadBackgrounds As Boolean = True
+        Dim SkipFileChecks As Boolean = False
+
+        'Load library config
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
+            Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+
+            If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Library", "LoadIcons")) Then
+                If MainConfig.IniReadValue("PS5 Library", "LoadIcons") = "False" Then
+                    LoadIcons = False
+                End If
+            End If
+            If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Library", "LoadBackgrounds")) Then
+                If MainConfig.IniReadValue("PS5 Library", "LoadBackgrounds") = "False" Then
+                    LoadBackgrounds = False
+                End If
+            End If
+            If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Library", "SkipFileChecks")) Then
+                If MainConfig.IniReadValue("PS5 Library", "SkipFileChecks") = "True" Then
+                    SkipFileChecks = True
+                End If
+            End If
+        End If
 
         If WorkerArgs.Type = LoadType.FTP Then
 
@@ -202,21 +242,25 @@ Public Class PS5Library
                         Else
                             PS5GameLVItem.GameID = item.Name
 
-                            'Check for icon0.png
-                            If conn.GetObjectInfo(item.FullName + "/icon0.png") IsNot Nothing Then
-                                Dim Icon0Bytes As Byte() = Nothing
-                                If conn.DownloadBytes(Icon0Bytes, item.FullName + "/icon0.png") Then
-                                    PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Icon0Bytes)
+                            If LoadIcons Then
+                                'Check for icon0.png
+                                If conn.GetObjectInfo(item.FullName + "/icon0.png") IsNot Nothing Then
+                                    Dim Icon0Bytes As Byte() = Nothing
+                                    If conn.DownloadBytes(Icon0Bytes, item.FullName + "/icon0.png") Then
+                                        PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Icon0Bytes)
+                                    End If
                                 End If
                             End If
 
-                            'Check for pic0.png (currently not used - can take also some more time)
-                            'If conn.GetObjectInfo(item.FullName + "/pic0.png") IsNot Nothing Then
-                            '    Dim Pic0Bytes As Byte() = Nothing
-                            '    If conn.DownloadBytes(Pic0Bytes, item.FullName + "/pic0.png") Then
-                            '        PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Pic0Bytes)
-                            '    End If
-                            'End If
+                            If LoadBackgrounds Then
+                                'Check for pic0.png (can take some time)
+                                If conn.GetObjectInfo(item.FullName + "/pic0.png") IsNot Nothing Then
+                                    Dim Pic0Bytes As Byte() = Nothing
+                                    If conn.DownloadBytes(Pic0Bytes, item.FullName + "/pic0.png") Then
+                                        PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Pic0Bytes)
+                                    End If
+                                End If
+                            End If
 
                             'Check for param.json
                             If conn.GetObjectInfo(item.FullName + "/param.json") IsNot Nothing Then
@@ -327,9 +371,7 @@ Public Class PS5Library
                             NewPS5Game.GameVersion = "Patch: " + ParamData.ContentVersion
                             NewPS5Game.GameRequiredFirmware = "Req.FW: " + ParamData.RequiredSystemSoftwareVersion.Replace("0x", "").Insert(2, "."c).Insert(5, "."c).Insert(8, "."c).Remove(11, 8)
 
-                            If File.Exists(Path.GetDirectoryName(PatchSCPKG) + "\icon0.png") Then
-                                Dispatcher.BeginInvoke(Sub() NewPS5Game.GameCoverSource = New BitmapImage(New Uri(Path.GetDirectoryName(PatchSCPKG) + "\icon0.png", UriKind.RelativeOrAbsolute)))
-                            Else
+                            If LoadIcons Then
                                 If Utils.IsURLValid("https://prosperopatches.com/" + ParamData.TitleId.Trim()) Then
                                     URLs.Add("https://prosperopatches.com/" + ParamData.TitleId.Trim()) 'Get the image from prosperopatches
                                 End If
@@ -431,8 +473,10 @@ Public Class PS5Library
                                 NewPS5Game.GameRequiredFirmware = "Required Firmware: " + ParamData.RequiredSystemSoftwareVersion.Replace("0x", "").Insert(2, "."c).Insert(5, "."c).Insert(8, "."c).Remove(11, 8)
                             End If
 
-                            If Utils.IsURLValid("https://prosperopatches.com/" + ParamData.TitleId.Trim()) Then
-                                URLs.Add("https://prosperopatches.com/" + ParamData.TitleId.Trim()) 'Get the image from prosperopatches
+                            If LoadIcons Then
+                                If Utils.IsURLValid("https://prosperopatches.com/" + ParamData.TitleId.Trim()) Then
+                                    URLs.Add("https://prosperopatches.com/" + ParamData.TitleId.Trim()) 'Get the image from prosperopatches
+                                End If
                             End If
                         End If
 
@@ -536,36 +580,40 @@ Public Class PS5Library
 
                     Dim SCESYSFolder As String = Path.GetDirectoryName(ParamFileInfo.FullName)
 
-                    'Check for game icon
-                    If File.Exists(SCESYSFolder + "\icon0.png") Then
-                        Dispatcher.BeginInvoke(Sub()
-                                                   Dim TempBitmapImage = New BitmapImage()
-                                                   TempBitmapImage.BeginInit()
-                                                   TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                   TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                   TempBitmapImage.UriSource = New Uri(SCESYSFolder + "\icon0.png", UriKind.RelativeOrAbsolute)
-                                                   TempBitmapImage.EndInit()
-                                                   NewPS5Game.GameCoverSource = TempBitmapImage
-                                               End Sub)
-                    Else
-                        If ParamData.ApplicationCategoryType = 0 And ParamData.TitleId.StartsWith("PP") Then
-                            If Utils.IsURLValid("https://prosperopatches.com/" + ParamData.TitleId.Trim()) Then
-                                URLs.Add("https://prosperopatches.com/" + ParamData.TitleId.Trim()) 'Get the image from prosperopatches
+                    If LoadIcons Then
+                        'Check for game icon
+                        If File.Exists(SCESYSFolder + "\icon0.png") Then
+                            Dispatcher.BeginInvoke(Sub()
+                                                       Dim TempBitmapImage = New BitmapImage()
+                                                       TempBitmapImage.BeginInit()
+                                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                       TempBitmapImage.UriSource = New Uri(SCESYSFolder + "\icon0.png", UriKind.RelativeOrAbsolute)
+                                                       TempBitmapImage.EndInit()
+                                                       NewPS5Game.GameCoverSource = TempBitmapImage
+                                                   End Sub)
+                        Else
+                            If ParamData.ApplicationCategoryType = 0 And ParamData.TitleId.StartsWith("PP") Then
+                                If Utils.IsURLValid("https://prosperopatches.com/" + ParamData.TitleId.Trim()) Then
+                                    URLs.Add("https://prosperopatches.com/" + ParamData.TitleId.Trim()) 'Get the image from prosperopatches
+                                End If
                             End If
                         End If
                     End If
 
-                    'Check for game background
-                    If File.Exists(SCESYSFolder + "\pic0.png") Then
-                        Dispatcher.BeginInvoke(Sub()
-                                                   Dim TempBitmapImage = New BitmapImage()
-                                                   TempBitmapImage.BeginInit()
-                                                   TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                   TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                   TempBitmapImage.UriSource = New Uri(SCESYSFolder + "\pic0.png", UriKind.RelativeOrAbsolute)
-                                                   TempBitmapImage.EndInit()
-                                                   NewPS5Game.GameBGSource = TempBitmapImage
-                                               End Sub)
+                    If LoadBackgrounds Then
+                        'Check for game background
+                        If File.Exists(SCESYSFolder + "\pic0.png") Then
+                            Dispatcher.BeginInvoke(Sub()
+                                                       Dim TempBitmapImage = New BitmapImage()
+                                                       TempBitmapImage.BeginInit()
+                                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                       TempBitmapImage.UriSource = New Uri(SCESYSFolder + "\pic0.png", UriKind.RelativeOrAbsolute)
+                                                       TempBitmapImage.EndInit()
+                                                       NewPS5Game.GameBGSource = TempBitmapImage
+                                                   End Sub)
+                        End If
                     End If
 
                     'Check for game soundtrack
@@ -590,75 +638,79 @@ Public Class PS5Library
                     End If
 
                     Dim ToolTipString As String = "This game includes: "
-                    'Check if prx is encrypted
-                    If File.Exists(MainGamePath + "\sce_module\libc.prx") Then
-                        Dim FirstStr As String = ""
-                        Using PRXReader As New FileStream(MainGamePath + "\sce_module\libc.prx", FileMode.Open)
-                            Dim BinReader As New BinaryReader(PRXReader)
-                            FirstStr = BinReader.ReadString()
-                            PRXReader.Close()
-                        End Using
-                        If Not String.IsNullOrEmpty(FirstStr) Then
-                            If FirstStr.Contains("ELF") Then
-                                ToolTipString += vbCrLf + "Decrypted .prx files"
-                            Else
-                                ToolTipString += vbCrLf + "Encrypted .prx files"
+                    If SkipFileChecks = False Then
+                        'Check if prx is encrypted
+                        If File.Exists(MainGamePath + "\sce_module\libc.prx") Then
+                            Dim FirstStr As String = ""
+                            Using PRXReader As New FileStream(MainGamePath + "\sce_module\libc.prx", FileMode.Open)
+                                Dim BinReader As New BinaryReader(PRXReader)
+                                FirstStr = BinReader.ReadString()
+                                PRXReader.Close()
+                            End Using
+                            If Not String.IsNullOrEmpty(FirstStr) Then
+                                If FirstStr.Contains("ELF") Then
+                                    ToolTipString += vbCrLf + "Decrypted .prx files"
+                                Else
+                                    ToolTipString += vbCrLf + "Encrypted .prx files"
+                                End If
                             End If
                         End If
-                    End If
-                    'Check if eboot is encrypted and signed
-                    If File.Exists(MainGamePath + "\eboot.bin") Then
-                        Dim FirstStr As String = ""
-                        Dim SecondStr As String = ""
-                        Using EBOOTReader As New FileStream(MainGamePath + "\eboot.bin", FileMode.Open)
-                            Dim BinReader As New BinaryReader(EBOOTReader)
+                        'Check if eboot is encrypted and signed
+                        If File.Exists(MainGamePath + "\eboot.bin") Then
+                            Dim FirstStr As String = ""
+                            Dim SecondStr As String = ""
+                            Using EBOOTReader As New FileStream(MainGamePath + "\eboot.bin", FileMode.Open)
+                                Dim BinReader As New BinaryReader(EBOOTReader)
 
-                            FirstStr = BinReader.ReadString()
-                            BinReader.BaseStream.Seek(416, SeekOrigin.Begin)
-                            SecondStr = BinReader.ReadString()
+                                FirstStr = BinReader.ReadString()
+                                BinReader.BaseStream.Seek(416, SeekOrigin.Begin)
+                                SecondStr = BinReader.ReadString()
 
-                            BinReader.Close()
-                            EBOOTReader.Close()
-                        End Using
-                        If Not String.IsNullOrEmpty(FirstStr) Then
-                            If FirstStr.Contains("ELF") Then
-                                ToolTipString += vbCrLf + "EBOOT: Decrypted"
-                            Else
-                                ToolTipString += vbCrLf + "EBOOT: Encrypted"
+                                BinReader.Close()
+                                EBOOTReader.Close()
+                            End Using
+                            If Not String.IsNullOrEmpty(FirstStr) Then
+                                If FirstStr.Contains("ELF") Then
+                                    ToolTipString += vbCrLf + "EBOOT: Decrypted"
+                                Else
+                                    ToolTipString += vbCrLf + "EBOOT: Encrypted"
+                                End If
+                            End If
+                            If Not String.IsNullOrEmpty(SecondStr) Then
+                                If SecondStr.Contains("ELF") Then
+                                    ToolTipString += vbCrLf + "EBOOT: Signed"
+                                Else
+                                    ToolTipString += vbCrLf + "EBOOT: Decrypted & Unsigned"
+                                End If
                             End If
                         End If
-                        If Not String.IsNullOrEmpty(SecondStr) Then
-                            If SecondStr.Contains("ELF") Then
-                                ToolTipString += vbCrLf + "EBOOT: Signed"
-                            Else
-                                ToolTipString += vbCrLf + "EBOOT: Decrypted & Unsigned"
-                            End If
+                        'Check for some other encrypted files
+                        If File.Exists(SCESYSFolder + "\trophy2\trophy00.UCP") Then
+                            ToolTipString += vbCrLf + "Trophy2: trophy00.UCP"
                         End If
-                    End If
-                    'Check for some other encrypted files
-                    If File.Exists(SCESYSFolder + "\trophy2\trophy00.UCP") Then
-                        ToolTipString += vbCrLf + "Trophy2: trophy00.UCP"
-                    End If
-                    If File.Exists(SCESYSFolder + "\uds\uds00.ucp") Then
-                        ToolTipString += vbCrLf + "UDS: uds00.ucp"
-                    End If
-                    If File.Exists(SCESYSFolder + "\keystone") Then
-                        ToolTipString += vbCrLf + "Keystone: keystone"
-                    End If
-                    If File.Exists(SCESYSFolder + "\nptitle.dat") Then
-                        ToolTipString += vbCrLf + "NPTitle: nptitle.dat"
-                    End If
-                    If File.Exists(MainGamePath + "\disc_info.dat") Then
-                        ToolTipString += vbCrLf + "Disc Info: disc_info.dat"
-                    End If
-                    If File.Exists(MainGamePath + "\ext_info.dat") Then
-                        ToolTipString += vbCrLf + "Ext Info: ext_info.dat"
-                    End If
-                    If File.Exists(SCESYSFolder + "\about\right.sprx") Then
-                        ToolTipString += vbCrLf + "Right: right.sprx"
-                    End If
-                    If File.Exists(SCESYSFolder + "\about\right.sprx.auth_info") Then
-                        ToolTipString += vbCrLf + "Right Auth info: right.sprx.auth_info"
+                        If File.Exists(SCESYSFolder + "\uds\uds00.ucp") Then
+                            ToolTipString += vbCrLf + "UDS: uds00.ucp"
+                        End If
+                        If File.Exists(SCESYSFolder + "\keystone") Then
+                            ToolTipString += vbCrLf + "Keystone: keystone"
+                        End If
+                        If File.Exists(SCESYSFolder + "\nptitle.dat") Then
+                            ToolTipString += vbCrLf + "NPTitle: nptitle.dat"
+                        End If
+                        If File.Exists(MainGamePath + "\disc_info.dat") Then
+                            ToolTipString += vbCrLf + "Disc Info: disc_info.dat"
+                        End If
+                        If File.Exists(MainGamePath + "\ext_info.dat") Then
+                            ToolTipString += vbCrLf + "Ext Info: ext_info.dat"
+                        End If
+                        If File.Exists(SCESYSFolder + "\about\right.sprx") Then
+                            ToolTipString += vbCrLf + "Right: right.sprx"
+                        End If
+                        If File.Exists(SCESYSFolder + "\about\right.sprx.auth_info") Then
+                            ToolTipString += vbCrLf + "Right Auth info: right.sprx.auth_info"
+                        End If
+                    Else
+                        ToolTipString = "File checks skipped"
                     End If
 
                     NewPS5Game.DecFilesIncluded = ToolTipString
@@ -711,7 +763,6 @@ Public Class PS5Library
 #End Region
 
 #Region "Game Context Menu Actions"
-
     Private Sub GameCopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameCopyToMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
@@ -1586,6 +1637,7 @@ Public Class PS5Library
 
     Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
         If Not String.IsNullOrEmpty(ConsoleIP) Then
+
             GamesListView.Items.Clear()
             AppsListView.Items.Clear()
 
@@ -1620,11 +1672,36 @@ Public Class PS5Library
     End Sub
 
     Private Sub OpenFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFolderMenuItem.Click
-        Dim FBD As New FolderBrowserDialog() With {.Description = "Select your PS5 games & apps folder"}
+        If GamesListView.Items.Count > 0 Then
+            Dim NewDialog As New CustomDialog()
+            NewDialog.ButtonsGrid.Visibility = Visibility.Visible
+            NewDialog.Title = "PS5 Library"
+            NewDialog.ButtonsTitleTextBlock.Text = "A folder is already loaded. Please select an action :"
 
+            If NewDialog.ShowDialog() = True Then
+                Select Case NewDialog.CustomDialogResultValue
+                    Case CustomDialog.CustomDialogResult.LoadNew
+                        GamesListView.Items.Clear()
+                        ShowGamesFolderBrowser()
+                    Case CustomDialog.CustomDialogResult.Append
+                        ShowGamesFolderBrowser()
+                    Case CustomDialog.CustomDialogResult.Cancel
+                        MsgBox("Aborted", MsgBoxStyle.Information)
+                End Select
+            End If
+        Else
+            ShowGamesFolderBrowser()
+        End If
+    End Sub
+
+    Private Sub NewSettingsMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles NewSettingsMenuItem.Click
+        Dim NewSettings As New PSSettings() With {.ShowActivated = True}
+        NewSettings.Show()
+    End Sub
+
+    Private Sub ShowGamesFolderBrowser()
+        Dim FBD As New FolderBrowserDialog() With {.Description = "Select your PS5 backup folder"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            GamesListView.Items.Clear()
-
             FilesCount = 0
             FilesCount += Directory.GetFiles(FBD.SelectedPath, "*_sc.pkg", SearchOption.AllDirectories).Count
             FilesCount += Directory.GetFiles(FBD.SelectedPath, "param.json", SearchOption.AllDirectories).Count
@@ -1715,18 +1792,5 @@ Public Class PS5Library
         Next
         Return TotalSize
     End Function
-
-    Private Sub PS5Library_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
-        'Load config if exists
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
-            Try
-                Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
-                ConsoleIP = MainConfig.IniReadValue("PS5 Tools", "IP")
-                ConsolePort = MainConfig.IniReadValue("PS5 Tools", "Port")
-            Catch ex As FileNotFoundException
-                MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
-            End Try
-        End If
-    End Sub
 
 End Class

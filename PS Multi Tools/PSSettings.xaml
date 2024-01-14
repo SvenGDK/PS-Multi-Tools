@@ -1,0 +1,44 @@
+﻿<Window x:Class="PSSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PS Multi Tools Settings" Height="450" Width="750" Background="#FF252525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock x:Name="TextInputTitle" HorizontalAlignment="Left" Margin="20,10,0,0" TextWrapping="Wrap" Text="General Settings" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
+        <TextBlock x:Name="TextInputTitle_Copy" HorizontalAlignment="Left" Margin="20,144,0,0" TextWrapping="Wrap" Text="PS5 Library Settings &amp; More Tools" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
+        <Button x:Name="ShowKlogButton" HorizontalAlignment="Left" Margin="425,207,0,0" VerticalAlignment="Top" Width="120" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+            <Button.Content>
+                <StackPanel>
+                    <Image Source="/Images/klog.png" Width="48" Height="48"></Image>
+                    <TextBlock FontFamily="Calibri" FontSize="14" Text="Show klog window"></TextBlock>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <Button x:Name="CheckForUpdateButton" HorizontalAlignment="Left" Margin="20,53,0,0" VerticalAlignment="Top" Width="155" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+            <StackPanel>
+                <Image Source="/Images/Update.png" Width="48" Height="48"/>
+                <TextBlock FontFamily="Calibri" FontSize="14" Text="Check for library updates"/>
+            </StackPanel>
+        </Button>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="20,212,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Port :" Margin="55,236,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="94,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBox x:Name="PS5FTPPortTextBox" HorizontalAlignment="Left" Margin="94,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Set PS5 FTP IP &amp; Port for FTP Tools" Margin="20,186,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="324" FontWeight="Bold"/>
+        <CheckBox x:Name="LoadIconCheckBox" Content="Load game &amp; app icons (icon0.png)" HorizontalAlignment="Left" Margin="20,317,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" />
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Games &amp; Apps Library Options" Margin="20,292,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="324" FontWeight="Bold"/>
+        <CheckBox x:Name="LoadBackgroundCheckBox" Content="Load game &amp; app backgrounds (pic0.png)" HorizontalAlignment="Left" Margin="20,338,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" />
+        <CheckBox x:Name="SkipFileCheckCheckBox" Content="Skip file checks when loading backups" HorizontalAlignment="Left" Margin="20,359,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" />
+        <Button x:Name="GetPubToolsButton" HorizontalAlignment="Left" Margin="550,207,0,0" VerticalAlignment="Top" Width="120" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+            <StackPanel>
+                <Image Source="/Images/Tools.png" Width="48" Height="48"/>
+                <TextBlock FontFamily="Calibri" FontSize="14" Text="Get Pub Tools"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="SavePS5AddressButton" Content="Save" HorizontalAlignment="Left" Margin="274,259,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Other Utilities &amp; Stuff" Margin="406,186,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="324" FontWeight="Bold"/>
+    </Grid>
+</Window>
