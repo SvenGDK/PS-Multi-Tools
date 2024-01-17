@@ -80,7 +80,7 @@ All-In-One Utility with backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PS
 </details>
 
 ## PS Multi Tools Library
-The PS Multi Tools .NET Library contains all tools, downloads and other stuff for almost any Playstation console or handheld.
+The PS Multi Tools .NET library contains all the mentioned tools, downloads and other stuff.
 The source code with all other information can be found in the other repository: [PSMT Library](https://github.com/SvenGDK/PSMT-Library)
 
 ## Current development focus & status
