@@ -83,5 +83,16 @@ All-In-One Utility with backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PS
 The PS Multi Tools .NET Library contains all tools, downloads and other stuff for almost any Playstation console or handheld.
 The source code with all other information can be found in the other repository: [PSMT Library](https://github.com/SvenGDK/PSMT-Library)
 
+## Current development focus & status
+Development is focused on the PS5 console and there are currently no features or updates planned for previous consoles or handhelds.
+
 ## v1-12
-All Builds below v13 are not working properly anymore, v13+ is recommended.</br>
+All builds below v13 are not working properly anymore, v13+ is recommended.</br>
+
+## History of PS(3) Multi Tools
+- Started in late 2010 as not open source project called "PS3 Multi Tools" (for PS3 only)
+- Added support for PS2 & PSP later around 2011-2013
+- Added support for PS Vita around 2013-2015
+- Development stopped in late 2016 with still no real support for the PS4
+- Started from scratch early 2023 and added first support for PS4 & PS5
+- First release of v13 with source code
