@@ -2,7 +2,7 @@
 </p>
 
 # PS Multi Tools
-All-In-One Utility with backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
+All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
   <summary>v13.6 contains following tools</summary>
@@ -87,7 +87,8 @@ The source code with all other information can be found in the other repository:
 Development is focused on the PS5 console and there are currently no features or updates planned for previous consoles or handhelds.
 
 ## v1-12
-All builds below v13 are not working properly anymore, v13+ is recommended.</br>
+All builds below v13 have broken links & downloads, v13+ is recommended.</br>
+Some builds can still be used while some do not start anymore and require updating the live menu (old PSMT Library).</br>
 
 ## History of PS(3) Multi Tools
 - Started in late 2010 as not open source project called "PS3 Multi Tools" (for PS3 only)
