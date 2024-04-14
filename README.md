@@ -84,7 +84,7 @@ The PS Multi Tools .NET library contains all the mentioned tools, downloads and 
 The source code with all other information can be found in the other repository: [PSMT Library](https://github.com/SvenGDK/PSMT-Library)
 
 ## Current development focus & status
-Development is focused on the PS5 console and there are currently no features or updates planned for previous consoles or handhelds.
+Development is focused on the PS3 & PS5 console and there are currently no features or updates planned for other consoles or handhelds.
 
 ## v1-12
 All builds below v13 have broken links & downloads, v13+ is recommended.</br>
