@@ -83,6 +83,9 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 The PS Multi Tools .NET library contains all the mentioned tools, downloads and other stuff.
 The source code with all other information can be found in the other repository: [PSMT Library](https://github.com/SvenGDK/PSMT-Library)
 
+## PS Multi Tools Covers
+All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored in the othe repository: [PSMT Covers](https://github.com/SvenGDK/PSMT-Covers)
+
 ## Current development focus & status
 Development is focused on the PS3 & PS5 console and there are currently no features or updates planned for other consoles or handhelds.
 
