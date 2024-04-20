@@ -11,9 +11,12 @@
     Private _GameRequiredFW As String
     Private _GameAppVer As String
     Private _ContentID As String
-    Private _IsGameSelected As Visibility
     Private _GameCoverSource As ImageSource
     Private _GameVer As String
+    Private _GridWidth As Double
+    Private _ImageHeight As Double
+    Private _ImageWidth As Double
+    Private _GridHeight As Double
 
     Public Property GameTitle As String
         Get
@@ -128,21 +131,48 @@
         End Set
     End Property
 
-    Public Property IsGameSelected As Visibility
-        Get
-            Return _IsGameSelected
-        End Get
-        Set
-            _IsGameSelected = Value
-        End Set
-    End Property
-
     Public Property ContentID As String
         Get
             Return _ContentID
         End Get
         Set
             _ContentID = Value
+        End Set
+    End Property
+
+    Public Property GridWidth As Double
+        Get
+            Return _GridWidth
+        End Get
+        Set
+            _GridWidth = Value
+        End Set
+    End Property
+
+    Public Property GridHeight As Double
+        Get
+            Return _GridHeight
+        End Get
+        Set
+            _GridHeight = Value
+        End Set
+    End Property
+
+    Public Property ImageWidth As Double
+        Get
+            Return _ImageWidth
+        End Get
+        Set
+            _ImageWidth = Value
+        End Set
+    End Property
+
+    Public Property ImageHeight As Double
+        Get
+            Return _ImageHeight
+        End Get
+        Set
+            _ImageHeight = Value
         End Set
     End Property
 

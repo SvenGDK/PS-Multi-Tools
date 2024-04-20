@@ -1,18 +1,18 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports System.Windows.Forms
+Imports System.Windows.Media.Animation
 Imports psmt_lib
 
 Public Class PSVLibrary
 
     Dim WithEvents GameLoaderWorker As New BackgroundWorker() With {.WorkerReportsProgress = True}
-    Dim WithEvents NPSBrowser As New Forms.WebBrowser() With {.ScriptErrorsSuppressed = True}
+    Dim WithEvents CoverBrowser As New Forms.WebBrowser() With {.ScriptErrorsSuppressed = True}
     Dim WithEvents NewLoadingWindow As New SyncWindow() With {.Title = "Loading PS Vita files", .ShowActivated = True}
 
     Dim FoldersCount As Integer = 0
     Dim PKGCount As Integer = 0
 
-    Dim URLs As New List(Of String)
+    Dim URLs As New List(Of String)()
     Dim CurrentURL As Integer = 0
 
     'Selected game context menu
@@ -28,7 +28,6 @@ Public Class PSVLibrary
 
     Private Sub PSVLibrary_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Set the controls in the shared library
-        NewPSVMenu.LView = DLListView
         NewPSVMenu.GamesLView = GamesListView
 
         'Add supplemental library menu items that will be handled in the app
@@ -37,8 +36,10 @@ Public Class PSVLibrary
         LibraryMenuItem.Items.Add(LoadLibraryMenuItem)
         LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
-        'Load available context menu options
-        NewPSVMenu.LoadDownloaderContextMenu()
+        'Add the new PKG Browser
+        Dim PKGDownloaderMenuItem As New Controls.MenuItem() With {.Header = "PKG Browser & Downloader"}
+        AddHandler PKGDownloaderMenuItem.Click, AddressOf OpenPKGBrowser
+        NewPSVMenu.Items.Add(PKGDownloaderMenuItem)
 
         NewContextMenu.Items.Add(CopyToMenuItem)
         NewContextMenu.Items.Add(PKGInfoMenuItem)
@@ -53,7 +54,7 @@ Public Class PSVLibrary
         'PSV encrypted/decrypted folders
         For Each Game In Directory.GetFiles(e.Argument.ToString, "*.sfo", SearchOption.AllDirectories)
 
-            Dim NewPSVGame As New PSVGame()
+            Dim NewPSVGame As New PSVGame() With {.GridWidth = 125, .GridHeight = 175, .ImageWidth = 100, .ImageHeight = 128}
 
             Using SFOReader As New Process()
                 SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\sfo.exe"
@@ -77,11 +78,11 @@ Public Class PSVLibrary
                         ElseIf Line.StartsWith("CATEGORY=") Then
                             NewPSVGame.GameCategory = PSVGame.GetCategory(Line.Split("="c)(1).Trim(""""c))
                         ElseIf Line.StartsWith("APP_VER=") Then
-                            NewPSVGame.GameAppVer = "App Ver.: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                            NewPSVGame.GameAppVer = FormatNumber(Line.Split("="c)(1).Trim(""""c), 0).Insert(1, ".")
                         ElseIf Line.StartsWith("PSP2_DISP_VER=") Then
-                            NewPSVGame.GameRequiredFW = "Req. FW: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                            NewPSVGame.GameRequiredFW = FormatNumber(Line.Split("="c)(1).Trim(""""c), 0).Replace("."c, "").Insert(2, ".")
                         ElseIf Line.StartsWith("VERSION=") Then
-                            NewPSVGame.GameVer = "Version: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                            NewPSVGame.GameVer = FormatNumber(Line.Split("="c)(1).Trim(""""c), 0).Insert(1, ".")
                         ElseIf Line.StartsWith("CONTENT_ID=") Then
                             NewPSVGame.ContentID = Line.Split("="c)(1).Trim(""""c).Trim()
                         End If
@@ -93,13 +94,29 @@ Public Class PSVLibrary
                     NewPSVGame.GameFolderPath = PSVGAMEFolder
                     NewPSVGame.GameFileType = PSVGame.GameFileTypes.Backup
 
-                    If Not String.IsNullOrWhiteSpace(NewPSVGame.GameID) Then
+                    If Not String.IsNullOrEmpty(NewPSVGame.GameID) Then
                         NewPSVGame.GameRegion = PSVGame.GetGameRegion(NewPSVGame.GameID)
-                    End If
 
-                    If NewPSVGame.ContentID.Split("-"c)(2) IsNot Nothing Then
-                        If Utils.IsURLValid("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1") Then
-                            URLs.Add("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1")
+                        If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + NewPSVGame.GameID + ".png") Then
+                            If Dispatcher.CheckAccess() = False Then
+                                Dispatcher.BeginInvoke(Sub()
+                                                           Dim TempBitmapImage = New BitmapImage()
+                                                           TempBitmapImage.BeginInit()
+                                                           TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                           TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                           TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + NewPSVGame.GameID + ".png", UriKind.RelativeOrAbsolute)
+                                                           TempBitmapImage.EndInit()
+                                                           NewPSVGame.GameCoverSource = TempBitmapImage
+                                                       End Sub)
+                            Else
+                                Dim TempBitmapImage = New BitmapImage()
+                                TempBitmapImage.BeginInit()
+                                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + NewPSVGame.GameID + ".png", UriKind.RelativeOrAbsolute)
+                                TempBitmapImage.EndInit()
+                                NewPSVGame.GameCoverSource = TempBitmapImage
+                            End If
                         End If
                     End If
 
@@ -122,7 +139,7 @@ Public Class PSVLibrary
         'PSV PSN pkgs
         For Each GamePKG In Directory.GetFiles(e.Argument.ToString, "*.pkg", SearchOption.AllDirectories)
 
-            Dim NewPSVGame As New PSVGame()
+            Dim NewPSVGame As New PSVGame() With {.GridWidth = 125, .GridHeight = 175, .ImageWidth = 100, .ImageHeight = 128}
             Dim GameInfo As New FileInfo(GamePKG)
 
             Using SFOReader As New Process()
@@ -147,11 +164,11 @@ Public Class PSVLibrary
                         ElseIf Line.StartsWith("NPS Type:") Then
                             NewPSVGame.GameCategory = Line.Split(":"c)(1).Trim(""""c).Trim()
                         ElseIf Line.StartsWith("App Ver:") Then
-                            NewPSVGame.GameAppVer = "App Ver.: " + FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2)
+                            NewPSVGame.GameAppVer = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2).Replace(","c, "").Insert(1, ".")
                         ElseIf Line.StartsWith("Min FW:") Then
-                            NewPSVGame.GameRequiredFW = "Req. FW: " + FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2)
+                            NewPSVGame.GameRequiredFW = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2).Replace(","c, "").Replace("."c, "").Insert(2, ".")
                         ElseIf Line.StartsWith("Version:") Then
-                            NewPSVGame.GameVer = "Version: " + FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2)
+                            NewPSVGame.GameVer = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2).Replace(","c, "").Insert(1, ".")
                         ElseIf Line.StartsWith("Content ID:") Then
                             NewPSVGame.ContentID = Line.Split(":"c)(1).Trim(""""c).Trim()
                         ElseIf Line.StartsWith("Region:") Then
@@ -163,13 +180,27 @@ Public Class PSVLibrary
                     NewPSVGame.GameFilePath = GamePKG
                     NewPSVGame.GameFileType = PSVGame.GameFileTypes.PKG
 
-                    If NewPSVGame.GameCategory = "PSX GAME" Then
-                        If Utils.IsURLValid("https://nopaystation.com/view/PSX/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/0") Then
-                            URLs.Add("https://nopaystation.com/view/PSX/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/0")
-                        End If
-                    Else
-                        If Utils.IsURLValid("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1") Then
-                            URLs.Add("https://nopaystation.com/view/PSV/" + NewPSVGame.GameID + "/" + NewPSVGame.ContentID.Split("-"c)(2) + "/1")
+                    If Not String.IsNullOrEmpty(NewPSVGame.GameID) Then
+                        If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + NewPSVGame.GameID + ".png") Then
+                            If Dispatcher.CheckAccess() = False Then
+                                Dispatcher.BeginInvoke(Sub()
+                                                           Dim TempBitmapImage = New BitmapImage()
+                                                           TempBitmapImage.BeginInit()
+                                                           TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                           TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                           TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + NewPSVGame.GameID + ".png", UriKind.RelativeOrAbsolute)
+                                                           TempBitmapImage.EndInit()
+                                                           NewPSVGame.GameCoverSource = TempBitmapImage
+                                                       End Sub)
+                            Else
+                                Dim TempBitmapImage = New BitmapImage()
+                                TempBitmapImage.BeginInit()
+                                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + NewPSVGame.GameID + ".png", UriKind.RelativeOrAbsolute)
+                                TempBitmapImage.EndInit()
+                                NewPSVGame.GameCoverSource = TempBitmapImage
+                            End If
                         End If
                     End If
 
@@ -192,62 +223,8 @@ Public Class PSVLibrary
     End Sub
 
     Private Sub GameLoaderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles GameLoaderWorker.RunWorkerCompleted
-        NewLoadingWindow.LoadStatusTextBlock.Text = "Getting " + URLs.Count.ToString() + " available covers"
-        NewLoadingWindow.LoadProgressBar.Value = 0
-        NewLoadingWindow.LoadProgressBar.Maximum = URLs.Count
-
-        GetGameCovers()
-    End Sub
-
-    Private Sub GetGameCovers()
-        NPSBrowser.Navigate(URLs.Item(0))
-    End Sub
-
-    Private Sub NPSBrowser_DocumentCompleted(sender As Object, e As Forms.WebBrowserDocumentCompletedEventArgs) Handles NPSBrowser.DocumentCompleted
-
-        On Error Resume Next
-        RemoveHandler NPSBrowser.DocumentCompleted, AddressOf NPSBrowser_DocumentCompleted
-
-        Dim GameCoverSource As String = ""
-        Dim TitleID As String = ""
-
-        'Art
-        If NPSBrowser.Document.GetElementById("itemArtwork") IsNot Nothing Then
-            If NPSBrowser.Document.GetElementById("itemArtwork").GetAttribute("src") IsNot Nothing Then
-                GameCoverSource = NPSBrowser.Document.GetElementById("itemArtwork").GetAttribute("src").Trim()
-            End If
-        End If
-
-        'Title ID
-        If NPSBrowser.Document.GetElementById("titleId") IsNot Nothing Then
-            If NPSBrowser.Document.GetElementById("titleId").GetAttribute("value") IsNot Nothing Then
-                TitleID = NPSBrowser.Document.GetElementById("titleId").GetAttribute("value").Trim()
-            End If
-        End If
-
-        If Not GameCoverSource = "" And Not TitleID = "" Then
-            For Each Game In GamesListView.Items
-                Dim FoundGame As PSVGame = CType(Game, PSVGame)
-                If FoundGame.GameID.Contains(TitleID) Or FoundGame.GameID = TitleID Then
-                    FoundGame.GameCoverSource = New BitmapImage(New Uri(NPSBrowser.Document.GetElementById("itemArtwork").GetAttribute("src"), UriKind.RelativeOrAbsolute))
-                    Exit For
-                End If
-            Next
-        End If
-
-        AddHandler NPSBrowser.DocumentCompleted, AddressOf NPSBrowser_DocumentCompleted
-
-        If CurrentURL < URLs.Count Then
-            NPSBrowser.Navigate(URLs.Item(CurrentURL))
-            CurrentURL += 1
-            NewLoadingWindow.LoadProgressBar.Value = CurrentURL
-        Else
-            CurrentURL = 0
-            URLs.Clear()
-            NewLoadingWindow.Close()
-            GamesListView.Items.Refresh()
-        End If
-
+        NewLoadingWindow.Close()
+        GamesListView.Items.Refresh()
     End Sub
 
 #End Region
@@ -257,7 +234,7 @@ Public Class PSVLibrary
     Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPSVGame As PSVGame = CType(GamesListView.SelectedItem, PSVGame)
-            Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
+            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
 
             If FBD.ShowDialog() = Forms.DialogResult.OK Then
                 Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
@@ -344,11 +321,6 @@ Public Class PSVLibrary
         End If
     End Sub
 
-    Private Sub LoadLibraryMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadLibraryMenuItem.Click
-        GamesListView.Visibility = Visibility.Visible
-        DLListView.Visibility = Visibility.Hidden
-    End Sub
-
     Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
         If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
             Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
@@ -356,5 +328,42 @@ Public Class PSVLibrary
     End Sub
 
 #End Region
+
+    Private Sub OpenPKGBrowser(sender As Object, e As RoutedEventArgs)
+        Dim NewPKGBrowser As New PKGBrowser() With {.Console = "PSV", .ShowActivated = True}
+        NewPKGBrowser.Show()
+    End Sub
+
+    Private Sub GamesListView_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles GamesListView.PreviewMouseWheel
+        Dim OpenWindowsListViewScrollViewer As ScrollViewer = Utils.FindScrollViewer(GamesListView)
+        Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
+        OpenWindowsListViewScrollViewer.ScrollToHorizontalOffset(HorizontalOffset - (e.Delta / 100))
+        e.Handled = True
+    End Sub
+
+    Private Sub GamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles GamesListView.SelectionChanged
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPSVGame As PSVGame = CType(GamesListView.SelectedItem, PSVGame)
+
+            GameTitleTextBlock.Text = SelectedPSVGame.GameTitle
+            GameIDTextBlock.Text = "Title ID: " & SelectedPSVGame.GameID
+            GameContentIDTextBlock.Text = "Content ID: " & SelectedPSVGame.ContentID
+            GameRegionTextBlock.Text = "Region: " & SelectedPSVGame.GameRegion
+            GameVersionTextBlock.Text = "Game Version: " & SelectedPSVGame.GameVer
+            GameAppVersionTextBlock.Text = "Application Version: " & SelectedPSVGame.GameAppVer
+            GameCategoryTextBlock.Text = "Category: " & SelectedPSVGame.GameCategory
+            GameSizeTextBlock.Text = "Size: " & SelectedPSVGame.GameSize
+            GameRequiredFirmwareTextBlock.Text = "Required Firmware: " & SelectedPSVGame.GameRequiredFW
+
+            GameBackupTypeTextBlock.Text = "Backup Type: " & SelectedPSVGame.GameFileType.ToString()
+
+            If Not String.IsNullOrEmpty(SelectedPSVGame.GameFilePath) Then
+                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(Path.GetDirectoryName(SelectedPSVGame.GameFilePath)).Name
+            Else
+                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(SelectedPSVGame.GameFolderPath).Name
+            End If
+
+        End If
+    End Sub
 
 End Class

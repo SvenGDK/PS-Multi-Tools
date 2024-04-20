@@ -6,118 +6,118 @@
         xmlns:local="clr-namespace:PS_Multi_Tools"
         xmlns:psmt_lib="clr-namespace:psmt_lib;assembly=psmt-lib"
         mc:Ignorable="d"
-        Title="PS3 Library" Height="680" Width="1325" Background="#FF252525">
-    <Window.Resources>
-        <DataTemplate x:Key="IconsOnly">
-            <Canvas Height="176" Width="320" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FocusVisualStyle="{x:Null}" Margin="5,5,5,5">
-                <Border x:Name="SelectedBorder" BorderBrush="White" BorderThickness="2,2,2,2" Height="176" Width="320" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding IsGameSelected}" FocusVisualStyle="{x:Null}"/>
-                <Image x:Name="GameImage" Width="320" Height="176" Canvas.Top="2" Canvas.Left="2" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}"/>
-            </Canvas>
-        </DataTemplate>
-    </Window.Resources>
+        Title="PS3 Library" Height="700" Width="1350" Background="#FF252525" ResizeMode="CanMinimize">
     <Grid>
+        <Rectangle x:Name="BlurringShape">
+            <Rectangle.Fill>
+                <ImageBrush x:Name="RectangleImageBrush" Opacity="0.75" />
+            </Rectangle.Fill>
+            <Rectangle.Effect>
+                <BlurEffect KernelType="Gaussian" Radius="25" />
+            </Rectangle.Effect>
+        </Rectangle>
         <psmt_lib:PS3Menu x:Name="NewPS3Menu" Height="20" VerticalAlignment="Top"></psmt_lib:PS3Menu>
-        <ListView x:Name="GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" FontSize="36" IsTextSearchEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectedIndex="0" FocusVisualStyle="{x:Null}" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=12}" Height="NaN" Margin="0,21,0,0" Visibility="Hidden">
+
+        <ListView x:Name="PS3GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" VirtualizingPanel.VirtualizationMode="Recycling" Height="220" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" Margin="5,35,5,0" >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel FocusVisualStyle="{x:Null}"/>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <ContentPresenter />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Canvas Height="150" Width="500" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FocusVisualStyle="{x:Null}" Margin="5,5,5,5">
-                        <Border x:Name="SelectedBorder" BorderBrush="White" BorderThickness="1,1,1,1" Height="150" Width="500" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding IsGameSelected}" FocusVisualStyle="{x:Null}"/>
-                        <Image x:Name="GameIcon" Width="160" Height="88" Canvas.Top="10" Canvas.Left="10" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBlock Width="315" Height="40" HorizontalAlignment="Left" Canvas.Left="175" VerticalAlignment="Center" Text="{Binding GameTitle}" Canvas.Top="10" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="14" TextAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock Width="155" Height="20" HorizontalAlignment="Left" Canvas.Left="175" VerticalAlignment="Top" Text="{Binding GameID}" Canvas.Top="55" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Center"/>
-                        <TextBlock Width="155" Height="20" HorizontalAlignment="Left" Canvas.Left="335" VerticalAlignment="Center" Text="{Binding GameRegion}" Canvas.Top="55" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Center"/>
-                        <TextBlock Width="155" Height="20" HorizontalAlignment="Center" Canvas.Left="175" VerticalAlignment="Top" Text="{Binding GameAppVer}" Canvas.Top="75" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Center"/>
-                        <TextBlock Width="155" Height="20" HorizontalAlignment="Center" Canvas.Left="175" VerticalAlignment="Top" Text="{Binding GameVer}" Canvas.Top="95" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Center"/>
-                        <TextBlock Width="155" Height="20" HorizontalAlignment="Center" Canvas.Left="175" VerticalAlignment="Top" Text="{Binding GameRequiredFW}" Canvas.Top="115" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Center"/>
-                        <TextBlock Width="155" Height="20" HorizontalAlignment="Center" Canvas.Left="335" VerticalAlignment="Top" Text="{Binding GameCategory}" Canvas.Top="75" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Center"/>
-                        <TextBlock Width="155" Height="20" HorizontalAlignment="Center" Canvas.Left="335" VerticalAlignment="Top" Text="{Binding GameSize}" Canvas.Top="95" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Center"/>
-                    </Canvas>
+                    <Grid Width="{Binding GridWidth}" Height="{Binding GridHeight}">
+                        <Image Width="{Binding ImageWidth}" Height="{Binding ImageHeight}" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Left" Margin="0,0,0,0" >
+                            <Image.Effect>
+                                <DropShadowEffect/>
+                            </Image.Effect>
+                        </Image>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView x:Name="SimpleGamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" FontSize="14" IsTextSearchEnabled="False" FocusVisualStyle="{x:Null}" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=10}" Margin="0,332,0,0" ScrollViewer.VerticalScrollBarVisibility="Hidden" FontFamily="Arial">
-            <ListView.Resources>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="CornflowerBlue" />
-                            <Setter Property="BorderBrush" Value="White" />
-                            <Setter Property="BorderThickness" Value="1" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="CornflowerBlue" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.Resources>
-            <ListView.Effect>
-                <DropShadowEffect Direction="320" ShadowDepth="2" BlurRadius="3" />
-            </ListView.Effect>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding GameTitle}" Width="350"></GridViewColumn>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding GameID}" Width="100"></GridViewColumn>
-                    <GridViewColumn Header="Region" DisplayMemberBinding="{Binding GameRegion}" Width="100"></GridViewColumn>
-                    <GridViewColumn Header="Application Version" DisplayMemberBinding="{Binding GameAppVer}" Width="150"></GridViewColumn>
-                    <GridViewColumn Header="Version" DisplayMemberBinding="{Binding GameVer}" Width="100"></GridViewColumn>
-                    <GridViewColumn Header="Required Firmware" DisplayMemberBinding="{Binding GameRequiredFW}" Width="150"></GridViewColumn>
-                    <GridViewColumn Header="Category" DisplayMemberBinding="{Binding GameCategory}" Width="150"></GridViewColumn>
-                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding GameSize}" Width="100"></GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <ListView x:Name="DLListView" d:ItemsSource="{d:SampleData ItemCount=15}" Margin="0,21,0,0" Background="{x:Null}" Foreground="White" BorderBrush="White" FontSize="14" Visibility="Hidden">
-            <ListView.Resources>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect/>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="CornflowerBlue" />
-                            <Setter Property="BorderBrush" Value="White" />
-                            <Setter Property="BorderThickness" Value="1" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="CornflowerBlue" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.Resources>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding PackageName}" Width="500"/>
-                    <GridViewColumn Header="Title ID" DisplayMemberBinding="{Binding PackageTitleID}" Width="120"/>
-                    <GridViewColumn Header="Content ID" DisplayMemberBinding="{Binding PackageContentID}" Width="325"/>
-                    <GridViewColumn Header="Region" DisplayMemberBinding="{Binding PackageRegion}" Width="50"/>
-                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding PackageSize}" Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Image x:Name="GameIconImage" Height="176" Margin="502,47,503,0" VerticalAlignment="Top" Width="320"/>
-        <TextBlock x:Name="SelectedGameTextBlock" HorizontalAlignment="Center" Margin="0,279,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="36" FontWeight="Bold" Width="1304" TextAlignment="Center">
+
+        <TextBlock x:Name="GameTitleTextBlock" VerticalAlignment="Top" Text="GameTitle" FocusVisualStyle="{x:Null}" FontSize="48" FontWeight="Bold" Margin="0,350,0,0" HorizontalAlignment="Center" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
-                <DropShadowEffect Direction="320" ShadowDepth="2" BlurRadius="3"/>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
+        <TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FocusVisualStyle="{x:Null}" FontSize="24" Margin="117,422,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,490,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,524,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,422,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameVersionTextBlock" VerticalAlignment="Top" Text="GameVersion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,456,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,524,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameAppVersionTextBlock" VerticalAlignment="Top" Text="GameAppVersion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,490,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,456,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <Image x:Name="ResolutionsImage" HorizontalAlignment="Left" Height="32" Margin="354,557,0,0" VerticalAlignment="Top" Width="32" Source="/Images/ResolutionsIcon.png" Cursor="Hand"/>
+        <Image x:Name="SoundFormatsImage" HorizontalAlignment="Left" Height="32" Margin="388,593,0,0" VerticalAlignment="Top" Width="32" Source="/Images/SoundFormatsIcon.png" Cursor="Hand"/>
+        <TextBlock VerticalAlignment="Top" Text="Supported Resolutions :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,558,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock VerticalAlignment="Top" Text="Supported Sound Formats :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,594,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameBackupTypeTextBlock" VerticalAlignment="Top" Text="Backup Type :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,558,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,592,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <Button x:Name="FilterByBackupFoldersButton" Content="Filter by PS3 GAMES" HorizontalAlignment="Left" Margin="80,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <Button x:Name="FilterByPS3ISOButton" Content="Filter by PS3ISO" HorizontalAlignment="Left" Margin="210,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <Button x:Name="FilterByPS2ISOButton" Content="Filter by PS2ISO" HorizontalAlignment="Left" Margin="340,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <Button x:Name="FilterByPSXISOButton" Content="Filter by PSXISO" HorizontalAlignment="Left" Margin="470,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <TextBlock VerticalAlignment="Top" Text="Filter Games Library" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="79,269,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <Button x:Name="FilterByPSPISOButton" Content="Filter by PSPISO" HorizontalAlignment="Left" Margin="600,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <Button x:Name="ShowAllButton" Content="Show all games" HorizontalAlignment="Left" Margin="1120,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <Button x:Name="FilterByPKGButton" Content="Filter by PKG" HorizontalAlignment="Left" Margin="730,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <Button x:Name="FilterByLocalGamesButton" Content="Only local games" HorizontalAlignment="Left" Margin="860,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <Button x:Name="FilterByRemoteGamesButton" Content="Only remote games" HorizontalAlignment="Left" Margin="990,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+
     </Grid>
 </Window>

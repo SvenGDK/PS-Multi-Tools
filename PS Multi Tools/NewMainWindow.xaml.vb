@@ -83,6 +83,7 @@ Public Class NewMainWindow
     End Sub
 
 #Region "Menu Navigation"
+
     Private Sub HideGrids(Platform As String)
         Select Case Platform
             Case "PS1"

@@ -74,7 +74,7 @@ Public Class CopyWindow
                     Dim BackupName As New DirectoryInfo(FileToCopy.GameFolderPath)
                     CopyDirectory(FileToCopy.GameFolderPath, BackupDestinationPath + BackupName.Name)
                     CopyWorker.ReportProgress(+1)
-                ElseIf FileToCopy.GameFileType = PS3Game.GameFileTypes.ISO Then
+                ElseIf FileToCopy.GameFileType = PS3Game.GameFileTypes.PS3ISO Then
                     CopyFile(FileToCopy.GameFilePath, BackupDestinationPath)
                     CopyWorker.ReportProgress(+1)
                 End If

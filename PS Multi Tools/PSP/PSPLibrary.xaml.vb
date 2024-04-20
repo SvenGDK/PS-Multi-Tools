@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Windows.Forms
+Imports System.Windows.Media.Animation
 
 Public Class PSPLibrary
 
@@ -9,6 +10,7 @@ Public Class PSPLibrary
 
     Dim FoldersCount As Integer = 0
     Dim ISOCount As Integer = 0
+    Dim IsSoundPlaying As Boolean = False
 
     'Selected game context menu
     Dim WithEvents NewContextMenu As New Controls.ContextMenu()
@@ -58,19 +60,55 @@ Public Class PSPLibrary
                         ElseIf Line.StartsWith("CATEGORY=") Then
                             NewPSPGame.GameCategory = PSPGame.GetCategory(Line.Split("="c)(1).Trim(""""c))
                         ElseIf Line.StartsWith("DISC_VERSION=") Then
-                            NewPSPGame.GameAppVer = "Disc Ver.: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                            NewPSPGame.GameAppVer = FormatNumber(Line.Split("="c)(1).Trim(""""c), 0).Insert(1, ".")
                         ElseIf Line.StartsWith("PSP_SYSTEM_VER=") Then
-                            NewPSPGame.GameRequiredFW = "Req. FW: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                            NewPSPGame.GameRequiredFW = FormatNumber(Line.Split("="c)(1).Trim(""""c), 0).Insert(1, ".")
                         End If
                     Next
 
                     'Load game files
                     Dim PSPGAMEFolder As String = Path.GetDirectoryName(Game)
                     If File.Exists(PSPGAMEFolder + "\ICON0.PNG") Then
-                        Dispatcher.BeginInvoke(Sub() NewPSPGame.GameCoverSource = New BitmapImage(New Uri(PSPGAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)))
+                        If Dispatcher.CheckAccess() = False Then
+                            Dispatcher.BeginInvoke(Sub()
+                                                       Dim TempBitmapImage = New BitmapImage()
+                                                       TempBitmapImage.BeginInit()
+                                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                       TempBitmapImage.UriSource = New Uri(PSPGAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)
+                                                       TempBitmapImage.EndInit()
+                                                       NewPSPGame.GameCoverSource = TempBitmapImage
+                                                   End Sub)
+                        Else
+                            Dim TempBitmapImage = New BitmapImage()
+                            TempBitmapImage.BeginInit()
+                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                            TempBitmapImage.UriSource = New Uri(PSPGAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)
+                            TempBitmapImage.EndInit()
+                            NewPSPGame.GameCoverSource = TempBitmapImage
+                        End If
                     End If
                     If File.Exists(PSPGAMEFolder + "\PIC1.PNG") Then
-                        Dispatcher.BeginInvoke(Sub() NewPSPGame.GameBackgroundSource = New BitmapImage(New Uri(PSPGAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)))
+                        If Dispatcher.CheckAccess() = False Then
+                            Dispatcher.BeginInvoke(Sub()
+                                                       Dim TempBitmapImage = New BitmapImage()
+                                                       TempBitmapImage.BeginInit()
+                                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                       TempBitmapImage.UriSource = New Uri(PSPGAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)
+                                                       TempBitmapImage.EndInit()
+                                                       NewPSPGame.GameBackgroundSource = TempBitmapImage
+                                                   End Sub)
+                        Else
+                            Dim TempBitmapImage = New BitmapImage()
+                            TempBitmapImage.BeginInit()
+                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                            TempBitmapImage.UriSource = New Uri(PSPGAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)
+                            TempBitmapImage.EndInit()
+                            NewPSPGame.GameBackgroundSource = TempBitmapImage
+                        End If
                     End If
                     If File.Exists(PSPGAMEFolder + "\SND0.AT3") Then
                         NewPSPGame.GameBackgroundSoundFile = PSPGAMEFolder + "\SND0.AT3"
@@ -148,19 +186,55 @@ Public Class PSPLibrary
                         ElseIf Line.StartsWith("CATEGORY=") Then
                             NewPSPGame.GameCategory = PSPGame.GetCategory(Line.Split("="c)(1).Trim(""""c))
                         ElseIf Line.StartsWith("DISC_VERSION=") Then
-                            NewPSPGame.GameAppVer = "Disc Ver.: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                            NewPSPGame.GameAppVer = FormatNumber(Line.Split("="c)(1).Trim(""""c), 0).Insert(1, ".")
                         ElseIf Line.StartsWith("PSP_SYSTEM_VER=") Then
-                            NewPSPGame.GameRequiredFW = "Req. FW: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                            NewPSPGame.GameRequiredFW = FormatNumber(Line.Split("="c)(1).Trim(""""c), 0).Insert(1, ".")
                         End If
                     Next
 
                     'Load game files
                     Dim PSPGAMEFolder As String = My.Computer.FileSystem.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName
                     If File.Exists(PSPGAMEFolder + "\ICON0.PNG") Then
-                        Dispatcher.BeginInvoke(Sub() NewPSPGame.GameCoverSource = New BitmapImage(New Uri(PSPGAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)))
+                        If Dispatcher.CheckAccess() = False Then
+                            Dispatcher.BeginInvoke(Sub()
+                                                       Dim TempBitmapImage = New BitmapImage()
+                                                       TempBitmapImage.BeginInit()
+                                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                       TempBitmapImage.UriSource = New Uri(PSPGAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)
+                                                       TempBitmapImage.EndInit()
+                                                       NewPSPGame.GameCoverSource = TempBitmapImage
+                                                   End Sub)
+                        Else
+                            Dim TempBitmapImage = New BitmapImage()
+                            TempBitmapImage.BeginInit()
+                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                            TempBitmapImage.UriSource = New Uri(PSPGAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)
+                            TempBitmapImage.EndInit()
+                            NewPSPGame.GameCoverSource = TempBitmapImage
+                        End If
                     End If
                     If File.Exists(PSPGAMEFolder + "\PIC1.PNG") Then
-                        Dispatcher.BeginInvoke(Sub() NewPSPGame.GameBackgroundSource = New BitmapImage(New Uri(PSPGAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)))
+                        If Dispatcher.CheckAccess() = False Then
+                            Dispatcher.BeginInvoke(Sub()
+                                                       Dim TempBitmapImage = New BitmapImage()
+                                                       TempBitmapImage.BeginInit()
+                                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                       TempBitmapImage.UriSource = New Uri(PSPGAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)
+                                                       TempBitmapImage.EndInit()
+                                                       NewPSPGame.GameBackgroundSource = TempBitmapImage
+                                                   End Sub)
+                        Else
+                            Dim TempBitmapImage = New BitmapImage()
+                            TempBitmapImage.BeginInit()
+                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                            TempBitmapImage.UriSource = New Uri(PSPGAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)
+                            TempBitmapImage.EndInit()
+                            NewPSPGame.GameBackgroundSource = TempBitmapImage
+                        End If
                     End If
                     If File.Exists(PSPGAMEFolder + "\SND0.AT3") Then
                         NewPSPGame.GameBackgroundSoundFile = PSPGAMEFolder + "\SND0.AT3"
@@ -252,5 +326,63 @@ Public Class PSPLibrary
     End Sub
 
 #End Region
+
+    Private Sub GamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles GamesListView.SelectionChanged
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPSPGame As PSPGame = CType(GamesListView.SelectedItem, PSPGame)
+
+            GameTitleTextBlock.Text = SelectedPSPGame.GameTitle
+            GameIDTextBlock.Text = "Title ID: " & SelectedPSPGame.GameID
+            GameRegionTextBlock.Text = "Region: " & SelectedPSPGame.GameRegion
+            GameAppVersionTextBlock.Text = "Application Version: " & SelectedPSPGame.GameAppVer
+            GameCategoryTextBlock.Text = "Category: " & SelectedPSPGame.GameCategory
+            GameSizeTextBlock.Text = "Size: " & SelectedPSPGame.GameSize
+            GameRequiredFirmwareTextBlock.Text = "Required Firmware: " & SelectedPSPGame.GameRequiredFW
+
+            GameBackupTypeTextBlock.Text = "Backup Type: " & SelectedPSPGame.GameFileType.ToString()
+
+            If Not String.IsNullOrEmpty(SelectedPSPGame.GameFilePath) Then
+                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(Path.GetDirectoryName(SelectedPSPGame.GameFilePath)).Name
+            Else
+                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(SelectedPSPGame.GameFolderPath).Name
+            End If
+
+            If SelectedPSPGame.GameBackgroundSource IsNot Nothing Then
+                If Dispatcher.CheckAccess() = False Then
+                    Dispatcher.BeginInvoke(Sub()
+                                               RectangleImageBrush.ImageSource = SelectedPSPGame.GameBackgroundSource
+                                               BlurringShape.BeginAnimation(OpacityProperty, New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(500))})
+                                           End Sub)
+                Else
+                    RectangleImageBrush.ImageSource = SelectedPSPGame.GameBackgroundSource
+                    BlurringShape.BeginAnimation(OpacityProperty, New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(500))})
+                End If
+            Else
+                RectangleImageBrush.ImageSource = Nothing
+            End If
+
+            If SelectedPSPGame.GameBackgroundSoundFile IsNot Nothing Then
+                If IsSoundPlaying Then
+                    Utils.StopGameSound()
+                    IsSoundPlaying = False
+                Else
+                    Utils.PlayGameSound(SelectedPSPGame.GameBackgroundSoundFile)
+                    IsSoundPlaying = True
+                End If
+            Else
+                If IsSoundPlaying Then
+                    Utils.StopGameSound()
+                    IsSoundPlaying = False
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub GamesListView_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles GamesListView.PreviewMouseWheel
+        Dim OpenWindowsListViewScrollViewer As ScrollViewer = Utils.FindScrollViewer(GamesListView)
+        Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
+        OpenWindowsListViewScrollViewer.ScrollToHorizontalOffset(HorizontalOffset - (e.Delta / 100))
+        e.Handled = True
+    End Sub
 
 End Class

@@ -7,13 +7,13 @@
     Private _GameFilePath As String
     Private _GameFolderPath As String
     Private _GameCategory As String
-    Private _IsGameSelected As Visibility
     Private _GameCoverSource As ImageSource
     Private _GameAppVer As String
     Private _GameVer As String
     Private _GameRequiredFW As String
     Private _GameContentID As String
     Private _GameSoundtrackBytes As Byte()
+    Private _GameBackgroundSource As ImageSource
 
     Public Property GameTitle As String
         Get
@@ -114,21 +114,21 @@
         End Set
     End Property
 
+    Public Property GameBackgroundSource As ImageSource
+        Get
+            Return _GameBackgroundSource
+        End Get
+        Set
+            _GameBackgroundSource = Value
+        End Set
+    End Property
+
     Public Property GameContentID As String
         Get
             Return _GameContentID
         End Get
         Set
             _GameContentID = Value
-        End Set
-    End Property
-
-    Public Property IsGameSelected As Visibility
-        Get
-            Return _IsGameSelected
-        End Get
-        Set
-            _IsGameSelected = Value
         End Set
     End Property
 

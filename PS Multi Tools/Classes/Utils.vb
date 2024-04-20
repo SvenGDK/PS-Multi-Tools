@@ -1,4 +1,6 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Globalization
 Imports System.IO
 Imports System.Net
@@ -320,6 +322,30 @@ Public Class Utils
 
     Public Shared Function CleanTitle(Title As String) As String
         Return Title.Replace("¢", "").Replace("„", "").Replace("â", "").Replace("Â", "").Replace("Ô", "").Replace("Ê", "").Replace("ô", "").Replace("ê", "").Replace(",", "").Replace(";", "")
+    End Function
+
+    Public Shared Function FindScrollViewer(DepObj As DependencyObject) As ScrollViewer
+        If TypeOf DepObj Is ScrollViewer Then Return TryCast(DepObj, ScrollViewer)
+
+        For i As Integer = 0 To VisualTreeHelper.GetChildrenCount(DepObj) - 1
+            Dim FoundScrollViewer = FindScrollViewer(VisualTreeHelper.GetChild(DepObj, i))
+            If FoundScrollViewer IsNot Nothing Then Return FoundScrollViewer
+        Next
+
+        Return Nothing
+    End Function
+
+    Public Shared Function GetScaledImage(InputImage As Image, NewWidth As Integer, NewHeight As Integer) As Bitmap
+        Dim ScaledImage As New Bitmap(NewWidth, NewHeight)
+
+        Using gr As Graphics = Graphics.FromImage(ScaledImage)
+            gr.SmoothingMode = SmoothingMode.HighQuality
+            gr.InterpolationMode = InterpolationMode.HighQualityBicubic
+            gr.PixelOffsetMode = PixelOffsetMode.HighQuality
+            gr.DrawImage(InputImage, New Rectangle(0, 0, NewWidth, NewHeight))
+        End Using
+
+        Return ScaledImage
     End Function
 
 End Class

@@ -13,7 +13,6 @@
     Private _GameCoverSource As ImageSource
     Private _GameBackgroundSource As ImageSource
     Private _GameBackgroundSoundFile As String
-    Private _IsGameSelected As Visibility
 
     Public Property GameTitle As String
         Get
@@ -134,15 +133,6 @@
         End Get
         Set
             _GameBackgroundSoundFile = Value
-        End Set
-    End Property
-
-    Public Property IsGameSelected As Visibility
-        Get
-            Return _IsGameSelected
-        End Get
-        Set
-            _IsGameSelected = Value
         End Set
     End Property
 

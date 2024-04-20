@@ -15,13 +15,32 @@ Public Class PS3Game
     Private _GameCoverSource As ImageSource
     Private _GameBackgroundSource As ImageSource
     Private _GameBackgroundSoundFile As String
-    Private _IsGameSelected As Visibility
     Private _PKGType As String
     Private _ContentID As String
     Private _GameFileType As GameFileTypes
     Private _GameBackgroundSoundBytes As Byte()
     Private _GameResolution As String
     Private _GameSoundFormat As String
+    Private _GameBackgroundPath As String
+    Private _GridWidth As Double
+    Private _GridHeight As Double
+    Private _ImageWidth As Double
+    Private _ImageHeight As Double
+    Private _GameRootLocation As GameLocation
+
+    Public Enum GameFileTypes
+        Backup
+        PKG
+        PS3ISO
+        PS2ISO
+        PSXISO
+        PSPISO
+    End Enum
+
+    Public Enum GameLocation
+        WebMANMOD
+        Local
+    End Enum
 
     Public Property GameTitle As String
         Get
@@ -86,12 +105,6 @@ Public Class PS3Game
         End Set
     End Property
 
-    Enum GameFileTypes
-        Backup
-        PKG
-        ISO
-    End Enum
-
     Public Property GameCategory As String
         Get
             Return _GameCategory
@@ -146,6 +159,15 @@ Public Class PS3Game
         End Set
     End Property
 
+    Public Property GameBackgroundPath As String
+        Get
+            Return _GameBackgroundPath
+        End Get
+        Set
+            _GameBackgroundPath = Value
+        End Set
+    End Property
+
     Public Property GameBackgroundSoundFile As String
         Get
             Return _GameBackgroundSoundFile
@@ -161,15 +183,6 @@ Public Class PS3Game
         End Get
         Set
             _GameBackgroundSoundBytes = Value
-        End Set
-    End Property
-
-    Public Property IsGameSelected As Visibility
-        Get
-            Return _IsGameSelected
-        End Get
-        Set
-            _IsGameSelected = Value
         End Set
     End Property
 
@@ -208,6 +221,53 @@ Public Class PS3Game
             _GameSoundFormat = Value
         End Set
     End Property
+
+    Public Property GridWidth As Double
+        Get
+            Return _GridWidth
+        End Get
+        Set
+            _GridWidth = Value
+        End Set
+    End Property
+
+    Public Property GridHeight As Double
+        Get
+            Return _GridHeight
+        End Get
+        Set
+            _GridHeight = Value
+        End Set
+    End Property
+
+    Public Property ImageWidth As Double
+        Get
+            Return _ImageWidth
+        End Get
+        Set
+            _ImageWidth = Value
+        End Set
+    End Property
+
+    Public Property ImageHeight As Double
+        Get
+            Return _ImageHeight
+        End Get
+        Set
+            _ImageHeight = Value
+        End Set
+    End Property
+
+    Public Property GameRootLocation As GameLocation
+        Get
+            Return _GameRootLocation
+        End Get
+        Set
+            _GameRootLocation = Value
+        End Set
+    End Property
+
+#Region "Functions"
 
     Public Shared Function GetCategory(SFOCategory As String) As String
         Select Case SFOCategory
@@ -279,8 +339,8 @@ Public Class PS3Game
     End Function
 
     Public Shared Function GetGameResolution(SFOResolution As String) As String
-        Dim ResolutionValue = CInt(Math.Round(Val(SFOResolution)))
-        Dim SupportedResolutions As New List(Of String)
+        Dim ResolutionValue As Long = CLng(Math.Round(Val(SFOResolution)))
+        Dim SupportedResolutions As New List(Of String)()
 
         If (ResolutionValue And 1) = 1 Then
             SupportedResolutions.Add("480p")
@@ -300,19 +360,21 @@ Public Class PS3Game
         If (ResolutionValue And 32) = 32 Then
             SupportedResolutions.Add("576p (16:9)")
         End If
+        If (ResolutionValue And 63) = 63 Then
+            SupportedResolutions.Add("All video modes supported")
+        End If
 
-        Dim builder As New StringBuilder
+        Dim NewStringBuilder As New StringBuilder
         For Each SupportedResolution In SupportedResolutions
-            If Not String.IsNullOrEmpty(SupportedResolution) Then
-                builder.Append(SupportedResolution + vbCrLf)
-            End If
+            NewStringBuilder.Append(SupportedResolution + vbCrLf)
         Next
-        Return "Supported Resolutions: " + vbCrLf + builder.ToString()
+
+        Return "Supported Resolutions: " + vbCrLf + NewStringBuilder.ToString()
     End Function
 
     Public Shared Function GetGameSoundFormat(SFOSoundFormat As String) As String
-        Dim SoundValue = CInt(Math.Round(Val(SFOSoundFormat)))
-        Dim SupportedSoundFormats As New List(Of String)
+        Dim SoundValue As Long = CLng(Math.Round(Val(SFOSoundFormat)))
+        Dim SupportedSoundFormats As New List(Of String)()
 
         If (SoundValue And 1) = 1 Then
             SupportedSoundFormats.Add("2.0 LPCM")
@@ -323,21 +385,36 @@ Public Class PS3Game
         If (SoundValue And 8) = 16 Then
             SupportedSoundFormats.Add("7.1 LPCM")
         End If
+        If (SoundValue And 21) = 21 Then
+            SupportedSoundFormats.Add("All LPCM modes")
+        End If
+        If (SoundValue And 256) = 256 Then
+            SupportedSoundFormats.Add("Dolby Digital 5.1")
+        End If
         If (SoundValue And 258) = 258 Then
-            SupportedSoundFormats.Add("Dolby Digital")
+            SupportedSoundFormats.Add("Only Dolby Digital 5.1")
+        End If
+        If (SoundValue And 279) = 279 Then
+            SupportedSoundFormats.Add("All LPCM modes + Dolby Digital 5.1")
+        End If
+        If (SoundValue And 512) = 512 Then
+            SupportedSoundFormats.Add("DTS 5.1")
         End If
         If (SoundValue And 514) = 514 Then
-            SupportedSoundFormats.Add("DTS Digital Surround")
+            SupportedSoundFormats.Add("Only DTS 5.1")
+        End If
+        If (SoundValue And 791) = 791 Then
+            SupportedSoundFormats.Add("All sound modes")
         End If
 
-        Dim builder As New StringBuilder
+        Dim NewStringBuilder As New StringBuilder
         For Each SupportedSoundFormat In SupportedSoundFormats
-            If Not String.IsNullOrEmpty(SupportedSoundFormat) Then
-                builder.Append(SupportedSoundFormat + vbCrLf)
-            End If
+            NewStringBuilder.Append(SupportedSoundFormat + vbCrLf)
         Next
-        Return "Supported Sound Formats: " + vbCrLf + builder.ToString()
 
+        Return "Supported Sound Formats: " + vbCrLf + NewStringBuilder.ToString()
     End Function
+
+#End Region
 
 End Class

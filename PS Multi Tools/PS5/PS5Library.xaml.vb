@@ -9,20 +9,25 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Security.Authentication
 Imports System.Text
+Imports System.Threading
 Imports System.Windows.Forms
+Imports System.Windows.Media.Animation
 
 Public Class PS5Library
 
+    Dim WithEvents FileLoaderWorker As New BackgroundWorker() With {.WorkerReportsProgress = True}
     Dim WithEvents GameLoaderWorker As New BackgroundWorker() With {.WorkerReportsProgress = True}
     Dim WithEvents NewLoadingWindow As New SyncWindow() With {.Title = "Loading PS5 files", .ShowActivated = True}
 
+    Dim SelectedPath As String = ""
     Public CurrentPath As String = ""
     Dim ConsoleIP As String = ""
     Dim ConsolePort As String = ""
 
     Dim PKGCount As Integer = 0
     Dim FilesCount As Integer = 0
-    Dim URLs As New List(Of String)
+    Dim CurrentFileCount As Integer = 0
+    Dim URLs As New List(Of String)()
     Dim CurrentURL As Integer = 0
     Dim TotalSize As Long = 0
 
@@ -81,9 +86,6 @@ Public Class PS5Library
     Dim WithEvents AppChangeSoundtrackMenuItem As New Controls.MenuItem() With {.Header = "Change app soundtrack", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Replace-icon.png", UriKind.Relative))}}
 
     Private Sub PS5Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        'Will set the console IP and port when changing the console address in the settings
-        AddHandler NewPS5Menu.IPTextChanged, AddressOf PS5MenuIPTextChanged
-
         'Add supplemental menu items that will be handled in PS Multi Tools
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(0), Controls.MenuItem)
         Dim SettingsMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(5), Controls.MenuItem)
@@ -141,7 +143,7 @@ Public Class PS5Library
         AppsContextMenu.Items.Add(AppChangeSoundtrackMenuItem)
 
         'Set context menu
-        GamesListView.ContextMenu = GamesContextMenu
+        NewGamesListView.ContextMenu = GamesContextMenu
         AppsListView.ContextMenu = AppsContextMenu
     End Sub
 
@@ -156,6 +158,20 @@ Public Class PS5Library
                 MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
             End Try
         End If
+    End Sub
+
+    Private Sub NewPS5Menu_IPTextChanged(sender As Object, e As RoutedEventArgs) Handles NewPS5Menu.IPTextChanged
+        ConsoleIP = NewPS5Menu.SharedConsoleAddress.Split(":"c)(0)
+        ConsolePort = NewPS5Menu.SharedConsoleAddress.Split(":"c)(1)
+
+        'Save config
+        Try
+            Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+            MainConfig.IniWriteValue("PS5 Tools", "IP", NewPS5Menu.SharedConsoleAddress.Split(":"c)(0))
+            MainConfig.IniWriteValue("PS5 Tools", "Port", NewPS5Menu.SharedConsoleAddress.Split(":"c)(1))
+        Catch ex As FileNotFoundException
+            MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
+        End Try
     End Sub
 
 #Region "Game Loader"
@@ -283,9 +299,9 @@ Public Class PS5Library
 
                             'Add to the GamesListView
                             If Dispatcher.CheckAccess() = False Then
-                                Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(PS5GameLVItem))
+                                Dispatcher.BeginInvoke(Sub() NewGamesListView.Items.Add(PS5GameLVItem))
                             Else
-                                GamesListView.Items.Add(PS5GameLVItem)
+                                NewGamesListView.Items.Add(PS5GameLVItem)
                             End If
                         End If
 
@@ -485,10 +501,10 @@ Public Class PS5Library
 
                         'Add to the ListView
                         If ParamData.ApplicationCategoryType = 0 And ParamData.TitleId.StartsWith("PP") Then
-                            If GamesListView.Dispatcher.CheckAccess() = False Then
-                                GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS5Game))
+                            If NewGamesListView.Dispatcher.CheckAccess() = False Then
+                                NewGamesListView.Dispatcher.BeginInvoke(Sub() NewGamesListView.Items.Add(NewPS5Game))
                             Else
-                                GamesListView.Items.Add(NewPS5Game)
+                                NewGamesListView.Items.Add(NewPS5Game)
                             End If
                         Else
                             If AppsListView.Dispatcher.CheckAccess() = False Then
@@ -642,7 +658,7 @@ Public Class PS5Library
                         'Check if prx is encrypted
                         If File.Exists(MainGamePath + "\sce_module\libc.prx") Then
                             Dim FirstStr As String = ""
-                            Using PRXReader As New FileStream(MainGamePath + "\sce_module\libc.prx", FileMode.Open)
+                            Using PRXReader As New FileStream(MainGamePath + "\sce_module\libc.prx", FileMode.Open, FileAccess.Read)
                                 Dim BinReader As New BinaryReader(PRXReader)
                                 FirstStr = BinReader.ReadString()
                                 PRXReader.Close()
@@ -659,7 +675,7 @@ Public Class PS5Library
                         If File.Exists(MainGamePath + "\eboot.bin") Then
                             Dim FirstStr As String = ""
                             Dim SecondStr As String = ""
-                            Using EBOOTReader As New FileStream(MainGamePath + "\eboot.bin", FileMode.Open)
+                            Using EBOOTReader As New FileStream(MainGamePath + "\eboot.bin", FileMode.Open, FileAccess.Read)
                                 Dim BinReader As New BinaryReader(EBOOTReader)
 
                                 FirstStr = BinReader.ReadString()
@@ -716,28 +732,32 @@ Public Class PS5Library
                     NewPS5Game.DecFilesIncluded = ToolTipString
                 End If
 
-                'Update progress
-                Dispatcher.BeginInvoke(Sub()
-                                           NewLoadingWindow.LoadProgressBar.Value += 1
-                                           NewLoadingWindow.LoadStatusTextBlock.Text = "Loading " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + FilesCount.ToString()
-                                       End Sub)
+                CurrentFileCount += 1
+                GameLoaderWorker.ReportProgress(CurrentFileCount)
+                Thread.Sleep(150)
 
                 'Add to the ListView
                 If ParamData.ApplicationCategoryType = 0 And ParamData.TitleId.StartsWith("PP") Then 'Games
-                    If GamesListView.Dispatcher.CheckAccess() = False Then
-                        GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS5Game))
+                    If NewGamesListView.Dispatcher.CheckAccess() = False Then
+                        NewGamesListView.Dispatcher.BeginInvoke(Sub()
+                                                                    NewGamesListView.Items.Add(NewPS5Game)
+                                                                End Sub)
                     Else
-                        GamesListView.Items.Add(NewPS5Game)
+                        NewGamesListView.Items.Add(NewPS5Game)
                     End If
                 ElseIf ParamData.ApplicationCategoryType = 65536 And ParamData.TitleId.StartsWith("PP") Then 'Media apps
                     If AppsListView.Dispatcher.CheckAccess() = False Then
-                        AppsListView.Dispatcher.BeginInvoke(Sub() AppsListView.Items.Add(NewPS5Game))
+                        AppsListView.Dispatcher.BeginInvoke(Sub()
+                                                                AppsListView.Items.Add(NewPS5Game)
+                                                            End Sub)
                     Else
                         AppsListView.Items.Add(NewPS5Game)
                     End If
                 Else
                     If AppsListView.Dispatcher.CheckAccess() = False Then 'NPXS
-                        AppsListView.Dispatcher.BeginInvoke(Sub() AppsListView.Items.Add(NewPS5Game))
+                        AppsListView.Dispatcher.BeginInvoke(Sub()
+                                                                AppsListView.Items.Add(NewPS5Game)
+                                                            End Sub)
                     Else
                         AppsListView.Items.Add(NewPS5Game)
                     End If
@@ -745,6 +765,21 @@ Public Class PS5Library
 
             Next
 
+        End If
+    End Sub
+
+    Private Sub GameLoaderWorker_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles GameLoaderWorker.ProgressChanged
+        'Update progress
+        If Dispatcher.CheckAccess() = False Then
+            Dispatcher.BeginInvoke(Sub()
+                                       NewLoadingWindow.LoadProgressBar.Value = CurrentFileCount
+                                       NewLoadingWindow.LoadStatusTextBlock.Text = "Loading " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + FilesCount.ToString()
+                                       Thread.Sleep(150)
+                                   End Sub)
+        Else
+            NewLoadingWindow.LoadProgressBar.Value = CurrentFileCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + FilesCount.ToString()
+            Thread.Sleep(150)
         End If
     End Sub
 
@@ -760,12 +795,33 @@ Public Class PS5Library
         End If
     End Sub
 
+    Private Sub FileLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles FileLoaderWorker.DoWork
+        For Each PatchSourcePKGFile In Directory.GetFiles(SelectedPath, "*_sc.pkg", SearchOption.AllDirectories)
+            FilesCount += 1
+        Next
+        For Each PatchSourcePKGFile In Directory.GetFiles(SelectedPath, "param.json", SearchOption.AllDirectories)
+            FilesCount += 1
+        Next
+    End Sub
+
+    Private Sub FileLoaderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles FileLoaderWorker.RunWorkerCompleted
+
+        NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS5 games & apps", .ShowActivated = True}
+        NewLoadingWindow.LoadProgressBar.IsIndeterminate = False
+        NewLoadingWindow.LoadProgressBar.Maximum = FilesCount
+        NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + FilesCount.ToString()
+        NewLoadingWindow.Show()
+
+        Thread.Sleep(120)
+        GameLoaderWorker.RunWorkerAsync(New GameLoaderArgs() With {.Type = LoadType.LocalFolder, .FolderPath = SelectedPath})
+    End Sub
+
 #End Region
 
 #Region "Game Context Menu Actions"
     Private Sub GameCopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameCopyToMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
 
                 Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to copy the selected game ?"}
@@ -793,8 +849,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GamePlayMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GamePlayMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If SelectedPS5Game.GameSoundFile IsNot Nothing Then
                 If IsSoundPlaying Then
                     Utils.StopGameSound()
@@ -821,16 +877,16 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameCheckForUpdatesMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameCheckForUpdatesMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             Dim NewPS5GamePatches As New PS5GamePatches With {.ShowActivated = True, .SearchForGamePatchWithID = SelectedPS5Game.GameID.Split(New String() {"Title ID: "}, StringSplitOptions.None)(1)}
             NewPS5GamePatches.Show()
         End If
     End Sub
 
     Private Sub GameChangeToGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeToGameMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -842,7 +898,7 @@ Public Class PS5Library
                     SelectedPS5Game.GameCategory = "Type: Game"
 
                     MsgBox("Game type changed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -851,8 +907,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameChangeToNativeMediaMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeToNativeMediaMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -861,10 +917,10 @@ Public Class PS5Library
 
                     Dim RawDataJSON As String = JsonConvert.SerializeObject(ParamData, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
                     File.WriteAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json", RawDataJSON)
-                    SelectedPS5Game.GameCategory = "Type: Game"
+                    SelectedPS5Game.GameCategory = "Type: Media"
 
                     MsgBox("Game type changed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -873,8 +929,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameChangeToRNPSMediaMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeToRNPSMediaMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -883,10 +939,10 @@ Public Class PS5Library
 
                     Dim RawDataJSON As String = JsonConvert.SerializeObject(ParamData, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
                     File.WriteAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json", RawDataJSON)
-                    SelectedPS5Game.GameCategory = "Type: Game"
+                    SelectedPS5Game.GameCategory = "Type: Media"
 
                     MsgBox("Game type changed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -895,8 +951,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameChangeToShellAppMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeToShellAppMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -905,10 +961,10 @@ Public Class PS5Library
 
                     Dim RawDataJSON As String = JsonConvert.SerializeObject(ParamData, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
                     File.WriteAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json", RawDataJSON)
-                    SelectedPS5Game.GameCategory = "Type: Game"
+                    SelectedPS5Game.GameCategory = "Type: ShellApp"
 
                     MsgBox("Game type changed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -917,8 +973,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameChangeToShellUIMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeToShellUIMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -927,10 +983,10 @@ Public Class PS5Library
 
                     Dim RawDataJSON As String = JsonConvert.SerializeObject(ParamData, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
                     File.WriteAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json", RawDataJSON)
-                    SelectedPS5Game.GameCategory = "Type: Game"
+                    SelectedPS5Game.GameCategory = "Type: ShellUI"
 
                     MsgBox("Game type changed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -939,8 +995,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameChangeToBigDaemonMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeToBigDaemonMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -949,10 +1005,10 @@ Public Class PS5Library
 
                     Dim RawDataJSON As String = JsonConvert.SerializeObject(ParamData, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
                     File.WriteAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json", RawDataJSON)
-                    SelectedPS5Game.GameCategory = "Type: Game"
+                    SelectedPS5Game.GameCategory = "Type: BigDaemon"
 
                     MsgBox("Game type changed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -961,8 +1017,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameChangeToBuiltInMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeToBuiltInMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -971,10 +1027,10 @@ Public Class PS5Library
 
                     Dim RawDataJSON As String = JsonConvert.SerializeObject(ParamData, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
                     File.WriteAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json", RawDataJSON)
-                    SelectedPS5Game.GameCategory = "Type: Game"
+                    SelectedPS5Game.GameCategory = "Type: System Built-In"
 
                     MsgBox("Game type changed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -983,8 +1039,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameChangeToDaemonMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeToDaemonMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -993,10 +1049,10 @@ Public Class PS5Library
 
                     Dim RawDataJSON As String = JsonConvert.SerializeObject(ParamData, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
                     File.WriteAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json", RawDataJSON)
-                    SelectedPS5Game.GameCategory = "Type: Game"
+                    SelectedPS5Game.GameCategory = "Type: Daemon"
 
                     MsgBox("Game type changed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -1005,8 +1061,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameRenameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameRenameMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             If File.Exists(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json") Then
                 Dim JSONData As String = File.ReadAllText(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\param.json")
                 Try
@@ -1118,7 +1174,7 @@ Public Class PS5Library
                     SelectedPS5Game.GameTitle = NewAppTitle
 
                     MsgBox("Game renamed!", MsgBoxStyle.Information)
-                    GamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
                 Catch ex As JsonSerializationException
                     MsgBox("Could not parse the selected param.json file.", MsgBoxStyle.Critical, "Error")
                 End Try
@@ -1127,8 +1183,8 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameChangeIconMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeIconMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new icon0.png image for this game", .Filter = "PNG images (*.png)|*.png", .Multiselect = False}
 
             If OFD.ShowDialog() = Forms.DialogResult.OK Then
@@ -1144,14 +1200,14 @@ Public Class PS5Library
                 TempBitmapImage.EndInit()
                 SelectedPS5Game.GameCoverSource = TempBitmapImage
 
-                GamesListView.Items.Refresh()
+                NewGamesListView.Items.Refresh()
             End If
         End If
     End Sub
 
     Private Sub GameChangeBackgroundMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeBackgroundMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new pic0.png image for this game", .Filter = "PNG images (*.png)|*.png", .Multiselect = False}
 
             If OFD.ShowDialog() = Forms.DialogResult.OK Then
@@ -1166,14 +1222,14 @@ Public Class PS5Library
                 TempBitmapImage.EndInit()
                 SelectedPS5Game.GameBGSource = TempBitmapImage
 
-                GamesListView.Items.Refresh()
+                NewGamesListView.Items.Refresh()
             End If
         End If
     End Sub
 
     Private Sub GameChangeSoundtrackMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameChangeSoundtrackMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new snd0.at9 soundtrack for this game", .Filter = "AT9 Audio Files (*.at9)|*.at9", .Multiselect = False}
 
             If IsSoundPlaying Then
@@ -1188,15 +1244,15 @@ Public Class PS5Library
     End Sub
 
     Private Sub GameOpenLocationMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameOpenLocationMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             Process.Start(SelectedPS5Game.GameFileOrFolderPath)
         End If
     End Sub
 
     Private Sub GameBrowseAssetsMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameBrowseAssetsMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS5Game As PS5Game = CType(GamesListView.SelectedItem, PS5Game)
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
             Dim NewAssetBrowser As New PS5AssetsBrowser With {.SelectedDirectory = SelectedPS5Game.GameFileOrFolderPath}
             NewAssetBrowser.Show()
         End If
@@ -1638,7 +1694,7 @@ Public Class PS5Library
     Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
         If Not String.IsNullOrEmpty(ConsoleIP) Then
 
-            GamesListView.Items.Clear()
+            NewGamesListView.Items.Clear()
             AppsListView.Items.Clear()
 
             'Show the loading progress window
@@ -1672,7 +1728,7 @@ Public Class PS5Library
     End Sub
 
     Private Sub OpenFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFolderMenuItem.Click
-        If GamesListView.Items.Count > 0 Then
+        If NewGamesListView.Items.Count > 0 Then
             Dim NewDialog As New CustomDialog()
             NewDialog.ButtonsGrid.Visibility = Visibility.Visible
             NewDialog.Title = "PS5 Library"
@@ -1681,7 +1737,7 @@ Public Class PS5Library
             If NewDialog.ShowDialog() = True Then
                 Select Case NewDialog.CustomDialogResultValue
                     Case CustomDialog.CustomDialogResult.LoadNew
-                        GamesListView.Items.Clear()
+                        NewGamesListView.Items.Clear()
                         ShowGamesFolderBrowser()
                     Case CustomDialog.CustomDialogResult.Append
                         ShowGamesFolderBrowser()
@@ -1703,30 +1759,10 @@ Public Class PS5Library
         Dim FBD As New FolderBrowserDialog() With {.Description = "Select your PS5 backup folder"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
             FilesCount = 0
-            FilesCount += Directory.GetFiles(FBD.SelectedPath, "*_sc.pkg", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(FBD.SelectedPath, "param.json", SearchOption.AllDirectories).Count
-
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS5 games & apps", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = FilesCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + FilesCount.ToString()
-            NewLoadingWindow.Show()
-
-            GameLoaderWorker.RunWorkerAsync(New GameLoaderArgs() With {.Type = LoadType.LocalFolder, .FolderPath = FBD.SelectedPath})
+            CurrentFileCount = 0
+            SelectedPath = FBD.SelectedPath
+            FileLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
         End If
-    End Sub
-
-    Private Sub PS5MenuIPTextChanged(sender As Object, e As RoutedEventArgs)
-        ConsoleIP = NewPS5Menu.SharedConsoleAddress.Split(":"c)(0)
-        ConsolePort = NewPS5Menu.SharedConsoleAddress.Split(":"c)(1)
-
-        'Save config
-        Try
-            Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
-            MainConfig.IniWriteValue("PS5 Tools", "IP", NewPS5Menu.SharedConsoleAddress.Split(":"c)(0))
-            MainConfig.IniWriteValue("PS5 Tools", "Port", NewPS5Menu.SharedConsoleAddress.Split(":"c)(1))
-        Catch ex As FileNotFoundException
-            MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
-        End Try
     End Sub
 
     Private Async Sub ContentWebView_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles ContentWebView.NavigationCompleted
@@ -1747,7 +1783,7 @@ Public Class PS5Library
             End If
 
             If Not String.IsNullOrEmpty(GameCoverSource) And Not String.IsNullOrEmpty(GameID) Then
-                For Each ItemInListView In GamesListView.Items
+                For Each ItemInListView In NewGamesListView.Items
                     Dim FoundGame As PS5Game = CType(ItemInListView, PS5Game)
 
                     If FoundGame.GameID.Contains(GameID) Or FoundGame.GameID = GameID Then
@@ -1774,7 +1810,7 @@ Public Class PS5Library
                 CurrentURL = 0
                 URLs.Clear()
                 NewLoadingWindow.Close()
-                GamesListView.Items.Refresh()
+                NewGamesListView.Items.Refresh()
                 PatchesListView.Items.Refresh()
             End If
         End If
@@ -1792,5 +1828,70 @@ Public Class PS5Library
         Next
         Return TotalSize
     End Function
+
+    Private Sub NewGamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles NewGamesListView.SelectionChanged
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
+
+            GameTitleTextBlock.Text = SelectedPS5Game.GameTitle
+            GameIDTextBlock.Text = SelectedPS5Game.GameID
+            GameRegionTextBlock.Text = SelectedPS5Game.GameRegion
+            GameVersionTextBlock.Text = SelectedPS5Game.GameVersion
+            GameContentIDTextBlock.Text = SelectedPS5Game.GameContentID
+            GameCategoryTextBlock.Text = SelectedPS5Game.GameCategory
+            GameSizeTextBlock.Text = SelectedPS5Game.GameSize
+            GameRequiredFirmwareTextBlock.Text = SelectedPS5Game.GameRequiredFirmware
+
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(Path.GetDirectoryName(SelectedPS5Game.GameFileOrFolderPath)).Name
+            Else
+                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(SelectedPS5Game.GameFileOrFolderPath).Name
+            End If
+
+            If SelectedPS5Game.GameBGSource IsNot Nothing Then
+                If Dispatcher.CheckAccess() = False Then
+                    Dispatcher.BeginInvoke(Sub()
+                                               RectangleImageBrush.ImageSource = SelectedPS5Game.GameBGSource
+                                               BlurringShape.BeginAnimation(OpacityProperty, New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(500))})
+                                           End Sub)
+                Else
+                    RectangleImageBrush.ImageSource = SelectedPS5Game.GameBGSource
+                    BlurringShape.BeginAnimation(OpacityProperty, New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(500))})
+                End If
+            Else
+                RectangleImageBrush.ImageSource = Nothing
+            End If
+
+            If SelectedPS5Game.GameSoundFile IsNot Nothing Then
+                If IsSoundPlaying Then
+                    Utils.StopGameSound()
+                    IsSoundPlaying = False
+                    GamePlayMenuItem.Header = "Play Soundtrack"
+                    GamePlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
+                Else
+                    Utils.PlayGameSound(SelectedPS5Game.GameSoundFile)
+                    IsSoundPlaying = True
+                    GamePlayMenuItem.Header = "Stop Soundtrack"
+                    GamePlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Stop-icon.png", UriKind.Relative))}
+                End If
+            Else
+                If IsSoundPlaying Then
+                    Utils.StopGameSound()
+                    IsSoundPlaying = False
+                    GamePlayMenuItem.Header = "Play Soundtrack"
+                    GamePlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
+                End If
+            End If
+
+        End If
+    End Sub
+
+    Private Sub NewGamesListView_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles NewGamesListView.PreviewMouseWheel
+        Dim OpenWindowsListViewScrollViewer As ScrollViewer = Utils.FindScrollViewer(NewGamesListView)
+        Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
+        OpenWindowsListViewScrollViewer.ScrollToHorizontalOffset(HorizontalOffset - (e.Delta / 100))
+        e.Handled = True
+    End Sub
 
 End Class

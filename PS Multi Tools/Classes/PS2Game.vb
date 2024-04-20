@@ -12,6 +12,12 @@
     Private _GameReleaseDate As String
     Private _GamePublisher As String
     Private _GameDeveloper As String
+    Private _GameBackupType As GameFileType
+
+    Public Enum GameFileType
+        ISO
+        CSO
+    End Enum
 
     Public Property GameTitle As String
         Get
@@ -120,4 +126,14 @@
             _GameDescription = Value
         End Set
     End Property
+
+    Public Property GameBackupType As GameFileType
+        Get
+            Return _GameBackupType
+        End Get
+        Set
+            _GameBackupType = Value
+        End Set
+    End Property
+
 End Class

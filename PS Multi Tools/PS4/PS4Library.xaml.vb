@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports System.Windows.Media.Animation
 Imports PS4_Tools
 Imports psmt_lib
 
@@ -46,22 +47,40 @@ Public Class PS4Library
         For Each Game In Directory.GetFiles(e.Argument.ToString, "*.pkg", SearchOption.AllDirectories)
             Dim NewPS4Game As New PS4Game()
             Dim GamePKG As PKG.SceneRelated.Unprotected_PKG = PKG.SceneRelated.Read_PKG(Game)
-            Dim PKGImgBitmap As BitmapSource = Nothing
 
             'Set game infos
             NewPS4Game.GameTitle = GamePKG.PS4_Title
-            NewPS4Game.GameID = GamePKG.Content_ID
             NewPS4Game.GameContentID = GamePKG.Content_ID
             NewPS4Game.GameFilePath = Game
             NewPS4Game.GameRegion = GamePKG.Region.Replace("(", "").Replace(")", "").Trim()
             NewPS4Game.GameRequiredFW = GamePKG.Firmware_Version
             NewPS4Game.GameSize = GamePKG.Size
+            NewPS4Game.GameAppVer = GamePKG.Param.APP_VER
 
-            If GamePKG.Param IsNot Nothing And Not String.IsNullOrEmpty(GamePKG.Param.Category) Then
-                NewPS4Game.GameCategory = PS4Game.GetCategory(GamePKG.Param.Category)
+            If GamePKG.Param IsNot Nothing Then
+                If Not String.IsNullOrEmpty(GamePKG.Param.Category) Then
+                    NewPS4Game.GameCategory = PS4Game.GetCategory(GamePKG.Param.Category)
+                End If
+                If Not String.IsNullOrEmpty(GamePKG.Param.APP_VER) Then
+                    NewPS4Game.GameAppVer = GamePKG.Param.APP_VER
+                End If
+
+                For Each TableRow In GamePKG.Param.Tables
+                    If TableRow.Name = "TITLE_ID" Then
+                        NewPS4Game.GameID = TableRow.Value
+                    End If
+                    If TableRow.Name = "VERSION" Then
+                        NewPS4Game.GameVer = TableRow.Value
+                    End If
+                Next
+
             End If
+
             If GamePKG.Icon IsNot Nothing Then
                 Dispatcher.BeginInvoke(Sub() NewPS4Game.GameCoverSource = Utils.BitmapSourceFromByteArray(GamePKG.Icon))
+            End If
+            If GamePKG.Image IsNot Nothing Then
+                Dispatcher.BeginInvoke(Sub() NewPS4Game.GameBackgroundSource = Utils.BitmapSourceFromByteArray(GamePKG.Image))
             End If
             If GamePKG.Sound IsNot Nothing Then
                 NewPS4Game.GameSoundtrackBytes = Media.Atrac9.LoadAt9(GamePKG.Sound)
@@ -97,7 +116,6 @@ Public Class PS4Library
                         OthersListView.Items.Add(NewPS4Game)
                     End If
             End Select
-
         Next
 
     End Sub
@@ -159,7 +177,6 @@ Public Class PS4Library
         Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS4 backup folder"}
 
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
-
             'Set the count of pkg files
             PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
 
@@ -172,7 +189,6 @@ Public Class PS4Library
             'Load the pkg files
             GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
         End If
-
     End Sub
 
     Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
@@ -182,5 +198,63 @@ Public Class PS4Library
     End Sub
 
 #End Region
+
+    Private Sub GamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles GamesListView.SelectionChanged
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS4Game As PS4Game = CType(GamesListView.SelectedItem, PS4Game)
+
+            GameTitleTextBlock.Text = SelectedPS4Game.GameTitle
+            GameIDTextBlock.Text = "Title ID: " & SelectedPS4Game.GameID
+            GameContentIDTextBlock.Text = "Content ID: " & SelectedPS4Game.GameContentID
+            GameRegionTextBlock.Text = "Region: " & SelectedPS4Game.GameRegion
+            GameVersionTextBlock.Text = "Game Version: " & SelectedPS4Game.GameVer
+            GameAppVersionTextBlock.Text = "Application Version: " & SelectedPS4Game.GameAppVer
+            GameCategoryTextBlock.Text = "Category: " & SelectedPS4Game.GameCategory
+            GameSizeTextBlock.Text = "Size: " & SelectedPS4Game.GameSize
+            GameRequiredFirmwareTextBlock.Text = "Required Firmware: " & SelectedPS4Game.GameRequiredFW
+
+            If Not String.IsNullOrEmpty(SelectedPS4Game.GameFilePath) Then
+                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(Path.GetDirectoryName(SelectedPS4Game.GameFilePath)).Name
+            Else
+                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(SelectedPS4Game.GameFolderPath).Name
+            End If
+
+            If SelectedPS4Game.GameBackgroundSource IsNot Nothing Then
+                If Dispatcher.CheckAccess() = False Then
+                    Dispatcher.BeginInvoke(Sub()
+                                               RectangleImageBrush.ImageSource = SelectedPS4Game.GameBackgroundSource
+                                               BlurringShape.BeginAnimation(OpacityProperty, New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(500))})
+                                           End Sub)
+                Else
+                    RectangleImageBrush.ImageSource = SelectedPS4Game.GameBackgroundSource
+                    BlurringShape.BeginAnimation(OpacityProperty, New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(500))})
+                End If
+            Else
+                RectangleImageBrush.ImageSource = Nothing
+            End If
+
+            If SelectedPS4Game.GameSoundtrackBytes IsNot Nothing Then
+                If IsSoundPlaying Then
+                    Utils.StopSND()
+                    IsSoundPlaying = False
+                Else
+                    Utils.PlaySND(SelectedPS4Game.GameSoundtrackBytes)
+                    IsSoundPlaying = True
+                End If
+            Else
+                If IsSoundPlaying Then
+                    Utils.StopGameSound()
+                    IsSoundPlaying = False
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub GamesListView_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles GamesListView.PreviewMouseWheel
+        Dim OpenWindowsListViewScrollViewer As ScrollViewer = Utils.FindScrollViewer(GamesListView)
+        Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
+        OpenWindowsListViewScrollViewer.ScrollToHorizontalOffset(HorizontalOffset - (e.Delta / 100))
+        e.Handled = True
+    End Sub
 
 End Class

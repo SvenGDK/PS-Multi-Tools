@@ -1,0 +1,156 @@
+﻿<Window x:Class="PKGBrowser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PKG Browser" Height="680" Width="1325" Background="#FF252525" ResizeMode="CanMinimize">
+    <Grid>
+        <wv2:WebView2 x:Name="ContentWebView" HorizontalAlignment="Center" Height="326" Margin="0,87,0,0" VerticalAlignment="Top" Width="830" Source="https://google.com" Visibility="Hidden"/>
+        <TabControl x:Name="MainTabControl" Background="{x:Null}" FontSize="18" Margin="0,0,0,400" BorderThickness="0,1,0,0">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabPanel}">
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Games" Padding="25,5,25,5">
+                <Grid Height="230">
+                    <ListView x:Name="GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=9}" VirtualizingPanel.VirtualizationMode="Recycling" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="135" Height="170">
+                                    <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Demos" Padding="25,5,25,5">
+                <Grid Height="230">
+                    <ListView x:Name="DemosListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=9}" VirtualizingPanel.VirtualizationMode="Recycling" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="135" Height="170">
+                                    <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="DLCs" Padding="25,5,25,5">
+                <Grid Height="230">
+                    <ListView x:Name="DLCsListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=9}" VirtualizingPanel.VirtualizationMode="Recycling" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="135" Height="170">
+                                    <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Themes" Padding="25,5,25,5">
+                <Grid Height="230">
+                    <ListView x:Name="ThemesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=9}" VirtualizingPanel.VirtualizationMode="Recycling" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="135" Height="170">
+                                    <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Avatars" Padding="25,5,25,5">
+                <Grid Height="230">
+                    <ListView x:Name="AvatarsListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=9}" VirtualizingPanel.VirtualizationMode="Recycling" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="135" Height="170">
+                                    <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <TextBox x:Name="NameSearchTextBox" HorizontalAlignment="Left" Margin="22,498,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
+        <TextBox x:Name="TitleIDSearchTextBox" HorizontalAlignment="Left" Margin="22,552,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
+        <TextBox x:Name="ContentIDSearchTextBox" HorizontalAlignment="Left" Margin="22,606,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,472,0,0" TextWrapping="Wrap" Text="By Name :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,526,0,0" TextWrapping="Wrap" Text="By Title ID :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,580,0,0" TextWrapping="Wrap" Text="By Content ID :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,443,0,0" TextWrapping="Wrap" Text="Search for a Game" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="301,443,0,0" TextWrapping="Wrap" Text="Downloads" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <ListView x:Name="DownloadsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="301,472,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1000" Height="157">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Path=PackageTitleID}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="GameIDHeader" >Package Title ID</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="400" DisplayMemberBinding="{Binding Path=PackageName}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="FileNameHeader" >Package Name</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="125" DisplayMemberBinding="{Binding Path=PackageSize}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="PKGSizeHeader" >PKG Size</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="175" DisplayMemberBinding="{Binding Path=PackageDownloadState}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="DownloadStateHeader" >Download State</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock x:Name="PKGTitleTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TITLE" VerticalAlignment="Top" Foreground="White" FontSize="24" FontWeight="Bold" Margin="0,269,0,0"/>
+        <TextBlock x:Name="TitleIDTextBlock" HorizontalAlignment="Center" Margin="0,306,0,0" TextWrapping="Wrap" Text="Title ID:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock x:Name="ContentIDTextBlock" HorizontalAlignment="Center" Margin="0,335,0,0" TextWrapping="Wrap" Text="Content ID:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Center" Margin="0,364,0,0" TextWrapping="Wrap" Text="Region:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock x:Name="SizeTextBlock" HorizontalAlignment="Center" Margin="0,393,0,0" TextWrapping="Wrap" Text="Size:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+
+    </Grid>
+</Window>

@@ -39,6 +39,13 @@
             </StackPanel>
         </Button>
         <Button x:Name="SavePS5AddressButton" Content="Save" HorizontalAlignment="Left" Margin="274,259,0,0" VerticalAlignment="Top" Width="70"/>
-        <TextBlock FontFamily="Calibri" FontSize="16" Text="Other Utilities &amp; Stuff" Margin="406,186,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="324" FontWeight="Bold"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Other Utilities &amp; Stuff" Margin="406,186,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="276" FontWeight="Bold"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Download Path :" Margin="211,72,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="PS5IPTextBox_Copy" HorizontalAlignment="Left" Margin="309,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Cache Path :" Margin="235,97,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="PS5IPTextBox_Copy1" HorizontalAlignment="Left" Margin="309,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="632,70,0,0" VerticalAlignment="Top" Width="50"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="632,95,0,0" VerticalAlignment="Top" Width="50"/>
+        <CheckBox x:Name="SkipFileCheckCheckBox_Copy" Content="Skip downloading missing icons" HorizontalAlignment="Left" Margin="20,380,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" />
     </Grid>
 </Window>

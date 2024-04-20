@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS Multi Tools" Height="580" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Multi Tools" Height="580" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
 
@@ -306,8 +306,16 @@
         </Grid>
 
         <StatusBar Height="27" VerticalAlignment="Bottom" Background="#FFE2E2E2" FontFamily="Calibri" Foreground="Black" FontSize="14">
-            <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.6" Margin="5,0,0,0"/>
-            <Button x:Name="CheckUpdatesButton" Content="Check for updates" FontSize="12" Width="100" Height="20" HorizontalAlignment="Right" Margin="395,0,0,0"/>
+            <StatusBarItem>
+                <StatusBarItem.Content>
+                    <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.6" Margin="10,0,0,0"/>
+                </StatusBarItem.Content>
+            </StatusBarItem>
+            <StatusBarItem>
+                <StatusBarItem.Content>
+                    <Button x:Name="CheckUpdatesButton" Content="Check for PSMT-Library Updates" FontSize="12" Width="175" Height="20" HorizontalAlignment="Right" Margin="320,0,0,0"/>
+                </StatusBarItem.Content>
+            </StatusBarItem>
         </StatusBar>
 
     </Grid>
