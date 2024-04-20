@@ -1,11 +1,11 @@
-<p align="center"><img src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/5f1e04c6-9d72-429c-85a5-b7090864c6e9" width="128" height="128">
+<p align="center"><img width="128" height="128" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/ba33e13f-b634-49ef-858e-3a3cef462916">
 </p>
 
 # PS Multi Tools
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
-  <summary>v13.6 contains following tools</summary>
+  <summary>v14 contains following tools</summary>
   
 ## General:
 - FTP Browser
@@ -28,6 +28,39 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - RCO Dumper
 - SELF Reader
 - PARAM.SFO Editor
+- webMAN MOD features
+  - PS3NetSrv Utilities
+    - Create folder structure (GAMES, PS3ISO, ...)
+    - Manage virtual folders for ps3netsrv
+    - Share a single folder
+    - Share configured managed virtual folders
+  - Disc & Game Utilities
+    - Play inserted disc
+    - Eject inserted disc
+    - Insert disc in tray
+    - Exit game to XMB
+    - Reload PS3 game
+    - Toggle video recording (in-game)
+    - Toggle in-game background music playback
+  - General Utilities
+    - Rescan the games and refresh XML
+    - Shutdown the PS3 console
+    - Restart the PS3 console
+    - Restart the PS3 console and allow scan content on startup
+    - Restart the PS3 console and show the min version
+    - Hard reboot
+    - Reboot using VSH command
+    - Open an URL on the PS3 web browser
+  - Download & Installation Utilities
+    - Download a PKG from an URL to the PS3 HDD
+    - Download a file from an URL to the PS3 HDD
+    - Download & Install a PKG from an URL
+    - Install a PKG from the PS3 HDD
+    - Install a theme from the PS3 HDD
+  - Temperature Monitoring
+    - Web GUI for monitor temperatures in Celcius
+    - Web GUI for monitor temperatures in Fahrenheit
+  - Show system info on PS3
 
 ## PS4
 - PKG Sender (currently not working)
