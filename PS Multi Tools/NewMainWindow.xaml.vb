@@ -517,6 +517,16 @@ Public Class NewMainWindow
         NewPS5RcoExtractor.Show()
     End Sub
 
+    Private Sub CheckPSMTUpdateButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckPSMTUpdateButton.Click
+        If psmt_lib.Utils.IsPSMultiToolsUpdateAvailable() Then
+            If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
+                psmt_lib.Utils.DownloadAndExecuteUpdater()
+            End If
+        Else
+            MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
+        End If
+    End Sub
+
 #End Region
 
 End Class

@@ -313,7 +313,12 @@
             </StatusBarItem>
             <StatusBarItem>
                 <StatusBarItem.Content>
-                    <Button x:Name="CheckUpdatesButton" Content="Check for PSMT-Library Updates" FontSize="12" Width="175" Height="20" HorizontalAlignment="Right" Margin="320,0,0,0"/>
+                    <Button x:Name="CheckPSMTUpdateButton" Content="Check for PS Multi Tools Updates" FontSize="12" Width="175" Height="20" HorizontalAlignment="Right" Margin="120,0,0,0"/>
+                </StatusBarItem.Content>
+            </StatusBarItem>
+            <StatusBarItem>
+                <StatusBarItem.Content>
+                    <Button x:Name="CheckUpdatesButton" Content="Check for PSMT-Library Updates" FontSize="12" Width="175" Height="20" HorizontalAlignment="Right" Margin="0,0,0,0"/>
                 </StatusBarItem.Content>
             </StatusBarItem>
         </StatusBar>

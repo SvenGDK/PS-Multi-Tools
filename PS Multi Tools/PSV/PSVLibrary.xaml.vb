@@ -19,7 +19,6 @@ Public Class PSVLibrary
     Dim WithEvents NewContextMenu As New Controls.ContextMenu()
     Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
     Dim WithEvents PKGInfoMenuItem As New Controls.MenuItem() With {.Header = "PKG Details", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/information-button.png", UriKind.Relative))}}
-    Dim WithEvents PSNInfoMenuItem As New Controls.MenuItem() With {.Header = "Load infos from NPS", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/information-button.png", UriKind.Relative))}}
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
@@ -43,7 +42,6 @@ Public Class PSVLibrary
 
         NewContextMenu.Items.Add(CopyToMenuItem)
         NewContextMenu.Items.Add(PKGInfoMenuItem)
-        NewContextMenu.Items.Add(PSNInfoMenuItem)
         GamesListView.ContextMenu = NewContextMenu
     End Sub
 
@@ -256,22 +254,6 @@ Public Class PSVLibrary
         End If
     End Sub
 
-    Private Sub PSNInfoMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PSNInfoMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPSVGame As PSVGame = CType(GamesListView.SelectedItem, PSVGame)
-            If Not String.IsNullOrEmpty(SelectedPSVGame.ContentID) Then
-                If MsgBox("Load from NPS?", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-                    Dim SelectedPackage As New psmt_lib.Structures.Package() With {.PackageContentID = SelectedPSVGame.ContentID, .PackageTitleID = SelectedPSVGame.GameID}
-                    Dim NewPackageInfoWindow As New DownloadPackageInfoWindow() With {.ShowActivated = True, .Title = SelectedPSVGame.GameTitle, .CurrentPackage = SelectedPackage, .PackageConsole = "PSV"}
-                    NewPackageInfoWindow.Show()
-                Else
-                    Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPSVGame.GameFilePath}
-                    NewPKGInfo.Show()
-                End If
-            End If
-        End If
-    End Sub
-
     Private Sub PKGInfoMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PKGInfoMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPSVGame As PSVGame = CType(GamesListView.SelectedItem, PSVGame)
@@ -288,10 +270,7 @@ Public Class PSVLibrary
 
             NewContextMenu.Items.Add(CopyToMenuItem)
 
-            If SelectedPSVGame.GameFileType = PS3Game.GameFileTypes.Backup Then
-                NewContextMenu.Items.Add(PSNInfoMenuItem)
-            ElseIf SelectedPSVGame.GameFileType = PS3Game.GameFileTypes.PKG Then
-                NewContextMenu.Items.Add(PSNInfoMenuItem)
+            If SelectedPSVGame.GameFileType = PS3Game.GameFileTypes.PKG Then
                 NewContextMenu.Items.Add(PKGInfoMenuItem)
             End If
         End If

@@ -18,7 +18,7 @@
         </Rectangle>
         <psmt_lib:PS3Menu x:Name="NewPS3Menu" Height="20" VerticalAlignment="Top"></psmt_lib:PS3Menu>
 
-        <ListView x:Name="PS3GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" VirtualizingPanel.VirtualizationMode="Recycling" Height="220" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" Margin="5,35,5,0" >
+        <ListView x:Name="PS3GamesListView" Background="{x:Null}" FocusVisualStyle="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" VirtualizingPanel.VirtualizationMode="Recycling" Height="220" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" Margin="5,35,5,0" >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>
@@ -26,7 +26,7 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="{Binding GridWidth}" Height="{Binding GridHeight}">
+                    <Grid Width="{Binding GridWidth}" Height="{Binding GridHeight}" FocusVisualStyle="{x:Null}">
                         <Image Width="{Binding ImageWidth}" Height="{Binding ImageHeight}" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Left" Margin="0,0,0,0" >
                             <Image.Effect>
                                 <DropShadowEffect/>

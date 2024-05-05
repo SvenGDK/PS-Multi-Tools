@@ -782,16 +782,8 @@ Public Class PS3Library
     Private Sub PKGInfoMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PKGInfoMenuItem.Click
         If PS3GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS3Game As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
-            If Not String.IsNullOrEmpty(SelectedPS3Game.ContentID) Then
-                If MsgBox("Load from NPS?", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
-                    Dim SelectedPackage As New psmt_lib.Structures.Package() With {.PackageContentID = SelectedPS3Game.ContentID, .PackageTitleID = SelectedPS3Game.GameID}
-                    Dim NewPackageInfoWindow As New DownloadPackageInfoWindow() With {.ShowActivated = True, .Title = SelectedPS3Game.GameTitle, .CurrentPackage = SelectedPackage, .PackageConsole = "PS3"}
-                    NewPackageInfoWindow.Show()
-                End If
-            Else
-                Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPS3Game.GameFilePath, .Console = "PS3"}
-                NewPKGInfo.Show()
-            End If
+            Dim NewPKGInfo As New PKGInfo() With {.SelectedPKG = SelectedPS3Game.GameFilePath, .Console = "PS3"}
+            NewPKGInfo.Show()
         End If
     End Sub
 

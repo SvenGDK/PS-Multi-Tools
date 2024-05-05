@@ -9,7 +9,7 @@
         Title="PS2 Library" Height="650" Width="1350" Background="#FF252525" ResizeMode="CanMinimize">
     <Grid>
         <psmt_lib:PS2Menu x:Name="NewPS2Menu" Height="20" VerticalAlignment="Top"></psmt_lib:PS2Menu>
-        <ListView x:Name="GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" VirtualizingPanel.VirtualizationMode="Recycling" Height="300" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" Margin="5,30,5,0" >
+        <ListView x:Name="GamesListView" Background="{x:Null}" FocusVisualStyle="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" VirtualizingPanel.VirtualizationMode="Recycling" Height="300" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" Margin="5,30,5,0" >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>
@@ -17,7 +17,7 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="200" Height="290">
+                    <Grid Width="200" Height="290" FocusVisualStyle="{x:Null}">
                         <Image Width="174" Height="250" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" >
                             <Image.Effect>
                                 <DropShadowEffect/>

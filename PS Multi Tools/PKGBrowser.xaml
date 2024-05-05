@@ -17,7 +17,7 @@
             </TabControl.Resources>
             <TabItem Header="Games" Padding="25,5,25,5">
                 <Grid Height="230">
-                    <ListView x:Name="GamesListView" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=9}" VirtualizingPanel.VirtualizationMode="Recycling" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+                    <ListView x:Name="GamesListView" Background="{x:Null}" FocusVisualStyle="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=9}" VirtualizingPanel.VirtualizationMode="Recycling" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel Orientation="Horizontal"/>
@@ -27,7 +27,7 @@
                             <DataTemplate>
                                 <Grid Width="135" Height="170">
                                     <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
-                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding PackageName}" FocusVisualStyle="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

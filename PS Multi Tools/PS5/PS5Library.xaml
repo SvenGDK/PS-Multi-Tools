@@ -30,7 +30,7 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Width="270" Height="300">
+                                <Grid Width="270" Height="300" FocusVisualStyle="{x:Null}">
                                     <Image Width="256" Height="256" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,15" >
                                         <Image.Effect>
                                             <DropShadowEffect/>
