@@ -5,7 +5,7 @@
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
-  <summary>v14 contains following tools</summary>
+  <summary>v14.1 contains following tools</summary>
   
 ## General:
 - FTP Browser
@@ -63,7 +63,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
   - Show system info on PS3
 
 ## PS4
-- PKG Sender (currently not working)
+- PKG Sender (currently broken)
 - PKG Infos Reader
 - Payload Sender
 - Show PSN Store Infos
@@ -71,6 +71,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - USB Writer
 - PARAM.SFO Editor
 - PKG Merger
+- PPPwn GUI
 
 ## PS5
 - General ELF & BIN Payload Sender
@@ -97,6 +98,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
   - Based on EchoStretch's Make_FSELF_PY3.bat & LightningMods updated make_fself by Flatz
 - etaHEN Configurator (requires running FTP server)
 - klog Viewer
+- Shortcut PKG Creator
 
 ## PSP
 - ISO to CSO Converter
