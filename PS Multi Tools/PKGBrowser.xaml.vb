@@ -228,15 +228,27 @@ Public Class PKGBrowser
     End Sub
 
     Private Sub NameSearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles NameSearchTextBox.TextChanged
-        TextSearch(NameSearchTextBox)
+        If CurrentListView IsNot Nothing Then
+            TextSearch(NameSearchTextBox)
+        Else
+            MsgBox("Please load the database first by clicking on the middle of the list or the left/right arrow.", MsgBoxStyle.Information, "Search unavailable")
+        End If
     End Sub
 
     Private Sub TitleIDSearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles TitleIDSearchTextBox.TextChanged
-        TextSearch(TitleIDSearchTextBox)
+        If CurrentListView IsNot Nothing Then
+            TextSearch(TitleIDSearchTextBox)
+        Else
+            MsgBox("Please load the database first by clicking on the middle of the list or the left/right arrow.", MsgBoxStyle.Information, "Search unavailable")
+        End If
     End Sub
 
     Private Sub ContentIDSearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles ContentIDSearchTextBox.TextChanged
-        TextSearch(ContentIDSearchTextBox)
+        If CurrentListView IsNot Nothing Then
+            TextSearch(ContentIDSearchTextBox)
+        Else
+            MsgBox("Please load the database first by clicking on the middle of the list or the left/right arrow.", MsgBoxStyle.Information, "Search unavailable")
+        End If
     End Sub
 
     Private Sub DownloadMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles DownloadMenuItem.Click
