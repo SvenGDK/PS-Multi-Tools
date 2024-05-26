@@ -110,12 +110,14 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PARAM.SFO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="PARAM.SFO">
+      <HintPath>..\..\..\..\Desktop\Debug\PARAM.SFO.dll</HintPath>
+    </Reference>
     <Reference Include="PS4_Tools">
       <HintPath>..\..\..\..\Desktop\Debug\PS4_Tools.dll</HintPath>
     </Reference>
     <Reference Include="psmt-lib">
-      <HintPath>..\..\psmt-lib\psmt-lib\bin\x64\Release\psmt-lib.dll</HintPath>
+      <HintPath>..\..\PSMT-Library\psmt-lib\bin\x64\Release\psmt-lib.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
