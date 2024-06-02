@@ -15,6 +15,7 @@ Public Class PS1Library
     'Selected game context menu
     Dim WithEvents NewContextMenu As New Controls.ContextMenu()
     Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
+    Dim WithEvents PlayGameMenuItem As New Controls.MenuItem() With {.Header = "Play with ePSXe", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/controller.png", UriKind.Relative))}}
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
@@ -30,6 +31,7 @@ Public Class PS1Library
         LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
         NewContextMenu.Items.Add(CopyToMenuItem)
+        NewContextMenu.Items.Add(PlayGameMenuItem)
         GamesListView.ContextMenu = NewContextMenu
     End Sub
 
@@ -59,7 +61,7 @@ Public Class PS1Library
             'We could also use StreamReader & BinaryReader but there are many methods, this is an easy way and also used in PS Mac Tools
             Using WindowsCMD As New Process()
                 WindowsCMD.StartInfo.FileName = "cmd"
-                WindowsCMD.StartInfo.Arguments = "/c strings -nobanner -b 7340032 """ + Game + """ | findstr BOOT"
+                WindowsCMD.StartInfo.Arguments = "/c strings.exe /accepteula -nobanner -b 7340032 """ + Game + """ | findstr BOOT"
                 WindowsCMD.StartInfo.RedirectStandardOutput = True
                 WindowsCMD.StartInfo.UseShellExecute = False
                 WindowsCMD.StartInfo.CreateNoWindow = True
@@ -297,8 +299,8 @@ Public Class PS1Library
         'Get game infos
         Dim infoTable As HtmlElementCollection = Nothing
         If PSXDatacenterBrowser.Document.GetElementById("table4") IsNot Nothing AndAlso PSXDatacenterBrowser.Document.GetElementById("table4").GetElementsByTagName("tr").Count > 0 Then
-                infoTable = PSXDatacenterBrowser.Document.GetElementById("table4").GetElementsByTagName("tr")
-            End If
+            infoTable = PSXDatacenterBrowser.Document.GetElementById("table4").GetElementsByTagName("tr")
+        End If
         Dim coverTableRows As HtmlElementCollection = Nothing
         If PSXDatacenterBrowser.Document.GetElementById("table2") IsNot Nothing AndAlso PSXDatacenterBrowser.Document.GetElementById("table2").GetElementsByTagName("tr").Count > 0 Then
             coverTableRows = PSXDatacenterBrowser.Document.GetElementById("table2").GetElementsByTagName("tr")
@@ -312,8 +314,8 @@ Public Class PS1Library
 
             'GameCode
             If infoTable.Item(2).Children.Count >= 1 Then
-                    GameCode = infoTable.Item(2).Children(1).InnerText.Trim()
-                End If
+                GameCode = infoTable.Item(2).Children(1).InnerText.Trim()
+            End If
 
             'Region
             If infoTable.Item(3).Children.Count >= 1 Then
@@ -335,8 +337,8 @@ Public Class PS1Library
 
             'Developer
             If infoTable.Item(5).Children.Count >= 1 Then
-                    GameDeveloper = infoTable.Item(5).Children(1).InnerText.Trim()
-                End If
+                GameDeveloper = infoTable.Item(5).Children(1).InnerText.Trim()
+            End If
 
             'Publisher
             If infoTable.Item(6).Children.Count >= 1 Then
@@ -361,10 +363,10 @@ Public Class PS1Library
         End If
 
         If Not String.IsNullOrEmpty(GameCode) Then
-                For Each Game In GamesListView.Items
-                    Dim FoundGame As PS1Game = CType(Game, PS1Game)
-                    If Not String.IsNullOrEmpty(FoundGame.GameTitle) Then
-                        If FoundGame.GameTitle.Contains(GameCode) Or FoundGame.GameTitle = GameCode Then
+            For Each Game In GamesListView.Items
+                Dim FoundGame As PS1Game = CType(Game, PS1Game)
+                If Not String.IsNullOrEmpty(FoundGame.GameTitle) Then
+                    If FoundGame.GameTitle.Contains(GameCode) Or FoundGame.GameTitle = GameCode Then
                         FoundGame.GameRegion = GameRegion
                         FoundGame.GameGenre = GameGenre
                         FoundGame.GameDeveloper = GameDeveloper
@@ -394,8 +396,8 @@ Public Class PS1Library
                             End If
                         End If
                     End If
-                    ElseIf Not String.IsNullOrEmpty(FoundGame.GameID) Then
-                        If FoundGame.GameID.Contains(GameCode) Or FoundGame.GameID = GameCode Then
+                ElseIf Not String.IsNullOrEmpty(FoundGame.GameID) Then
+                    If FoundGame.GameID.Contains(GameCode) Or FoundGame.GameID = GameCode Then
                         FoundGame.GameTitle = GameTitle
                         FoundGame.GameRegion = GameRegion
                         FoundGame.GameGenre = GameGenre
@@ -426,9 +428,9 @@ Public Class PS1Library
                             End If
                         End If
                     End If
-                    End If
-                Next
-            End If
+                End If
+            Next
+        End If
 
         AddHandler PSXDatacenterBrowser.DocumentCompleted, AddressOf PSXDatacenterBrowser_DocumentCompleted
 
@@ -501,6 +503,64 @@ Public Class PS1Library
                 End If
             End If
 
+        End If
+    End Sub
+
+    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe") Then
+            If GamesListView.SelectedItem IsNot Nothing Then
+                Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
+
+                'Check if any PS1 BIOS file is available
+                If Not Directory.GetFiles(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\bios", "*.bin", SearchOption.TopDirectoryOnly).Count > 0 Then
+                    If MsgBox("No PS1 BIOS file available." + vbCrLf + "You need at least one BIOS file installed in order to play " + SelectedPS1Game.GameTitle + "." + vbCrLf +
+                              "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
+
+                        'Get a BIOS file from OpenFileDialog
+                        Dim OFD As New OpenFileDialog() With {.Title = "Select a PS1 BIOS file", .Filter = "PS1 BIOS (*.bin)|*.bin", .Multiselect = False}
+                        If OFD.ShowDialog() = Forms.DialogResult.OK Then
+                            Dim SelectedBIOSFile As String = OFD.FileName
+                            Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
+
+                            'Copy to the BIOS folder
+                            File.Copy(SelectedBIOSFile, My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\bios\" + SelectedBIOSFileName, True)
+
+                            'Proceed
+                            If MsgBox("Start " + SelectedPS1Game.GameTitle + " using ePSXe ?" + vbCrLf + vbCrLf +
+                                      "If the game doesn't start then you have to set the BIOS manually using ePSXe.exe in \Emulators\ePSXe (Config -> BIOS).", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                                Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                                Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                                EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
+                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
+                                EmulatorLauncherStartInfo.Arguments = "-nogui -loadbin """ + SelectedPS1Game.GameFilePath + """"
+                                EmulatorLauncher.Start()
+                            End If
+
+                        Else
+                            MsgBox("No BIOS file specied, aborting.", MsgBoxStyle.Critical, "Error")
+                            Exit Sub
+                        End If
+                    Else
+                        MsgBox("No BIOS file available, aborting.", MsgBoxStyle.Critical, "Error")
+                        Exit Sub
+                    End If
+
+                Else
+                    'Proceed
+                    If MsgBox("Start " + SelectedPS1Game.GameTitle + " using ePSXe ?" + vbCrLf + vbCrLf +
+                                      "If the game doesn't start then you have to set the BIOS manually using ePSXe.exe in \Emulators\ePSXe (Config -> BIOS).", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                        Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                        Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
+                        EmulatorLauncherStartInfo.Arguments = "-nogui -loadbin """ + SelectedPS1Game.GameFilePath + """"
+                        EmulatorLauncher.Start()
+                    End If
+
+                End If
+            End If
+        Else
+            MsgBox("Cannot start ePSXe." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
         End If
     End Sub
 

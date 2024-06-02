@@ -1,6 +1,8 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Security.Authentication
+Imports System.Threading
+Imports System.Windows.Forms
 Imports System.Windows.Media.Animation
 Imports FluentFTP
 Imports PS_Multi_Tools.INI
@@ -25,6 +27,7 @@ Public Class PS3Library
     Dim WithEvents ExtractPKGMenuItem As New Controls.MenuItem() With {.Header = "Extract .pkg", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/extract.png", UriKind.Relative))}}
     Dim WithEvents PlayMenuItem As New Controls.MenuItem() With {.Header = "Play Soundtrack", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}}
     Dim WithEvents PKGInfoMenuItem As New Controls.MenuItem() With {.Header = "PKG Details", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/information-button.png", UriKind.Relative))}}
+    Dim WithEvents PlayGameMenuItem As New Controls.MenuItem() With {.Header = "Play with rpcs3", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/controller.png", UriKind.Relative))}}
 
     'ISO tools context menu items
     Dim WithEvents ISOToolsMenuItem As New Controls.MenuItem() With {.Header = "ISO Tools", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/iso.png", UriKind.Relative))}}
@@ -50,7 +53,7 @@ Public Class PS3Library
         LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
         'Add the new PKG Browser
-        Dim PKGDownloaderMenuItem As New MenuItem() With {.Header = "PKG Browser & Downloader"}
+        Dim PKGDownloaderMenuItem As New Controls.MenuItem() With {.Header = "PKG Browser & Downloader"}
         AddHandler PKGDownloaderMenuItem.Click, AddressOf OpenPKGBrowser
         NewPS3Menu.Items.Add(PKGDownloaderMenuItem)
 
@@ -790,7 +793,7 @@ Public Class PS3Library
     Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
         If PS3GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS3Game As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
-            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
+            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to copy the selected game ?"}
 
             If FBD.ShowDialog() = Forms.DialogResult.OK Then
                 Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
@@ -815,6 +818,172 @@ Public Class PS3Library
                 End If
             End If
 
+        End If
+    End Sub
+
+    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
+            'Check if PS3 firmware is installed
+            If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\dev_flash\sys\external") OrElse Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\dev_flash\sys\internal") Then
+                If MsgBox("Playing games using rpcs3 requires the PS3 firmware to be installed first." + vbCrLf + "Do you want to install a firmware now using an PS3UPDAT.PUP file ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+
+                    Dim OFD As New OpenFileDialog() With {.Title = "Select the PS3UPDAT.PUP file to install.", .Filter = "PUP File (*.PUP)|*.PUP", .Multiselect = False}
+                    If OFD.ShowDialog() = Forms.DialogResult.OK Then
+
+                        'Set up rpcs3 to install the selected PS3 firmware
+                        Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                        Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
+                        EmulatorLauncherStartInfo.Arguments = "--installfw """ + OFD.FileName + """"
+                        EmulatorLauncher.Start()
+                        EmulatorLauncher.WaitForExit()
+                        EmulatorLauncher.Dispose()
+
+                    Else
+                        MsgBox("No PS3UPDAT.PUP file specified.", MsgBoxStyle.Critical, "Error")
+                        Exit Sub
+                    End If
+
+                Else
+                    'Do not skip for PKGs, installation is possible without firmware
+                    If PS3GamesListView.SelectedItem IsNot Nothing Then
+                        Dim SelectedPS3Game As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
+                        If Not SelectedPS3Game.GameFileType = PS3Game.GameFileTypes.PKG Then
+                            MsgBox("Aborting game start.", MsgBoxStyle.Critical, "Error")
+                            Exit Sub
+                        End If
+                    Else
+                        MsgBox("Aborting game start.", MsgBoxStyle.Critical, "Error")
+                        Exit Sub
+                    End If
+                End If
+            End If
+
+            If PS3GamesListView.SelectedItem IsNot Nothing Then
+                Dim SelectedPS3Game As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
+
+                If MsgBox("Start " + SelectedPS3Game.GameTitle + " using rpcs3 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+
+                    Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                    Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                    EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
+                    EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
+
+                    Select Case SelectedPS3Game.GameFileType
+                        Case PS3Game.GameFileTypes.Backup
+
+                            EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
+                            EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
+                            EmulatorLauncherStartInfo.Arguments = """" + SelectedPS3Game.GameFolderPath + """ --no-gui"
+                            EmulatorLauncher.Start()
+
+                        Case PS3Game.GameFileTypes.PKG
+
+                            'Installation of game required
+                            Dim RPCS3GameInstallationPath As String = My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\dev_hdd0\game\" + SelectedPS3Game.GameID
+                            If Not Directory.Exists(RPCS3GameInstallationPath) Then
+                                If MsgBox("Playing games in PKG format will require you to install them first including their RAP file." + vbCrLf + vbCrLf +
+                                    "Please close rpcs3 when the game PKG has been installed & after the RAP installation or PS Multi Tools will stop responding." + vbCrLf + vbCrLf +
+                                    "The game will start automatically after the RAP file installation." + vbCrLf + vbCrLf +
+                                    "Do you want to continue ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+
+                                    Dim OFD As New OpenFileDialog() With {.Title = "Select the .rap file for the selected game.", .Filter = "RAP license (*.rap)|*.rap"}
+                                    If OFD.ShowDialog() = Forms.DialogResult.OK Then
+
+                                        Dim SelectedRAPFile As String = OFD.FileName
+
+                                        'Set up rpcs3 to install the .pkg file
+                                        EmulatorLauncherStartInfo.Arguments = "--installpkg """ + SelectedPS3Game.GameFilePath + """"
+                                        EmulatorLauncher.Start()
+                                        EmulatorLauncher.WaitForExit()
+                                        EmulatorLauncher.Dispose()
+
+                                        'Set up rpcs3 to install the .rap file
+                                        EmulatorLauncher = New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                                        EmulatorLauncherStartInfo.Arguments = "--installpkg """ + SelectedRAPFile + """"
+                                        EmulatorLauncher.Start()
+                                        EmulatorLauncher.WaitForExit()
+                                        EmulatorLauncher.Dispose()
+
+                                        'Start the game after installation
+                                        EmulatorLauncher = New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                                        EmulatorLauncherStartInfo.Arguments = "--no-gui ""%RPCS3_GAMEID%:" + SelectedPS3Game.GameID + """"
+                                        EmulatorLauncher.Start()
+
+                                    Else
+
+                                        If MsgBox("No .rap file specified. The game will probably not run." + vbCrLf + "Do you want to continue ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+
+                                            'Set up rpcs3 to install the .pkg file
+                                            EmulatorLauncherStartInfo.Arguments = "--installpkg """ + SelectedPS3Game.GameFilePath + """"
+                                            EmulatorLauncher.Start()
+                                            EmulatorLauncher.WaitForExit()
+                                            EmulatorLauncher.Dispose()
+
+                                            'Try to start the game after installation
+                                            EmulatorLauncher = New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                                            EmulatorLauncherStartInfo.Arguments = "--no-gui ""%RPCS3_GAMEID%:" + SelectedPS3Game.GameID + """"
+                                            EmulatorLauncher.Start()
+
+                                        Else
+                                            Exit Sub
+                                        End If
+
+                                    End If
+                                Else
+                                    Exit Sub
+                                End If
+                            Else
+                                'Game is already installed
+
+                                'Start the game
+                                EmulatorLauncher = New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                                EmulatorLauncherStartInfo.Arguments = "--no-gui ""%RPCS3_GAMEID%:" + SelectedPS3Game.GameID + """"
+                                EmulatorLauncher.Start()
+
+                            End If
+
+                        Case PS3Game.GameFileTypes.PS3ISO
+
+                            'Save current list of drives
+                            Dim CurrentDrives As New List(Of String)()
+                            For Each Drive As DriveInfo In My.Computer.FileSystem.Drives()
+                                CurrentDrives.Add(Drive.Name)
+                            Next
+
+                            'Mount the ISO file using explorer & wait 3 sec.
+                            Process.Start("explorer", SelectedPS3Game.GameFilePath)
+                            Thread.Sleep(3000)
+
+                            'Get new list of drives
+                            Dim NewDrivesList As New List(Of String)()
+                            For Each Drive As DriveInfo In My.Computer.FileSystem.Drives()
+                                NewDrivesList.Add(Drive.Name)
+                            Next
+
+                            'Get the new drive name
+                            Dim NewDriveNames As IEnumerable(Of String) = NewDrivesList.Except(CurrentDrives)
+                            If NewDriveNames.Count > 0 Then
+
+                                Dim NewDriveName As String = NewDriveNames(0)
+
+                                'Set up rpcs3
+                                EmulatorLauncherStartInfo.Arguments = NewDriveName + " --no-gui"
+                                EmulatorLauncher.Start()
+
+                            Else
+                                MsgBox("Could not find the mounted ISO.", MsgBoxStyle.Critical, "Error")
+                            End If
+
+                    End Select
+
+                End If
+            Else
+                MsgBox("No game selected.", MsgBoxStyle.Information, "Error")
+            End If
+        Else
+            MsgBox("Cannot start rpcs3." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
         End If
     End Sub
 
@@ -1021,10 +1190,13 @@ Public Class PS3Library
                 Case PS3Game.GameFileTypes.Backup
                     NewContextMenu.Items.Add(PlayMenuItem)
                     NewContextMenu.Items.Add(ISOToolsMenuItem)
+                    NewContextMenu.Items.Add(PlayGameMenuItem)
+
                     ISOToolsMenuItem.Items.Add(CreateISOMenuItem)
                 Case PS3Game.GameFileTypes.PKG
                     NewContextMenu.Items.Add(PKGInfoMenuItem)
                     NewContextMenu.Items.Add(ExtractPKGMenuItem)
+                    NewContextMenu.Items.Add(PlayGameMenuItem)
                 Case PS3Game.GameFileTypes.PS3ISO
                     If SelectedPS3Game.GameRootLocation = PS3Game.GameLocation.WebMANMOD Then
                         NewContextMenu.Items.Add(ISOToolsMenuItem)
@@ -1032,6 +1204,7 @@ Public Class PS3Library
                         ISOToolsMenuItem.Items.Add(MountISOMenuItem)
                     Else
                         NewContextMenu.Items.Add(ISOToolsMenuItem)
+                        NewContextMenu.Items.Add(PlayGameMenuItem)
                         ISOToolsMenuItem.Items.Add(ExtractISOMenuItem)
                         ISOToolsMenuItem.Items.Add(PatchISOMenuItem)
                         ISOToolsMenuItem.Items.Add(SplitISOMenuItem)

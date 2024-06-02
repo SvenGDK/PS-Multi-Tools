@@ -15,6 +15,7 @@ Public Class PSPLibrary
     'Selected game context menu
     Dim WithEvents NewContextMenu As New Controls.ContextMenu()
     Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
+    Dim WithEvents PlayGameMenuItem As New Controls.MenuItem() With {.Header = "Play with PPSSPP", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/controller.png", UriKind.Relative))}}
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
@@ -27,6 +28,7 @@ Public Class PSPLibrary
         LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
         NewContextMenu.Items.Add(CopyToMenuItem)
+        NewContextMenu.Items.Add(PlayGameMenuItem)
         GamesListView.ContextMenu = NewContextMenu
     End Sub
 
@@ -322,6 +324,33 @@ Public Class PSPLibrary
                 End If
             End If
 
+        End If
+    End Sub
+
+    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe") Then
+            If GamesListView.SelectedItem IsNot Nothing Then
+                Dim SelectedPSPGame As PSPGame = CType(GamesListView.SelectedItem, PSPGame)
+
+                If MsgBox("Start " + SelectedPSPGame.GameTitle + " using PPSSPP ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                    Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                    Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                    EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe"
+                    EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe")
+
+                    Select Case SelectedPSPGame.GameFileType
+                        Case PSPGame.GameFileTypes.Backup
+                            EmulatorLauncherStartInfo.Arguments = """" + SelectedPSPGame.GameFolderPath + """"
+                        Case PSPGame.GameFileTypes.ISO
+                            EmulatorLauncherStartInfo.Arguments = """" + SelectedPSPGame.GameFilePath + """"
+                    End Select
+
+                    EmulatorLauncher.Start()
+                End If
+
+            End If
+        Else
+            MsgBox("Cannot start PPSSPP." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
         End If
     End Sub
 

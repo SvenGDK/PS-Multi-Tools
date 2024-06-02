@@ -12,12 +12,14 @@ Public Class PS4Library
     'Selected game context menu
     Dim WithEvents NewContextMenu As New ContextMenu()
     Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
-    Dim WithEvents SendToMenuItem As New Controls.MenuItem() With {.Header = "Send to PS4", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/send-icon.png", UriKind.Relative))}}
+    Dim WithEvents ExtractPKGMenuItem As New Controls.MenuItem() With {.Header = "Extract .pkg", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/extract.png", UriKind.Relative))}}
     Dim WithEvents PKGInfoMenuItem As New Controls.MenuItem() With {.Header = "PKG Details", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/information-button.png", UriKind.Relative))}}
     Dim WithEvents PSNInfoMenuItem As New Controls.MenuItem() With {.Header = "Store Details", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/information-button.png", UriKind.Relative))}}
     Dim WithEvents PlayMenuItem As New Controls.MenuItem() With {.Header = "Play Soundtrack", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}}
+    Dim WithEvents PlayGameMenuItem As New Controls.MenuItem() With {.Header = "Play with psOff", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/controller.png", UriKind.Relative))}}
 
     Dim PKGCount As Integer = 0
+    Dim FoldersCount As Integer = 0
     Dim IsSoundPlaying As Boolean = False
 
     'Supplemental library menu items
@@ -31,11 +33,6 @@ Public Class PS4Library
         LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
 
         'Add the games context menu
-        NewContextMenu.Items.Add(CopyToMenuItem)
-        NewContextMenu.Items.Add(SendToMenuItem)
-        NewContextMenu.Items.Add(PKGInfoMenuItem)
-        NewContextMenu.Items.Add(PSNInfoMenuItem)
-        NewContextMenu.Items.Add(PlayMenuItem)
         GamesListView.ContextMenu = NewContextMenu
     End Sub
 
@@ -56,6 +53,7 @@ Public Class PS4Library
             NewPS4Game.GameRequiredFW = GamePKG.Firmware_Version
             NewPS4Game.GameSize = GamePKG.Size
             NewPS4Game.GameAppVer = GamePKG.Param.APP_VER
+            NewPS4Game.GameFileType = PS4Game.GameFileTypes.PKG
 
             If GamePKG.Param IsNot Nothing Then
                 If Not String.IsNullOrEmpty(GamePKG.Param.Category) Then
@@ -118,6 +116,131 @@ Public Class PS4Library
             End Select
         Next
 
+        'PS4 Backup folders
+        For Each Game In Directory.GetFiles(e.Argument.ToString, "*.sfo", SearchOption.AllDirectories)
+            Dim NewPS4Game As New PS4Game()
+
+            Using SFOReader As New Process()
+                SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\sfo.exe"
+                SFOReader.StartInfo.Arguments = """" + Game + """"
+                SFOReader.StartInfo.RedirectStandardOutput = True
+                SFOReader.StartInfo.UseShellExecute = False
+                SFOReader.StartInfo.CreateNoWindow = True
+                SFOReader.Start()
+
+                Dim OutputReader As StreamReader = SFOReader.StandardOutput
+                Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
+                If ProcessOutput.Count > 0 Then
+
+                    For Each Line In ProcessOutput
+                        If Line.StartsWith("TITLE=") Then
+                            NewPS4Game.GameTitle = Utils.CleanTitle(Line.Split("="c)(1).Trim(""""c).Trim())
+                        ElseIf Line.StartsWith("TITLE_ID=") Then
+                            NewPS4Game.GameID = Line.Split("="c)(1).Trim(""""c).Trim()
+                        ElseIf Line.StartsWith("CATEGORY=") Then
+                            NewPS4Game.GameCategory = Line.Split("="c)(1).Trim(""""c)
+                        ElseIf Line.StartsWith("APP_VER=") Then
+                            NewPS4Game.GameAppVer = Line.Split("="c)(1).Trim(""""c).Trim()
+                        ElseIf Line.StartsWith("SYSTEM_VER=") Then
+                            NewPS4Game.GameRequiredFW = Line.Split("="c)(1).Trim(""""c).Trim().Replace("0x0", "").Insert(1, ".").Insert(5, ".")
+                        ElseIf Line.StartsWith("VERSION=") Then
+                            NewPS4Game.GameVer = Line.Split("="c)(1).Trim(""""c).Trim()
+                        ElseIf Line.StartsWith("CONTENT_ID=") Then
+                            NewPS4Game.GameContentID = Line.Split("="c)(1).Trim(""""c).Trim()
+                        End If
+                    Next
+
+                    Dim PSVGAMEFolder As String = Path.GetDirectoryName(Directory.GetParent(Game).FullName)
+                    Dim PSVGAMEFolderSize As Long = Utils.DirSize(PSVGAMEFolder, True)
+
+                    NewPS4Game.GameSize = FormatNumber(PSVGAMEFolderSize / 1073741824, 2) + " GB"
+                    NewPS4Game.GameFolderPath = PSVGAMEFolder
+                    NewPS4Game.GameFileType = PS4Game.GameFileTypes.Backup
+
+                    'Load icon, background & sound if available
+                    If File.Exists(PSVGAMEFolder + "\sce_sys\icon0.png") Then
+                        If Dispatcher.CheckAccess() = False Then
+                            Dispatcher.BeginInvoke(Sub()
+                                                       Dim TempBitmapImage = New BitmapImage()
+                                                       TempBitmapImage.BeginInit()
+                                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                       TempBitmapImage.UriSource = New Uri(PSVGAMEFolder + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
+                                                       TempBitmapImage.EndInit()
+                                                       NewPS4Game.GameCoverSource = TempBitmapImage
+                                                   End Sub)
+                        Else
+                            Dim TempBitmapImage = New BitmapImage()
+                            TempBitmapImage.BeginInit()
+                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                            TempBitmapImage.UriSource = New Uri(PSVGAMEFolder + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
+                            TempBitmapImage.EndInit()
+                            NewPS4Game.GameCoverSource = TempBitmapImage
+                        End If
+                    End If
+                    If File.Exists(PSVGAMEFolder + "\sce_sys\pic1.png") Then
+                        If Dispatcher.CheckAccess() = False Then
+                            Dispatcher.BeginInvoke(Sub()
+                                                       Dim TempBitmapImage = New BitmapImage()
+                                                       TempBitmapImage.BeginInit()
+                                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                       TempBitmapImage.UriSource = New Uri(PSVGAMEFolder + "\sce_sys\pic1.png", UriKind.RelativeOrAbsolute)
+                                                       TempBitmapImage.EndInit()
+                                                       NewPS4Game.GameBackgroundSource = TempBitmapImage
+                                                   End Sub)
+                        Else
+                            Dim TempBitmapImage = New BitmapImage()
+                            TempBitmapImage.BeginInit()
+                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                            TempBitmapImage.UriSource = New Uri(PSVGAMEFolder + "\sce_sys\pic1.png", UriKind.RelativeOrAbsolute)
+                            TempBitmapImage.EndInit()
+                            NewPS4Game.GameBackgroundSource = TempBitmapImage
+                        End If
+                    End If
+                    If File.Exists(PSVGAMEFolder + "\sce_sys\snd0.at9") Then
+                        NewPS4Game.GameSoundtrackBytes = Media.Atrac9.LoadAt9(PSVGAMEFolder + "\sce_sys\snd0.at9")
+                    End If
+
+                    Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
+                    Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading backup folder " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + FoldersCount.ToString())
+
+                    'Add to the ListView
+                    Select Case NewPS4Game.GameCategory
+                        Case "ac"
+                            If DLCsListView.Dispatcher.CheckAccess() = False Then
+                                DLCsListView.Dispatcher.BeginInvoke(Sub() DLCsListView.Items.Add(NewPS4Game))
+                            Else
+                                DLCsListView.Items.Add(NewPS4Game)
+                            End If
+                        Case "gd"
+                            If GamesListView.Dispatcher.CheckAccess() = False Then
+                                GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS4Game))
+                            Else
+                                GamesListView.Items.Add(NewPS4Game)
+                            End If
+                        Case "gp"
+                            If UpdatesListView.Dispatcher.CheckAccess() = False Then
+                                UpdatesListView.Dispatcher.BeginInvoke(Sub() UpdatesListView.Items.Add(NewPS4Game))
+                            Else
+                                UpdatesListView.Items.Add(NewPS4Game)
+                            End If
+                        Case Else
+                            If OthersListView.Dispatcher.CheckAccess() = False Then
+                                OthersListView.Dispatcher.BeginInvoke(Sub() OthersListView.Items.Add(NewPS4Game))
+                            Else
+                                OthersListView.Items.Add(NewPS4Game)
+                            End If
+                    End Select
+
+                End If
+
+            End Using
+
+        Next
+
     End Sub
 
     Private Sub GameLoaderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles GameLoaderWorker.RunWorkerCompleted
@@ -126,7 +249,62 @@ Public Class PS4Library
 
 #End Region
 
+    Private Sub GamesListView_ContextMenuOpening(sender As Object, e As ContextMenuEventArgs) Handles GamesListView.ContextMenuOpening
+        NewContextMenu.Items.Clear()
+
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS3Game As PS4Game = CType(GamesListView.SelectedItem, PS4Game)
+
+            NewContextMenu.Items.Add(CopyToMenuItem)
+
+            Select Case SelectedPS3Game.GameFileType
+                Case PS4Game.GameFileTypes.Backup
+                    NewContextMenu.Items.Add(PlayMenuItem)
+                    NewContextMenu.Items.Add(PlayGameMenuItem)
+                Case PS4Game.GameFileTypes.PKG
+                    NewContextMenu.Items.Add(ExtractPKGMenuItem)
+                    NewContextMenu.Items.Add(PKGInfoMenuItem)
+                    NewContextMenu.Items.Add(PlayMenuItem)
+                    NewContextMenu.Items.Add(PSNInfoMenuItem)
+            End Select
+
+        End If
+    End Sub
+
+    Private Sub GamesListView_ContextMenuClosing(sender As Object, e As ContextMenuEventArgs) Handles GamesListView.ContextMenuClosing
+        NewContextMenu.Items.Clear()
+    End Sub
+
 #Region "Contextmenu Actions"
+
+    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS4Game As PS4Game = CType(GamesListView.SelectedItem, PS4Game)
+            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to copy the selected game ?"}
+
+            If FBD.ShowDialog() = Forms.DialogResult.OK Then
+                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
+                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    .BackupDestinationPath = FBD.SelectedPath + "\",
+                    .Title = "Copying " + SelectedPS4Game.GameTitle + " to " + FBD.SelectedPath + "\" + Path.GetFileName(SelectedPS4Game.GameFilePath)}
+
+                If SelectedPS4Game.GameFileType = PS4Game.GameFileTypes.Backup Then
+                    NewCopyWindow.BackupPath = SelectedPS4Game.GameFolderPath
+                ElseIf SelectedPS4Game.GameFileType = PS4Game.GameFileTypes.PKG Then
+                    NewCopyWindow.BackupPath = SelectedPS4Game.GameFilePath
+                End If
+
+                If SelectedPS4Game.GameCoverSource IsNot Nothing Then
+                    NewCopyWindow.GameIcon = SelectedPS4Game.GameCoverSource
+                End If
+
+                If NewCopyWindow.ShowDialog() = True Then
+                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
+                End If
+            End If
+
+        End If
+    End Sub
 
     Private Sub PlayMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayMenuItem.Click
         If IsSoundPlaying = True Then
@@ -169,6 +347,39 @@ Public Class PS4Library
         End If
     End Sub
 
+    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\psOff\psoff.exe") Then
+            If GamesListView.SelectedItem IsNot Nothing Then
+                Dim SelectedPS4Game As PS4Game = CType(GamesListView.SelectedItem, PS4Game)
+                If SelectedPS4Game.GameFileType = PS4Game.GameFileTypes.Backup Then
+
+                    If MsgBox("Start " + SelectedPS4Game.GameTitle + " using psOff ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                        Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                        Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\psOff\psoff.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\psOff\psoff.exe")
+                        EmulatorLauncherStartInfo.Arguments = "--file """ + SelectedPS4Game.GameFolderPath + "\eboot.bin"""
+
+                        EmulatorLauncher.Start()
+                    End If
+
+                Else
+                    MsgBox("PKG files are not supported yet." + vbCrLf + "Please extract the .pkg file before running with psOff.", MsgBoxStyle.Information, "Cannot launch PKG")
+                End If
+            End If
+        Else
+            MsgBox("Cannot start psoff." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
+        End If
+    End Sub
+
+    Private Sub ExtractPKGMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles ExtractPKGMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS4Game As PS4Game = CType(GamesListView.SelectedItem, PS4Game)
+            Dim NewPKGExtractor As New PS4PKGExtractor() With {.ShowActivated = True, .PKGToExtract = SelectedPS4Game.GameFilePath}
+            NewPKGExtractor.Show()
+        End If
+    End Sub
+
 #End Region
 
 #Region "Menu Actions"
@@ -177,13 +388,14 @@ Public Class PS4Library
         Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS4 backup folder"}
 
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            'Set the count of pkg files
+            'Set the count of pkg files & backup folders
             PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
+            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.sfo", SearchOption.AllDirectories).Count
 
             'Show the loading progress window
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS4 pkg files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = PKGCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + PKGCount.ToString()
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS4 files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = PKGCount + FoldersCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (PKGCount + FoldersCount).ToString()
             NewLoadingWindow.Show()
 
             'Load the pkg files

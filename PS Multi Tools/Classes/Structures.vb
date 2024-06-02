@@ -329,4 +329,33 @@ Public Class Structures
 
     End Structure
 
+    Public Enum LoadType
+        LocalFolder
+        FTP
+        PKGs
+    End Enum
+
+    Public Structure GameLoaderArgs
+        Private _Type As LoadType
+        Private _FolderPath As String
+
+        Public Property Type As LoadType
+            Get
+                Return _Type
+            End Get
+            Set
+                _Type = Value
+            End Set
+        End Property
+
+        Public Property FolderPath As String
+            Get
+                Return _FolderPath
+            End Get
+            Set
+                _FolderPath = Value
+            End Set
+        End Property
+    End Structure
+
 End Class

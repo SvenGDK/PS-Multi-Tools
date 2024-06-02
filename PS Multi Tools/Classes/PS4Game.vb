@@ -14,6 +14,12 @@
     Private _GameContentID As String
     Private _GameSoundtrackBytes As Byte()
     Private _GameBackgroundSource As ImageSource
+    Private _GameFileType As GameFileTypes
+
+    Public Enum GameFileTypes
+        Backup
+        PKG
+    End Enum
 
     Public Property GameTitle As String
         Get
@@ -138,6 +144,15 @@
         End Get
         Set
             _GameSoundtrackBytes = Value
+        End Set
+    End Property
+
+    Public Property GameFileType As GameFileTypes
+        Get
+            Return _GameFileType
+        End Get
+        Set
+            _GameFileType = Value
         End Set
     End Property
 

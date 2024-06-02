@@ -19,9 +19,8 @@ Public Class PS2Library
     'Selected game context menu
     Dim WithEvents NewContextMenu As New Controls.ContextMenu()
     Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
-    Dim WithEvents SendToMenuItem As New Controls.MenuItem() With {.Header = "Send to PS4-5", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/send-icon.png", UriKind.Relative))}}
-    Dim WithEvents ISOInfoMenuItem As New Controls.MenuItem() With {.Header = "ISO Infos (not available yet)", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/information-button.png", UriKind.Relative))}}
-    Dim WithEvents GameInfoMenuItem As New Controls.MenuItem() With {.Header = "More Game Infos (not available yet)", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/information-button.png", UriKind.Relative))}}
+    Dim WithEvents SendToMenuItem As New Controls.MenuItem() With {.Header = "Send to PS4/5", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/send-icon.png", UriKind.Relative))}}
+    Dim WithEvents PlayGameMenuItem As New Controls.MenuItem() With {.Header = "Play with PCSX2", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/controller.png", UriKind.Relative))}}
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
@@ -38,8 +37,7 @@ Public Class PS2Library
 
         NewContextMenu.Items.Add(CopyToMenuItem)
         NewContextMenu.Items.Add(SendToMenuItem)
-        NewContextMenu.Items.Add(ISOInfoMenuItem)
-        NewContextMenu.Items.Add(GameInfoMenuItem)
+        NewContextMenu.Items.Add(PlayGameMenuItem)
         GamesListView.ContextMenu = NewContextMenu
     End Sub
 
@@ -423,6 +421,62 @@ Public Class PS2Library
                 End If
             End If
 
+        End If
+    End Sub
+
+    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe") Then
+            If GamesListView.SelectedItem IsNot Nothing Then
+                Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
+
+                'Check if any PS2 BIOS file is available
+                If Not Directory.GetFiles(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\bios", "*.bin", SearchOption.TopDirectoryOnly).Count > 0 Then
+                    If MsgBox("No PS2 BIOS file available." + vbCrLf + "You need at least one BIOS file installed in order to play " + SelectedPS2Game.GameTitle + "." + vbCrLf +
+                              "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
+
+                        'Get a BIOS file from OpenFileDialog
+                        Dim OFD As New OpenFileDialog() With {.Title = "Select a PS2 BIOS file", .Filter = "PS2 BIOS (*.bin)|*.bin", .Multiselect = False}
+                        If OFD.ShowDialog() = Forms.DialogResult.OK Then
+                            Dim SelectedBIOSFile As String = OFD.FileName
+                            Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
+
+                            'Copy to the BIOS folder
+                            File.Copy(SelectedBIOSFile, My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\bios\" + SelectedBIOSFileName, True)
+
+                            'Proceed
+                            If MsgBox("Start " + SelectedPS2Game.GameTitle + " using PCSX2 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                                Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                                Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                                EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
+                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
+                                EmulatorLauncherStartInfo.Arguments = """" + SelectedPS2Game.GameFilePath + """ --nogui --fullboot --portable"
+                                EmulatorLauncher.Start()
+                            End If
+
+                        Else
+                            MsgBox("No BIOS file specied, aborting.", MsgBoxStyle.Critical, "Error")
+                            Exit Sub
+                        End If
+                    Else
+                        MsgBox("No BIOS file available, aborting.", MsgBoxStyle.Critical, "Error")
+                        Exit Sub
+                    End If
+
+                Else
+                    'Proceed
+                    If MsgBox("Start " + SelectedPS2Game.GameTitle + " using PCSX2 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                        Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                        Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
+                        EmulatorLauncherStartInfo.Arguments = """" + SelectedPS2Game.GameFilePath + """ --nogui --fullboot --portable"
+                        EmulatorLauncher.Start()
+                    End If
+
+                End If
+            End If
+        Else
+            MsgBox("Cannot start pcsx2." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
         End If
     End Sub
 

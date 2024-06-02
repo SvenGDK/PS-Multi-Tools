@@ -3,6 +3,7 @@ Imports Microsoft.Web.WebView2.Core
 Imports MS.Internal
 Imports Newtonsoft.Json
 Imports PS_Multi_Tools.INI
+Imports PS_Multi_Tools.Structures
 Imports psmt_lib
 Imports psmt_lib.PS5ParamClass
 Imports System.ComponentModel
@@ -175,35 +176,6 @@ Public Class PS5Library
     End Sub
 
 #Region "Game Loader"
-
-    Public Enum LoadType
-        LocalFolder
-        FTP
-        PKGs
-    End Enum
-
-    Public Structure GameLoaderArgs
-        Private _Type As LoadType
-        Private _FolderPath As String
-
-        Public Property Type As LoadType
-            Get
-                Return _Type
-            End Get
-            Set
-                _Type = Value
-            End Set
-        End Property
-
-        Public Property FolderPath As String
-            Get
-                Return _FolderPath
-            End Get
-            Set
-                _FolderPath = Value
-            End Set
-        End Property
-    End Structure
 
     Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
 
