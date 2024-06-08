@@ -5,7 +5,7 @@
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
-  <summary>v14.1 contains following tools</summary>
+  <summary>v14.2 contains following tools</summary>
   
 ## General:
 - FTP Browser
@@ -13,7 +13,8 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 
 ## PS1
 - Merge BIN files
-
+- Convert BIN/CUE to ISO
+- 
 ## PS2
 - Convert BIN/CUE to ISO
 - PSX DVR XMB Games and Homebrew Installer
@@ -72,6 +73,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - PARAM.SFO Editor
 - PKG Merger
 - PPPwn GUI
+- PKG Extractor
 
 ## PS5
 - General ELF & BIN Payload Sender
@@ -99,6 +101,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - etaHEN Configurator (requires running FTP server)
 - klog Viewer
 - Shortcut PKG Creator
+- etaHEN Remote PKG Installer
 
 ## PSP
 - ISO to CSO Converter
@@ -111,6 +114,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - PKG Infos Reader
 - PSVIMAGE Tools (currently not working)
 - RCO Data Table Extractor
+- PS Vita PFS Tools (psvpfstools) GUI
 
 </details>
 
