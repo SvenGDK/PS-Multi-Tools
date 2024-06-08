@@ -14,7 +14,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 ## PS1
 - Merge BIN files
 - Convert BIN/CUE to ISO
-- 
+
 ## PS2
 - Convert BIN/CUE to ISO
 - PSX DVR XMB Games and Homebrew Installer
