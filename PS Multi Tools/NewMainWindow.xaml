@@ -36,11 +36,18 @@
                     </WrapPanel>
                 </Button.Content>
             </Button>
-            <Button x:Name="LoadPS1MergeBINButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="55" Background="#FF575757" Foreground="White">
+            <Button x:Name="LoadPS1BINConverterButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="55" Background="#FF575757" Foreground="White">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/convert.png" Width="42" Height="42"/>
+                    <TextBlock Text=".BIN / .CUE to ISO Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Convert PS1 games in .bin/.cue format to ISO." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button x:Name="LoadPS1MergeBINButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="54" Background="#FF575757" Foreground="White" Margin="0,148,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/merge.png" Width="42" Height="42"/>
                     <TextBlock Text="Merge .bin files" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="For games that have multiple .bin (Track x) files." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    <TextBlock Text="Merge games that have multiple .bin (Track x) files." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
             </Button>
         </Grid>

@@ -180,18 +180,30 @@
     <Compile Include="NewMainWindow.xaml.vb">
       <DependentUpon>NewMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PS1\PS1EmulatorSettings.xaml.vb">
+      <DependentUpon>PS1EmulatorSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PS1\PS1Library.xaml.vb">
       <DependentUpon>PS1Library.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\PS2Game.vb" />
+    <Compile Include="PS2\PS2EmulatorSettings.xaml.vb">
+      <DependentUpon>PS2EmulatorSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PS2\PS2Library.xaml.vb">
       <DependentUpon>PS2Library.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\PS3Game.vb" />
+    <Compile Include="PS3\PS3EmulatorSettings.xaml.vb">
+      <DependentUpon>PS3EmulatorSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PS3\PS3Library.xaml.vb">
       <DependentUpon>PS3Library.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\PS4Game.vb" />
+    <Compile Include="PS4\PS4EmulatorSettings.xaml.vb">
+      <DependentUpon>PS4EmulatorSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PS4\PS4Library.xaml.vb">
       <DependentUpon>PS4Library.xaml</DependentUpon>
     </Compile>
@@ -205,12 +217,18 @@
     <Compile Include="PS5\PS5Log.xaml.vb">
       <DependentUpon>PS5Log.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PSP\PSPEmulatorSettings.xaml.vb">
+      <DependentUpon>PSPEmulatorSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PSP\PSPLibrary.xaml.vb">
       <DependentUpon>PSPLibrary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\PSVGame.vb" />
     <Compile Include="PSSettings.xaml.vb">
       <DependentUpon>PSSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PSV\PSVEmulatorSettings.xaml.vb">
+      <DependentUpon>PSVEmulatorSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="PSV\PSVLibrary.xaml.vb">
       <DependentUpon>PSVLibrary.xaml</DependentUpon>
@@ -237,7 +255,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PS1\PS1EmulatorSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PS1\PS1Library.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PS2\PS2EmulatorSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,7 +271,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PS3\PS3EmulatorSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PS3\PS3Library.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PS4\PS4EmulatorSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -265,11 +299,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PSP\PSPEmulatorSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PSP\PSPLibrary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PSSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PSV\PSVEmulatorSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

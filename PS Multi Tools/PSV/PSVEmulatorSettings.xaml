@@ -1,0 +1,40 @@
+﻿<Window x:Class="PSVEmulatorSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="Vita3k Settings" Height="400" Width="400" ResizeMode="CanMinimize" Background="#FF252525" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <CheckBox x:Name="ValidationLayerCheckBox" Content="Validation Layer" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="PSTVModeCheckBox" Content="PSTV Mode" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ShowModeCheckBox" Content="Show Mode" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="DemoModeCheckBox" Content="Demo Mode" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="DisplaySystemAppsCheckBox" Content="Display System Apps" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="StretchDisplayAreaCheckBox" Content="Stretch The Display Area" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ShowLiveAreaScreenCheckBox" Content="Show Live Area Screen" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="HighAccuracyCheckBox" Content="High Accuracy" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="DisableSurfaceSyncCheckBox" Content="Disable Surface Sync" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="VSyncCheckBox" Content="V-Sync" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="AsyncPipeplineCompilationCheckBox" Content="Async Pipeline Compilation" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="TextureCacheCheckBox" Content="Texture Cache" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ShowCompileShadersCheckBox" Content="Show Compile Shaders" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="HashlessTextureCacheCheckBox" Content="Hashless Texture Cache" HorizontalAlignment="Left" Margin="10,270,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ImportTexturesCheckBox" Content="Import Textures" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ExportTexturesCheckBox" Content="Export Textures" HorizontalAlignment="Left" Margin="10,310,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ExportAsPNGCheckBox" Content="Export As PNG" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="False"/>
+        <CheckBox x:Name="BootAppsFSCheckBox" Content="Boot Apps Fullscreen" HorizontalAlignment="Left" Margin="209,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="NGSEnableCheckBox" Content="NGS Enable" HorizontalAlignment="Left" Margin="209,30,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="CPUOPTCheckBox" Content="CPU OPT" HorizontalAlignment="Left" Margin="209,50,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ShowTouchpadCursorCheckBox" Content="Show Touchpad Cursor" HorizontalAlignment="Left" Margin="209,70,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="PerformanceOverlayCheckBox" Content="Performance Overlay" HorizontalAlignment="Left" Margin="209,90,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="AsiaFontSupportCheckBox" Content="Asia Font Support" HorizontalAlignment="Left" Margin="209,130,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ShaderCacheCheckBox" Content="Shader Cache" HorizontalAlignment="Left" Margin="209,150,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="SpirvCacheCheckBox" Content="Spirv Cache" HorizontalAlignment="Left" Margin="209,170,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="FPSHackCheckBox" Content="FPS Hack" HorizontalAlignment="Left" Margin="209,190,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="HTTPEnableCheckBox" Content="HTTP Enable" HorizontalAlignment="Left" Margin="209,210,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="DisplayInfoMessageCheckBox" Content="Display Info Message" HorizontalAlignment="Left" Margin="209,110,0,0" VerticalAlignment="Top" Foreground="White"/>
+
+    </Grid>
+</Window>

@@ -26,6 +26,9 @@ Public Class PS4Library
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
+    'Supplemental emulator menu item
+    Dim WithEvents EMU_Settings As New Controls.MenuItem() With {.Header = "psOff Settings"}
+
     Private Sub PS4Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Add supplemental library menu items that will be handled in the app
         Dim LibraryMenuItem As MenuItem = CType(NewPS4Menu.Items(0), MenuItem)
@@ -34,6 +37,11 @@ Public Class PS4Library
 
         'Add the games context menu
         GamesListView.ContextMenu = NewContextMenu
+
+        'Add supplemental emulator menu item
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\psOff\psoff.exe") Then
+            NewPS4Menu.Items.Add(EMU_Settings)
+        End If
     End Sub
 
 #Region "Game Loader"
@@ -467,6 +475,11 @@ Public Class PS4Library
         Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
         OpenWindowsListViewScrollViewer.ScrollToHorizontalOffset(HorizontalOffset - (e.Delta / 100))
         e.Handled = True
+    End Sub
+
+    Private Sub EMU_Settings_Click(sender As Object, e As RoutedEventArgs) Handles EMU_Settings.Click
+        Dim NewPS4EmulatorSettingsWindow As New PS4EmulatorSettings() With {.ShowActivated = True}
+        NewPS4EmulatorSettingsWindow.Show()
     End Sub
 
 End Class

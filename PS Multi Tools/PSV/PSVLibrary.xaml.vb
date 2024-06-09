@@ -26,6 +26,9 @@ Public Class PSVLibrary
     Dim WithEvents LoadLibraryMenuItem As New Controls.MenuItem() With {.Header = "Show games library"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
+    'Supplemental emulator menu item
+    Dim WithEvents EMU_Settings As New Controls.MenuItem() With {.Header = "Vita3k Settings"}
+
     Private Sub PSVLibrary_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Set the controls in the shared library
         NewPSVMenu.GamesLView = GamesListView
@@ -45,6 +48,11 @@ Public Class PSVLibrary
         NewContextMenu.Items.Add(PKGInfoMenuItem)
         NewContextMenu.Items.Add(PlayGameMenuItem)
         GamesListView.ContextMenu = NewContextMenu
+
+        'Add supplemental emulator menu item
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
+            NewPSVMenu.Items.Add(EMU_Settings)
+        End If
     End Sub
 
 #Region "Game Loader"
@@ -514,6 +522,11 @@ Public Class PSVLibrary
             End If
 
         End If
+    End Sub
+
+    Private Sub EMU_Settings_Click(sender As Object, e As RoutedEventArgs) Handles EMU_Settings.Click
+        Dim NewPSVEmulatorSettingsWindow As New PSVEmulatorSettings() With {.ShowActivated = True}
+        NewPSVEmulatorSettingsWindow.Show()
     End Sub
 
 End Class

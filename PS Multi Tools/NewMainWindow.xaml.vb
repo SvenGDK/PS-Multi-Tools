@@ -284,6 +284,11 @@ Public Class NewMainWindow
         NewPS1Library.Show()
     End Sub
 
+    Private Sub LoadPS1BINConverterButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS1BINConverterButton.Click
+        Dim NewBINCUEConverter As New BINCUEConverter() With {.ShowActivated = True, .ConvertForPS1 = True}
+        NewBINCUEConverter.Show()
+    End Sub
+
     Private Sub LoadPS1MergeBINButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS1MergeBINButton.Click
         Dim NewMergeBINTool As New MergeBinTool() With {.ShowActivated = True}
         NewMergeBINTool.Show()

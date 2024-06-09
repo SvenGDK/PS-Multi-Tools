@@ -26,6 +26,9 @@ Public Class PS2Library
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
+    'Supplemental emulator menu item
+    Dim WithEvents EMU_Settings As New Controls.MenuItem() With {.Header = "PCSX2 Settings"}
+
     Private Sub PS2Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Set the controls in the shared library
         NewPS2Menu.GamesLView = GamesListView
@@ -39,6 +42,11 @@ Public Class PS2Library
         NewContextMenu.Items.Add(SendToMenuItem)
         NewContextMenu.Items.Add(PlayGameMenuItem)
         GamesListView.ContextMenu = NewContextMenu
+
+        'Add supplemental emulator menu item
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe") Then
+            NewPS2Menu.Items.Add(EMU_Settings)
+        End If
     End Sub
 
 #Region "Game Loader"
@@ -514,6 +522,11 @@ Public Class PS2Library
             End If
 
         End If
+    End Sub
+
+    Private Sub EMU_Settings_Click(sender As Object, e As RoutedEventArgs) Handles EMU_Settings.Click
+        Dim NewPS2EmulatorSettingsWindow As New PS2EmulatorSettings() With {.ShowActivated = True}
+        NewPS2EmulatorSettingsWindow.Show()
     End Sub
 
 End Class

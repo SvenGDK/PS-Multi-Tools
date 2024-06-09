@@ -21,6 +21,9 @@ Public Class PSPLibrary
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
+    'Supplemental emulator menu item
+    Dim WithEvents EMU_Settings As New Controls.MenuItem() With {.Header = "PPSSPP Settings"}
+
     Private Sub PSPLibrary_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Add supplemental library menu items that will be handled in the app
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPSPMenu.Items(0), Controls.MenuItem)
@@ -30,6 +33,11 @@ Public Class PSPLibrary
         NewContextMenu.Items.Add(CopyToMenuItem)
         NewContextMenu.Items.Add(PlayGameMenuItem)
         GamesListView.ContextMenu = NewContextMenu
+
+        'Add supplemental emulator menu item
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe") Then
+            NewPSPMenu.Items.Add(EMU_Settings)
+        End If
     End Sub
 
 #Region "Game Loader"
@@ -412,6 +420,11 @@ Public Class PSPLibrary
         Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
         OpenWindowsListViewScrollViewer.ScrollToHorizontalOffset(HorizontalOffset - (e.Delta / 100))
         e.Handled = True
+    End Sub
+
+    Private Sub EMU_Settings_Click(sender As Object, e As RoutedEventArgs) Handles EMU_Settings.Click
+        Dim NewPSPEmulatorSettingsWindow As New PSPEmulatorSettings() With {.ShowActivated = True}
+        NewPSPEmulatorSettingsWindow.Show()
     End Sub
 
 End Class

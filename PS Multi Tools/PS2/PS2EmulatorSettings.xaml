@@ -1,0 +1,22 @@
+﻿<Window x:Class="PS2EmulatorSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PCSX2 Settings" Height="220" Width="350" ResizeMode="CanMinimize" Background="#FF252525" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <CheckBox x:Name="EnableSpeedHacksCheckBox" Content="Enable Speed Hacks" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="EnableGameFixesCheckBox" Content="Enable Game Fixes" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="EnablePresetsCheckBox" Content="Enable Presets" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="EnableVSyncCheckBox" Content="Enable VSync" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Button x:Name="BrowseBIOSFileButton" Content="Browse" HorizontalAlignment="Left" Margin="265,110,0,0" VerticalAlignment="Top" Width="55"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="Current BIOS :" VerticalAlignment="Top" Foreground="White"/>
+        <TextBox x:Name="CurrentBIOSNameTextBox" HorizontalAlignment="Left" Margin="10,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,134,0,0" TextWrapping="Wrap" Text="Aspect Ratio :" VerticalAlignment="Top" Foreground="White"/>
+        <RadioButton x:Name="WideAspectRadioButton" Content="16:9" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <RadioButton x:Name="LBRadioButton" Content="4:3" HorizontalAlignment="Left" Margin="65,155,0,0" VerticalAlignment="Top" Foreground="White"/>
+
+    </Grid>
+</Window>

@@ -45,6 +45,9 @@ Public Class PS3Library
     Dim WithEvents LoadRemoteFolderMenuItem As New Controls.MenuItem() With {.Header = "Load games on PS3 HDD"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 
+    'Supplemental emulator menu item
+    Dim WithEvents EMU_Settings As New Controls.MenuItem() With {.Header = "RPCS3 Settings"}
+
     Private Sub PS3Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Add supplemental library menu items that will be handled in the app
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS3Menu.Items(1), Controls.MenuItem)
@@ -59,6 +62,11 @@ Public Class PS3Library
 
         'Load available context menu options
         PS3GamesListView.ContextMenu = NewContextMenu
+
+        'Add supplemental emulator menu item
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
+            NewPS3Menu.Items.Add(EMU_Settings)
+        End If
     End Sub
 
     Private Sub PS3Library_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
@@ -1308,6 +1316,11 @@ Public Class PS3Library
     Private Sub OpenPKGBrowser(sender As Object, e As RoutedEventArgs)
         Dim NewPKGBrowser As New PKGBrowser() With {.Console = "PS3", .ShowActivated = True}
         NewPKGBrowser.Show()
+    End Sub
+
+    Private Sub EMU_Settings_Click(sender As Object, e As RoutedEventArgs) Handles EMU_Settings.Click
+        Dim NewPS3EmulatorSettingsWindow As New PS3EmulatorSettings() With {.ShowActivated = True}
+        NewPS3EmulatorSettingsWindow.Show()
     End Sub
 
 End Class
