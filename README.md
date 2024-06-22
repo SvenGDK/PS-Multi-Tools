@@ -136,14 +136,6 @@ The source code with all other information can be found in the other repository:
 ## PS Multi Tools Covers
 All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored in the othe repository: [PSMT Covers](https://github.com/SvenGDK/PSMT-Covers)
 
-## Current development focus & status
-Development is mainly focused on :
-
-- PS3
-- PS5
-
-There are currently no new features planned for other consoles (with exception for PS4) or handhelds (with exception for PS Vita).
-
 ## v1-12
 All builds below v13 have broken links & downloads, v13+ is recommended.</br>
 Some builds can still be used while some do not start anymore and require updating the live menu (old PSMT Library).</br>
