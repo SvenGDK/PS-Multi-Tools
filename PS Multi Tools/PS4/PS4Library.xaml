@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools" xmlns:psmt_lib="clr-namespace:psmt_lib;assembly=psmt-lib"
         mc:Ignorable="d"
-        Title="PS4 Library" Height="700" Width="1350" Background="#FF252525" ResizeMode="CanMinimize">
+        Title="PS4 Library" Height="700" Width="1350" Background="#2D2D30" ResizeMode="CanMinimize">
     <Grid>
         <psmt_lib:PS4Menu x:Name="NewPS4Menu" Height="20" VerticalAlignment="Top"></psmt_lib:PS4Menu>
         <TabControl Margin="0,21,0,0" Background="{x:Null}" Foreground="White">

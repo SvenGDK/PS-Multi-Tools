@@ -12,8 +12,10 @@ Public Class NewMainWindow
     Dim NewVersion As String = String.Empty
     Dim Changelog As String = String.Empty
 
-    Dim ConsoleIP As String = String.Empty
-    Dim ConsolePort As String = String.Empty
+    Dim PS3ConsoleIP As String = String.Empty
+    Dim PS3ConsolePort As String = String.Empty
+    Dim PS5ConsoleIP As String = String.Empty
+    Dim PS5ConsolePort As String = String.Empty
 
     Dim CurrentSelection As TextBlock = Nothing
     Dim CurrentGrid As Grid = Nothing
@@ -21,6 +23,9 @@ Public Class NewMainWindow
     Dim HideAnimation As New DoubleAnimation With {.From = 1, .To = 0, .Duration = New Duration(TimeSpan.FromMilliseconds(300))}
 
     Private Sub NewMainWindow_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
+        Title = String.Format("Multi Tools - v{0}.{1}.{2}", My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build)
+
+        'Check for the PS Multi Tools library
         If Not File.Exists("psmt-lib.dll") Then
             If MsgBox("PS Multi Tools Library not found! Do you want to re-download it?") = MsgBoxResult.Yes Then
                 If Utils.IsURLValid("http://X.X.X.X/psmt-lib.dll") Then
@@ -35,14 +40,22 @@ Public Class NewMainWindow
             Dim PSMTInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\PS Multi Tools.exe")
             Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
 
-            BuildTextBlock.Text = "[Main] PS Multi Tools v" + PSMTInfo.FileVersion + "  -  [DLL] PSMT-Library v" + LibraryInfo.FileVersion
+            BuildTextBlock.Text = "[Main] PS " + Title + "  /  [DLL] PSMT-Library - v" + LibraryInfo.FileVersion
         End If
 
+        'Check for PS Multi Tools configuration
         If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
             Try
+                'Read config
                 Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
-                ConsoleIP = MainConfig.IniReadValue("PS5 Tools", "IP")
-                ConsolePort = MainConfig.IniReadValue("PS5 Tools", "Port")
+
+                'Set PS3 IP & Port
+                PS3ConsoleIP = MainConfig.IniReadValue("PS3 Tools", "IP")
+                PS3ConsolePort = MainConfig.IniReadValue("PS3 Tools", "Port")
+
+                'Set PS5 IP & Port
+                PS5ConsoleIP = MainConfig.IniReadValue("PS5 Tools", "IP")
+                PS5ConsolePort = MainConfig.IniReadValue("PS5 Tools", "Port")
             Catch ex As FileNotFoundException
                 MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
             End Try
@@ -93,6 +106,7 @@ Public Class NewMainWindow
                 PS5Grid.Visibility = Visibility.Hidden
                 PSPGrid.Visibility = Visibility.Hidden
                 PSVGrid.Visibility = Visibility.Hidden
+                PSXGrid.Visibility = Visibility.Hidden
             Case "PS2"
                 PS1Grid.Visibility = Visibility.Hidden
                 PS3Grid.Visibility = Visibility.Hidden
@@ -100,6 +114,7 @@ Public Class NewMainWindow
                 PS5Grid.Visibility = Visibility.Hidden
                 PSPGrid.Visibility = Visibility.Hidden
                 PSVGrid.Visibility = Visibility.Hidden
+                PSXGrid.Visibility = Visibility.Hidden
             Case "PS3"
                 PS2Grid.Visibility = Visibility.Hidden
                 PS1Grid.Visibility = Visibility.Hidden
@@ -107,6 +122,7 @@ Public Class NewMainWindow
                 PS5Grid.Visibility = Visibility.Hidden
                 PSPGrid.Visibility = Visibility.Hidden
                 PSVGrid.Visibility = Visibility.Hidden
+                PSXGrid.Visibility = Visibility.Hidden
             Case "PS4"
                 PS2Grid.Visibility = Visibility.Hidden
                 PS3Grid.Visibility = Visibility.Hidden
@@ -114,6 +130,7 @@ Public Class NewMainWindow
                 PS5Grid.Visibility = Visibility.Hidden
                 PSPGrid.Visibility = Visibility.Hidden
                 PSVGrid.Visibility = Visibility.Hidden
+                PSXGrid.Visibility = Visibility.Hidden
             Case "PS5"
                 PS2Grid.Visibility = Visibility.Hidden
                 PS3Grid.Visibility = Visibility.Hidden
@@ -121,6 +138,7 @@ Public Class NewMainWindow
                 PS1Grid.Visibility = Visibility.Hidden
                 PSPGrid.Visibility = Visibility.Hidden
                 PSVGrid.Visibility = Visibility.Hidden
+                PSXGrid.Visibility = Visibility.Hidden
             Case "PSP"
                 PS2Grid.Visibility = Visibility.Hidden
                 PS3Grid.Visibility = Visibility.Hidden
@@ -128,6 +146,7 @@ Public Class NewMainWindow
                 PS5Grid.Visibility = Visibility.Hidden
                 PS1Grid.Visibility = Visibility.Hidden
                 PSVGrid.Visibility = Visibility.Hidden
+                PSXGrid.Visibility = Visibility.Hidden
             Case "PSV"
                 PS2Grid.Visibility = Visibility.Hidden
                 PS3Grid.Visibility = Visibility.Hidden
@@ -135,6 +154,15 @@ Public Class NewMainWindow
                 PS5Grid.Visibility = Visibility.Hidden
                 PSPGrid.Visibility = Visibility.Hidden
                 PS1Grid.Visibility = Visibility.Hidden
+                PSXGrid.Visibility = Visibility.Hidden
+            Case "PSX"
+                PS2Grid.Visibility = Visibility.Hidden
+                PS3Grid.Visibility = Visibility.Hidden
+                PS4Grid.Visibility = Visibility.Hidden
+                PS5Grid.Visibility = Visibility.Hidden
+                PSPGrid.Visibility = Visibility.Hidden
+                PS1Grid.Visibility = Visibility.Hidden
+                PSVGrid.Visibility = Visibility.Hidden
         End Select
     End Sub
 
@@ -275,6 +303,26 @@ Public Class NewMainWindow
         CurrentSelection.FontWeight = FontWeights.Bold
     End Sub
 
+    Private Sub PSXImage_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles PSXImage.MouseLeftButtonDown
+        PSXGrid.Visibility = Visibility.Visible
+
+        If CurrentGrid IsNot Nothing Then
+            HideGridAnimation(CurrentGrid)
+        End If
+
+        PSXGrid.BeginAnimation(OpacityProperty, ShowAnimation)
+
+        HideGrids("PSX")
+        If CurrentSelection IsNot Nothing Then
+            CurrentSelection.FontWeight = FontWeights.Regular
+        End If
+
+        CurrentGrid = PSXGrid
+        CurrentSelection = PSXTextBlock
+        CurrentSelection.FontWeight = FontWeights.Bold
+
+    End Sub
+
 #End Region
 
 #Region "PS1"
@@ -308,9 +356,14 @@ Public Class NewMainWindow
         NewBINCUEConverter.Show()
     End Sub
 
-    Private Sub LoadPSXXMBManagerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSXXMBManagerButton.Click
-        Dim NewXMBInstaller As New XMBInstaller() With {.ShowActivated = True}
-        NewXMBInstaller.Show()
+    Private Sub LoadPS2CUE2POPSConverterButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS2CUE2POPSConverterButton.Click
+        Dim NewCue2POPSConverter As New CUE2POPSConverter() With {.ShowActivated = True}
+        NewCue2POPSConverter.Show()
+    End Sub
+
+    Private Sub LoadPS2ELF2KELFWrapperButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS2ELF2KELFWrapperButton.Click
+        Dim NewELF2KELFWrapper As New ELFWrapper() With {.ShowActivated = True}
+        NewELF2KELFWrapper.Show()
     End Sub
 
 #End Region
@@ -386,13 +439,13 @@ Public Class NewMainWindow
     Private Sub LoadPS5FTPGrabberButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5FTPGrabberButton.Click
         Dim NewFTPGrabber As New PS5FTPGrabber() With {.ShowActivated = True}
 
-        If Not String.IsNullOrEmpty(ConsoleIP) Then
-            NewFTPGrabber.ConsoleIP = ConsoleIP
+        If Not String.IsNullOrEmpty(PS5ConsoleIP) Then
+            NewFTPGrabber.ConsoleIP = PS5ConsoleIP
             NewFTPGrabber.Show()
         Else
-            ConsoleIP = InputBox("Enter your PS5 console IP without port:", "IP Address required", "")
-            If Not String.IsNullOrEmpty(ConsoleIP) Then
-                NewFTPGrabber.ConsoleIP = ConsoleIP
+            PS5ConsoleIP = InputBox("Enter your PS5 console IP without port:", "IP Address required", "")
+            If Not String.IsNullOrEmpty(PS5ConsoleIP) Then
+                NewFTPGrabber.ConsoleIP = PS5ConsoleIP
                 NewFTPGrabber.Show()
             Else
                 MsgBox("No IP address entered!", MsgBoxStyle.Exclamation)
@@ -435,8 +488,8 @@ Public Class NewMainWindow
     Private Sub LoadPS5SenderButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5SenderButton.Click
         Dim NewPS5Sender As New PS5Sender() With {.ShowActivated = True}
 
-        If Not String.IsNullOrEmpty(ConsoleIP) Then
-            NewPS5Sender.ConsoleIP = ConsoleIP
+        If Not String.IsNullOrEmpty(PS5ConsoleIP) Then
+            NewPS5Sender.ConsoleIP = PS5ConsoleIP
         End If
 
         NewPS5Sender.Show()
@@ -465,13 +518,13 @@ Public Class NewMainWindow
     Private Sub LoadPS5RCODumperButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPS5RCODumperButton.Click
         Dim NewPS5RcoDumper As New PS5RcoDumper With {.ShowActivated = True}
 
-        If Not String.IsNullOrEmpty(ConsoleIP) Then
-            NewPS5RcoDumper.ConsoleIP = ConsoleIP
+        If Not String.IsNullOrEmpty(PS5ConsoleIP) Then
+            NewPS5RcoDumper.ConsoleIP = PS5ConsoleIP
             NewPS5RcoDumper.Show()
         Else
-            ConsoleIP = InputBox("Enter your PS5 console IP without port:", "IP Address required", "")
-            If Not String.IsNullOrEmpty(ConsoleIP) Then
-                NewPS5RcoDumper.ConsoleIP = ConsoleIP
+            PS5ConsoleIP = InputBox("Enter your PS5 console IP without port:", "IP Address required", "")
+            If Not String.IsNullOrEmpty(PS5ConsoleIP) Then
+                NewPS5RcoDumper.ConsoleIP = PS5ConsoleIP
                 NewPS5RcoDumper.Show()
             Else
                 MsgBox("No IP address entered!", MsgBoxStyle.Exclamation)
@@ -530,6 +583,35 @@ Public Class NewMainWindow
         Else
             MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
         End If
+    End Sub
+
+#End Region
+
+#Region "PSX"
+
+    Private Sub LoadPSXHDDManagerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSXHDDManagerButton.Click
+        If Not String.IsNullOrEmpty(psmt_lib.Utils.ConnectedPSXHDD.HDLDriveName) Then
+            Dim NewPSXHDDManager As New PSXPartitionManager() With {.ShowActivated = True}
+            NewPSXHDDManager.Show()
+        Else
+            MsgBox("Please connect to your PSX HDD first using the Project Manager before using the HDD Partition Manager.", MsgBoxStyle.Information, "Cannot start the HDD Partition Manager")
+        End If
+    End Sub
+
+    Private Sub LoadPSXProjectManagerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSXProjectManagerButton.Click
+        If Utils.IsRunningAsAdministrator() Then
+            Dim NewPSXProjectManager As New PSXMainWindow() With {.ShowActivated = True}
+            NewPSXProjectManager.Show()
+        Else
+            If MsgBox("This feature requires Administrator rights." + vbCrLf + "Do you want to restart PS Multi Tools as Administrator ?", MsgBoxStyle.YesNo, "Elevation required") = MsgBoxResult.Yes Then
+                Utils.RunAsAdministrator()
+            End If
+        End If
+    End Sub
+
+    Private Sub LoadXMBUtilitesButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadXMBUtilitesButton.Click
+        Dim NewPSXXMBTools As New PSXAssetsBrowser() With {.ShowActivated = True}
+        NewPSXXMBTools.Show()
     End Sub
 
 #End Region

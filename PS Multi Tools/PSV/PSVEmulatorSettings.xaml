@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="Vita3k Settings" Height="400" Width="400" ResizeMode="CanMinimize" Background="#FF252525" WindowStartupLocation="CenterScreen">
+        Title="Vita3k Settings" Height="400" Width="400" ResizeMode="CanMinimize" Background="#2D2D30" WindowStartupLocation="CenterScreen">
     <Grid>
         <CheckBox x:Name="ValidationLayerCheckBox" Content="Validation Layer" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
         <CheckBox x:Name="PSTVModeCheckBox" Content="PSTV Mode" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Foreground="White"/>

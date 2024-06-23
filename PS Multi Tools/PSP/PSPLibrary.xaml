@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools" xmlns:psmt_lib="clr-namespace:psmt_lib;assembly=psmt-lib"
         mc:Ignorable="d"
-        Title="PSP Library" Height="600" Width="1150" Background="#FF252525" ResizeMode="CanMinimize">
+        Title="PSP Library" Height="600" Width="1150" Background="#2D2D30" ResizeMode="CanMinimize">
     <Grid>
         <Rectangle x:Name="BlurringShape">
             <Rectangle.Fill>

@@ -13,6 +13,10 @@
     Private _GamePublisher As String
     Private _GameDeveloper As String
     Private _GameBackupType As GameFileType
+    Private _GameWebsite As String
+    Private _GameCoverURL As String
+    Private _AssignedPartitionDriveLetter As String
+    Private _PartitionName As String
 
     Public Enum GameFileType
         ISO
@@ -135,5 +139,65 @@
             _GameBackupType = Value
         End Set
     End Property
+
+    Public Property GameWebsite As String
+        Get
+            Return _GameWebsite
+        End Get
+        Set
+            _GameWebsite = Value
+        End Set
+    End Property
+
+    Public Property GameCoverURL As String
+        Get
+            Return _GameCoverURL
+        End Get
+        Set
+            _GameCoverURL = Value
+        End Set
+    End Property
+
+    Public Property AssignedPartitionDriveLetter As String
+        Get
+            Return _AssignedPartitionDriveLetter
+        End Get
+        Set
+            _AssignedPartitionDriveLetter = Value
+        End Set
+    End Property
+
+    Public Property PartitionName As String
+        Get
+            Return _PartitionName
+        End Get
+        Set
+            _PartitionName = Value
+        End Set
+    End Property
+
+    Public Shared Function GetGameRegionByGameID(GameID As String) As String
+        If GameID.StartsWith("SLES", StringComparison.OrdinalIgnoreCase) Then
+            Return "E"
+        ElseIf GameID.StartsWith("SCES", StringComparison.OrdinalIgnoreCase) Then
+            Return "E"
+        ElseIf GameID.StartsWith("SLUS", StringComparison.OrdinalIgnoreCase) Then
+            Return "U"
+        ElseIf GameID.StartsWith("SCUS", StringComparison.OrdinalIgnoreCase) Then
+            Return "U"
+        ElseIf GameID.StartsWith("SCPS", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        ElseIf GameID.StartsWith("SLPS", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        ElseIf GameID.StartsWith("SLPM", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        ElseIf GameID.StartsWith("SCCS", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        ElseIf GameID.StartsWith("SLKA", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        Else
+            Return ""
+        End If
+    End Function
 
 End Class

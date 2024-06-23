@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="ePSXe Settings" Height="120" Width="300" ResizeMode="CanMinimize" Background="#FF252525" WindowStartupLocation="CenterScreen">
+        Title="ePSXe Settings" Height="120" Width="300" ResizeMode="CanMinimize" Background="#2D2D30" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="No settings available yet." VerticalAlignment="Top" Foreground="White"/>
         <Button x:Name="StartEmulatorButton" Content="Configure ePSXe using ePSXe.exe" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="250" FontWeight="Bold"/>

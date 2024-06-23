@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PPSSPP Settings" Height="470" Width="640" ResizeMode="CanMinimize" Background="#FF252525" WindowStartupLocation="CenterScreen">
+        Title="PPSSPP Settings" Height="470" Width="640" ResizeMode="CanMinimize" Background="#2D2D30" WindowStartupLocation="CenterScreen">
     <Grid>
         <CheckBox x:Name="EnableLoggingCheckBox" Content="Enable Logging" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Foreground="White"/>
         <CheckBox x:Name="IgnoreBadMemAccessCheckBox" Content="Ignore Bad Memory Access" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Foreground="White"/>

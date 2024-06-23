@@ -5,322 +5,928 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="Multi Tools" Height="580" Width="890" Background="#FF434343" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Multi Tools" Height="600" Width="1000" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
 
-        <Image x:Name="PS1Image" HorizontalAlignment="Left" Height="84" Margin="38,104,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS1.png" UseLayoutRounding="True" Cursor="Hand"/>
-        <Image x:Name="PS2Image" HorizontalAlignment="Left" Height="84" Margin="161,104,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS2.png" UseLayoutRounding="True" Cursor="Hand"/>
-        <Image x:Name="PS3Image" HorizontalAlignment="Left" Height="84" Margin="286,104,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS3.png" UseLayoutRounding="True" Cursor="Hand"/>
-        <Image x:Name="PS4Image" HorizontalAlignment="Center" Height="84" Margin="0,104,0,0" VerticalAlignment="Top" Width="84" Source="/Images/ps4.png" UseLayoutRounding="True" Cursor="Hand"/>
-        <Image x:Name="PS5Image" HorizontalAlignment="Left" Height="84" Margin="515,100,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS5.png" UseLayoutRounding="True" Cursor="Hand"/>
-        <Image x:Name="PSPImage" HorizontalAlignment="Left" Height="92" Margin="628,96,0,0" VerticalAlignment="Top" Width="92" Source="/Images/psp.png" UseLayoutRounding="True" Cursor="Hand"/>
-        <Image x:Name="PSVImage" HorizontalAlignment="Left" Height="43" Margin="751,121,0,0" VerticalAlignment="Top" Width="92" Source="/Images/PSV.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS1Image" HorizontalAlignment="Left" Height="84" Margin="38,99,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS1.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS2Image" HorizontalAlignment="Left" Height="84" Margin="158,99,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS2.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PSXImage" HorizontalAlignment="Left" Height="84" Margin="282,99,0,0" VerticalAlignment="Top" Width="84" Source="/Images/psx.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS3Image" HorizontalAlignment="Left" Height="84" Margin="399,99,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS3.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS4Image" HorizontalAlignment="Left" Height="84" Margin="513,99,0,0" VerticalAlignment="Top" Width="84" Source="/Images/ps4.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PS5Image" HorizontalAlignment="Left" Height="84" Margin="628,95,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS5.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PSPImage" HorizontalAlignment="Left" Height="92" Margin="741,91,0,0" VerticalAlignment="Top" Width="92" Source="/Images/psp.png" UseLayoutRounding="True" Cursor="Hand"/>
+        <Image x:Name="PSVImage" HorizontalAlignment="Left" Height="43" Margin="864,116,0,0" VerticalAlignment="Top" Width="92" Source="/Images/PSV.png" UseLayoutRounding="True" Cursor="Hand"/>
 
-        <TextBlock x:Name="PS1TextBlock" HorizontalAlignment="Left" Margin="65,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS1" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock x:Name="PS2TextBlock" HorizontalAlignment="Left" Margin="188,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS2" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock x:Name="PS3TextBlock" HorizontalAlignment="Left" Margin="313,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS3" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock x:Name="PS4TextBlock" HorizontalAlignment="Center" Margin="0,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS4" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock x:Name="PS5TextBlock" HorizontalAlignment="Left" Margin="542,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PS5" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock x:Name="PSPTextBlock" HorizontalAlignment="Left" Margin="659,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PSP" FontSize="20" FontFamily="Calibri"/>
-        <TextBlock x:Name="PSVTextBlock" HorizontalAlignment="Left" Margin="782,193,0,0" VerticalAlignment="Top" Foreground="White" Text="PSV" FontSize="20" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS1TextBlock" HorizontalAlignment="Left" Margin="64,188,0,0" VerticalAlignment="Top" Foreground="White" Text="PS1" FontSize="22" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS2TextBlock" HorizontalAlignment="Left" Margin="184,188,0,0" VerticalAlignment="Top" Foreground="White" Text="PS2" FontSize="22" FontFamily="Calibri"/>
+        <TextBlock x:Name="PSXTextBlock" HorizontalAlignment="Left" Margin="308,188,0,0" VerticalAlignment="Top" Foreground="White" Text="PSX" FontSize="22" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS3TextBlock" HorizontalAlignment="Left" Margin="424,188,0,0" VerticalAlignment="Top" Foreground="White" Text="PS3" FontSize="22" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS4TextBlock" HorizontalAlignment="Left" Margin="539,188,0,0" VerticalAlignment="Top" Foreground="White" Text="PS4" FontSize="22" FontFamily="Calibri"/>
+        <TextBlock x:Name="PS5TextBlock" HorizontalAlignment="Left" Margin="654,188,0,0" VerticalAlignment="Top" Foreground="White" Text="PS5" FontSize="22" FontFamily="Calibri"/>
+        <TextBlock x:Name="PSPTextBlock" HorizontalAlignment="Left" Margin="771,188,0,0" VerticalAlignment="Top" Foreground="White" Text="PSP" FontSize="22" FontFamily="Calibri"/>
+        <TextBlock x:Name="PSVTextBlock" HorizontalAlignment="Left" Margin="879,188,0,0" VerticalAlignment="Top" Foreground="White" Text="PS Vita" FontSize="22" FontFamily="Calibri"/>
 
         <!--PS1 Grid-->
-        <Grid x:Name="PS1Grid" Margin="39,242,46,62" Width="805" Height="230" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
-            <Button x:Name="LoadPS1LibraryButton" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White">
-                <Button.Content>
-                    <WrapPanel Orientation="Vertical">
-                        <Image Width="42" Height="42" Source="/Images/gamelibrary.png"/>
-                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                        <TextBlock Text="Load and manage your PS1 games (.iso and .bin supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
-                    </WrapPanel>
-                </Button.Content>
-            </Button>
-            <Button x:Name="LoadPS1BINConverterButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="55" Background="#FF575757" Foreground="White">
+        <Grid x:Name="PS1Grid" Margin="35,242,35,62" Width="900" Height="280" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS1LibraryButton" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White">
                 <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/convert.png" Width="42" Height="42"/>
+                    <Image Width="42" Height="42" Source="/Images/gamelibrary.png"/>
+                    <TextBlock Text="PS1 Games Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Load and manage your PS1 games (.BIN and .VCD files supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="LoadPS1BINConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,88,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/ConvertISO.png" Width="42" Height="42"/>
                     <TextBlock Text=".BIN / .CUE to ISO Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Convert PS1 games in .bin/.cue format to ISO." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS1MergeBINButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="54" Background="#FF575757" Foreground="White" Margin="0,148,0,0">
+            <Button x:Name="LoadPS1MergeBINButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="54" Background="#FF3E3E3E" Foreground="White" Margin="0,148,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/merge.png" Width="42" Height="42"/>
                     <TextBlock Text="Merge .bin files" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Merge games that have multiple .bin (Track x) files." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
         </Grid>
 
         <!--PS2 Grid-->
-        <Grid x:Name="PS2Grid" Margin="39,242,46,62" Width="805" Height="230" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
-            <Button x:Name="LoadPS2LibraryButton" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White">
-                <Button.Content>
-                    <WrapPanel Orientation="Vertical">
-                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
-                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                        <TextBlock Text="Load and manage your PS2 games (.iso files supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
-                    </WrapPanel>
-                </Button.Content>
+        <Grid x:Name="PS2Grid" Margin="35,230,35,62" Width="900" Height="300" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS2LibraryButton" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                    <TextBlock Text="PS2 Games Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Load and manage your PS2 games (.ISO files supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS2BINConverterButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="55" Background="#FF575757" Foreground="White">
+            <Button x:Name="LoadPS2BINConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,88,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/ConvertISO.png" Width="42" Height="42"/>
+                    <TextBlock Text=".BIN / .CUE to ISO Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Convert PS2 CD games in .bin/.cue format to ISO." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="LoadPS2CUE2POPSConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,148,0,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/convert.png" Width="42" Height="42"/>
-                    <TextBlock Text=".BIN / .CUE to ISO Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="For PS2 CD games in .bin/.cue format." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    <TextBlock Text="CUE2POPS Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Convert PS1 games in .cue format to VCD to use with POPStarter." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
             </Button>
-            <Button x:Name="LoadPSXXMBManagerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,148,0,0">
+            <Button x:Name="LoadPS2ELF2KELFWrapperButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,208,0,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
                 <WrapPanel Orientation="Vertical">
-                    <Image Source="/Images/av.png" Width="42" Height="42"/>
-                    <TextBlock Text="PSX XMB Manager" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                    <TextBlock Text="Install games and homebrew on the XMB (PSX DESR) - Uses build v1.3" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                    <Image Source="/Images/Wrap.png" Width="42" Height="42"/>
+                    <TextBlock Text="ELF to KELF Wrapper" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Convert homebrew ELF files to KELF format (HDDOSD, PSBBN, PSX XMB)." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
             </Button>
         </Grid>
 
-        <!--PS3 Grid-->
-        <Grid x:Name="PS3Grid" Margin="39,242,46,39" Height="255" Width="805" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
-            <Button x:Name="LoadPS3LibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,10,0,0">
-                <Button.Content>
-                    <WrapPanel Orientation="Vertical">
-                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
-                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                        <TextBlock Text="Load and manage your PS3 games (.iso, .pkg files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
-                    </WrapPanel>
-                </Button.Content>
+        <!--PSX Grid-->
+        <Grid x:Name="PSXGrid" Margin="35,230,35,62" Width="900" Height="300" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPSXProjectManagerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="133" Background="#FF3E3E3E" Foreground="White" Margin="0,10,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/PSXProjects.png" Width="64" Height="64"/>
+                    <TextBlock Text="Game &amp; Homebrew Project Manager" FontSize="18" FontFamily="Calibri" FontWeight="Bold" Width="500" Margin="0,2,0,0" TextAlignment="Center"/>
+                    <TextBlock Text="Create or edit a PS1 / PS2 game or PS2 homebrew project that can be installed on the PSX." FontFamily="Calibri" Width="500" Margin="0,2,0,0" TextAlignment="Center"/>
+                    <TextBlock Text="This option also allows to connect to the PSX HDD using NBD." FontFamily="Calibri" Width="500" Margin="0,2,0,0" TextAlignment="Center"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS3ISOToolsButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,70,0,0">
+            <Button x:Name="LoadPSXHDDManagerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,148,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/HDD.png" Width="42" Height="42"/>
+                    <TextBlock Text="HDD Partition Manager" FontSize="18" FontFamily="Calibri" Height="21" FontWeight="Bold" Margin="10,0,0,0" Width="500"/>
+                    <TextBlock Text="Create, modify or delete partitions on the PSX HDD. Requires connected HDD." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="LoadXMBUtilitesButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,208,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/XMBicons.png" Width="42" Height="42"/>
+                    <TextBlock Text="XMB Utilities" FontSize="18" FontFamily="Calibri" Height="21" FontWeight="Bold" Margin="10,0,0,0" Width="500"/>
+                    <TextBlock Text="Browse assets, view and edit images and files, auto-translate XML and DIC files." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!--PS3 Grid-->
+        <Grid x:Name="PS3Grid" Margin="35,242,35,62" Width="900" Height="280" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS3LibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,10,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                    <TextBlock Text="PS3 Games Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Load and manage your PS3 games (.iso, .pkg files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="LoadPS3ISOToolsButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,70,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/av.png" Width="42" Height="42"/>
                     <TextBlock Text="ISO Tools" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Create / Extract / Split / Patch PS3 .iso files" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS3PUPUnpackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,130,0,0">
+            <Button x:Name="LoadPS3PUPUnpackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,130,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/box.png" Width="42" Height="42"/>
                     <TextBlock Text="PUP Unpacker" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Unpack PS3 .PUP files" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
         </Grid>
 
         <!--PS4 Grid-->
-        <Grid x:Name="PS4Grid" Margin="39,242,46,39" Height="255" Width="805" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
-            <Button x:Name="LoadPS4LibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,10,0,0">
-                <Button.Content>
-                    <WrapPanel Orientation="Vertical">
-                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
-                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                        <TextBlock Text="Load and manage your PS4 games, updates and DLCs (.pkg files supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
-                    </WrapPanel>
-                </Button.Content>
+        <Grid x:Name="PS4Grid" Margin="35,242,35,62" Width="900" Height="280" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPS4LibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,10,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                    <TextBlock Text="PS4 Games Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Load and manage your PS4 games, updates and DLCs (.pkg files supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS4PUPUnpackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,70,0,0">
+            <Button x:Name="LoadPS4PUPUnpackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,70,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/box.png" Width="42" Height="42"/>
                     <TextBlock Text="PUP Unpacker" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Unpack decrypted PS4 update files (PUP.dec)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS4USBWriterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,130,0,0">
+            <Button x:Name="LoadPS4USBWriterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,130,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/usb.png" Width="42" Height="42"/>
                     <TextBlock Text="USB Exploit Writer" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Write exfathax.img to a USB drive." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS4PKGMergerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,190,0,0">
+            <Button x:Name="LoadPS4PKGMergerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,190,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/box.png" Width="42" Height="42"/>
                     <TextBlock Text="PKG Merger" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Merge game or patch PKG files into a single one." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
         </Grid>
 
         <!--PS5 Grid-->
-        <Grid x:Name="PS5Grid" Margin="39,225,46,30" Width="810" Height="284" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
-            <Button x:Name="LoadPS5LibraryButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <Button.Content>
-                    <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
-                        <Image Width="32" Height="32" Source="/Images/gamelibrary.png" UseLayoutRounding="True"></Image>
-                        <TextBlock Text="Game Library" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
-                        <TextBlock Text="Load your PS5 games, applications and patches" FontFamily="Calibri" Margin="8,3,0,0"/>
-                    </WrapPanel>
-                </Button.Content>
+        <Grid x:Name="PS5Grid" Margin="35,230,35,0" Width="900" HorizontalAlignment="Center" VerticalAlignment="Top" Height="300" Visibility="Hidden">
+            <Button x:Name="LoadPS5LibraryButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="10,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
+                    <Image Width="32" Height="32" Source="/Images/gamelibrary.png" UseLayoutRounding="True"></Image>
+                    <TextBlock Text="PS5 Games Library" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
+                    <TextBlock Text="Load your PS5 games, applications and patches" FontFamily="Calibri" Margin="8,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5BDBurnerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,55,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5BDBurnerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="10,50,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/burn.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="Blu Ray Disc Burner" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Burn the BD-JB .iso file on an empty Blu Ray disc" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5FTPGrabberButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,100,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5FTPGrabberButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="10,100,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/ftp.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="FTP Grabber" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Grab specific directories from the PS5 via FTP" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5GP5CreatorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="10,145,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5GP5CreatorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="215" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="10,150,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/Tools.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="GP5 Project Creator" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Create a new .gp5 project" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5AT9ConverterButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,190,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5AT9ConverterButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="10,200,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/Update.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="AT9 Audio Converter" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Encode .wav to .at9 or decode .at9 to .wav" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5ModGamePatchesButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="415,55,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5ModGamePatchesButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="455,50,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/gamepatches.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="Game Patches (illusion)" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Run and control the game patches fork of libhijacker" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5NotificationManagerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="415,100,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5NotificationManagerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="455,100,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/notifications.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="Notification Manager" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Edit your notifications on the PS5, enabling more features" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5ParamEditorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="415,145,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5ParamEditorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="215" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="455,150,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/editor.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="Param JSON Editor" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Create/Edit param.json" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5RCOExtractorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="415,190,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5RCOExtractorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="215" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="455,200,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/extract.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="RCO Extractor" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Extract .rco files (PS4, PS5 &amp; Vita)" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5SenderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="415,235,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5SenderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="455,250,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/sendfile.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="BIN / ELF Payload &amp; Mast1c0re PS2 Game Sender" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Send a .BIN or .ELF payload or a PS2 .iso game to mast1c0re" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5MakefSELFButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="10,235,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5MakefSELFButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="10,250,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/Sign.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="Make fSELF" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Create fake signed SELF files from a dumped game backup" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5GamePatchesDownloaderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Height="40" Background="#FF575757" Foreground="White" Margin="415,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5GamePatchesDownloaderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="435" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="455,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/Downloader.png" UseLayoutRounding="True" Margin="0,2,0,0"></Image>
                     <TextBlock Text="Game Patches Downloader" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Check for game patches &amp; download within PS Multi Tools" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5RCODumperButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="610,190,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5RCODumperButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="215" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="675,200,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/Downloader.png" UseLayoutRounding="True" Margin="0,2,0,0"></Image>
                     <TextBlock Text="RCO Dumper" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Dump .rco files from FTP" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5PKGBuilderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="205,145,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5PKGBuilderButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="215" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="230,150,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/Tools.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="GP5 PKG Builder" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Build pkg from gp5 project" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPS5ManifestEditorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="40" Background="#FF575757" Foreground="White" Margin="610,145,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <WrapPanel Orientation="Vertical" Margin="5,0,0,0">
+            <Button x:Name="LoadPS5ManifestEditorButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="215" Height="45" Background="#FF3E3E3E" Foreground="White" Margin="675,150,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <WrapPanel Orientation="Vertical" Margin="5,3,0,0">
                     <Image Width="32" Height="32" Source="/Images/editor.png" UseLayoutRounding="True"></Image>
                     <TextBlock Text="Manifest JSON Editor" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Margin="5,0,0,0"/>
                     <TextBlock Text="Create/Edit manifest.json" FontFamily="Calibri" Margin="8,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
         </Grid>
 
         <!--PSP Grid-->
-        <Grid x:Name="PSPGrid" Margin="39,242,46,39" Height="255" Width="805" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
-            <Button x:Name="LoadPSPLibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,10,0,0">
-                <Button.Content>
-                    <WrapPanel Orientation="Vertical">
-                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
-                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                        <TextBlock Text="Load and manage your PSP games (.iso files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
-                    </WrapPanel>
-                </Button.Content>
+        <Grid x:Name="PSPGrid" Margin="35,242,35,62" Width="900" Height="280" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPSPLibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,10,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                    <TextBlock Text="PSP Games Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Load and manage your PSP games (.iso files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPSPISOCSOConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,70,0,0">
+            <Button x:Name="LoadPSPISOCSOConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,70,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/convert.png" Width="42" Height="42"/>
                     <TextBlock Text="ISO / CSO Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Convert to .cso or decompress to .iso file." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPSPISOPBPConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,130,0,0">
+            <Button x:Name="LoadPSPISOPBPConverterButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,130,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/convert.png" Width="42" Height="42"/>
                     <TextBlock Text="ISO / PBP Converter" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Conver .PBP to .iso or convert an .iso file with a STARTDAT image to a .PBP file." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPSPPBPPackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,190,0,0">
+            <Button x:Name="LoadPSPPBPPackerButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,190,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/box.png" Width="42" Height="42"/>
                     <TextBlock Text="PBP Unpacker / Packer" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Unpack a .PBP file or create a new one from scratch." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
         </Grid>
 
         <!--PSV Grid-->
-        <Grid x:Name="PSVGrid" Margin="39,242,46,39" Height="255" Width="805" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
-            <Button x:Name="LoadPSVLibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,35,0,0">
-                <Button.Content>
-                    <WrapPanel Orientation="Vertical">
-                        <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
-                        <TextBlock Text="Game Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
-                        <TextBlock Text="Load and manage your PS Vita games (.pkg files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
-                    </WrapPanel>
-                </Button.Content>
+        <Grid x:Name="PSVGrid" Margin="35,242,35,62" Width="900" Height="280" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+            <Button x:Name="LoadPSVLibraryButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,35,0,0">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="/Images/gamelibrary.png" Width="42" Height="42"/>
+                    <TextBlock Text="PS Vita Games Library" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Text="Load and manage your PS Vita games (.pkg files and backup folders are supported)" FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
+                </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPSVPKGExtractorButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,95,0,0">
+            <Button x:Name="LoadPSVPKGExtractorButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,95,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/box.png" Width="42" Height="42"/>
                     <TextBlock Text="PKG Extractor" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Extract .pkg files with a zRIF key." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
-            <Button x:Name="LoadPSVRCOExtractorButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF575757" Foreground="White" Margin="0,155,0,0">
+            <Button x:Name="LoadPSVRCOExtractorButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="600" Height="55" Background="#FF3E3E3E" Foreground="White" Margin="0,155,0,0">
                 <WrapPanel Orientation="Vertical">
                     <Image Source="/Images/extract.png" Width="42" Height="42"/>
                     <TextBlock Text="RCO Extractor" FontSize="18" FontFamily="Calibri" Height="21" Width="500" FontWeight="Bold" Margin="10,0,0,0"/>
                     <TextBlock Text="Extract .rco files from the PS4, PS5 or PS Vita." FontFamily="Calibri" Height="15" Width="500" Margin="25,3,0,0"/>
                 </WrapPanel>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="MainBorder" BorderThickness="1" BorderBrush="#FF707070" Background="#FF3E3E3E">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF98B0CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#FF699BD1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
         </Grid>
 
         <StatusBar Height="27" VerticalAlignment="Bottom" Background="#FFE2E2E2" FontFamily="Calibri" Foreground="Black" FontSize="14">
             <StatusBarItem>
                 <StatusBarItem.Content>
-                    <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v13.6" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="BuildTextBlock" Text="[Main] PS Multi Tools v14.3" Margin="10,0,0,0"/>
                 </StatusBarItem.Content>
             </StatusBarItem>
             <StatusBarItem>
                 <StatusBarItem.Content>
-                    <Button x:Name="CheckPSMTUpdateButton" Content="Check for PS Multi Tools Updates" FontSize="12" Width="175" Height="20" HorizontalAlignment="Right" Margin="120,0,0,0"/>
+                    <Button x:Name="CheckPSMTUpdateButton" Content="Check for PS Multi Tools Updates" FontSize="12" Width="175" Height="20" HorizontalAlignment="Right" Margin="229,0,0,0"/>
                 </StatusBarItem.Content>
             </StatusBarItem>
             <StatusBarItem>

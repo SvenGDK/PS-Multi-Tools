@@ -1,9 +1,5 @@
-﻿Imports System
-Imports System.Globalization
-Imports System.Reflection
-Imports System.Resources
+﻿Imports System.Reflection
 Imports System.Runtime.InteropServices
-Imports System.Windows
 
 ' General Information about an assembly is controlled through the following
 ' set of attributes. Change these attribute values to modify the information
@@ -55,5 +51,5 @@ Imports System.Windows
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("14.2.1.0")>
-<Assembly: AssemblyFileVersion("14.2.1.0")>
+<Assembly: AssemblyVersion("14.3.0.0")>
+<Assembly: AssemblyFileVersion("14.3.0.0")>

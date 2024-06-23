@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports System.Windows.Forms
 Imports psmt_lib
 
 Public Class PS2Library
@@ -21,6 +20,7 @@ Public Class PS2Library
     Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
     Dim WithEvents SendToMenuItem As New Controls.MenuItem() With {.Header = "Send to PS4/5", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/send-icon.png", UriKind.Relative))}}
     Dim WithEvents PlayGameMenuItem As New Controls.MenuItem() With {.Header = "Play with PCSX2", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/controller.png", UriKind.Relative))}}
+    Dim WithEvents CreateProjectMenuItem As New Controls.MenuItem() With {.Header = "Create a game project for the PSX", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
@@ -41,6 +41,7 @@ Public Class PS2Library
         NewContextMenu.Items.Add(CopyToMenuItem)
         NewContextMenu.Items.Add(SendToMenuItem)
         NewContextMenu.Items.Add(PlayGameMenuItem)
+        NewContextMenu.Items.Add(CreateProjectMenuItem)
         GamesListView.ContextMenu = NewContextMenu
 
         'Add supplemental emulator menu item
@@ -166,7 +167,7 @@ Public Class PS2Library
                 If Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + GameID + ".html") Then
                     URLs.Add("https://psxdatacenter.com/psx2/games2/" + GameID + ".html")
                 Else
-                    NewPS2Game.GameTitle = GameID
+                    NewPS2Game.GameTitle = GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
                 End If
             End If
         Next
@@ -240,7 +241,7 @@ Public Class PS2Library
                 If Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + GameID + ".html") Then
                     URLs.Add("https://psxdatacenter.com/psx2/games2/" + GameID + ".html")
                 Else
-                    NewPS2Game.GameTitle = GameID
+                    NewPS2Game.GameTitle = GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
                 End If
             End If
         Next
@@ -259,7 +260,7 @@ Public Class PS2Library
         PSXDatacenterBrowser.Navigate(URLs.Item(0))
     End Sub
 
-    Private Sub PSXDatacenterBrowser_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles PSXDatacenterBrowser.DocumentCompleted
+    Private Sub PSXDatacenterBrowser_DocumentCompleted(sender As Object, e As Forms.WebBrowserDocumentCompletedEventArgs) Handles PSXDatacenterBrowser.DocumentCompleted
         RemoveHandler PSXDatacenterBrowser.DocumentCompleted, AddressOf PSXDatacenterBrowser_DocumentCompleted
 
         Dim GameTitle As String = ""
@@ -272,7 +273,7 @@ Public Class PS2Library
         Dim GameDescription As String = ""
 
         'Get game infos
-        Dim infoRows As HtmlElementCollection = Nothing
+        Dim infoRows As Forms.HtmlElementCollection = Nothing
         If PSXDatacenterBrowser.Document.GetElementsByTagName("tr") IsNot Nothing Then
             infoRows = PSXDatacenterBrowser.Document.GetElementsByTagName("tr")
         End If
@@ -374,6 +375,24 @@ Public Class PS2Library
         End If
     End Sub
 
+    Public Function GetPS2GameTitleFromDatabaseList(GameID As String) As String
+        Dim FoundGameTitle As String = ""
+        GameID = GameID.Replace("-", "")
+
+        For Each GameTitle As String In File.ReadLines(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps2ids.txt")
+            If GameTitle.Contains(GameID) Then
+                FoundGameTitle = GameTitle.Split(";"c)(1)
+                Exit For
+            End If
+        Next
+
+        If String.IsNullOrEmpty(FoundGameTitle) Then
+            Return "Unknown PS2 game"
+        Else
+            Return FoundGameTitle
+        End If
+    End Function
+
 #End Region
 
 #Region "Menu Actions"
@@ -415,7 +434,7 @@ Public Class PS2Library
     Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
-            Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
+            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
 
             If FBD.ShowDialog() = Forms.DialogResult.OK Then
                 Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
@@ -443,7 +462,7 @@ Public Class PS2Library
                               "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
 
                         'Get a BIOS file from OpenFileDialog
-                        Dim OFD As New OpenFileDialog() With {.Title = "Select a PS2 BIOS file", .Filter = "PS2 BIOS (*.bin)|*.bin", .Multiselect = False}
+                        Dim OFD As New Forms.OpenFileDialog() With {.Title = "Select a PS2 BIOS file", .Filter = "PS2 BIOS (*.bin)|*.bin", .Multiselect = False}
                         If OFD.ShowDialog() = Forms.DialogResult.OK Then
                             Dim SelectedBIOSFile As String = OFD.FileName
                             Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
@@ -527,6 +546,148 @@ Public Class PS2Library
     Private Sub EMU_Settings_Click(sender As Object, e As RoutedEventArgs) Handles EMU_Settings.Click
         Dim NewPS2EmulatorSettingsWindow As New PS2EmulatorSettings() With {.ShowActivated = True}
         NewPS2EmulatorSettingsWindow.Show()
+    End Sub
+
+    Private Sub CreateProjectMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CreateProjectMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
+            Dim GameProjectDirectory As String = SelectedPS2Game.GameTitle + " [" + SelectedPS2Game.GameID + "]"
+            Dim NewGameProjectDirectory As String = My.Computer.FileSystem.CurrentDirectory + "\Projects\" + SelectedPS2Game.GameTitle + " [" + SelectedPS2Game.GameID + "]"
+
+            Dim NewGameProjectWindow As New PSXNewPS2GameProject() With {.ShowActivated = True}
+            Dim NewGameEditor As New PSXPS2GameEditor() With {.ProjectDirectory = NewGameProjectDirectory, .Title = "Game Ressources Editor - " + NewGameProjectDirectory}
+
+            'Set project information
+            NewGameProjectWindow.ImportFromPSMT(SelectedPS2Game.GameFilePath, SelectedPS2Game.GameTitle, NewGameProjectDirectory, SelectedPS2Game.GameID.Replace("-", "_").Insert(8, "."))
+
+            'Create game project directory
+            If Not Directory.Exists(NewGameProjectDirectory) Then
+                Directory.CreateDirectory(NewGameProjectDirectory)
+            End If
+
+            'Write Project settings to .CFG
+            Using ProjectWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Projects\" + SelectedPS2Game.GameTitle + ".CFG", False)
+                ProjectWriter.WriteLine("TITLE=" + SelectedPS2Game.GameTitle)
+                ProjectWriter.WriteLine("ID=" + SelectedPS2Game.GameID.Replace("-", "_").Insert(8, "."))
+                ProjectWriter.WriteLine("DIR=" + NewGameProjectDirectory)
+                ProjectWriter.WriteLine("ELForISO=" + SelectedPS2Game.GameFilePath)
+                ProjectWriter.WriteLine("TYPE=GAME")
+                ProjectWriter.WriteLine("SIGNED=FALSE")
+                ProjectWriter.WriteLine("GAMETYPE=PS2")
+            End Using
+
+            'Write SYSTEM.CNF to project directory
+            Using CNFWriter As New StreamWriter(NewGameProjectDirectory + "\SYSTEM.CNF", False)
+                CNFWriter.WriteLine("BOOT2 = pfs:/EXECUTE.KELF") 'Loads EXECUTE.KELF
+                CNFWriter.WriteLine("VER = 1.01")
+                CNFWriter.WriteLine("VMODE = NTSC")
+                CNFWriter.WriteLine("HDDUNITPOWER = NICHDD")
+            End Using
+
+            'Write icon.sys to project directory
+            Using CNFWriter As New StreamWriter(NewGameProjectDirectory + "\icon.sys", False)
+                CNFWriter.WriteLine("PS2X")
+                CNFWriter.WriteLine("title0=" + SelectedPS2Game.GameTitle)
+                CNFWriter.WriteLine("title1=" + SelectedPS2Game.GameID)
+                CNFWriter.WriteLine("bgcola=0")
+                CNFWriter.WriteLine("bgcol0=0,0,0")
+                CNFWriter.WriteLine("bgcol1=0,0,0")
+                CNFWriter.WriteLine("bgcol2=0,0,0")
+                CNFWriter.WriteLine("bgcol3=0,0,0")
+                CNFWriter.WriteLine("lightdir0=1.0,-1.0,1.0")
+                CNFWriter.WriteLine("lightdir1=-1.0,1.0,-1.0")
+                CNFWriter.WriteLine("lightdir2=0.0,0.0,0.0")
+                CNFWriter.WriteLine("lightcolamb=64,64,64")
+                CNFWriter.WriteLine("lightcol0=64,64,64")
+                CNFWriter.WriteLine("lightcol1=16,16,16")
+                CNFWriter.WriteLine("lightcol2=0,0,0")
+                CNFWriter.WriteLine("uninstallmes0=Do you want to uninstall this game ?")
+                CNFWriter.WriteLine("uninstallmes1=")
+                CNFWriter.WriteLine("uninstallmes2=")
+            End Using
+
+            'Create game project res & image directory
+            If Not Directory.Exists(NewGameProjectDirectory + "\res") Then
+                Directory.CreateDirectory(NewGameProjectDirectory + "\res")
+            End If
+            If Not Directory.Exists(NewGameProjectDirectory + "\res\image") Then
+                Directory.CreateDirectory(NewGameProjectDirectory + "\res\image")
+            End If
+
+            'Write info.sys to res directory
+            Using SYSWriter As New StreamWriter(NewGameProjectDirectory + "\res\info.sys", False)
+                SYSWriter.WriteLine("title = " + SelectedPS2Game.GameTitle)
+                SYSWriter.WriteLine("title_id = " + SelectedPS2Game.GameID)
+                SYSWriter.WriteLine("title_sub_id = 0")
+                SYSWriter.WriteLine("release_date = " + SelectedPS2Game.GameReleaseDate)
+                SYSWriter.WriteLine("developer_id = " + SelectedPS2Game.GameDeveloper)
+                SYSWriter.WriteLine("publisher_id = " + SelectedPS2Game.GamePublisher)
+                SYSWriter.WriteLine("note = ")
+                SYSWriter.WriteLine("content_web = " + SelectedPS2Game.GameWebsite)
+                SYSWriter.WriteLine("image_topviewflag = 0")
+                SYSWriter.WriteLine("image_type = 0")
+                SYSWriter.WriteLine("image_count = 1")
+                SYSWriter.WriteLine("image_viewsec = 600")
+                SYSWriter.WriteLine("copyright_viewflag = 0")
+                SYSWriter.WriteLine("copyright_imgcount = 1")
+                SYSWriter.WriteLine("genre = " + SelectedPS2Game.GameGenre)
+                SYSWriter.WriteLine("parental_lock = 1")
+                SYSWriter.WriteLine("effective_date = 0")
+                SYSWriter.WriteLine("expire_date = 0")
+
+                Select Case SelectedPS2Game.GameRegion
+                    Case "Europe"
+                        SYSWriter.WriteLine("area = E")
+                    Case "US"
+                        SYSWriter.WriteLine("area = U")
+                    Case "Japan"
+                        SYSWriter.WriteLine("area = J")
+                    Case Else
+                        SYSWriter.WriteLine("area = J")
+                End Select
+
+                SYSWriter.WriteLine("violence_flag = 0")
+                SYSWriter.WriteLine("content_type = 255")
+                SYSWriter.WriteLine("content_subtype = 0")
+            End Using
+
+            'Create man.xml
+            Using MANWriter As New StreamWriter(NewGameProjectDirectory + "\res\man.xml", False)
+                MANWriter.WriteLine("<?xml version=""1.0"" encoding=""UTF-8""?>")
+                MANWriter.WriteLine("")
+                MANWriter.WriteLine("<MANUAL version=""1.0"">")
+                MANWriter.WriteLine("")
+                MANWriter.WriteLine("<IMG id=""bg"" src=""./image/0.png"" />")
+                MANWriter.WriteLine("")
+                MANWriter.WriteLine("<MENUGROUP id=""TOP"">")
+                MANWriter.WriteLine("<TITLE id=""TOP-TITLE"" label=""" + SelectedPS2Game.GameTitle + """ />")
+                MANWriter.WriteLine("<ITEM id=""M00"" label=""Screenshots""	page=""PIC0000"" />")
+                MANWriter.WriteLine("</MENUGROUP>")
+                MANWriter.WriteLine("")
+                MANWriter.WriteLine("<PAGEGROUP>")
+                MANWriter.WriteLine("<PAGE id=""PIC0000"" src=""./image/1.png"" retitem=""M00"" retgroup=""TOP"" />")
+                MANWriter.WriteLine("<PAGE id=""PIC0000"" src=""./image/2.png"" retitem=""M00"" retgroup=""TOP"" />")
+                MANWriter.WriteLine("</PAGEGROUP>")
+                MANWriter.WriteLine("</MANUAL>")
+                MANWriter.WriteLine("")
+            End Using
+
+            'Open project settings window
+            NewGameProjectWindow.Show()
+
+            'Open the Game Editor (in case of additional changes)
+            NewGameEditor.Show()
+            NewGameEditor.AutoSave = True
+
+            'Open the Game Editor and try to load values from PSXDatacenter
+            If Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + SelectedPS2Game.GameID + ".html") Then
+                NewGameEditor.PSXDatacenterBrowser.Navigate("https://psxdatacenter.com/psx2/games2/" + SelectedPS2Game.GameID + ".html")
+            Else
+                'Apply cover, title and region only if no data is available on PSXDatacenter
+                NewGameEditor.ApplyKnownValues(SelectedPS2Game.GameID, SelectedPS2Game.GameTitle)
+            End If
+
+        End If
     End Sub
 
 End Class

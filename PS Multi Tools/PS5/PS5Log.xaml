@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS5 klog Viewer" Height="650" Width="1000" Background="#FF252525" WindowStartupLocation="CenterScreen">
+        Title="PS5 klog Viewer" Height="650" Width="1000" Background="#2D2D30" WindowStartupLocation="CenterScreen">
     <Grid>
         <RichTextBox x:Name="LogRichTextBox" Margin="10,142,10,10" FontFamily="Calibri" Background="#FF474747" BorderBrush="White" Foreground="White">
             <RichTextBox.Resources>

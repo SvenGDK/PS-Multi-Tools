@@ -6,6 +6,7 @@ Imports System.IO
 Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
+Imports System.Security.Principal
 Imports System.Text
 Imports System.Threading
 
@@ -347,6 +348,29 @@ Public Class Utils
 
         Return ScaledImage
     End Function
+
+    Public Shared Function IsRunningAsAdministrator() As Boolean
+        Dim CurrentWindowsIdentity = WindowsIdentity.GetCurrent()
+        Dim CurrentWindowsPrincipal = New WindowsPrincipal(CurrentWindowsIdentity)
+        Return CurrentWindowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator)
+    End Function
+
+    Public Shared Sub RunAsAdministrator()
+        Dim NewProcessStartInfo As New ProcessStartInfo With {
+            .UseShellExecute = True,
+            .WorkingDirectory = Environment.CurrentDirectory,
+            .FileName = AppDomain.CurrentDomain.BaseDirectory + "PS Multi Tools.exe",
+            .Verb = "runas"
+        }
+
+        Try
+            Dim NewProcess As Process = Process.Start(NewProcessStartInfo)
+        Catch ex As Win32Exception
+            Return
+        End Try
+
+        Windows.Application.Current.Shutdown()
+    End Sub
 
 End Class
 

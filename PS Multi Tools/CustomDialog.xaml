@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="Dialog Title" Height="125" Width="420" Background="#FF252525" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Dialog Title" Height="125" Width="420" Background="#2D2D30" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
         <Grid x:Name="TextInputGrid" Visibility="Hidden">
             <TextBlock x:Name="TextInputTitle" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>

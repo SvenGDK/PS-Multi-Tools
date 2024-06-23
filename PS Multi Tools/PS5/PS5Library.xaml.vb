@@ -1,4 +1,11 @@
-﻿Imports FluentFTP
+﻿Imports System.ComponentModel
+Imports System.IO
+Imports System.Security.Authentication
+Imports System.Text
+Imports System.Threading
+Imports System.Windows.Forms
+Imports System.Windows.Media.Animation
+Imports FluentFTP
 Imports Microsoft.Web.WebView2.Core
 Imports MS.Internal
 Imports Newtonsoft.Json
@@ -6,13 +13,6 @@ Imports PS_Multi_Tools.INI
 Imports PS_Multi_Tools.Structures
 Imports psmt_lib
 Imports psmt_lib.PS5ParamClass
-Imports System.ComponentModel
-Imports System.IO
-Imports System.Security.Authentication
-Imports System.Text
-Imports System.Threading
-Imports System.Windows.Forms
-Imports System.Windows.Media.Animation
 
 Public Class PS5Library
 

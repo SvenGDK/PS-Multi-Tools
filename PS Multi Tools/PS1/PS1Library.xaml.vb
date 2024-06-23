@@ -1,21 +1,24 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports System.Windows.Forms
+Imports psmt_lib
 
 Public Class PS1Library
 
     Dim WithEvents GameLoaderWorker As New BackgroundWorker() With {.WorkerReportsProgress = True}
-    Dim WithEvents PSXDatacenterBrowser As New WebBrowser()
+    Dim WithEvents PSXDatacenterBrowser As New Forms.WebBrowser()
     Dim WithEvents NewLoadingWindow As New SyncWindow() With {.Title = "Loading PS1 files", .ShowActivated = True}
 
     Dim URLs As New List(Of String)()
     Dim CurrentKeyCount As Integer = 0
+
     Dim BINCount As Integer = 0
+    Dim VCDCount As Integer = 0
 
     'Selected game context menu
     Dim WithEvents NewContextMenu As New Controls.ContextMenu()
     Dim WithEvents CopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
     Dim WithEvents PlayGameMenuItem As New Controls.MenuItem() With {.Header = "Play with ePSXe", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/controller.png", UriKind.Relative))}}
+    Dim WithEvents CreateProjectMenuItem As New Controls.MenuItem() With {.Header = "Create a game project for the PSX", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a new folder"}
@@ -35,6 +38,7 @@ Public Class PS1Library
 
         NewContextMenu.Items.Add(CopyToMenuItem)
         NewContextMenu.Items.Add(PlayGameMenuItem)
+        NewContextMenu.Items.Add(CreateProjectMenuItem)
         GamesListView.ContextMenu = NewContextMenu
 
         'Add supplemental emulator menu item
@@ -50,7 +54,9 @@ Public Class PS1Library
         Dim GamesList As New List(Of String)()
         Dim FailList As New List(Of String)()
 
-        For Each Game In Directory.GetFiles(e.Argument.ToString, "*.bin", SearchOption.AllDirectories)
+        Dim FoundGames As IEnumerable(Of String) = Directory.EnumerateFiles(e.Argument.ToString, "*.*", SearchOption.AllDirectories).Where(Function(s) s.EndsWith(".bin") OrElse s.EndsWith(".BIN") OrElse s.EndsWith(".VCD"))
+
+        For Each Game In FoundGames
 
             Dim GameInfo As New FileInfo(Game)
 
@@ -84,8 +90,8 @@ Public Class PS1Library
                     For Each OutputLine In ProcessOutput
                         If OutputLine.Contains("BOOT =") Or OutputLine.Contains("BOOT=") Then
                             GameIDFound = True
-                            Dim GameID As String = OutputLine.Replace("BOOT = cdrom:\", "").Replace("BOOT=cdrom:\", "").Replace("BOOT = cdrom:", "").Replace(";1", "").Replace("_", "-").Replace(".", "").Trim()
-                            Dim RegionCharacter As String = GetRegionChar(GameID)
+                            Dim GameID As String = OutputLine.Replace("BOOT = cdrom:\", "").Replace("BOOT=cdrom:\", "").Replace("BOOT = cdrom:", "").Replace(";1", "").Replace("_", "-").Replace(".", "").Replace("MGS\", "").Trim()
+                            Dim RegionCharacter As String = PS1Game.GetRegionChar(GameID)
 
                             'Set known values
                             NewPS1Game.GameID = UCase(GameID)
@@ -116,13 +122,13 @@ Public Class PS1Library
                                     If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
                                         URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
                                     Else
-                                        NewPS1Game.GameTitle = GameID
+                                        NewPS1Game.GameTitle = GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                     End If
                                 Else
                                     If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
                                         URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
                                     Else
-                                        NewPS1Game.GameTitle = GameID
+                                        NewPS1Game.GameTitle = GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                     End If
                                 End If
                             End If
@@ -143,7 +149,7 @@ Public Class PS1Library
                     'Update progress
                     Dispatcher.BeginInvoke(Sub()
                                                NewLoadingWindow.LoadProgressBar.Value += 1
-                                               NewLoadingWindow.LoadStatusTextBlock.Text = "Loading bin " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + BINCount.ToString()
+                                               NewLoadingWindow.LoadStatusTextBlock.Text = "Loading bin " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + (BINCount + VCDCount).ToString()
                                            End Sub)
 
                     'Add to the ListView
@@ -200,8 +206,8 @@ Public Class PS1Library
                         If ProcessOutput.Length > 0 Then 'Game ID found
                             For Each OutputLine In ProcessOutput
                                 If OutputLine.Contains("BOOT =") Or OutputLine.Contains("BOOT=") Then
-                                    Dim GameID As String = OutputLine.Replace("BOOT = cdrom:\", "").Replace("BOOT=cdrom:\", "").Replace("BOOT = cdrom:", "").Replace(";1", "").Replace("_", "-").Replace(".", "").Trim()
-                                    Dim RegionCharacter As String = GetRegionChar(GameID)
+                                    Dim GameID As String = OutputLine.Replace("BOOT = cdrom:\", "").Replace("BOOT=cdrom:\", "").Replace("BOOT = cdrom:", "").Replace(";1", "").Replace("_", "-").Replace(".", "").Replace("MGS\", "").Trim()
+                                    Dim RegionCharacter As String = PS1Game.GetRegionChar(GameID)
 
                                     'Set known values
                                     NewPS1Game.GameID = UCase(GameID)
@@ -232,13 +238,13 @@ Public Class PS1Library
                                             If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
                                                 URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
                                             Else
-                                                NewPS1Game.GameTitle = GameID
+                                                NewPS1Game.GameTitle = GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                             End If
                                         Else
                                             If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
                                                 URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
                                             Else
-                                                NewPS1Game.GameTitle = GameID
+                                                NewPS1Game.GameTitle = GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                             End If
                                         End If
                                     End If
@@ -291,7 +297,7 @@ Public Class PS1Library
         End If
     End Sub
 
-    Private Sub PSXDatacenterBrowser_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles PSXDatacenterBrowser.DocumentCompleted
+    Private Sub PSXDatacenterBrowser_DocumentCompleted(sender As Object, e As Forms.WebBrowserDocumentCompletedEventArgs) Handles PSXDatacenterBrowser.DocumentCompleted
         RemoveHandler PSXDatacenterBrowser.DocumentCompleted, AddressOf PSXDatacenterBrowser_DocumentCompleted
 
         Dim GameTitle As String = ""
@@ -305,11 +311,11 @@ Public Class PS1Library
         Dim GameDescription As String = ""
 
         'Get game infos
-        Dim infoTable As HtmlElementCollection = Nothing
+        Dim infoTable As Forms.HtmlElementCollection = Nothing
         If PSXDatacenterBrowser.Document.GetElementById("table4") IsNot Nothing AndAlso PSXDatacenterBrowser.Document.GetElementById("table4").GetElementsByTagName("tr").Count > 0 Then
             infoTable = PSXDatacenterBrowser.Document.GetElementById("table4").GetElementsByTagName("tr")
         End If
-        Dim coverTableRows As HtmlElementCollection = Nothing
+        Dim coverTableRows As Forms.HtmlElementCollection = Nothing
         If PSXDatacenterBrowser.Document.GetElementById("table2") IsNot Nothing AndAlso PSXDatacenterBrowser.Document.GetElementById("table2").GetElementsByTagName("tr").Count > 0 Then
             coverTableRows = PSXDatacenterBrowser.Document.GetElementById("table2").GetElementsByTagName("tr")
         End If
@@ -454,6 +460,23 @@ Public Class PS1Library
         End If
     End Sub
 
+    Public Function GetPS1GameTitleFromDatabaseList(GameID As String) As String
+        Dim FoundGameTitle As String = ""
+
+        For Each GameTitle As String In File.ReadLines(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps1ids.txt")
+            If GameTitle.Contains(GameID) Then
+                FoundGameTitle = GameTitle.Split(";"c)(1)
+                Exit For
+            End If
+        Next
+
+        If String.IsNullOrEmpty(FoundGameTitle) Then
+            Return ""
+        Else
+            Return FoundGameTitle
+        End If
+    End Function
+
 #End Region
 
 #Region "Menu Actions"
@@ -462,9 +485,15 @@ Public Class PS1Library
         Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS1 backup folder"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
 
+            GamesListView.Items.Clear()
+            URLs.Clear()
+            BINCount = 0
+            VCDCount = 0
+
             For Each GameBIN In Directory.GetFiles(FBD.SelectedPath, "*.bin", SearchOption.AllDirectories)
-                If GameBIN.Contains("Track") Then
-                    If Not GameBIN.Contains("(Track 1).bin") Then
+                Dim GameInfo As New FileInfo(GameBIN)
+                If GameInfo.Name.ToLower().Contains("track") Then
+                    If Not GameBIN.ToLower().Contains("(track 1).bin") OrElse Not GameInfo.Name.ToLower().Contains("(track 01).bin") Then
                         'Skip
                         Continue For
                     Else
@@ -475,9 +504,11 @@ Public Class PS1Library
                 End If
             Next
 
+            VCDCount = Directory.GetFiles(FBD.SelectedPath, "*.VCD", SearchOption.AllDirectories).Count
+
             NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS1 files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = BINCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + BINCount.ToString()
+            NewLoadingWindow.LoadProgressBar.Maximum = BINCount + VCDCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (BINCount + VCDCount).ToString()
             NewLoadingWindow.Show()
 
             GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
@@ -497,7 +528,7 @@ Public Class PS1Library
     Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
-            Dim FBD As New FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
+            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
 
             If FBD.ShowDialog() = Forms.DialogResult.OK Then
                 Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
@@ -525,7 +556,7 @@ Public Class PS1Library
                               "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
 
                         'Get a BIOS file from OpenFileDialog
-                        Dim OFD As New OpenFileDialog() With {.Title = "Select a PS1 BIOS file", .Filter = "PS1 BIOS (*.bin)|*.bin", .Multiselect = False}
+                        Dim OFD As New Forms.OpenFileDialog() With {.Title = "Select a PS1 BIOS file", .Filter = "PS1 BIOS (*.bin)|*.bin", .Multiselect = False}
                         If OFD.ShowDialog() = Forms.DialogResult.OK Then
                             Dim SelectedBIOSFile As String = OFD.FileName
                             Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
@@ -574,28 +605,6 @@ Public Class PS1Library
 
 #End Region
 
-    Public Shared Function GetRegionChar(GameID As String) As String
-        If GameID.StartsWith("SLES", StringComparison.OrdinalIgnoreCase) Then
-            Return "P"
-        ElseIf GameID.StartsWith("SCES", StringComparison.OrdinalIgnoreCase) Then
-            Return "P"
-        ElseIf GameID.StartsWith("SLUS", StringComparison.OrdinalIgnoreCase) Then
-            Return "U"
-        ElseIf GameID.StartsWith("SCUS", StringComparison.OrdinalIgnoreCase) Then
-            Return "U"
-        ElseIf GameID.StartsWith("SLPS", StringComparison.OrdinalIgnoreCase) Then
-            Return "J"
-        ElseIf GameID.StartsWith("SLPM", StringComparison.OrdinalIgnoreCase) Then
-            Return "J"
-        ElseIf GameID.StartsWith("SCCS", StringComparison.OrdinalIgnoreCase) Then
-            Return "J"
-        ElseIf GameID.StartsWith("SLKA", StringComparison.OrdinalIgnoreCase) Then
-            Return "J"
-        Else
-            Return ""
-        End If
-    End Function
-
     Private Sub GamesListView_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles GamesListView.PreviewMouseWheel
         Dim OpenWindowsListViewScrollViewer As ScrollViewer = Utils.FindScrollViewer(GamesListView)
         Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
@@ -632,6 +641,156 @@ Public Class PS1Library
     Private Sub EMU_Settings_Click(sender As Object, e As RoutedEventArgs) Handles EMU_Settings.Click
         Dim NewPS1EmulatorSettingsWindow As New PS1EmulatorSettings() With {.ShowActivated = True}
         NewPS1EmulatorSettingsWindow.Show()
+    End Sub
+
+    Private Sub CreateProjectMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CreateProjectMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
+
+            If Path.GetExtension(SelectedPS1Game.GameFilePath) = ".VCD" Then
+                Dim GameProjectDirectory As String = SelectedPS1Game.GameTitle + " [" + SelectedPS1Game.GameID + "]"
+                Dim NewGameProjectDirectory As String = My.Computer.FileSystem.CurrentDirectory + "\Projects\" + SelectedPS1Game.GameTitle + " [" + SelectedPS1Game.GameID + "]"
+
+                Dim NewGameProjectWindow As New PSXNewPS1GameProject() With {.ShowActivated = True}
+                Dim NewGameEditor As New PSXPS1GameEditor() With {.ProjectDirectory = NewGameProjectDirectory, .Title = "Game Ressources Editor - " + NewGameProjectDirectory}
+
+                'Set project information
+                NewGameProjectWindow.ImportFromPSMT(SelectedPS1Game.GameFilePath, SelectedPS1Game.GameTitle, NewGameProjectDirectory, SelectedPS1Game.GameID)
+
+                'Create game project directory
+                If Not Directory.Exists(NewGameProjectDirectory) Then
+                    Directory.CreateDirectory(NewGameProjectDirectory)
+                End If
+
+                'Write Project settings to .CFG
+                Using ProjectWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Projects\" + SelectedPS1Game.GameTitle + ".CFG", False)
+                    ProjectWriter.WriteLine("TITLE=" + SelectedPS1Game.GameTitle)
+                    ProjectWriter.WriteLine("ID=" + SelectedPS1Game.GameID)
+                    ProjectWriter.WriteLine("DIR=" + NewGameProjectDirectory)
+                    ProjectWriter.WriteLine("ELForISO=" + SelectedPS1Game.GameFilePath)
+                    ProjectWriter.WriteLine("TYPE=GAME")
+                    ProjectWriter.WriteLine("SIGNED=FALSE")
+                    ProjectWriter.WriteLine("GAMETYPE=PS1")
+                End Using
+
+                'Write SYSTEM.CNF to project directory
+                Using CNFWriter As New StreamWriter(NewGameProjectDirectory + "\SYSTEM.CNF", False)
+                    CNFWriter.WriteLine("BOOT2 = pfs:/EXECUTE.KELF")
+                    CNFWriter.WriteLine("VER = 1.01")
+                    CNFWriter.WriteLine("VMODE = NTSC")
+                    CNFWriter.WriteLine("HDDUNITPOWER = NICHDD")
+                End Using
+
+                'Write icon.sys to project directory
+                Using CNFWriter As New StreamWriter(NewGameProjectDirectory + "\icon.sys", False)
+                    CNFWriter.WriteLine("PS2X")
+                    CNFWriter.WriteLine("title0=" + SelectedPS1Game.GameTitle)
+                    CNFWriter.WriteLine("title1=" + SelectedPS1Game.GameID)
+                    CNFWriter.WriteLine("bgcola=0")
+                    CNFWriter.WriteLine("bgcol0=0,0,0")
+                    CNFWriter.WriteLine("bgcol1=0,0,0")
+                    CNFWriter.WriteLine("bgcol2=0,0,0")
+                    CNFWriter.WriteLine("bgcol3=0,0,0")
+                    CNFWriter.WriteLine("lightdir0=1.0,-1.0,1.0")
+                    CNFWriter.WriteLine("lightdir1=-1.0,1.0,-1.0")
+                    CNFWriter.WriteLine("lightdir2=0.0,0.0,0.0")
+                    CNFWriter.WriteLine("lightcolamb=64,64,64")
+                    CNFWriter.WriteLine("lightcol0=64,64,64")
+                    CNFWriter.WriteLine("lightcol1=16,16,16")
+                    CNFWriter.WriteLine("lightcol2=0,0,0")
+                    CNFWriter.WriteLine("uninstallmes0=Do you want to uninstall this game ?")
+                    CNFWriter.WriteLine("uninstallmes1=")
+                    CNFWriter.WriteLine("uninstallmes2=")
+                End Using
+
+                'Create game project res & image directory
+                If Not Directory.Exists(NewGameProjectDirectory + "\res") Then
+                    Directory.CreateDirectory(NewGameProjectDirectory + "\res")
+                End If
+                If Not Directory.Exists(NewGameProjectDirectory + "\res\image") Then
+                    Directory.CreateDirectory(NewGameProjectDirectory + "\res\image")
+                End If
+
+                'Write info.sys to res directory
+                Using SYSWriter As New StreamWriter(NewGameProjectDirectory + "\res\info.sys", False)
+                    SYSWriter.WriteLine("title = " + SelectedPS1Game.GameTitle)
+                    SYSWriter.WriteLine("title_id = " + SelectedPS1Game.GameID)
+                    SYSWriter.WriteLine("title_sub_id = 0")
+                    SYSWriter.WriteLine("release_date = " + SelectedPS1Game.GameReleaseDate)
+                    SYSWriter.WriteLine("developer_id = " + SelectedPS1Game.GameDeveloper)
+                    SYSWriter.WriteLine("publisher_id = " + SelectedPS1Game.GamePublisher)
+                    SYSWriter.WriteLine("note = ")
+                    SYSWriter.WriteLine("content_web = ")
+                    SYSWriter.WriteLine("image_topviewflag = 0")
+                    SYSWriter.WriteLine("image_type = 0")
+                    SYSWriter.WriteLine("image_count = 1")
+                    SYSWriter.WriteLine("image_viewsec = 600")
+                    SYSWriter.WriteLine("copyright_viewflag = 0")
+                    SYSWriter.WriteLine("copyright_imgcount = 1")
+                    SYSWriter.WriteLine("genre = " + SelectedPS1Game.GameGenre)
+                    SYSWriter.WriteLine("parental_lock = 1")
+                    SYSWriter.WriteLine("effective_date = 0")
+                    SYSWriter.WriteLine("expire_date = 0")
+
+                    Select Case SelectedPS1Game.GameRegion
+                        Case "Europe"
+                            SYSWriter.WriteLine("area = E")
+                        Case "US"
+                            SYSWriter.WriteLine("area = U")
+                        Case "Japan"
+                            SYSWriter.WriteLine("area = J")
+                        Case Else
+                            SYSWriter.WriteLine("area = J")
+                    End Select
+
+                    SYSWriter.WriteLine("violence_flag = 0")
+                    SYSWriter.WriteLine("content_type = 255")
+                    SYSWriter.WriteLine("content_subtype = 0")
+                End Using
+
+                'Create man.xml
+                Using MANWriter As New StreamWriter(NewGameProjectDirectory + "\res\man.xml", False)
+                    MANWriter.WriteLine("<?xml version=""1.0"" encoding=""UTF-8""?>")
+                    MANWriter.WriteLine("")
+                    MANWriter.WriteLine("<MANUAL version=""1.0"">")
+                    MANWriter.WriteLine("")
+                    MANWriter.WriteLine("<IMG id=""bg"" src=""./image/0.png"" />")
+                    MANWriter.WriteLine("")
+                    MANWriter.WriteLine("<MENUGROUP id=""TOP"">")
+                    MANWriter.WriteLine("<TITLE id=""TOP-TITLE"" label=""" + SelectedPS1Game.GameTitle + """ />")
+                    MANWriter.WriteLine("<ITEM id=""M00"" label=""Screenshots""	page=""PIC0000"" />")
+                    MANWriter.WriteLine("</MENUGROUP>")
+                    MANWriter.WriteLine("")
+                    MANWriter.WriteLine("<PAGEGROUP>")
+                    MANWriter.WriteLine("<PAGE id=""PIC0000"" src=""./image/1.png"" retitem=""M00"" retgroup=""TOP"" />")
+                    MANWriter.WriteLine("<PAGE id=""PIC0000"" src=""./image/2.png"" retitem=""M00"" retgroup=""TOP"" />")
+                    MANWriter.WriteLine("</PAGEGROUP>")
+                    MANWriter.WriteLine("</MANUAL>")
+                    MANWriter.WriteLine("")
+                End Using
+
+                'Open project settings window
+                NewGameProjectWindow.Show()
+
+                'Open the Game Editor (in case of additional changes)
+                NewGameEditor.Show()
+                NewGameEditor.AutoSave = True
+
+                'Open the Game Editor and try to load values from PSXDatacenter
+                Dim GameStartLetter As String = SelectedPS1Game.GameTitle.Substring(0, 1)
+                Dim RegionCharacter As String = PS1Game.GetRegionChar(SelectedPS1Game.GameID)
+
+                If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + SelectedPS1Game.GameID + ".html") Then
+                    NewGameEditor.PSXDatacenterBrowser.Navigate("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + SelectedPS1Game.GameID + ".html")
+                Else
+                    'Apply cover, title and region only if no data is available on PSXDatacenter
+                    NewGameEditor.ApplyKnownValues(SelectedPS1Game.GameID, SelectedPS1Game.GameTitle)
+                End If
+            Else
+                MsgBox("Games in BIN format cannot be installed directly on the HDD, please convert it with cue2pops using PS Multi Tools.", MsgBoxStyle.Information, "BIN files not supported")
+            End If
+
+        End If
     End Sub
 
 End Class

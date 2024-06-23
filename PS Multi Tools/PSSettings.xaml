@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS Multi Tools Settings" Height="450" Width="750" Background="#FF252525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="PS Multi Tools Settings" Height="450" Width="750" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock x:Name="TextInputTitle" HorizontalAlignment="Left" Margin="20,10,0,0" TextWrapping="Wrap" Text="General Settings" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="20,144,0,0" TextWrapping="Wrap" Text="PS5 Library Settings &amp; More Tools" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>

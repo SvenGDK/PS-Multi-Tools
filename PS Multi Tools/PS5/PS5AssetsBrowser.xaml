@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS5 Assets Browser" Height="720" Width="1280" Background="#FF252525" WindowStartupLocation="CenterScreen">
+        Title="PS5 Assets Browser" Height="720" Width="1280" Background="#2D2D30" WindowStartupLocation="CenterScreen">
     <Grid>
         <ListView x:Name="AssetFilesListView" d:ItemsSource="{d:SampleData ItemCount=10}" Margin="0,0,810,0" Width="350" HorizontalAlignment="Left" Background="#FF474747" BorderBrush="Black" SelectionMode="Single" Foreground="White">
             <ListView.ItemsPanel>

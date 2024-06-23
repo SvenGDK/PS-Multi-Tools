@@ -121,4 +121,26 @@
         End Set
     End Property
 
+    Public Shared Function GetRegionChar(GameID As String) As String
+        If GameID.StartsWith("SLES", StringComparison.OrdinalIgnoreCase) Then
+            Return "P"
+        ElseIf GameID.StartsWith("SCES", StringComparison.OrdinalIgnoreCase) Then
+            Return "P"
+        ElseIf GameID.StartsWith("SLUS", StringComparison.OrdinalIgnoreCase) Then
+            Return "U"
+        ElseIf GameID.StartsWith("SCUS", StringComparison.OrdinalIgnoreCase) Then
+            Return "U"
+        ElseIf GameID.StartsWith("SLPS", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        ElseIf GameID.StartsWith("SLPM", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        ElseIf GameID.StartsWith("SCCS", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        ElseIf GameID.StartsWith("SLKA", StringComparison.OrdinalIgnoreCase) Then
+            Return "J"
+        Else
+            Return ""
+        End If
+    End Function
+
 End Class

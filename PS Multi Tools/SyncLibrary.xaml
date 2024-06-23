@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="Checking for updates" Height="110" Width="435" ResizeMode="CanMinimize" Background="#FF252525" WindowStartupLocation="CenterScreen">
+        Title="Checking for updates" Height="110" Width="435" ResizeMode="CanMinimize" Background="#2D2D30" WindowStartupLocation="CenterScreen">
     <Grid>
         <ProgressBar x:Name="LoadProgressBar" HorizontalAlignment="Left" Height="25" Margin="10,36,0,0" VerticalAlignment="Top" Width="400" Foreground="#FF0069FF"/>
         <TextBlock x:Name="LoadStatusTextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Checking for library updates" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="400"/>

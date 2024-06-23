@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PS_Multi_Tools"
         xmlns:psmt_lib="clr-namespace:psmt_lib;assembly=psmt-lib"
         mc:Ignorable="d"
-        Title="PS3 Library" Height="700" Width="1350" Background="#FF252525" ResizeMode="CanMinimize">
+        Title="PS3 Library" Height="700" Width="1350" Background="#2D2D30" ResizeMode="CanMinimize">
     <Grid>
         <Rectangle x:Name="BlurringShape">
             <Rectangle.Fill>
