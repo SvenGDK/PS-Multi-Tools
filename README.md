@@ -17,9 +17,18 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 
 ## PS2
 - Convert BIN/CUE to ISO
-- PSX DVR XMB Games and Homebrew Installer
 - CUE2POPS Converter
 - ELF2KELF Wrapper
+
+## PSX
+- Install PS2 homebrew and games on the internal PSX HDD
+- Install PS1 games on the internal PSX HDD
+- HDD Partition Manager (Create partition, Remove partition (destructive), Change partition visibility)
+- PS2 Game Partition Manager (Dump partition header, Change game title, flags, DMA)
+- XMB Files Explorer (XMB Tools)
+  - Open a _system or xosd folder to load, view and edit its content
+  - Text Editor for .xml & .dic files with syntax highlighting
+  - Translate .dic & .xml files automatically in most languages
 
 ## PS3
 - Core_OS Tools
@@ -125,7 +134,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - RCO Data Table Extractor
 - PS Vita PFS Tools (psvpfstools) GUI
 
-# Memory Cards
+## Memory Cards
 - Read PS2 Memory Card information
 - Browse the content of the PS2 Memory Cards
 - Add files and directories
