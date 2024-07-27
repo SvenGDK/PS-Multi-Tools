@@ -119,15 +119,15 @@ Public Class PSClassicsfPKGBuilder
     Private Sub BuildPS1fPKGButton_Click(sender As Object, e As RoutedEventArgs) Handles BuildPS1fPKGButton.Click
 
         'Checks before fPKG creation
-        If Not String.IsNullOrEmpty(PS1SelectedDisc1TextBox.Text) Then
+        If String.IsNullOrEmpty(PS1SelectedDisc1TextBox.Text) Then
             MsgBox("No disc 1 specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
-        If Not String.IsNullOrEmpty(PS1TitleTextBox.Text) Then
+        If String.IsNullOrEmpty(PS1TitleTextBox.Text) Then
             MsgBox("No game title specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
-        If Not String.IsNullOrEmpty(PS1NPTitleTextBox.Text) Then
+        If String.IsNullOrEmpty(PS1NPTitleTextBox.Text) Then
             MsgBox("No NP title specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
@@ -551,15 +551,15 @@ Public Class PSClassicsfPKGBuilder
     Private Sub BuildPS2fPKGButton_Click(sender As Object, e As RoutedEventArgs) Handles BuildPS2fPKGButton.Click
 
         'Checks before fPKG creation
-        If Not String.IsNullOrEmpty(SelectedDisc1TextBox.Text) Then
+        If String.IsNullOrEmpty(SelectedDisc1TextBox.Text) Then
             MsgBox("No disc 1 specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
-        If Not String.IsNullOrEmpty(PS2TitleTextBox.Text) Then
+        If String.IsNullOrEmpty(PS2TitleTextBox.Text) Then
             MsgBox("No game title specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
-        If Not String.IsNullOrEmpty(PS2NPTitleTextBox.Text) Then
+        If String.IsNullOrEmpty(PS2NPTitleTextBox.Text) Then
             MsgBox("No NP title specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
@@ -1045,15 +1045,15 @@ Public Class PSClassicsfPKGBuilder
     Private Sub BuildPSPfPKGButton_Click(sender As Object, e As RoutedEventArgs) Handles BuildPSPfPKGButton.Click
 
         'Checks before fPKG creation
-        If Not String.IsNullOrEmpty(SelectedPSPDiscTextBox.Text) Then
+        If String.IsNullOrEmpty(SelectedPSPDiscTextBox.Text) Then
             MsgBox("No disc 1 specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
-        If Not String.IsNullOrEmpty(PSPTitleTextBox.Text) Then
+        If String.IsNullOrEmpty(PSPTitleTextBox.Text) Then
             MsgBox("No game title specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
-        If Not String.IsNullOrEmpty(PSPNPTitleTextBox.Text) Then
+        If String.IsNullOrEmpty(PSPNPTitleTextBox.Text) Then
             MsgBox("No NP title specified, fPKG creation will be aborted.", MsgBoxStyle.Critical, "Cannot create fPKG")
             Exit Sub
         End If
