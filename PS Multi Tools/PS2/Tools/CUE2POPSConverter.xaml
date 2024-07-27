@@ -1,0 +1,26 @@
+﻿<Window x:Class="CUE2POPSConverter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="Cue2POPS GUI" Height="460" Width="480" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBox x:Name="SelectedCueTextBox" HorizontalAlignment="Left" Margin="8,34,0,0" VerticalAlignment="Top" Width="363"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a .cue file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseCueButton" Content="Browse" HorizontalAlignment="Left" Margin="376,33,0,0" VerticalAlignment="Top" Width="75"/>
+        <CheckBox x:Name="Add2SecToAllTrackIndexesCheckBox" Content="Add 2 seconds to all track indexes MSF" HorizontalAlignment="Left" Margin="8,138,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="Sub2SecToAllTrackIndexesCheckBox" Content="Substract 2 seconds to all track indexes MSF" HorizontalAlignment="Left" Margin="8,158,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="PatchVideoModeCheckBox" Content="Attempt to patch the video mode to NTSC and to fix the screen position" HorizontalAlignment="Left" Margin="8,178,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="EnableCheatsCheckBox" Content="Enable cheats" HorizontalAlignment="Left" Margin="8,198,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <TextBox x:Name="POPSOutputFolderTextBox" HorizontalAlignment="Left" Margin="8,81,0,0" VerticalAlignment="Top" Width="363"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="376,80,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,114,0,0" Text="Options (Optional) :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="441" Height="160"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,228,0,0" TextWrapping="Wrap" Text="Log :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="ConvertButton" Content="Convert" HorizontalAlignment="Left" Margin="296,104,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
+
+    </Grid>
+</Window>

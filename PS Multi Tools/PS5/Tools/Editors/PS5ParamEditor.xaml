@@ -1,0 +1,69 @@
+﻿<Window x:Class="PS5ParamEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PS5 Param Editor" Height="540" Width="960" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Menu VerticalAlignment="Top" Height="20">
+            <MenuItem Header="File">
+                <MenuItem Header="New" x:Name="NewParamMenuItem"></MenuItem>
+                <MenuItem Header="Load param.json" x:Name="LoadParamMenuItem"></MenuItem>
+                <MenuItem Header="Save" x:Name="SaveMenuItem"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="PS5 Dev Wiki" x:Name="LoadPSDevWikiMenuItem"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <TextBlock HorizontalAlignment="Left" Margin="10,34,0,0"  Text="Current parameters" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="940" FontWeight="Bold" FontStyle="Italic"/>
+        <ListView x:Name="ParamsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,60,0,0" Height="309" VerticalAlignment="Top" HorizontalAlignment="Left" Width="920">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Param" DisplayMemberBinding="{Binding ParamName}"/>
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ParamType}"/>
+                    <GridViewColumn Header="Value" DisplayMemberBinding="{Binding ParamValue}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock HorizontalAlignment="Left" Margin="10,383,0,0"  Text="Add a parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150" FontStyle="Italic" FontWeight="Bold"/>
+        <ComboBox x:Name="ParamsComboBox" HorizontalAlignment="Left" Margin="165,411,0,0" VerticalAlignment="Top" Width="300">
+            <ComboBoxItem Content="AgeLevel"/>
+            <ComboBoxItem Content="ApplicationCategoryType"/>
+            <ComboBoxItem Content="ApplicationDrmType"/>
+            <ComboBoxItem Content="Asa"/>
+            <ComboBoxItem Content="Attribute"/>
+            <ComboBoxItem Content="Attribute2"/>
+            <ComboBoxItem Content="Attribute3"/>
+            <ComboBoxItem Content="BackgroundBasematType"/>
+            <ComboBoxItem Content="ContentBadgeType"/>
+            <ComboBoxItem Content="ContentId"/>
+            <ComboBoxItem Content="ContentVersion"/>
+            <ComboBoxItem Content="DeeplinkUri"/>
+            <ComboBoxItem Content="DownloadDataSize"/>
+            <ComboBoxItem Content="Kernel"/>
+            <ComboBoxItem Content="LocalizedParameters"/>
+            <ComboBoxItem Content="MasterVersion"/>
+            <ComboBoxItem Content="OriginContentVersion"/>
+            <ComboBoxItem Content="Pubtools"/>
+            <ComboBoxItem Content="RequiredSystemSoftwareVersion"/>
+            <ComboBoxItem Content="Savedata"/>
+            <ComboBoxItem Content="SdkVersion"/>
+            <ComboBoxItem Content="TargetContentVersion"/>
+            <ComboBoxItem Content="TitleId"/>
+            <ComboBoxItem Content="VersionFileUri"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="10,411,0,0" Text="Select param:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,436,0,0" Text="Set value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+        <TextBox x:Name="ParamValueTextBox" HorizontalAlignment="Left" Margin="165,438,0,0" VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,383,0,0" Text="Modify selected parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="455" FontStyle="Italic" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,409,0,0" Text="Modify value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+        <TextBox x:Name="ModifyValueTextBox" HorizontalAlignment="Left" Margin="630,411,0,0" VerticalAlignment="Top" Width="300"/>
+        <Button x:Name="SaveModifiedValueButton" Content="Save changes" HorizontalAlignment="Left" Margin="630,434,0,0" VerticalAlignment="Top" Width="115" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="AddParamButton" Content="Add param" HorizontalAlignment="Left" Margin="315,461,0,0" VerticalAlignment="Top" Width="150" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="RemoveParamButton" Content="Remove param" HorizontalAlignment="Left" Margin="815,434,0,0" VerticalAlignment="Top" Width="115" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="AdvancedEditorButton" Content="Open advanced param editor" HorizontalAlignment="Left" Margin="630,462,0,0" VerticalAlignment="Top" Width="300" FontSize="14" IsEnabled="False"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,19 @@
+﻿<Window x:Class="PS3RCODumper"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PS3 RCO Dumper" Height="165" Width="420" Background="#2D2D30" ResizeMode="CanMinimize">
+    <Grid>
+        <Button x:Name="BrowseRCOButton" Content="Browse" HorizontalAlignment="Left" Margin="315,32,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Selected an .rco file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="315,78,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,55,0,0" TextWrapping="Wrap" Text="Selected an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="UnpackButton" Content="Dump" HorizontalAlignment="Left" Margin="236,102,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBox x:Name="SelectedRCOFileTextBox" HorizontalAlignment="Left" Margin="10,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+
+    </Grid>
+</Window>

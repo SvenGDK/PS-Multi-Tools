@@ -1,0 +1,27 @@
+﻿<Window x:Class="PS4PKGExtractor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PS4 PKG Extractor" Height="555" Width="650" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="BrowsePKGButton" Content="Browse" HorizontalAlignment="Left" Margin="551,33,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="536" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select a PS4 PKG / fPKG file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Image x:Name="PKGICONImage" HorizontalAlignment="Left" Height="125" Margin="10,149,0,0" VerticalAlignment="Top" Width="125" Source="/Images/PKG.png"/>
+        <Button x:Name="ExtractButton" Content="Extract" HorizontalAlignment="Left" Margin="551,125,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,303,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="615" Height="205"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,279,0,0" TextWrapping="Wrap" Text="Extraction Log :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock x:Name="PKGTitleTextBlock" HorizontalAlignment="Left" Margin="151,178,0,0" TextWrapping="Wrap" Text="Title :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock x:Name="IDTextBlock" HorizontalAlignment="Left" Margin="151,202,0,0" TextWrapping="Wrap" Text="ID :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock x:Name="TypeTextBlock" HorizontalAlignment="Left" Margin="151,226,0,0" TextWrapping="Wrap" Text="Type :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="PKGPasscodeTextBox" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="536" IsReadOnly="True" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,102,0,0" TextWrapping="Wrap" Text="Enter a passcode (optional for fPKG) :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="551,80,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" Width="536" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+
+    </Grid>
+</Window>

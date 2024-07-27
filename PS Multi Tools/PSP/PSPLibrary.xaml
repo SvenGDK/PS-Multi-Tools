@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PS_Multi_Tools" xmlns:psmt_lib="clr-namespace:psmt_lib;assembly=psmt-lib"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
         Title="PSP Library" Height="600" Width="1150" Background="#2D2D30" ResizeMode="CanMinimize">
     <Grid>
@@ -15,7 +15,7 @@
                 <BlurEffect KernelType="Gaussian" Radius="25" />
             </Rectangle.Effect>
         </Rectangle>
-        <psmt_lib:PSPMenu x:Name="NewPSPMenu" Height="20" VerticalAlignment="Top"></psmt_lib:PSPMenu>
+        <local:PSPMenu x:Name="NewPSPMenu" Height="20" VerticalAlignment="Top"></local:PSPMenu>
         <ListView x:Name="GamesListView" Background="{x:Null}" FocusVisualStyle="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" VirtualizingPanel.VirtualizationMode="Recycling" Height="210" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" Margin="5,30,5,0" >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

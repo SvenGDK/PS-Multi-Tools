@@ -1,0 +1,53 @@
+﻿<Window x:Class="PS5ManifestEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PS5 Manifest Editor" Height="530" Width="960" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,25,0,0" TextWrapping="Wrap" Text="Current parameters" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="940" FontWeight="Bold" FontStyle="Italic"/>
+        <ListView x:Name="ManifestParamListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,51,0,0" Height="309" VerticalAlignment="Top" HorizontalAlignment="Left" Width="920">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Param" DisplayMemberBinding="{Binding ParamName}"/>
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ParamType}"/>
+                    <GridViewColumn Header="Value" DisplayMemberBinding="{Binding ParamValue}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Menu VerticalAlignment="Top" Height="20">
+            <MenuItem Header="File">
+                <MenuItem Header="New" x:Name="NewManifestParamMenuItem"/>
+                <MenuItem Header="Load manifest.json" x:Name="LoadManifestParamMenuItem"/>
+                <MenuItem Header="Save" x:Name="SaveMenuItem"/>
+            </MenuItem>
+        </Menu>
+        <TextBlock HorizontalAlignment="Left" Margin="10,365,0,0" TextWrapping="Wrap" Text="Add a parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150" FontStyle="Italic" FontWeight="Bold"/>
+        <ComboBox x:Name="ManifestParamsComboBox" HorizontalAlignment="Left" Margin="165,393,0,0" VerticalAlignment="Top" Width="300">
+            <ComboBoxItem Content="applicationData"/>
+            <ComboBoxItem Content="applicationName"/>
+            <ComboBoxItem Content="applicationVersion"/>
+            <ComboBoxItem Content="bootAnimation"/>
+            <ComboBoxItem Content="commitHash"/>
+            <ComboBoxItem Content="enableAccessibility"/>
+            <ComboBoxItem Content="enableHttpCache"/>
+            <ComboBoxItem Content="reactNativePlaystationVersion"/>
+            <ComboBoxItem Content="repositoryUrl"/>
+            <ComboBoxItem Content="titleId"/>
+            <ComboBoxItem Content="twinTurbo"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="10,393,0,0" Text="Select param:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,418,0,0" Text="Set value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+        <TextBox x:Name="ManifestParamValueTextBox" HorizontalAlignment="Left" Margin="165,420,0,0" VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,365,0,0" Text="Modify selected parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="455" FontStyle="Italic" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,391,0,0" Text="Modify value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+        <TextBox x:Name="ModifyValueTextBox" HorizontalAlignment="Left" Margin="630,393,0,0" VerticalAlignment="Top" Width="300"/>
+        <Button x:Name="SaveModifiedValueButton" Content="Save changes" HorizontalAlignment="Left" Margin="630,416,0,0" VerticalAlignment="Top" Width="115" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="AddManifestParamButton" Content="Add parameter" HorizontalAlignment="Left" Margin="315,443,0,0" VerticalAlignment="Top" Width="150" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="RemoveManifestParamButton" Content="Remove parameter" HorizontalAlignment="Left" Margin="790,416,0,0" VerticalAlignment="Top" Width="140" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="AdvancedEditorButton" Content="Open advanced param editor" HorizontalAlignment="Left" Margin="630,444,0,0" VerticalAlignment="Top" Width="300" FontSize="14" IsEnabled="False" Height="22"/>
+
+    </Grid>
+</Window>

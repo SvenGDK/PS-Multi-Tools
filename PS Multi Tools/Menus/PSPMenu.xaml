@@ -1,0 +1,231 @@
+﻿<Menu x:Class="PSPMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             d:DesignHeight="20">
+    <MenuItem Header="Library"/>
+    <MenuItem Header="Tools">
+        <MenuItem Header="ISO ~ CISO Converter" x:Name="OpenISOCISOConverter"/>
+        <MenuItem Header="PARAM.SFO Editor" x:Name="OpenSFOEditor"/>
+        <MenuItem Header="PBP ISO Converter" x:Name="OpenPBPISOConverter"/>
+        <MenuItem Header="PBP Packer/Unpacker" x:Name="OpenPBPPacker"/>
+    </MenuItem>
+    <MenuItem Header="Downloads">
+        <MenuItem Header="Homebrew">
+            <MenuItem Header="Alphabase">
+                <MenuItem Header="Download v3.6" x:Name="DownloadAlphabase" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="BeatBox">
+                <MenuItem Header="Download v1.6" x:Name="DownloadBeatBox" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Bookr">
+                <MenuItem Header="Download v8.2.0" x:Name="DownloadBookr" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Cex2DexConverter">
+                <MenuItem Header="Download v1.1" x:Name="DownloadCex2DexConverter" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="CMFileManager">
+                <MenuItem Header="Download for PSP" x:Name="DownloadCMFileManager" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download for PSPGo" x:Name="DownloadCMFileManagerGo" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="CyanogenPSP">
+                <MenuItem Header="Download v6.1 Final" x:Name="DownloadCyanogenPSP" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Flashlight">
+                <MenuItem Header="Download v1" x:Name="DownloadFlashlight" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Paint Lite">
+                <MenuItem Header="Download v0.3" x:Name="DownloadPaintLite" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="prxDecrypter">
+                <MenuItem Header="Download v2.7a" x:Name="DownloadprxDecrypter" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="IDPS Dumper">
+                <MenuItem Header="Download v0.9" x:Name="DownloadIDPSDumper" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PSPIdent">
+                <MenuItem Header="Download v0.75" x:Name="DownloadPSPIdent" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="QwikMove">
+                <MenuItem Header="Download v2" x:Name="DownloadQwikMove" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RebootPSP">
+                <MenuItem Header="Download v1" x:Name="DownloadRebootPSP" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="ShutdownPSP">
+                <MenuItem Header="Download v1" x:Name="DownloadShutdownPSP" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="WifiHack">
+                <MenuItem Header="Download v2.1" x:Name="DownloadWifiHack" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="Emulators">
+            <MenuItem Header="RetroArch">
+                <MenuItem Header="Download v1.15" x:Name="DownloadRetroArch" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="Firmwares">
+            <MenuItem Header="PSP">
+                <MenuItem Header="1.00 PBP">
+                    <MenuItem Header="Download" x:Name="Download100PBP" >
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="3.60 Unpacked Archive">
+                    <MenuItem Header="Download" x:Name="Download360Archive" >
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="3.60 PSAR">
+                    <MenuItem Header="Download" x:Name="Download360PSAR" >
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="6.61 PBP">
+                    <MenuItem Header="Download" x:Name="Download661PBP" >
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PSPGo">
+                <MenuItem Header="5.70 PSAR">
+                    <MenuItem Header="Download" x:Name="Download570PSARGo" >
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="6.61 PBP">
+                    <MenuItem Header="Download" x:Name="Download661PBPGo" >
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="Tools">
+            <MenuItem Header="ISOPBPConverter">
+                <MenuItem Header="Download v0.1" x:Name="DownloadISOPBPConverter" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PBPUnpacker">
+                <MenuItem Header="Download v1.2" x:Name="DownloadPBPUnpacker" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PBPViewer">
+                <MenuItem Header="Download v0.1" x:Name="DownloadPBPViewer" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PSPDisp">
+                <MenuItem Header="Download v0.6.1" x:Name="DownloadPSPDisp" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RCOMage">
+                <MenuItem Header="Download v1.1.1" x:Name="DownloadRCOMage" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RemoteJoyLite">
+                <MenuItem Header="Download 20a" x:Name="DownloadRemoteJoyLite" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+    </MenuItem>
+</Menu>

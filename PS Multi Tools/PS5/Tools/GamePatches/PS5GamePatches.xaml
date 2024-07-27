@@ -1,0 +1,50 @@
+﻿<Window x:Name="MainWindow" x:Class="PS5GamePatches"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PS5 Game Patches" Height="600" Width="1105" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Search for available Game Patches" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="336" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="NoWrap" Text="Enter Game ID:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="100"/>
+        <TextBox x:Name="SearchGameIDTextBox" HorizontalAlignment="Left" Margin="115,38,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="150"/>
+        <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Left" Margin="270,37,0,0" VerticalAlignment="Top" Width="76"/>
+        <ListView x:Name="DownloadQueueListView" ItemsSource="{Binding Path=DownloadQueueItemCollection, ElementName=MainWindow}" Margin="10,88,0,0" Width="1070" Height="440" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Path=GameID}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="GameIDHeader" Click="ColumnHeader_Click">Game ID</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="400" DisplayMemberBinding="{Binding Path=FileName}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="FileNameHeader" Click="ColumnHeader_Click">File Name</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="125" DisplayMemberBinding="{Binding Path=PKGSize}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="PKGSizeHeader" Click="ColumnHeader_Click">PKG Size</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="175" DisplayMemberBinding="{Binding Path=DownloadState}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="DownloadStateHeader" Click="ColumnHeader_Click">Download State</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="175" DisplayMemberBinding="{Binding Path=MergeState}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="MergeStateHeader" Click="ColumnHeader_Click">Merge State</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="VisitButton" Content="Visit Prosperopatches" HorizontalAlignment="Left" Margin="10,533,0,0" VerticalAlignment="Top" Width="200"/>
+        <TextBlock x:Name="AvailableGamePatchesTextBlock_Copy" HorizontalAlignment="Left" Margin="10,62,0,0" TextWrapping="NoWrap" Text="Patch Download Queue:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="1070" FontWeight="Bold"/>
+        <Button x:Name="DownloadButton" Content="Download selected file(s)" HorizontalAlignment="Left" Margin="800,533,0,0" VerticalAlignment="Top" Width="280" IsEnabled="False"/>
+    </Grid>
+</Window>

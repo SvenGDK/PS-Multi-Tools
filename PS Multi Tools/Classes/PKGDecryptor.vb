@@ -49,6 +49,21 @@ Public Class PKGDecryptor
         Retail_PSX_PSP
     End Enum
 
+    Public Function GetImage(PKGIMG As PKGFiles) As BitmapSource
+        Select Case PKGIMG
+            Case PKGFiles.ICON0
+                Return ICON0
+            Case PKGFiles.PIC0
+                Return PIC0
+            Case PKGFiles.PIC1
+                Return PIC1
+            Case PKGFiles.PIC2
+                Return PIC2
+            Case Else
+                Return Nothing
+        End Select
+    End Function
+
     Public ReadOnly Property GetPARAMSFO As Byte()
         Get
             Return PARAMSFO

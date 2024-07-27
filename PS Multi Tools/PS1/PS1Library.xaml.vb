@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports psmt_lib
 
 Public Class PS1Library
 
@@ -122,13 +121,13 @@ Public Class PS1Library
                                     If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
                                         URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
                                     Else
-                                        NewPS1Game.GameTitle = GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
+                                        NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                     End If
                                 Else
                                     If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
                                         URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
                                     Else
-                                        NewPS1Game.GameTitle = GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
+                                        NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                     End If
                                 End If
                             End If
@@ -238,13 +237,13 @@ Public Class PS1Library
                                             If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
                                                 URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
                                             Else
-                                                NewPS1Game.GameTitle = GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
+                                                NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                             End If
                                         Else
                                             If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
                                                 URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
                                             Else
-                                                NewPS1Game.GameTitle = GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
+                                                NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                             End If
                                         End If
                                     End If
@@ -459,23 +458,6 @@ Public Class PS1Library
             GamesListView.Items.Refresh()
         End If
     End Sub
-
-    Public Function GetPS1GameTitleFromDatabaseList(GameID As String) As String
-        Dim FoundGameTitle As String = ""
-
-        For Each GameTitle As String In File.ReadLines(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps1ids.txt")
-            If GameTitle.Contains(GameID) Then
-                FoundGameTitle = GameTitle.Split(";"c)(1)
-                Exit For
-            End If
-        Next
-
-        If String.IsNullOrEmpty(FoundGameTitle) Then
-            Return ""
-        Else
-            Return FoundGameTitle
-        End If
-    End Function
 
 #End Region
 

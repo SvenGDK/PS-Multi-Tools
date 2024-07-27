@@ -1,0 +1,32 @@
+﻿<Window x:Class="PS5ParamAdvanced"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="Advanced Param Editor" Height="410" Width="760" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Modifying ageLevel" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="699" FontStyle="Italic" FontWeight="Bold"/>
+        <ListView x:Name="ParamsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,36,0,0" Height="215" VerticalAlignment="Top" HorizontalAlignment="Left" Width="699">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Param" Width="250" DisplayMemberBinding="{Binding ParamName}"/>
+                    <GridViewColumn Header="Value" Width="250" DisplayMemberBinding="{Binding ParamValue}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock HorizontalAlignment="Left" Margin="10,256,0,0" Text="Add a parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150" FontStyle="Italic" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,282,0,0" Text="Enter param:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="110"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,307,0,0" Text="Set value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="110"/>
+        <TextBox x:Name="ParamValueTextBox" HorizontalAlignment="Left" Margin="125,309,0,0" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="389,256,0,0" Text="Modify selected parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="320" FontStyle="Italic" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="389,282,0,0" Text="Modify value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="110"/>
+        <TextBox x:Name="ModifyValueTextBox" HorizontalAlignment="Left" Margin="504,284,0,0" VerticalAlignment="Top" Width="205"/>
+        <Button x:Name="SaveModifiedValueButton" Content="Save changes" HorizontalAlignment="Left" Margin="593,307,0,0" VerticalAlignment="Top" Width="116" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="AddParamButton" Content="Add param" HorizontalAlignment="Left" Margin="250,332,0,0" VerticalAlignment="Top" Width="125" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="RemoveParamButton" Content="Remove param" HorizontalAlignment="Left" Margin="593,335,0,0" VerticalAlignment="Top" Width="116" FontSize="14" IsEnabled="False"/>
+        <TextBox x:Name="NewParamTextBox" HorizontalAlignment="Left" Margin="125,284,0,0" VerticalAlignment="Top" Width="250"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,20 @@
+﻿<Window x:Class="PackageInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="Package Info" Height="500" Width="800" Background="#FF252525" ResizeMode="CanMinimize">
+    <Grid>
+        <Image x:Name="PackageIcon" HorizontalAlignment="Left" Height="128" Margin="33,33,0,0" VerticalAlignment="Top" Width="128"/>
+        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Margin="170,33,0,0" TextWrapping="Wrap" Text="Title not found" VerticalAlignment="Top" Foreground="White" FontSize="18" Width="580" FontWeight="Bold"/>
+        <TextBlock x:Name="ContentIDTextBlock" HorizontalAlignment="Left" Margin="170,71,0,0" TextWrapping="Wrap" Text="Content ID not found" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="580"/>
+        <TextBlock x:Name="TitleIDTextBlock" HorizontalAlignment="Left" Margin="170,95,0,0" TextWrapping="Wrap" Text="Title ID not found" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="580"/>
+        <TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Left" Margin="170,119,0,0" TextWrapping="Wrap" Text="Region not found" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="580"/>
+        <TextBlock x:Name="LockedTextBlock" HorizontalAlignment="Left" Margin="170,143,0,0" TextWrapping="Wrap" Text="Platform not found" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="580"/>
+        <TextBlock x:Name="DescriptionTextBlock" HorizontalAlignment="Left" Margin="33,196,0,0" TextWrapping="Wrap" Text="Description not found" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="729" Height="278"/>
+        <TextBlock HorizontalAlignment="Left" Margin="33,167,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Foreground="White" FontSize="18" Width="729" FontWeight="Bold"/>
+
+    </Grid>
+</Window>

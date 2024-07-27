@@ -1,0 +1,22 @@
+﻿<Window x:Class="GP5LanguageSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="Language Selector" Height="530" Width="500" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="MainGrid">
+
+        <Grid x:Name="ProjectLanguagesGrid">
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Default language:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="165" TextAlignment="Right"/>
+            <ComboBox x:Name="DefaultLanguageComboBox" HorizontalAlignment="Left" Margin="180,11,0,0" VerticalAlignment="Top" Width="285"/>
+        </Grid>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" Text="Supported languages:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="165" TextAlignment="Right"/>
+        <ListBox x:Name="SupportedLanguagesListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="180,38,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="285" Height="425"/>
+        <Button x:Name="OKButton" Content="OK" HorizontalAlignment="Left" Margin="260,468,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="365,468,0,0" VerticalAlignment="Top" Width="100"/>
+    </Grid>
+
+</Window>

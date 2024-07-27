@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
-Imports psmt_lib
 
 Public Class PSVLibrary
 
@@ -398,7 +397,7 @@ Public Class PSVLibrary
                                                           "Do you want to continue ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
 
                                                     'Get zRIF using the online or offline database or user input
-                                                    Dim RequiredzRIF As String = psmt_lib.Utils.GetzRIF(SelectedPSVGame.ContentID)
+                                                    Dim RequiredzRIF As String = Utils.GetzRIF(SelectedPSVGame.ContentID)
                                                     If String.IsNullOrEmpty(RequiredzRIF) Then
                                                         RequiredzRIF = InputBox("Enter the zRIF Key string for the selected PKG:", "zRIF required", "")
                                                     End If

@@ -1,0 +1,49 @@
+﻿<Window x:Class="PSXMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="Manage PSX Projects" Height="400" Width="800" Background="#FF252525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="MainGrid">
+
+        <Menu x:Name="MainMenu" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250">
+            <MenuItem x:Name="StartMenuItem" Background="#FF004671" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="Connect to the PSX" VerticalAlignment="Top" Width="250"/>
+            <MenuItem x:Name="ProjectsMenuItem" Background="#FF00619C" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="Manage Projects" VerticalAlignment="Top" Width="250"/>
+            <MenuItem x:Name="NBDDriverMenuItem" Background="#FF00619C" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="NBD Driver" VerticalAlignment="Top" Width="250"/>
+            <MenuItem x:Name="DokanDriverMenuItem" Background="#FF00619C" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="Dokan Driver" VerticalAlignment="Top" Width="250"/>
+        </Menu>
+
+        <Grid x:Name="StartGrid">
+            <TextBlock HorizontalAlignment="Left" Margin="279,223,0,0" TextWrapping="Wrap" Text="NBD Driver Status :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="16"/>
+            <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="616,112,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="126" Height="24" FontFamily="Calibri" FontSize="14"/>
+            <TextBlock x:Name="NBDConnectionStatusLabel" HorizontalAlignment="Left" Margin="279,273,0,0" TextWrapping="Wrap" Text="Connection Status :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Margin="279,298,0,0" TextWrapping="Wrap" Text="PSX HDD Mount Status :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="16"/>
+            <TextBox x:Name="PSXIPTextBox" Margin="279,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Width="463" HorizontalAlignment="Left" FontSize="14" Height="23"/>
+            <TextBlock x:Name="EnterIPLabel" Margin="279,59,0,0" TextWrapping="Wrap" Text="Enter the IP address of your PSX :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="16" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="NBDDriverVersionLabel" HorizontalAlignment="Left" Margin="408,223,0,0" TextWrapping="Wrap" Text="Not installed" VerticalAlignment="Top" Foreground="#FFC12249" FontFamily="Calibri" FontSize="16" TextAlignment="Right" Width="334"/>
+            <TextBlock x:Name="NBDConnectionLabel" HorizontalAlignment="Left" Margin="410,273,0,0" TextWrapping="Wrap" Text="Not connected" VerticalAlignment="Top" Foreground="#FFC12249" FontFamily="Calibri" FontSize="16" Width="332" TextAlignment="Right"/>
+            <TextBlock x:Name="MountStatusLabel" HorizontalAlignment="Left" Margin="440,298,0,0" TextWrapping="Wrap" Text="Unmounted" VerticalAlignment="Top" Foreground="#FFC12249" FontFamily="Calibri" FontSize="16" Width="302" TextAlignment="Right"/>
+            <TextBlock HorizontalAlignment="Left" Margin="279,248,0,0" TextWrapping="Wrap" Text="Dokan Status :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="16"/>
+            <TextBlock x:Name="DokanDriverVersionLabel" HorizontalAlignment="Left" Margin="377,248,0,0" TextWrapping="Wrap" Text="Not installed" VerticalAlignment="Top" Foreground="#FFC12249" FontFamily="Calibri" FontSize="16" TextAlignment="Right" Width="365"/>
+        </Grid>
+
+        <Grid x:Name="ProjectsGrid" Opacity="0" Visibility="Hidden">
+            <Button x:Name="NewHomebrewProjectButton" Content="New Homebrew Project" HorizontalAlignment="Left" Margin="127,33,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
+            <Button x:Name="NewGameProjectButton" Content="New PS2 Game Project" HorizontalAlignment="Left" Margin="313,33,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
+            <ComboBox x:Name="ProjectListComboBox" HorizontalAlignment="Left" Margin="274,116,0,0" VerticalAlignment="Top" Width="460"/>
+            <TextBlock HorizontalAlignment="Left" Margin="274,91,0,0" TextWrapping="Wrap" Text="Manage or prepare a saved project :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="16"/>
+            <Button x:Name="EditProjectButton" Content="Edit Project" HorizontalAlignment="Left" Margin="403,163,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="124" Height="24" FontFamily="Calibri" FontSize="14"/>
+            <Button x:Name="PrepareProjectButton" Content="Prepare Project" HorizontalAlignment="Left" Margin="610,163,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="124" Height="24" FontFamily="Calibri" FontSize="14"/>
+            <ComboBox x:Name="PreparedProjectsComboBox" HorizontalAlignment="Left" Margin="274,257,0,0" VerticalAlignment="Top" Width="460"/>
+            <TextBlock HorizontalAlignment="Left" Margin="274,232,0,0" TextWrapping="Wrap" Text="Install a prepared project on the PSX :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Margin="274,143,0,0" TextWrapping="Wrap" Text="Select a created project from the list." VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" TextAlignment="Right" Width="460"/>
+            <TextBlock HorizontalAlignment="Left" Margin="274,284,0,0" TextWrapping="Wrap" Text="Select a prepared project from the list to install on the PSX." VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" TextAlignment="Right" Width="460"/>
+            <Button x:Name="InstallProjectButton" Content="Install" HorizontalAlignment="Left" Margin="610,304,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="124" Height="24" FontFamily="Calibri" FontSize="14"/>
+            <Button x:Name="NewPS1GameProjectButton" Content="New PS1 Game Project" HorizontalAlignment="Left" Margin="497,33,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
+            <Button x:Name="DeleteProjectButton" Content="Delete Project" HorizontalAlignment="Left" Margin="274,163,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="124" Height="24" FontFamily="Calibri" FontSize="14"/>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -1,0 +1,25 @@
+﻿<Window x:Class="ELFWrapper"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="ELF to KELF Wrapper GUI" Height="435" Width="535" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBox x:Name="SelectedELFTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="416"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select an .ELF file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseELFButton" Content="Browse" HorizontalAlignment="Left" Margin="431,33,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="KELFOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" Width="416"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="431,80,0,0" VerticalAlignment="Top" Width="75"/>
+        <CheckBox x:Name="ForPSXCheckBox" Content="For PSX (DVR) - not MBR flagged" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ForAllCheckBox" Content="For All - DNAS With HDD container" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="ForRetailCheckBox" Content="For Retail PS2 (CEX Only)" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,112,0,0" Text="Options (Optional) :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="496" Height="160"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,202,0,0" TextWrapping="Wrap" Text="Log :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="WrapButton" Content="Wrap ELF" HorizontalAlignment="Left" Margin="351,104,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
+
+    </Grid>
+</Window>

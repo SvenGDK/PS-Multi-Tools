@@ -1,0 +1,20 @@
+﻿<Window x:Class="USBWriter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="USB Writer" Height="180" Width="515" Background="#2D2D30">
+    <Grid>
+        <TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select your .img file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,58,0,0" TextWrapping="Wrap" Text="Select your USB drive :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <ComboBox x:Name="DrivesComboBox" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" Width="400"/>
+        <Button x:Name="BrowseFileButton" Content="Browse" HorizontalAlignment="Left" Margin="415,33,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="415,83,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="WriteButton" Content="Write" HorizontalAlignment="Left" Margin="335,109,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,112,0,0" TextWrapping="Wrap" Text="Warning: All data on this drive will be deleted!&#x0a;Please close all programs that could access the drive." VerticalAlignment="Top" Foreground="White" FontSize="11" FontStyle="Italic" Height="42" Width="320"/>
+
+    </Grid>
+</Window>

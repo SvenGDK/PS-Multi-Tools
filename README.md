@@ -5,7 +5,7 @@
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
-  <summary>v14.2 contains following tools</summary>
+  <summary>v14.4 contains following tools</summary>
   
 ## General:
 - FTP Browser
@@ -18,6 +18,8 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 ## PS2
 - Convert BIN/CUE to ISO
 - PSX DVR XMB Games and Homebrew Installer
+- CUE2POPS Converter
+- ELF2KELF Wrapper
 
 ## PS3
 - Core_OS Tools
@@ -74,6 +76,9 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - PKG Merger
 - PPPwn GUI
 - PKG Extractor
+- PS1 Classics fPKG Creator
+- PS2 Classics fPKG Creator
+- PSP Classics fPKG Creator
 
 ## PS5
 - General ELF & BIN Payload Sender
@@ -102,6 +107,10 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - klog Viewer
 - Shortcut PKG Creator
 - etaHEN Remote PKG Installer
+- Content Manager for the PS5 WebSrv of john-tornblom
+  - Homebrew Manager
+  - Game ROM Manager for games that use a roms folder
+  - Media Content Manager for homebrew that use a media folder
 
 ## PSP
 - ISO to CSO Converter
@@ -116,6 +125,15 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - RCO Data Table Extractor
 - PS Vita PFS Tools (psvpfstools) GUI
 
+# Memory Cards
+- Read PS2 Memory Card information
+- Browse the content of the PS2 Memory Cards
+- Add files and directories
+- Remove files and directories
+- Extract files from a PS2 Memory Card
+- Format PS2 Memory Cards
+- Install FMCB on PS2 Memory Cards
+
 </details>
 
 ## Screenshots
@@ -129,12 +147,66 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 <img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/3b677d2a-92e2-4fe1-b8bc-c5dbaca8e672">
 </p>
 
-## PS Multi Tools Library
-The PS Multi Tools .NET library contains all the mentioned tools, downloads and other stuff.<br>
-The source code with all other information can be found in the other repository: [PSMT Library](https://github.com/SvenGDK/PSMT-Library)
-
 ## PS Multi Tools Covers
 All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored in the othe repository: [PSMT Covers](https://github.com/SvenGDK/PSMT-Covers)
+
+## PS Multi Tools currently uses the following tools & libraries from other developers
+| Tool / Library | Created by | Repository | Info |
+| --- | --- | --- | --- |
+| `bchunk` | extramaster | [https://github.com/extramaster/bchunk](https://github.com/extramaster/bchunk)
+| `binmerge` | putnam | [https://github.com/putnam/binmerge](https://github.com/putnam/binmerge)
+| `CEX2DEX` |  | 
+| `costool` | naehrwert | 
+| `cue2toc` | Goatman13 & NRGDEAD | https://github.com/Goatman13/Cue2toc
+| `dd` | John Newbigin | [http://www.chrysocome.net/dd](http://www.chrysocome.net/dd)
+| `dev_flash` | HSReina | 
+| `DiscUtils` | DiscUtils | [https://github.com/DiscUtils/DiscUtils](https://github.com/DiscUtils/DiscUtils)
+| `discore` |  | 
+| `DotNetZip` |  | [https://www.nuget.org/packages/DotNetZip/](https://www.nuget.org/packages/DotNetZip/)
+| `elf2pbp` | loser | [https://github.com/PSP-Archive/elf2pbp](https://github.com/PSP-Archive/elf2pbp)
+| `esrpatch` | ffgriever | [https://www.psx-place.com/threads/esr-by-ffgriever.19136/](https://www.psx-place.com/threads/esr-by-ffgriever.19136/)
+| `esrunpatch` | ffgriever | [https://www.psx-place.com/threads/esr-by-ffgriever.19136/](https://www.psx-place.com/threads/esr-by-ffgriever.19136/)
+| `ffplay` | FFmpeg | [https://github.com/FFmpeg/FFmpeg](https://github.com/FFmpeg/FFmpeg)
+| `fix_tar` | KaKaRoTo & cfwprpht | 
+| `fwpkg` | evilsperm | [https://github.com/evilsperm/fwtool](https://github.com/evilsperm/fwtool)
+| `hdl_dump` |  | [https://github.com/ps2homebrew/hdl-dump](https://github.com/ps2homebrew/hdl-dump)
+| `hexdump` | di-mgt | [https://www.di-mgt.com.au/hexdump-for-windows.html](https://www.di-mgt.com.au/hexdump-for-windows.html)
+| `HtmlAgilityPack` | ZZZ Projects | [https://html-agility-pack.net/](https://html-agility-pack.net/)
+| `IsoPbpConverter` | LMAN | 
+| `kill_daemon` | illusion0001 | [https://github.com/illusion0001/libhijacker](https://github.com/illusion0001/libhijacker) | Python script -> single .exe
+| `klicencebruteforce` | MAGiC333X | 
+| `make_fself` | (PS3) | 
+| `Make_FSELF_PY3` | EchoStretch |  | Batch script translated to VB
+| `make_fself_python3-1` | Flatz (updated by LightningMods) |  | Python script -> single .exe
+| `maxcso` | unknownbrackets | [https://github.com/unknownbrackets/maxcso](https://github.com/unknownbrackets/maxcso)
+| `mCiso` | sindastra | [https://github.com/sindastra/psp-mciso](https://github.com/sindastra/psp-mciso)
+| `Newtonsoft.Json` | Newtonsoft | [https://www.newtonsoft.com/json](https://www.newtonsoft.com/json)
+| `nQuant` | matt wrock | [https://www.nuget.org/packages/nQuant](https://www.nuget.org/packages/nQuant)
+| `PARAM.SFO Library` | xXxTheDarkprogramerxXx | [https://github.com/xXxTheDarkprogramerxXx/PS4_Tools](https://github.com/xXxTheDarkprogramerxXx/PS4_Tools)
+| `pbppacker` |  | 
+| `pfsshell & pfsfuse` | -> | [https://github.com/ps2homebrew/pfsshell](https://github.com/ps2homebrew/pfsshell)
+| `pkg2zip` | lusid1 | [https://github.com/lusid1/pkg2zip](https://github.com/lusid1/pkg2zip)
+| `pkg_merge` | aldo-o & Tustin | [https://github.com/aldo-o/pkg-merge](https://github.com/aldo-o/pkg-merge)
+| `pppwn` | TheOfficialFloW | [https://github.com/TheOfficialFloW/PPPwn](https://github.com/TheOfficialFloW/PPPwn) | Python script -> Single .exe
+| `ps3mca-ps1` | paolo-caroni | https://github.com/paolo-caroni/ps3mca-ps1
+| `ps3mca-tool` | jimmikaelkael | 
+| `ps3iso-utils` | bucanero | [https://github.com/bucanero/ps3iso-utils](https://github.com/bucanero/ps3iso-utils)
+| `PS4_Tools Library` | xXxTheDarkprogramerxXx | [https://github.com/xXxTheDarkprogramerxXx/PS4_Tools](https://github.com/xXxTheDarkprogramerxXx/PS4_Tools)
+| `pspdecrypt` | John-K | https://github.com/John-K/pspdecrypt
+| `PSN_get_pkg_info` | windsurfer1122 | [https://github.com/windsurfer1122/PSN_get_pkg_info](https://github.com/windsurfer1122/PSN_get_pkg_info) | Python script -> Single .exe
+| `psvpfstools` | motoharu-gosuto | [https://github.com/motoharu-gosuto/psvpfstools](https://github.com/motoharu-gosuto/psvpfstools)
+| `psxtract` | Hykem | [https://github.com/mrlucas84/psxtract](https://github.com/mrlucas84/psxtract)
+| `pup_unpacker` | Zer0xFF | [https://github.com/Zer0xFF/ps4-pup-unpacker](https://github.com/Zer0xFF/ps4-pup-unpacker)
+| `pupunpack` |  | 
+| `rcomage` | ZiNgA BuRgA | 
+| `readself` | Team fail0verflow | [https://github.com/daryl317/fail0verflow-PS3-tools/tree/master](https://github.com/daryl317/fail0verflow-PS3-tools/tree/master)
+| `SCEDoormat_NoME` | krHACKen | 
+| `scetool` | naehrwert | [https://github.com/naehrwert/scetool](https://github.com/naehrwert/scetool) | 
+| `send_elf` | illusion0001 | [https://github.com/illusion0001/libhijacker](https://github.com/illusion0001/libhijacker) | Python script -> Single .exe
+| `sfo` | hippie68 | [https://github.com/hippie68/sfo](https://github.com/hippie68/sfo)
+| `sngre` | cfwprophet | [https://github.com/cfwprpht/Simply_Vita_RCO_Extractor](https://github.com/cfwprpht/Simply_Vita_RCO_Extractor)
+| `strings` | Mark Russinovich | [https://learn.microsoft.com/en-us/sysinternals/downloads/strings](https://learn.microsoft.com/en-us/sysinternals/downloads/strings)
+
 
 ## v1-12
 All builds below v13 have broken links & downloads, v13+ is recommended.</br>

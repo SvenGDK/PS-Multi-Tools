@@ -1,0 +1,26 @@
+﻿<Window x:Class="FTPBDRip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PS5 FTP BD Ripper" Height="375" Width="525" Background="#FF252525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBox x:Name="IPTextBox" HorizontalAlignment="Left" Margin="10,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" Text="PS5 IP:" VerticalAlignment="Top" FontSize="14" Width="200" Foreground="White"/>
+        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="264,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="264,42,0,0" TextWrapping="Wrap" Text="Port:" VerticalAlignment="Top" FontSize="14" Width="146" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="1. Connect to the PS5 via FTP" VerticalAlignment="Top" FontSize="14" Width="399" Foreground="White" FontWeight="Bold"/>
+        <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="414,66,0,0" VerticalAlignment="Top" Width="66"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" Text="2. Insert a disc and stop the installation if started" VerticalAlignment="Top" FontSize="14" Width="472" Foreground="White" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,149,0,0" TextWrapping="Wrap" Text="3. Select a directory to save the dump" VerticalAlignment="Top" FontSize="14" Width="400" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="20"/>
+        <Button x:Name="BrowseFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="414,173,0,0" VerticalAlignment="Top" Width="66"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,219,0,0" TextWrapping="Wrap" Text="4. Start dump transfer" VerticalAlignment="Top" FontSize="14" Width="400" Foreground="White" FontWeight="Bold"/>
+        <Button x:Name="StartButton" Content="Start" HorizontalAlignment="Left" Margin="414,243,0,0" VerticalAlignment="Top" Width="66" IsEnabled="False"/>
+        <ProgressBar x:Name="ReceiveProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,293,0,0" VerticalAlignment="Top" Width="472" Foreground="#FF00A4E3"/>
+        <TextBlock x:Name="ReceiveStatusTextBlock" HorizontalAlignment="Left" Margin="10,268,0,0" TextWrapping="Wrap" Text="Transfer Status:" VerticalAlignment="Top" Width="472" Height="20" Foreground="White"/>
+
+    </Grid>
+</Window>

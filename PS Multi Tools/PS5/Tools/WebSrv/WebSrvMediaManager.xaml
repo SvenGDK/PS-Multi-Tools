@@ -1,0 +1,21 @@
+﻿<Window x:Class="WebSrvMediaManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" Title="PS5 WebSrv Media Content Manager" Height="300" Width="1000" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ListView x:Name="InstalledMediaListView" HorizontalAlignment="Left" Height="192" Margin="10,34,0,0" VerticalAlignment="Top" Width="950" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Remote File Path" Width="700" DisplayMemberBinding="{Binding RemoteFilePath}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Installed Media Files :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="AddContentButton" Content="Add Content" HorizontalAlignment="Left" Margin="665,231,0,0" VerticalAlignment="Top" Width="115" FontWeight="Bold" Height="20"/>
+        <Button x:Name="RemoveContentButton" Content="Remove selected file" HorizontalAlignment="Left" Margin="785,231,0,0" VerticalAlignment="Top" Width="175" FontWeight="Bold" Height="20"/>
+
+    </Grid>
+</Window>

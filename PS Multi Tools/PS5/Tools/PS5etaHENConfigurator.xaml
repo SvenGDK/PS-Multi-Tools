@@ -1,0 +1,23 @@
+﻿<Window x:Class="PS5etaHENConfigurator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="etaHEN Configurator" Height="275" Width="400" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="GetConfigButton" Content="Get config file from PS5" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="175" FontWeight="Bold"/>
+        <CheckBox x:Name="UseCheatsCheckBox" Content="Illusions cheats (libhijacker)" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+        <CheckBox x:Name="PS5DebugAutoLoadCheckBox" Content="PS5Debug auto load" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+        <CheckBox x:Name="FTPCheckBox" Content="etaHEN built-in FTP" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+        <CheckBox x:Name="DiscordCheckBox" Content="Discord RPC server" HorizontalAlignment="Left" Margin="10,152,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+        <TextBlock x:Name="ConfigStatusTextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="No local etaHEN config,ini found. Get it with 'Get config file'." VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,65,0,0" TextWrapping="Wrap" Text="Current config :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="SaveAndUploadButton" Content="Upload config file to PS5" HorizontalAlignment="Left" Margin="190,32,0,0" VerticalAlignment="Top" Width="175" FontWeight="Bold"/>
+        <CheckBox x:Name="TestkitCheckBox" Content="Testkit" HorizontalAlignment="Left" Margin="10,173,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+        <CheckBox x:Name="AllowDataInSandboxCheckBox" Content="Allow data in sandbox" HorizontalAlignment="Left" Margin="10,194,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+        <CheckBox x:Name="DPIServiceCheckBox" Content="Direct PKG Installer service" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14"/>
+
+    </Grid>
+</Window>

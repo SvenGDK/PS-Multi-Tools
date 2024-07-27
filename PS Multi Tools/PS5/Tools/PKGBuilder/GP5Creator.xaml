@@ -1,0 +1,60 @@
+﻿<Window x:Class="GP5Creator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="GP5 Creator" Height="610" Width="965" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StatusBar VerticalAlignment="Bottom" Height="25" Background="White" AlternationCount="-3">
+            <TextBlock Text="Pub Tools :"></TextBlock>
+            <TextBlock x:Name="PubToolsFoundTextBlock" Text="Not found" Foreground="Red"></TextBlock>
+        </StatusBar>
+        <ListView x:Name="ChunkFilesFolderListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="12,323,0,0" Width="930" HorizontalAlignment="Left" VerticalAlignment="Top" Height="177">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ChunkType}"/>
+                    <GridViewColumn Header="Source Path" DisplayMemberBinding="{Binding SourcePath}"/>
+                    <GridViewColumn Header="Destination Path" DisplayMemberBinding="{Binding DestinationPath}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock x:Name="CurrentChunkTextBlock" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Files and folders inside Chunk#0 :" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="928" Margin="12,297,0,0"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Create or modify a project" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="455" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="NoWrap" Text="Save Path:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,62,0,0" TextWrapping="NoWrap" Text="Enter a passcode:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,136,0,0" TextWrapping="NoWrap" Text="Add a file or folder" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="455" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="230,235,0,0" TextWrapping="NoWrap" Text="Add to Chunk#:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="110"/>
+        <ComboBox x:Name="ChunksComboBox" HorizontalAlignment="Left" Margin="725,505,0,0" VerticalAlignment="Top" Width="215" SelectedIndex="0" IsReadOnly="True" Visibility="Hidden">
+            <ComboBoxItem Content="0"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="609,505,0,0" TextWrapping="NoWrap" Text="Switch Chunk:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="111" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,163,0,0" TextWrapping="NoWrap" Text="Source Path:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="130"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,210,0,0" TextWrapping="NoWrap" Text="Destination Path:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="130"/>
+        <TextBox x:Name="FileFolderSourcePathTextBox" HorizontalAlignment="Left" Margin="147,165,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="318"/>
+        <TextBox x:Name="FileFolderDestinationPathTextBox" HorizontalAlignment="Left" Margin="147,212,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="318"/>
+        <TextBox x:Name="SelectedChunkTextBox" HorizontalAlignment="Left" Margin="345,235,0,0" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="120" TextAlignment="Center"/>
+        <Button x:Name="AddToChunkButton" Content="Add to chunk" HorizontalAlignment="Left" Margin="345,258,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="PasscodeTextBox" HorizontalAlignment="Left" Margin="165,64,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300" Text="GvE6xCpZxd96scOUGuLPbuLp8O800B0s"/>
+        <TextBox x:Name="SaveToTextBox" HorizontalAlignment="Left" Margin="165,38,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,10,0,0" TextWrapping="NoWrap" Text="Extract a PS5 pkg" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="455" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,36,0,0" TextWrapping="NoWrap" Text="Select a .pkg file:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,62,0,0" TextWrapping="NoWrap" Text="Enter the passcode:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="150"/>
+        <TextBox x:Name="ExtractPasscodeTextBox" HorizontalAlignment="Left" Margin="630,64,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+        <TextBox x:Name="FileToExtractTextBox" HorizontalAlignment="Left" Margin="630,38,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowseSavePathButton" Content="..." HorizontalAlignment="Left" Margin="420,38,0,0" VerticalAlignment="Top" Width="45" Height="18"/>
+        <Button x:Name="BrowseFileToExtractButton" Content="..." HorizontalAlignment="Left" Margin="885,38,0,0" VerticalAlignment="Top" Width="45" Height="18"/>
+        <Button x:Name="ExtractButton" Content="Extract" HorizontalAlignment="Left" Margin="805,113,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,88,0,0" TextWrapping="NoWrap" Text="Extract to:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="150"/>
+        <TextBox x:Name="ExtractToTextBox" HorizontalAlignment="Left" Margin="630,90,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowseExtractDestinationPathButton" Content="..." HorizontalAlignment="Left" Margin="885,90,0,0" VerticalAlignment="Top" Width="45" Height="18"/>
+        <Button x:Name="CreateParamButton" Content="Create a new param.json" HorizontalAlignment="Left" Margin="476,165,0,0" VerticalAlignment="Top" Width="224"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,136,0,0" TextWrapping="NoWrap" Text="Utilities" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="222" FontWeight="Bold"/>
+        <Button x:Name="BrowseFolderSourcePathButton" Content="Folder" HorizontalAlignment="Left" Margin="405,188,0,0" VerticalAlignment="Top" Width="60" Height="19"/>
+        <Button x:Name="BrowseFileSourcePathButton" Content="File" HorizontalAlignment="Left" Margin="345,188,0,0" VerticalAlignment="Top" Width="55" Height="19"/>
+        <Button x:Name="CreateProjectButton" Content="Create" HorizontalAlignment="Left" Margin="345,88,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="BuildPKGButton" Content="Build selected gp5 project as PKG" HorizontalAlignment="Left" Margin="476,190,0,0" VerticalAlignment="Top" Width="224"/>
+
+    </Grid>
+</Window>

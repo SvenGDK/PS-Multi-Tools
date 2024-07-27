@@ -1,0 +1,44 @@
+﻿<Window x:Class="PS5AT9Converter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="AT9 Converter" Height="320" Width="490" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Encode .wav to .at9" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="435" FontStyle="Italic" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="NoWrap" Text="Input .wav file:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="100"/>
+        <TextBox x:Name="InputWavTextBox" HorizontalAlignment="Left" Margin="115,38,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowseWavFileButton" Content="Browse" HorizontalAlignment="Left" Margin="370,37,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,168,0,0" TextWrapping="NoWrap" Text="Decode .at9 to .wav" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="435" FontStyle="Italic" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,195,0,0" TextWrapping="NoWrap" Text="Input .at9 file:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="100"/>
+        <TextBox x:Name="InputAt9TextBox" HorizontalAlignment="Left" Margin="115,196,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowseAt9FileButton" Content="Browse" HorizontalAlignment="Left" Margin="370,195,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="EncodeBitrateComboBox" HorizontalAlignment="Left" Margin="206,61,0,0" VerticalAlignment="Top" Width="159" Height="21">
+            <ComboBoxItem Content="1ch:72kbps"/>
+            <ComboBoxItem Content="2ch:144kbps"/>
+            <ComboBoxItem Content="4.0ch:240kbps"/>
+            <ComboBoxItem Content="5.1ch:300kbps"/>
+            <ComboBoxItem Content="7.1ch:420kbps"/>
+            <ComboBoxItem Content="Vibration 1ch: 24kbps"/>
+            <ComboBoxItem Content="Vibration 2ch: 48kbps"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="10,62,0,0" TextWrapping="Wrap" Text="Select bitrate or leave empty:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="191"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,87,0,0" TextWrapping="Wrap" Text="Select sampling rate or leave empty:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="233"/>
+        <ComboBox x:Name="EncodeSamplingRateComboBox" HorizontalAlignment="Left" Margin="248,87,0,0" VerticalAlignment="Top" Width="117" Height="21">
+            <ComboBoxItem Content="12000"/>
+            <ComboBoxItem Content="24000"/>
+            <ComboBoxItem Content="48000"/>
+        </ComboBox>
+        <Button x:Name="ConvertToAt9Button" Content="Convert" HorizontalAlignment="Left" Margin="290,113,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="OutputFormatComboBox" HorizontalAlignment="Left" Margin="155,219,0,0" VerticalAlignment="Top" Width="210" Height="21" SelectedIndex="0">
+            <ComboBoxItem Content="16bit Integer PCM"/>
+            <ComboBoxItem Content="24bit Integer PCM"/>
+            <ComboBoxItem Content="IEEE float PCM"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="10,220,0,0" TextWrapping="Wrap" Text="WAV Output Format:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="140"/>
+        <Button x:Name="ConvertToWavButton" Content="Convert" HorizontalAlignment="Left" Margin="290,245,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock x:Name="WAVInfoTextBlock" HorizontalAlignment="Left" Margin="10,138,0,0" TextWrapping="Wrap" Text="WAV File Info:" VerticalAlignment="Top" Foreground="White" Width="355" FontWeight="Bold" FontStyle="Italic"/>
+    </Grid>
+</Window>

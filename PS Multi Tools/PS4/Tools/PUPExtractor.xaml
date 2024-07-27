@@ -1,0 +1,21 @@
+﻿<Window x:Class="PUPExtractor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PS4 PUP.dec Extractor" Height="370" Width="615" Background="#2D2D30" ResizeMode="CanMinimize">
+    <Grid>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Center" Margin="0,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" Height="173" FontSize="14" VerticalScrollBarVisibility="Auto"/>
+        <TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select a decrypted PS4 Update File (PUP.dec) :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="ExtractButton" Content="Unpack" HorizontalAlignment="Left" Margin="515,105,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="Extraction Log :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="515,33,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" TextWrapping="Wrap" Text="Output Folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="515,80,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

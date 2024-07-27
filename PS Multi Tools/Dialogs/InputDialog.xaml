@@ -1,0 +1,15 @@
+﻿<Window x:Class="InputDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="Please enter a new value" Height="125" Width="340" Background="#2D2D30" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBox x:Name="NewValueTextBox" HorizontalAlignment="Left" Margin="8,34,0,0" VerticalAlignment="Top" Width="300"/>
+        <TextBlock x:Name="InputDialogTitleTextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Enter a new value :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="ConfirmButton" Content="Confirm" HorizontalAlignment="Left" Margin="233,57,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

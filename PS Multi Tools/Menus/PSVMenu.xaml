@@ -1,0 +1,491 @@
+﻿<Menu x:Class="PSVMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="320">
+    <MenuItem Header="Library"/>
+    <MenuItem Header="Tools">
+        <MenuItem Header="Decrypt PFS content" x:Name="OpenPFSToolsMenuItem"></MenuItem>
+        <MenuItem Header="PARAM.SFO Editor" x:Name="OpenParamSFOEditorMenuItem"></MenuItem>
+        <MenuItem Header="PKG Extractor" x:Name="OpenPKGExtractor"></MenuItem>
+        <MenuItem Header="RCO DataTable Extractor" x:Name="OpenRCOExtractor"></MenuItem>
+        <MenuItem Header="Vita CMA Backup Image Tools" x:Name="OpenIMGTools"></MenuItem>
+    </MenuItem>
+    <MenuItem Header="Firmwares">
+        <MenuItem Header="Official">
+            <MenuItem Header="3.65">
+                <MenuItem Header="Download" x:Name="DownloadOFW365">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+    </MenuItem>
+    <MenuItem Header="Homebrew">
+        <MenuItem Header="Emulators">
+            <MenuItem Header="mGBA">
+                <MenuItem Header="Download v0.10.1" x:Name="DownloadmGBA">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RetroArch">
+                <MenuItem Header="Download v1.15" x:Name="DownloadRetroArch">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download Data" x:Name="DownloadRetroArchData">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="DaedalusX64">
+                <MenuItem Header="Download Nightly v20230412.1" x:Name="DownloadDaedalusX64">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadDaedalusX64Github">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Flycast">
+                <MenuItem Header="Download v1.1" x:Name="DownloadFlycast">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadFlycastGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Snes9xVITA">
+                <MenuItem Header="Download v1.0.2M" x:Name="DownloadSnes9xVITA">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadSnes9xVITAGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="Plugins - SUPRX">
+            <MenuItem Header="Download Enabler">
+                <MenuItem Header="Download" x:Name="DownloadDownloadEnabler">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadDownloadEnablerGithub" >
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FontRedirect">
+                <MenuItem Header="Download" x:Name="DownloadFontRedirect">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Netcheck Bypass">
+                <MenuItem Header="Download" x:Name="DownloadNetcheckBypass">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadNetcheckBypassGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="NoNpDrm">
+                <MenuItem Header="Download v1.2" x:Name="DownloadNoNpDrm">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadNoNpDrmGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PNGShot">
+                <MenuItem Header="Download" x:Name="DownloadPNGShot">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadPNGShotGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="reF00D">
+                <MenuItem Header="Download v1.1" x:Name="DownloadreF00D">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadreF00DGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="USBDisable">
+                <MenuItem Header="Download v3.03" x:Name="DownloadUSBDisable">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadUSBDisableGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="UserAgentSpoofer">
+                <MenuItem Header="Download" x:Name="DownloadUserAgentSpoofer">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadUserAgentSpooferGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="Apps - VPK">
+            <MenuItem Header="Adrenaline">
+                <MenuItem Header="Download v7" x:Name="DownloadAdrenaline">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadAdrenalineGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Adrenaline Bubble Manager">
+                <MenuItem Header="Download v6.19" x:Name="DownloadAdrenalineBubbleManager">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadAdrenalineBubbleManagerGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="AdrenalineStates">
+                <MenuItem Header="Download v1.20" x:Name="DownloadAdrenalineStates">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Apollo Save Manager">
+                <MenuItem Header="Download v1.2.4" x:Name="DownloadApollo">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadApolloGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="AppDBTool">
+                <MenuItem Header="Download" x:Name="DownloadAppDBTool">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="ElevenMPV-A">
+                <MenuItem Header="Download v7.10" x:Name="DownloadElevenMPV">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadElevenMPVGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FontInstaller">
+                <MenuItem Header="Download v1" x:Name="DownloadFontInstaller">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadFontInstallerGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FTPClient">
+                <MenuItem Header="Download v1.54" x:Name="DownloadFTPClient">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadFTPClientGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="iTLS-Enso">
+                <MenuItem Header="Download v3.2.1" x:Name="DownloadiTLSEnso">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadiTLSEnsoGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="MediaImporter">
+                <MenuItem Header="Download v0.91" x:Name="DownloadMediaImporter">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadMediaImporterGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Moonlight">
+                <MenuItem Header="Download v0.9.2" x:Name="DownloadMoonlight">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadMoonlightGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Multidownload Vita">
+                <MenuItem Header="Download v1" x:Name="DownloadMultidownloadVita">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadMultidownloadVitaGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="MVPLAYER0">
+                <MenuItem Header="Download v1.3" x:Name="DownloadMVPLAYER0">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadMVPLAYER0GitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="NetStream">
+                <MenuItem Header="Download v2.04" x:Name="DownloadNetStream">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadNetStreamGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Parental Control Bypass">
+                <MenuItem Header="Download" x:Name="DownloadParentalControlBypass">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PKGj">
+                <MenuItem Header="Download v0.57" x:Name="Downloadpkgj">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadpkgjGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RegistryEditor">
+                <MenuItem Header="Download v1" x:Name="DownloadRegistryEditor">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RetroFlow Adrenaline Launcher">
+                <MenuItem Header="Download v3" x:Name="DownloadRetroFlowAdrenalineLauncher">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadRetroFlowAdrenalineLauncherGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RetroFlow">
+                <MenuItem Header="Download v6" x:Name="DownloadRetroFlow">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadRetroFlowGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="SMBClient">
+                <MenuItem Header="Download v1.04" x:Name="DownloadSMBClient">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadSMBClientGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Trophies Fixer">
+                <MenuItem Header="Download v1.1" x:Name="DownloaTrophiesFixer">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloaTrophiesFixerGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="VITAlbum">
+                <MenuItem Header="Download v1.40" x:Name="DownloadVITAlbum">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadVITAlbumGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="VitaMediaPlayer">
+                <MenuItem Header="Download v1.01" x:Name="DownloadVitaMediaPlayer">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadVitaMediaPlayerGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="VitaShell">
+                <MenuItem Header="Download v2.02" x:Name="DownloadVitaShell">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadVitaShellGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="WebDAVClient">
+                <MenuItem Header="Download v1.02" x:Name="DownloadWebDAVClient">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadWebDAVClientGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="Game Ports - VPK">
+            <MenuItem Header="Download Blasphemous" x:Name="DownloadBlasphemousPort">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Download Cuphead" x:Name="DownloadCupheadPort">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Download Sonic Mania" x:Name="DownloadSonicManiaPort">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Download GTA Chinatown Wars" x:Name="DownloadGTACTWPort">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuItem>
+    </MenuItem>
+    <MenuItem Header="Other">
+        <MenuItem Header="keys.bin (NoNpDrm/reF00D)" x:Name="DownloadKeys">
+            <MenuItem.Icon>
+                <Image Source="/Images/download.png"/>
+            </MenuItem.Icon>
+        </MenuItem>
+    </MenuItem>
+</Menu>

@@ -1,0 +1,55 @@
+﻿<Window x:Class="PPPwner"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PPPwner GUI" Height="650" Width="855" Background="#2D2D30" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="PPPwn Options" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <ComboBox x:Name="FirmwaresComboBox" HorizontalAlignment="Left" Margin="12,141,0,0" VerticalAlignment="Top" Width="400">
+            <ComboBoxItem Content="7.50 / 7.51 / 7.55"/>
+            <ComboBoxItem Content="8.00 / 8.01 / 8.03"/>
+            <ComboBoxItem Content="8.50 / 8.52"/>
+            <ComboBoxItem Content="9.00"/>
+            <ComboBoxItem Content="9.03 / 9.04"/>
+            <ComboBoxItem Content="9.50 / 9.51 / 9.60"/>
+            <ComboBoxItem Content="10.00 / 10.01"/>
+            <ComboBoxItem Content="10.50 / 10.70 / 10.71"/>
+            <ComboBoxItem Content="11.00"/>
+        </ComboBox>
+        <ComboBox x:Name="EthernetInterfacesComboBox" HorizontalAlignment="Left" Margin="12,57,0,0" VerticalAlignment="Top" Width="400"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Select your Ethernet Adapter :"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Select your PS4 Firmware :"/>
+        <Button x:Name="StartPPPwnButton" Content="Start PPPwn" HorizontalAlignment="Right" Margin="0,328,15,0" VerticalAlignment="Top" Width="130" Height="25" FontWeight="Bold" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Right" Margin="0,60,194,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Select a custom stage1 payload :"/>
+        <TextBox x:Name="CustomStage1PayloadTextBox" HorizontalAlignment="Right" Margin="0,81,50,0" VerticalAlignment="Top" Width="317" Height="22"/>
+        <Button x:Name="BrowseStage1PayloadButton" Content="..." HorizontalAlignment="Right" Margin="0,81,15,0" VerticalAlignment="Top" Width="30" Height="22"/>
+        <TextBlock HorizontalAlignment="Right" Margin="0,120,194,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Text="Select a custom stage2 payload :"/>
+        <TextBox x:Name="CustomStage2PayloadTextBox" HorizontalAlignment="Right" Margin="0,141,50,0" VerticalAlignment="Top" Width="317" Height="22"/>
+        <Button x:Name="BrowseStage2PayloadButton" Content="..." HorizontalAlignment="Right" Margin="0,141,15,0" VerticalAlignment="Top" Width="30" Height="22"/>
+        <TextBlock Text="Customize (advanced)" VerticalAlignment="Top" TextWrapping="Wrap" Margin="0,10,201,0" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold" Foreground="White"/>
+        <Button x:Name="CopyGoldHENButton" Content="Copy cached goldhen.bin (v2.4b17.3) to an USB drive" HorizontalAlignment="Right" Margin="0,232,15,0" VerticalAlignment="Top" Width="352" Height="22" FontWeight="Bold"/>
+        <CheckBox x:Name="AutoRetryCheckBox" Content="Enable Auto-Retry" HorizontalAlignment="Left" Margin="12,205,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <TextBlock VerticalAlignment="Bottom" Text="PPPwn Log" TextWrapping="Wrap" Margin="12,0,0,252" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="White"/>
+        <TextBox x:Name="LogTextBox" Width="830" VerticalAlignment="Top" TextWrapping="Wrap" Margin="12,387,13,0" Height="232"/>
+        <Button x:Name="DownloadGoldHENButton" Content="Download latest GoldHEN to an USB drive" HorizontalAlignment="Right" Margin="0,205,15,0" VerticalAlignment="Top" Width="352" Height="22" FontWeight="Bold"/>
+        <TextBox x:Name="ResponseTimeoutValueTextBox" HorizontalAlignment="Left" Margin="256,224,0,0" VerticalAlignment="Top" Width="30" Text="0" TextAlignment="Center"/>
+        <CheckBox x:Name="UseWaitingTimeCheckBox" Content="Specify waiting time in seconds after first round CPU pinning :" HorizontalAlignment="Left" Margin="12,245,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <TextBox x:Name="WaitingTimeValueTextBox" HorizontalAlignment="Left" Margin="364,244,0,0" VerticalAlignment="Top" Width="30" Text="1" TextAlignment="Center"/>
+        <TextBox Width="30" VerticalAlignment="Top" Text="4" TextAlignment="Center" x:Name="GroomDelayValueTextBox" Margin="382,267,0,0" HorizontalAlignment="Left"/>
+        <CheckBox Content="PCAP buffer size in bytes, less than 100 indicates default value :" VerticalAlignment="Top" x:Name="SpecifyPCAPBufferSizeCheckBox" Margin="12,291,0,0" HorizontalAlignment="Left" Foreground="White" ToolTip="When running on low-end devices, this value can be set to reduce memory usage. I tested that setting it to 10240 can run normally, and the memory usage is about 3MB. (Note: A value that is too small may cause some packets to not be captured properly)"/>
+        <TextBox Width="40" VerticalAlignment="Top" Text="0" TextAlignment="Center" x:Name="PCAPBufferSizeValueTextBox" Margin="372,290,0,0" HorizontalAlignment="Left"/>
+        <CheckBox Content="Don't wait one more PADI before starting the exploit" VerticalAlignment="Top" x:Name="DontWaitPADICheckBox" Margin="12,311,0,0" HorizontalAlignment="Left" Foreground="White" ToolTip="pppwn_cpp will wait for two PADI request, according to TheOfficialFloW/PPPwn/pull/48 this helps to improve stability. You can turn off this feature with this parameter if you don't need it."/>
+        <CheckBox Content="Use CPU for more precise sleep time" VerticalAlignment="Top" x:Name="UseCPUCheckBox" Margin="12,331,0,0" HorizontalAlignment="Left" Foreground="White" ToolTip="Only used when execution speed is too slow."/>
+        <CheckBox Content="Wait for 1ms every groom-delay rounds during Heap grooming :" VerticalAlignment="Top" x:Name="UseGroomDelayCheckBox" Margin="12,267,0,0" HorizontalAlignment="Left" Foreground="White" ToolTip="This is an empirical value. The Python version of pppwn does not set any wait at Heap grooming, but if the C++ version does not add some wait, there is a probability of kernel panic on the PS4. You can set any value within 1-4097 (4097 is equivalent to not doing any wait)."/>
+        <CheckBox VerticalAlignment="Top" x:Name="UseCustomStageFilesCheckBox" Margin="0,37,229,0" HorizontalAlignment="Right" Foreground="White" Content="Use custom stage files"/>
+        <CheckBox VerticalAlignment="Top" x:Name="UseResponseTimeoutCheckBox" Margin="12,225,0,0" HorizontalAlignment="Left" Foreground="White" Content="Set timeout in seconds for PS4 response :" ToolTip="Waiting for PADI is not included, which allows you to start pppwn_cpp before the ps4 is launched."/>
+        <CheckBox VerticalAlignment="Top" x:Name="UsePinningWaitingTimeCheckBox" Margin="12,245,0,0" HorizontalAlignment="Left" Foreground="White" Content="Specify waiting time in seconds after first round CPU pinning :" ToolTip="According to SiSTR0/PPPwn/pull/1 set this parameter to 20 helps to improve stability"/>
+        <TextBox Width="30" VerticalAlignment="Top" Text="1" TextAlignment="Center" x:Name="PinningWaitingTimeValueTextBox" Margin="364,244,0,0" HorizontalAlignment="Left"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,175,0,0" TextWrapping="Wrap" Text="Optional PPPwn Options" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Right" Margin="0,175,234,0" TextWrapping="Wrap" Text="GoldHEN Options" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+    </Grid>
+
+</Window>

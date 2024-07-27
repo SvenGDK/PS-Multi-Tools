@@ -1,0 +1,300 @@
+﻿<Menu x:Class="PS5Menu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="500">
+    <MenuItem Header="Library"/>
+    <MenuItem Header="Tools">
+        <MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems"></MenuItem>
+        <MenuItem Header="Blu Ray Disc Burner" x:Name="OpenBDBurnerMenuItem"/>
+        <MenuItem Header="Fake sign SELF files" x:Name="OpenMakefSELFMenuItem"/>
+        <MenuItem Header="Manifest Editor" x:Name="OpenManifestEditorMenuItem"/>
+        <MenuItem Header="Param Editor" x:Name="OpenParamEditorMenuItem"/>
+        <MenuItem Header="Payload &amp; Mast1c0re PS2 Game Sender" x:Name="SenderMenuItem"/>
+        <MenuItem Header="PKG Merger" x:Name="OpenPKGMergerMenuItem"/>
+        <MenuItem Header="PKG Sender" x:Name="OpenPKGSenderMenuItem"/>
+        <MenuItem Header="Build / Create">
+            <MenuItem Header="GP5 Project Creator" x:Name="OpenGP5ManagerMenuItem"/>
+            <MenuItem Header="GP5 PKG Builder" x:Name="OpenPKGBuilderMenuItem"/>
+            <MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem"></MenuItem>
+            <MenuItem Header="Shortcut PKG Creator" x:Name="OpenShortcutPKGCreatorMenuItem"/>
+        </MenuItem>
+        <MenuItem Header="Converters">
+            <MenuItem Header="WAV &lt;-&gt; AT9" x:Name="OpenAudioConverterMenuItem"/>
+        </MenuItem>
+        <MenuItem Header="Over FTP (Requires running FTP server)">
+            <MenuItem Header="etaHEN Configurator" x:Name="OpenetaHENConfiguratorMenuItem"/>
+            <MenuItem Header="FTP Browser" x:Name="OpenFTPBrowserMenuItem"/>
+            <MenuItem Header="FTP Grabber" x:Name="OpenFTPGrabberMenuItem"/>
+            <MenuItem Header="Web Browser Installer" x:Name="OpenWebBrowserInstallerMenuItem"/>
+            <MenuItem Header="Notification Manager" x:Name="OpenNotificationManagerMenuItem"/>
+            <MenuItem Header="Clear error history on the console" x:Name="ClearErrorHistoryMenuItem"/>
+        </MenuItem>
+        <MenuItem Header="UI Customization">
+            <MenuItem Header="Dump RCO files (Requires running FTP server)" x:Name="OpenRCODumperMenuItem"/>
+            <MenuItem Header="Extract RCO files" x:Name="OpenRCOExtractorMenuItem"/>
+        </MenuItem>
+    </MenuItem>
+    <MenuItem Header="Exploits">
+        <MenuItem Header="3.00 - 4.51">
+            <MenuItem Header="PS5 IPV6 Kernel Exploit">
+                <MenuItem Header="Go to GitHub" x:Name="OpenKexGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download v1.03" x:Name="DownloadPS5IPV6Expl">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="4.51+">
+            <MenuItem Header="Mast1c0re Exploit">
+                <MenuItem Header="Learn more at GitHub" x:Name="OpenMast1c0reGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="7.61 and below">
+            <MenuItem Header="JAR Loader (PoC)">
+                <MenuItem Header="Download v2023-10-27" x:Name="DownloadJARLoader">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Learn more at GitHub" x:Name="OpenJARLoaderGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+    </MenuItem>
+    <MenuItem Header="Hosts &amp; DNS">
+        <MenuItem Header="PS Multi Tools Host:">
+            <TextBox Text="http://X.X.X.X/ps5ex/"></TextBox>
+        </MenuItem>
+        <MenuItem Header="PKG-Zone Host:">
+            <TextBox Text="https://pkg-zone.com/exploit/PS5/index.html"></TextBox>
+        </MenuItem>
+        <MenuItem Header="Sleirsgoevy Host:">
+            <TextBox Text="https://sleirsgoevy.github.io/ps4jb2/ps5-403/index.html"></TextBox>
+        </MenuItem>
+        <MenuItem Header="Zecoxao Host:">
+            <TextBox Text="https://zecoxao.github.io/ps5jb/"></TextBox>
+        </MenuItem>
+        <Separator/>
+        <MenuItem Header="Al Azif DNS:">
+            <TextBox Text="192.241.221.79"></TextBox>
+        </MenuItem>
+        <MenuItem Header="Kameleon DNS:">
+            <TextBox Text="62.210.38.117"></TextBox>
+        </MenuItem>
+    </MenuItem>
+    <MenuItem Header="webMAN for websrv">
+        <MenuItem Header="General">
+            <MenuItem Header="Open PS5 WebSrv Interface" x:Name="OpenPS5WebSrvInterface"/>
+            <MenuItem Header="Browse PS5 File System" x:Name="BrowsePS5FileSystem"/>
+            <MenuItem Header="Install or Remove Homebrew" x:Name="ManagePS5Homebrew"/>
+        </MenuItem>
+        <MenuItem Header="Game Utilities">
+            <MenuItem Header="Manage ROMs of Homebrew Emulators" x:Name="ManagePS5GameROMs"/>
+        </MenuItem>
+        <MenuItem Header="Temperature Monitoring">
+            <MenuItem Header="Show system info on PS5" x:Name="ShowSystemInfoOnPS5"/>
+        </MenuItem>
+    </MenuItem>
+    <MenuItem Header="Downloads">
+        <MenuItem Header="Exploits">
+            <MenuItem Header="Download PS5 BD-JB ELF Loader v1.6.1" x:Name="DownloadPS5BDJBElfLoader">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuItem>
+
+        <MenuItem Header="Firmwares">
+            <MenuItem Header="Recovery Firmware">
+                <MenuItem Header="Download 4.03" x:Name="DownloadRecoveryFW403">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download 4.51" x:Name="DownloadRecoveryFW451">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="System Firmware">
+                <MenuItem Header="Download 4.03" x:Name="DownloadSystemFW403">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download 4.51" x:Name="DownloadSystemFW451">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+
+        <MenuItem Header="Homebrew">
+            <MenuItem Header="Debug Settings" x:Name="DownloadDebugPKG">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Game Hub Preview" x:Name="DownloadGameHubPreviewPKG">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Homebrew Store by LightningMods">
+                <MenuItem Header="Download R2" x:Name="DownloadHomebrewStore">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Internet Browser" x:Name="DownloadInternetBrowserPKG">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Itemzflow by LightningMods">
+                <MenuItem Header="Download v1.06" x:Name="DownloadItemzflow">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PS Multi Tools Host" x:Name="DownloadPSMTPKG">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="PS5-Xplorer by Lapy">
+                <MenuItem Header="Download v1.02" x:Name="DownloadPS5Xplorer">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Store Preview" x:Name="DownloadStorePreviewPKG">
+                <MenuItem.Icon>
+                    <Image Source="/Images/download.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuItem>
+
+        <MenuItem Header="Payloads">
+            <MenuItem Header="ELFLdr by john-tornblom">
+                <MenuItem Header="Download v0.14" x:Name="DownloadELFLdr">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="etaHEN by LightningMods">
+                <MenuItem Header="Download v1.7B" x:Name="DownloadetaHEN">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FetchPKG by john-tornblom">
+                <MenuItem Header="Download v0.2" x:Name="DownloadFetchPKG">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="For Mast1c0re Exploit">
+                <MenuItem Header="Download latest PS2 Network ELF Loader VMC0 .card">
+                    <MenuItem Header="PS5 6.50">
+                        <MenuItem Header="Download" x:Name="DownloadPS5NetworkELFLoader650">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/download.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Download latest PS2 Network Game Loader ELF">
+                    <MenuItem Header="PS5 6.50">
+                        <MenuItem Header="Download" x:Name="DownloadPS5NetworkGameLoader650">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/download.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FTPS5 by zecoxao">
+                <MenuItem Header="Download v1.4 (Contains both ELFs)" x:Name="DownloadFTPS5">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FTPSrv by john-tornblom">
+                <MenuItem Header="Download v0.8" x:Name="DownloadFTPSrv">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="OffAct by john-tornblom">
+                <MenuItem Header="Download v0.1" x:Name="DownloadOffAct">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="PS5-kstuff by sleirsgoevy">
+                <MenuItem Header="3.00, 3.20, 3.21, 4.00, 4.02, 4.03, 4.50, 4.51">
+                    <MenuItem Header="Download" x:Name="DownloadKStuff">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="SHSrv by john-tornblom">
+                <MenuItem Header="Download v0.8" x:Name="DownloadSHSrv">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="WebSrv by john-tornblom">
+                <MenuItem Header="Download v0.7" x:Name="DownloadWebSrv">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+
+        <MenuItem Header="Game Patches">
+            <MenuItem Header="Official Game Patches" x:Name="OpenGamePatchesMenuItem"/>
+            <MenuItem Header="Game Mods &amp; Patches" x:Name="OpenModPatchesMenuItem"/>
+        </MenuItem>
+    </MenuItem>
+    <MenuItem Header="Settings">
+        <MenuItem Header="Set FTP IP address with port (IP:PORT) :">
+            <TextBox x:Name="FTPIPTextBox" Width="200"></TextBox>
+        </MenuItem>
+    </MenuItem>
+    <wv2:WebView2 x:Name="webMANwebsrvWebView" HorizontalAlignment="Center" Height="0" Margin="0,0,0,0" VerticalAlignment="Top" Width="0" Source="https://google.com" Visibility="Hidden" AllowExternalDrop="False" Focusable="False"/>
+
+</Menu>

@@ -1,0 +1,16 @@
+﻿<Window x:Class="PS5GamePatchSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        mc:Ignorable="d" 
+        Title="PS5 Game Patche Selector" Height="650" Width="800" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid x:Name="BrowserGrid" Visibility="Hidden">
+            <wv2:WebView2 x:Name="GamePatchesWebView" Source="https://google.com" AllowExternalDrop="False" />
+        </Grid>
+        <TextBlock x:Name="LoadingTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Loading game patches for&#10;&#10;PPSA12345&#10;&#10;Please wait ..." VerticalAlignment="Center" Foreground="White" FontSize="48" FontFamily="Calibri" TextAlignment="Center"/>
+    </Grid>
+</Window>

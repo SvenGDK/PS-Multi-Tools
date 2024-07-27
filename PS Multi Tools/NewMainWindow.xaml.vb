@@ -1,13 +1,9 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports System.Net
 Imports System.Windows.Media.Animation
 Imports PS_Multi_Tools.INI
-Imports psmt_lib
 
 Public Class NewMainWindow
-
-    Dim WithEvents DownloadClient As New WebClient()
 
     Dim NewVersion As String = String.Empty
     Dim Changelog As String = String.Empty
@@ -23,27 +19,8 @@ Public Class NewMainWindow
     Dim HideAnimation As New DoubleAnimation With {.From = 1, .To = 0, .Duration = New Duration(TimeSpan.FromMilliseconds(300))}
 
     Private Sub NewMainWindow_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
-        Title = String.Format("Multi Tools - v{0}.{1}.{2}", My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build)
-
-        'Check for the PS Multi Tools library
-        If Not File.Exists("psmt-lib.dll") Then
-            If MsgBox("PS Multi Tools Library not found! Do you want to re-download it?") = MsgBoxResult.Yes Then
-                If Utils.IsURLValid("http://X.X.X.X/psmt-lib.dll") Then
-                    DownloadClient.DownloadFile(New Uri("http://X.X.X.X/psmt-lib.dll"), My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
-                Else
-                    MsgBox("No internet connection available. PS Multi Tools will close.", MsgBoxStyle.Exclamation, "Could not load the PSMT library")
-                End If
-            Else
-                Windows.Application.Current.Shutdown()
-            End If
-        Else
-            Dim PSMTInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\PS Multi Tools.exe")
-            Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
-
-            BuildTextBlock.Text = "[Main] PS " + Title + "  /  [DLL] PSMT-Library - v" + LibraryInfo.FileVersion
-        End If
-
-        'Check for PS Multi Tools configuration
+        Title = String.Format("Multi Tools - v{0}.{1}.{2} - {3}", My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build, Text.Encoding.ASCII.GetString(Utils.ByBytes))
+        'Check for PS Multi Tools config file
         If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
             Try
                 'Read config
@@ -62,32 +39,13 @@ Public Class NewMainWindow
         End If
     End Sub
 
-    Private Sub DownloadClient_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles DownloadClient.DownloadFileCompleted
-        If MsgBox("Library Update " + NewVersion + " installed." + vbCrLf + vbCrLf + Changelog, MsgBoxStyle.OkOnly, "PS Multi Tools Library Update") = MsgBoxResult.Ok Then
-            Process.Start(Windows.Application.ResourceAssembly.Location)
-            Windows.Application.Current.Shutdown()
-        End If
-    End Sub
-
-    Private Sub CheckUpdatesButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckUpdatesButton.Click
-        If Utils.IsURLValid("http://X.X.X.X/psmt-lib.txt") Then
-            Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
-            Dim CurrentLibraryVersion As String = LibraryInfo.FileVersion
-
-            Dim VerCheckClient As New WebClient()
-            Dim NewLibraryVersion As String = VerCheckClient.DownloadString("http://X.X.X.X/psmt-lib.txt")
-            Changelog = VerCheckClient.DownloadString("http://X.X.X.X/changelog.txt")
-
-            If CurrentLibraryVersion < NewLibraryVersion Then
-                If MsgBox("A library update is available, do you want to install it now ?", MsgBoxStyle.YesNo, "Library Update found") = MsgBoxResult.Yes Then
-                    Dim NewUpdater As New SyncLibrary() With {.ShowActivated = True}
-                    NewUpdater.ShowDialog()
-                End If
-            Else
-                MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
+    Private Sub CheckPSMTUpdateButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckPSMTUpdateButton.Click
+        If Utils.IsPSMultiToolsUpdateAvailable() Then
+            If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
+                Utils.DownloadAndExecuteUpdater()
             End If
         Else
-            MsgBox("Could not check for updates. No internet connection available.", MsgBoxStyle.Exclamation)
+            MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
         End If
     End Sub
 
@@ -575,22 +533,12 @@ Public Class NewMainWindow
         NewPS5RcoExtractor.Show()
     End Sub
 
-    Private Sub CheckPSMTUpdateButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckPSMTUpdateButton.Click
-        If psmt_lib.Utils.IsPSMultiToolsUpdateAvailable() Then
-            If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
-                psmt_lib.Utils.DownloadAndExecuteUpdater()
-            End If
-        Else
-            MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
-        End If
-    End Sub
-
 #End Region
 
 #Region "PSX"
 
     Private Sub LoadPSXHDDManagerButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSXHDDManagerButton.Click
-        If Not String.IsNullOrEmpty(psmt_lib.Utils.ConnectedPSXHDD.HDLDriveName) Then
+        If Not String.IsNullOrEmpty(Utils.ConnectedPSXHDD.HDLDriveName) Then
             Dim NewPSXHDDManager As New PSXPartitionManager() With {.ShowActivated = True}
             NewPSXHDDManager.Show()
         Else

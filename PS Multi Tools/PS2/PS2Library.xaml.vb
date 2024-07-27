@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports psmt_lib
 
 Public Class PS2Library
 
@@ -52,57 +51,15 @@ Public Class PS2Library
 
 #Region "Game Loader"
 
-    Public Function GetGameID(GameISO As String) As String
-        Dim GameID As String = ""
-
-        Using SevenZip As New Process()
-            SevenZip.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\7z.exe"
-            SevenZip.StartInfo.Arguments = "l -ba """ + GameISO + """"
-            SevenZip.StartInfo.RedirectStandardOutput = True
-            SevenZip.StartInfo.UseShellExecute = False
-            SevenZip.StartInfo.CreateNoWindow = True
-            SevenZip.Start()
-
-            'Read the output
-            Dim OutputReader As StreamReader = SevenZip.StandardOutput
-            Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.None)
-
-            If ProcessOutput.Length > 0 Then
-                For Each Line As String In ProcessOutput
-                    If Line.Contains("SLES_") Or Line.Contains("SLUS_") Or Line.Contains("SCES_") Or Line.Contains("SCUS_") Then
-                        If Line.Contains("Volume:") Then 'ID found in the ISO Header
-                            If Line.Split(New String() {"Volume: "}, StringSplitOptions.RemoveEmptyEntries).Length > 0 Then
-                                GameID = Line.Split(New String() {"Volume: "}, StringSplitOptions.RemoveEmptyEntries)(1)
-                                Exit For
-                            End If
-                        Else 'ID found in the ISO files
-                            If String.Join(" ", Line.Split(New Char() {}, StringSplitOptions.RemoveEmptyEntries)).Split(" "c).Length > 4 Then
-                                GameID = String.Join(" ", Line.Split(New Char() {}, StringSplitOptions.RemoveEmptyEntries)).Split(" "c)(5).Trim()
-                                Exit For
-                            End If
-                        End If
-                    End If
-                Next
-            End If
-
-        End Using
-
-        If GameID = "" Then
-            Return "ID not found"
-        Else
-            Return GameID
-        End If
-    End Function
-
     Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
 
         'PS2 ISOs
         For Each GameISO In Directory.GetFiles(e.Argument.ToString, "*.iso", SearchOption.AllDirectories)
 
             Dim NewPS2Game As New PS2Game()
-            Dim GameID As String = GetGameID(GameISO)
+            Dim GameID As String = PS2Game.GetPS2GameID(GameISO)
 
-            If GameID = "ID not found" Then
+            If GameID = "" Then
                 NewPS2Game.GameFilePath = GameISO
                 Dim PS2ISOFileInfo As New FileInfo(GameISO)
                 NewPS2Game.GameSize = FormatNumber(PS2ISOFileInfo.Length / 1073741824, 2) + " GB"
@@ -167,7 +124,7 @@ Public Class PS2Library
                 If Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + GameID + ".html") Then
                     URLs.Add("https://psxdatacenter.com/psx2/games2/" + GameID + ".html")
                 Else
-                    NewPS2Game.GameTitle = GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
+                    NewPS2Game.GameTitle = PS2Game.GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
                 End If
             End If
         Next
@@ -176,9 +133,9 @@ Public Class PS2Library
         For Each GameCSO In Directory.GetFiles(e.Argument.ToString, "*.cso", SearchOption.AllDirectories)
 
             Dim NewPS2Game As New PS2Game()
-            Dim GameID As String = GetGameID(GameCSO)
+            Dim GameID As String = PS2Game.GetPS2GameID(GameCSO)
 
-            If GameID = "ID not found" Then
+            If GameID = "" Then
 
                 'Add to the GamesListView
                 NewPS2Game.GameFilePath = GameCSO
@@ -241,7 +198,7 @@ Public Class PS2Library
                 If Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + GameID + ".html") Then
                     URLs.Add("https://psxdatacenter.com/psx2/games2/" + GameID + ".html")
                 Else
-                    NewPS2Game.GameTitle = GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
+                    NewPS2Game.GameTitle = PS2Game.GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
                 End If
             End If
         Next
@@ -374,24 +331,6 @@ Public Class PS2Library
             GamesListView.Items.Refresh()
         End If
     End Sub
-
-    Public Function GetPS2GameTitleFromDatabaseList(GameID As String) As String
-        Dim FoundGameTitle As String = ""
-        GameID = GameID.Replace("-", "")
-
-        For Each GameTitle As String In File.ReadLines(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps2ids.txt")
-            If GameTitle.Contains(GameID) Then
-                FoundGameTitle = GameTitle.Split(";"c)(1)
-                Exit For
-            End If
-        Next
-
-        If String.IsNullOrEmpty(FoundGameTitle) Then
-            Return "Unknown PS2 game"
-        Else
-            Return FoundGameTitle
-        End If
-    End Function
 
 #End Region
 

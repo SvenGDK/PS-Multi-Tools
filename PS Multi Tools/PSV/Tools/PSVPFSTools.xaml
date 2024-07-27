@@ -1,0 +1,24 @@
+﻿<Window x:Class="PSVPFSTools"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Height="455" Width="610" Background="#2D2D30" ResizeMode="CanMinimize" Title="PSV PFS Tools" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select an encrypted game/app folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedFolderTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="500"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="OutputFolderTextBox" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" Width="500"/>
+        <Button x:Name="BrowseFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="515,33,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="515,80,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="ExtractButton" Content="Decrypt content" HorizontalAlignment="Left" Margin="381,152,0,0" VerticalAlignment="Top" Width="129" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,105,0,0" TextWrapping="Wrap" Text="zRIF Key :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="zRIFTextBox" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="500"/>
+        <Button x:Name="GetzRIFKeyButton" Content="Get" HorizontalAlignment="Left" Margin="515,128,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="575" Height="205"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,182,0,0" TextWrapping="Wrap" Text="Decryption Log :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+
+    </Grid>
+</Window>

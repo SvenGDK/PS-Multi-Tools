@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Net
 Imports PS_Multi_Tools.INI
 
 Public Class PSSettings
@@ -85,32 +84,20 @@ Public Class PSSettings
         End If
     End Sub
 
-    Private Sub CheckForUpdateButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckForUpdateButton.Click
-        If Utils.IsURLValid("http://X.X.X.X/psmt-lib.txt") Then
-            Dim LibraryInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\psmt-lib.dll")
-            Dim CurrentLibraryVersion As String = LibraryInfo.FileVersion
-
-            Dim VerCheckClient As New WebClient()
-            Dim NewLibraryVersion As String = VerCheckClient.DownloadString("http://X.X.X.X/psmt-lib.txt")
-            Dim Changelog As String = VerCheckClient.DownloadString("http://X.X.X.X/changelog.txt")
-
-            If CurrentLibraryVersion < NewLibraryVersion Then
-                If MsgBox("A library update is available, do you want to install it now ?", MsgBoxStyle.YesNo, "Library Update found") = MsgBoxResult.Yes Then
-                    Dim NewUpdater As New SyncLibrary() With {.ShowActivated = True}
-                    NewUpdater.ShowDialog()
-                End If
-            Else
-                MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
-            End If
-        Else
-            MsgBox("Could not check for updates. No internet connection available.", MsgBoxStyle.Exclamation)
-        End If
-    End Sub
-
     Private Sub GetPubToolsButton_Click(sender As Object, e As RoutedEventArgs) Handles GetPubToolsButton.Click
         If MsgBox("Click on :" + vbCrLf + vbCrLf + "[<> Code] -> [Download ZIP]" + vbCrLf + vbCrLf + "Extract content of ZIP in the ""Tools\PS5"" folder where PS Multi Tools is located.", MsgBoxStyle.Information) = MsgBoxResult.Ok Then
             Dim NewProcessStartInfo As New ProcessStartInfo("https://github.com/florinsdistortedvision/prospero-publishing-tools")
             Process.Start(NewProcessStartInfo)
+        End If
+    End Sub
+
+    Private Sub CheckForMainUpdateButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckForMainUpdateButton.Click
+        If Utils.IsPSMultiToolsUpdateAvailable() Then
+            If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
+                Utils.DownloadAndExecuteUpdater()
+            End If
+        Else
+            MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
         End If
     End Sub
 

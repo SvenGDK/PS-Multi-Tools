@@ -1,0 +1,44 @@
+﻿<Window x:Class="PBPPacker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PBP Packer / Unpacker" Height="610" Width="420" Background="#2D2D30">
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="438" Margin="10,128,0,0" Stroke="White" VerticalAlignment="Top" Width="384"/>
+        <Rectangle HorizontalAlignment="Left" Height="113" Margin="10,10,0,0" Stroke="White" VerticalAlignment="Top" Width="384"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,135,0,0" TextWrapping="Wrap" Text="Pack to PBP" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,17,0,0" TextWrapping="Wrap" Text="Unpack PBP" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,43,0,0" TextWrapping="Wrap" Text="Select a .PBP file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedPBPTextBox" HorizontalAlignment="Left" Margin="23,67,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <Button x:Name="BrowsePBPButton" Content="Browse" HorizontalAlignment="Left" Margin="303,66,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="UnpackPBPButton" Content="Unpack" HorizontalAlignment="Left" Margin="303,90,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="BrowsePARAMButton" Content="Browse" HorizontalAlignment="Left" Margin="304,184,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox x:Name="SelectedPARAMTextBox" HorizontalAlignment="Left" Margin="23,185,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,161,0,0" TextWrapping="Wrap" Text="PARAM.SFO :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseICON0Button" Content="Browse" HorizontalAlignment="Left" Margin="304,231,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox x:Name="SelectedICON0TextBox" HorizontalAlignment="Left" Margin="23,232,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,208,0,0" TextWrapping="Wrap" Text="ICON0.PNG :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseICON1PMFButton" Content="Browse" HorizontalAlignment="Left" Margin="304,278,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox x:Name="SelectedICON1TextBox" HorizontalAlignment="Left" Margin="23,279,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,255,0,0" TextWrapping="Wrap" Text="ICON1.PMF :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowsePIC0Button" Content="Browse" HorizontalAlignment="Left" Margin="304,325,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox x:Name="SelectedPIC0TextBox" HorizontalAlignment="Left" Margin="23,326,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,302,0,0" TextWrapping="Wrap" Text="PIC0.PNG :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseSND0Button" Content="Browse" HorizontalAlignment="Left" Margin="304,372,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox x:Name="SelectedSND0TextBox" HorizontalAlignment="Left" Margin="23,373,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,349,0,0" TextWrapping="Wrap" Text="SND0.AT3 :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseDataPSPButton" Content="Browse" HorizontalAlignment="Left" Margin="304,419,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox x:Name="SelectedDataPSPTextBox" HorizontalAlignment="Left" Margin="23,420,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,396,0,0" TextWrapping="Wrap" Text="DATA.PSP :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="BrowseDATAPSARButton" Content="Browse" HorizontalAlignment="Left" Margin="304,466,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox x:Name="SelectedDataPSARTextBox" HorizontalAlignment="Left" Margin="23,467,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,443,0,0" TextWrapping="Wrap" Text="DATA.PSAR :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="PackPBPButton" Content="Pack PBP" HorizontalAlignment="Left" Margin="304,538,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,490,0,0" TextWrapping="Wrap" Text="File Name :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="NewFileNameTextBox" HorizontalAlignment="Left" Margin="23,514,0,0" VerticalAlignment="Top" Width="350"/>
+
+    </Grid>
+</Window>

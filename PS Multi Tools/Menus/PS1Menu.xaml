@@ -1,0 +1,81 @@
+﻿<Menu x:Class="PS1Menu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="800">
+    <MenuItem Header="Library"/>
+    <MenuItem Header="Tools">
+        <MenuItem Header="Merge .bin files" x:Name="OpenMergeBinTool"/>
+        <MenuItem Header="Convert BIN/CUE to ISO" x:Name="OpenBINCUEConverter"/>
+    </MenuItem>
+    <MenuItem Header="Downloads">
+        <MenuItem Header="Exploits">
+            <MenuItem Header="FreePSXBoot">
+                <MenuItem Header="Download v2.1" x:Name="DownloadFreePSXBoot">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="TonyHax">
+                <MenuItem Header="Download v1.4.5" x:Name="DownloadTonyHax">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="TonyHax International">
+                <MenuItem Header="Download v1.5.1" x:Name="DownloadTonyHaxInternational">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="Tools">
+            <MenuItem Header="Aprip">
+                <MenuItem Header="Download v1.0.9" x:Name="DownloadAprip">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="EDCRE">
+                <MenuItem Header="Download v1.0.6" x:Name="DownloadEDCRE">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="LibCrypt Patcher">
+                <MenuItem Header="Download v1.0.8" x:Name="DownloadLibCryptPatcher">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="PSEXE2ROM">
+                <MenuItem Header="Download v1.0.2" x:Name="DownloadPSEXE2ROM">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="PSX 80 Minute Patcher">
+                <MenuItem Header="Download v2.0" x:Name="DownloadPSX80MP">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            
+        </MenuItem>
+    </MenuItem>
+</Menu>

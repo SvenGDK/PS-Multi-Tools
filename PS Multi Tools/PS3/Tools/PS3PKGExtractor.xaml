@@ -1,0 +1,19 @@
+﻿<Window x:Class="PS3PKGExtractor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PS3 PKG Extractor" Height="350" Width="500" ResizeMode="CanMinimize" Background="#2D2D30" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="BrowsePKGButton" Content="Browse" HorizontalAlignment="Left" Margin="315,33,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select a .pkg file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Image x:Name="PKGICONImage" HorizontalAlignment="Left" Height="176" Margin="100,70,0,0" VerticalAlignment="Top" Width="320"/>
+        <TextBlock x:Name="ExtractProgressTextBlock" HorizontalAlignment="Left" Margin="10,255,0,0" TextWrapping="Wrap" Text="Progress :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <ProgressBar x:Name="ExtractProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,279,0,0" VerticalAlignment="Top" Width="458"/>
+        <Button x:Name="ExtractButton" Content="Extract" HorizontalAlignment="Left" Margin="394,33,0,0" VerticalAlignment="Top" Width="74"/>
+
+    </Grid>
+</Window>

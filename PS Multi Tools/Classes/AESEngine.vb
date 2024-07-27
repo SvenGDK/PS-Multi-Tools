@@ -21,6 +21,8 @@ Public Class AESEngine
         Return encryptedData
     End Function
 
+#Disable Warning BC40000 ' Type or member is obsolete
+
     Public Shared Function Encrypt(clearText As String, Password As String, cipherMode As CipherMode, paddingMode As PaddingMode) As String
         Dim clearBytes As Byte() = Text.Encoding.Unicode.GetBytes(clearText)
         Dim pdb As New PasswordDeriveBytes(Password, New Byte() {&H49, &H76, &H61, &H6E, &H20, &H4D, &H65, &H64, &H76, &H65, &H64, &H65, &H76})
@@ -109,7 +111,9 @@ Public Class AESEngine
 
     Public Shared Function Decrypt(cipherData As Byte(), Password As String, cipherMode As CipherMode, paddingMode As PaddingMode) As Byte()
         Dim pdb As New PasswordDeriveBytes(Password, New Byte() {&H49, &H76, &H61, &H6E, &H20, &H4D, &H65, &H64, &H76, &H65, &H64, &H65, &H76})
+
         Return Decrypt(cipherData, pdb.GetBytes(32), pdb.GetBytes(16), cipherMode, paddingMode)
+
     End Function
 
     Public Shared Sub Decrypt(fileIn As String, fileOut As String, Password As String, cipherMode As CipherMode, paddingMode As PaddingMode)
@@ -138,5 +142,7 @@ Public Class AESEngine
         cs.Close()
         fsIn.Close()
     End Sub
+
+#Enable Warning BC40000 ' Type or member is obsolete
 
 End Class

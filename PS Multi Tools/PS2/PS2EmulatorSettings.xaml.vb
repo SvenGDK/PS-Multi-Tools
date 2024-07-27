@@ -2,7 +2,7 @@
 
 Public Class PS2EmulatorSettings
 
-    Dim PCSX2Config As New psmt_lib.INI.IniFile(FileIO.FileSystem.CurrentDirectory + "\System\Emulators\PCSX2\inis\PCSX2_ui.ini")
+    Dim PCSX2Config As New INI.IniFile(FileIO.FileSystem.CurrentDirectory + "\System\Emulators\PCSX2\inis\PCSX2_ui.ini")
 
     Private Sub PS2EmulatorSettings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\inis\PCSX2_ui.ini") Then

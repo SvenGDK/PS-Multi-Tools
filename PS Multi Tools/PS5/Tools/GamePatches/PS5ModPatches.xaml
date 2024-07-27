@@ -1,0 +1,30 @@
+﻿<Window x:Class="PS5ModPatches"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="PS5 Unofficial Patches" Height="650" Width="1000" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="List of available patches using illusion's libhijacker" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="800" FontWeight="Bold"/>
+        <ListView x:Name="PatchesListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,36,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="950" Height="200">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Platform" Width="100" DisplayMemberBinding="{Binding Platform}"/>
+                    <GridViewColumn Header="Game Title" Width="200" DisplayMemberBinding="{Binding GameTitle}"/>
+                    <GridViewColumn Header="Game Version" Width="100" DisplayMemberBinding="{Binding RequiredVersion}"/>
+                    <GridViewColumn Header="Patch Details" Width="250" DisplayMemberBinding="{Binding PatchDetails}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="StartButton" Content="Start libhijacker" HorizontalAlignment="Left" Margin="795,241,0,0" VerticalAlignment="Top" Width="165" Height="25"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="950" Height="247" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,271,0,0" TextWrapping="NoWrap" Text="Logs" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="800" FontWeight="Bold"/>
+        <Button x:Name="StopLibhijackerButton" Content="Stop libhijacker" HorizontalAlignment="Left" Margin="795,549,0,0" VerticalAlignment="Top" Width="165" Height="25" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,549,0,0" TextWrapping="NoWrap" Text="Status:" VerticalAlignment="Top" Foreground="White" Width="50" FontSize="14"/>
+        <TextBlock x:Name="DaemonStatusTextBlock" HorizontalAlignment="Left" Margin="65,549,0,0" TextWrapping="NoWrap" Text="Not running" VerticalAlignment="Top" Foreground="#FFFF3F00" Width="715" FontSize="14"/>
+        <Button Content="Clear Log" HorizontalAlignment="Left" Margin="880,579,0,0" VerticalAlignment="Top" Width="80"/>
+
+    </Grid>
+</Window>

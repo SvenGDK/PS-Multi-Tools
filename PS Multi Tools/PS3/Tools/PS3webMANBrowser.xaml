@@ -1,0 +1,13 @@
+﻿<Window x:Class="PS3webMANBrowser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="webMAN MOD Web Interface" Height="720" Width="1280" Background="#2D2D30">
+    <Grid>
+        <wv2:WebView2 x:Name="WebMANWebView" Margin="0,0,0,0" Source="https://google.com"/>
+    </Grid>
+</Window>

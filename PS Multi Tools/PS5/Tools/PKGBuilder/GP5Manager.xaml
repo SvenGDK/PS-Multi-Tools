@@ -1,0 +1,227 @@
+﻿<Window x:Class="GP5Manager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Title="GP5 Manager" Height="785" Width="1595" Background="#FF252525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Menu Height="20" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Width="125">
+                    <MenuItem Header="Empty GP5 File" x:Name="NewBlankFileMenuItem"/>
+                    <MenuItem Header="Application GP5">
+                        <MenuItem Header="Empty project" x:Name="NewApplicationFileMenuItem"></MenuItem>
+                        <MenuItem Header="Simple app from directory" x:Name="NewAppFromFolderMenuItem"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Additional Content GP5" x:Name="NewAdditionalContentFileMenuItem"/>
+                </MenuItem>
+                <MenuItem Header="Load" Width="125" x:Name="LoadFileMenuItem"></MenuItem>
+                <MenuItem Header="Save" Width="125" x:Name="SaveFileMenuItem"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="General">
+                <MenuItem Header="Supported Languages" x:Name="OpenSupportedLanguagesMenuItem"></MenuItem>
+                <MenuItem Header="Refresh" x:Name="RefreshMenuItem"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Build">
+                <MenuItem Header="Blu-ray disc image + PKG" x:Name="BuildBDMenuItem"></MenuItem>
+                <MenuItem Header="Blu-ray DL disc image + PKG" x:Name="BuildBD66MenuItem"></MenuItem>
+                <MenuItem Header="Blu-ray UHD disc image + PKG" x:Name="BuildBD100MenuItem"></MenuItem>
+                <MenuItem Header="PKG only" x:Name="BuildPKGMenuItem"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Verify">
+                <MenuItem Header="Verify PKG" x:Name="VerifyPKGMenuItem"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="ISO">
+                <MenuItem Header="Write" x:Name="WriteISOMenuItem"></MenuItem>
+                <MenuItem Header="Convert" x:Name="ConvertISOMenuItem"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Info">
+                <MenuItem Header="Show PKG information" x:Name="ShowPKGInfoMenuItem"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+
+            </MenuItem>
+        </Menu>
+        <TabControl Margin="304,39,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="703" Width="550">
+            <TabItem Header="Chunks">
+                <Grid>
+                    <ListView x:Name="ChunksListView" d:ItemsSource="{d:SampleData ItemCount=3}" Height="98" Width="544" HorizontalAlignment="Center" VerticalAlignment="Top" FocusVisualStyle="{x:Null}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" FocusVisualStyle="{x:Null}"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:Name="ChunkTemplate">
+                                <Canvas x:Name="ItemCanvas" Height="70" Width="90" FocusVisualStyle="{x:Null}" Margin="0,0,0,0">
+                                    <Button x:Name="ChunkButton" Click="ChunkButton_Click" Width="90" Height="70" Margin="0,0,0,0" Background="{x:Null}" BorderBrush="#FF2672B4" BorderThickness="2,2,2,2">
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock FontWeight="Bold" Text="{Binding ChunkIDs}" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                            <TextBlock Text="{Binding ChunkLabel}" Margin="0,0" Foreground="#FF0089FF" />
+                                            <TextBlock Text="{Binding ChunkSize}" Foreground="Black"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Canvas>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <ListView x:Name="ChunkFilesFolderListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,133,0,0" Width="544" HorizontalAlignment="Center" VerticalAlignment="Top" Height="542">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding ChunkName}"/>
+                                <GridViewColumn Header="Size" DisplayMemberBinding="{Binding ChunkSize}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button x:Name="ChangeChunkLabelButton" Content="Change name" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Width="125"/>
+                    <Button x:Name="ChangeChunkLanguagesButton" Content="Languages" HorizontalAlignment="Left" Margin="140,103,0,0" VerticalAlignment="Top" Width="125"/>
+                    <Button x:Name="AddChunkButton" Content="Add Chunk" HorizontalAlignment="Left" Margin="270,103,0,0" VerticalAlignment="Top" Width="125"/>
+                    <Button x:Name="DeleteChunkButton" Content="Delete Chunk" HorizontalAlignment="Left" Margin="400,103,0,0" VerticalAlignment="Top" Width="125"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Scenarios">
+                <Grid>
+                    <ListView x:Name="ScenariosListView" d:ItemsSource="{d:SampleData ItemCount=3}" Height="98" Width="549" HorizontalAlignment="Center" VerticalAlignment="Top" FocusVisualStyle="{x:Null}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:Name="ScenarioTemplate">
+                                <Canvas x:Name="ItemCanvas" Height="70" Width="100" FocusVisualStyle="{x:Null}" Margin="0,0,0,0">
+                                    <Button x:Name="ScenarioButton" Click="ScenarioButton_Click" Width="100" Height="70" Margin="0,0,0,0" BorderBrush="#FF2672B4" BorderThickness="2,2,2,2" Background="{x:Null}">
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock FontWeight="Bold" Text="#0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                            <TextBlock Margin="0,0" Foreground="#FF0089FF">Scenario #0</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                </Canvas>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Button x:Name="AddScenarioButton" Content="Add Scenario" HorizontalAlignment="Left" Margin="259,103,0,0" VerticalAlignment="Top" Width="135"/>
+                    <Button x:Name="DeleteScenarioButton" Content="Remove Scenario" HorizontalAlignment="Left" Margin="399,103,0,0" VerticalAlignment="Top" Width="135" IsEnabled="False"/>
+                    <Button x:Name="DeleteScenarioChunkButton" Content="Delete Chunk" HorizontalAlignment="Left" Margin="259,276,0,0" VerticalAlignment="Top" Width="135" IsEnabled="False"/>
+                    <Button x:Name="MoveScenarioChunkUpButton" Content="Move Up" HorizontalAlignment="Left" Margin="399,276,0,0" VerticalAlignment="Top" Width="135" IsEnabled="False"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,166,0,0" TextWrapping="Wrap" Text="Scenario Name:" VerticalAlignment="Top" Foreground="Black" Width="150"/>
+                    <ComboBox x:Name="DefaultScenarioListComboBox" HorizontalAlignment="Left" Margin="165,133,0,0" VerticalAlignment="Top" Width="369"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,136,0,0" TextWrapping="Wrap" Text="Default Scenario:" VerticalAlignment="Top" Foreground="Black" Width="150"/>
+                    <TextBox x:Name="ScenarioLabelTextBox" HorizontalAlignment="Left" Margin="165,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,196,0,0" TextWrapping="Wrap" Text="Scenario Type:" VerticalAlignment="Top" Foreground="Black" Width="150"/>
+                    <ComboBox x:Name="ScenarioTypeComboBox" HorizontalAlignment="Left" Margin="165,193,0,0" VerticalAlignment="Top" Width="369" IsReadOnly="True"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,226,0,0" TextWrapping="Wrap" Text="Initial Chunk Count:" VerticalAlignment="Top" Foreground="Black" Width="150"/>
+                    <TextBox x:Name="ScenarioInitialChunkCountTextBox" HorizontalAlignment="Left" Margin="165,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,254,0,0" TextWrapping="Wrap" Text="Chunks:" VerticalAlignment="Top" Foreground="Black" Width="150"/>
+                    <TextBox x:Name="ScenarioChunksTextBox" HorizontalAlignment="Left" Margin="165,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369"/>
+                    <Button x:Name="MoveScenarioChunkDownButton" Content="Move Down" HorizontalAlignment="Left" Margin="399,306,0,0" VerticalAlignment="Top" Width="135" IsEnabled="False"/>
+                    <ListView x:Name="ScenarioChunksListView" d:ItemsSource="{d:SampleData ItemCount=5}" Height="334" Width="548" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,341,0,0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Chunk ID" DisplayMemberBinding="{Binding ChunkIDs}"/>
+                                <GridViewColumn Header="Chunk Label" DisplayMemberBinding="{Binding ChunkLabel}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <TreeView x:Name="RulesView" Margin="10,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="289" Height="200"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,39,0,0" TextWrapping="Wrap" Text="Rules" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,270,0,0" TextWrapping="Wrap" Text="Node Properties" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="289"/>
+        <TreeView x:Name="PackageView" Margin="859,64,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="350" Height="678"/>
+        <TextBlock HorizontalAlignment="Left" Margin="859,38,0,0" TextWrapping="Wrap" Text="Internal Package View" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="390"/>
+        <ListView x:Name="PackageViewFilesListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="1214,64,0,0" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Height="678">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name"/>
+                    <GridViewColumn Header="Size"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid x:Name="ProjectPropertiesGrid" Margin="10,296,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="446" Width="289" Visibility="Hidden">
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Format:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="64"/>
+            <TextBox x:Name="ProjectFormatTextBox" HorizontalAlignment="Left" Margin="79,12,0,0" TextWrapping="Wrap" Text="gp5" VerticalAlignment="Top" Width="200" IsEnabled="False"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" Text="Version:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="64"/>
+            <TextBox x:Name="ProjectVersionTextBox" HorizontalAlignment="Left" Margin="79,36,0,0" TextWrapping="Wrap" Text="1000" VerticalAlignment="Top" Width="200" IsEnabled="False"/>
+        </Grid>
+        <Grid x:Name="VolumePropertiesGrid" Margin="10,296,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="446" Width="289" Visibility="Hidden">
+            <RadioButton x:Name="VolumeIsApplicationRadioButton" Content="Application" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="230"/>
+            <RadioButton x:Name="VolumeIsAdditionalContentRadioButton" Content="Additional Content" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="230"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="Wrap" Text="Passcode:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="80"/>
+            <TextBox x:Name="VolumePasscodeTextBox" HorizontalAlignment="Left" Margin="95,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,92,0,0" TextWrapping="Wrap" Text="Time:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="80"/>
+            <TextBox x:Name="VolumeTimeTextBox" HorizontalAlignment="Left" Margin="95,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,118,0,0" TextWrapping="Wrap" Text="Entitlement Key:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="VolumeEntitlementKeyTextBox" HorizontalAlignment="Left" Margin="10,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269" IsEnabled="False"/>
+        </Grid>
+        <Grid x:Name="GlobalExcludePropertiesGrid" Margin="10,296,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="408" Width="289" Visibility="Hidden">
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Filename Excludes:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="GlobalFilenameExcludesTextBox" HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,59,0,0" TextWrapping="Wrap" Text="Directory Excludes:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="GlobalDirectoryExcludesTextBox" HorizontalAlignment="Left" Margin="10,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+            <Button x:Name="AddGlobalFileExcludeButton" Content="Add" HorizontalAlignment="Left" Margin="240,35,0,0" VerticalAlignment="Top" Width="45"/>
+            <Button x:Name="AddGlobalDirectoryExcludeButton" Content="Add" HorizontalAlignment="Left" Margin="240,84,0,0" VerticalAlignment="Top" Width="45"/>
+        </Grid>
+        <Grid x:Name="FilePropertiesGrid" Margin="10,296,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="446" Width="289" Visibility="Hidden">
+            <RadioButton x:Name="FileIsSourcePathRadioButton" Content="Source Path" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="230"/>
+            <RadioButton x:Name="FileIsLaunchPathRadioButton" Content="Launch Path" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="230"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="Wrap" Text="Destination Path:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="FileDestinationPathTextBox" HorizontalAlignment="Left" Margin="10,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269"/>
+            <TextBlock x:Name="FileSoureOrLaunchPathTextBlock" HorizontalAlignment="Left" Margin="10,117,0,0" TextWrapping="Wrap" Text="Source Path:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="FileSourcePathTextBox" HorizontalAlignment="Left" Margin="10,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Content Config Label:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269" Margin="0,166,0,0"/>
+            <TextBox x:Name="FileContentConfigLabelTextBox" HorizontalAlignment="Center" Margin="0,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269" IsEnabled="False"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,215,0,0" TextWrapping="Wrap" Text="Chunk:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="FileChunkTextBox" HorizontalAlignment="Center" Margin="0,241,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269"/>
+        </Grid>
+        <Grid x:Name="RootDirPropertiesGrid" Margin="10,296,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="446" Width="289" Visibility="Hidden">
+            <RadioButton x:Name="RootDirIsVirtualRadioButton" Content="Virtual" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+            <RadioButton x:Name="RootDirIsSourcePathRadioButton" Content="Source Path" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+            <RadioButton x:Name="RootDirIsLaunchPathRadioButton" Content="Launch Path" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,93,0,0" TextWrapping="Wrap" Text="Mappings:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="RootDirMappingsTextBox" HorizontalAlignment="Center" Margin="0,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269" IsEnabled="False"/>
+            <TextBlock x:Name="SourceOrLaunchPathTextBlock" HorizontalAlignment="Center" Margin="0,142,0,0" TextWrapping="Wrap" Text="Source Path:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="RootDirSourcePathTextBox" HorizontalAlignment="Center" Margin="0,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,340,0,0" TextWrapping="Wrap" Text="Chunk:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="RootDirChunkTextBox" HorizontalAlignment="Center" Margin="0,366,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,191,0,0" TextWrapping="Wrap" Text="Filename Excludes:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="RootDirFilenameExcludesTextBox" HorizontalAlignment="Left" Margin="10,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,240,0,0" TextWrapping="Wrap" Text="Directory Excludes:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="RootDirDirectoryExcludesTextBox" HorizontalAlignment="Left" Margin="10,266,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+            <Button x:Name="AddRootDirFileNameExcludeButton" Content="Add" HorizontalAlignment="Left" Margin="240,216,0,0" VerticalAlignment="Top" Width="45"/>
+            <Button x:Name="AddRootDirDirectoryNameExcludeButton" Content="Add" HorizontalAlignment="Left" Margin="240,265,0,0" VerticalAlignment="Top" Width="45"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,290,0,0" TextWrapping="Wrap" Text="Filename Includes:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="RootDirFilenameIncludesTextBox" HorizontalAlignment="Left" Margin="10,316,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+            <Button x:Name="AddRootDirFileNameIncludeButton" Content="Add" HorizontalAlignment="Left" Margin="240,315,0,0" VerticalAlignment="Top" Width="45"/>
+            <CheckBox x:Name="RootDirUseRecursiveCheckBox" Content="Recursive" HorizontalAlignment="Left" Margin="185,36,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        </Grid>
+        <Grid x:Name="DirectoryPropertiesGrid" Margin="10,296,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="446" Width="289" Visibility="Hidden">
+            <RadioButton x:Name="DirectoryIsVirtualRadioButton" Content="Virtual" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+            <RadioButton x:Name="DirectoryIsSourcePathRadioButton" Content="Source Path" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+            <RadioButton x:Name="DirectoryIsLaunchPathRadioButton" Content="Launch Path" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,93,0,0" TextWrapping="Wrap" Text="Destination Path:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="DirectoryDestinationPathTextBox" HorizontalAlignment="Center" Margin="0,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269"/>
+            <TextBlock x:Name="DirectorySourceOrLaunchPathTextBlock" HorizontalAlignment="Center" Margin="0,142,0,0" TextWrapping="Wrap" Text="Source Path:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="DirectorySourcePathTextBox" HorizontalAlignment="Center" Margin="0,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Content Config Label:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269" Margin="0,389,0,0"/>
+            <TextBox x:Name="DirectoryContentConfigLabelTextBox" HorizontalAlignment="Center" Margin="0,415,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269" IsEnabled="False"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,340,0,0" TextWrapping="Wrap" Text="Chunk:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="DirectoryChunkTextBox" HorizontalAlignment="Center" Margin="0,366,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,191,0,0" TextWrapping="Wrap" Text="Filename Excludes:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="DirectoryFilenameExcludesTextBox" HorizontalAlignment="Left" Margin="10,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,240,0,0" TextWrapping="Wrap" Text="Directory Excludes:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="DirectoryDirectoryExcludesTextBox" HorizontalAlignment="Left" Margin="10,266,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+            <Button x:Name="AddDirectoryFileNameExcludeButton" Content="Add" HorizontalAlignment="Left" Margin="240,216,0,0" VerticalAlignment="Top" Width="45"/>
+            <Button x:Name="AddDirectoryDirectoryNameExcludeButton" Content="Add" HorizontalAlignment="Left" Margin="240,265,0,0" VerticalAlignment="Top" Width="45"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,290,0,0" TextWrapping="Wrap" Text="Filename Includes:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="269"/>
+            <TextBox x:Name="DirectoryFilenameIncludesTextBox" HorizontalAlignment="Left" Margin="10,316,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+            <Button x:Name="AddDirectoryFileNameIncludeButton" Content="Add" HorizontalAlignment="Left" Margin="240,315,0,0" VerticalAlignment="Top" Width="45"/>
+            <CheckBox x:Name="DirectoryUseRecursiveCheckBox" Content="Recursive" HorizontalAlignment="Left" Margin="185,36,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        </Grid>
+
+    </Grid>
+</Window>

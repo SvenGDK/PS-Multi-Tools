@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PS_Multi_Tools" xmlns:psmt_lib="clr-namespace:psmt_lib;assembly=psmt-lib"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
         Title="PS5 Library" Height="800" Width="1350" Background="#2D2D30" WindowStartupLocation="CenterScreen">
     <Grid>
-        <psmt_lib:PS5Menu x:Name="NewPS5Menu" Height="20" VerticalAlignment="Top"></psmt_lib:PS5Menu>
+        <local:PS5Menu x:Name="NewPS5Menu" Height="20" VerticalAlignment="Top"></local:PS5Menu>
         <wv2:WebView2 x:Name="ContentWebView" HorizontalAlignment="Center" Height="326" Margin="0,87,0,0" VerticalAlignment="Top" Width="830" Source="https://google.com" Visibility="Hidden"/>
         <TabControl Margin="0,21,0,0" Background="{x:Null}" Foreground="White">
             <TabItem Header="Games" FontSize="14" >

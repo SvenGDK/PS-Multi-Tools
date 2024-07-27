@@ -1,6 +1,6 @@
 ﻿Public Class PSPEmulatorSettings
 
-    Dim PPSSPPConfig As New psmt_lib.INI.IniFile(FileIO.FileSystem.CurrentDirectory + "\Emulators\ppsspp\memstick\PSP\SYSTEM\ppsspp.ini")
+    Dim PPSSPPConfig As New INI.IniFile(FileIO.FileSystem.CurrentDirectory + "\Emulators\ppsspp\memstick\PSP\SYSTEM\ppsspp.ini")
 
     Private Sub PSPEmulatorSettings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 

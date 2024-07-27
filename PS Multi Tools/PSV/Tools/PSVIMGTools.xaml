@@ -1,0 +1,50 @@
+﻿<Window x:Class="PSVIMGTools"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PS_Multi_Tools"
+             mc:Ignorable="d" 
+             Height="440" Width="740" Background="#2D2D30" ResizeMode="CanMinimize" Title="PSV IMG Tools" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock x:Name="LockedTextBlock_Copy" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Backup Key :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="BackupKeyTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="250"/>
+        <Rectangle HorizontalAlignment="Left" Height="165" Margin="10,65,0,0" Stroke="White" VerticalAlignment="Top" Width="350"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,100,0,0" TextWrapping="Wrap" Text="Select a .psvimg file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedPSVIMGFileTextBox" HorizontalAlignment="Left" Margin="22,124,0,0" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,147,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="ExtractOutputFolderTextBox" HorizontalAlignment="Left" Margin="22,171,0,0" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowsePKGButton" Content="Browse" HorizontalAlignment="Left" Margin="277,123,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="277,170,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,74,0,0" TextWrapping="Wrap" Text="Extract PSVIMG" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <Rectangle HorizontalAlignment="Left" Height="165" Margin="10,235,0,0" Stroke="White" VerticalAlignment="Top" Width="350"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,271,0,0" TextWrapping="Wrap" Text="Select a .psvmd file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedPKGTextBox_Copy" HorizontalAlignment="Left" Margin="22,295,0,0" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,318,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="OutputFolderTextBox_Copy" HorizontalAlignment="Left" Margin="22,342,0,0" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowsePKGButton_Copy" Content="Browse" HorizontalAlignment="Left" Margin="277,294,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="BrowseOutputFolderButton_Copy" Content="Browse" HorizontalAlignment="Left" Margin="277,341,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,245,0,0" TextWrapping="Wrap" Text="Decrypt PSVMD" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,271,0,0" TextWrapping="Wrap" Text="Select a .psvmd file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedPSVMDDecryptFileTextBox" HorizontalAlignment="Left" Margin="22,295,0,0" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,318,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="DecryptOutputFolderTextBox" HorizontalAlignment="Left" Margin="22,342,0,0" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowsePKGButton_Copy1" Content="Browse" HorizontalAlignment="Left" Margin="277,294,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="BrowseOutputFolderButton_Copy1" Content="Browse" HorizontalAlignment="Left" Margin="277,341,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,245,0,0" TextWrapping="Wrap" Text="Decrypt PSVMD" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <Rectangle HorizontalAlignment="Left" Height="272" Margin="365,65,0,0" Stroke="White" VerticalAlignment="Top" Width="350"/>
+        <TextBlock HorizontalAlignment="Left" Margin="377,100,0,0" TextWrapping="Wrap" Text="Select a decrypted metadata file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedMetadataFileTextBox" HorizontalAlignment="Left" Margin="377,124,0,0" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="377,241,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="CreateOutputFolderTextBox" HorizontalAlignment="Left" Margin="377,265,0,0" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowseMetadataFileButton" Content="Browse" HorizontalAlignment="Left" Margin="632,123,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="BrowseCreateOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="632,264,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock HorizontalAlignment="Left" Margin="377,74,0,0" TextWrapping="Wrap" Text="Create PSVIMG" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="377,147,0,0" TextWrapping="Wrap" Text="Specifiy a name if you have no metadata :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedNameTextBox" HorizontalAlignment="Left" Margin="377,171,0,0" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="377,194,0,0" TextWrapping="Wrap" Text="Select your input folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="CreateInputFolderTextBox" HorizontalAlignment="Left" Margin="377,218,0,0" VerticalAlignment="Top" Width="250"/>
+        <Button x:Name="BrowseCreateInputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="632,217,0,0" VerticalAlignment="Top" Width="70"/>
+
+    </Grid>
+</Window>

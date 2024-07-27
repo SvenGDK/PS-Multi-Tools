@@ -4,11 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
-        xmlns:psmt_lib="clr-namespace:psmt_lib;assembly=psmt-lib"
         mc:Ignorable="d"
         Title="PS2 Library" Height="650" Width="1350" Background="#2D2D30" ResizeMode="CanMinimize">
     <Grid>
-        <psmt_lib:PS2Menu x:Name="NewPS2Menu" Height="20" VerticalAlignment="Top"></psmt_lib:PS2Menu>
+        <local:PS2Menu x:Name="NewPS2Menu" Height="20" VerticalAlignment="Top"></local:PS2Menu>
         <ListView x:Name="GamesListView" Background="{x:Null}" FocusVisualStyle="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=14}" VirtualizingPanel.VirtualizationMode="Recycling" Height="300" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" Margin="5,30,5,0" >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

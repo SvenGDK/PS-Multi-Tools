@@ -10,9 +10,8 @@ Imports Microsoft.Web.WebView2.Core
 Imports MS.Internal
 Imports Newtonsoft.Json
 Imports PS_Multi_Tools.INI
+Imports PS_Multi_Tools.PS5ParamClass
 Imports PS_Multi_Tools.Structures
-Imports psmt_lib
-Imports psmt_lib.PS5ParamClass
 
 Public Class PS5Library
 
