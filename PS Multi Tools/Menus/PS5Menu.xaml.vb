@@ -378,7 +378,7 @@ Public Class PS5Menu
     Private Sub DownloadetaHEN_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHEN.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/LightningMods/etaHEN/releases/download/1.7b/etaHEN-1.7B.bin") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/LightningMods/etaHEN/releases/download/1.08b/etaHEN-1.8B.bin") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If

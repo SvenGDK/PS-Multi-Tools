@@ -919,13 +919,11 @@
         </Grid>
 
         <StatusBar Height="27" VerticalAlignment="Bottom" Background="#FFE2E2E2" FontFamily="Calibri" Foreground="Black" FontSize="14">
-            <StatusBarItem/>
             <StatusBarItem>
                 <StatusBarItem.Content>
                     <Button x:Name="CheckPSMTUpdateButton" Content="Check for PS Multi Tools Updates" FontSize="12" Width="175" Height="20" Margin="5,0,0,0"/>
                 </StatusBarItem.Content>
             </StatusBarItem>
-            <StatusBarItem/>
         </StatusBar>
 
     </Grid>

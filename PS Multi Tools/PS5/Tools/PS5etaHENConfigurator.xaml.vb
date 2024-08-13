@@ -35,13 +35,6 @@ Public Class PS5etaHENConfigurator
                     ConfigStatusTextBlock.Text = "etaHEN config found" + " - " + ConfigDateTime.ToString()
 
                     Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
-                    If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "libhijacker_cheats")) Then
-                        If etaHENConfig.IniReadValue("Settings", "libhijacker_cheats") = "0" Then
-                            UseCheatsCheckBox.IsChecked = False
-                        Else
-                            UseCheatsCheckBox.IsChecked = True
-                        End If
-                    End If
                     If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "PS5Debug")) Then
                         If etaHENConfig.IniReadValue("Settings", "PS5Debug") = "0" Then
                             PS5DebugAutoLoadCheckBox.IsChecked = False
@@ -83,6 +76,52 @@ Public Class PS5etaHENConfigurator
                         Else
                             DPIServiceCheckBox.IsChecked = True
                         End If
+                    End If
+                    If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "Klog")) Then
+                        If etaHENConfig.IniReadValue("Settings", "Klog") = "0" Then
+                            KernelLogCheckBox.IsChecked = False
+                        Else
+                            KernelLogCheckBox.IsChecked = True
+                        End If
+                    End If
+                    If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "ALLOW_FTP_DEV_ACCESS")) Then
+                        If etaHENConfig.IniReadValue("Settings", "ALLOW_FTP_DEV_ACCESS") = "0" Then
+                            FTPDevAccessCheckBox.IsChecked = False
+                        Else
+                            FTPDevAccessCheckBox.IsChecked = True
+                        End If
+                    End If
+                    If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "Util_rest_kill")) Then
+                        If etaHENConfig.IniReadValue("Settings", "Util_rest_kill") = "0" Then
+                            KillUtilDaemonCheckBox.IsChecked = False
+                        Else
+                            KillUtilDaemonCheckBox.IsChecked = True
+                        End If
+                    End If
+                    If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "Game_rest_kill")) Then
+                        If etaHENConfig.IniReadValue("Settings", "Game_rest_kill") = "0" Then
+                            KillOpenGameCheckBox.IsChecked = False
+                        Else
+                            KillOpenGameCheckBox.IsChecked = True
+                        End If
+                    End If
+
+                    If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "StartOption")) Then
+                        Select Case etaHENConfig.IniReadValue("Settings", "StartOption")
+                            Case "0"
+                                StartupOptionComboBox.SelectedIndex = 0
+                            Case "1"
+                                StartupOptionComboBox.SelectedIndex = 1
+                            Case "2"
+                                StartupOptionComboBox.SelectedIndex = 2
+                            Case "3"
+                                StartupOptionComboBox.SelectedIndex = 3
+                            Case "4"
+                                StartupOptionComboBox.SelectedIndex = 4
+                        End Select
+                    End If
+                    If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "Rest_Mode_Delay_Seconds")) Then
+                        ShellUIPatchDelayTextBox.Text = etaHENConfig.IniReadValue("Settings", "Rest_Mode_Delay_Seconds")
                     End If
 
                 End If
@@ -130,13 +169,6 @@ Public Class PS5etaHENConfigurator
             Dim ConfigDateTime As Date = ConfigInfo.LastWriteTime
             ConfigStatusTextBlock.Text = "etaHEN config found" + " - " + ConfigDateTime.ToString()
 
-            If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "libhijacker_cheats")) Then
-                If etaHENConfig.IniReadValue("Settings", "libhijacker_cheats") = "0" Then
-                    UseCheatsCheckBox.IsChecked = False
-                Else
-                    UseCheatsCheckBox.IsChecked = True
-                End If
-            End If
             If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "PS5Debug")) Then
                 If etaHENConfig.IniReadValue("Settings", "PS5Debug") = "0" Then
                     PS5DebugAutoLoadCheckBox.IsChecked = False
@@ -178,6 +210,52 @@ Public Class PS5etaHENConfigurator
                 Else
                     DPIServiceCheckBox.IsChecked = True
                 End If
+            End If
+            If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "Klog")) Then
+                If etaHENConfig.IniReadValue("Settings", "Klog") = "0" Then
+                    KernelLogCheckBox.IsChecked = False
+                Else
+                    KernelLogCheckBox.IsChecked = True
+                End If
+            End If
+            If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "ALLOW_FTP_DEV_ACCESS")) Then
+                If etaHENConfig.IniReadValue("Settings", "ALLOW_FTP_DEV_ACCESS") = "0" Then
+                    FTPDevAccessCheckBox.IsChecked = False
+                Else
+                    FTPDevAccessCheckBox.IsChecked = True
+                End If
+            End If
+            If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "Util_rest_kill")) Then
+                If etaHENConfig.IniReadValue("Settings", "Util_rest_kill") = "0" Then
+                    KillUtilDaemonCheckBox.IsChecked = False
+                Else
+                    KillUtilDaemonCheckBox.IsChecked = True
+                End If
+            End If
+            If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "Game_rest_kill")) Then
+                If etaHENConfig.IniReadValue("Settings", "Game_rest_kill") = "0" Then
+                    KillOpenGameCheckBox.IsChecked = False
+                Else
+                    KillOpenGameCheckBox.IsChecked = True
+                End If
+            End If
+
+            If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "StartOption")) Then
+                Select Case etaHENConfig.IniReadValue("Settings", "StartOption")
+                    Case "0"
+                        StartupOptionComboBox.SelectedIndex = 0
+                    Case "1"
+                        StartupOptionComboBox.SelectedIndex = 1
+                    Case "2"
+                        StartupOptionComboBox.SelectedIndex = 2
+                    Case "3"
+                        StartupOptionComboBox.SelectedIndex = 3
+                    Case "4"
+                        StartupOptionComboBox.SelectedIndex = 4
+                End Select
+            End If
+            If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "Rest_Mode_Delay_Seconds")) Then
+                ShellUIPatchDelayTextBox.Text = etaHENConfig.IniReadValue("Settings", "Rest_Mode_Delay_Seconds")
             End If
         End If
     End Sub
@@ -240,20 +318,6 @@ Public Class PS5etaHENConfigurator
         End If
     End Sub
 
-    Private Sub UseCheatsCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles UseCheatsCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
-            etaHENConfig.IniWriteValue("Settings", "libhijacker_cheats", "1")
-        End If
-    End Sub
-
-    Private Sub UseCheatsCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles UseCheatsCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
-            etaHENConfig.IniWriteValue("Settings", "libhijacker_cheats", "0")
-        End If
-    End Sub
-
     Private Sub AllowDataInSandboxCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles AllowDataInSandboxCheckBox.Checked
         If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
             Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
@@ -279,6 +343,81 @@ Public Class PS5etaHENConfigurator
         If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
             Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "DPI", "0")
+        End If
+    End Sub
+
+    Private Sub KernelLogCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles KernelLogCheckBox.Checked
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+            etaHENConfig.IniWriteValue("Settings", "Klog", "1")
+        End If
+    End Sub
+
+    Private Sub KernelLogCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles KernelLogCheckBox.Unchecked
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+            etaHENConfig.IniWriteValue("Settings", "Klog", "0")
+        End If
+    End Sub
+
+    Private Sub KillUtilDaemonCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles KillUtilDaemonCheckBox.Checked
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+            etaHENConfig.IniWriteValue("Settings", "Util_rest_kill", "1")
+        End If
+    End Sub
+
+    Private Sub KillUtilDaemonCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles KillUtilDaemonCheckBox.Unchecked
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+            etaHENConfig.IniWriteValue("Settings", "Util_rest_kill", "0")
+        End If
+    End Sub
+
+    Private Sub KillOpenGameCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles KillOpenGameCheckBox.Checked
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+            etaHENConfig.IniWriteValue("Settings", "Game_rest_kill", "1")
+        End If
+    End Sub
+
+    Private Sub KillOpenGameCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles KillOpenGameCheckBox.Unchecked
+        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+            etaHENConfig.IniWriteValue("Settings", "Game_rest_kill", "0")
+        End If
+    End Sub
+
+    Private Sub StartupOptionComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles StartupOptionComboBox.SelectionChanged
+        If e.AddedItems IsNot Nothing Then
+            Dim SelectedCBItem As ComboBoxItem = CType(e.AddedItems(0), ComboBoxItem)
+            Select Case SelectedCBItem.Content.ToString()
+                Case "None"
+                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                        etaHENConfig.IniWriteValue("Settings", "StartOption", "0")
+                    End If
+                Case "Home Menu"
+                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                        etaHENConfig.IniWriteValue("Settings", "StartOption", "1")
+                    End If
+                Case "Settings"
+                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                        etaHENConfig.IniWriteValue("Settings", "StartOption", "2")
+                    End If
+                Case "Toolbox"
+                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                        etaHENConfig.IniWriteValue("Settings", "StartOption", "3")
+                    End If
+                Case "Itemzflow"
+                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                        etaHENConfig.IniWriteValue("Settings", "StartOption", "4")
+                    End If
+            End Select
         End If
     End Sub
 
