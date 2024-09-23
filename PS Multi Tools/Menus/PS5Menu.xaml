@@ -54,7 +54,7 @@
                 </MenuItem>
             </MenuItem>
         </MenuItem>
-        <MenuItem Header="4.51+">
+        <MenuItem Header="7.61 and below">
             <MenuItem Header="Mast1c0re Exploit">
                 <MenuItem Header="Learn more at GitHub" x:Name="OpenMast1c0reGitHub">
                     <MenuItem.Icon>
@@ -62,8 +62,6 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-        </MenuItem>
-        <MenuItem Header="7.61 and below">
             <MenuItem Header="JAR Loader (PoC)">
                 <MenuItem Header="Download v2023-10-27" x:Name="DownloadJARLoader">
                     <MenuItem.Icon>
@@ -71,6 +69,18 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Learn more at GitHub" x:Name="OpenJARLoaderGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="UMTX Jailbreak">
+                <MenuItem Header="Download v1.1" x:Name="DownloadUMTXJailbreak">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Learn more at GitHub" x:Name="OpenUMTXJailbreakGitHub">
                     <MenuItem.Icon>
                         <Image Source="/Images/github-mark.png"/>
                     </MenuItem.Icon>
@@ -149,48 +159,48 @@
         </MenuItem>
 
         <MenuItem Header="Homebrew">
-            <MenuItem Header="Debug Settings" x:Name="DownloadDebugPKG">
+            <MenuItem Header="Debug Settings PKG" x:Name="DownloadDebugPKG">
                 <MenuItem.Icon>
                     <Image Source="/Images/download.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Game Hub Preview" x:Name="DownloadGameHubPreviewPKG">
+            <MenuItem Header="Game Hub (Preview) PKG" x:Name="DownloadGameHubPreviewPKG">
                 <MenuItem.Icon>
                     <Image Source="/Images/download.png"/>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="Homebrew Store by LightningMods">
-                <MenuItem Header="Download R2" x:Name="DownloadHomebrewStore">
+                <MenuItem Header="Download R2 PKG" x:Name="DownloadHomebrewStore">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Internet Browser" x:Name="DownloadInternetBrowserPKG">
+            <MenuItem Header="Internet Browser PKG" x:Name="DownloadInternetBrowserPKG">
                 <MenuItem.Icon>
                     <Image Source="/Images/download.png"/>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="Itemzflow by LightningMods">
-                <MenuItem Header="Download v1.06" x:Name="DownloadItemzflow">
+                <MenuItem Header="Download v1.06 PKG" x:Name="DownloadItemzflow">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="PS Multi Tools Host" x:Name="DownloadPSMTPKG">
+            <MenuItem Header="PS Multi Tools Auto-Exploit Host PKG" x:Name="DownloadPSMTPKG">
                 <MenuItem.Icon>
                     <Image Source="/Images/download.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="PS5-Xplorer by Lapy">
+            <MenuItem Header="PS5-Xplorer PKG by Lapy">
                 <MenuItem Header="Download v1.02" x:Name="DownloadPS5Xplorer">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Store Preview" x:Name="DownloadStorePreviewPKG">
+            <MenuItem Header="Store (Preview) PKG" x:Name="DownloadStorePreviewPKG">
                 <MenuItem.Icon>
                     <Image Source="/Images/download.png"/>
                 </MenuItem.Icon>
@@ -199,7 +209,7 @@
 
         <MenuItem Header="Payloads">
             <MenuItem Header="ELFLdr by john-tornblom">
-                <MenuItem Header="Download v0.14" x:Name="DownloadELFLdr">
+                <MenuItem Header="Download v0.14.1" x:Name="DownloadELFLdr">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -247,7 +257,14 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="FTPSrv by john-tornblom">
-                <MenuItem Header="Download v0.9" x:Name="DownloadFTPSrv">
+                <MenuItem Header="Download v0.10.2" x:Name="DownloadFTPSrv">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="KLogSrv by john-tornblom">
+                <MenuItem Header="Download v0.4.1" x:Name="DownloadKLogSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -270,14 +287,14 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="SHSrv by john-tornblom">
-                <MenuItem Header="Download v0.8" x:Name="DownloadSHSrv">
+                <MenuItem Header="Download v0.10.1" x:Name="DownloadSHSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="WebSrv by john-tornblom">
-                <MenuItem Header="Download v0.8" x:Name="DownloadWebSrv">
+                <MenuItem Header="Download v0.10.1" x:Name="DownloadWebSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
