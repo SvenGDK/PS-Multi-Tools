@@ -420,10 +420,19 @@ Public Class PS5Menu
         End If
     End Sub
 
-    Private Sub DownloadFetchPKG_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFetchPKG.Click
+    Private Sub DownloadFetchPKGPS5_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFetchPKGPS5.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
         If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/fetchpkg_v0.2.elf") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadFetchPKGWin_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFetchPKGWin.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/fetchpkg_v0.2_Win64.zip") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -474,6 +483,87 @@ Public Class PS5Menu
         End If
     End Sub
 
+    Private Sub DownloadELFLdrGitHub_Click(sender As Object, e As RoutedEventArgs) Handles DownloadELFLdrGitHub.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/ps5-payload-dev/elfldr/releases/latest/download/Payload.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadFetchPKGPS5Github_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFetchPKGPS5Github.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/ps5-payload-dev/fetchpkg/releases/latest/download/PS5.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadFetchPKGWinGithub_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFetchPKGWinGithub.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/ps5-payload-dev/fetchpkg/releases/latest/download/Win64.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadFTPSrvGithub_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFTPSrvGithub.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/ps5-payload-dev/ftpsrv/releases/latest/download/Payload.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadKLogSrvGithub_Click(sender As Object, e As RoutedEventArgs) Handles DownloadKLogSrvGithub.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/ps5-payload-dev/klogsrv/releases/latest/download/Payload.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadOffActGithub_Click(sender As Object, e As RoutedEventArgs) Handles DownloadOffActGithub.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/ps5-payload-dev/offact/releases/latest/download/Payload.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadSHSrvGithub_Click(sender As Object, e As RoutedEventArgs) Handles DownloadSHSrvGithub.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/ps5-payload-dev/shsrv/releases/latest/download/Payload.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadWebSrvGithub_Click(sender As Object, e As RoutedEventArgs) Handles DownloadWebSrvGithub.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/ps5-payload-dev/websrv/releases/latest/download/Payload.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadJARFTPServer_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARFTPServer.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v1.1/ftp-server-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
 #End Region
 
 #Region "Firmwares"
@@ -519,7 +609,7 @@ Public Class PS5Menu
     Private Sub DownloadPS5BDJBElfLoader_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPS5BDJBElfLoader.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/PS5_BD-JB_ELF_Loader_v1.6.1.iso") = False Then
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/PS5_BD-JB_ELF_Loader_v1.6.2.iso") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -553,7 +643,7 @@ Public Class PS5Menu
     Private Sub DownloadJARLoader_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARLoader.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v20231027/ps5-jar-loader.iso") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v1.1/ps5-jar-loader-1.1.iso") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -562,7 +652,7 @@ Public Class PS5Menu
     Private Sub DownloadUMTXJailbreak_Click(sender As Object, e As RoutedEventArgs) Handles DownloadUMTXJailbreak.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/PS5Dev/PS5-UMTX-Jailbreak/archive/refs/tags/v1.1.zip") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/PS5Dev/PS5-UMTX-Jailbreak/archive/refs/tags/v1.2.zip") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -643,5 +733,6 @@ Public Class PS5Menu
     End Sub
 
 #End Region
+
 
 End Class

@@ -62,8 +62,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="JAR Loader (PoC)">
-                <MenuItem Header="Download v2023-10-27" x:Name="DownloadJARLoader">
+            <MenuItem Header="JAR Loader">
+                <MenuItem Header="Download v1.1" x:Name="DownloadJARLoader">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -75,7 +75,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="UMTX Jailbreak">
-                <MenuItem Header="Download v1.1" x:Name="DownloadUMTXJailbreak">
+                <MenuItem Header="Download v1.2" x:Name="DownloadUMTXJailbreak">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -124,7 +124,7 @@
     </MenuItem>
     <MenuItem Header="Downloads">
         <MenuItem Header="Exploits">
-            <MenuItem Header="Download PS5 BD-JB ELF Loader v1.6.1" x:Name="DownloadPS5BDJBElfLoader">
+            <MenuItem Header="Download PS5 BD-JB ELF Loader v1.6.2" x:Name="DownloadPS5BDJBElfLoader">
                 <MenuItem.Icon>
                     <Image Source="/Images/download.png"/>
                 </MenuItem.Icon>
@@ -209,7 +209,12 @@
 
         <MenuItem Header="Payloads">
             <MenuItem Header="ELFLdr by john-tornblom">
-                <MenuItem Header="Download v0.14.1" x:Name="DownloadELFLdr">
+                <MenuItem Header="Download v0.15" x:Name="DownloadELFLdr">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest build from GitHub" x:Name="DownloadELFLdrGitHub">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -223,7 +228,22 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="FetchPKG by john-tornblom">
-                <MenuItem Header="Download v0.2" x:Name="DownloadFetchPKG">
+                <MenuItem Header="Download v0.2 PS5 Payload" x:Name="DownloadFetchPKGPS5">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download v0.2 Windows Application" x:Name="DownloadFetchPKGWin">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest payload build from GitHub" x:Name="DownloadFetchPKGPS5Github">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest payload build from GitHub" x:Name="DownloadFetchPKGWinGithub">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -262,6 +282,18 @@
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Download latest build from GitHub" x:Name="DownloadFTPSrvGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FTP Server for JAR Loader">
+                <MenuItem Header="Download v1.0 Snapshot" x:Name="DownloadJARFTPServer">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="KLogSrv by john-tornblom">
                 <MenuItem Header="Download v0.4.1" x:Name="DownloadKLogSrv">
@@ -269,9 +301,19 @@
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Download latest build from GitHub" x:Name="DownloadKLogSrvGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="OffAct by john-tornblom">
                 <MenuItem Header="Download v0.1" x:Name="DownloadOffAct">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest build from GitHub" x:Name="DownloadOffActGithub">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -292,9 +334,19 @@
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Download latest build from GitHub" x:Name="DownloadSHSrvGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="WebSrv by john-tornblom">
-                <MenuItem Header="Download v0.10.1" x:Name="DownloadWebSrv">
+                <MenuItem Header="Download v0.11" x:Name="DownloadWebSrv">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download latest build from GitHub" x:Name="DownloadWebSrvGithub">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
