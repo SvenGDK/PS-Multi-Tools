@@ -5,7 +5,7 @@
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
-  <summary>v14.4 contains following tools</summary>
+  <summary>v14.5 contains following tools</summary>
   
 ## General:
 - FTP Browser

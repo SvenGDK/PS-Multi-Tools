@@ -3,14 +3,6 @@ Imports PS_Multi_Tools.INI
 
 Public Class PSSettings
 
-    Private Sub ShowKlogButton_Click(sender As Object, e As RoutedEventArgs) Handles ShowKlogButton.Click
-        Dim NewLogWindow As New PS5Log() With {.ShowActivated = True}
-        If Not String.IsNullOrEmpty(PS5IPTextBox.Text) Then
-            NewLogWindow.PS5IPTextBox.Text = PS5IPTextBox.Text
-        End If
-        NewLogWindow.Show()
-    End Sub
-
     Private Sub LoadIconCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles LoadIconCheckBox.Checked
         Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
         MainConfig.IniWriteValue("PS5 Library", "LoadIcons", "True")
@@ -81,23 +73,6 @@ Public Class PSSettings
             If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Tools", "Port")) Then
                 PS5FTPPortTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "Port")
             End If
-        End If
-    End Sub
-
-    Private Sub GetPubToolsButton_Click(sender As Object, e As RoutedEventArgs) Handles GetPubToolsButton.Click
-        If MsgBox("Click on :" + vbCrLf + vbCrLf + "[<> Code] -> [Download ZIP]" + vbCrLf + vbCrLf + "Extract content of ZIP in the ""Tools\PS5"" folder where PS Multi Tools is located.", MsgBoxStyle.Information) = MsgBoxResult.Ok Then
-            Dim NewProcessStartInfo As New ProcessStartInfo("https://github.com/florinsdistortedvision/prospero-publishing-tools")
-            Process.Start(NewProcessStartInfo)
-        End If
-    End Sub
-
-    Private Sub CheckForMainUpdateButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckForMainUpdateButton.Click
-        If Utils.IsPSMultiToolsUpdateAvailable() Then
-            If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
-                Utils.DownloadAndExecuteUpdater()
-            End If
-        Else
-            MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
         End If
     End Sub
 

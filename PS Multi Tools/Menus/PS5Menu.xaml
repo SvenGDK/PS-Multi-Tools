@@ -7,39 +7,33 @@
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="500">
+    
     <MenuItem Header="Library"/>
-    <MenuItem Header="Tools">
-        <MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems"></MenuItem>
+    <MenuItem x:Name="ToolsMenuItem" Header="Tools">
         <MenuItem Header="Blu Ray Disc Burner" x:Name="OpenBDBurnerMenuItem"/>
+        <MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems"></MenuItem>
+        <MenuItem Header="Clear error history on PS5 (Requires running FTP server)" x:Name="ClearErrorHistoryMenuItem"/>
+        <MenuItem Header="Dump RCO files (Requires running FTP server)" x:Name="OpenRCODumperMenuItem"/>
+        <MenuItem Header="etaHEN Configurator" x:Name="OpenetaHENConfiguratorMenuItem"/>
+        <MenuItem Header="Extract RCO files" x:Name="OpenRCOExtractorMenuItem"/>
         <MenuItem Header="Fake sign SELF files" x:Name="OpenMakefSELFMenuItem"/>
-        <MenuItem Header="Manifest Editor" x:Name="OpenManifestEditorMenuItem"/>
-        <MenuItem Header="Param Editor" x:Name="OpenParamEditorMenuItem"/>
+        <MenuItem Header="FTP Browser" x:Name="OpenFTPBrowserMenuItem"/>
+        <MenuItem Header="FTP Grabber (Dumper)" x:Name="OpenFTPGrabberMenuItem"/>
+        <MenuItem Header="GP5 Project Creator" x:Name="OpenGP5ManagerMenuItem"/>
+        <MenuItem Header="Kernel Log Viewer" x:Name="OpenKLogViewerMenuItem"/>
+        <MenuItem Header="Manifest JSON Editor" x:Name="OpenManifestEditorMenuItem"/>
+        <MenuItem Header="Notifications Manager" x:Name="OpenNotificationManagerMenuItem"/>
+        <MenuItem Header="Param JSON Editor" x:Name="OpenParamEditorMenuItem"/>
         <MenuItem Header="Payload &amp; Mast1c0re PS2 Game Sender" x:Name="SenderMenuItem"/>
+        <MenuItem Header="PKG Builder" x:Name="OpenPKGBuilderMenuItem"/>
         <MenuItem Header="PKG Merger" x:Name="OpenPKGMergerMenuItem"/>
         <MenuItem Header="PKG Sender" x:Name="OpenPKGSenderMenuItem"/>
-        <MenuItem Header="Build / Create">
-            <MenuItem Header="GP5 Project Creator" x:Name="OpenGP5ManagerMenuItem"/>
-            <MenuItem Header="GP5 PKG Builder" x:Name="OpenPKGBuilderMenuItem"/>
-            <MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem"></MenuItem>
-            <MenuItem Header="Shortcut PKG Creator" x:Name="OpenShortcutPKGCreatorMenuItem"/>
-        </MenuItem>
-        <MenuItem Header="Converters">
-            <MenuItem Header="WAV &lt;-&gt; AT9" x:Name="OpenAudioConverterMenuItem"/>
-        </MenuItem>
-        <MenuItem Header="Over FTP (Requires running FTP server)">
-            <MenuItem Header="etaHEN Configurator" x:Name="OpenetaHENConfiguratorMenuItem"/>
-            <MenuItem Header="FTP Browser" x:Name="OpenFTPBrowserMenuItem"/>
-            <MenuItem Header="FTP Grabber" x:Name="OpenFTPGrabberMenuItem"/>
-            <MenuItem Header="Web Browser Installer" x:Name="OpenWebBrowserInstallerMenuItem"/>
-            <MenuItem Header="Notification Manager" x:Name="OpenNotificationManagerMenuItem"/>
-            <MenuItem Header="Clear error history on the console" x:Name="ClearErrorHistoryMenuItem"/>
-        </MenuItem>
-        <MenuItem Header="UI Customization">
-            <MenuItem Header="Dump RCO files (Requires running FTP server)" x:Name="OpenRCODumperMenuItem"/>
-            <MenuItem Header="Extract RCO files" x:Name="OpenRCOExtractorMenuItem"/>
-        </MenuItem>
+        <MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem"></MenuItem>
+        <MenuItem Header="Simple Shortcut PKG Creator" x:Name="OpenShortcutPKGCreatorMenuItem"/>
+        <MenuItem Header="WAV &lt;-&gt; AT9" x:Name="OpenAudioConverterMenuItem"/>
+        <MenuItem Header="Web Browser Installer" x:Name="OpenWebBrowserInstallerMenuItem"/>
     </MenuItem>
-    <MenuItem Header="Exploits">
+    <MenuItem x:Name="ExploitsMenuItem" Header="Exploits">
         <MenuItem Header="3.00 - 4.51">
             <MenuItem Header="PS5 IPV6 Kernel Exploit">
                 <MenuItem Header="Go to GitHub" x:Name="OpenKexGitHub">
@@ -62,8 +56,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="JAR Loader">
-                <MenuItem Header="Download v1.1" x:Name="DownloadJARLoader">
+            <MenuItem Header="BD-JB JAR Loader">
+                <MenuItem Header="Download v2.0.0" x:Name="DownloadJARLoader">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -88,7 +82,7 @@
             </MenuItem>
         </MenuItem>
     </MenuItem>
-    <MenuItem Header="Hosts &amp; DNS">
+    <MenuItem x:Name="HostsDNSMenuItem" Header="Hosts &amp; DNS">
         <MenuItem Header="PS Multi Tools Host:">
             <TextBox Text="http://X.X.X.X/ps5ex/"></TextBox>
         </MenuItem>
@@ -109,7 +103,7 @@
             <TextBox Text="62.210.38.117"></TextBox>
         </MenuItem>
     </MenuItem>
-    <MenuItem Header="webMAN for websrv">
+    <MenuItem x:Name="WebManMenuItem" Header="webMAN for websrv">
         <MenuItem Header="General">
             <MenuItem Header="Open PS5 WebSrv Interface" x:Name="OpenPS5WebSrvInterface"/>
             <MenuItem Header="Browse PS5 File System" x:Name="BrowsePS5FileSystem"/>
@@ -122,7 +116,7 @@
             <MenuItem Header="Show system info on PS5" x:Name="ShowSystemInfoOnPS5"/>
         </MenuItem>
     </MenuItem>
-    <MenuItem Header="Downloads">
+    <MenuItem x:Name="DownloadsMenuItem" Header="Downloads">
         <MenuItem Header="Exploits">
             <MenuItem Header="Download PS5 BD-JB ELF Loader v1.6.2" x:Name="DownloadPS5BDJBElfLoader">
                 <MenuItem.Icon>
@@ -288,11 +282,41 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="FTP Server for JAR Loader">
-                <MenuItem Header="Download v1.0 Snapshot" x:Name="DownloadJARFTPServer">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/download.png"/>
-                    </MenuItem.Icon>
+            <MenuItem Header="JAR Payloads">
+                <MenuItem Header="Dump Class Path">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadDumpClassPath">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="FTP Server">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadJARFTPServer">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="MiniTennis">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadMiniTennis">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Print System Properties">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadPrintSysProps">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="UMTX Bug">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadUMTXBug">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="KLogSrv by john-tornblom">
@@ -356,14 +380,14 @@
 
         <MenuItem Header="Game Patches">
             <MenuItem Header="Official Game Patches" x:Name="OpenGamePatchesMenuItem"/>
-            <MenuItem Header="Game Mods &amp; Patches" x:Name="OpenModPatchesMenuItem"/>
         </MenuItem>
     </MenuItem>
-    <MenuItem Header="Settings">
-        <MenuItem Header="Set FTP IP address with port (IP:PORT) :">
+    <MenuItem x:Name="SettingsMenuItem" Header="Settings">
+        <MenuItem x:Name="SettingsSetPS5IPMenuItem" Header="Set FTP IP address with port (IP:PORT) :">
             <TextBox x:Name="FTPIPTextBox" Width="200"></TextBox>
         </MenuItem>
     </MenuItem>
-    <wv2:WebView2 x:Name="webMANwebsrvWebView" HorizontalAlignment="Center" Height="0" Margin="0,0,0,0" VerticalAlignment="Top" Width="0" Source="https://google.com" Visibility="Hidden" AllowExternalDrop="False" Focusable="False"/>
+    
+    <wv2:WebView2 x:Name="webMANwebsrvWebView" HorizontalAlignment="Center" Height="0" Margin="0,0,0,0" VerticalAlignment="Top" Width="0" Source="about:blank" Visibility="Hidden" AllowExternalDrop="False" Focusable="False"/>
 
 </Menu>

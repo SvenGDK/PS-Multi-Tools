@@ -4,23 +4,6 @@ Imports System.Windows.Forms
 Public Class GP5Creator
 
     Dim PubToolsPath As String = Nothing
-    'Dim ListOfChunks As New Dictionary(Of String, Structures.GP5ChunkFilesFolderListViewItem)()
-
-    Private Sub GP5Creator_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        'Set the path of the pub tools
-        If File.Exists(My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\SCE\Prospero\Tools\Publishing Tools\bin\prospero-pub-cmd.exe") Then
-            PubToolsPath = My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\SCE\Prospero\Tools\Publishing Tools\bin\prospero-pub-cmd.exe"
-            PubToolsFoundTextBlock.Text = PubToolsPath
-            PubToolsFoundTextBlock.Foreground = Brushes.Green
-        ElseIf File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe") Then
-            PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"
-            PubToolsFoundTextBlock.Text = PubToolsPath
-            PubToolsFoundTextBlock.Foreground = Brushes.Green
-        Else
-            MsgBox("Could not find any publishing tools." + vbCrLf + "Please add them inside the Tools\PS5 folder inside PS Multi Toools.", MsgBoxStyle.Information, "Pub Tools not available")
-            IsEnabled = False
-        End If
-    End Sub
 
     Private Sub BrowseSavePathButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseSavePathButton.Click
         Dim SFD As New SaveFileDialog() With {.Title = "Save your project.", .Filter = "GP5 Files (*.gp5)|*.gp5", .DefaultExt = ".gp5", .AddExtension = True, .SupportMultiDottedExtensions = False}
@@ -129,22 +112,6 @@ Public Class GP5Creator
         End If
     End Sub
 
-    'Private Sub ChunksComboBox_SelectionChanged(sender As Object, e As Controls.SelectionChangedEventArgs) Handles ChunksComboBox.SelectionChanged
-    '    If ChunksComboBox.SelectedItem IsNot Nothing Then
-
-    '        If Not ListOfChunks.Count = 0 Then
-    '            ChunkFilesFolderListView.Items.Clear()
-
-    '            For Each KVP As KeyValuePair(Of String, Structures.GP5ChunkFilesFolderListViewItem) In ListOfChunks
-    '                If KVP.Key = ChunksComboBox.Text Then
-    '                    ChunkFilesFolderListView.Items.Add(New Structures.GP5ChunkFilesFolderListViewItem() With {.ChunkType = KVP.Value.ChunkType, .SourcePath = KVP.Value.SourcePath, .DestinationPath = KVP.Value.DestinationPath})
-    '                End If
-    '            Next
-    '        End If
-
-    '    End If
-    'End Sub
-
     Private Sub ExtractButton_Click(sender As Object, e As RoutedEventArgs) Handles ExtractButton.Click
         If Not String.IsNullOrEmpty(FileToExtractTextBox.Text) Then
             If Not String.IsNullOrEmpty(ExtractPasscodeTextBox.Text) Then
@@ -181,6 +148,11 @@ Public Class GP5Creator
             NewPKGBuilder.SelectedProjectTextBox.Text = SaveToTextBox.Text
         End If
         NewPKGBuilder.Show()
+    End Sub
+
+    Private Sub CreateManifestButton_Click(sender As Object, e As RoutedEventArgs) Handles CreateManifestButton.Click
+        Dim NewManifestEditor As New PS5ManifestEditor() With {.ShowActivated = True}
+        NewManifestEditor.Show()
     End Sub
 
 End Class

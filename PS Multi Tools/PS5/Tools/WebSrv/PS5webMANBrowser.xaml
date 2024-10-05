@@ -8,6 +8,6 @@
              mc:Ignorable="d" 
              Title="WebMAN WebSrv Interface" Height="720" Width="1280" Background="#2D2D30">
     <Grid>
-        <wv2:WebView2 x:Name="WebMANWebSrvView" Margin="0,0,0,0" Source="https://google.com"/>
+        <wv2:WebView2 x:Name="WebMANWebSrvView" Margin="0,0,0,0" Source="about:blank"/>
     </Grid>
 </Window>

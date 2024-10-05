@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="PKG Builder" Height="400" Width="760" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+             Title="PKG Builder" Height="422" Width="760" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBox x:Name="BuildLogTextBox" HorizontalAlignment="Center" Margin="0,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="720" Height="218"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,85,0,0" TextWrapping="NoWrap" Text="Build Log:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="720"/>
-        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" Margin="0,332,10,0" VerticalAlignment="Top" Width="93" IsEnabled="False"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="NoWrap" Text="Set build options" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="720" FontWeight="Bold" FontStyle="Italic"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="NoWrap" Text="GP5 Project:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="85"/>
-        <TextBox x:Name="SelectedProjectTextBox" HorizontalAlignment="Left" Margin="100,37,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="225"/>
-        <Button x:Name="BrowseProjectButton" Content="..." HorizontalAlignment="Left" Margin="330,37,0,0" VerticalAlignment="Top" Width="45" Height="18"/>
-        <TextBlock HorizontalAlignment="Right" Margin="0,36,287,0" TextWrapping="NoWrap" Text="Save To:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="60"/>
-        <TextBox x:Name="SaveToTextBox" HorizontalAlignment="Right" Margin="0,37,58,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="224"/>
-        <Button x:Name="BrowseSavePathButton" Content="..." Margin="0,37,12,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Right" Width="44"/>
-        <Button x:Name="BuildButton" Content="Build PKG" HorizontalAlignment="Right" Margin="0,60,12,0" VerticalAlignment="Top" Width="91"/>
+        <TextBox x:Name="BuildLogTextBox" HorizontalAlignment="Left" Margin="10,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="720" Height="218"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="NoWrap" Text="Build Log:" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="638,357,0,0" VerticalAlignment="Top" Width="93" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="PKG Builder Options :" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="NoWrap" Text="Select your GP5 project :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedProjectTextBox" HorizontalAlignment="Left" Margin="175,37,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="506"/>
+        <Button x:Name="BrowseProjectButton" Content="..." HorizontalAlignment="Left" Margin="686,37,0,0" VerticalAlignment="Top" Width="45" Height="18"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="NoWrap" Text="Save output PKG to :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SaveToTextBox" HorizontalAlignment="Left" Margin="175,61,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="506"/>
+        <Button x:Name="BrowseSavePathButton" Content="..." Margin="686,61,0,0" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="45"/>
+        <Button x:Name="BuildButton" Content="Build PKG" HorizontalAlignment="Left" Margin="640,84,0,0" VerticalAlignment="Top" Width="91"/>
 
     </Grid>
 </Window>

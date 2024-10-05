@@ -38,7 +38,7 @@ Public Class PS5Library
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load installed games and apps over FTP"}
     Dim WithEvents LoadPKGFolderMenuItem As New Controls.MenuItem() With {.Header = "Load patches PKG folder"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
-    Dim WithEvents NewSettingsMenuItem As New Controls.MenuItem() With {.Header = "Open Settings"}
+    Dim WithEvents NewSettingsMenuItem As New Controls.MenuItem() With {.Header = "More Settings"}
 
     'Games context menu items
     Dim GamesContextMenu As New Controls.ContextMenu()
@@ -88,7 +88,7 @@ Public Class PS5Library
     Private Sub PS5Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Add supplemental menu items that will be handled in PS Multi Tools
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(0), Controls.MenuItem)
-        Dim SettingsMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(5), Controls.MenuItem)
+        Dim SettingsMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(6), Controls.MenuItem)
         LibraryMenuItem.Items.Add(OpenFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadPKGFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadFolderMenuItem)
@@ -148,16 +148,14 @@ Public Class PS5Library
     End Sub
 
     Private Sub PS5Library_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
-        'Load config if exists
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
-            Try
-                Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
-                ConsoleIP = MainConfig.IniReadValue("PS5 Tools", "IP")
-                ConsolePort = MainConfig.IniReadValue("PS5 Tools", "Port")
-            Catch ex As FileNotFoundException
-                MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
-            End Try
-        End If
+        'Load config
+        Try
+            Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+            ConsoleIP = MainConfig.IniReadValue("PS5 Tools", "IP")
+            ConsolePort = MainConfig.IniReadValue("PS5 Tools", "Port")
+        Catch ex As FileNotFoundException
+            MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
+        End Try
     End Sub
 
     Private Sub NewPS5Menu_IPTextChanged(sender As Object, e As RoutedEventArgs) Handles NewPS5Menu.IPTextChanged
@@ -776,7 +774,6 @@ Public Class PS5Library
     End Sub
 
     Private Sub FileLoaderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles FileLoaderWorker.RunWorkerCompleted
-
         NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS5 games & apps", .ShowActivated = True}
         NewLoadingWindow.LoadProgressBar.IsIndeterminate = False
         NewLoadingWindow.LoadProgressBar.Maximum = FilesCount
@@ -1721,11 +1718,6 @@ Public Class PS5Library
         End If
     End Sub
 
-    Private Sub NewSettingsMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles NewSettingsMenuItem.Click
-        Dim NewSettings As New PSSettings() With {.ShowActivated = True}
-        NewSettings.Show()
-    End Sub
-
     Private Sub ShowGamesFolderBrowser()
         Dim FBD As New FolderBrowserDialog() With {.Description = "Select your PS5 backup folder"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
@@ -1803,6 +1795,17 @@ Public Class PS5Library
     Private Sub NewGamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles NewGamesListView.SelectionChanged
         If NewGamesListView.SelectedItem IsNot Nothing Then
 
+            'Show values
+            GameTitleTextBlock.Visibility = Visibility.Visible
+            GameIDTextBlock.Visibility = Visibility.Visible
+            GameRegionTextBlock.Visibility = Visibility.Visible
+            GameVersionTextBlock.Visibility = Visibility.Visible
+            GameContentIDTextBlock.Visibility = Visibility.Visible
+            GameCategoryTextBlock.Visibility = Visibility.Visible
+            GameSizeTextBlock.Visibility = Visibility.Visible
+            GameRequiredFirmwareTextBlock.Visibility = Visibility.Visible
+            GameBackupFolderNameTextBlock.Visibility = Visibility.Visible
+
             Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
 
             GameTitleTextBlock.Text = SelectedPS5Game.GameTitle
@@ -1855,6 +1858,17 @@ Public Class PS5Library
                 End If
             End If
 
+        Else
+            'Hide values
+            GameTitleTextBlock.Visibility = Visibility.Hidden
+            GameIDTextBlock.Visibility = Visibility.Hidden
+            GameRegionTextBlock.Visibility = Visibility.Hidden
+            GameVersionTextBlock.Visibility = Visibility.Hidden
+            GameContentIDTextBlock.Visibility = Visibility.Hidden
+            GameCategoryTextBlock.Visibility = Visibility.Hidden
+            GameSizeTextBlock.Visibility = Visibility.Hidden
+            GameRequiredFirmwareTextBlock.Visibility = Visibility.Hidden
+            GameBackupFolderNameTextBlock.Visibility = Visibility.Hidden
         End If
     End Sub
 
@@ -1863,6 +1877,11 @@ Public Class PS5Library
         Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
         OpenWindowsListViewScrollViewer.ScrollToHorizontalOffset(HorizontalOffset - (e.Delta / 100))
         e.Handled = True
+    End Sub
+
+    Private Sub NewSettingsMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles NewSettingsMenuItem.Click
+        Dim NewSettings As New PSSettings() With {.ShowActivated = True}
+        NewSettings.Show()
     End Sub
 
 End Class

@@ -16,12 +16,21 @@ Public Class GP5PKGBuilder
     Dim WithEvents PKGBuilder As New Process()
     Dim PKGBuilderOuput As String = ""
     Dim CurrentLanguage As String = ""
+    Dim UseTwinTurbo As Boolean = False
+    Dim SavedBGPath As String = ""
+    Dim SavedIconPath As String = ""
 
     Private WithEvents ClockTimer As DispatcherTimer
     ReadOnly MoveRightToLeftAnimation As New ThicknessAnimation With {.From = New Thickness(175, 305, 0, 0), .To = New Thickness(55, 305, 0, 0), .Duration = New Duration(TimeSpan.FromMilliseconds(500))}
     ReadOnly MoveLeftToRightAnimation As New ThicknessAnimation With {.From = New Thickness(55, 305, 0, 0), .To = New Thickness(175, 305, 0, 0), .Duration = New Duration(TimeSpan.FromMilliseconds(500))}
     ReadOnly ShowAnimation As New DoubleAnimation With {.From = 0, .To = 1, .Duration = New Duration(TimeSpan.FromMilliseconds(200))}
     ReadOnly HideAnimation As New DoubleAnimation With {.From = 1, .To = 0, .Duration = New Duration(TimeSpan.FromMilliseconds(200))}
+
+    Private Sub GP5PKGBuilder_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
+        ClockTextBlock.Text = Date.Now.ToString("HH:mm")
+        ClockTimer = New DispatcherTimer With {.Interval = New TimeSpan(0, 1, 0)} 'Update every minute only
+        ClockTimer.Start()
+    End Sub
 
     Private Sub CreateNewProjectButton_Click(sender As Object, e As RoutedEventArgs) Handles CreateNewProjectButton.Click
         Dim SFD As New FolderBrowserDialog() With {.Description = "Select a folder to save your project", .ShowNewFolderButton = True}
@@ -92,6 +101,7 @@ Public Class GP5PKGBuilder
 
             Dim ProjectInfos As New PKGBuilderProject()
             Dim ProjectINI As New IniFile(OFD.FileName)
+
             If Not String.IsNullOrEmpty(ProjectINI.IniReadValue("PKGProject", "Title")) Then
                 ProjectInfos.ProjectTitle = ProjectINI.IniReadValue("PKGProject", "Title")
                 TitleTextBlock.Text = ProjectINI.IniReadValue("PKGProject", "Title")
@@ -183,9 +193,9 @@ Public Class GP5PKGBuilder
                 'Save project settings
                 Dim NewProjectINI As New IniFile(SFD.SelectedPath + "\" + CurrentProject.ProjectTitle + ".ini")
                 NewProjectINI.IniWriteValue("PKGProject", "Title", CurrentProject.ProjectTitle)
-                NewProjectINI.IniWriteValue("PKGProject", "Background", "")
+                NewProjectINI.IniWriteValue("PKGProject", "Background", SavedBGPath)
                 NewProjectINI.IniWriteValue("PKGProject", "Category", CurrentProject.ProjectCategory)
-                NewProjectINI.IniWriteValue("PKGProject", "Icon", "")
+                NewProjectINI.IniWriteValue("PKGProject", "Icon", SavedIconPath)
                 NewProjectINI.IniWriteValue("PKGProject", "Soundtrack", CurrentProject.ProjectSoundtrack)
                 NewProjectINI.IniWriteValue("PKGProject", "URL", CurrentProject.ProjectURL)
                 NewProjectINI.IniWriteValue("PKGProject", "Path", SFD.SelectedPath)
@@ -199,10 +209,10 @@ Public Class GP5PKGBuilder
     Private Sub GamesTextBlock_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles GamesTextBlock.MouseLeftButtonDown
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             If File.Exists(CurrentProject.ProjectPath + "\sce_sys\param.json") Then
-                ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Category", "Game")
+                ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Category", NewValue:="Game")
             Else
                 CreateParam(CurrentProject.ProjectPath + "\sce_sys\param.json")
-                ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Category", "Game")
+                ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Category", NewValue:="Game")
             End If
 
             MediaTextBlock.FontWeight = FontWeights.Regular
@@ -224,10 +234,10 @@ Public Class GP5PKGBuilder
     Private Sub MediaTextBlock_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles MediaTextBlock.MouseLeftButtonDown
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             If File.Exists(CurrentProject.ProjectPath + "\sce_sys\param.json") Then
-                ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Category", "Media")
+                ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Category", NewValue:="Media")
             Else
                 CreateParam(CurrentProject.ProjectPath + "\sce_sys\param.json")
-                ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Category", "Media")
+                ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Category", NewValue:="Media")
             End If
 
             MediaTextBlock.FontWeight = FontWeights.Bold
@@ -322,18 +332,18 @@ Public Class GP5PKGBuilder
             If Not String.IsNullOrEmpty(NewTitle) Then
                 'Save changes in param.json
                 If File.Exists(CurrentProject.ProjectPath + "\sce_sys\param.json") Then
-                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Title", NewTitle)
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Title", NewValue:=NewTitle)
                 Else
                     CreateParam(CurrentProject.ProjectPath + "\sce_sys\param.json")
-                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Title", NewTitle)
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "Title", NewValue:=NewTitle)
                 End If
 
                 'Save changes in manifest.json
                 If File.Exists(CurrentProject.ProjectPath + "\manifest.json") Then
-                    ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ApplicationName", NewTitle)
+                    ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ApplicationName", NewValue:=NewTitle)
                 Else
                     CreateManifest(CurrentProject.ProjectPath + "\manifest.json")
-                    ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ApplicationName", NewTitle)
+                    ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ApplicationName", NewValue:=NewTitle)
                 End If
 
                 TitleTextBlock.Text = NewTitle
@@ -372,6 +382,7 @@ Public Class GP5PKGBuilder
                     ProjectINI.IniWriteValue("PKGProject", "Background", CurrentProject.ProjectPath + "\sce_sys\pic0.png")
                 End If
 
+                SavedBGPath = OFD.FileName
                 MsgBox("Background changed!", MsgBoxStyle.Information)
             End If
         Else
@@ -403,11 +414,12 @@ Public Class GP5PKGBuilder
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             Dim NewURL As String = InputBox("Enter an action or website URL :", "Set URL", "")
             If Not String.IsNullOrEmpty(NewURL) Then
+
                 If File.Exists(CurrentProject.ProjectPath + "\sce_sys\param.json") Then
-                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "URL", NewURL)
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "URL", NewValue:=NewURL)
                 Else
                     CreateParam(CurrentProject.ProjectPath + "\sce_sys\param.json")
-                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "URL", NewURL)
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "URL", NewValue:=NewURL)
                 End If
 
                 MsgBox("URL changed!", MsgBoxStyle.Information)
@@ -421,12 +433,13 @@ Public Class GP5PKGBuilder
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             Dim NewContentID As String = InputBox("Enter a new Content ID :", "Set Content ID", "IV9999-NPXS12345_00-XXXXXXXXXXXXXXXX")
             If Not String.IsNullOrEmpty(NewContentID) Then
+
                 'Save changes in param.json
                 If File.Exists(CurrentProject.ProjectPath + "\sce_sys\param.json") Then
-                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "ContentID", NewContentID)
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "ContentID", NewValue:=NewContentID)
                 Else
                     CreateParam(CurrentProject.ProjectPath + "\sce_sys\param.json")
-                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "ContentID", NewContentID)
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "ContentID", NewValue:=NewContentID)
                 End If
 
                 MsgBox("Content ID changed!", MsgBoxStyle.Information)
@@ -440,20 +453,21 @@ Public Class GP5PKGBuilder
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             Dim NewTitleID As String = InputBox("Enter a new Title ID :", "Set Title ID", "NPXS12345")
             If Not String.IsNullOrEmpty(NewTitleID) Then
+
                 'Save changes in param.json
                 If File.Exists(CurrentProject.ProjectPath + "\sce_sys\param.json") Then
-                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "TitleID", NewTitleID)
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "TitleID", NewValue:=NewTitleID)
                 Else
                     CreateParam(CurrentProject.ProjectPath + "\sce_sys\param.json")
-                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "TitleID", NewTitleID)
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "TitleID", NewValue:=NewTitleID)
                 End If
 
                 'Save changes in manifest.json
                 If File.Exists(CurrentProject.ProjectPath + "\manifest.json") Then
-                    ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "TitleID", NewTitleID)
+                    ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "TitleID", NewValue:=NewTitleID)
                 Else
                     CreateManifest(CurrentProject.ProjectPath + "\manifest.json")
-                    ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "TitleID", NewTitleID)
+                    ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "TitleID", NewValue:=NewTitleID)
                 End If
 
                 MsgBox("Title ID changed!", MsgBoxStyle.Information)
@@ -510,30 +524,30 @@ Public Class GP5PKGBuilder
                 'Save changes in param.json
                 If File.Exists(CurrentProject.ProjectPath + "\sce_sys\param.json") Then
                     If Not String.IsNullOrEmpty(NewVersion) AndAlso Not String.IsNullOrEmpty(MasterVersion) Then
-                        ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "ContentVersion", NewVersion)
-                        ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "MasterVersion", MasterVersion)
+                        ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "ContentVersion", NewValue:=NewVersion)
+                        ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "MasterVersion", NewValue:=MasterVersion)
                     End If
                 Else
                     CreateParam(CurrentProject.ProjectPath + "\sce_sys\param.json")
 
                     If Not String.IsNullOrEmpty(NewVersion) AndAlso Not String.IsNullOrEmpty(MasterVersion) Then
-                        ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "ContentVersion", NewVersion)
-                        ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "MasterVersion", MasterVersion)
+                        ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "ContentVersion", NewValue:=NewVersion)
+                        ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "MasterVersion", NewValue:=MasterVersion)
                     End If
                 End If
 
                 'Save changes in manifest.json
                 If File.Exists(CurrentProject.ProjectPath + "\manifest.json") Then
                     If Not String.IsNullOrEmpty(ApplicationVersion) Then
-                        ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ApplicationVersion", ApplicationVersion)
-                        ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ReactNativePlaystationVersion", ReactNativePlaystationVersion)
+                        ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ApplicationVersion", NewValue:=ApplicationVersion)
+                        ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ReactNativePlaystationVersion", NewValue:=ReactNativePlaystationVersion)
                     End If
                 Else
                     CreateManifest(CurrentProject.ProjectPath + "\manifest.json")
 
                     If Not String.IsNullOrEmpty(ApplicationVersion) Then
-                        ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ApplicationVersion", ApplicationVersion)
-                        ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ReactNativePlaystationVersion", ReactNativePlaystationVersion)
+                        ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ApplicationVersion", NewValue:=ApplicationVersion)
+                        ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "ReactNativePlaystationVersion", NewValue:=ReactNativePlaystationVersion)
                     End If
                 End If
 
@@ -570,6 +584,10 @@ Public Class GP5PKGBuilder
                 SetContentIDButton.IsEnabled = False
                 SetTitleIDButton.IsEnabled = False
                 SetVersionButton.IsEnabled = False
+                SetReqSysVersionButton.IsEnabled = False
+                EnableHTTPCacheCheckBox.IsEnabled = False
+                TwinTurboCheckBox.IsEnabled = False
+
                 GamesTextBlock.IsEnabled = False
                 MediaTextBlock.IsEnabled = False
                 TitleTextBlock.IsEnabled = False
@@ -581,7 +599,6 @@ Public Class GP5PKGBuilder
 
         End If
     End Sub
-
 
     Private Sub CreateParam(DestinationPath As String)
         Dim NewPS5Param As New PS5Param() With {
@@ -639,7 +656,6 @@ Public Class GP5PKGBuilder
     Private Sub ChangeParam(DestinationPath As String, Param As String, NewValue As String)
         Dim JSONData As String = File.ReadAllText(DestinationPath)
         Try
-
             'Read values
             Dim ParamData As PS5Param = JsonConvert.DeserializeObject(Of PS5Param)(JSONData)
 
@@ -696,6 +712,8 @@ Public Class GP5PKGBuilder
                     ParamData.TitleId = NewValue
                 Case "URL"
                     ParamData.DeeplinkUri = NewValue
+                Case "RequiredSystemSoftwareVersion"
+                    ParamData.RequiredSystemSoftwareVersion = NewValue
             End Select
 
             'Write back
@@ -716,16 +734,16 @@ Public Class GP5PKGBuilder
             .repositoryUrl = "",
             .reactNativePlaystationVersion = "0.00.0-000.0",
             .applicationData = New ApplicationData() With {.branchType = "release"},
-            .twinTurbo = True}
+            .twinTurbo = False,
+            .enableHttpCache = False}
 
         Dim RawDataJSON As String = JsonConvert.SerializeObject(NewPS5Manifest, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
         File.WriteAllText(DestinationPath, RawDataJSON)
     End Sub
 
-    Private Sub ChangeManifest(DestinationPath As String, Param As String, NewValue As String)
+    Private Sub ChangeManifest(DestinationPath As String, Param As String, Optional NewValue As String = "", Optional NewBoolValue As Boolean = False)
         Dim JSONData As String = File.ReadAllText(DestinationPath)
         Try
-
             'Read values
             Dim ManifestData As PS5Manifest = JsonConvert.DeserializeObject(Of PS5Manifest)(JSONData)
 
@@ -739,6 +757,10 @@ Public Class GP5PKGBuilder
                     ManifestData.titleId = NewValue
                 Case "ReactNativePlaystationVersion"
                     ManifestData.reactNativePlaystationVersion = NewValue
+                Case "EnableHttpCache"
+                    ManifestData.enableHttpCache = NewBoolValue
+                Case "TwinTurbo"
+                    ManifestData.twinTurbo = NewBoolValue
             End Select
 
             'Write back
@@ -907,6 +929,10 @@ Public Class GP5PKGBuilder
                                        SetContentIDButton.IsEnabled = True
                                        SetTitleIDButton.IsEnabled = True
                                        SetVersionButton.IsEnabled = True
+                                       SetReqSysVersionButton.IsEnabled = True
+                                       EnableHTTPCacheCheckBox.IsEnabled = True
+                                       TwinTurboCheckBox.IsEnabled = True
+
                                        GamesTextBlock.IsEnabled = True
                                        MediaTextBlock.IsEnabled = True
                                        TitleTextBlock.IsEnabled = True
@@ -924,6 +950,10 @@ Public Class GP5PKGBuilder
             SetContentIDButton.IsEnabled = True
             SetTitleIDButton.IsEnabled = True
             SetVersionButton.IsEnabled = True
+            SetReqSysVersionButton.IsEnabled = True
+            EnableHTTPCacheCheckBox.IsEnabled = True
+            TwinTurboCheckBox.IsEnabled = True
+
             GamesTextBlock.IsEnabled = True
             MediaTextBlock.IsEnabled = True
             TitleTextBlock.IsEnabled = True
@@ -936,17 +966,85 @@ Public Class GP5PKGBuilder
         Else
             MsgBox("Error while creating the PKG :" + vbCrLf + PKGBuilderOuput, MsgBoxStyle.Exclamation)
         End If
-
-    End Sub
-
-    Private Sub GP5PKGBuilder_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
-        ClockTextBlock.Text = Date.Now.ToString("HH:mm")
-        ClockTimer = New DispatcherTimer With {.Interval = New TimeSpan(0, 1, 0)} 'Update every minute only
-        ClockTimer.Start()
     End Sub
 
     Private Sub ClockTimer_Tick(sender As Object, e As EventArgs) Handles ClockTimer.Tick
         ClockTextBlock.Text = Date.Now.ToString("HH:mm")
+    End Sub
+
+    Private Sub EnableHTTPCacheCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles EnableHTTPCacheCheckBox.Checked
+        If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
+            'Save changes in manifest.json
+            If File.Exists(CurrentProject.ProjectPath + "\manifest.json") Then
+                ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "EnableHttpCache", NewBoolValue:=True)
+            Else
+                CreateManifest(CurrentProject.ProjectPath + "\manifest.json")
+                ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "EnableHttpCache", NewBoolValue:=True)
+            End If
+        Else
+            MsgBox("No project loaded.", MsgBoxStyle.Information)
+        End If
+    End Sub
+
+    Private Sub TwinTurboCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles TwinTurboCheckBox.Checked
+        If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
+            'Save changes in manifest.json
+            If File.Exists(CurrentProject.ProjectPath + "\manifest.json") Then
+                ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "TwinTurbo", NewBoolValue:=True)
+            Else
+                CreateManifest(CurrentProject.ProjectPath + "\manifest.json")
+                ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "TwinTurbo", NewBoolValue:=True)
+            End If
+        Else
+            MsgBox("No project loaded.", MsgBoxStyle.Information)
+        End If
+    End Sub
+
+    Private Sub TwinTurboCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles TwinTurboCheckBox.Unchecked
+        If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
+            'Save changes in manifest.json
+            If File.Exists(CurrentProject.ProjectPath + "\manifest.json") Then
+                ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "TwinTurbo", NewBoolValue:=False)
+            Else
+                CreateManifest(CurrentProject.ProjectPath + "\manifest.json")
+                ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "TwinTurbo", NewBoolValue:=False)
+            End If
+        Else
+            MsgBox("No project loaded.", MsgBoxStyle.Information)
+        End If
+    End Sub
+
+    Private Sub EnableHTTPCacheCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles EnableHTTPCacheCheckBox.Unchecked
+        If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
+            'Save changes in manifest.json
+            If File.Exists(CurrentProject.ProjectPath + "\manifest.json") Then
+                ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "EnableHttpCache", NewBoolValue:=False)
+            Else
+                CreateManifest(CurrentProject.ProjectPath + "\manifest.json")
+                ChangeManifest(CurrentProject.ProjectPath + "\manifest.json", "EnableHttpCache", NewBoolValue:=False)
+            End If
+        Else
+            MsgBox("No project loaded.", MsgBoxStyle.Information)
+        End If
+    End Sub
+
+    Private Sub SetReqSysVersionButton_Click(sender As Object, e As RoutedEventArgs) Handles SetReqSysVersionButton.Click
+        If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
+            Dim NewRequiredSystemVersion As String = InputBox("Enter the required System Version :", "Set Required System Version", "0x0000000000000000")
+            If Not String.IsNullOrEmpty(NewRequiredSystemVersion) Then
+                'Save changes in param.json
+                If File.Exists(CurrentProject.ProjectPath + "\sce_sys\param.json") Then
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "RequiredSystemSoftwareVersion", NewValue:=NewRequiredSystemVersion)
+                Else
+                    CreateParam(CurrentProject.ProjectPath + "\sce_sys\param.json")
+                    ChangeParam(CurrentProject.ProjectPath + "\sce_sys\param.json", "RequiredSystemSoftwareVersion", NewValue:=NewRequiredSystemVersion)
+                End If
+
+                MsgBox("Required System Version changed!", MsgBoxStyle.Information)
+            End If
+        Else
+            MsgBox("No project loaded.", MsgBoxStyle.Information)
+        End If
     End Sub
 
 End Class

@@ -3,7 +3,6 @@
 Public Class PS5MakefSelfs
 
     'PS5 Make Fake Self Batch Script by EchoStretch, translated in VB.NET
-
     Dim SelectedPath As String = ""
 
     Private Sub BrowseFolderButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseFolderButton.Click

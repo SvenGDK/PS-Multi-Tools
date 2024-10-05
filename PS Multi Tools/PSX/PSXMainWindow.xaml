@@ -11,6 +11,8 @@
         <Menu x:Name="MainMenu" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250">
             <MenuItem x:Name="StartMenuItem" Background="#FF004671" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="Connect to the PSX" VerticalAlignment="Top" Width="250"/>
             <MenuItem x:Name="ProjectsMenuItem" Background="#FF00619C" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="Manage Projects" VerticalAlignment="Top" Width="250"/>
+            <MenuItem x:Name="HDDManagerMenuItem" Background="#FF00619C" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="HDD Manager" VerticalAlignment="Top" Width="250"/>
+            <MenuItem x:Name="XMBToolsMenuItem" Background="#FF00619C" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="XMB Tools" VerticalAlignment="Top" Width="250"/>
             <MenuItem x:Name="NBDDriverMenuItem" Background="#FF00619C" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="NBD Driver" VerticalAlignment="Top" Width="250"/>
             <MenuItem x:Name="DokanDriverMenuItem" Background="#FF00619C" Foreground="White" FontFamily="Calibri" FontSize="24" HorizontalAlignment="Left" Height="40" Header="Dokan Driver" VerticalAlignment="Top" Width="250"/>
         </Menu>

@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Windows.Forms
 
-
 Public Class PS5AT9Converter
 
     Public AT9Tool As String = String.Empty
@@ -118,7 +117,8 @@ Public Class PS5AT9Converter
                 MsgBox("Could not convert selected WAV file", MsgBoxStyle.Critical, "Error")
                 MsgBox(ex.Message)
             End Try
-
+        Else
+            MsgBox("No WAV file specified.", MsgBoxStyle.Critical, "No input file")
         End If
     End Sub
 
@@ -158,7 +158,8 @@ Public Class PS5AT9Converter
                 MsgBox("Could not convert selected AT9 file", MsgBoxStyle.Critical, "Error")
                 MsgBox(ex.Message)
             End Try
-
+        Else
+            MsgBox("No AT9 file specified.", MsgBoxStyle.Critical, "No input file")
         End If
     End Sub
 

@@ -68,7 +68,7 @@ Public Class PS5Sender
     End Enum
 
     Private Sub SendButton_Click(sender As Object, e As RoutedEventArgs) Handles SendButton.Click
-        'Check if a ELF is selected
+        'Check if a file is selected
         If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) Then
             'Check if an IP address was entered
             If Not String.IsNullOrWhiteSpace(IPTextBox.Text) Then
@@ -173,7 +173,6 @@ Public Class PS5Sender
     End Sub
 
     Private Sub SenderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles SenderWorker.DoWork
-
         Dim CurrentWorkerArgs As WorkerArgs = CType(e.Argument, WorkerArgs)
 
         Dim FileInfos As New FileInfo(CurrentWorkerArgs.FileToSend)
@@ -226,11 +225,9 @@ Public Class PS5Sender
             'Close the connection
             SenderSocket.Close()
         End Using
-
     End Sub
 
     Private Sub SenderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles SenderWorker.RunWorkerCompleted
-
         SendStatusTextBlock.Text = "Status:"
         SendProgressBar.Value = 0
 
@@ -259,7 +256,6 @@ Public Class PS5Sender
                     MsgBox("Config successfully sent!", MsgBoxStyle.Information, "Success")
             End Select
         End If
-
     End Sub
 
     Private Sub BrowseButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseButton.Click
@@ -299,7 +295,6 @@ Public Class PS5Sender
     End Sub
 
     Private Sub DefaultSenderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles DefaultSenderWorker.RunWorkerCompleted
-
         SendConfigButton.IsEnabled = True
         SendButton.IsEnabled = True
         SendISOButton.IsEnabled = True

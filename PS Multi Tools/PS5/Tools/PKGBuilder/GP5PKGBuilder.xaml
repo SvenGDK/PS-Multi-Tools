@@ -1,18 +1,17 @@
-﻿<Window
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PS_Multi_Tools"
-             x:Class="GP5PKGBuilder"
-             mc:Ignorable="d" 
-             Title="Shortcut PKG Creator" Height="735" Width="755" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        x:Class="GP5PKGBuilder"
+        mc:Ignorable="d" 
+        Title="Shortcut PKG Creator" Height="800" Width="840" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid x:Name="MainGrid">
-        <Image x:Name="BackgroundImage" HorizontalAlignment="Left" Height="406" Margin="10,283,0,0" VerticalAlignment="Top" Width="720" Cursor="Hand" IsEnabled="False"/>
-        <TextBlock x:Name="GamesTextBlock" HorizontalAlignment="Left" Margin="55,305,0,0" TextWrapping="Wrap" Text="Games" VerticalAlignment="Top" Foreground="White" FontSize="20" FontWeight="Bold" Cursor="Hand" IsEnabled="False"/>
-        <TextBlock x:Name="MediaTextBlock" HorizontalAlignment="Left" Margin="175,305,0,0" TextWrapping="Wrap" Text="Media" VerticalAlignment="Top" Foreground="White" FontSize="20" Cursor="Hand" IsEnabled="False" />
+        <Image x:Name="BackgroundImage" HorizontalAlignment="Left" Height="450" Margin="15,313,0,0" VerticalAlignment="Top" Width="800" Cursor="Hand" IsEnabled="False"/>
+        <TextBlock x:Name="GamesTextBlock" HorizontalAlignment="Left" Margin="60,335,0,0" TextWrapping="Wrap" Text="Games" VerticalAlignment="Top" Foreground="White" FontSize="20" FontWeight="Bold" Cursor="Hand" IsEnabled="False"/>
+        <TextBlock x:Name="MediaTextBlock" HorizontalAlignment="Left" Margin="180,335,0,0" TextWrapping="Wrap" Text="Media" VerticalAlignment="Top" Foreground="White" FontSize="20" Cursor="Hand" IsEnabled="False" />
 
-        <Rectangle x:Name="MainIconImageRectangle" RadiusX="20" RadiusY="20" Width="120" Height="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="83,351,0,0" Cursor="Hand" >
+        <Rectangle x:Name="MainIconImageRectangle" RadiusX="20" RadiusY="20" Width="120" Height="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="88,381,0,0" Cursor="Hand" >
             <Rectangle.Fill>
                 <ImageBrush x:Name="MainIconImage">
                     <ImageBrush.ImageSource>
@@ -21,7 +20,7 @@
                 </ImageBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle RadiusX="20" RadiusY="20" Width="85" Height="85" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="208,351,0,0" >
+        <Rectangle RadiusX="20" RadiusY="20" Width="85" Height="85" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="213,381,0,0" >
             <Rectangle.Fill>
                 <ImageBrush>
                     <ImageBrush.ImageSource>
@@ -30,7 +29,7 @@
                 </ImageBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle RadiusX="20" RadiusY="20" Width="84" Height="85" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,351,0,0" >
+        <Rectangle RadiusX="20" RadiusY="20" Width="84" Height="85" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,381,0,0" >
             <Rectangle.Fill>
                 <ImageBrush>
                     <ImageBrush.ImageSource>
@@ -40,34 +39,39 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Margin="212,445,0,0" TextWrapping="Wrap" Text="No Title" VerticalAlignment="Top" Foreground="White" FontSize="16" Cursor="Hand" IsEnabled="False" />
+        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Margin="217,475,0,0" TextWrapping="Wrap" Text="No Title" VerticalAlignment="Top" Foreground="White" FontSize="16" Cursor="Hand" IsEnabled="False" />
         <Button x:Name="SaveProjectButton" Content="Save current project" HorizontalAlignment="Left" Margin="290,36,0,0" VerticalAlignment="Top" Width="125" Height="25" IsEnabled="False"/>
         <Button x:Name="LoadProjectButton" Content="Load an existing project" HorizontalAlignment="Left" Margin="140,36,0,0" VerticalAlignment="Top" Width="145" Height="25"/>
-        <Button x:Name="SetBackgroundButton" Content="Set background" HorizontalAlignment="Left" Margin="9,219,0,0" VerticalAlignment="Top" Width="101" Height="25" IsEnabled="False"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,195,0,0" TextWrapping="Wrap" Text="More PKG settings :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" />
-        <Button x:Name="SetSoundtrackButton" Content="Set soundtrack" HorizontalAlignment="Left" Margin="115,219,0,0" VerticalAlignment="Top" Width="100" Height="25" IsEnabled="False"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Create / Modify / Build a PKG project" VerticalAlignment="Top" Foreground="White" FontSize="16" Cursor="Hand" FontWeight="Bold" />
-        <Button x:Name="BuildProjectButton" Content="Build project as PKG" HorizontalAlignment="Left" Margin="520,36,0,0" VerticalAlignment="Top" Width="125" Height="25" IsEnabled="False"/>
+        <Button x:Name="SetBackgroundButton" Content="Set background" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top" Width="102" Height="25" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,204,0,0" TextWrapping="Wrap" Text="All PKG settings :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" />
+        <Button x:Name="SetSoundtrackButton" Content="Set soundtrack" HorizontalAlignment="Left" Margin="116,228,0,0" VerticalAlignment="Top" Width="100" Height="25" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Create or Modify a PKG project" VerticalAlignment="Top" Foreground="White" FontSize="16" Cursor="Hand" FontWeight="Bold" />
+        <Button x:Name="BuildProjectButton" Content="Build project as PKG" HorizontalAlignment="Left" Margin="668,36,0,0" VerticalAlignment="Top" Width="125" Height="25" IsEnabled="False"/>
         <Button x:Name="CreateNewProjectButton" Content="Create a new project" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="125" Height="25"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,66,0,0" TextWrapping="Wrap" Text="Current project :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" />
-        <TextBlock x:Name="CurrentProjectTextBlock" HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="No project loaded." VerticalAlignment="Top" Foreground="White" />
-        <TextBlock HorizontalAlignment="Left" Margin="10,259,0,0" TextWrapping="Wrap" Text="PKG Preview :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" />
-        <Button x:Name="SetURLButton" Content="Set URL" HorizontalAlignment="Left" Margin="220,219,0,0" VerticalAlignment="Top" Width="75" Height="25" IsEnabled="False"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,139,0,0" TextWrapping="Wrap" Text="Click on the ? icon to change it (512 x 512)." VerticalAlignment="Top" Foreground="White" />
-        <TextBlock HorizontalAlignment="Left" Margin="10,155,0,0" TextWrapping="Wrap" Text="Click on GAMES or MEDIA to change the category and make it appear in Games or Media." VerticalAlignment="Top" Foreground="White" />
-        <TextBlock HorizontalAlignment="Left" Margin="10,171,0,0" TextWrapping="Wrap" Text="Click on NO TITLE to change the title." VerticalAlignment="Top" Foreground="White" />
-        <TextBlock HorizontalAlignment="Left" Margin="10,115,0,0" TextWrapping="Wrap" Text="How to use :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" />
-        <Button x:Name="SetContentIDButton" Content="Set ContentID" HorizontalAlignment="Left" Margin="300,219,0,0" VerticalAlignment="Top" Width="100" Height="25" IsEnabled="False"/>
-        <Button x:Name="SetVersionButton" Content="Set Version" HorizontalAlignment="Left" Margin="495,219,0,0" VerticalAlignment="Top" Width="85" Height="25" IsEnabled="False"/>
-        <Button x:Name="SetTitleIDButton" Content="Set Title ID" HorizontalAlignment="Left" Margin="405,219,0,0" VerticalAlignment="Top" Width="85" Height="25" IsEnabled="False"/>
-        <Button x:Name="FinalizeButton" Content="Finalize project" HorizontalAlignment="Left" Margin="420,36,0,0" VerticalAlignment="Top" Width="95" Height="25" IsEnabled="False"/>
-        <TextBlock x:Name="ClockTextBlock" HorizontalAlignment="Left" Margin="633,305,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Foreground="White" FontSize="20" Cursor="Hand" IsEnabled="False" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,153,0,0" TextWrapping="Wrap" Text="Currently loaded project :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" />
+        <TextBlock x:Name="CurrentProjectTextBlock" HorizontalAlignment="Left" Margin="10,177,0,0" TextWrapping="Wrap" Text="No project loaded." VerticalAlignment="Top" Foreground="White" FontStyle="Italic" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,289,0,0" TextWrapping="Wrap" Text="PKG Preview :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" />
+        <Button x:Name="SetURLButton" Content="Set URL" HorizontalAlignment="Left" Margin="222,228,0,0" VerticalAlignment="Top" Width="74" Height="25" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,92,0,0" TextWrapping="Wrap" Text="Click on the ? icon to change it (512 x 512)." VerticalAlignment="Top" Foreground="White" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" Text="Click on GAMES or MEDIA to change the category and make it appear in Games or Media." VerticalAlignment="Top" Foreground="White" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,124,0,0" TextWrapping="Wrap" Text="Click on NO TITLE to change the title." VerticalAlignment="Top" Foreground="White" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="Wrap" Text="How to use :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" />
+        <Button x:Name="SetContentIDButton" Content="Set ContentID" HorizontalAlignment="Left" Margin="302,228,0,0" VerticalAlignment="Top" Width="100" Height="25" IsEnabled="False"/>
+        <Button x:Name="SetVersionButton" Content="Set Version" HorizontalAlignment="Left" Margin="496,228,0,0" VerticalAlignment="Top" Width="86" Height="25" IsEnabled="False"/>
+        <Button x:Name="SetTitleIDButton" Content="Set Title ID" HorizontalAlignment="Left" Margin="405,228,0,0" VerticalAlignment="Top" Width="86" Height="25" IsEnabled="False"/>
+        <Button x:Name="FinalizeButton" Content="Finalize project" HorizontalAlignment="Left" Margin="568,36,0,0" VerticalAlignment="Top" Width="95" Height="25" IsEnabled="False"/>
+        <TextBlock x:Name="ClockTextBlock" HorizontalAlignment="Left" Margin="724,335,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Foreground="White" FontSize="20" Cursor="Hand" IsEnabled="False" />
 
-        <Rectangle RadiusX="20" RadiusY="20" Width="215" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="83,621,0,0" >
+        <Rectangle RadiusX="20" RadiusY="20" Width="215" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="88,651,0,0" >
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FF393939" Opacity="0.5"></SolidColorBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <TextBlock x:Name="PlayButtonTextBlock" HorizontalAlignment="Left" Margin="93,628,0,0" Text="Play Game" VerticalAlignment="Top" Foreground="White" FontSize="20" Cursor="Hand" IsEnabled="False" Width="197" TextAlignment="Center" />
+        <TextBlock x:Name="PlayButtonTextBlock" HorizontalAlignment="Left" Margin="98,658,0,0" Text="Play Game" VerticalAlignment="Top" Foreground="White" FontSize="20" Cursor="Hand" IsEnabled="False" Width="197" TextAlignment="Center" />
+        <TextBlock HorizontalAlignment="Left" Margin="568,10,0,0" TextWrapping="Wrap" Text="Finalize &amp; Build a PKG Project" VerticalAlignment="Top" Foreground="White" FontSize="16" Cursor="Hand" FontWeight="Bold" />
+        <TextBlock HorizontalAlignment="Left" Margin="574,75,0,0" TextWrapping="Wrap" Text="Finalize creates the required GP5 project." VerticalAlignment="Top" Foreground="White" FontStyle="Italic" />
+        <Button x:Name="SetReqSysVersionButton" Content="Set Required System Software Ver." HorizontalAlignment="Left" Margin="587,228,0,0" VerticalAlignment="Top" Width="206" Height="25" IsEnabled="False"/>
+        <CheckBox x:Name="EnableHTTPCacheCheckBox" Content="Enable HTTP Cache" HorizontalAlignment="Left" Margin="10,262,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="TwinTurboCheckBox" Content="Twin Turbo" HorizontalAlignment="Left" Margin="140,262,0,0" VerticalAlignment="Top" Foreground="White"/>
     </Grid>
 </Window>

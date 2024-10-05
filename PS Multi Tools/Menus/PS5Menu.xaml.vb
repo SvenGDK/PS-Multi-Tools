@@ -68,13 +68,10 @@ Public Class PS5Menu
 
     Private Sub OpenFTPBrowserMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFTPBrowserMenuItem.Click
         Dim NewFTPBrowser As New FTPBrowser() With {.ShowActivated = True, .FTPS5Mode = True}
-
-        'Set values if SharedConsoleAddress is set
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             NewFTPBrowser.ConsoleIPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
             NewFTPBrowser.PortTextBox.Text = SharedConsoleAddress.Split(":"c)(1)
         End If
-
         NewFTPBrowser.Show()
     End Sub
 
@@ -85,24 +82,18 @@ Public Class PS5Menu
 
     Private Sub OpenWebBrowserInstallerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenWebBrowserInstallerMenuItem.Click
         Dim NewPS5WebBrowserAdder As New PS5WebBrowserAdder() With {.ShowActivated = True}
-
-        'Set values if SharedConsoleAddress is set
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             NewPS5WebBrowserAdder.ConsoleIP = SharedConsoleAddress.Split(":"c)(0)
         End If
-
         NewPS5WebBrowserAdder.Show()
     End Sub
 
     Private Sub OpenNotificationManagerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenNotificationManagerMenuItem.Click
         Dim NewPS5NotificationsManager As New PS5Notifications() With {.ShowActivated = True}
-
-        'Set values if SharedConsoleAddress is set
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             NewPS5NotificationsManager.IPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
             NewPS5NotificationsManager.PortTextBox.Text = SharedConsoleAddress.Split(":"c)(1)
         End If
-
         NewPS5NotificationsManager.Show()
     End Sub
 
@@ -179,7 +170,6 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenPKGBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGBuilderMenuItem.Click
-
         Dim NewPKGBuilder As New PS5PKGBuilder()
 
         If File.Exists(My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\SCE\Prospero\Tools\Publishing Tools\bin\prospero-pub-cmd.exe") Then
@@ -192,7 +182,6 @@ Public Class PS5Menu
         End If
 
         NewPKGBuilder.Show()
-
     End Sub
 
     Private Sub OpenAudioConverterMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenAudioConverterMenuItem.Click
@@ -213,17 +202,6 @@ Public Class PS5Menu
         NewPS5GamePatches.Show()
     End Sub
 
-    Private Sub OpenModPatchesMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenModPatchesMenuItem.Click
-        Dim NewPS5ModPatches As New PS5ModPatches() With {.ShowActivated = True}
-
-        'Set values if SharedConsoleAddress is set
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewPS5ModPatches.ConsoleIP = SharedConsoleAddress.Split(":"c)(0)
-        End If
-
-        NewPS5ModPatches.Show()
-    End Sub
-
     Private Sub OpenPKGMergerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGMergerMenuItem.Click
         Dim NewPS5PKGMerger As New PS5PKGMerger() With {.ShowActivated = True}
         NewPS5PKGMerger.Show()
@@ -231,12 +209,9 @@ Public Class PS5Menu
 
     Private Sub OpenFTPGrabberMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFTPGrabberMenuItem.Click
         Dim NewFTPGrabber As New PS5FTPGrabber() With {.ShowActivated = True}
-
-        'Set values if SharedConsoleAddress is set
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             NewFTPGrabber.ConsoleIP = SharedConsoleAddress.Split(":"c)(0)
         End If
-
         NewFTPGrabber.Show()
     End Sub
 
@@ -274,7 +249,6 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenPKGSenderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGSenderMenuItem.Click
-        'Set values if SharedConsoleAddress is set
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             Dim NewPKGSender As New PS5PKGSender With {.ShowActivated = True, .ConsoleIP = SharedConsoleAddress.Split(":"c)(0)}
             NewPKGSender.Show()
@@ -286,6 +260,14 @@ Public Class PS5Menu
     Private Sub OpenPSClassicsfPKGBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPSClassicsfPKGBuilderMenuItem.Click
         Dim NewPSClassicsfPKGBuilder As New PSClassicsfPKGBuilder() With {.ShowActivated = True}
         NewPSClassicsfPKGBuilder.Show()
+    End Sub
+
+    Private Sub OpenKLogViewerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenKLogViewerMenuItem.Click
+        Dim NewLogWindow As New PS5Log() With {.ShowActivated = True}
+        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
+            NewLogWindow.PS5IPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
+        End If
+        NewLogWindow.Show()
     End Sub
 
 #End Region
@@ -558,7 +540,43 @@ Public Class PS5Menu
     Private Sub DownloadJARFTPServer_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARFTPServer.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v1.1/ftp-server-1.0-SNAPSHOT.jar") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.0.0/ftpserver-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadDumpClassPath_Click(sender As Object, e As RoutedEventArgs) Handles DownloadDumpClassPath.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.0.0/dumpclasspath-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadMiniTennis_Click(sender As Object, e As RoutedEventArgs) Handles DownloadMiniTennis.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.0.0/minitennis-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadPrintSysProps_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPrintSysProps.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.0.0/printsysprops-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadUMTXBug_Click(sender As Object, e As RoutedEventArgs) Handles DownloadUMTXBug.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.0.0/umtx-bug-1.0-SNAPSHOT.jar") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -606,15 +624,6 @@ Public Class PS5Menu
 
 #End Region
 
-    Private Sub DownloadPS5BDJBElfLoader_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPS5BDJBElfLoader.Click
-        Dim NewDownloader As New Downloader() With {.ShowActivated = True}
-        NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/PS5_BD-JB_ELF_Loader_v1.6.2.iso") = False Then
-            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
-            NewDownloader.Close()
-        End If
-    End Sub
-
 #End Region
 
 #Region "Exploits"
@@ -640,10 +649,19 @@ Public Class PS5Menu
         Process.Start("https://github.com/hammer-83/ps5-jar-loader")
     End Sub
 
+    Private Sub DownloadPS5BDJBElfLoader_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPS5BDJBElfLoader.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/PS5_BD-JB_ELF_Loader_v1.6.2.iso") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
     Private Sub DownloadJARLoader_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARLoader.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v1.1/ps5-jar-loader-1.1.iso") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.0.0/ps5-jar-loader-2.0.0.iso") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -733,6 +751,5 @@ Public Class PS5Menu
     End Sub
 
 #End Region
-
 
 End Class

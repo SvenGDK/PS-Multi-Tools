@@ -162,7 +162,13 @@ Public Class BDBurner
     End Sub
 
     Private Sub BurnDiscButton_Click(sender As Object, e As RoutedEventArgs) Handles BurnDiscButton.Click
+        If DiscDrivesComboBox.SelectedIndex = -1 Then
+            MsgBox("No disc drive specified.", MsgBoxStyle.Critical, "Error reading disc")
+            Return
+        End If
+
         If String.IsNullOrEmpty(SelectedISOTextBox.Text) Then
+            MsgBox("No ISO file specified.", MsgBoxStyle.Critical, "No file to burn")
             Return
         Else
             'Set cursor & status
@@ -176,6 +182,7 @@ Public Class BDBurner
 
     Private Sub CheckDiscButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckDiscButton.Click
         If DiscDrivesComboBox.SelectedIndex = -1 Then
+            MsgBox("No disc drive specified.", MsgBoxStyle.Critical, "Error reading disc")
             Return
         End If
 

@@ -31,14 +31,14 @@
             <ComboBoxItem Content="24000"/>
             <ComboBoxItem Content="48000"/>
         </ComboBox>
-        <Button x:Name="ConvertToAt9Button" Content="Convert" HorizontalAlignment="Left" Margin="290,113,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="ConvertToAt9Button" Content="Convert" HorizontalAlignment="Left" Margin="290,113,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
         <ComboBox x:Name="OutputFormatComboBox" HorizontalAlignment="Left" Margin="155,219,0,0" VerticalAlignment="Top" Width="210" Height="21" SelectedIndex="0">
             <ComboBoxItem Content="16bit Integer PCM"/>
             <ComboBoxItem Content="24bit Integer PCM"/>
             <ComboBoxItem Content="IEEE float PCM"/>
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="10,220,0,0" TextWrapping="Wrap" Text="WAV Output Format:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="140"/>
-        <Button x:Name="ConvertToWavButton" Content="Convert" HorizontalAlignment="Left" Margin="290,245,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="ConvertToWavButton" Content="Convert" HorizontalAlignment="Left" Margin="290,245,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
         <TextBlock x:Name="WAVInfoTextBlock" HorizontalAlignment="Left" Margin="10,138,0,0" TextWrapping="Wrap" Text="WAV File Info:" VerticalAlignment="Top" Foreground="White" Width="355" FontWeight="Bold" FontStyle="Italic"/>
     </Grid>
 </Window>

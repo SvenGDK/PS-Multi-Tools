@@ -281,6 +281,20 @@ Public Class PSXMainWindow
         Process.Start(New ProcessStartInfo("https://github.com/dokan-dev/dokany/releases") With {.UseShellExecute = True})
     End Sub
 
+    Private Sub HDDManagerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles HDDManagerMenuItem.Click
+        If Not String.IsNullOrEmpty(ConnectedPSXHDD.HDLDriveName) Then
+            Dim NewPSXHDDManager As New PSXPartitionManager() With {.ShowActivated = True}
+            NewPSXHDDManager.Show()
+        Else
+            MsgBox("Please connect to your PSX HDD first using the Project Manager before using the HDD Partition Manager.", MsgBoxStyle.Information, "Cannot start the HDD Partition Manager")
+        End If
+    End Sub
+
+    Private Sub XMBToolsMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles XMBToolsMenuItem.Click
+        Dim NewPSXXMBTools As New PSXAssetsBrowser() With {.ShowActivated = True}
+        NewPSXXMBTools.Show()
+    End Sub
+
 #End Region
 
 #Region "Projects"
@@ -604,5 +618,6 @@ Public Class PSXMainWindow
 
         ConnectDelay.Stop()
     End Sub
+
 
 End Class

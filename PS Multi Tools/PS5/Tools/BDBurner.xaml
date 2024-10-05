@@ -5,18 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="Blu Ray Burner" Height="350" Width="465" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+             Title="Blu Ray Burner" Height="310" Width="465" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button x:Name="BurnDiscButton" Content="Burn Disc" HorizontalAlignment="Left" Margin="335,212,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="BurnDiscButton" Content="Burn Disc" HorizontalAlignment="Left" Margin="335,195,0,0" VerticalAlignment="Top" Width="100"/>
         <ComboBox x:Name="DiscDrivesComboBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="425"/>
         <Button x:Name="CheckDiscButton" Content="Check Disc" HorizontalAlignment="Left" Margin="335,61,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select your disc drive:" VerticalAlignment="Top" FontSize="14" Width="425" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select your Blu-Ray Disc Drive :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
         <TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Height="20"/>
         <Button x:Name="BrowseISOButton" Content="Browse" HorizontalAlignment="Left" Margin="335,170,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,121,0,0" TextWrapping="Wrap" Text="Select an .iso file to burn on the disc:" VerticalAlignment="Top" FontSize="14" Width="425" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,121,0,0" TextWrapping="Wrap" Text="Select an ISO file to burn on the disc :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
         <TextBlock x:Name="DiscInfoTextBlock" HorizontalAlignment="Left" Margin="10,86,0,0" TextWrapping="Wrap" Text="Disc info:" VerticalAlignment="Top" Width="425" Foreground="White" FontStyle="Italic" FontSize="14"/>
-        <ProgressBar x:Name="BurnProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,278,0,0" VerticalAlignment="Top" Width="425" Foreground="#FF00A4E3"/>
-        <TextBlock x:Name="BurnStatusTextBlock" HorizontalAlignment="Left" Margin="10,253,0,0" TextWrapping="Wrap" Text="Burn Status:" VerticalAlignment="Top" Width="425" Height="20" Foreground="White"/>
+        <ProgressBar x:Name="BurnProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,245,0,0" VerticalAlignment="Top" Width="425" Foreground="#FF00A4E3"/>
+        <TextBlock x:Name="BurnStatusTextBlock" HorizontalAlignment="Left" Margin="10,224,0,0" TextWrapping="Wrap" Text="Burn Status:" VerticalAlignment="Top" Foreground="White"/>
 
     </Grid>
 </Window>

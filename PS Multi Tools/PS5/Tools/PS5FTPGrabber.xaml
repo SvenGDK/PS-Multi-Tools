@@ -5,24 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="FTP Grabber" Height="320" Width="705" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+             Title="FTP Grabber / Dumper" Height="320" Width="705" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <ComboBox x:Name="SelectedFolderComboBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="665" IsEditable="True">
             <ComboBoxItem Content="/mnt/sandbox/pfsmnt/"/>
             <ComboBoxItem Content="/mnt/disc/"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Enter or select a folder to grab from:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="665"/>
-        <Button x:Name="DownloadButton" Content="Start Download" HorizontalAlignment="Left" Margin="505,182,0,0" VerticalAlignment="Top" Width="170"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Enter or select a folder to dump from :" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="665"/>
+        <Button x:Name="DownloadButton" Content="Start Dumping" HorizontalAlignment="Left" Margin="525,183,0,0" VerticalAlignment="Top" Width="150"/>
         <ProgressBar x:Name="ReceiveProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,237,0,0" VerticalAlignment="Top" Width="665" Foreground="#FF00A4E3"/>
-        <TextBlock x:Name="ReceiveStatusTextBlock" HorizontalAlignment="Left" Margin="10,212,0,0" Text="Transfer Status:" VerticalAlignment="Top" Width="665" Height="20" Foreground="White"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,61,0,0" TextWrapping="NoWrap" Text="Info: Selecting pfsmnt will automatically detect the mounted game." VerticalAlignment="Top" Foreground="White" Width="665" TextAlignment="Center" FontSize="11" FontStyle="Italic"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,133,0,0" Text="Save to:" VerticalAlignment="Top" FontSize="14" Width="665" Foreground="White"/>
-        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,157,0,0" VerticalAlignment="Top" Width="594" Height="20"/>
-        <Button x:Name="BrowseFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="609,157,0,0" VerticalAlignment="Top" Width="66"/>
-        <CheckBox x:Name="FullDumpCheckBox" Content="Create a full dump" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" IsEnabled="False"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="NoWrap" Text="Options:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="665"/>
-        <CheckBox x:Name="MetadataDumpCheckBox" Content="Dump metadata only" HorizontalAlignment="Left" Margin="149,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" IsEnabled="False"/>
-        <CheckBox x:Name="SELFDumpCheckBox" Content="Dump SELF files only" HorizontalAlignment="Left" Margin="304,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" IsEnabled="False"/>
+        <TextBlock x:Name="ReceiveStatusTextBlock" HorizontalAlignment="Left" Margin="10,216,0,0" Text="Transfer Status :" VerticalAlignment="Top" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,61,0,0" TextWrapping="NoWrap" Text="Info: Selecting pfsmnt will automatically detect the mounted game." VerticalAlignment="Top" Foreground="White" Width="665" TextAlignment="Center" FontStyle="Italic"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,134,0,0" Text="Save Dump to :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
+        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="594" Height="20"/>
+        <Button x:Name="BrowseFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="609,158,0,0" VerticalAlignment="Top" Width="66"/>
+        <CheckBox x:Name="FullDumpCheckBox" Content="Create a Full Dump" HorizontalAlignment="Left" Margin="10,106,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,82,0,0" TextWrapping="NoWrap" Text="Dump Options :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <CheckBox x:Name="MetadataDumpCheckBox" Content="Dump Metadata only" HorizontalAlignment="Left" Margin="153,106,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" IsEnabled="False"/>
+        <CheckBox x:Name="SELFDumpCheckBox" Content="Dump SELF files only" HorizontalAlignment="Left" Margin="309,106,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" IsEnabled="False"/>
 
     </Grid>
 </Window>

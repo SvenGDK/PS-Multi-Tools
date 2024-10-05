@@ -483,13 +483,14 @@ Public Class PS5Notifications
 
     Private Sub OtherActionsComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles OtherActionsComboBox.SelectionChanged
         If OtherActionsComboBox.SelectedItem IsNot Nothing Then
-            CustomDefinedActionTextBox.Text = OtherActionsComboBox.SelectedItem.ToString
+            Dim SelectedComboBoxItem As ComboBoxItem = CType(OtherActionsComboBox.SelectedItem, ComboBoxItem)
+            CustomDefinedActionTextBox.Text = SelectedComboBoxItem.Content.ToString()
         End If
     End Sub
 
     Private Sub PS5Notifications_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
-        'Add pre-defined actions to the list
+        'Add pre-defined bookmarks to the list
         WebBrowserJSONActions.Add(New Action() With {.actionName = "PS Multi Tools Host",
                         .actionType = "DeepLink",
                         .defaultFocus = True,

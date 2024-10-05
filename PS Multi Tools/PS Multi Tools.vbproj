@@ -151,14 +151,14 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.119.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.118.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.119.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.119.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.118.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.119.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.119.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -234,6 +234,9 @@
     <Compile Include="Dialogs\Downloader.xaml.vb">
       <DependentUpon>Downloader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HomeWindow.xaml.vb">
+      <DependentUpon>HomeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MultiPlatformTools\DownloadPackageInfoWindow.xaml.vb">
       <DependentUpon>DownloadPackageInfoWindow.xaml</DependentUpon>
     </Compile>
@@ -269,9 +272,6 @@
     </Compile>
     <Compile Include="MultiPlatformTools\PSClassicsfPKGBuilder.xaml.vb">
       <DependentUpon>PSClassicsfPKGBuilder.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NewMainWindow.xaml.vb">
-      <DependentUpon>NewMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MultiPlatformTools\PackageInfoWindow.xaml.vb">
       <DependentUpon>PackageInfoWindow.xaml</DependentUpon>
@@ -376,17 +376,8 @@
     <Compile Include="PS5\Tools\BDBurner.xaml.vb">
       <DependentUpon>BDBurner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PS5\Tools\FTPBDRip.xaml.vb">
-      <DependentUpon>FTPBDRip.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PS5\Tools\PKGBuilder\GP5Creator.xaml.vb">
       <DependentUpon>GP5Creator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PKGBuilder\GP5LanguageSelector.xaml.vb">
-      <DependentUpon>GP5LanguageSelector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PKGBuilder\GP5Manager.xaml.vb">
-      <DependentUpon>GP5Manager.xaml</DependentUpon>
     </Compile>
     <Compile Include="PS5\Tools\PKGBuilder\GP5PKGBuilder.xaml.vb">
       <DependentUpon>GP5PKGBuilder.xaml</DependentUpon>
@@ -411,9 +402,6 @@
     </Compile>
     <Compile Include="PS5\Tools\Editors\PS5ManifestEditor.xaml.vb">
       <DependentUpon>PS5ManifestEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\GamePatches\PS5ModPatches.xaml.vb">
-      <DependentUpon>PS5ModPatches.xaml</DependentUpon>
     </Compile>
     <Compile Include="PS5\Tools\PS5Notifications.xaml.vb">
       <DependentUpon>PS5Notifications.xaml</DependentUpon>
@@ -558,6 +546,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="HomeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MultiPlatformTools\DownloadPackageInfoWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -603,10 +595,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MultiPlatformTools\PSClassicsfPKGBuilder.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NewMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -742,19 +730,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PS5\Tools\FTPBDRip.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="PS5\Tools\PKGBuilder\GP5Creator.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PKGBuilder\GP5LanguageSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PKGBuilder\GP5Manager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -787,10 +763,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PS5\Tools\Editors\PS5ManifestEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\GamePatches\PS5ModPatches.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1256,19 +1228,19 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('..\packages\WinSCP.6.3.5\build\WinSCP.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WinSCP.6.3.5\build\WinSCP.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2792.45\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2792.45\build\Microsoft.Web.WebView2.targets'))" />
+    <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
   </Target>
   <Target Name="RemoveSatelliteAssemblies" AfterTargets="ResolveAssemblyReferences">
     <ItemGroup>
       <ReferenceCopyLocalPaths Remove="@(ReferenceSatellitePaths)" />
     </ItemGroup>
   </Target>
-  <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
   <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <Import Project="..\packages\WinSCP.6.3.5\build\WinSCP.targets" Condition="Exists('..\packages\WinSCP.6.3.5\build\WinSCP.targets')" />
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2792.45\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2792.45\build\Microsoft.Web.WebView2.targets')" />
+  <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
 </Project>
