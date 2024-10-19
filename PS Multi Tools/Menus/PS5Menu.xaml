@@ -7,30 +7,31 @@
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="500">
-    
     <MenuItem Header="Library"/>
     <MenuItem x:Name="ToolsMenuItem" Header="Tools">
         <MenuItem Header="Blu Ray Disc Burner" x:Name="OpenBDBurnerMenuItem"/>
         <MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems"></MenuItem>
         <MenuItem Header="Clear error history on PS5 (Requires running FTP server)" x:Name="ClearErrorHistoryMenuItem"/>
+        <MenuItem Header="Disc Info Reader (Requires running FTP server)" x:Name="OpenDiscParamReaderMenuItem"/>
         <MenuItem Header="Dump RCO files (Requires running FTP server)" x:Name="OpenRCODumperMenuItem"/>
-        <MenuItem Header="etaHEN Configurator" x:Name="OpenetaHENConfiguratorMenuItem"/>
+        <MenuItem Header="etaHEN Configurator (Requires running FTP server)" x:Name="OpenetaHENConfiguratorMenuItem"/>
         <MenuItem Header="Extract RCO files" x:Name="OpenRCOExtractorMenuItem"/>
         <MenuItem Header="Fake sign SELF files" x:Name="OpenMakefSELFMenuItem"/>
         <MenuItem Header="FTP Browser" x:Name="OpenFTPBrowserMenuItem"/>
         <MenuItem Header="FTP Grabber (Dumper)" x:Name="OpenFTPGrabberMenuItem"/>
         <MenuItem Header="GP5 Project Creator" x:Name="OpenGP5ManagerMenuItem"/>
-        <MenuItem Header="Kernel Log Viewer" x:Name="OpenKLogViewerMenuItem"/>
+        <MenuItem Header="Kernel Log Viewer (Requires running Klog server)" x:Name="OpenKLogViewerMenuItem"/>
         <MenuItem Header="Manifest JSON Editor" x:Name="OpenManifestEditorMenuItem"/>
         <MenuItem Header="Notifications Manager" x:Name="OpenNotificationManagerMenuItem"/>
         <MenuItem Header="Param JSON Editor" x:Name="OpenParamEditorMenuItem"/>
         <MenuItem Header="Payload &amp; Mast1c0re PS2 Game Sender" x:Name="SenderMenuItem"/>
         <MenuItem Header="PKG Builder" x:Name="OpenPKGBuilderMenuItem"/>
         <MenuItem Header="PKG Merger" x:Name="OpenPKGMergerMenuItem"/>
+        <MenuItem Header="PKG Reader (Viewer)" x:Name="OpenPKGReaderMenuItem"/>
         <MenuItem Header="PKG Sender" x:Name="OpenPKGSenderMenuItem"/>
         <MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem"></MenuItem>
         <MenuItem Header="Simple Shortcut PKG Creator" x:Name="OpenShortcutPKGCreatorMenuItem"/>
-        <MenuItem Header="WAV &lt;-&gt; AT9" x:Name="OpenAudioConverterMenuItem"/>
+        <MenuItem Header="WAV &lt;-&gt; AT9 Converter" x:Name="OpenAudioConverterMenuItem"/>
         <MenuItem Header="Web Browser Installer" x:Name="OpenWebBrowserInstallerMenuItem"/>
     </MenuItem>
     <MenuItem x:Name="ExploitsMenuItem" Header="Exploits">
@@ -387,7 +388,6 @@
             <TextBox x:Name="FTPIPTextBox" Width="200"></TextBox>
         </MenuItem>
     </MenuItem>
-    
-    <wv2:WebView2 x:Name="webMANwebsrvWebView" HorizontalAlignment="Center" Height="0" Margin="0,0,0,0" VerticalAlignment="Top" Width="0" Source="about:blank" Visibility="Hidden" AllowExternalDrop="False" Focusable="False"/>
 
+    <wv2:WebView2 x:Name="webMANwebsrvWebView" Source="about:blank" Visibility="Collapsed" AllowExternalDrop="False" Focusable="False"/>
 </Menu>

@@ -1,0 +1,105 @@
+﻿<Window x:Class="PS5PKGViewer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PS5 PKG Viewer" Height="540" Width="1000" Background="#2D2D30" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid>
+        <TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="845" Height="20"/>
+        <Button x:Name="BrowsePKGFileButton" Content="Browse" HorizontalAlignment="Left" Margin="860,35,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a PS5 PKG file :" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="10,10,0,0" FontFamily="Calibri"/>
+        <Image x:Name="PKGIconImage" HorizontalAlignment="Left" Height="128" Margin="25,70,0,0" VerticalAlignment="Top" Width="128"/>
+        <TextBlock x:Name="CurrentListViewTitleTextBlock" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="PKG Entries :" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="10,210,0,0" FontFamily="Calibri"/>
+
+        <TextBlock x:Name="GameTitleTextBlock" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="GameTitle" VerticalAlignment="Top" Foreground="White" FontSize="24" Margin="188,70,0,0" FontFamily="Calibri" Visibility="Hidden"/>
+        <TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FocusVisualStyle="{x:Null}" Margin="188,114,0,0" HorizontalAlignment="Left" Foreground="White" FontFamily="Calibri" FontSize="14" Visibility="Hidden"/>
+        <TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FocusVisualStyle="{x:Null}" TextAlignment="Left" Margin="188,136,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" FontSize="14" Visibility="Hidden"/>
+        <TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FocusVisualStyle="{x:Null}" TextAlignment="Left" Margin="645,114,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" FontSize="14" Visibility="Hidden"/>
+        <TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FocusVisualStyle="{x:Null}" TextAlignment="Left" Margin="645,136,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" FontSize="14" Visibility="Hidden"/>
+        <TextBlock x:Name="GameVersionTextBlock" VerticalAlignment="Top" Text="GameVersion" FocusVisualStyle="{x:Null}" TextAlignment="Left" Margin="188,158,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" FontSize="14" Visibility="Hidden"/>
+        <TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FocusVisualStyle="{x:Null}" TextAlignment="Left" Margin="645,158,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" FontSize="14" Visibility="Hidden"/>
+        <TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FocusVisualStyle="{x:Null}" TextAlignment="Left" Margin="188,180,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" FontSize="14" Visibility="Hidden"/>
+
+        <ListView x:Name="PKGContentListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="960" Height="200">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Offset" DisplayMemberBinding="{Binding EntryOffset}" Width="100"/>
+                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding EntrySize}" Width="100"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding EntryName}" Width="375"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="PKGScenariosListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="960" Height="200" Visibility="Hidden">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ScenarioID}" Width="100"/>
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ScenarioType}" Width="100"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding ScenarioName}" Width="375"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="PKGChunksListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="960" Height="200" Visibility="Hidden">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ChunkID}" Width="100"/>
+                    <GridViewColumn Header="Flag" DisplayMemberBinding="{Binding ChunkFlag}" Width="100"/>
+                    <GridViewColumn Header="Locus" DisplayMemberBinding="{Binding ChunkLocus}" Width="100"/>
+                    <GridViewColumn Header="Language" DisplayMemberBinding="{Binding ChunkLanguage}" Width="100"/>
+                    <GridViewColumn Header="Disps" DisplayMemberBinding="{Binding ChunkDisps}" Width="100"/>
+                    <GridViewColumn Header="Num" DisplayMemberBinding="{Binding ChunkNum}" Width="100"/>
+                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding ChunkSize}" Width="100"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding ChunkName}" Width="200"/>
+                    <GridViewColumn Header="Value" DisplayMemberBinding="{Binding ChunkValue}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="PKGOutersListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="960" Height="200" Visibility="Hidden">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding OuterID}" Width="100"/>
+                    <GridViewColumn Header="Image" DisplayMemberBinding="{Binding OuterImage}" Width="100"/>
+                    <GridViewColumn Header="Offset" DisplayMemberBinding="{Binding OuterOffset}" Width="100"/>
+                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding OuterSize}" Width="100"/>
+                    <GridViewColumn Header="Chunks" DisplayMemberBinding="{Binding OuterChunks}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="PKGImageFilesListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="960" Height="200" Visibility="Hidden">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="File Size" DisplayMemberBinding="{Binding FileSize}"/>
+                    <GridViewColumn Header="Plain" DisplayMemberBinding="{Binding FilePlain}"/>
+                    <GridViewColumn Header="File Compression" DisplayMemberBinding="{Binding FileCompression}"/>
+                    <GridViewColumn Header="File iMode" DisplayMemberBinding="{Binding FileIMode}"/>
+                    <GridViewColumn Header="File Index" DisplayMemberBinding="{Binding FileIndex}"/>
+                    <GridViewColumn Header="File iNode" DisplayMemberBinding="{Binding FileINode}"/>
+                    <GridViewColumn Header="File Name" DisplayMemberBinding="{Binding FileName}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="PKGImageDirectoriesListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="960" Height="200" Visibility="Hidden">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Directory Size" DisplayMemberBinding="{Binding DirectorySize}"/>
+                    <GridViewColumn Header="Links" DisplayMemberBinding="{Binding DirectoryLinks}"/>
+                    <GridViewColumn Header="Directory iMode" DisplayMemberBinding="{Binding DirectoryIMode}"/>
+                    <GridViewColumn Header="Directory Index" DisplayMemberBinding="{Binding DirectoryIndex}"/>
+                    <GridViewColumn Header="Directory iNode" DisplayMemberBinding="{Binding DirectoryINode}"/>
+                    <GridViewColumn Header="Directory Name" DisplayMemberBinding="{Binding DirectoryName}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button x:Name="ShowPKGChunksButton" Content="Show PKG Chunks" HorizontalAlignment="Left" Margin="710,465,0,0" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGScenariosButton" Content="Show PKG Scenarios" HorizontalAlignment="Left" Margin="710,440,0,0" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGOutersButton" Content="Show PKG Outers" HorizontalAlignment="Left" Margin="845,440,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGEntriesButton" Content="Show PKG Entries" HorizontalAlignment="Left" Margin="845,465,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGPFSImageFilesButton" Content="Show PKG PFS Image Files" HorizontalAlignment="Left" Margin="10,440,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGNestedImageFilesButton" Content="Show PKG Nested Image Files" HorizontalAlignment="Left" Margin="239,440,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGPFSImageDirectoriesButton" Content="Show PKG PFS Image Directories" HorizontalAlignment="Left" Margin="10,465,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGNestedImageDirectoriesButton" Content="Show PKG Nested Image Directories" HorizontalAlignment="Left" Margin="239,465,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
+
+    </Grid>
+</Window>

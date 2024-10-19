@@ -3868,3 +3868,101 @@ Public Class StorePageInfos
     End Property
 
 End Class
+
+Public Class PS5DiscParamClass
+
+    Public Class Disc
+        Private _MasterDataId As String
+        Private _Role As String
+
+        <JsonProperty("masterDataId")>
+        Public Property MasterDataId As String
+            Get
+                Return _MasterDataId
+            End Get
+            Set
+                _MasterDataId = Value
+            End Set
+        End Property
+
+        <JsonProperty("role")>
+        Public Property Role As String
+            Get
+                Return _Role
+            End Get
+            Set
+                _Role = Value
+            End Set
+        End Property
+    End Class
+
+    Public Class PS5DiscParam
+        Private _RequiredSystemSoftwareVersion As String
+        Private _PubtoolsVersion As String
+        Private _MasterVersion As String
+        Private _DiscTotal As Integer
+        Private _DiscNumber As Integer
+        Private _Disc As Disc()
+
+        <JsonProperty("disc")>
+        Public Property Disc As Disc()
+            Get
+                Return _Disc
+            End Get
+            Set
+                _Disc = Value
+            End Set
+        End Property
+
+        <JsonProperty("discNumber")>
+        Public Property DiscNumber As Integer
+            Get
+                Return _DiscNumber
+            End Get
+            Set
+                _DiscNumber = Value
+            End Set
+        End Property
+
+        <JsonProperty("discTotal")>
+        Public Property DiscTotal As Integer
+            Get
+                Return _DiscTotal
+            End Get
+            Set
+                _DiscTotal = Value
+            End Set
+        End Property
+
+        <JsonProperty("masterVersion")>
+        Public Property MasterVersion As String
+            Get
+                Return _MasterVersion
+            End Get
+            Set
+                _MasterVersion = Value
+            End Set
+        End Property
+
+        <JsonProperty("pubtoolsVersion")>
+        Public Property PubtoolsVersion As String
+            Get
+                Return _PubtoolsVersion
+            End Get
+            Set
+                _PubtoolsVersion = Value
+            End Set
+        End Property
+
+        <JsonProperty("requiredSystemSoftwareVersion")>
+        Public Property RequiredSystemSoftwareVersion As String
+            Get
+                Return _RequiredSystemSoftwareVersion
+            End Get
+            Set
+                _RequiredSystemSoftwareVersion = Value
+            End Set
+        End Property
+    End Class
+
+End Class

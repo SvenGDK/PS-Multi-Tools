@@ -42,14 +42,15 @@ Public Class PS5Library
 #End Region
 
 #Region "Game Context Menu Items"
-    Dim GamesContextMenu As New Controls.ContextMenu()
+    Dim WithEvents GamesContextMenu As New Controls.ContextMenu()
     Dim WithEvents GameCopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy game to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
     Dim WithEvents GameOpenLocationMenuItem As New Controls.MenuItem() With {.Header = "Open game folder", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/OpenFolder-icon.png", UriKind.Relative))}}
     Dim WithEvents GamePlayMenuItem As New Controls.MenuItem() With {.Header = "Play Soundtrack", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}}
     Dim WithEvents GameCheckForUpdatesMenuItem As New Controls.MenuItem() With {.Header = "Check for updates", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Refresh-icon.png", UriKind.Relative))}}
     Dim WithEvents GameBrowseAssetsMenuItem As New Controls.MenuItem() With {.Header = "Browse assets", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/OpenFolder-icon.png", UriKind.Relative))}}
+    Dim WithEvents GamePackAsPKG As New Controls.MenuItem() With {.Header = "Pack as PS5 PKG", .Visibility = Visibility.Collapsed, .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/PKG.png", UriKind.Relative))}}
 
-    Dim GameChangeTypeMenuItem As New Controls.MenuItem() With {.Header = "Change game type", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/rename.png", UriKind.Relative))}}
+    Dim WithEvents GameChangeTypeMenuItem As New Controls.MenuItem() With {.Header = "Change game type", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/rename.png", UriKind.Relative))}}
     Dim WithEvents GameChangeToGameMenuItem As New Controls.MenuItem() With {.Header = "To Game App"}
     Dim WithEvents GameChangeToNativeMediaMenuItem As New Controls.MenuItem() With {.Header = "To Native Media App"}
     Dim WithEvents GameChangeToRNPSMediaMenuItem As New Controls.MenuItem() With {.Header = "To RNPS Media App"}
@@ -66,13 +67,14 @@ Public Class PS5Library
 #End Region
 
 #Region "App Context Menu Items"
-    Dim AppsContextMenu As New Controls.ContextMenu()
+    Dim WithEvents AppsContextMenu As New Controls.ContextMenu()
     Dim WithEvents AppCopyToMenuItem As New Controls.MenuItem() With {.Header = "Copy app to", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/copy-icon.png", UriKind.Relative))}}
     Dim WithEvents AppOpenLocationMenuItem As New Controls.MenuItem() With {.Header = "Open app folder", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/OpenFolder-icon.png", UriKind.Relative))}}
     Dim WithEvents AppPlayMenuItem As New Controls.MenuItem() With {.Header = "Play Soundtrack", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}}
     Dim WithEvents AppCheckForUpdatesMenuItem As New Controls.MenuItem() With {.Header = "Check for updates", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Refresh-icon.png", UriKind.Relative))}}
+    Dim WithEvents AppPackAsPKG As New Controls.MenuItem() With {.Header = "Pack as PS5 PKG", .Visibility = Visibility.Collapsed, .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/PKG.png", UriKind.Relative))}}
 
-    Dim AppChangeTypeMenuItem As New Controls.MenuItem() With {.Header = "Change app type", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/rename.png", UriKind.Relative))}}
+    Dim WithEvents AppChangeTypeMenuItem As New Controls.MenuItem() With {.Header = "Change app type", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/rename.png", UriKind.Relative))}}
     Dim WithEvents AppChangeToGameMenuItem As New Controls.MenuItem() With {.Header = "To Game App"}
     Dim WithEvents AppChangeToNativeMediaMenuItem As New Controls.MenuItem() With {.Header = "To Native Media App"}
     Dim WithEvents AppChangeToRNPSMediaMenuItem As New Controls.MenuItem() With {.Header = "To RNPS Media App"}
@@ -91,11 +93,13 @@ Public Class PS5Library
     Private Sub PS5Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Add supplemental menu items that will be handled in PS Multi Tools
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(0), Controls.MenuItem)
+        Dim ToolsMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(1), Controls.MenuItem)
         Dim SettingsMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(6), Controls.MenuItem)
         LibraryMenuItem.Items.Add(OpenLocalBackupFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadPatchPKGFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadFTPFolderMenuItem)
         LibraryMenuItem.Items.Add(OpenDownloadsFolderMenuItem)
+
         SettingsMenuItem.Items.Add(NewSettingsMenuItem)
 
         'Add context menu for games
@@ -104,6 +108,7 @@ Public Class PS5Library
         GamesContextMenu.Items.Add(GameBrowseAssetsMenuItem)
         GamesContextMenu.Items.Add(GamePlayMenuItem)
         GamesContextMenu.Items.Add(GameCheckForUpdatesMenuItem)
+        GamesContextMenu.Items.Add(GamePackAsPKG)
         GamesContextMenu.Items.Add(New Separator())
 
         'Add sub menu for GameChangeType
@@ -127,6 +132,7 @@ Public Class PS5Library
         AppsContextMenu.Items.Add(AppCopyToMenuItem)
         AppsContextMenu.Items.Add(AppPlayMenuItem)
         AppsContextMenu.Items.Add(AppCheckForUpdatesMenuItem)
+        AppsContextMenu.Items.Add(AppPackAsPKG)
         AppsContextMenu.Items.Add(New Separator())
 
         'Add sub menu for AppChangeType
@@ -221,7 +227,7 @@ Public Class PS5Library
                 'List appmeta directory for the games
                 For Each item In conn.GetListing("/user/appmeta")
 
-                    Dim PS5GameLVItem As New PS5Game()
+                    Dim PS5GameLVItem As New PS5Game() With {.GameBackupType = "FTP"}
 
                     If item.Type = FtpObjectType.Directory Then
 
@@ -284,7 +290,7 @@ Public Class PS5Library
                 'List installed system apps 
                 For Each item In conn.GetListing("/system_ex/app")
 
-                    Dim PS5GameLVItem As New PS5Game()
+                    Dim PS5GameLVItem As New PS5Game() With {.GameBackupType = "FTP"}
 
                     If item.Type = FtpObjectType.Directory Then
 
@@ -330,7 +336,7 @@ Public Class PS5Library
             'PS5 Patch Source pkgs
             For Each PatchSCPKG In Directory.GetFiles(WorkerArgs.FolderPath, "*_sc.pkg", SearchOption.AllDirectories)
 
-                Dim NewPS5Game As New PS5Game()
+                Dim NewPS5Game As New PS5Game() With {.GameBackupType = "Patch"}
                 Dim PKGFileInfo As New FileInfo(PatchSCPKG)
 
                 TotalSize = 0
@@ -347,7 +353,7 @@ Public Class PS5Library
                     Dim ProcessOutput As String = OutputReader.ReadToEnd()
 
                     If ProcessOutput.Count > 0 Then
-                        Dim ParamData = JsonConvert.DeserializeObject(Of PS5ParamClass.PS5Param)(ProcessOutput)
+                        Dim ParamData = JsonConvert.DeserializeObject(Of PS5Param)(ProcessOutput)
 
                         If ParamData IsNot Nothing Then
                             NewPS5Game.GameID = ParamData.TitleId
@@ -448,7 +454,7 @@ Public Class PS5Library
                         TotalSize = 0
 
                         Dim PKGFileInfo As New FileInfo(FoundFile)
-                        Dim NewPS5Game As New PS5Game()
+                        Dim NewPS5Game As New PS5Game With {.GameBackupType = "PKG"}
 
                         Using PARAMReader As New Process()
                             PARAMReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps5_pkg.exe"
@@ -462,7 +468,7 @@ Public Class PS5Library
                             Dim ProcessOutput As String = OutputReader.ReadToEnd()
 
                             If ProcessOutput.Count > 0 Then
-                                Dim ParamData = JsonConvert.DeserializeObject(Of PS5ParamClass.PS5Param)(ProcessOutput)
+                                Dim ParamData = JsonConvert.DeserializeObject(Of PS5Param)(ProcessOutput)
 
                                 If ParamData IsNot Nothing Then
                                     If ParamData.TitleId IsNot Nothing Then
@@ -547,7 +553,7 @@ Public Class PS5Library
                     Case ".json"
                         TotalSize = 0
 
-                        Dim NewPS5Game As New PS5Game()
+                        Dim NewPS5Game As New PS5Game() With {.GameBackupType = "Folder"}
                         Dim ParamData = JsonConvert.DeserializeObject(Of PS5Param)(File.ReadAllText(FoundFile))
                         Dim ParamFileInfo As New FileInfo(FoundFile)
 
@@ -941,6 +947,7 @@ Public Class PS5Library
 #End Region
 
 #Region "Game Context Menu Actions"
+
     Private Sub GameCopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameCopyToMenuItem.Click
         If NewGamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
@@ -973,7 +980,7 @@ Public Class PS5Library
     Private Sub GamePlayMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GamePlayMenuItem.Click
         If NewGamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
-            If SelectedPS5Game.GameSoundFile IsNot Nothing Then
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameSoundFile) Then
                 If IsSoundPlaying Then
                     Utils.StopGameSound()
                     IsSoundPlaying = False
@@ -1001,8 +1008,10 @@ Public Class PS5Library
     Private Sub GameCheckForUpdatesMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameCheckForUpdatesMenuItem.Click
         If NewGamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
-            Dim NewPS5GamePatches As New PS5GamePatches With {.ShowActivated = True, .SearchForGamePatchWithID = SelectedPS5Game.GameID.Split(New String() {"Title ID: "}, StringSplitOptions.None)(1)}
-            NewPS5GamePatches.Show()
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameID) Then
+                Dim NewPS5GamePatches As New PS5GamePatches With {.ShowActivated = True, .SearchForGamePatchWithID = SelectedPS5Game.GameID.Split(New String() {"Title ID: "}, StringSplitOptions.None)(1)}
+                NewPS5GamePatches.Show()
+            End If
         End If
     End Sub
 
@@ -1310,19 +1319,21 @@ Public Class PS5Library
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new icon0.png image for this game", .Filter = "PNG images (*.png)|*.png", .Multiselect = False}
 
             If OFD.ShowDialog() = Forms.DialogResult.OK Then
-                'Move new icon to sce_sys
-                File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", True)
+                If File.Exists(OFD.FileName) AndAlso Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                    'Move new icon to sce_sys
+                    File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", True)
 
-                'Reload new icon
-                Dim TempBitmapImage = New BitmapImage()
-                TempBitmapImage.BeginInit()
-                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                TempBitmapImage.UriSource = New Uri(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
-                TempBitmapImage.EndInit()
-                SelectedPS5Game.GameCoverSource = TempBitmapImage
+                    'Reload new icon
+                    Dim TempBitmapImage = New BitmapImage()
+                    TempBitmapImage.BeginInit()
+                    TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                    TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                    TempBitmapImage.UriSource = New Uri(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
+                    TempBitmapImage.EndInit()
+                    SelectedPS5Game.GameCoverSource = TempBitmapImage
 
-                NewGamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
+                End If
             End If
         End If
     End Sub
@@ -1333,18 +1344,20 @@ Public Class PS5Library
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new pic0.png image for this game", .Filter = "PNG images (*.png)|*.png", .Multiselect = False}
 
             If OFD.ShowDialog() = Forms.DialogResult.OK Then
-                File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\pic0.png", True)
+                If File.Exists(OFD.FileName) AndAlso Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                    File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\pic0.png", True)
 
-                'Set new background
-                Dim TempBitmapImage = New BitmapImage()
-                TempBitmapImage.BeginInit()
-                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                TempBitmapImage.UriSource = New Uri(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
-                TempBitmapImage.EndInit()
-                SelectedPS5Game.GameBGSource = TempBitmapImage
+                    'Set new background
+                    Dim TempBitmapImage = New BitmapImage()
+                    TempBitmapImage.BeginInit()
+                    TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                    TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                    TempBitmapImage.UriSource = New Uri(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
+                    TempBitmapImage.EndInit()
+                    SelectedPS5Game.GameBGSource = TempBitmapImage
 
-                NewGamesListView.Items.Refresh()
+                    NewGamesListView.Items.Refresh()
+                End If
             End If
         End If
     End Sub
@@ -1359,7 +1372,9 @@ Public Class PS5Library
             Else
                 'Set new soundtrack
                 If OFD.ShowDialog() = Forms.DialogResult.OK Then
-                    File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\snd0.at9", True)
+                    If File.Exists(OFD.FileName) AndAlso Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                        File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\snd0.at9", True)
+                    End If
                 End If
             End If
         End If
@@ -1368,15 +1383,62 @@ Public Class PS5Library
     Private Sub GameOpenLocationMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameOpenLocationMenuItem.Click
         If NewGamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
-            Process.Start(SelectedPS5Game.GameFileOrFolderPath)
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                Process.Start(SelectedPS5Game.GameFileOrFolderPath)
+            End If
         End If
     End Sub
 
     Private Sub GameBrowseAssetsMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameBrowseAssetsMenuItem.Click
         If NewGamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
-            Dim NewAssetBrowser As New PS5AssetsBrowser With {.SelectedDirectory = SelectedPS5Game.GameFileOrFolderPath}
-            NewAssetBrowser.Show()
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                Dim NewAssetBrowser As New PS5AssetsBrowser With {.SelectedDirectory = SelectedPS5Game.GameFileOrFolderPath}
+                NewAssetBrowser.Show()
+            End If
+        End If
+    End Sub
+
+    Private Sub GamePackAsPKG_Click(sender As Object, e As RoutedEventArgs) Handles GamePackAsPKG.Click
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+
+                'Create a GP5 project
+                Dim AppProjectPath As String = SelectedPS5Game.GameFileOrFolderPath
+                Dim NewGP5Project As XDocument = <?xml version="1.0" encoding="utf-8" standalone="no"?>
+                                                 <psproject fmt="gp5" version="1000">
+                                                     <volume>
+                                                         <volume_type>prospero_app</volume_type>
+                                                         <package passcode="GvE6xCpZxd96scOUGuLPbuLp8O800B0s"/>
+                                                         <chunk_info chunk_count="1" scenario_count="1">
+                                                             <chunks>
+                                                                 <chunk id="0" label="Chunk #0"/>
+                                                             </chunks>
+                                                             <scenarios default_id="0">
+                                                                 <scenario id="0" initial_chunk_count="1" label="Scenario #0" type="playmode">0</scenario>
+                                                             </scenarios>
+                                                         </chunk_info>
+                                                     </volume>
+                                                     <global_exclude/>
+                                                     <rootdir dir_exclude="about" file_exclude="*.esbak;keystone;*.dds;disc_info.dat;pfs-version.dat;ext_info.dat" src_path=<%= AppProjectPath %>/>
+                                                 </psproject>
+
+                'Save the GP5 project
+                Dim GP5ProjectPath As String = ""
+                Dim SFD As New SaveFileDialog() With {.Title = "Select a save path for the GP5 project", .DefaultExt = ".gp5", .AddExtension = True, .Filter = "GP5 Project (*.gp5)|*.gp5"}
+                If SFD.ShowDialog() = Forms.DialogResult.OK Then
+                    GP5ProjectPath = SFD.FileName
+                    NewGP5Project.Save(SFD.FileName)
+                End If
+
+                'Show the PKG Builder
+                Dim NewPKGBuilder As New PS5PKGBuilder() With {.PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"}
+                NewPKGBuilder.SelectedProjectTextBox.Text = GP5ProjectPath
+                NewPKGBuilder.Show()
+
+                MsgBox("A GP5 project for " + SelectedPS5Game.GameTitle + " - [" + SelectedPS5Game.GameID + "] has been created." + vbCrLf + "Select an output path for the final PKG file and build it.", MsgBoxStyle.Information, "PS5 Game Library")
+            End If
         End If
     End Sub
 
@@ -1416,7 +1478,7 @@ Public Class PS5Library
     Private Sub AppPlayMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles AppPlayMenuItem.Click
         If AppsListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(AppsListView.SelectedItem, PS5Game)
-            If SelectedPS5Game.GameSoundFile IsNot Nothing Then
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameSoundFile) Then
                 If IsSoundPlaying Then
                     Utils.StopGameSound()
                     IsSoundPlaying = False
@@ -1444,11 +1506,13 @@ Public Class PS5Library
     Private Sub AppCheckForUpdatesMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles AppCheckForUpdatesMenuItem.Click
         If AppsListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(AppsListView.SelectedItem, PS5Game)
-            If Not SelectedPS5Game.GameID.StartsWith("NPXS") Then
-                Dim NewPS5GamePatches As New PS5GamePatches With {.ShowActivated = True, .SearchForGamePatchWithID = SelectedPS5Game.GameID.Split(New String() {"Title ID: "}, StringSplitOptions.None)(1)}
-                NewPS5GamePatches.Show()
-            Else
-                MsgBox("Updates can only be checked for retail games and apps.", MsgBoxStyle.Information)
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameID) Then
+                If Not SelectedPS5Game.GameID.StartsWith("NPXS") Then
+                    Dim NewPS5GamePatches As New PS5GamePatches With {.ShowActivated = True, .SearchForGamePatchWithID = SelectedPS5Game.GameID.Split(New String() {"Title ID: "}, StringSplitOptions.None)(1)}
+                    NewPS5GamePatches.Show()
+                Else
+                    MsgBox("Updates can only be checked for retail games and apps.", MsgBoxStyle.Information)
+                End If
             End If
         End If
     End Sub
@@ -1752,19 +1816,21 @@ Public Class PS5Library
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new icon0.png image for this app", .Filter = "PNG images (*.png)|*.png", .Multiselect = False}
 
             If OFD.ShowDialog() = Forms.DialogResult.OK Then
-                'Move new icon to sce_sys
-                File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", True)
+                If File.Exists(OFD.FileName) AndAlso Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                    'Move new icon to sce_sys
+                    File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", True)
 
-                'Reload new icon
-                Dim TempBitmapImage = New BitmapImage()
-                TempBitmapImage.BeginInit()
-                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                TempBitmapImage.UriSource = New Uri(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
-                TempBitmapImage.EndInit()
-                SelectedPS5Game.GameCoverSource = TempBitmapImage
+                    'Reload new icon
+                    Dim TempBitmapImage = New BitmapImage()
+                    TempBitmapImage.BeginInit()
+                    TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                    TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                    TempBitmapImage.UriSource = New Uri(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
+                    TempBitmapImage.EndInit()
+                    SelectedPS5Game.GameCoverSource = TempBitmapImage
 
-                AppsListView.Items.Refresh()
+                    AppsListView.Items.Refresh()
+                End If
             End If
         End If
     End Sub
@@ -1775,16 +1841,18 @@ Public Class PS5Library
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new pic0.png image for this app", .Filter = "PNG images (*.png)|*.png", .Multiselect = False}
 
             If OFD.ShowDialog() = Forms.DialogResult.OK Then
-                File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\pic0.png", True)
+                If File.Exists(OFD.FileName) AndAlso Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                    File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\pic0.png", True)
 
-                'Set new background
-                Dim TempBitmapImage = New BitmapImage()
-                TempBitmapImage.BeginInit()
-                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                TempBitmapImage.UriSource = New Uri(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
-                TempBitmapImage.EndInit()
-                SelectedPS5Game.GameBGSource = TempBitmapImage
+                    'Set new background
+                    Dim TempBitmapImage = New BitmapImage()
+                    TempBitmapImage.BeginInit()
+                    TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                    TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                    TempBitmapImage.UriSource = New Uri(SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\icon0.png", UriKind.RelativeOrAbsolute)
+                    TempBitmapImage.EndInit()
+                    SelectedPS5Game.GameBGSource = TempBitmapImage
+                End If
             End If
         End If
     End Sub
@@ -1798,7 +1866,9 @@ Public Class PS5Library
                 MsgBox("A soundtrack is currently playing. Please stop it before changing any soundtrack.", MsgBoxStyle.Information)
             Else
                 If OFD.ShowDialog() = Forms.DialogResult.OK Then
-                    File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\snd0.at9", True)
+                    If File.Exists(OFD.FileName) AndAlso Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                        File.Copy(OFD.FileName, SelectedPS5Game.GameFileOrFolderPath + "\sce_sys\snd0.at9", True)
+                    End If
                 End If
             End If
         End If
@@ -1807,7 +1877,54 @@ Public Class PS5Library
     Private Sub AppOpenLocationMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles AppOpenLocationMenuItem.Click
         If AppsListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS5Game As PS5Game = CType(AppsListView.SelectedItem, PS5Game)
-            Process.Start(SelectedPS5Game.GameFileOrFolderPath)
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+                If Directory.Exists(SelectedPS5Game.GameFileOrFolderPath) Then
+                    Process.Start(SelectedPS5Game.GameFileOrFolderPath)
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub AppPackAsPKG_Click(sender As Object, e As RoutedEventArgs) Handles AppPackAsPKG.Click
+        If AppsListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(AppsListView.SelectedItem, PS5Game)
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+
+                'Create a GP5 project
+                Dim AppProjectPath As String = SelectedPS5Game.GameFileOrFolderPath
+                Dim NewGP5Project As XDocument = <?xml version="1.0" encoding="utf-8" standalone="no"?>
+                                                 <psproject fmt="gp5" version="1000">
+                                                     <volume>
+                                                         <volume_type>prospero_app</volume_type>
+                                                         <package passcode="GvE6xCpZxd96scOUGuLPbuLp8O800B0s"/>
+                                                         <chunk_info chunk_count="1" scenario_count="1">
+                                                             <chunks>
+                                                                 <chunk id="0" label="Chunk #0"/>
+                                                             </chunks>
+                                                             <scenarios default_id="0">
+                                                                 <scenario id="0" initial_chunk_count="1" label="Scenario #0" type="playmode">0</scenario>
+                                                             </scenarios>
+                                                         </chunk_info>
+                                                     </volume>
+                                                     <global_exclude/>
+                                                     <rootdir dir_exclude="about" file_exclude="*.esbak;keystone;*.dds;disc_info.dat;pfs-version.dat;ext_info.dat" src_path=<%= AppProjectPath %>/>
+                                                 </psproject>
+
+                'Save the GP5 project
+                Dim GP5ProjectPath As String = ""
+                Dim SFD As New SaveFileDialog() With {.Title = "Select a save path for the GP5 project", .DefaultExt = ".gp5", .AddExtension = True, .Filter = "GP5 Project (*.gp5)|*.gp5"}
+                If SFD.ShowDialog() = Forms.DialogResult.OK Then
+                    GP5ProjectPath = SFD.FileName
+                    NewGP5Project.Save(SFD.FileName)
+                End If
+
+                'Show the PKG Builder
+                Dim NewPKGBuilder As New PS5PKGBuilder() With {.PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"}
+                NewPKGBuilder.SelectedProjectTextBox.Text = GP5ProjectPath
+                NewPKGBuilder.Show()
+
+                MsgBox("A GP5 project for " + SelectedPS5Game.GameTitle + " - [" + SelectedPS5Game.GameID + "] has been created." + vbCrLf + "Select an output path for the final PKG file and build it.", MsgBoxStyle.Information, "PS5 Apps Library")
+            End If
         End If
     End Sub
 
@@ -1891,6 +2008,10 @@ Public Class PS5Library
                 End If
             End If
 
+            If SelectedPS5Game.GameBackupType = "Folder" Then
+                GamePackAsPKG.Visibility = Visibility.Visible
+            End If
+
         Else
             'Hide values
             GameTitleTextBlock.Visibility = Visibility.Hidden
@@ -1902,6 +2023,7 @@ Public Class PS5Library
             GameSizeTextBlock.Visibility = Visibility.Hidden
             GameRequiredFirmwareTextBlock.Visibility = Visibility.Hidden
             GameBackupFolderNameTextBlock.Visibility = Visibility.Hidden
+            GamePackAsPKG.Visibility = Visibility.Collapsed
         End If
     End Sub
 
@@ -1915,6 +2037,18 @@ Public Class PS5Library
     Private Sub NewSettingsMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles NewSettingsMenuItem.Click
         Dim NewSettings As New PSSettings() With {.ShowActivated = True}
         NewSettings.Show()
+    End Sub
+
+    Private Sub AppsListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles AppsListView.SelectionChanged
+        If AppsListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(AppsListView.SelectedItem, PS5Game)
+
+            If SelectedPS5Game.GameBackupType = "Folder" Then
+                AppPackAsPKG.Visibility = Visibility.Visible
+            End If
+        Else
+            AppPackAsPKG.Visibility = Visibility.Collapsed
+        End If
     End Sub
 
 End Class

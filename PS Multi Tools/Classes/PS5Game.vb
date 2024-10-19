@@ -21,6 +21,7 @@
     Private _IsCompatibleFW As String
     Private _DecFilesIncluded As String
     Private _GameContentIDs As String
+    Private _GameBackupType As String
 
     Public Property GameTitle As String
         Get
@@ -208,6 +209,15 @@
         End Get
         Set
             _GameContentIDs = Value
+        End Set
+    End Property
+
+    Public Property GameBackupType As String
+        Get
+            Return _GameBackupType
+        End Get
+        Set
+            _GameBackupType = Value
         End Set
     End Property
 

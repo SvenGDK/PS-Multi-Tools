@@ -1,8 +1,9 @@
-﻿Imports System.IO
-Imports System.Security.Authentication
-Imports FluentFTP
+﻿Imports FluentFTP
 Imports Microsoft.Web.WebView2.Core
+Imports Newtonsoft.Json
 Imports PS_Multi_Tools.INI
+Imports System.IO
+Imports System.Security.Authentication
 
 Public Class PS5Menu
 
@@ -268,6 +269,82 @@ Public Class PS5Menu
             NewLogWindow.PS5IPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
         End If
         NewLogWindow.Show()
+    End Sub
+
+    Private Sub OpenPKGReaderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGReaderMenuItem.Click
+        Dim NewPS5PKGViewer As New PS5PKGViewer() With {.ShowActivated = True}
+        NewPS5PKGViewer.Show()
+    End Sub
+
+    Private Sub OpenDiscParamReaderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenDiscParamReaderMenuItem.Click
+        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
+            Try
+                Dim ParamJSONDownloaded As Boolean = False
+                Using NewFTPConnection As New FtpClient(SharedConsoleAddress.Split(":"c)(0), "anonymous", "anonymous", 1337)
+
+                    'Configurate the FTP connection
+                    NewFTPConnection.Config.EncryptionMode = FtpEncryptionMode.None
+                    NewFTPConnection.Config.SslProtocols = SslProtocols.None
+                    NewFTPConnection.Config.DataConnectionEncryption = False
+
+                    'Connect
+                    NewFTPConnection.Connect()
+
+                    'Check if the disc is compatible
+                    If NewFTPConnection.DirectoryExists("/mnt/disc/bd") Then
+                        If NewFTPConnection.FileExists("/mnt/disc/bd/param.json") Then
+                            'Get the param.json file
+                            If NewFTPConnection.DownloadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\param.json", "/mnt/disc/bd/param.json", FtpLocalExists.Overwrite, FtpVerify.None, Nothing) = FtpStatus.Success Then
+                                ParamJSONDownloaded = True
+                            Else
+                                ParamJSONDownloaded = False
+                            End If
+                        Else
+                            MsgBox("Disc in tray is not compatible.", MsgBoxStyle.Information, "Unknown Disc")
+                        End If
+                    Else
+                        MsgBox("Disc in tray is not compatible.", MsgBoxStyle.Information, "Unknown Disc")
+                    End If
+
+                    'Disonnect
+                    NewFTPConnection.Disconnect()
+                End Using
+
+                If ParamJSONDownloaded Then
+                    Dim ParamJSONData As List(Of String) = File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\param.json").ToList()
+
+                    'Remove unreadable stuff
+                    ParamJSONData.RemoveRange(0, 6)
+
+                    'Read the param.json file
+                    Dim ParamJSONString As String = String.Join(Environment.NewLine, ParamJSONData)
+                    ParamJSONString = String.Concat("{" + vbCrLf, ParamJSONString)
+                    Dim ParamDiscDetailsData As PS5DiscParamClass.PS5DiscParam = JsonConvert.DeserializeObject(Of PS5DiscParamClass.PS5DiscParam)(ParamJSONString)
+
+                    If ParamDiscDetailsData IsNot Nothing Then
+
+                        Dim FirstDiscDetails As PS5DiscParamClass.Disc = ParamDiscDetailsData.Disc(0)
+                        Dim FirstDiscMasterDataID As String = FirstDiscDetails.MasterDataId
+                        Dim FirstDiscRole As String = FirstDiscDetails.Role
+
+                        MsgBox("Disc Master Data ID: " + FirstDiscMasterDataID + vbCrLf +
+                               "Disc Role: " + FirstDiscRole + vbCrLf +
+                               "Disc Number: " + ParamDiscDetailsData.DiscNumber.ToString() + vbCrLf +
+                               "Disc Total: " + ParamDiscDetailsData.DiscTotal.ToString() + vbCrLf +
+                               "Master Version: " + ParamDiscDetailsData.MasterVersion + vbCrLf +
+                               "Pub Tools Version: " + ParamDiscDetailsData.PubtoolsVersion + vbCrLf +
+                               "Required System Version: " + ParamDiscDetailsData.RequiredSystemSoftwareVersion)
+                    End If
+                Else
+                    MsgBox("Could not find any valid disc information.", MsgBoxStyle.Exclamation)
+                End If
+
+            Catch ex As Exception
+                MsgBox("Could not find any valid disc information.", MsgBoxStyle.Exclamation)
+            End Try
+        Else
+            MsgBox("Please set your IP:Port in the settings first.", MsgBoxStyle.Information, "Cannot connect to the PS5")
+        End If
     End Sub
 
 #End Region

@@ -4,6 +4,7 @@ Public Class PS5PKGBuilder
 
     Public PubToolsPath As String
     Dim WithEvents PKGBuilder As New Process()
+    Private Killed As Boolean = False
 
     Public Sub BuildPKG(ProjectPath As String, DestinationPath As String)
         PKGBuilder = New Process()
@@ -45,11 +46,14 @@ Public Class PS5PKGBuilder
     Private Sub BuildButton_Click(sender As Object, e As RoutedEventArgs) Handles BuildButton.Click
         If Not String.IsNullOrEmpty(SelectedProjectTextBox.Text) Then
             If Not String.IsNullOrEmpty(SaveToTextBox.Text) Then
-
                 If Dispatcher.CheckAccess() = False Then
-                    Dispatcher.BeginInvoke(Sub() CancelButton.IsEnabled = True)
+                    Dispatcher.BeginInvoke(Sub()
+                                               CancelButton.IsEnabled = True
+                                               Cursor = Input.Cursors.Wait
+                                           End Sub)
                 Else
                     CancelButton.IsEnabled = True
+                    Cursor = Input.Cursors.Wait
                 End If
 
                 Try
@@ -58,7 +62,6 @@ Public Class PS5PKGBuilder
                     MsgBox("Could not build pkg.", MsgBoxStyle.Critical)
                     MsgBox(ex.Message)
                 End Try
-
             End If
         End If
     End Sub
@@ -67,6 +70,7 @@ Public Class PS5PKGBuilder
         If PKGBuilder.HasExited() = False Then
             Try
                 PKGBuilder.Kill()
+                Killed = True
                 MsgBox("PKG creation stopped.", MsgBoxStyle.Information)
             Catch ex As Exception
                 MsgBox(ex.Message)
@@ -79,12 +83,18 @@ Public Class PS5PKGBuilder
         PKGBuilder = Nothing
 
         If Dispatcher.CheckAccess() = False Then
-            Dispatcher.BeginInvoke(Sub() CancelButton.IsEnabled = False)
+            Dispatcher.BeginInvoke(Sub()
+                                       CancelButton.IsEnabled = False
+                                       Cursor = Input.Cursors.Arrow
+                                   End Sub)
         Else
             CancelButton.IsEnabled = False
+            Cursor = Input.Cursors.Arrow
         End If
 
-        MsgBox("PKG created!", MsgBoxStyle.Information, "Success")
+        If Killed = False Then
+            MsgBox("PKG created!", MsgBoxStyle.Information, "Success")
+        End If
     End Sub
 
 End Class
