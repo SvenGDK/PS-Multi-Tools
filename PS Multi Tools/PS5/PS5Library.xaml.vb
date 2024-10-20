@@ -93,7 +93,6 @@ Public Class PS5Library
     Private Sub PS5Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Add supplemental menu items that will be handled in PS Multi Tools
         Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(0), Controls.MenuItem)
-        Dim ToolsMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(1), Controls.MenuItem)
         Dim SettingsMenuItem As Controls.MenuItem = CType(NewPS5Menu.Items(6), Controls.MenuItem)
         LibraryMenuItem.Items.Add(OpenLocalBackupFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadPatchPKGFolderMenuItem)

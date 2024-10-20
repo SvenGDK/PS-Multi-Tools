@@ -17,6 +17,32 @@ Public Class PS5PKGViewer
 
             SelectedPKGFileTextBox.Text = OFD.FileName
 
+            'Determine PS5 PKG
+            Dim IsSourcePKG As Boolean = False
+            Dim IsRetailPKG As Boolean = False
+
+            Dim FirstString As String = ""
+            Dim SecondChar As Char
+            Using PKGReader As New FileStream(OFD.FileName, FileMode.Open, FileAccess.Read)
+                Dim BinReader As New BinaryReader(PKGReader)
+                FirstString = BinReader.ReadString()
+                PKGReader.Seek(5, SeekOrigin.Begin)
+                SecondChar = BinReader.ReadChar()
+                PKGReader.Close()
+            End Using
+
+            If Not String.IsNullOrEmpty(FirstString) Then
+                If FirstString.Contains("CNT") Then
+                    IsSourcePKG = True
+                Else
+                    IsSourcePKG = False
+                End If
+            End If
+
+            If Not SecondChar = ChrW(0) Then
+                IsRetailPKG = True
+            End If
+
             'Clear previous ListView items and lists
             PKGContentListView.Items.Clear()
             PKGScenariosListView.Items.Clear()
@@ -28,6 +54,148 @@ Public Class PS5PKGViewer
             NestedImageRootFiles.Clear()
             NestedImageRootDirectories.Clear()
             NestedImageURootFiles.Clear()
+
+            If IsRetailPKG Or IsSourcePKG Then
+                'Get only param.json
+                Dim startBytes As Byte() = Encoding.UTF8.GetBytes("param.json")
+                Dim endBytes As Byte() = Encoding.UTF8.GetBytes("version.xml")
+
+                Dim startOffset As Long = -1
+                Dim endOffset As Long = -1
+
+                Using PKGReader As New FileStream(OFD.FileName, FileMode.Open, FileAccess.Read)
+                    Dim buffer(4096) As Byte
+                    Dim fileLength As Long = PKGReader.Length
+                    Dim totalBytesRead As Long = fileLength
+
+                    While totalBytesRead > 0
+                        Dim bytesRead As Integer = CInt(Math.Min(buffer.Length, totalBytesRead))
+                        PKGReader.Seek(totalBytesRead - bytesRead, SeekOrigin.Begin)
+                        PKGReader.Read(buffer, 0, bytesRead)
+                        totalBytesRead -= bytesRead
+
+                        For i As Integer = bytesRead - 1 To 0 Step -1
+                            If endOffset = -1 AndAlso MatchBytes(buffer, i, endBytes) Then
+                                endOffset = totalBytesRead + i + endBytes.Length
+                            End If
+
+                            If startOffset = -1 AndAlso MatchBytes(buffer, i, startBytes) Then
+                                startOffset = totalBytesRead + i
+                            End If
+
+                            If startOffset <> -1 AndAlso endOffset <> -1 Then
+                                Exit While
+                            End If
+                        Next
+                    End While
+                End Using
+
+                If startOffset <> -1 AndAlso endOffset <> -1 AndAlso endOffset > startOffset Then
+                    Dim FinalParamJSONString As String = ""
+                    Using ParamJSONFileStream As New FileStream(OFD.FileName, FileMode.Open, FileAccess.Read)
+                        Dim ParamDataSize As Long = endOffset - startOffset
+                        ParamJSONFileStream.Seek(startOffset, SeekOrigin.Begin)
+
+                        Dim NewParamData(CInt(ParamDataSize) - 1) As Byte
+                        ParamJSONFileStream.Read(NewParamData, 0, CInt(ParamDataSize))
+
+                        Dim ExtractedData As String = Encoding.UTF8.GetString(NewParamData)
+                        Dim ParamJSONData As List(Of String) = ExtractedData.Split(New String() {vbCrLf}, StringSplitOptions.None).ToList()
+
+                        'Adjust the output
+                        ParamJSONData.RemoveAt(0)
+                        ParamJSONData.Insert(0, "{")
+                        ParamJSONData(ParamJSONData.Count - 1) &= """"
+                        ParamJSONData.Add("}")
+
+                        FinalParamJSONString = String.Join(Environment.NewLine, ParamJSONData)
+                    End Using
+
+                    If Not String.IsNullOrEmpty(FinalParamJSONString) Then
+
+                        'Display pkg information
+                        Dim ParamData As PS5ParamClass.PS5Param = JsonConvert.DeserializeObject(Of PS5ParamClass.PS5Param)(FinalParamJSONString)
+                        Dim NewPS5Game As New PS5Game With {.GameBackupType = "PKG"}
+                        If ParamData IsNot Nothing Then
+                            If ParamData.TitleId IsNot Nothing Then
+                                NewPS5Game.GameID = "Title ID: " + ParamData.TitleId
+                                NewPS5Game.GameRegion = "Region: " + PS5Game.GetGameRegion(ParamData.TitleId)
+                            End If
+
+                            If ParamData.LocalizedParameters.EnUS IsNot Nothing Then
+                                NewPS5Game.GameTitle = ParamData.LocalizedParameters.EnUS.TitleName
+                            End If
+                            If ParamData.LocalizedParameters.DeDE IsNot Nothing Then
+                                NewPS5Game.DEGameTitle = ParamData.LocalizedParameters.DeDE.TitleName
+                            End If
+                            If ParamData.LocalizedParameters.FrFR IsNot Nothing Then
+                                NewPS5Game.FRGameTitle = ParamData.LocalizedParameters.FrFR.TitleName
+                            End If
+                            If ParamData.LocalizedParameters.ItIT IsNot Nothing Then
+                                NewPS5Game.ITGameTitle = ParamData.LocalizedParameters.ItIT.TitleName
+                            End If
+                            If ParamData.LocalizedParameters.EsES IsNot Nothing Then
+                                NewPS5Game.ESGameTitle = ParamData.LocalizedParameters.EsES.TitleName
+                            End If
+                            If ParamData.LocalizedParameters.JaJP IsNot Nothing Then
+                                NewPS5Game.JPGameTitle = ParamData.LocalizedParameters.JaJP.TitleName
+                            End If
+
+                            If ParamData.ContentId IsNot Nothing Then
+                                NewPS5Game.GameContentID = "Content ID: " + ParamData.ContentId
+                            End If
+
+                            If ParamData.ApplicationCategoryType = 0 Then
+                                NewPS5Game.GameCategory = "Type: PS5 Game"
+                            ElseIf ParamData.ApplicationCategoryType = 65792 Then
+                                NewPS5Game.GameCategory = "Type: RNPS Media App"
+                            ElseIf ParamData.ApplicationCategoryType = 131328 Then
+                                NewPS5Game.GameCategory = "Type: System Built-in App"
+                            ElseIf ParamData.ApplicationCategoryType = 131584 Then
+                                NewPS5Game.GameCategory = "Type: Big Daemon"
+                            ElseIf ParamData.ApplicationCategoryType = 16777216 Then
+                                NewPS5Game.GameCategory = "Type: ShellUI"
+                            ElseIf ParamData.ApplicationCategoryType = 33554432 Then
+                                NewPS5Game.GameCategory = "Type: Daemon"
+                            ElseIf ParamData.ApplicationCategoryType = 67108864 Then
+                                NewPS5Game.GameCategory = "Type: ShellApp"
+                            End If
+
+                            NewPS5Game.GameSize = "Size: " + FormatNumber(New FileInfo(OFD.FileName).Length / 1073741824, 2) + " GB"
+
+                            If ParamData.ContentVersion IsNot Nothing Then
+                                NewPS5Game.GameVersion = "Version: " + ParamData.ContentVersion
+                            End If
+                            If ParamData.RequiredSystemSoftwareVersion IsNot Nothing Then
+                                NewPS5Game.GameRequiredFirmware = "Required Firmware: " + ParamData.RequiredSystemSoftwareVersion.Replace("0x", "").Insert(2, "."c).Insert(5, "."c).Insert(8, "."c).Remove(11, 8)
+                            End If
+
+                            GameTitleTextBlock.Visibility = Visibility.Visible
+                            GameIDTextBlock.Visibility = Visibility.Visible
+                            GameRegionTextBlock.Visibility = Visibility.Visible
+                            GameVersionTextBlock.Visibility = Visibility.Visible
+                            GameContentIDTextBlock.Visibility = Visibility.Visible
+                            GameCategoryTextBlock.Visibility = Visibility.Visible
+                            GameSizeTextBlock.Visibility = Visibility.Visible
+                            GameRequiredFirmwareTextBlock.Visibility = Visibility.Visible
+
+                            GameTitleTextBlock.Text = NewPS5Game.GameTitle
+                            GameIDTextBlock.Text = NewPS5Game.GameID
+                            GameRegionTextBlock.Text = NewPS5Game.GameRegion
+                            GameVersionTextBlock.Text = NewPS5Game.GameVersion
+                            GameContentIDTextBlock.Text = NewPS5Game.GameContentID
+                            GameCategoryTextBlock.Text = NewPS5Game.GameCategory
+                            GameSizeTextBlock.Text = NewPS5Game.GameSize
+                            GameRequiredFirmwareTextBlock.Text = NewPS5Game.GameRequiredFirmware
+                        End If
+                    End If
+
+                End If
+
+                Exit Sub
+            End If
+
+            'Probably a self created PKG that contains a package configuration
 
             Dim ExtractedPKGConfigurationData As String = ""
             Dim PKGConfigurationStartString As String = "<package-configuration version=""1.0"" type=""package-info"">"

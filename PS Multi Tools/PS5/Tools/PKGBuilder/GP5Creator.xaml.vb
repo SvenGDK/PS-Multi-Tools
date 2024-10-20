@@ -3,7 +3,7 @@ Imports System.Windows.Forms
 
 Public Class GP5Creator
 
-    Dim PubToolsPath As String = Nothing
+    Public PubToolsPath As String = Nothing
 
     Private Sub BrowseSavePathButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseSavePathButton.Click
         Dim SFD As New SaveFileDialog() With {.Title = "Save your project.", .Filter = "GP5 Files (*.gp5)|*.gp5", .DefaultExt = ".gp5", .AddExtension = True, .SupportMultiDottedExtensions = False}

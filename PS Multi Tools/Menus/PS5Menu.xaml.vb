@@ -3,6 +3,8 @@ Imports Microsoft.Web.WebView2.Core
 Imports Newtonsoft.Json
 Imports PS_Multi_Tools.INI
 Imports System.IO
+Imports System.Net
+Imports System.Net.Sockets
 Imports System.Security.Authentication
 
 Public Class PS5Menu
@@ -145,7 +147,7 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenGP5ManagerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenGP5ManagerMenuItem.Click
-        Dim NewGP5Creator As New GP5Creator() With {.ShowActivated = True}
+        Dim NewGP5Creator As New GP5Creator() With {.PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe", .ShowActivated = True}
         NewGP5Creator.Show()
     End Sub
 
@@ -171,17 +173,7 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenPKGBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGBuilderMenuItem.Click
-        Dim NewPKGBuilder As New PS5PKGBuilder()
-
-        If File.Exists(My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\SCE\Prospero\Tools\Publishing Tools\bin\prospero-pub-cmd.exe") Then
-            NewPKGBuilder.PubToolsPath = My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\SCE\Prospero\Tools\Publishing Tools\bin\prospero-pub-cmd.exe"
-        ElseIf File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe") Then
-            NewPKGBuilder.PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"
-        Else
-            NewPKGBuilder.IsEnabled = False
-            MsgBox("Could not find any publishing tools." + vbCrLf + "Please add them inside the 'Tools\PS5' folder inside PS Multi Tools.", MsgBoxStyle.Information, "Pub Tools not available")
-        End If
-
+        Dim NewPKGBuilder As New PS5PKGBuilder() With {.PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe", .ShowActivated = True}
         NewPKGBuilder.Show()
     End Sub
 
@@ -342,6 +334,40 @@ Public Class PS5Menu
             Catch ex As Exception
                 MsgBox("Could not find any valid disc information.", MsgBoxStyle.Exclamation)
             End Try
+        Else
+            MsgBox("Please set your IP:Port in the settings first.", MsgBoxStyle.Information, "Cannot connect to the PS5")
+        End If
+    End Sub
+
+    Private Sub SpoofFWMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles SpoofFWMenuItem.Click
+        'Check if an IP address was entered
+        If Not String.IsNullOrWhiteSpace(SharedConsoleAddress) Then
+            Dim DeviceIP As IPAddress
+
+            Try
+                DeviceIP = IPAddress.Parse(SharedConsoleAddress.Split(":"c)(0))
+            Catch ex As FormatException
+                MsgBox("Could not parse the set console IP. Please check your IP in the settings.", MsgBoxStyle.Exclamation, "Error sending payload")
+                Exit Sub
+            End Try
+
+            Dim SelectedELF As String = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\spoof.elf"
+            Dim ELFFileInfo As New FileInfo(SelectedELF)
+            Try
+                Using SenderSocket As New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) With {.ReceiveTimeout = 3000}
+                    'Connect
+                    SenderSocket.Connect(DeviceIP, 9020)
+                    'Send ELF
+                    SenderSocket.SendFile(SelectedELF)
+                    'Close the connection
+                    SenderSocket.Close()
+                End Using
+            Catch ex As SocketException
+                MsgBox("Could not send selected payload. Please make sure that your PS5 can receive payloads on port 9020.", MsgBoxStyle.Exclamation, "Error sending payload")
+                Exit Sub
+            End Try
+
+            MsgBox("Spoofing payload has been sent" + vbCrLf + "You will need to eject and insert the disc back again to install it." + vbCrLf + "To reverse the firmware spoofing simply send this payload again.", MsgBoxStyle.Information)
         Else
             MsgBox("Please set your IP:Port in the settings first.", MsgBoxStyle.Information, "Cannot connect to the PS5")
         End If
