@@ -1284,8 +1284,8 @@ Public Class PS5PKGViewer
         If Not String.IsNullOrEmpty(CurrentParamJSON) Then
             Dim SFD As New Forms.SaveFileDialog() With {.Title = "Select a save path", .Filter = "JSON files (*.json)|*.json", .FileName = "param.json"}
             If SFD.ShowDialog() = Forms.DialogResult.OK Then
-                Dim RawDataJSON As String = JsonConvert.SerializeObject(CurrentParamJSON, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
-                File.WriteAllText(SFD.FileName, RawDataJSON)
+                'Dim RawDataJSON As String = JsonConvert.SerializeObject(CurrentParamJSON, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
+                File.WriteAllText(SFD.FileName, CurrentParamJSON)
             End If
         End If
     End Sub
