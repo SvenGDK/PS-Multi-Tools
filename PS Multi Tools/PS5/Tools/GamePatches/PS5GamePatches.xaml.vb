@@ -30,8 +30,8 @@ Public Class PS5GamePatches
                 Dim PKGFileInfo As New FileInfo(PKG)
                 Dim PKGFileName As String = PKGFileInfo.Name
 
-                If PKGFileName.Split("-"c).Length > 0 Then
-                    If PKGFileName.Split("-"c)(1).Split("_"c).Length > 0 Then
+                If PKGFileName.Split("-"c).Length > 1 Then
+                    If PKGFileName.Split("-"c)(1).Split("_"c).Length > 1 Then
                         Dim PKGID As String = PKGFileName.Split("-"c)(1).Split("_"c)(0)
                         Dim PKGFileSize As String = FormatNumber(PKGFileInfo.Length / 1073741824, 2) + " GB"
                         Dim NewQueueItem As New DownloadQueueItem() With {.FileName = PKGFileName, .GameID = PKGID, .DownloadURL = PKG, .DownloadState = "Downloaded", .PKGSize = PKGFileSize}

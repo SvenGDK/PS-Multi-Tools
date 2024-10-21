@@ -11,6 +11,14 @@ Public Class PS5PKGViewer
     Dim NestedImageRootDirectories As New List(Of PS5PKGRootDirectory)()
     Dim NestedImageURootFiles As New List(Of PS5PKGRootFile)()
 
+    Dim IsSourcePKG As Boolean = False
+    Dim IsRetailPKG As Boolean = False
+
+    Dim CurrentParamJSON As String = ""
+    Dim CurrentConfigurationXML As XDocument = Nothing
+    Dim CurrentIcon0 As BitmapImage = Nothing
+    Dim CurrentPic0 As BitmapImage = Nothing
+
     Private Sub BrowsePKGFileButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowsePKGFileButton.Click
         Dim OFD As New Forms.OpenFileDialog() With {.Filter = "PKG files (*.pkg)|*.pkg"}
         If OFD.ShowDialog() = Forms.DialogResult.OK Then
@@ -18,16 +26,13 @@ Public Class PS5PKGViewer
             SelectedPKGFileTextBox.Text = OFD.FileName
 
             'Determine PS5 PKG
-            Dim IsSourcePKG As Boolean = False
-            Dim IsRetailPKG As Boolean = False
-
             Dim FirstString As String = ""
-            Dim SecondChar As Char
+            Dim CharAtOffset5 As Char
             Using PKGReader As New FileStream(OFD.FileName, FileMode.Open, FileAccess.Read)
                 Dim BinReader As New BinaryReader(PKGReader)
                 FirstString = BinReader.ReadString()
                 PKGReader.Seek(5, SeekOrigin.Begin)
-                SecondChar = BinReader.ReadChar()
+                CharAtOffset5 = BinReader.ReadChar()
                 PKGReader.Close()
             End Using
 
@@ -39,7 +44,7 @@ Public Class PS5PKGViewer
                 End If
             End If
 
-            If Not SecondChar = ChrW(0) Then
+            If Not CharAtOffset5 = ChrW(0) Then
                 IsRetailPKG = True
             End If
 
@@ -112,6 +117,7 @@ Public Class PS5PKGViewer
                     End Using
 
                     If Not String.IsNullOrEmpty(FinalParamJSONString) Then
+                        CurrentParamJSON = FinalParamJSONString
 
                         'Display pkg information
                         Dim ParamData As PS5ParamClass.PS5Param = JsonConvert.DeserializeObject(Of PS5ParamClass.PS5Param)(FinalParamJSONString)
@@ -262,6 +268,7 @@ Public Class PS5PKGViewer
             If Not String.IsNullOrEmpty(ExtractedPKGConfigurationData) Then
                 'Load the XML file
                 Dim PKGConfigurationXML As XDocument = XDocument.Parse(ExtractedPKGConfigurationData)
+                CurrentConfigurationXML = PKGConfigurationXML
 
                 'Get the PKG config values
                 Dim PKGConfig As XElement = PKGConfigurationXML.Element("config")
@@ -608,11 +615,13 @@ Public Class PS5PKGViewer
 
                     Dim ParamJSONOffsetPosition As Long = 0
                     Dim Icon0OffsetPosition As Long = 0
+                    Dim Pic0OffsetPosition As Long = 0
 
                     Dim PKGFileLength As Long = PKGReader.Length
 
                     Dim ParamJsonPKGEntry As New PS5PKGEntry()
                     Dim Icon0PKGEntry As New PS5PKGEntry()
+                    Dim Pic0PKGEntry As New PS5PKGEntry()
 
                     'Get the param.json and icon0.png PKG entry info
                     For Each PKGEntry As XElement In PKGConfigurationXML.Descendants("entries").Descendants("entry")
@@ -625,6 +634,11 @@ Public Class PS5PKGViewer
                             Icon0PKGEntry.EntryOffset = PKGEntry.Attribute("offset").Value
                             Icon0PKGEntry.EntrySize = PKGEntry.Attribute("size").Value
                             Icon0PKGEntry.EntryName = PKGEntry.Attribute("name").Value
+                        End If
+                        If PKGEntry.Attribute("name").Value = "pic0.png" Then
+                            Pic0PKGEntry.EntryOffset = PKGEntry.Attribute("offset").Value
+                            Pic0PKGEntry.EntrySize = PKGEntry.Attribute("size").Value
+                            Pic0PKGEntry.EntryName = PKGEntry.Attribute("name").Value
                         End If
                     Next
 
@@ -649,6 +663,7 @@ Public Class PS5PKGViewer
                         PKGReader.Read(ParamFileBuffer, 0, ParamFileBuffer.Length)
 
                         If Not String.IsNullOrWhiteSpace(Encoding.UTF8.GetString(ParamFileBuffer)) Then
+                            CurrentParamJSON = Encoding.UTF8.GetString(ParamFileBuffer)
                             Dim ParamData = JsonConvert.DeserializeObject(Of PS5ParamClass.PS5Param)(Encoding.UTF8.GetString(ParamFileBuffer))
                             Dim NewPS5Game As New PS5Game With {.GameBackupType = "PKG"}
 
@@ -744,20 +759,54 @@ Public Class PS5PKGViewer
                         Icon0OffsetPosition = ContainerOffsetDecValue + EntryOffsetDecValue
 
                         'Seek to the beginning of the icon0.png file and read
-                        Dim IconFileBuffer() As Byte = New Byte(EntrySizeDecValue - 1) {}
+                        Dim Icon0FileBuffer() As Byte = New Byte(EntrySizeDecValue - 1) {}
                         PKGReader.Seek(Icon0OffsetPosition, SeekOrigin.Begin)
-                        PKGReader.Read(IconFileBuffer, 0, IconFileBuffer.Length)
+                        PKGReader.Read(Icon0FileBuffer, 0, Icon0FileBuffer.Length)
 
                         'Check the buffer and display the icon
-                        If IconFileBuffer IsNot Nothing Then
+                        If Icon0FileBuffer IsNot Nothing Then
                             Dim Icon0BitmapImage As New BitmapImage()
-                            Using IconMemoryStream As New MemoryStream(IconFileBuffer)
+                            Using Icon0MemoryStream As New MemoryStream(Icon0FileBuffer)
                                 Icon0BitmapImage.BeginInit()
                                 Icon0BitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                Icon0BitmapImage.StreamSource = IconMemoryStream
+                                Icon0BitmapImage.StreamSource = Icon0MemoryStream
                                 Icon0BitmapImage.EndInit()
                             End Using
                             PKGIconImage.Source = Icon0BitmapImage
+                            CurrentIcon0 = Icon0BitmapImage
+                        End If
+                    End If
+
+                    'PIC0.PNG
+                    If Not String.IsNullOrEmpty(Pic0PKGEntry.EntryOffset) AndAlso Not String.IsNullOrEmpty(Pic0PKGEntry.EntrySize) Then
+
+                        'Get decimal offset values
+                        If Not String.IsNullOrEmpty(PKGMountImageContainerOffset) Then
+                            ContainerOffsetDecValue = Convert.ToInt64(PKGMountImageContainerOffset, 16)
+                        End If
+                        If Not String.IsNullOrEmpty(Pic0PKGEntry.EntryOffset) Then
+                            EntryOffsetDecValue = Convert.ToInt64(Pic0PKGEntry.EntryOffset, 16)
+                        End If
+                        If Not String.IsNullOrEmpty(Pic0PKGEntry.EntrySize) Then
+                            EntrySizeDecValue = Convert.ToInt32(Pic0PKGEntry.EntrySize, 16)
+                        End If
+                        Pic0OffsetPosition = ContainerOffsetDecValue + EntryOffsetDecValue
+
+                        'Seek to the beginning of the icon0.png file and read
+                        Dim Pic0FileBuffer() As Byte = New Byte(EntrySizeDecValue - 1) {}
+                        PKGReader.Seek(Pic0OffsetPosition, SeekOrigin.Begin)
+                        PKGReader.Read(Pic0FileBuffer, 0, Pic0FileBuffer.Length)
+
+                        'Check the buffer and display the icon
+                        If Pic0FileBuffer IsNot Nothing Then
+                            Dim Pic0BitmapImage As New BitmapImage()
+                            Using Pic0MemoryStream As New MemoryStream(Pic0FileBuffer)
+                                Pic0BitmapImage.BeginInit()
+                                Pic0BitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                Pic0BitmapImage.StreamSource = Pic0MemoryStream
+                                Pic0BitmapImage.EndInit()
+                            End Using
+                            CurrentPic0 = Pic0BitmapImage
                         End If
                     End If
 
@@ -1220,6 +1269,53 @@ Public Class PS5PKGViewer
 
         HideListViews()
         PKGContentListView.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub ExportConfigurationXMLButton_Click(sender As Object, e As RoutedEventArgs) Handles ExportConfigurationXMLButton.Click
+        If CurrentConfigurationXML IsNot Nothing Then
+            Dim SFD As New Forms.SaveFileDialog() With {.Title = "Select a save path", .Filter = "XML files (*.xml)|*.xml", .FileName = "package-configuration.xml"}
+            If SFD.ShowDialog() = Forms.DialogResult.OK Then
+                CurrentConfigurationXML.Save(SFD.FileName)
+            End If
+        End If
+    End Sub
+
+    Private Sub ExportParamJSONButton_Click(sender As Object, e As RoutedEventArgs) Handles ExportParamJSONButton.Click
+        If Not String.IsNullOrEmpty(CurrentParamJSON) Then
+            Dim SFD As New Forms.SaveFileDialog() With {.Title = "Select a save path", .Filter = "JSON files (*.json)|*.json", .FileName = "param.json"}
+            If SFD.ShowDialog() = Forms.DialogResult.OK Then
+                Dim RawDataJSON As String = JsonConvert.SerializeObject(CurrentParamJSON, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
+                File.WriteAllText(SFD.FileName, RawDataJSON)
+            End If
+        End If
+    End Sub
+
+    Private Sub ExportIcon0PNGButton_Click(sender As Object, e As RoutedEventArgs) Handles ExportIcon0PNGButton.Click
+        If CurrentIcon0 IsNot Nothing Then
+            Dim SFD As New Forms.SaveFileDialog() With {.Title = "Select a save path", .Filter = "PNG files (*.png)|*.png", .FileName = "icon0.png"}
+            If SFD.ShowDialog() = Forms.DialogResult.OK Then
+                Dim NewPngBitmapEncoder As New PngBitmapEncoder()
+                NewPngBitmapEncoder.Frames.Add(BitmapFrame.Create(CurrentIcon0))
+
+                Using Icon0FileStream As New FileStream(SFD.FileName, FileMode.Create)
+                    NewPngBitmapEncoder.Save(Icon0FileStream)
+                End Using
+            End If
+        End If
+    End Sub
+
+    Private Sub ExportPic0Button_Click(sender As Object, e As RoutedEventArgs) Handles ExportPic0Button.Click
+        If CurrentPic0 IsNot Nothing Then
+            Dim SFD As New Forms.SaveFileDialog() With {.Title = "Select a save path", .Filter = "PNG files (*.png)|*.png", .FileName = "pic0.png"}
+            If SFD.ShowDialog() = Forms.DialogResult.OK Then
+                Dim NewPngBitmapEncoder As New PngBitmapEncoder()
+                NewPngBitmapEncoder.Frames.Add(BitmapFrame.Create(CurrentPic0))
+
+                Using Pic0FileStream As New FileStream(SFD.FileName, FileMode.Create)
+                    NewPngBitmapEncoder.Save(Pic0FileStream)
+                End Using
+            End If
+        End If
     End Sub
 
 End Class

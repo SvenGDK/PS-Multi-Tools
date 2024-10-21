@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS5 PKG Viewer" Height="540" Width="1000" Background="#2D2D30" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="PS5 PKG Viewer" Height="585" Width="1000" Background="#2D2D30" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
         <TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="845" Height="20"/>
         <Button x:Name="BrowsePKGFileButton" Content="Browse" HorizontalAlignment="Left" Margin="860,35,0,0" VerticalAlignment="Top" Width="110"/>
@@ -92,14 +92,18 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="ShowPKGChunksButton" Content="Show PKG Chunks" HorizontalAlignment="Left" Margin="710,465,0,0" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
-        <Button x:Name="ShowPKGScenariosButton" Content="Show PKG Scenarios" HorizontalAlignment="Left" Margin="710,440,0,0" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
-        <Button x:Name="ShowPKGOutersButton" Content="Show PKG Outers" HorizontalAlignment="Left" Margin="845,440,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
-        <Button x:Name="ShowPKGEntriesButton" Content="Show PKG Entries" HorizontalAlignment="Left" Margin="845,465,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
-        <Button x:Name="ShowPKGPFSImageFilesButton" Content="Show PKG PFS Image Files" HorizontalAlignment="Left" Margin="10,440,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
-        <Button x:Name="ShowPKGNestedImageFilesButton" Content="Show PKG Nested Image Files" HorizontalAlignment="Left" Margin="239,440,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
-        <Button x:Name="ShowPKGPFSImageDirectoriesButton" Content="Show PKG PFS Image Directories" HorizontalAlignment="Left" Margin="10,465,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
-        <Button x:Name="ShowPKGNestedImageDirectoriesButton" Content="Show PKG Nested Image Directories" HorizontalAlignment="Left" Margin="239,465,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGChunksButton" Content="Show Chunks" HorizontalAlignment="Left" Margin="420,490,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGScenariosButton" Content="Show Scenarios" HorizontalAlignment="Left" Margin="420,465,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGOutersButton" Content="Show Outers" HorizontalAlignment="Left" Margin="420,515,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGEntriesButton" Content="Show Entries" HorizontalAlignment="Left" Margin="420,440,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGPFSImageFilesButton" Content="Show PFS Image Files" HorizontalAlignment="Left" Margin="10,440,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGNestedImageFilesButton" Content="Show Nested Image Files" HorizontalAlignment="Left" Margin="215,440,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGPFSImageDirectoriesButton" Content="Show PFS Image Directories" HorizontalAlignment="Left" Margin="10,465,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+        <Button x:Name="ShowPKGNestedImageDirectoriesButton" Content="Show Nested Image Directories" HorizontalAlignment="Left" Margin="215,465,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+        <Button x:Name="ExportConfigurationXMLButton" Content="Export configuration XML" HorizontalAlignment="Left" Margin="625,440,0,0" VerticalAlignment="Top" Width="170" FontWeight="Bold"/>
+        <Button x:Name="ExportParamJSONButton" Content="Export param JSON" HorizontalAlignment="Left" Margin="625,465,0,0" VerticalAlignment="Top" Width="170" FontWeight="Bold"/>
+        <Button x:Name="ExportIcon0PNGButton" Content="Export icon PNG" HorizontalAlignment="Left" Margin="800,440,0,0" VerticalAlignment="Top" Width="170" FontWeight="Bold"/>
+        <Button x:Name="ExportPic0Button" Content="Export background PNG" HorizontalAlignment="Left" Margin="800,465,0,0" VerticalAlignment="Top" Width="170" FontWeight="Bold"/>
 
     </Grid>
 </Window>
