@@ -22,6 +22,7 @@ Public Class PSVLibrary
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a backup folder"}
+    Dim WithEvents LoadFTPMenuItem As New Controls.MenuItem() With {.Header = "Load installed backups over FTP"}
     Dim WithEvents LoadLibraryMenuItem As New Controls.MenuItem() With {.Header = "Show games library"}
     Dim WithEvents LoadDLFolderMenuItem As New Controls.MenuItem() With {.Header = "Open Downloads folder"}
 

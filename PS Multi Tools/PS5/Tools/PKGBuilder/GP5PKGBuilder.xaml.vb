@@ -85,6 +85,9 @@ Public Class GP5PKGBuilder
                 TitleTextBlock.IsEnabled = True
                 MainIconImageRectangle.IsEnabled = True
                 BackgroundImage.IsEnabled = True
+                SetReqSysVersionButton.IsEnabled = True
+                EnableHTTPCacheCheckBox.IsEnabled = True
+                TwinTurboCheckBox.IsEnabled = True
 
                 CurrentProject = NewProject
                 TitleTextBlock.Text = NewProjectTitle
@@ -175,6 +178,9 @@ Public Class GP5PKGBuilder
                 TitleTextBlock.IsEnabled = True
                 MainIconImageRectangle.IsEnabled = True
                 BackgroundImage.IsEnabled = True
+                SetReqSysVersionButton.IsEnabled = True
+                EnableHTTPCacheCheckBox.IsEnabled = True
+                TwinTurboCheckBox.IsEnabled = True
 
                 CurrentProject = ProjectInfos
             Else

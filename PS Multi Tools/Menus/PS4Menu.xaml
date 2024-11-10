@@ -107,8 +107,8 @@
                     <MenuItem Header="es7in1.site"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="9.00" >
-                <MenuItem Header="Downloads" >
+            <MenuItem Header="9.00">
+                <MenuItem Header="Downloads">
                     <MenuItem Header="exfathax.img" >
                         <MenuItem Header="Download latest" x:Name="Download900Exfathax">
                             <MenuItem.Icon>
@@ -141,16 +141,26 @@
                     <MenuItem Header="wolf2022.ir"/>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="Up to 11.00">
+                <MenuItem Header="PPPwn">
+                    <MenuItem Header="Read more" x:Name="OpenPPPwnGitHub">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/github-mark.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Open PPPwn Tool" x:Name="OpenPPPwnTool"/>
+                </MenuItem>
+            </MenuItem>
         </MenuItem>
-        <MenuItem Header="Emulators" >
-            <MenuItem Header="Mednafen" >
+        <MenuItem Header="Emulators">
+            <MenuItem Header="Mednafen">
                 <MenuItem Header="Download v1" x:Name="DownloadMednafen">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="mGBA" >
+            <MenuItem Header="mGBA">
                 <MenuItem Header="Download v1" x:Name="DownloadmGBA">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
@@ -191,7 +201,7 @@
                 </MenuItem>
             </MenuItem>
         </MenuItem>
-        <MenuItem Header="Firmwares" >
+        <MenuItem Header="Firmwares">
             <MenuItem Header="System Firmware 5.05" x:Name="DownloadSysFW505">
                 <MenuItem.Icon>
                     <Image Source="/Images/download.png"/>
@@ -236,45 +246,30 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
-        <MenuItem Header="Homebrew" >
-            <MenuItem Header="Apollo Save Tool" >
-                <MenuItem Header="Download v1.4.0" x:Name="DownloadApolloST">
+        <MenuItem Header="Homebrew">
+            <MenuItem Header="Apollo Save Tool">
+                <MenuItem Header="Download v1.6.0" x:Name="DownloadApolloST">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadApolloSTGithub">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/github-mark.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
             </MenuItem>
-            <MenuItem Header="Brew" >
+            <MenuItem Header="Brew">
                 <MenuItem Header="Download v1" x:Name="DownloadBrew">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="FTP Client" >
+            <MenuItem Header="FTP Client">
                 <MenuItem Header="Download v1.0.8" x:Name="DownloadFTPClient">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="GoldHEN" >
-                <MenuItem Header="Download v2.3 for Firmware 5.05" x:Name="DownloadGoldHEN505">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/download.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Download v2.3 for Firmware 6.72" x:Name="DownloadGoldHEN672">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/download.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Download v2.3 for Firmware 9.00" x:Name="DownloadGoldHEN900">
+            <MenuItem Header="GoldHEN">
+                <MenuItem Header="Download v2.4b18" x:Name="DownloadGoldHEN">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

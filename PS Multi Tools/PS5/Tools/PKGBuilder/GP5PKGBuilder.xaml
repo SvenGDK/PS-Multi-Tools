@@ -71,7 +71,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="568,10,0,0" TextWrapping="Wrap" Text="Finalize &amp; Build a PKG Project" VerticalAlignment="Top" Foreground="White" FontSize="16" Cursor="Hand" FontWeight="Bold" />
         <TextBlock HorizontalAlignment="Left" Margin="574,75,0,0" TextWrapping="Wrap" Text="Finalize creates the required GP5 project." VerticalAlignment="Top" Foreground="White" FontStyle="Italic" />
         <Button x:Name="SetReqSysVersionButton" Content="Set Required System Software Ver." HorizontalAlignment="Left" Margin="587,228,0,0" VerticalAlignment="Top" Width="206" Height="25" IsEnabled="False"/>
-        <CheckBox x:Name="EnableHTTPCacheCheckBox" Content="Enable HTTP Cache" HorizontalAlignment="Left" Margin="10,262,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <CheckBox x:Name="TwinTurboCheckBox" Content="Twin Turbo" HorizontalAlignment="Left" Margin="140,262,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="EnableHTTPCacheCheckBox" Content="Enable HTTP Cache" HorizontalAlignment="Left" Margin="10,262,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False"/>
+        <CheckBox x:Name="TwinTurboCheckBox" Content="Twin Turbo" HorizontalAlignment="Left" Margin="140,262,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False"/>
     </Grid>
 </Window>

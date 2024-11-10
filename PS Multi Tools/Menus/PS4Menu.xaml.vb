@@ -1,8 +1,67 @@
 ﻿Public Class PS4Menu
 
+#Region "Tools"
+
+    Private Sub OpenPUPExtractorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPUPExtractorMenuItem.Click
+        Dim NewPUPExtractor As New PUPExtractor() With {.ShowActivated = True}
+        NewPUPExtractor.Show()
+    End Sub
+
+    Private Sub OpenUSBWriterMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenUSBWriterMenuItem.Click
+        Dim NewUSBWriter As New USBWriter() With {.ShowActivated = True}
+        NewUSBWriter.Show()
+    End Sub
+
+    Private Sub OpenPayloadSenderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPayloadSenderMenuItem.Click
+        Dim NewPKGSender As New PS5Sender() With {.ShowActivated = True}
+        NewPKGSender.Show()
+    End Sub
+
+    Private Sub OpenFTPBrowserMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFTPBrowserMenuItem.Click
+        Dim NewFTPBrowser As New FTPBrowser() With {.ShowActivated = True}
+        NewFTPBrowser.Show()
+    End Sub
+
+    Private Sub OpenParamSFOEditorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenParamSFOEditorMenuItem.Click
+        Dim NewSFOEditor As New SFOEditor() With {.ShowActivated = True}
+        NewSFOEditor.Show()
+    End Sub
+
+    Private Sub OpenPKGMergerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGMergerMenuItem.Click
+        Dim NewPS4PKGMerger As New PS5PKGMerger() With {.ShowActivated = True}
+        NewPS4PKGMerger.Show()
+    End Sub
+
+    Private Sub OpenPPPwnerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPPPwnerMenuItem.Click
+        Dim NewPPPwner As New PPPwner() With {.ShowActivated = True}
+        NewPPPwner.Show()
+    End Sub
+
+    Private Sub CheckForUpdatesMenuItems_Click(sender As Object, e As RoutedEventArgs) Handles CheckForUpdatesMenuItems.Click
+        If Utils.IsPSMultiToolsUpdateAvailable() Then
+            If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
+                Utils.DownloadAndExecuteUpdater()
+            End If
+        Else
+            MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
+        End If
+    End Sub
+
+    Private Sub OpenPKGExtractorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGExtractorMenuItem.Click
+        Dim NewPKGExtractor As New PS4PKGExtractor() With {.ShowActivated = True}
+        NewPKGExtractor.Show()
+    End Sub
+
+    Private Sub OpenPSClassicsfPKGBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPSClassicsfPKGBuilderMenuItem.Click
+        Dim NewPSClassicsfPKGBuilder As New PSClassicsfPKGBuilder() With {.ShowActivated = True}
+        NewPSClassicsfPKGBuilder.Show()
+    End Sub
+
+#End Region
+
 #Region "Menu Downloads"
 
-#Region "Hosts"
+#Region "Hosts & Exploits"
 
     Private Sub Download405Host_Click(sender As Object, e As RoutedEventArgs) Handles Download405Host.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
@@ -112,23 +171,23 @@
         End If
     End Sub
 
+    Private Sub OpenPPPwnGitHub_Click(sender As Object, e As RoutedEventArgs) Handles OpenPPPwnGitHub.Click
+        Process.Start("https://github.com/TheOfficialFloW/PPPwn")
+    End Sub
+
+    Private Sub OpenPPPwnTool_Click(sender As Object, e As RoutedEventArgs) Handles OpenPPPwnTool.Click
+        Dim NewPPPwner As New PPPwner() With {.ShowActivated = True}
+        NewPPPwner.Show()
+    End Sub
+
 #End Region
 
-#Region "Homebrew"
+#Region "Homebrew & Payloads"
 
     Private Sub DownloadApolloST_Click(sender As Object, e As RoutedEventArgs) Handles DownloadApolloST.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps4/hb/ApolloSaveTool_V1.4.0.pkg") = False Then
-            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
-            NewDownloader.Close()
-        End If
-    End Sub
-
-    Private Sub DownloadApolloSTGithub_Click(sender As Object, e As RoutedEventArgs) Handles DownloadApolloSTGithub.Click
-        Dim NewDownloader As New Downloader() With {.ShowActivated = True}
-        NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/bucanero/apollo-ps4/releases/latest/download/IV0000-APOL00004_00-APOLLO0000140PS4.pkg") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/bucanero/apollo-ps4/releases/download/v1.6.0/IV0000-APOL00004_00-APOLLO0000000PS4.pkg") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -152,28 +211,10 @@
         End If
     End Sub
 
-    Private Sub DownloadGoldHEN505_Click(sender As Object, e As RoutedEventArgs) Handles DownloadGoldHEN505.Click
+    Private Sub DownloadGoldHEN_Click(sender As Object, e As RoutedEventArgs) Handles DownloadGoldHEN.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://raw.githubusercontent.com/GoldHEN/GoldHEN/master/goldhen_2.3_505.bin") = False Then
-            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
-            NewDownloader.Close()
-        End If
-    End Sub
-
-    Private Sub DownloadGoldHEN672_Click(sender As Object, e As RoutedEventArgs) Handles DownloadGoldHEN672.Click
-        Dim NewDownloader As New Downloader() With {.ShowActivated = True}
-        NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://raw.githubusercontent.com/GoldHEN/GoldHEN/master/goldhen_2.3_672.bin") = False Then
-            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
-            NewDownloader.Close()
-        End If
-    End Sub
-
-    Private Sub DownloadGoldHEN900_Click(sender As Object, e As RoutedEventArgs) Handles DownloadGoldHEN900.Click
-        Dim NewDownloader As New Downloader() With {.ShowActivated = True}
-        NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://raw.githubusercontent.com/GoldHEN/GoldHEN/master/goldhen_2.3_900.bin") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/GoldHEN/GoldHEN/blob/beta/goldhen.bin") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -401,7 +442,7 @@
 
 #End Region
 
-#Region "Tools"
+#Region "Utilities"
 
     Private Sub DownloadDiscDumperVTX405_Click(sender As Object, e As RoutedEventArgs) Handles DownloadDiscDumperVTX405.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
@@ -507,65 +548,6 @@
     End Sub
 
 #End Region
-
-#End Region
-
-#Region "Tools"
-
-    Private Sub OpenPUPExtractorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPUPExtractorMenuItem.Click
-        Dim NewPUPExtractor As New PUPExtractor() With {.ShowActivated = True}
-        NewPUPExtractor.Show()
-    End Sub
-
-    Private Sub OpenUSBWriterMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenUSBWriterMenuItem.Click
-        Dim NewUSBWriter As New USBWriter() With {.ShowActivated = True}
-        NewUSBWriter.Show()
-    End Sub
-
-    Private Sub OpenPayloadSenderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPayloadSenderMenuItem.Click
-        Dim NewPKGSender As New PS5Sender() With {.ShowActivated = True}
-        NewPKGSender.Show()
-    End Sub
-
-    Private Sub OpenFTPBrowserMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFTPBrowserMenuItem.Click
-        Dim NewFTPBrowser As New FTPBrowser() With {.ShowActivated = True}
-        NewFTPBrowser.Show()
-    End Sub
-
-    Private Sub OpenParamSFOEditorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenParamSFOEditorMenuItem.Click
-        Dim NewSFOEditor As New SFOEditor() With {.ShowActivated = True}
-        NewSFOEditor.Show()
-    End Sub
-
-    Private Sub OpenPKGMergerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGMergerMenuItem.Click
-        Dim NewPS4PKGMerger As New PS5PKGMerger() With {.ShowActivated = True}
-        NewPS4PKGMerger.Show()
-    End Sub
-
-    Private Sub OpenPPPwnerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPPPwnerMenuItem.Click
-        Dim NewPPPwner As New PPPwner() With {.ShowActivated = True}
-        NewPPPwner.Show()
-    End Sub
-
-    Private Sub CheckForUpdatesMenuItems_Click(sender As Object, e As RoutedEventArgs) Handles CheckForUpdatesMenuItems.Click
-        If Utils.IsPSMultiToolsUpdateAvailable() Then
-            If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
-                Utils.DownloadAndExecuteUpdater()
-            End If
-        Else
-            MsgBox("PS Multi Tools is up to date!", MsgBoxStyle.Information, "No update found")
-        End If
-    End Sub
-
-    Private Sub OpenPKGExtractorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGExtractorMenuItem.Click
-        Dim NewPKGExtractor As New PS4PKGExtractor() With {.ShowActivated = True}
-        NewPKGExtractor.Show()
-    End Sub
-
-    Private Sub OpenPSClassicsfPKGBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPSClassicsfPKGBuilderMenuItem.Click
-        Dim NewPSClassicsfPKGBuilder As New PSClassicsfPKGBuilder() With {.ShowActivated = True}
-        NewPSClassicsfPKGBuilder.Show()
-    End Sub
 
 #End Region
 

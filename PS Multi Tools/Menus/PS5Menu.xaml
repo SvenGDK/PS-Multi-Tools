@@ -67,7 +67,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="BD-JB JAR Loader">
-                <MenuItem Header="Download v2.0.0" x:Name="DownloadJARLoader">
+                <MenuItem Header="Download v2.1.0" x:Name="DownloadJARLoader">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -213,7 +213,7 @@
 
         <MenuItem Header="Payloads">
             <MenuItem Header="ELFLdr by john-tornblom">
-                <MenuItem Header="Download v0.15" x:Name="DownloadELFLdr">
+                <MenuItem Header="Download v0.16" x:Name="DownloadELFLdr">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -281,7 +281,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="FTPSrv by john-tornblom">
-                <MenuItem Header="Download v0.10.2" x:Name="DownloadFTPSrv">
+                <MenuItem Header="Download v0.11" x:Name="DownloadFTPSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -293,6 +293,13 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="JAR Payloads">
+                <MenuItem Header="Byepervisor">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadByepervisor">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
                 <MenuItem Header="Dump Class Path">
                     <MenuItem Header="Download v1.0" x:Name="DownloadDumpClassPath">
                         <MenuItem.Icon>
@@ -302,6 +309,13 @@
                 </MenuItem>
                 <MenuItem Header="FTP Server">
                     <MenuItem Header="Download v1.0" x:Name="DownloadJARFTPServer">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Kerneldump">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadKerneldump">
                         <MenuItem.Icon>
                             <Image Source="/Images/download.png"/>
                         </MenuItem.Icon>
@@ -330,7 +344,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="KLogSrv by john-tornblom">
-                <MenuItem Header="Download v0.4.1" x:Name="DownloadKLogSrv">
+                <MenuItem Header="Download v0.5" x:Name="DownloadKLogSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -363,7 +377,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="SHSrv by john-tornblom">
-                <MenuItem Header="Download v0.10.1" x:Name="DownloadSHSrv">
+                <MenuItem Header="Download v0.12" x:Name="DownloadSHSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -375,7 +389,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="WebSrv by john-tornblom">
-                <MenuItem Header="Download v0.11" x:Name="DownloadWebSrv">
+                <MenuItem Header="Download v0.14" x:Name="DownloadWebSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

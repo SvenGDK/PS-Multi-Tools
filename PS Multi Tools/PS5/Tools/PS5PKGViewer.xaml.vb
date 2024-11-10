@@ -25,29 +25,6 @@ Public Class PS5PKGViewer
 
             SelectedPKGFileTextBox.Text = OFD.FileName
 
-            'Determine PS5 PKG
-            Dim FirstString As String = ""
-            Dim CharAtOffset5 As Char
-            Using PKGReader As New FileStream(OFD.FileName, FileMode.Open, FileAccess.Read)
-                Dim BinReader As New BinaryReader(PKGReader)
-                FirstString = BinReader.ReadString()
-                PKGReader.Seek(5, SeekOrigin.Begin)
-                CharAtOffset5 = BinReader.ReadChar()
-                PKGReader.Close()
-            End Using
-
-            If Not String.IsNullOrEmpty(FirstString) Then
-                If FirstString.Contains("CNT") Then
-                    IsSourcePKG = True
-                Else
-                    IsSourcePKG = False
-                End If
-            End If
-
-            If Not CharAtOffset5 = ChrW(0) Then
-                IsRetailPKG = True
-            End If
-
             'Clear previous ListView items and lists
             PKGContentListView.Items.Clear()
             PKGScenariosListView.Items.Clear()
@@ -59,6 +36,38 @@ Public Class PS5PKGViewer
             NestedImageRootFiles.Clear()
             NestedImageRootDirectories.Clear()
             NestedImageURootFiles.Clear()
+
+            'Reset
+            PKGIconImage.Source = Nothing
+            IsSourcePKG = False
+            IsRetailPKG = False
+            CurrentParamJSON = ""
+            CurrentConfigurationXML = Nothing
+            CurrentIcon0 = Nothing
+            CurrentPic0 = Nothing
+
+            'Determine PS5 PKG
+            Dim FirstString As String = ""
+            Dim Int8AtOffset5 As SByte
+            Using PKGReader As New FileStream(OFD.FileName, FileMode.Open, FileAccess.Read)
+                Dim BinReader As New BinaryReader(PKGReader)
+                FirstString = BinReader.ReadString()
+                PKGReader.Seek(5, SeekOrigin.Begin)
+                Int8AtOffset5 = BinReader.ReadSByte()
+                PKGReader.Close()
+            End Using
+
+            If Not String.IsNullOrEmpty(FirstString) Then
+                If FirstString.Contains("CNT") Then
+                    IsSourcePKG = True
+                Else
+                    IsSourcePKG = False
+                End If
+            End If
+
+            If Int8AtOffset5 = -128 Then
+                IsRetailPKG = True
+            End If
 
             If IsRetailPKG Or IsSourcePKG Then
                 'Get only param.json
@@ -1284,7 +1293,6 @@ Public Class PS5PKGViewer
         If Not String.IsNullOrEmpty(CurrentParamJSON) Then
             Dim SFD As New Forms.SaveFileDialog() With {.Title = "Select a save path", .Filter = "JSON files (*.json)|*.json", .FileName = "param.json"}
             If SFD.ShowDialog() = Forms.DialogResult.OK Then
-                'Dim RawDataJSON As String = JsonConvert.SerializeObject(CurrentParamJSON, Formatting.Indented, New JsonSerializerSettings With {.NullValueHandling = NullValueHandling.Ignore})
                 File.WriteAllText(SFD.FileName, CurrentParamJSON)
             End If
         End If
