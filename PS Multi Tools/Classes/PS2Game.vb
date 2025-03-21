@@ -206,7 +206,7 @@ Public Class PS2Game
         Dim GameID As String = ""
 
         Using SevenZip As New Process()
-            SevenZip.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\7z.exe"
+            SevenZip.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
             SevenZip.StartInfo.Arguments = "l -ba """ + GameISO + """"
             SevenZip.StartInfo.RedirectStandardOutput = True
             SevenZip.StartInfo.UseShellExecute = False
@@ -244,7 +244,7 @@ Public Class PS2Game
         Dim FoundGameTitle As String = ""
         GameID = GameID.Replace("-", "")
 
-        For Each GameTitle As String In File.ReadLines(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps2ids.txt")
+        For Each GameTitle As String In File.ReadLines(Environment.CurrentDirectory + "\Tools\ps2ids.txt")
             If GameTitle.Contains(GameID) Then
                 FoundGameTitle = GameTitle.Split(";"c)(1)
                 Exit For

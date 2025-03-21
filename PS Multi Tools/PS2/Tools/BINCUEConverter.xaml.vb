@@ -14,7 +14,7 @@ Public Class BINCUEConverter
 
     Private Sub BrowseCueButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseCueButton.Click
         Dim OFD As New OpenFileDialog() With {.CheckFileExists = True, .Filter = "CUE files (*.cue)|*.cue", .Multiselect = False}
-        If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedCueTextBox.Text = OFD.FileName
         End If
     End Sub
@@ -36,13 +36,13 @@ Public Class BINCUEConverter
             NewBaseName = Path.GetFileNameWithoutExtension(SelectedCueTextBox.Text)
 
             'Create Converted folder if not exists
-            If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Converted") Then
-                Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Converted")
-                Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Converted\ISO")
+            If Not Directory.Exists(Environment.CurrentDirectory + "\Converted") Then
+                Directory.CreateDirectory(Environment.CurrentDirectory + "\Converted")
+                Directory.CreateDirectory(Environment.CurrentDirectory + "\Converted\ISO")
             End If
 
             Using BChunk As New Process()
-                BChunk.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\bchunk.exe"
+                BChunk.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\bchunk.exe"
 
                 If IsForPSXCheckBox.IsChecked Then
                     BChunk.StartInfo.Arguments = "-p """ + BINFile + """ """ + CUEFile + """ """ + NewBaseName + """"
@@ -80,15 +80,15 @@ Public Class BINCUEConverter
             If e.Data.Contains("End of Conversion") Then
                 If File.Exists(NewBaseName + "01.iso") Then
 
-                    File.Move(NewBaseName + "01.iso", My.Computer.FileSystem.CurrentDirectory + "\Converted\ISO\" + NewBaseName + "01.iso")
+                    File.Move(NewBaseName + "01.iso", Environment.CurrentDirectory + "\Converted\ISO\" + NewBaseName + "01.iso")
 
                     If MsgBox("Converted ! Do you want the open the folder containing the new ISO file ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
-                        Process.Start("explorer", My.Computer.FileSystem.CurrentDirectory + "\Converted\ISO")
+                        Process.Start("explorer", Environment.CurrentDirectory + "\Converted\ISO")
                     End If
 
                 Else
                     If MsgBox("Converted, but the file could not be found. Do you want to check the Tools folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
-                        Process.Start("explorer", My.Computer.FileSystem.CurrentDirectory + "\Tools")
+                        Process.Start("explorer", Environment.CurrentDirectory + "\Tools")
                     End If
                 End If
             End If

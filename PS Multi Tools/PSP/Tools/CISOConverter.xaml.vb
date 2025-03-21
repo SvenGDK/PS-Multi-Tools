@@ -5,14 +5,14 @@ Public Class CISOConverter
 
     Private Sub BrowseISOButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseISOButton.Click
         Dim OFD As New OpenFileDialog() With {.CheckFileExists = True, .Filter = "ISO files (*.iso)|*.iso", .Multiselect = False}
-        If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedISOTextBox.Text = OFD.FileName
         End If
     End Sub
 
     Private Sub BrowseCISOButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseCISOButton.Click
         Dim OFD As New OpenFileDialog() With {.CheckFileExists = True, .Filter = "cso files (*.cso)|*.cso", .Multiselect = False}
-        If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedCISOTextBox.Text = OFD.FileName
         End If
     End Sub
@@ -43,7 +43,7 @@ Public Class CISOConverter
             Dim NewFile As String = Path.ChangeExtension(SelectedISOTextBox.Text, ".cso")
 
             Using MCISO As New Process()
-                MCISO.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\mciso.exe"
+                MCISO.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\mciso.exe"
                 MCISO.StartInfo.Arguments = CompressionLevelComboBox.Text + " """ + SelectedISOTextBox.Text + """ """ + NewFile + """"
                 MCISO.StartInfo.RedirectStandardOutput = True
                 MCISO.StartInfo.RedirectStandardError = True
@@ -65,7 +65,7 @@ Public Class CISOConverter
             Dim NewFile As String = Path.ChangeExtension(SelectedCISOTextBox.Text, ".iso")
 
             Using MCISO As New Process()
-                MCISO.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\mciso.exe"
+                MCISO.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\mciso.exe"
                 MCISO.StartInfo.Arguments = "0 """ + SelectedCISOTextBox.Text + """ """ + NewFile + """"
                 MCISO.StartInfo.RedirectStandardOutput = True
                 MCISO.StartInfo.RedirectStandardError = True

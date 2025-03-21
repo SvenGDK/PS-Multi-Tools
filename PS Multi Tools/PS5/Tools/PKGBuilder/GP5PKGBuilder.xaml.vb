@@ -34,7 +34,7 @@ Public Class GP5PKGBuilder
 
     Private Sub CreateNewProjectButton_Click(sender As Object, e As RoutedEventArgs) Handles CreateNewProjectButton.Click
         Dim SFD As New FolderBrowserDialog() With {.Description = "Select a folder to save your project", .ShowNewFolderButton = True}
-        If SFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If SFD.ShowDialog() = Forms.DialogResult.OK Then
 
             Dim NewProjectTitle As String = InputBox("Enter a title for your new PKG project :", "Title required", "No Title")
             If Not String.IsNullOrEmpty(NewProjectTitle) Then
@@ -98,7 +98,7 @@ Public Class GP5PKGBuilder
 
     Private Sub LoadProjectButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadProjectButton.Click
         Dim OFD As New OpenFileDialog() With {.Title = "Select a saved PKG project", .Filter = "INI Files (*.ini)|*.ini", .Multiselect = False}
-        If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
 
             CurrentProjectTextBlock.Text = OFD.FileName
 
@@ -194,7 +194,7 @@ Public Class GP5PKGBuilder
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
 
             Dim SFD As New FolderBrowserDialog() With {.Description = "Select a save path for your project", .ShowNewFolderButton = True}
-            If SFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            If SFD.ShowDialog() = Forms.DialogResult.OK Then
 
                 'Save project settings
                 Dim NewProjectINI As New IniFile(SFD.SelectedPath + "\" + CurrentProject.ProjectTitle + ".ini")
@@ -265,7 +265,7 @@ Public Class GP5PKGBuilder
     Private Sub MainIconImageRectangle_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles MainIconImageRectangle.MouseLeftButtonDown
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new icon", .Filter = "PNG Image (*.png)|*.png", .Multiselect = False}
-            If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            If OFD.ShowDialog() = Forms.DialogResult.OK Then
                 'Show new icon
                 Dispatcher.BeginInvoke(Sub()
                                            Dim TempBitmapImage = New BitmapImage()
@@ -300,7 +300,7 @@ Public Class GP5PKGBuilder
     Private Sub BackgroundImage_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles BackgroundImage.MouseLeftButtonDown
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new background image", .Filter = "PNG Image (*.png)|*.png", .Multiselect = False}
-            If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            If OFD.ShowDialog() = Forms.DialogResult.OK Then
                 'Show new background
                 Dispatcher.BeginInvoke(Sub()
                                            Dim TempBitmapImage = New BitmapImage()
@@ -363,7 +363,7 @@ Public Class GP5PKGBuilder
     Private Sub SetBackgroundButton_Click(sender As Object, e As RoutedEventArgs) Handles SetBackgroundButton.Click
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new background image", .Filter = "PNG Image (*.png)|*.png", .Multiselect = False}
-            If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            If OFD.ShowDialog() = Forms.DialogResult.OK Then
                 'Show new background
                 Dispatcher.BeginInvoke(Sub()
                                            Dim TempBitmapImage = New BitmapImage()
@@ -399,7 +399,7 @@ Public Class GP5PKGBuilder
     Private Sub SetSoundtrackButton_Click(sender As Object, e As RoutedEventArgs) Handles SetSoundtrackButton.Click
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
             Dim OFD As New OpenFileDialog() With {.Title = "Select a new soundtrack", .Filter = "AT9 Audio (*.at9)|*.at9", .Multiselect = False}
-            If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            If OFD.ShowDialog() = Forms.DialogResult.OK Then
                 'Copy file to project folder
                 File.Copy(OFD.FileName, CurrentProject.ProjectPath + "\sce_sys\snd0.at9", True)
 
@@ -576,7 +576,7 @@ Public Class GP5PKGBuilder
         If Not String.IsNullOrEmpty(CurrentProject.ProjectPath) AndAlso Not String.IsNullOrEmpty(CurrentProjectTextBlock.Text) Then
 
             Dim SFD As New SaveFileDialog() With {.Title = "Select a save path for the PKG file", .Filter = "PKG Files (*.pkg)|*.pkg", .DefaultExt = ".pkg"}
-            If SFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            If SFD.ShowDialog() = Forms.DialogResult.OK Then
                 Dim PKGDestinationPath As String = SFD.FileName
                 Dim GP5ProjectPath As String = CurrentProject.ProjectPath + "\" + CurrentProject.ProjectTitle + ".gp5"
 
@@ -780,12 +780,12 @@ Public Class GP5PKGBuilder
     Private Function FinalizeProject(ProjectConfig As String) As Boolean
         If Not String.IsNullOrEmpty(ProjectConfig) AndAlso Not String.IsNullOrEmpty(CurrentProject.ProjectPath) Then
 
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe") Then
+            If File.Exists(Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe") Then
 
                 Dim ProjectINI As New IniFile(ProjectConfig)
                 Dim GP5ProjectPath As String = CurrentProject.ProjectPath + "\" + CurrentProject.ProjectTitle + ".gp5"
 
-                PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"
+                PubToolsPath = Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"
 
                 If Not String.IsNullOrEmpty(CurrentProject.ProjectTitle) Then
                     Try

@@ -43,9 +43,9 @@ Public Class PS3Menu
 
     Private Sub PS3Menu_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Load config if exists
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
+        If File.Exists(Environment.CurrentDirectory + "\psmt-config.ini") Then
             Try
-                Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+                Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
                 SharedConsoleAddress = MainConfig.IniReadValue("PS3 Tools", "IP") + ":" + MainConfig.IniReadValue("PS3 Tools", "Port")
                 FTPIPTextBox.Text = MainConfig.IniReadValue("PS3 Tools", "IP") + ":" + MainConfig.IniReadValue("PS3 Tools", "Port")
             Catch ex As FileNotFoundException
@@ -1114,7 +1114,7 @@ Public Class PS3Menu
     Private Sub ShareASingleFolder_Click(sender As Object, e As RoutedEventArgs) Handles ShareASingleFolder.Click
         Select Case ShareASingleFolder.Header.ToString()
             Case "Share a single folder"
-                If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe") Then
+                If File.Exists(Environment.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe") Then
                     Dim FBD As New FolderBrowserDialog() With {.RootFolder = Environment.SpecialFolder.Desktop, .Description = "Select the folder you want to share"}
                     If FBD.ShowDialog() = Forms.DialogResult.OK Then
                         If MsgBox(FBD.SelectedPath + " will be shared using ps3netsrv. Continue ?", MsgBoxStyle.YesNo, "Please confirm sharing the selected folder") = MsgBoxResult.Yes Then
@@ -1128,7 +1128,7 @@ Public Class PS3Menu
 
                             PS3NetSrvProcess = New Process() With {.EnableRaisingEvents = True, .StartInfo = New ProcessStartInfo With {
                                 .Arguments = NewArgs,
-                                .FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe"}}
+                                .FileName = Environment.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe"}}
 
                             PS3NetSrvProcess.Start()
 
@@ -1143,7 +1143,7 @@ Public Class PS3Menu
                         End If
                     End If
                 Else
-                    MsgBox("Could not find " + My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe", MsgBoxStyle.Critical, "Cannot share without ps3netsrv")
+                    MsgBox("Could not find " + Environment.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe", MsgBoxStyle.Critical, "Cannot share without ps3netsrv")
                 End If
             Case "Stop sharing"
                 If PS3NetSrvProcess IsNot Nothing Then
@@ -1165,9 +1165,9 @@ Public Class PS3Menu
     Private Sub ShareManagedFolders_Click(sender As Object, e As RoutedEventArgs) Handles ShareManagedFolders.Click
         Select Case ShareManagedFolders.Header.ToString()
             Case "Share configured managed virtual folders"
-                If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe") Then
+                If File.Exists(Environment.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe") Then
 
-                    Directory.SetCurrentDirectory(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv")
+                    Directory.SetCurrentDirectory(Environment.CurrentDirectory + "\Tools\ps3netsrv")
 
                     PS3NetSrvProcess = New Process() With {.EnableRaisingEvents = True, .StartInfo = New ProcessStartInfo With {.Arguments = ".", .FileName = "ps3netsrv.exe"}}
                     PS3NetSrvProcess.Start()
@@ -1180,7 +1180,7 @@ Public Class PS3Menu
                         ShareManagedFolders.Header = "Stop sharing"
                     End If
                 Else
-                    MsgBox("Could not find " + My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe", MsgBoxStyle.Critical, "Cannot share without ps3netsrv")
+                    MsgBox("Could not find " + Environment.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe", MsgBoxStyle.Critical, "Cannot share without ps3netsrv")
                 End If
             Case "Stop sharing"
                 If PS3NetSrvProcess IsNot Nothing Then

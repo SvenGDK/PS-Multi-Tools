@@ -6,12 +6,12 @@
              xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             d:DesignHeight="20" d:DesignWidth="500">
+             d:DesignHeight="20" d:DesignWidth="800">
     <MenuItem Header="Library"/>
     <MenuItem x:Name="ToolsMenuItem" Header="Tools">
         <MenuItem Header="PC - Windows Utilities">
             <MenuItem Header="Blu Ray Disc Burner" x:Name="OpenBDBurnerMenuItem"/>
-            <MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems"></MenuItem>
+            <MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems"/>
             <MenuItem Header="Extract RCO files" x:Name="OpenRCOExtractorMenuItem"/>
             <MenuItem Header="Fake sign SELF files" x:Name="OpenMakefSELFMenuItem"/>
             <MenuItem Header="GP5 Project Creator" x:Name="OpenGP5ManagerMenuItem"/>
@@ -22,7 +22,7 @@
             <MenuItem Header="PKG Merger" x:Name="OpenPKGMergerMenuItem"/>
             <MenuItem Header="PKG Reader (Viewer)" x:Name="OpenPKGReaderMenuItem"/>
             <MenuItem Header="PKG Sender" x:Name="OpenPKGSenderMenuItem"/>
-            <MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem"></MenuItem>
+            <MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem"/>
             <MenuItem Header="Simple Shortcut PKG Creator" x:Name="OpenShortcutPKGCreatorMenuItem"/>
             <MenuItem Header="WAV &lt;-&gt; AT9 Converter" x:Name="OpenAudioConverterMenuItem"/>
         </MenuItem>
@@ -44,6 +44,20 @@
         </MenuItem>
     </MenuItem>
     <MenuItem x:Name="ExploitsMenuItem" Header="Exploits">
+        <MenuItem Header="1.00 - 5.50">
+            <MenuItem Header="UMTX Jailbreak">
+                <MenuItem Header="Download v1.2" x:Name="DownloadUMTXJailbreak">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Learn more at GitHub" x:Name="OpenUMTXJailbreakGitHub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/github-mark.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </MenuItem>
         <MenuItem Header="3.00 - 4.51">
             <MenuItem Header="PS5 IPV6 Kernel Exploit">
                 <MenuItem Header="Go to GitHub" x:Name="OpenKexGitHub">
@@ -67,24 +81,12 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="BD-JB JAR Loader">
-                <MenuItem Header="Download v2.1.0" x:Name="DownloadJARLoader">
+                <MenuItem Header="Download v4.1.1" x:Name="DownloadJARLoader">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Learn more at GitHub" x:Name="OpenJARLoaderGitHub">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/github-mark.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="UMTX Jailbreak">
-                <MenuItem Header="Download v1.2" x:Name="DownloadUMTXJailbreak">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/download.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Learn more at GitHub" x:Name="OpenUMTXJailbreakGitHub">
                     <MenuItem.Icon>
                         <Image Source="/Images/github-mark.png"/>
                     </MenuItem.Icon>
@@ -127,14 +129,6 @@
         </MenuItem>
     </MenuItem>
     <MenuItem x:Name="DownloadsMenuItem" Header="Downloads">
-        <MenuItem Header="Exploits">
-            <MenuItem Header="Download PS5 BD-JB ELF Loader v1.6.2" x:Name="DownloadPS5BDJBElfLoader">
-                <MenuItem.Icon>
-                    <Image Source="/Images/download.png"/>
-                </MenuItem.Icon>
-            </MenuItem>
-        </MenuItem>
-
         <MenuItem Header="Firmwares">
             <MenuItem Header="Recovery Firmware">
                 <MenuItem Header="Download 4.03" x:Name="DownloadRecoveryFW403">
@@ -186,7 +180,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="Itemzflow by LightningMods">
-                <MenuItem Header="Download v1.06 PKG" x:Name="DownloadItemzflow">
+                <MenuItem Header="Download v1.08 PKG" x:Name="DownloadItemzflow">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -213,7 +207,7 @@
 
         <MenuItem Header="Payloads">
             <MenuItem Header="ELFLdr by john-tornblom">
-                <MenuItem Header="Download v0.16" x:Name="DownloadELFLdr">
+                <MenuItem Header="Download v0.18.1" x:Name="DownloadELFLdr">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -225,29 +219,39 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="etaHEN by LightningMods">
-                <MenuItem Header="Download v1.8B" x:Name="DownloadetaHEN">
+                <MenuItem Header="Download v1.9B" x:Name="DownloadetaHEN">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download v1.9B (No Toolbox)" x:Name="DownloadetaHENNoToolbox">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download v2.0B (Pre Release)" x:Name="DownloadetaHENBeta">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="FetchPKG by john-tornblom">
-                <MenuItem Header="Download v0.2 PS5 Payload" x:Name="DownloadFetchPKGPS5">
+                <MenuItem Header="Download v0.3.1 PS5 Payload" x:Name="DownloadFetchPKGPS5">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Download v0.2 Windows Application" x:Name="DownloadFetchPKGWin">
+                <MenuItem Header="Download v0.3.1 Windows Application" x:Name="DownloadFetchPKGWin">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Download latest payload build from GitHub" x:Name="DownloadFetchPKGPS5Github">
+                <MenuItem Header="Download latest Payload from GitHub" x:Name="DownloadFetchPKGPS5Github">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Download latest payload build from GitHub" x:Name="DownloadFetchPKGWinGithub">
+                <MenuItem Header="Download latest Windows Application from GitHub" x:Name="DownloadFetchPKGWinGithub">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -281,7 +285,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="FTPSrv by john-tornblom">
-                <MenuItem Header="Download v0.11" x:Name="DownloadFTPSrv">
+                <MenuItem Header="Download v0.11.2" x:Name="DownloadFTPSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -292,9 +296,16 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="JAR Payloads">
+            <MenuItem Header="JAR Payloads for PlayStation 5 Remote JAR Loader">
                 <MenuItem Header="Byepervisor">
                     <MenuItem Header="Download v1.0" x:Name="DownloadByepervisor">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Debug Settings">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadDebugSettings">
                         <MenuItem.Icon>
                             <Image Source="/Images/download.png"/>
                         </MenuItem.Icon>
@@ -307,6 +318,13 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+                <MenuItem Header="Dump Current Process">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadCurProc">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
                 <MenuItem Header="FTP Server">
                     <MenuItem Header="Download v1.0" x:Name="DownloadJARFTPServer">
                         <MenuItem.Icon>
@@ -314,8 +332,29 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+                <MenuItem Header="Jailbreak">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadJailbreak">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
                 <MenuItem Header="Kerneldump">
                     <MenuItem Header="Download v1.0" x:Name="DownloadKerneldump">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Kernel Log Server">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadJARKlogSrv">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="List Directory Entries">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadListDirEnts">
                         <MenuItem.Icon>
                             <Image Source="/Images/download.png"/>
                         </MenuItem.Icon>
@@ -335,8 +374,15 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="UMTX Bug">
-                    <MenuItem Header="Download v1.0" x:Name="DownloadUMTXBug">
+                <MenuItem Header="UMTX 1">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadUMTX1">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="UMTX 2">
+                    <MenuItem Header="Download v1.0" x:Name="DownloadUMTX2">
                         <MenuItem.Icon>
                             <Image Source="/Images/download.png"/>
                         </MenuItem.Icon>
@@ -344,7 +390,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="KLogSrv by john-tornblom">
-                <MenuItem Header="Download v0.5" x:Name="DownloadKLogSrv">
+                <MenuItem Header="Download v0.5.3" x:Name="DownloadKLogSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -356,7 +402,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="OffAct by john-tornblom">
-                <MenuItem Header="Download v0.1" x:Name="DownloadOffAct">
+                <MenuItem Header="Download v0.3" x:Name="DownloadOffAct">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -367,9 +413,16 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="PS5-kstuff by sleirsgoevy">
-                <MenuItem Header="3.00, 3.20, 3.21, 4.00, 4.02, 4.03, 4.50, 4.51">
+            <MenuItem Header="PS5-kstuff">
+                <MenuItem Header="By sleirsgoevy for 3.00, 3.20, 3.21, 4.00, 4.02, 4.03, 4.50, 4.51">
                     <MenuItem Header="Download" x:Name="DownloadKStuff">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="By sleirsgoevy &amp; EchoStretch for 3.00 - 6.50">
+                    <MenuItem Header="Download" x:Name="DownloadNewKStuff">
                         <MenuItem.Icon>
                             <Image Source="/Images/download.png"/>
                         </MenuItem.Icon>
@@ -377,7 +430,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="SHSrv by john-tornblom">
-                <MenuItem Header="Download v0.12" x:Name="DownloadSHSrv">
+                <MenuItem Header="Download v0.14" x:Name="DownloadSHSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -389,7 +442,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="WebSrv by john-tornblom">
-                <MenuItem Header="Download v0.14" x:Name="DownloadWebSrv">
+                <MenuItem Header="Download v0.21" x:Name="DownloadWebSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

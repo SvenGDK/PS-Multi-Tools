@@ -1426,6 +1426,71 @@ Public Class Structures
         End Property
     End Structure
 
+    Public Structure DLPackage
+
+        Private _PackageName As String
+        Private _PackageIcon As Image
+        Private _PackageDescription As String
+        Private _PackageRegion As String
+        Private _PackageConsole As String
+        Private _PackageFormat As String
+
+        Public Property PackageIcon As Image
+            Get
+                Return _PackageIcon
+            End Get
+            Set
+                _PackageIcon = Value
+            End Set
+        End Property
+
+        Public Property PackageName As String
+            Get
+                Return _PackageName
+            End Get
+            Set
+                _PackageName = Value
+            End Set
+        End Property
+
+        Public Property PackageDescription As String
+            Get
+                Return _PackageDescription
+            End Get
+            Set
+                _PackageDescription = Value
+            End Set
+        End Property
+
+        Public Property PackageRegion As String
+            Get
+                Return _PackageRegion
+            End Get
+            Set
+                _PackageRegion = Value
+            End Set
+        End Property
+
+        Public Property PackageConsole As String
+            Get
+                Return _PackageConsole
+            End Get
+            Set
+                _PackageConsole = Value
+            End Set
+        End Property
+
+        Public Property PackageFormat As String
+            Get
+                Return _PackageFormat
+            End Get
+            Set
+                _PackageFormat = Value
+            End Set
+        End Property
+
+    End Structure
+
 End Class
 
 Public Class PS5ParamClass

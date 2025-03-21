@@ -4,7 +4,7 @@ Imports System.Text
 Public Class PSVEmulatorSettings
 
     Private Sub PSVEmulatorSettings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             Dim ValidationLayer As String = GetVitaConfigValue("validation-layer").Trim()
             Dim PSTVMode As String = GetVitaConfigValue("pstv-mode").Trim()
             Dim ShowMode As String = GetVitaConfigValue("show-mode").Trim()
@@ -104,325 +104,325 @@ Public Class PSVEmulatorSettings
 #Region "CheckBox Changes"
 
     Private Sub AsiaFontSupportCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles AsiaFontSupportCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("asia-font-support", "true")
         End If
     End Sub
 
     Private Sub AsyncPipeplineCompilationCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles AsyncPipeplineCompilationCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("async-pipeline-compilation", "true")
         End If
     End Sub
 
     Private Sub BootAppsFSCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles BootAppsFSCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("boot-apps-full-screen", "true")
         End If
     End Sub
 
     Private Sub CPUOPTCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles CPUOPTCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("cpu-opt", "true")
         End If
     End Sub
 
     Private Sub DemoModeCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles DemoModeCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("demo-mode", "true")
         End If
     End Sub
 
     Private Sub DisableSurfaceSyncCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles DisableSurfaceSyncCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("disable-surface-sync", "true")
         End If
     End Sub
 
     Private Sub DisplaySystemAppsCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles DisplaySystemAppsCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("display-system-apps", "true")
         End If
     End Sub
 
     Private Sub ExportAsPNGCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ExportAsPNGCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("export-as-png", "true")
         End If
     End Sub
 
     Private Sub ExportTexturesCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ExportTexturesCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("export-textures", "true")
         End If
     End Sub
 
     Private Sub FPSHackCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles FPSHackCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("fps-hack", "true")
         End If
     End Sub
 
     Private Sub HashlessTextureCacheCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles HashlessTextureCacheCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("hashless-texture-cache", "true")
         End If
     End Sub
 
     Private Sub HighAccuracyCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles HighAccuracyCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("high-accuracy", "true")
         End If
     End Sub
 
     Private Sub HTTPEnableCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles HTTPEnableCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("http-enable", "true")
         End If
     End Sub
 
     Private Sub ImportTexturesCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ImportTexturesCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("import-textures", "true")
         End If
     End Sub
 
     Private Sub NGSEnableCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles NGSEnableCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("ngs-enable", "true")
         End If
     End Sub
 
     Private Sub PerformanceOverlayCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles PerformanceOverlayCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("performance-overlay", "true")
         End If
     End Sub
 
     Private Sub PSTVModeCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles PSTVModeCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("pstv-mode", "true")
         End If
     End Sub
 
     Private Sub ShaderCacheCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ShaderCacheCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("shader-cache", "true")
         End If
     End Sub
 
     Private Sub ShowCompileShadersCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ShowCompileShadersCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("show-compile-shaders", "true")
         End If
     End Sub
 
     Private Sub ShowLiveAreaScreenCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ShowLiveAreaScreenCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("show-live-area-screen", "true")
         End If
     End Sub
 
     Private Sub ShowModeCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ShowModeCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("show-mode", "true")
         End If
     End Sub
 
     Private Sub ShowTouchpadCursorCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ShowTouchpadCursorCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("show-touchpad-cursor", "true")
         End If
     End Sub
 
     Private Sub SpirvCacheCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles SpirvCacheCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("spirv-shader", "true")
         End If
     End Sub
 
     Private Sub StretchDisplayAreaCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles StretchDisplayAreaCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("stretch_the_display_area", "true")
         End If
     End Sub
 
     Private Sub TextureCacheCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles TextureCacheCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("texture-cache", "true")
         End If
     End Sub
 
     Private Sub ValidationLayerCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles ValidationLayerCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("validation-layer", "true")
         End If
     End Sub
 
     Private Sub VSyncCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles VSyncCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("v-sync", "true")
         End If
     End Sub
 
     Private Sub AsiaFontSupportCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles AsiaFontSupportCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("asia-font-support", "false")
         End If
     End Sub
 
     Private Sub AsyncPipeplineCompilationCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles AsyncPipeplineCompilationCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("async-pipeline-compilation", "false")
         End If
     End Sub
 
     Private Sub BootAppsFSCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles BootAppsFSCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("boot-apps-full-screen", "false")
         End If
     End Sub
 
     Private Sub CPUOPTCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles CPUOPTCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("cpu-opt", "false")
         End If
     End Sub
 
     Private Sub DemoModeCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles DemoModeCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("demo-mode", "false")
         End If
     End Sub
 
     Private Sub DisableSurfaceSyncCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles DisableSurfaceSyncCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("disable-surface-sync", "false")
         End If
     End Sub
 
     Private Sub DisplaySystemAppsCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles DisplaySystemAppsCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("display-system-apps", "false")
         End If
     End Sub
 
     Private Sub ExportAsPNGCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ExportAsPNGCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("export-as-png", "false")
         End If
     End Sub
 
     Private Sub ExportTexturesCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ExportTexturesCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("export-textures", "false")
         End If
     End Sub
 
     Private Sub FPSHackCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles FPSHackCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("fps-hack", "false")
         End If
     End Sub
 
     Private Sub HashlessTextureCacheCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles HashlessTextureCacheCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("hashless-texture-cache", "false")
         End If
     End Sub
 
     Private Sub HighAccuracyCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles HighAccuracyCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("high-accuracy", "false")
         End If
     End Sub
 
     Private Sub HTTPEnableCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles HTTPEnableCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("http-enable", "false")
         End If
     End Sub
 
     Private Sub ImportTexturesCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ImportTexturesCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("import-textures", "false")
         End If
     End Sub
 
     Private Sub NGSEnableCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles NGSEnableCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("ngs-enable", "false")
         End If
     End Sub
 
     Private Sub PerformanceOverlayCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles PerformanceOverlayCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("performance-overlay", "false")
         End If
     End Sub
 
     Private Sub PSTVModeCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles PSTVModeCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("pstv-mode", "false")
         End If
     End Sub
 
     Private Sub ShaderCacheCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ShaderCacheCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("shader-cache", "false")
         End If
     End Sub
 
     Private Sub ShowCompileShadersCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ShowCompileShadersCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("show-compile-shaders", "false")
         End If
     End Sub
 
     Private Sub ShowLiveAreaScreenCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ShowLiveAreaScreenCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("show-live-area-screen", "false")
         End If
     End Sub
 
     Private Sub ShowModeCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ShowModeCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("show-mode", "false")
         End If
     End Sub
 
     Private Sub ShowTouchpadCursorCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ShowTouchpadCursorCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("show-touchpad-cursor", "false")
         End If
     End Sub
 
     Private Sub SpirvCacheCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles SpirvCacheCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("spirv-shader", "false")
         End If
     End Sub
 
     Private Sub StretchDisplayAreaCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles StretchDisplayAreaCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("stretch_the_display_area", "false")
         End If
     End Sub
 
     Private Sub TextureCacheCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles TextureCacheCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("texture-cache", "false")
         End If
     End Sub
 
     Private Sub ValidationLayerCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles ValidationLayerCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("validation-layer", "false")
         End If
     End Sub
 
     Private Sub VSyncCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles VSyncCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
             SetVitaConfigValue("v-sync", "false")
         End If
     End Sub

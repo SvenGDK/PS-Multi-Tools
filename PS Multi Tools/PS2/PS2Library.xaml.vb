@@ -44,7 +44,7 @@ Public Class PS2Library
         GamesListView.ContextMenu = NewContextMenu
 
         'Add supplemental emulator menu item
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe") Then
             NewPS2Menu.Items.Add(EMU_Settings)
         End If
     End Sub
@@ -352,8 +352,8 @@ Public Class PS2Library
     End Sub
 
     Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
-        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
         End If
     End Sub
 
@@ -391,12 +391,12 @@ Public Class PS2Library
     End Sub
 
     Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe") Then
             If GamesListView.SelectedItem IsNot Nothing Then
                 Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
 
                 'Check if any PS2 BIOS file is available
-                If Not Directory.GetFiles(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\bios", "*.bin", SearchOption.TopDirectoryOnly).Count > 0 Then
+                If Not Directory.GetFiles(Environment.CurrentDirectory + "\Emulators\PCSX2\bios", "*.bin", SearchOption.TopDirectoryOnly).Count > 0 Then
                     If MsgBox("No PS2 BIOS file available." + vbCrLf + "You need at least one BIOS file installed in order to play " + SelectedPS2Game.GameTitle + "." + vbCrLf +
                               "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
 
@@ -407,14 +407,14 @@ Public Class PS2Library
                             Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
 
                             'Copy to the BIOS folder
-                            File.Copy(SelectedBIOSFile, My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\bios\" + SelectedBIOSFileName, True)
+                            File.Copy(SelectedBIOSFile, Environment.CurrentDirectory + "\Emulators\PCSX2\bios\" + SelectedBIOSFileName, True)
 
                             'Proceed
                             If MsgBox("Start " + SelectedPS2Game.GameTitle + " using PCSX2 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
                                 Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                                 Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                                EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
-                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
+                                EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
+                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
                                 EmulatorLauncherStartInfo.Arguments = """" + SelectedPS2Game.GameFilePath + """ --nogui --fullboot --portable"
                                 EmulatorLauncher.Start()
                             End If
@@ -433,8 +433,8 @@ Public Class PS2Library
                     If MsgBox("Start " + SelectedPS2Game.GameTitle + " using PCSX2 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
                         Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                         Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
-                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
+                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
                         EmulatorLauncherStartInfo.Arguments = """" + SelectedPS2Game.GameFilePath + """ --nogui --fullboot --portable"
                         EmulatorLauncher.Start()
                     End If
@@ -491,7 +491,7 @@ Public Class PS2Library
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
             Dim GameProjectDirectory As String = SelectedPS2Game.GameTitle + " [" + SelectedPS2Game.GameID + "]"
-            Dim NewGameProjectDirectory As String = My.Computer.FileSystem.CurrentDirectory + "\Projects\" + SelectedPS2Game.GameTitle + " [" + SelectedPS2Game.GameID + "]"
+            Dim NewGameProjectDirectory As String = Environment.CurrentDirectory + "\Projects\" + SelectedPS2Game.GameTitle + " [" + SelectedPS2Game.GameID + "]"
 
             Dim NewGameProjectWindow As New PSXNewPS2GameProject() With {.ShowActivated = True}
             Dim NewGameEditor As New PSXPS2GameEditor() With {.ProjectDirectory = NewGameProjectDirectory, .Title = "Game Ressources Editor - " + NewGameProjectDirectory}
@@ -505,7 +505,7 @@ Public Class PS2Library
             End If
 
             'Write Project settings to .CFG
-            Using ProjectWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Projects\" + SelectedPS2Game.GameTitle + ".CFG", False)
+            Using ProjectWriter As New StreamWriter(Environment.CurrentDirectory + "\Projects\" + SelectedPS2Game.GameTitle + ".CFG", False)
                 ProjectWriter.WriteLine("TITLE=" + SelectedPS2Game.GameTitle)
                 ProjectWriter.WriteLine("ID=" + SelectedPS2Game.GameID.Replace("-", "_").Insert(8, "."))
                 ProjectWriter.WriteLine("DIR=" + NewGameProjectDirectory)

@@ -31,9 +31,9 @@
             <TextBlock x:Name="DokanDriverVersionLabel" HorizontalAlignment="Left" Margin="377,248,0,0" TextWrapping="Wrap" Text="Not installed" VerticalAlignment="Top" Foreground="#FFC12249" FontFamily="Calibri" FontSize="16" TextAlignment="Right" Width="365"/>
         </Grid>
 
-        <Grid x:Name="ProjectsGrid" Opacity="0" Visibility="Hidden">
-            <Button x:Name="NewHomebrewProjectButton" Content="New Homebrew Project" HorizontalAlignment="Left" Margin="127,33,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
-            <Button x:Name="NewGameProjectButton" Content="New PS2 Game Project" HorizontalAlignment="Left" Margin="313,33,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
+        <Grid x:Name="ProjectsGrid" Visibility="Hidden" Opacity="0">
+            <Button x:Name="NewHomebrewProjectButton" Content="New Homebrew Project" HorizontalAlignment="Left" Margin="128,18,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
+            <Button x:Name="NewGameProjectButton" Content="New PS2 Game Project" HorizontalAlignment="Left" Margin="314,18,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
             <ComboBox x:Name="ProjectListComboBox" HorizontalAlignment="Left" Margin="274,116,0,0" VerticalAlignment="Top" Width="460"/>
             <TextBlock HorizontalAlignment="Left" Margin="274,91,0,0" TextWrapping="Wrap" Text="Manage or prepare a saved project :" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="16"/>
             <Button x:Name="EditProjectButton" Content="Edit Project" HorizontalAlignment="Left" Margin="403,163,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="124" Height="24" FontFamily="Calibri" FontSize="14"/>
@@ -43,7 +43,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="274,143,0,0" TextWrapping="Wrap" Text="Select a created project from the list." VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" TextAlignment="Right" Width="460"/>
             <TextBlock HorizontalAlignment="Left" Margin="274,284,0,0" TextWrapping="Wrap" Text="Select a prepared project from the list to install on the PSX." VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" TextAlignment="Right" Width="460"/>
             <Button x:Name="InstallProjectButton" Content="Install" HorizontalAlignment="Left" Margin="610,304,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="124" Height="24" FontFamily="Calibri" FontSize="14"/>
-            <Button x:Name="NewPS1GameProjectButton" Content="New PS1 Game Project" HorizontalAlignment="Left" Margin="497,33,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
+            <Button x:Name="NewPS1GameProjectButton" Content="New PS1 Game Project" HorizontalAlignment="Left" Margin="498,18,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" Height="30" FontFamily="Calibri" FontSize="16"/>
             <Button x:Name="DeleteProjectButton" Content="Delete Project" HorizontalAlignment="Left" Margin="274,163,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="124" Height="24" FontFamily="Calibri" FontSize="14"/>
         </Grid>
 

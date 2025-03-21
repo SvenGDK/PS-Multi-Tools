@@ -89,7 +89,7 @@ Public Class WebSrvHomebrewManager
             NewSession.Open(NewSessionOptions)
 
             'Enumerate directories
-            For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/data/homebrew/", "", EnumerationOptions.MatchDirectories)
+            For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/data/homebrew/", "", WinSCP.EnumerationOptions.MatchDirectories)
                 If NewSession.FileExists(DirectoryInFTP.FullName + "/homebrew.js") Then
                     Dim NewHomebrewListViewItem As New HomebrewListViewItem() With {.HomebrewPath = DirectoryInFTP.FullName}
                     InstalledHomebrewListView.Items.Add(NewHomebrewListViewItem)
@@ -121,14 +121,14 @@ Public Class WebSrvHomebrewManager
 
         If NewSession.FileExists(HomebrewFullPath + "/homebrew.js") Then
 
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js") Then
-                File.Delete(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+            If File.Exists(Environment.CurrentDirectory + "\Cache\homebrew.js") Then
+                File.Delete(Environment.CurrentDirectory + "\Cache\homebrew.js")
             End If
 
             'Get the homebrew.js file
-            NewSession.GetFileToDirectory(HomebrewFullPath + "/homebrew.js", My.Computer.FileSystem.CurrentDirectory + "\Cache", False, Nothing)
+            NewSession.GetFileToDirectory(HomebrewFullPath + "/homebrew.js", Environment.CurrentDirectory + "\Cache", False, Nothing)
 
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js") Then
+            If File.Exists(Environment.CurrentDirectory + "\Cache\homebrew.js") Then
 
                 Dim PayloadFilePath As String = ""
                 Dim PayloadArgs As String = ""
@@ -139,7 +139,7 @@ Public Class WebSrvHomebrewManager
                 Dim PayloadDescription As String = ""
 
                 'Get homebrew info
-                For Each Line As String In File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+                For Each Line As String In File.ReadAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js")
                     If Line.Contains("const PAYLOAD") Then
                         PayloadFilePath = Line.Split("+"c)(1).Replace("'"c, "").Replace(";"c, "").Trim()
                     End If
@@ -175,14 +175,14 @@ Public Class WebSrvHomebrewManager
 
                 'Show or hide buttons
                 If Not String.IsNullOrEmpty(PayloadROMDir) Then
-                    ManageROMsButton.Visibility = Windows.Visibility.Visible
+                    ManageROMsButton.Visibility = Visibility.Visible
                 Else
-                    ManageROMsButton.Visibility = Windows.Visibility.Hidden
+                    ManageROMsButton.Visibility = Visibility.Hidden
                 End If
                 If Not String.IsNullOrEmpty(PayloadMediaDir) Then
-                    ManageMediaButton.Visibility = Windows.Visibility.Visible
+                    ManageMediaButton.Visibility = Visibility.Visible
                 Else
-                    ManageMediaButton.Visibility = Windows.Visibility.Hidden
+                    ManageMediaButton.Visibility = Visibility.Hidden
                 End If
 
             End If
@@ -221,7 +221,7 @@ Public Class WebSrvHomebrewManager
 
         'Payload File Path
         If Not String.IsNullOrEmpty(HomebrewPayloadPathTextBox.Text) Then
-            For Each Line As String In File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+            For Each Line As String In File.ReadAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js")
                 If Line.Contains("const PAYLOAD") Then
                     NewJSLines.Add("const PAYLOAD = window.workingDir + '" + HomebrewPayloadPathTextBox.Text + "';")
                 Else
@@ -229,13 +229,13 @@ Public Class WebSrvHomebrewManager
                 End If
             Next
             'Save
-            File.WriteAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
+            File.WriteAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
             NewJSLines = New List(Of String)()
         End If
 
         'Payload Title
         If Not String.IsNullOrEmpty(HomebrewPayloadNameTextBox.Text) Then
-            For Each Line As String In File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+            For Each Line As String In File.ReadAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js")
                 If Line.Contains("mainText:") Then
                     NewJSLines.Add("mainText: " + """" + HomebrewPayloadNameTextBox.Text + """,")
                 Else
@@ -243,13 +243,13 @@ Public Class WebSrvHomebrewManager
                 End If
             Next
             'Save
-            File.WriteAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
+            File.WriteAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
             NewJSLines = New List(Of String)()
         End If
 
         'Payload Description
         If Not String.IsNullOrEmpty(HomebrewPayloadDescriptionTextBox.Text) Then
-            For Each Line As String In File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+            For Each Line As String In File.ReadAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js")
                 If Line.Contains("secondaryText:") Then
                     NewJSLines.Add("secondaryText: " + "'" + HomebrewPayloadDescriptionTextBox.Text + "',")
                 Else
@@ -257,13 +257,13 @@ Public Class WebSrvHomebrewManager
                 End If
             Next
             'Save
-            File.WriteAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
+            File.WriteAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
             NewJSLines = New List(Of String)()
         End If
 
         'Payload Arguments
         If Not String.IsNullOrEmpty(HomebrewPayloadArgumentsTextBox.Text) Then
-            For Each Line As String In File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+            For Each Line As String In File.ReadAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js")
                 If Line.Contains("const ARGS") Then
                     NewJSLines.Add("const ARGS = [" + HomebrewPayloadArgumentsTextBox.Text + "]") 'Missing ";" ?
                 Else
@@ -271,13 +271,13 @@ Public Class WebSrvHomebrewManager
                 End If
             Next
             'Save
-            File.WriteAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
+            File.WriteAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
             NewJSLines = New List(Of String)()
         End If
 
         'Payload Enviroment Variables
         If Not String.IsNullOrEmpty(HomebrewPayloadEnvironmentVariablesTextBox.Text) Then
-            For Each Line As String In File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+            For Each Line As String In File.ReadAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js")
                 If Line.Contains("const ENVVARS") Then
                     NewJSLines.Add("const ENVVARS = " + HomebrewPayloadEnvironmentVariablesTextBox.Text + ";")
                 Else
@@ -285,13 +285,13 @@ Public Class WebSrvHomebrewManager
                 End If
             Next
             'Save
-            File.WriteAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
+            File.WriteAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
             NewJSLines = New List(Of String)()
         End If
 
         'Payload ROMDIR
         If Not String.IsNullOrEmpty(HomebrewPayloadROMDirectoryTextBox.Text) Then
-            For Each Line As String In File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+            For Each Line As String In File.ReadAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js")
                 If Line.Contains("const ROMDIR") Then
                     NewJSLines.Add("const ROMDIR = window.workingDir + '" + HomebrewPayloadROMDirectoryTextBox.Text + "';")
                 Else
@@ -299,13 +299,13 @@ Public Class WebSrvHomebrewManager
                 End If
             Next
             'Save
-            File.WriteAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
+            File.WriteAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
             NewJSLines = New List(Of String)()
         End If
 
         'Payload MEDIADIR
         If Not String.IsNullOrEmpty(HomebrewPayloadMediaDirectoryTextBox.Text) Then
-            For Each Line As String In File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js")
+            For Each Line As String In File.ReadAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js")
                 If Line.Contains("const MEDIADIR") Then
                     NewJSLines.Add("const MEDIADIR = window.workingDir + '" + HomebrewPayloadMediaDirectoryTextBox.Text + "';")
                 Else
@@ -313,12 +313,12 @@ Public Class WebSrvHomebrewManager
                 End If
             Next
             'Save
-            File.WriteAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
+            File.WriteAllLines(Environment.CurrentDirectory + "\Cache\homebrew.js", NewJSLines.ToArray(), Encoding.UTF8)
             NewJSLines = New List(Of String)()
         End If
 
         'Upload changes
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js") AndAlso Not String.IsNullOrEmpty(SelectedHomebrewItem.HomebrewPath) Then
+        If File.Exists(Environment.CurrentDirectory + "\Cache\homebrew.js") AndAlso Not String.IsNullOrEmpty(SelectedHomebrewItem.HomebrewPath) Then
 
             Try
                 Dim NewSessionOptions As New SessionOptions
@@ -333,7 +333,7 @@ Public Class WebSrvHomebrewManager
 
                 'Connect & upload changes
                 NewSession.Open(NewSessionOptions)
-                NewSession.PutFileToDirectory(My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", SelectedHomebrewItem.HomebrewPath, False, Nothing)
+                NewSession.PutFileToDirectory(Environment.CurrentDirectory + "\Cache\homebrew.js", SelectedHomebrewItem.HomebrewPath, False, Nothing)
 
                 'Close session when done
                 NewSession.Close()
@@ -343,7 +343,7 @@ Public Class WebSrvHomebrewManager
             End Try
 
         Else
-            MsgBox("Could not find " + My.Computer.FileSystem.CurrentDirectory + "\Cache\homebrew.js", MsgBoxStyle.Critical, "Error uploading changes")
+            MsgBox("Could not find " + Environment.CurrentDirectory + "\Cache\homebrew.js", MsgBoxStyle.Critical, "Error uploading changes")
         End If
 
         MsgBox("Homebrew information updated & saved!", MsgBoxStyle.Information)

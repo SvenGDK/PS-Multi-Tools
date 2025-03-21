@@ -7,17 +7,16 @@
         mc:Ignorable="d"
         Title="PS Multi Tools Settings" Height="200" Width="680" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="PS5 Library Settings &amp; More Tools" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
         <TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="10,70,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBlock FontFamily="Calibri" FontSize="14" Text="Port :" Margin="45,92,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="84,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" TextAlignment="Center"/>
         <TextBox x:Name="PS5FTPPortTextBox" HorizontalAlignment="Left" Margin="84,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" TextAlignment="Center"/>
         <TextBlock FontFamily="Calibri" FontSize="16" Text="Set PS5 FTP IP &amp; Port for FTP Tools" Margin="10,44,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-        <CheckBox x:Name="LoadIconCheckBox" Content="Load game &amp; app icons (icon0.png)" HorizontalAlignment="Left" Margin="370,71,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" />
+        <CheckBox x:Name="LoadIconCheckBox" Content="Load game &amp; app icons (icon0.png)" Margin="370,71,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
         <TextBlock FontFamily="Calibri" FontSize="16" Text="PS5 Library Options" Margin="370,44,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-        <CheckBox x:Name="LoadBackgroundCheckBox" Content="Load game &amp; app backgrounds (pic0.png)" HorizontalAlignment="Left" Margin="370,92,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" />
-        <CheckBox x:Name="SkipFileCheckCheckBox" Content="Skip file checks when loading backups" HorizontalAlignment="Left" Margin="370,113,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" />
-        <Button x:Name="SavePS5AddressButton" Content="Save" HorizontalAlignment="Left" Margin="264,114,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="PS5 Library Settings &amp; More Tools" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
+        <CheckBox x:Name="LoadBackgroundCheckBox" Content="Load game &amp; app backgrounds (pic0.png)" Margin="370,92,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
+        <CheckBox x:Name="SkipFileCheckCheckBox" Content="Skip file checks when loading backups" Margin="370,113,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
+        <Button x:Name="SavePS5AddressButton" Content="Save" Margin="370,134,240,0" VerticalAlignment="Top" Width="70" FontWeight="Bold" HorizontalAlignment="Left"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="PS5 Library Settings" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
     </Grid>
 </Window>

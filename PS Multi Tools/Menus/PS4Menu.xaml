@@ -61,9 +61,6 @@
                     <MenuItem Header="5.05: wolf2022.ir"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="5.50 - 5.53 - 5.55 - 5.56 - 6.00 - 6.02 - 6.20 - 6.50 - 6.70">
-                
-            </MenuItem>
             <MenuItem Header="6.72" >
                 <MenuItem Header="Downloads" >
                     <MenuItem Header="PS4JB Host Download" >
@@ -246,7 +243,7 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
-        <MenuItem Header="Homebrew">
+        <MenuItem Header="Homebrew &amp; Payloads">
             <MenuItem Header="Apollo Save Tool">
                 <MenuItem Header="Download v1.6.0" x:Name="DownloadApolloST">
                     <MenuItem.Icon>
@@ -269,7 +266,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="GoldHEN">
-                <MenuItem Header="Download v2.4b18" x:Name="DownloadGoldHEN">
+                <MenuItem Header="Download v2.4b18.3" x:Name="DownloadGoldHEN">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

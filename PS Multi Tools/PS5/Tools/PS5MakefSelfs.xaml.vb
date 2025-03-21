@@ -8,7 +8,7 @@ Public Class PS5MakefSelfs
     Private Sub BrowseFolderButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseFolderButton.Click
         Dim FBD As New Forms.FolderBrowserDialog()
 
-        If FBD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedDirectoryTextBox.Text = FBD.SelectedPath
             SelectedPath = FBD.SelectedPath
             MakeButton.IsEnabled = True
@@ -36,7 +36,7 @@ Public Class PS5MakefSelfs
                 Dim FileToSignFileName As String = Path.GetFileName(FileToSign)
 
                 Using Make_fSELF As New Process()
-                    Make_fSELF.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\make_fself_python3-1.exe"
+                    Make_fSELF.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\make_fself_python3-1.exe"
                     Make_fSELF.StartInfo.Arguments = FileToSign + " " + FileToSignDirectory + FileToSignFileName + ".estemp"
                     Make_fSELF.StartInfo.RedirectStandardOutput = True
                     Make_fSELF.StartInfo.UseShellExecute = False

@@ -108,9 +108,9 @@ Public Class PS5Log
 
     Private Sub PS5Log_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Load config if exists
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
+        If File.Exists(Environment.CurrentDirectory + "\psmt-config.ini") Then
             Try
-                Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+                Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
                 SavedIP = MainConfig.IniReadValue("PS5 Tools", "IP")
             Catch ex As FileNotFoundException
                 MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)

@@ -261,7 +261,7 @@ Public Class PKGInfo
         PKGSizeTextBlock.Dispatcher.BeginInvoke(Sub() PKGSizeTextBlock.Text = FormatNumber(PKGFileInfo.Length / 1073741824, 2) + " GB")
 
         Using SFOReader As New Process()
-            SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\PSN_get_pkg_info.exe"
+            SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PSN_get_pkg_info.exe"
             SFOReader.StartInfo.Arguments = """" + SelectedPKG + """"
             SFOReader.StartInfo.RedirectStandardOutput = True
             SFOReader.StartInfo.UseShellExecute = False

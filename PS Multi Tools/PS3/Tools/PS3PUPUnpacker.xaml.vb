@@ -26,7 +26,7 @@ Public Class PS3PUPUnpacker
         If Not String.IsNullOrEmpty(SelectedPUPTextBox.Text) And File.Exists(SelectedPUPTextBox.Text) And Not String.IsNullOrEmpty(SelectedOutputFolderTextBox.Text) And Directory.Exists(SelectedOutputFolderTextBox.Text) Then
             Dim ProcessOutput As String = ""
             Using PUPUnpack As New Process()
-                PUPUnpack.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\pupunpack.exe"
+                PUPUnpack.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\pupunpack.exe"
                 PUPUnpack.StartInfo.Arguments = """" + SelectedPUPTextBox.Text + """ " + """" + SelectedOutputFolderTextBox.Text + """"
                 PUPUnpack.StartInfo.RedirectStandardOutput = True
                 PUPUnpack.StartInfo.UseShellExecute = False

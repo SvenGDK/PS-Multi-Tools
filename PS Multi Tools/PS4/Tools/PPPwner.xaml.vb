@@ -74,10 +74,10 @@ Public Class PPPwner
         'Check if Npcap is installed
         If Registry.LocalMachine.OpenSubKey("SOFTWARE\Npcap", False) Is Nothing AndAlso Registry.LocalMachine.OpenSubKey("SOFTWARE\WOW6432Node\Npcap", False) Is Nothing Then
             If MsgBox("Npcap is not installed." + vbCrLf + "Do you want to install it now ? (Required)", MsgBoxStyle.YesNo, "Npcap Required") = MsgBoxResult.Yes Then
-                If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\npcap-1.79.exe") Then
-                    Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Tools\npcap-1.79.exe")
+                If File.Exists(Environment.CurrentDirectory + "\Tools\npcap-1.79.exe") Then
+                    Process.Start(Environment.CurrentDirectory + "\Tools\npcap-1.79.exe")
                 Else
-                    MsgBox(My.Computer.FileSystem.CurrentDirectory + "\Tools\npcap-1.79.exe NOT FOUND, please install manually from : https://npcap.com/#download", MsgBoxStyle.Critical, "Error")
+                    MsgBox(Environment.CurrentDirectory + "\Tools\npcap-1.79.exe NOT FOUND, please install manually from : https://npcap.com/#download", MsgBoxStyle.Critical, "Error")
                 End If
             End If
         End If
@@ -102,7 +102,7 @@ Public Class PPPwner
             End If
         Else
             If EthernetInterfacesComboBox.SelectedItem IsNot Nothing AndAlso FirmwaresComboBox.SelectedItem IsNot Nothing Then
-                If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\pppwn.exe") Then
+                If File.Exists(Environment.CurrentDirectory + "\Tools\pppwn.exe") Then
                     'Get selected Ethernet interface
                     Dim SelectedEthernetInterfaceInComboBox As ComboBoxEthernetDevice = CType(EthernetInterfacesComboBox.SelectedItem, ComboBoxEthernetDevice)
                     Dim SelectedEthernetInterface As String = "\Device\NPF_" + SelectedEthernetInterfaceInComboBox.AdapterID
@@ -139,32 +139,32 @@ Public Class PPPwner
                     Else
                         Select Case SelectedFirmware
                             Case "750"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-750.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-750.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-750.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-750.bin"
                             Case "800"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-800.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-800.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-800.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-800.bin"
                             Case "850"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-850.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-850.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-850.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-850.bin"
                             Case "900"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\SiS-stage1-900.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\SiS-stage2-900.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\SiS-stage1-900.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\SiS-stage2-900.bin"
                             Case "903"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-903.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-903.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-903.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-903.bin"
                             Case "950"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\SiS-stage1-950.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\SiS-stage2-950.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\SiS-stage1-950.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\SiS-stage2-950.bin"
                             Case "1000"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\SiS-stage1-1000.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\SiS-stage2-1000.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\SiS-stage1-1000.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\SiS-stage2-1000.bin"
                             Case "1050"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-1050.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-1050.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\ToF-stage1-1050.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\ToF-stage2-1050.bin"
                             Case "1100"
-                                Stage1File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage1\SiS-stage1-1100.bin"
-                                Stage2File = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\stage2\SiS-stage2-1100.bin"
+                                Stage1File = Environment.CurrentDirectory + "\Tools\PS4\stage1\SiS-stage1-1100.bin"
+                                Stage2File = Environment.CurrentDirectory + "\Tools\PS4\stage2\SiS-stage2-1100.bin"
                         End Select
                     End If
 
@@ -244,7 +244,7 @@ Public Class PPPwner
                         StartPPPwnButton.Content = "Stop PPPWn"
                     End If
                 Else
-                    MsgBox("Could not find PPPwn at " + My.Computer.FileSystem.CurrentDirectory + "\Tools\pppwn.exe", MsgBoxStyle.Critical, "Error")
+                    MsgBox("Could not find PPPwn at " + Environment.CurrentDirectory + "\Tools\pppwn.exe", MsgBoxStyle.Critical, "Error")
                 End If
             Else
                 MsgBox("Please select your Ethernet interface, PS4 firmware and Payload.", MsgBoxStyle.Critical, "Error")
@@ -314,7 +314,7 @@ Public Class PPPwner
     Private Sub PPPwnWoker_DoWork(sender As Object, e As DoWorkEventArgs) Handles PPPwnWoker.DoWork
         'Set PPPwn process properties
         PPPwn = New Process()
-        PPPwn.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\pppwn.exe"
+        PPPwn.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\pppwn.exe"
         PPPwn.StartInfo.Arguments = e.Argument.ToString()
         PPPwn.StartInfo.RedirectStandardOutput = True
         PPPwn.StartInfo.RedirectStandardError = True
@@ -361,15 +361,15 @@ Public Class PPPwner
     Private Sub CopyGoldHENButton_Click(sender As Object, e As RoutedEventArgs) Handles CopyGoldHENButton.Click
         Dim FBD As New FolderBrowserDialog() With {.Description = "Select an USB drive"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\goldhen.bin") Then
+            If File.Exists(Environment.CurrentDirectory + "\Tools\PS4\goldhen.bin") Then
                 Try
-                    File.Copy(My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\goldhen.bin", FBD.SelectedPath + "goldhen.bin", True)
+                    File.Copy(Environment.CurrentDirectory + "\Tools\PS4\goldhen.bin", FBD.SelectedPath + "goldhen.bin", True)
                     MsgBox("Copy done!", MsgBoxStyle.Information)
                 Catch ex As Exception
                     MsgBox("Could not copy GoldHEN to selected USB drive.", MsgBoxStyle.Exclamation, "Error")
                 End Try
             Else
-                MsgBox("Could not find goldhen.bin at " + My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\goldhen.bin", MsgBoxStyle.Exclamation, "Error")
+                MsgBox("Could not find goldhen.bin at " + Environment.CurrentDirectory + "\Tools\PS4\goldhen.bin", MsgBoxStyle.Exclamation, "Error")
             End If
         Else
             MsgBox("No USB drive selected.", MsgBoxStyle.Exclamation, "Error")
@@ -380,9 +380,9 @@ Public Class PPPwner
         Dim FBD As New FolderBrowserDialog() With {.Description = "Select an USB drive"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
             Try
-                If Utils.IsURLValid("https://github.com/GoldHEN/GoldHEN/blob/beta/goldhen.bin") Then
+                If Utils.IsURLValid("http://89.58.2.209/ps4/ex/goldhen_v2.4b18.3.bin") Then
                     Dim DownloadClient As New WebClient()
-                    DownloadClient.DownloadFile(New Uri("https://github.com/GoldHEN/GoldHEN/blob/beta/goldhen.bin"), FBD.SelectedPath + "goldhen.bin")
+                    DownloadClient.DownloadFile(New Uri("http://89.58.2.209/ps4/ex/goldhen_v2.4b18.3.bin"), FBD.SelectedPath + "goldhen.bin")
                     MsgBox("GoldHEN downloaded to : " + FBD.SelectedPath + "goldhen.bin", MsgBoxStyle.Information, "Success")
                 Else
                     MsgBox("Could not download GoldHEN to : " + FBD.SelectedPath + "goldhen.bin" + vbCrLf + "File is not available.", MsgBoxStyle.Information, "Error")

@@ -58,7 +58,7 @@ Public Class MCManager
 
         Using PS2MCReader As New Process()
             'Read MC information
-            PS2MCReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+            PS2MCReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
             PS2MCReader.StartInfo.Arguments = "-i"
             PS2MCReader.StartInfo.RedirectStandardOutput = True
             PS2MCReader.StartInfo.UseShellExecute = False
@@ -101,7 +101,7 @@ Public Class MCManager
         If PS2MCCardConnectionSuccess Then
             'Get the free space on the MC
             Using PS2MCReader As New Process()
-                PS2MCReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+                PS2MCReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
                 PS2MCReader.StartInfo.Arguments = "-f"
                 PS2MCReader.StartInfo.RedirectStandardOutput = True
                 PS2MCReader.StartInfo.UseShellExecute = False
@@ -129,7 +129,7 @@ Public Class MCManager
 
         If Not String.IsNullOrEmpty(SelectedPath) Then
             Using PS2MCReader As New Process()
-                PS2MCReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+                PS2MCReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
                 PS2MCReader.StartInfo.Arguments = "-ls " + SelectedPath
                 PS2MCReader.StartInfo.RedirectStandardOutput = True
                 PS2MCReader.StartInfo.UseShellExecute = False
@@ -199,7 +199,7 @@ Public Class MCManager
                 Dim SelectedFileNameToInject As String = Path.GetFileName(OFD.FileName)
 
                 Using PS2MCTool As New Process()
-                    PS2MCTool.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+                    PS2MCTool.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
 
                     'Set -in command
                     If CurrentMCPathTextBox.Text = "/" Then
@@ -260,7 +260,7 @@ Public Class MCManager
                     If FBD.ShowDialog() = Forms.DialogResult.OK Then
 
                         Using PS2MCTool As New Process()
-                            PS2MCTool.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+                            PS2MCTool.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
 
                             'Set -x command
                             If CurrentMCPathTextBox.Text = "/" Then
@@ -327,7 +327,7 @@ Public Class MCManager
                     If MsgBox("Please confirm to delete the file: " + SelectedMCContent.FileName, MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
 
                         Using PS2MCTool As New Process()
-                            PS2MCTool.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+                            PS2MCTool.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
 
                             'Set -rm command
                             If CurrentMCPathTextBox.Text = "/" Then
@@ -390,7 +390,7 @@ Public Class MCManager
             If MsgBox("Please confirm to format the PS2 Memory Card", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
 
                 Using PS2MCTool As New Process()
-                    PS2MCTool.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+                    PS2MCTool.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
                     PS2MCTool.StartInfo.Arguments = "--mc-format"
                     PS2MCTool.StartInfo.RedirectStandardOutput = True
                     PS2MCTool.StartInfo.UseShellExecute = False
@@ -446,7 +446,7 @@ Public Class MCManager
             If Not String.IsNullOrEmpty(NewDirectoryName) Then
                 If Not String.IsNullOrEmpty(CurrentMCPathTextBox.Text) Then
                     Using PS2MCTool As New Process()
-                        PS2MCTool.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+                        PS2MCTool.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
 
                         'Set mkdir command
                         If CurrentMCPathTextBox.Text = "/" Then
@@ -508,7 +508,7 @@ Public Class MCManager
                     If MsgBox("Please confirm to delete the directory: " + SelectedMCContent.FileName, MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
 
                         Using PS2MCTool As New Process()
-                            PS2MCTool.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+                            PS2MCTool.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
 
                             'Set -rmdir command (SelectedMCContent.FileName = directory name)
                             If CurrentMCPathTextBox.Text = "/" Then
@@ -579,7 +579,7 @@ Public Class MCManager
                 End If
 
                 Dim ExecutionValues As New List(Of Boolean)()
-                Dim FMCBInstallPath As String = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS2\FMCB"
+                Dim FMCBInstallPath As String = Environment.CurrentDirectory + "\Tools\PS2\FMCB"
 
                 'Sign KELFs
                 ExecutionValues.Add(ExecutePS3MCACommand("-k """ + FMCBInstallPath + "\SYSTEM\FMCB.XLF"" """ + FMCBInstallPath + "\SYSTEM\osdmain.elf"""))
@@ -681,7 +681,7 @@ Public Class MCManager
 
     Private Function ExecutePS3MCACommand(Argument As String) As Boolean
         Using PS2MCTool As New Process()
-            PS2MCTool.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3mca-tool.exe"
+            PS2MCTool.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3mca-tool.exe"
             PS2MCTool.StartInfo.Arguments = Argument
             PS2MCTool.StartInfo.RedirectStandardOutput = True
             PS2MCTool.StartInfo.UseShellExecute = False

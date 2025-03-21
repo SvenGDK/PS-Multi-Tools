@@ -144,7 +144,7 @@ Public Class InstallWindow
 
             'Set up hdl_dump
             HDL_Dump = New Process()
-            HDL_Dump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+            HDL_Dump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
             HDL_Dump.StartInfo.RedirectStandardOutput = True
             AddHandler HDL_Dump.OutputDataReceived, AddressOf HDLDumpOutputDataHandler
             HDL_Dump.StartInfo.UseShellExecute = False
@@ -224,7 +224,7 @@ Public Class InstallWindow
             If MsgBox("A new partition " + PPPartitionName + " with " + GameRequiredPartitionSizeInMB.ToString() + "M will be created." + vbCrLf + "Do you want to proceed with the installation ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
 
                 '1. Set mkpart command for the PP partition
-                Using CommandFileWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Tools\cmdlist\mkpart.txt", False)
+                Using CommandFileWriter As New StreamWriter(Environment.CurrentDirectory + "\Tools\cmdlist\mkpart.txt", False)
                     CommandFileWriter.WriteLine("device " + MountedDrive.DriveID)
                     CommandFileWriter.WriteLine("mkpart " + PPPartitionName + " " + GameRequiredPartitionSizeInMB.ToString() + "M PFS")
                     CommandFileWriter.WriteLine("exit")
@@ -243,7 +243,7 @@ Public Class InstallWindow
                 Dim PFSShellOutput As String
                 Using PFSShellProcess As New Process()
                     PFSShellProcess.StartInfo.FileName = "cmd"
-                    PFSShellProcess.StartInfo.Arguments = """/c type """ + My.Computer.FileSystem.CurrentDirectory + "\Tools\cmdlist\mkpart.txt"" | """ + My.Computer.FileSystem.CurrentDirectory + "\Tools\pfsshell.exe"" 2>&1"
+                    PFSShellProcess.StartInfo.Arguments = """/c type """ + Environment.CurrentDirectory + "\Tools\cmdlist\mkpart.txt"" | """ + Environment.CurrentDirectory + "\Tools\pfsshell.exe"" 2>&1"
 
                     PFSShellProcess.StartInfo.RedirectStandardOutput = True
                     PFSShellProcess.StartInfo.UseShellExecute = False
@@ -298,7 +298,7 @@ Public Class InstallWindow
         '1. List partitions
         Dim QueryOutput As String()
         Using HDLDump As New Process()
-            HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+            HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
             HDLDump.StartInfo.Arguments = "toc " + MountedDrive.HDLDriveName
             HDLDump.StartInfo.RedirectStandardOutput = True
             HDLDump.StartInfo.UseShellExecute = False
@@ -323,7 +323,7 @@ Public Class InstallWindow
         Next
 
         '3. Set mkpart command for the PP partition
-        Using CommandFileWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Tools\cmdlist\mkpart.txt", False)
+        Using CommandFileWriter As New StreamWriter(Environment.CurrentDirectory + "\Tools\cmdlist\mkpart.txt", False)
             CommandFileWriter.WriteLine("device " + MountedDrive.DriveID)
             CommandFileWriter.WriteLine("mkpart " + CreatedGamePartition.Replace("__.", "PP.") + " 128M PFS")
             CommandFileWriter.WriteLine("exit")
@@ -333,7 +333,7 @@ Public Class InstallWindow
         Dim PFSShellOutput As String
         Using PFSShellProcess As New Process()
             PFSShellProcess.StartInfo.FileName = "cmd"
-            PFSShellProcess.StartInfo.Arguments = """/c type """ + My.Computer.FileSystem.CurrentDirectory + "\Tools\cmdlist\mkpart.txt"" | """ + My.Computer.FileSystem.CurrentDirectory + "\Tools\pfsshell.exe"" 2>&1"
+            PFSShellProcess.StartInfo.Arguments = """/c type """ + Environment.CurrentDirectory + "\Tools\cmdlist\mkpart.txt"" | """ + Environment.CurrentDirectory + "\Tools\pfsshell.exe"" 2>&1"
 
             PFSShellProcess.StartInfo.RedirectStandardOutput = True
             PFSShellProcess.StartInfo.UseShellExecute = False
@@ -377,7 +377,7 @@ Public Class InstallWindow
             Dim ProjectDirectory As String = File.ReadAllLines(ProjectToInstall.ProjectFile)(2).Split("="c)(1)
 
             '1. Set mkpart command for the PP partition
-            Using CommandFileWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Tools\cmdlist\mkpart.txt", False)
+            Using CommandFileWriter As New StreamWriter(Environment.CurrentDirectory + "\Tools\cmdlist\mkpart.txt", False)
                 CommandFileWriter.WriteLine("device " + MountedDrive.DriveID)
                 CommandFileWriter.WriteLine("mkpart " + PartitionName + " 128M PFS")
                 CommandFileWriter.WriteLine("exit")
@@ -387,7 +387,7 @@ Public Class InstallWindow
             Dim PFSShellOutput As String
             Using PFSShellProcess As New Process()
                 PFSShellProcess.StartInfo.FileName = "cmd"
-                PFSShellProcess.StartInfo.Arguments = """/c type """ + My.Computer.FileSystem.CurrentDirectory + "\Tools\cmdlist\mkpart.txt"" | """ + My.Computer.FileSystem.CurrentDirectory + "\Tools\pfsshell.exe"" 2>&1"
+                PFSShellProcess.StartInfo.Arguments = """/c type """ + Environment.CurrentDirectory + "\Tools\cmdlist\mkpart.txt"" | """ + Environment.CurrentDirectory + "\Tools\pfsshell.exe"" 2>&1"
 
                 PFSShellProcess.StartInfo.RedirectStandardOutput = True
                 PFSShellProcess.StartInfo.UseShellExecute = False
@@ -416,7 +416,7 @@ Public Class InstallWindow
 
     Public Sub ModifyPartitionHeader(PartitionName As String, FinalizePS1 As Boolean)
         '1. Create a copy of hdl_dump in the project directory
-        File.Copy(My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe", CurrentProjectDirectory + "\hdl_dump.exe", True)
+        File.Copy(Environment.CurrentDirectory + "\Tools\hdl_dump.exe", CurrentProjectDirectory + "\hdl_dump.exe", True)
 
         '2. Switch to project directory and inject the files
         Directory.SetCurrentDirectory(CurrentProjectDirectory)

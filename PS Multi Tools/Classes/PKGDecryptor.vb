@@ -244,7 +244,7 @@ Public Class PKGDecryptor
             Array.Copy(PKGFileKey, IncPKGFileKey, PKGFileKey.Length)
 
             EncryptedPKGReadStream.Seek(DataRelativeOffset + PKGEncryptedFileStartOffset, SeekOrigin.Begin)
-            EncryptedPKGStream.Read(EncryptedData, 0, InputSize)
+            EncryptedPKGStream.ReadExactly(EncryptedData, 0, InputSize)
 
             For Position As Integer = 0 To CInt(DataRelativeOffset - 1) Step 16
                 Utils.IncrementArray(IncPKGFileKey, PKGFileKey.Length - 1)
@@ -426,7 +426,7 @@ Public Class PKGDecryptor
 
             Using FileStream As New FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
                 ByteArray = New Byte(CInt(1048576 - 1L) + 1 - 1) {}
-                FileStream.Read(ByteArray, 0, ByteArray.Length)
+                FileStream.ReadExactly(ByteArray, 0, ByteArray.Length)
             End Using
 
             BytesFromFile = ByteArray
@@ -671,8 +671,8 @@ Public Class PKGDecryptor
                 File.Delete(DecryptedPKGFileName)
             End If
 
-            If MsgBox("Pkg extracted successfully." + vbNewLine + "Open folder?", MsgBoxStyle.OkCancel, "Done") = MsgBoxResult.Ok Then
-                Process.Start(".\")
+            If MsgBox("Pkg extracted successfully." + vbCrLf + "Open folder?", MsgBoxStyle.OkCancel, "Done") = MsgBoxResult.Ok Then
+                Process.Start("explorer", ".\")
             End If
 
             Return True

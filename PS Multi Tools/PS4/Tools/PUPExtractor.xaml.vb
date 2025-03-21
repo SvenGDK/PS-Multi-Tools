@@ -8,7 +8,7 @@ Public Class PUPExtractor
         Dim OutputFolder As String = SelectedOutputFolderTextBox.Text
 
         Using PUPUnpacker As New Process()
-            PUPUnpacker.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\pup_unpacker.exe"
+            PUPUnpacker.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\pup_unpacker.exe"
             PUPUnpacker.StartInfo.Arguments = """" + InputPUPDec + """ " + """" + OutputFolder + """"
             PUPUnpacker.StartInfo.RedirectStandardOutput = True
             AddHandler PUPUnpacker.OutputDataReceived, AddressOf OutputHandler

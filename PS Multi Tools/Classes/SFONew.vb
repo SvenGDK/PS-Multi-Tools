@@ -67,37 +67,37 @@ Public Class SFONew
 
     Public Shared Function ReadUInt32(Str As Stream) As UInteger
         Dim IntBytes As Byte() = New Byte(3) {}
-        Str.Read(IntBytes, &H0, IntBytes.Length)
+        Str.ReadExactly(IntBytes, &H0, IntBytes.Length)
         Return BitConverter.ToUInt32(IntBytes, &H0)
     End Function
 
     Public Shared Function ReadInt32(Str As Stream) As UInteger
         Dim IntBytes As Byte() = New Byte(3) {}
-        Str.Read(IntBytes, &H0, IntBytes.Length)
+        Str.ReadExactly(IntBytes, &H0, IntBytes.Length)
         Return BitConverter.ToUInt32(IntBytes, &H0)
     End Function
 
     Public Shared Function ReadUInt64(Str As Stream) As ULong
         Dim IntBytes As Byte() = New Byte(7) {}
-        Str.Read(IntBytes, &H0, IntBytes.Length)
+        Str.ReadExactly(IntBytes, &H0, IntBytes.Length)
         Return BitConverter.ToUInt64(IntBytes, &H0)
     End Function
 
     Public Shared Function ReadInt64(Str As Stream) As Long
         Dim IntBytes As Byte() = New Byte(7) {}
-        Str.Read(IntBytes, &H0, IntBytes.Length)
+        Str.ReadExactly(IntBytes, &H0, IntBytes.Length)
         Return BitConverter.ToInt64(IntBytes, &H0)
     End Function
 
     Public Shared Function ReadUInt16(Str As Stream) As UShort
         Dim IntBytes As Byte() = New Byte(1) {}
-        Str.Read(IntBytes, &H0, IntBytes.Length)
+        Str.ReadExactly(IntBytes, &H0, IntBytes.Length)
         Return BitConverter.ToUInt16(IntBytes, &H0)
     End Function
 
     Public Shared Function ReadInt16(Str As Stream) As Short
         Dim IntBytes As Byte() = New Byte(1) {}
-        Str.Read(IntBytes, &H0, IntBytes.Length)
+        Str.ReadExactly(IntBytes, &H0, IntBytes.Length)
         Return BitConverter.ToInt16(IntBytes, &H0)
     End Function
 
@@ -113,7 +113,7 @@ Public Class SFONew
         Dim oldPos As Long = Str.Position
         Str.Seek(location, SeekOrigin.Begin)
         Dim work_buf As Byte() = New Byte(length - 1) {}
-        Str.Read(work_buf, &H0, work_buf.Length)
+        Str.ReadExactly(work_buf, &H0, work_buf.Length)
         Str.Seek(oldPos, SeekOrigin.Begin)
         Return work_buf
     End Function

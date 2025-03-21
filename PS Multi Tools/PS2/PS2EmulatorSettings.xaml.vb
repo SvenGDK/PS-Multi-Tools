@@ -5,7 +5,7 @@ Public Class PS2EmulatorSettings
     Dim PCSX2Config As New INI.IniFile(FileIO.FileSystem.CurrentDirectory + "\System\Emulators\PCSX2\inis\PCSX2_ui.ini")
 
     Private Sub PS2EmulatorSettings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\inis\PCSX2_ui.ini") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\PCSX2\inis\PCSX2_ui.ini") Then
 
             'Add a [General] section on the top because the INI constructor cannot handle empty sections. PCSX2 will probably remove the section but accept the new values.
             InsertTopConfigSection()
@@ -96,7 +96,7 @@ Public Class PS2EmulatorSettings
             Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
 
             'Copy to the BIOS folder
-            File.Copy(SelectedBIOSFile, My.Computer.FileSystem.CurrentDirectory + "\Emulators\PCSX2\bios\" + SelectedBIOSFileName, True)
+            File.Copy(SelectedBIOSFile, Environment.CurrentDirectory + "\Emulators\PCSX2\bios\" + SelectedBIOSFileName, True)
 
             'Save
             CurrentBIOSNameTextBox.Text = SelectedBIOSFileName

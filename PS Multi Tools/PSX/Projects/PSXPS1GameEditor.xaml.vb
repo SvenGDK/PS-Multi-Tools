@@ -1,7 +1,10 @@
-﻿Imports System.Drawing
-Imports System.IO
+﻿Imports System.IO
 Imports System.Windows.Forms
-Imports nQuant
+Imports SixLabors.ImageSharp
+Imports SixLabors.ImageSharp.Formats.Png
+Imports SixLabors.ImageSharp.PixelFormats
+Imports SixLabors.ImageSharp.Processing
+Imports SixLabors.ImageSharp.Processing.Processors.Quantization
 
 Public Class PSXPS1GameEditor
 
@@ -181,81 +184,64 @@ Public Class PSXPS1GameEditor
         'Save selected XMB cover as compressed PNG
         'Skips now already saved art
         If GameCoverImage.Tag IsNot Nothing Then
-            Dim Cover1Bitmap As Bitmap = Utils.GetResizedBitmap(GameCoverImage.Tag.ToString(), 190, 200)
-            Dim Cover2Bitmap As Bitmap = Utils.GetResizedBitmap(GameCoverImage.Tag.ToString(), 102, 108)
 
-            If Cover1Bitmap.PixelFormat <> Imaging.PixelFormat.Format32bppArgb Then
-                Utils.ConvertTo32bppAndDisposeOriginal(Cover1Bitmap)
-            End If
-            If Cover2Bitmap.PixelFormat <> Imaging.PixelFormat.Format32bppArgb Then
-                Utils.ConvertTo32bppAndDisposeOriginal(Cover2Bitmap)
-            End If
+            'Load URL of image into a Bitmap, resize it and get the MemoryStream to use with SixLabors.ImageSharp.Image.Load
+            Dim Cover1BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(GameCoverImage.Tag.ToString(), 90, 200))
+            Dim Cover2BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(GameCoverImage.Tag.ToString(), 102, 108))
+
+            Cover1BitmapStream.Position = 0
+            Cover2BitmapStream.Position = 0
 
             Try
-                Using CompressedImage = Quantizer.QuantizeImage(Cover1Bitmap)
-                    CompressedImage.Save(ProjectDirectory + "\res\jkt_001.png", Imaging.ImageFormat.Png)
-                End Using
-                Using CompressedImage = Quantizer.QuantizeImage(Cover2Bitmap)
-                    CompressedImage.Save(ProjectDirectory + "\res\jkt_002.png", Imaging.ImageFormat.Png)
-                End Using
+                Dim Cover1Image As Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(Cover1BitmapStream)
+                Dim Cover2Image As Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(Cover2BitmapStream)
+
+                Cover1Image.Mutate(Function(qtz) qtz.Quantize(Quantizer))
+                Cover1Image.Save(ProjectDirectory + "\res\jkt_001.png", New PngEncoder())
+                Cover2Image.Mutate(Function(qtz) qtz.Quantize(Quantizer))
+                Cover2Image.Save(ProjectDirectory + "\res\jkt_002.png", New PngEncoder())
             Catch ex As Exception
                 MsgBox("Could not compress PNG." + vbCrLf + ex.Message, MsgBoxStyle.Exclamation)
-            Finally
-                Cover1Bitmap.Dispose()
-                Cover2Bitmap.Dispose()
             End Try
         End If
 
         'Background image
         If BackgroundImagePictureBox.Tag IsNot Nothing Then
-            Dim BackgroundImageBitmap As Bitmap = Utils.GetResizedBitmap(BackgroundImagePictureBox.Tag.ToString, 640, 350)
-            If BackgroundImageBitmap.PixelFormat <> Imaging.PixelFormat.Format32bppArgb Then
-                Utils.ConvertTo32bppAndDisposeOriginal(BackgroundImageBitmap)
-            End If
-
             Try
-                Using CompressedImage = Quantizer.QuantizeImage(BackgroundImageBitmap)
-                    CompressedImage.Save(ProjectDirectory + "\res\image\0.png", Imaging.ImageFormat.Png)
-                End Using
+                Dim BackgroundImageBitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(BackgroundImagePictureBox.Tag.ToString, 640, 350))
+                BackgroundImageBitmapStream.Position = 0
+
+                Dim BackgroundImage As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(BackgroundImageBitmapStream)
+                BackgroundImage.Mutate(Function(qtz) qtz.Quantize(Quantizer))
+                BackgroundImage.Save(ProjectDirectory + "\res\image\0.png", New PngEncoder())
             Catch ex As Exception
                 MsgBox("Could not compress PNG." + vbCrLf + ex.Message, MsgBoxStyle.Exclamation)
-            Finally
-                BackgroundImageBitmap.Dispose()
             End Try
         End If
 
         'Screenshots
         If ScreenshotImage1PictureBox.Tag IsNot Nothing Then
-            Dim ScreenshotImageBitmap As Bitmap = Utils.GetResizedBitmap(ScreenshotImage1PictureBox.Tag.ToString, 640, 350)
-            If ScreenshotImageBitmap.PixelFormat <> Imaging.PixelFormat.Format32bppArgb Then
-                Utils.ConvertTo32bppAndDisposeOriginal(ScreenshotImageBitmap)
-            End If
-
             Try
-                Using CompressedImage = Quantizer.QuantizeImage(ScreenshotImageBitmap)
-                    CompressedImage.Save(ProjectDirectory + "\res\image\1.png", Imaging.ImageFormat.Png)
-                End Using
+                Dim ScreenshotImageBitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(ScreenshotImage1PictureBox.Tag.ToString, 640, 350))
+                ScreenshotImageBitmapStream.Position = 0
+
+                Dim Screenshot1Image As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(ScreenshotImageBitmapStream)
+                Screenshot1Image.Mutate(Function(qtz) qtz.Quantize(Quantizer))
+                Screenshot1Image.Save(ProjectDirectory + "\res\image\1.png", New PngEncoder())
             Catch ex As Exception
-                MsgBox("Could not compress PNG." + vbCrLf + ex.Message, MsgBoxStyle.Exclamation)
-            Finally
-                ScreenshotImageBitmap.Dispose()
+                MsgBox("Could not compress PNG." + vbCrLf + ex.Message)
             End Try
         End If
         If ScreenshotImage2PictureBox.Tag IsNot Nothing Then
-            Dim ScreenshotImageBitmap As Bitmap = Utils.GetResizedBitmap(ScreenshotImage2PictureBox.Tag.ToString, 640, 350)
-
-            If ScreenshotImageBitmap.PixelFormat <> Imaging.PixelFormat.Format32bppArgb Then
-                Utils.ConvertTo32bppAndDisposeOriginal(ScreenshotImageBitmap)
-            End If
-
             Try
-                Using CompressedImage = Quantizer.QuantizeImage(ScreenshotImageBitmap)
-                    CompressedImage.Save(ProjectDirectory + "\res\image\2.png", Imaging.ImageFormat.Png)
-                End Using
+                Dim ScreenshotImage2BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(ScreenshotImage2PictureBox.Tag.ToString, 640, 350))
+                ScreenshotImage2BitmapStream.Position = 0
+
+                Dim Screenshot2Image As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(ScreenshotImage2BitmapStream)
+                Screenshot2Image.Mutate(Function(qtz) qtz.Quantize(Quantizer))
+                Screenshot2Image.Save(ProjectDirectory + "\res\image\2.png", New PngEncoder())
             Catch ex As Exception
-                MsgBox("Could not compress PNG." + vbCrLf + ex.Message, MsgBoxStyle.Exclamation)
-            Finally
-                ScreenshotImageBitmap.Dispose()
+                MsgBox("Could not compress PNG." + vbCrLf + ex.Message)
             End Try
         End If
 

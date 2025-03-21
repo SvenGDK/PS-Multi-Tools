@@ -99,7 +99,7 @@ Public Class PSXNewPS1GameProject
             DISCSInfoTextBox.AppendText(IMAGE3FileName & vbCrLf)
         End If
 
-        Dim DiscInfoLines() As String = DISCSInfoTextBox.Text.Split(vbNewLine.ToCharArray, StringSplitOptions.RemoveEmptyEntries)
+        Dim DiscInfoLines() As String = DISCSInfoTextBox.Text.Split(vbCrLf.ToCharArray, StringSplitOptions.RemoveEmptyEntries)
         DISCSInfoTextBox.Text = String.Join(vbCrLf, DiscInfoLines)
     End Sub
 
@@ -130,7 +130,7 @@ Public Class PSXNewPS1GameProject
             End If
 
             'Write Project settings to .CFG
-            Using ProjectWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Projects\" + ProjectNameTextBox.Text + ".CFG", False)
+            Using ProjectWriter As New StreamWriter(Environment.CurrentDirectory + "\Projects\" + ProjectNameTextBox.Text + ".CFG", False)
                 ProjectWriter.WriteLine("TITLE=" + ProjectNameTextBox.Text)
                 ProjectWriter.WriteLine("ID=" + ProjectIDTextBox.Text)
                 ProjectWriter.WriteLine("DIR=" + ProjectDirectoryTextBox.Text)
@@ -223,7 +223,7 @@ Public Class PSXNewPS1GameProject
                 Utils.ReloadProjects()
 
                 'Reactivate the main window
-                For Each Win In Windows.Application.Current.Windows()
+                For Each Win In System.Windows.Application.Current.Windows()
                     If Win.ToString = "psmt_lib.PSXMainWindow" Then
                         CType(Win, PSXMainWindow).Activate()
                         Exit For
@@ -323,7 +323,7 @@ Public Class PSXNewPS1GameProject
     Public Function GetPS1GameTitleFromDatabaseList(GameID As String) As String
         Dim FoundGameTitle As String = ""
 
-        For Each GameTitle As String In File.ReadLines(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps1ids.txt")
+        For Each GameTitle As String In File.ReadLines(Environment.CurrentDirectory + "\Tools\ps1ids.txt")
             If GameTitle.Contains(GameID) Then
                 FoundGameTitle = GameTitle.Split(";"c)(1)
                 Exit For

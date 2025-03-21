@@ -63,16 +63,16 @@ Public Class PS3Library
         PS3GamesListView.ContextMenu = NewContextMenu
 
         'Add supplemental emulator menu item
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
             NewPS3Menu.Items.Add(EMU_Settings)
         End If
     End Sub
 
     Private Sub PS3Library_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
         'Load config if exists
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
+        If File.Exists(Environment.CurrentDirectory + "\psmt-config.ini") Then
             Try
-                Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+                Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
                 ConsoleIP = MainConfig.IniReadValue("PS3 Tools", "IP")
                 ConsolePort = MainConfig.IniReadValue("PS3 Tools", "Port")
             Catch ex As FileNotFoundException
@@ -87,7 +87,7 @@ Public Class PS3Library
 
         'Save config
         Try
-            Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+            Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
             MainConfig.IniWriteValue("PS3 Tools", "IP", NewPS3Menu.SharedConsoleAddress.Split(":"c)(0))
             MainConfig.IniWriteValue("PS3 Tools", "Port", NewPS3Menu.SharedConsoleAddress.Split(":"c)(1))
         Catch ex As FileNotFoundException
@@ -346,7 +346,7 @@ Public Class PS3Library
                 Dim NewPS3Game As New PS3Game() With {.GridWidth = 325, .GridHeight = 180, .ImageWidth = 320, .ImageHeight = 176}
 
                 Using SFOReader As New Process()
-                    SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\sfo.exe"
+                    SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\sfo.exe"
                     SFOReader.StartInfo.Arguments = """" + Game + """ --decimal"
                     SFOReader.StartInfo.RedirectStandardOutput = True
                     SFOReader.StartInfo.UseShellExecute = False
@@ -569,16 +569,16 @@ Public Class PS3Library
                 Dim ISOCacheFolderName As String = Path.GetFileNameWithoutExtension(ISOFileInfo.Name)
 
                 'Create cache dir for PS3 games
-                If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName) Then
-                    Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName)
+                If Not Directory.Exists(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName) Then
+                    Directory.CreateDirectory(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName)
                 End If
 
                 'Extract files to display infos
-                If Not File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO") Then
+                If Not File.Exists(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO") Then
                     Using ISOExtractor As New Process()
-                        ISOExtractor.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\7z.exe"
+                        ISOExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
                         ISOExtractor.StartInfo.Arguments = "e """ + GameISO + """" +
-                            " -o""" + My.Computer.FileSystem.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + """" +
+                            " -o""" + Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + """" +
                             " PS3_GAME/PARAM.SFO PARAM.SFO PS3_GAME/ICON0.PNG ICON0.PNG PS3_GAME/PIC1.PNG PIC1.PNG PS3_GAME/SND0.AT3 SND0.AT3"
                         ISOExtractor.StartInfo.RedirectStandardOutput = True
                         ISOExtractor.StartInfo.UseShellExecute = False
@@ -588,7 +588,7 @@ Public Class PS3Library
                     End Using
                 End If
 
-                Using ParamFileStream As New FileStream(My.Computer.FileSystem.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO", FileMode.Open, FileAccess.Read)
+                Using ParamFileStream As New FileStream(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO", FileMode.Open, FileAccess.Read)
                     Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(ParamFileStream)
                     If SFOKeys IsNot Nothing AndAlso SFOKeys.Count > 0 Then
                         If SFOKeys.ContainsKey("APP_VER") Then
@@ -625,7 +625,7 @@ Public Class PS3Library
                 End Using
 
                 'Load game files
-                Dim PS3GAMEFolder As String = My.Computer.FileSystem.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName
+                Dim PS3GAMEFolder As String = Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName
 
                 If File.Exists(PS3GAMEFolder + "\ICON0.PNG") Then
                     Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri(PS3GAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)))
@@ -829,9 +829,9 @@ Public Class PS3Library
     End Sub
 
     Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
             'Check if PS3 firmware is installed
-            If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\dev_flash\sys\external") OrElse Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\dev_flash\sys\internal") Then
+            If Not Directory.Exists(Environment.CurrentDirectory + "\Emulators\rpcs3\dev_flash\sys\external") OrElse Not Directory.Exists(Environment.CurrentDirectory + "\Emulators\rpcs3\dev_flash\sys\internal") Then
                 If MsgBox("Playing games using rpcs3 requires the PS3 firmware to be installed first." + vbCrLf + "Do you want to install a firmware now using an PS3UPDAT.PUP file ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
 
                     Dim OFD As New OpenFileDialog() With {.Title = "Select the PS3UPDAT.PUP file to install.", .Filter = "PUP File (*.PUP)|*.PUP", .Multiselect = False}
@@ -840,8 +840,8 @@ Public Class PS3Library
                         'Set up rpcs3 to install the selected PS3 firmware
                         Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                         Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
-                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
+                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
                         EmulatorLauncherStartInfo.Arguments = "--installfw """ + OFD.FileName + """"
                         EmulatorLauncher.Start()
                         EmulatorLauncher.WaitForExit()
@@ -874,21 +874,21 @@ Public Class PS3Library
 
                     Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                     Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                    EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
-                    EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
+                    EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
+                    EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
 
                     Select Case SelectedPS3Game.GameFileType
                         Case PS3Game.GameFileTypes.Backup
 
-                            EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
-                            EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
+                            EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe"
+                            EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
                             EmulatorLauncherStartInfo.Arguments = """" + SelectedPS3Game.GameFolderPath + """ --no-gui"
                             EmulatorLauncher.Start()
 
                         Case PS3Game.GameFileTypes.PKG
 
                             'Installation of game required
-                            Dim RPCS3GameInstallationPath As String = My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\dev_hdd0\game\" + SelectedPS3Game.GameID
+                            Dim RPCS3GameInstallationPath As String = Environment.CurrentDirectory + "\Emulators\rpcs3\dev_hdd0\game\" + SelectedPS3Game.GameID
                             If Not Directory.Exists(RPCS3GameInstallationPath) Then
                                 If MsgBox("Playing games in PKG format will require you to install them first including their RAP file." + vbCrLf + vbCrLf +
                                     "Please close rpcs3 when the game PKG has been installed & after the RAP installation or PS Multi Tools will stop responding." + vbCrLf + vbCrLf +
@@ -955,7 +955,7 @@ Public Class PS3Library
 
                             'Save current list of drives
                             Dim CurrentDrives As New List(Of String)()
-                            For Each Drive As DriveInfo In My.Computer.FileSystem.Drives()
+                            For Each Drive As DriveInfo In DriveInfo.GetDrives()
                                 CurrentDrives.Add(Drive.Name)
                             Next
 
@@ -965,7 +965,7 @@ Public Class PS3Library
 
                             'Get new list of drives
                             Dim NewDrivesList As New List(Of String)()
-                            For Each Drive As DriveInfo In My.Computer.FileSystem.Drives()
+                            For Each Drive As DriveInfo In DriveInfo.GetDrives()
                                 NewDrivesList.Add(Drive.Name)
                             Next
 
@@ -1091,8 +1091,8 @@ Public Class PS3Library
     End Sub
 
     Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
-        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
         End If
     End Sub
 

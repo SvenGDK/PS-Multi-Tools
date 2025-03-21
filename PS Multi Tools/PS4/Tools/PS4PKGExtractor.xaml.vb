@@ -63,7 +63,7 @@ Public Class PS4PKGExtractor
 
     Private Sub BrowseOutputFolderButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseOutputFolderButton.Click
         Dim FBD As New FolderBrowserDialog() With {.ShowNewFolderButton = True}
-        If FBD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedOutputFolderTextBox.Text = FBD.SelectedPath
         End If
     End Sub
@@ -85,7 +85,7 @@ Public Class PS4PKGExtractor
                 End If
 
                 OrbisPubCMD = New Process()
-                OrbisPubCMD.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS4\orbis-pub-cmd.exe"
+                OrbisPubCMD.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PS4\orbis-pub-cmd.exe"
                 OrbisPubCMD.StartInfo.Arguments = Args
                 OrbisPubCMD.StartInfo.RedirectStandardOutput = True
                 OrbisPubCMD.StartInfo.RedirectStandardError = True

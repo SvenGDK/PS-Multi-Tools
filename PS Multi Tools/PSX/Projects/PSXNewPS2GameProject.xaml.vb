@@ -19,7 +19,7 @@ Public Class PSXNewPS2GameProject
             If Path.GetExtension(OFD.FileName) = ".iso" Then
                 If MsgBox("Do you want to load the game ID from the disc?" + vbCrLf + "The Game ID is required to install the game.", MsgBoxStyle.YesNo, "") = MsgBoxResult.Yes Then
                     Using SevenZip As New Process()
-                        SevenZip.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\7z.exe"
+                        SevenZip.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
                         SevenZip.StartInfo.Arguments = "l -ba """ + OFD.FileName + """"
                         SevenZip.StartInfo.RedirectStandardOutput = True
                         SevenZip.StartInfo.UseShellExecute = False
@@ -120,7 +120,7 @@ Public Class PSXNewPS2GameProject
             MsgBox("Please select the project save path first.", MsgBoxStyle.Information, "No save path")
         Else
             'Write Project settings to .CFG
-            Using ProjectWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Projects\" + ProjectNameTextBox.Text + ".CFG", False)
+            Using ProjectWriter As New StreamWriter(Environment.CurrentDirectory + "\Projects\" + ProjectNameTextBox.Text + ".CFG", False)
                 ProjectWriter.WriteLine("TITLE=" + ProjectNameTextBox.Text)
                 ProjectWriter.WriteLine("ID=" + ProjectIDTextBox.Text)
                 ProjectWriter.WriteLine("DIR=" + ProjectDirectoryTextBox.Text)

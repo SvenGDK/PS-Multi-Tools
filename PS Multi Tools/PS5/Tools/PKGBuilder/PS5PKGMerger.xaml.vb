@@ -9,7 +9,7 @@
     Private Sub BrowseFolderButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseFolderButton.Click
         Dim FBD As New Forms.FolderBrowserDialog()
 
-        If FBD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedDirectoryTextBox.Text = FBD.SelectedPath
             SelectedPath = FBD.SelectedPath
             MergeButton.IsEnabled = True
@@ -30,7 +30,7 @@
                                    End Sub)
 
             PKGMerge = New Process()
-            PKGMerge.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\pkg_merge.exe"
+            PKGMerge.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\pkg_merge.exe"
             PKGMerge.StartInfo.Arguments = """" + SelectedPath + """"
             PKGMerge.StartInfo.RedirectStandardOutput = True
             PKGMerge.StartInfo.RedirectStandardError = False
@@ -101,7 +101,7 @@
                                    If Not String.IsNullOrEmpty(MergeBaseName) Then
                                        'Update progress in PS5GamePatches (if open)
                                        Dim OpenGamePatchesWindow As PS5GamePatches
-                                       For Each OpenWin In Windows.Application.Current.Windows()
+                                       For Each OpenWin In System.Windows.Application.Current.Windows()
                                            If OpenWin.ToString = "psmt_lib.PS5GamePatches" Then
                                                OpenGamePatchesWindow = CType(OpenWin, PS5GamePatches)
 
@@ -147,7 +147,7 @@
                                    End Sub)
 
             PKGMerge = New Process()
-            PKGMerge.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\pkg_merge.exe"
+            PKGMerge.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\pkg_merge.exe"
             PKGMerge.StartInfo.Arguments = """" + MergeDownloadSourceFolder + """"
             PKGMerge.StartInfo.RedirectStandardOutput = True
             PKGMerge.StartInfo.UseShellExecute = False

@@ -8,7 +8,7 @@ Public Class PS5etaHENConfigurator
     Public ConsoleIP As String
 
     Private Sub GetConfigButton_Click(sender As Object, e As RoutedEventArgs) Handles GetConfigButton.Click
-        If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache") Then Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Cache")
+        If Not Directory.Exists(Environment.CurrentDirectory + "\Cache") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Cache")
 
         If Not String.IsNullOrEmpty(ConsoleIP) Then
             Try
@@ -22,19 +22,19 @@ Public Class PS5etaHENConfigurator
                     conn.Connect()
 
                     'Get config.ini
-                    conn.DownloadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini", "/data/etaHEN/config.ini", FtpLocalExists.Overwrite)
+                    conn.DownloadFile(Environment.CurrentDirectory + "\Cache\config.ini", "/data/etaHEN/config.ini", FtpLocalExists.Overwrite)
 
                     'Disconnect
                     conn.Disconnect()
                 End Using
 
                 'Load config after download
-                If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-                    Dim ConfigInfo As New FileInfo(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+                    Dim ConfigInfo As New FileInfo(Environment.CurrentDirectory + "\Cache\config.ini")
                     Dim ConfigDateTime As Date = ConfigInfo.LastWriteTime
                     ConfigStatusTextBlock.Text = "etaHEN config found" + " - " + ConfigDateTime.ToString()
 
-                    Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                    Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
                     If Not String.IsNullOrEmpty(etaHENConfig.IniReadValue("Settings", "PS5Debug")) Then
                         If etaHENConfig.IniReadValue("Settings", "PS5Debug") = "0" Then
                             PS5DebugAutoLoadCheckBox.IsChecked = False
@@ -134,7 +134,7 @@ Public Class PS5etaHENConfigurator
     End Sub
 
     Private Sub SaveAndUploadButton_Click(sender As Object, e As RoutedEventArgs) Handles SaveAndUploadButton.Click
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
             Try
                 Using conn As New FtpClient(ConsoleIP, "anonymous", "anonymous", 1337)
                     'Configurate the FTP connection
@@ -146,7 +146,7 @@ Public Class PS5etaHENConfigurator
                     conn.Connect()
 
                     'Upload config.ini
-                    conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini", "/data/etaHEN/config.ini", FtpRemoteExists.NoCheck)
+                    conn.UploadFile(Environment.CurrentDirectory + "\Cache\config.ini", "/data/etaHEN/config.ini", FtpRemoteExists.NoCheck)
 
                     'Disconnect
                     conn.Disconnect()
@@ -163,9 +163,9 @@ Public Class PS5etaHENConfigurator
 
     Private Sub PS5etaHENConfigurator_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Load existing config
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
-            Dim ConfigInfo As New FileInfo(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
+            Dim ConfigInfo As New FileInfo(Environment.CurrentDirectory + "\Cache\config.ini")
             Dim ConfigDateTime As Date = ConfigInfo.LastWriteTime
             ConfigStatusTextBlock.Text = "etaHEN config found" + " - " + ConfigDateTime.ToString()
 
@@ -263,127 +263,127 @@ Public Class PS5etaHENConfigurator
 #Region "Check changes"
 
     Private Sub DiscordCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles DiscordCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "discord_rpc", "1")
         End If
     End Sub
 
     Private Sub DiscordCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles DiscordCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "discord_rpc", "0")
         End If
     End Sub
 
     Private Sub FTPCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles FTPCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "FTP", "1")
         End If
     End Sub
 
     Private Sub FTPCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles FTPCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "FTP", "0")
         End If
     End Sub
 
     Private Sub TestkitCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles TestkitCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "testkit", "1")
         End If
     End Sub
 
     Private Sub TestkitCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles TestkitCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "testkit", "0")
         End If
     End Sub
 
     Private Sub PS5DebugAutoLoadCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles PS5DebugAutoLoadCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "PS5Debug", "1")
         End If
     End Sub
 
     Private Sub PS5DebugAutoLoadCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles PS5DebugAutoLoadCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "PS5Debug", "0")
         End If
     End Sub
 
     Private Sub AllowDataInSandboxCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles AllowDataInSandboxCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "Allow_data_in_sandbox", "1")
         End If
     End Sub
 
     Private Sub AllowDataInSandboxCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles AllowDataInSandboxCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "Allow_data_in_sandbox", "0")
         End If
     End Sub
 
     Private Sub DPIServiceCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles DPIServiceCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "DPI", "1")
         End If
     End Sub
 
     Private Sub DPIServiceCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles DPIServiceCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "DPI", "0")
         End If
     End Sub
 
     Private Sub KernelLogCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles KernelLogCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "Klog", "1")
         End If
     End Sub
 
     Private Sub KernelLogCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles KernelLogCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "Klog", "0")
         End If
     End Sub
 
     Private Sub KillUtilDaemonCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles KillUtilDaemonCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "Util_rest_kill", "1")
         End If
     End Sub
 
     Private Sub KillUtilDaemonCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles KillUtilDaemonCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "Util_rest_kill", "0")
         End If
     End Sub
 
     Private Sub KillOpenGameCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles KillOpenGameCheckBox.Checked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "Game_rest_kill", "1")
         End If
     End Sub
 
     Private Sub KillOpenGameCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles KillOpenGameCheckBox.Unchecked
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-            Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+        If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+            Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
             etaHENConfig.IniWriteValue("Settings", "Game_rest_kill", "0")
         End If
     End Sub
@@ -393,28 +393,28 @@ Public Class PS5etaHENConfigurator
             Dim SelectedCBItem As ComboBoxItem = CType(e.AddedItems(0), ComboBoxItem)
             Select Case SelectedCBItem.Content.ToString()
                 Case "None"
-                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                    If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
                         etaHENConfig.IniWriteValue("Settings", "StartOption", "0")
                     End If
                 Case "Home Menu"
-                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                    If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
                         etaHENConfig.IniWriteValue("Settings", "StartOption", "1")
                     End If
                 Case "Settings"
-                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                    If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
                         etaHENConfig.IniWriteValue("Settings", "StartOption", "2")
                     End If
                 Case "Toolbox"
-                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                    If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
                         etaHENConfig.IniWriteValue("Settings", "StartOption", "3")
                     End If
                 Case "Itemzflow"
-                    If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini") Then
-                        Dim etaHENConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\config.ini")
+                    If File.Exists(Environment.CurrentDirectory + "\Cache\config.ini") Then
+                        Dim etaHENConfig As New IniFile(Environment.CurrentDirectory + "\Cache\config.ini")
                         etaHENConfig.IniWriteValue("Settings", "StartOption", "4")
                     End If
             End Select

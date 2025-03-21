@@ -37,7 +37,7 @@ Public Class PS5GamePatchSelector
         args.Handled = True
         args.Cancel = True
 
-        Dim MsgBoxResult = MsgBox("Do you want to add this download to the queue ?" + vbNewLine + "Selecting 'No' will download the file instantly.", MsgBoxStyle.YesNoCancel, "Select Download Option")
+        Dim MsgBoxResult = MsgBox("Do you want to add this download to the queue ?" + vbCrLf + "Selecting 'No' will download the file instantly.", MsgBoxStyle.YesNoCancel, "Select Download Option")
         If MsgBoxResult = MsgBoxResult.Yes Then
 
             Dim DownloadUri As String = args.DownloadOperation.Uri

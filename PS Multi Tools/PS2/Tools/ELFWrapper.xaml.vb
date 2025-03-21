@@ -4,7 +4,7 @@
 
     Private Sub BrowseELFButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseELFButton.Click
         Dim OFD As New Forms.OpenFileDialog() With {.CheckFileExists = True, .Filter = "ELF files (*.ELF)|*.ELF", .Multiselect = False}
-        If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedELFTextBox.Text = OFD.FileName
         End If
     End Sub
@@ -21,9 +21,9 @@
             If Not String.IsNullOrEmpty(KELFOutputFolderTextBox.Text) Then
                 Cursor = Cursors.Wait
 
-                Dim RetailKHNPath As String = My.Computer.FileSystem.CurrentDirectory + "\Tools\KRYPTO(CEX).KHN"
-                Dim PSXKHNPath As String = My.Computer.FileSystem.CurrentDirectory + "\Tools\KRYPTO.KHN"
-                Dim AllKHNPath As String = My.Computer.FileSystem.CurrentDirectory + "\Tools\KRYPTO(All).KHN"
+                Dim RetailKHNPath As String = Environment.CurrentDirectory + "\Tools\KRYPTO(CEX).KHN"
+                Dim PSXKHNPath As String = Environment.CurrentDirectory + "\Tools\KRYPTO.KHN"
+                Dim AllKHNPath As String = Environment.CurrentDirectory + "\Tools\KRYPTO(All).KHN"
 
                 If LogTextBox.Dispatcher.CheckAccess() = False Then
                     LogTextBox.Dispatcher.BeginInvoke(Sub() LogTextBox.Clear())
@@ -33,7 +33,7 @@
 
                 'Set SCEDoormat_NoME process properties
                 SCEDoormat_NoME = New Process()
-                SCEDoormat_NoME.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\SCEDoormat_NoME.exe"
+                SCEDoormat_NoME.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\SCEDoormat_NoME.exe"
 
                 If ForRetailCheckBox.IsChecked Then
                     SCEDoormat_NoME.StartInfo.Arguments = """" + SelectedELFTextBox.Text + """ """ + KELFOutputFolderTextBox.Text + "\EXECUTE.KELF"" """ + RetailKHNPath + """"

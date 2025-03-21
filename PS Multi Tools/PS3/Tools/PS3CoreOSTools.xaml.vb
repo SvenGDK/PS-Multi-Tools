@@ -63,7 +63,7 @@ Public Class PS3CoreOSTools
 
             Dim ProcessOutput As String = ""
             Using FWPKG As New Process()
-                FWPKG.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\fwpkg.exe"
+                FWPKG.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\fwpkg.exe"
                 FWPKG.StartInfo.Arguments = "d """ + SelectedCoreOSPKGForDecTextBox.Text + """ """ + SelectedOutputFolderForDecTextBox.Text + """"
                 FWPKG.StartInfo.RedirectStandardOutput = True
                 FWPKG.StartInfo.UseShellExecute = False
@@ -83,7 +83,7 @@ Public Class PS3CoreOSTools
 
             Dim ProcessOutput As String = ""
             Using Discore As New Process()
-                Discore.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\discore.exe"
+                Discore.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\discore.exe"
                 Discore.StartInfo.Arguments = """" + SelectedDecFolderForExtrTextBox.Text + """"
                 Discore.StartInfo.RedirectStandardOutput = True
                 Discore.StartInfo.UseShellExecute = False
@@ -103,7 +103,7 @@ Public Class PS3CoreOSTools
 
             Dim ProcessOutput As String = ""
             Using FWPKG As New Process()
-                FWPKG.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\fwpkg.exe"
+                FWPKG.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\fwpkg.exe"
                 FWPKG.StartInfo.Arguments = "e """ + SelectedDecFolderForEncTextBox.Text + """ """ + SelectedNewFolderForEncTextBox.Text + """"
                 FWPKG.StartInfo.RedirectStandardOutput = True
                 FWPKG.StartInfo.UseShellExecute = False
@@ -123,7 +123,7 @@ Public Class PS3CoreOSTools
 
             Dim ProcessOutput As String = ""
             Using COS As New Process()
-                COS.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\cos.exe"
+                COS.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\cos.exe"
                 COS.StartInfo.Arguments = "-i """ + SelectedCoreOSPKGForReadTextBox.Text + """"
                 COS.StartInfo.RedirectStandardOutput = True
                 COS.StartInfo.UseShellExecute = False
@@ -147,7 +147,7 @@ Public Class PS3CoreOSTools
             Dim FolderName As String = NewSplit(NewSplit.Length - 2) + ".hex"
 
             Using Hexdump As New Process()
-                Hexdump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hexdump.exe"
+                Hexdump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hexdump.exe"
                 Hexdump.StartInfo.Arguments = """" + SelectedCoreOSPKGForReadTextBox.Text + """ > """ + FolderName + """"
                 Hexdump.StartInfo.RedirectStandardOutput = True
                 Hexdump.StartInfo.UseShellExecute = False

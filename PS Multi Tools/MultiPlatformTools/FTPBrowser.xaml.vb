@@ -455,7 +455,7 @@ Public Class FTPBrowser
     End Sub
 
     Public Sub DownloadContent2(ConsoleIP As String, FileOrDir As String)
-        If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        If Not Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads")
 
         Dim FileName As String = FileOrDir.Split("/"c).Last()
         If Not String.IsNullOrEmpty(FileName) Then
@@ -469,14 +469,14 @@ Public Class FTPBrowser
                 conn.Connect()
 
                 'Get the file
-                conn.DownloadFile(My.Computer.FileSystem.CurrentDirectory + "\Downloads\" + FileName, FileOrDir, FtpLocalExists.Overwrite)
+                conn.DownloadFile(Environment.CurrentDirectory + "\Downloads\" + FileName, FileOrDir, FtpLocalExists.Overwrite)
 
                 'Disconnect
                 conn.Disconnect()
             End Using
 
             If MsgBox("Download completed. Open the Downloads folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
-                Process.Start("explorer", My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+                Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
             End If
         Else
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
@@ -717,9 +717,9 @@ Public Class FTPBrowser
                 Dim SafeUriString As String
 
                 If CurrentPath = "/" Then
-                    SafeUriString = Uri.EscapeUriString(Encoding.UTF8.GetString(Encoding.ASCII.GetBytes("ftp://" & ConsoleIPTextBox.Text & ":" + PortTextBox.Text & CurrentPath & OFD.SafeFileName)))
+                    SafeUriString = Uri.EscapeDataString(Encoding.UTF8.GetString(Encoding.ASCII.GetBytes("ftp://" & ConsoleIPTextBox.Text & ":" + PortTextBox.Text & CurrentPath & OFD.SafeFileName)))
                 Else
-                    SafeUriString = Uri.EscapeUriString(Encoding.UTF8.GetString(Encoding.ASCII.GetBytes("ftp://" & ConsoleIPTextBox.Text & ":" + PortTextBox.Text & CurrentPath & "/" & OFD.SafeFileName)))
+                    SafeUriString = Uri.EscapeDataString(Encoding.UTF8.GetString(Encoding.ASCII.GetBytes("ftp://" & ConsoleIPTextBox.Text & ":" + PortTextBox.Text & CurrentPath & "/" & OFD.SafeFileName)))
                 End If
 
                 LockUI()

@@ -21,7 +21,7 @@ Public Class PSXPartitionManager
         Dim QueryOutput As String()
 
         Using HDLDump As New Process()
-            HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+            HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
             HDLDump.StartInfo.Arguments = "toc " + MountedDrive.HDLDriveName
             HDLDump.StartInfo.RedirectStandardOutput = True
             HDLDump.StartInfo.UseShellExecute = False
@@ -59,7 +59,7 @@ Public Class PSXPartitionManager
         Dim QueryOutput As String()
 
         Using HDLDump As New Process()
-            HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+            HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
             HDLDump.StartInfo.Arguments = "hdl_toc " + MountedDrive.HDLDriveName
             HDLDump.StartInfo.RedirectStandardOutput = True
             HDLDump.StartInfo.UseShellExecute = False
@@ -118,7 +118,7 @@ Public Class PSXPartitionManager
                 Dim HDLDumpOutput As String
 
                 Using HDLDump As New Process()
-                    HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+                    HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
                     HDLDump.StartInfo.Arguments = "modify " + MountedDrive.HDLDriveName + " """ + SelectedPartition.Name + """ """ + NewGameTitle + """"
                     HDLDump.StartInfo.RedirectStandardOutput = True
                     HDLDump.StartInfo.UseShellExecute = False
@@ -146,7 +146,7 @@ Public Class PSXPartitionManager
                 Dim HDLDumpOutput As String
 
                 Using HDLDump As New Process()
-                    HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+                    HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
                     HDLDump.StartInfo.Arguments = "modify " + MountedDrive.HDLDriveName + " """ + SelectedPartition.Name + """ " + NewGameFlags
                     HDLDump.StartInfo.RedirectStandardOutput = True
                     HDLDump.StartInfo.UseShellExecute = False
@@ -173,7 +173,7 @@ Public Class PSXPartitionManager
                 Dim HDLDumpOutput As String
 
                 Using HDLDump As New Process()
-                    HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+                    HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
                     HDLDump.StartInfo.Arguments = "modify " + MountedDrive.HDLDriveName + " """ + SelectedPartition.Name + """ " + NewGameFlags
                     HDLDump.StartInfo.RedirectStandardOutput = True
                     HDLDump.StartInfo.UseShellExecute = False
@@ -199,7 +199,7 @@ Public Class PSXPartitionManager
                     Dim HDLDumpOutput As String
 
                     Using HDLDump As New Process()
-                        HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+                        HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
                         HDLDump.StartInfo.Arguments = "modify " + MountedDrive.HDLDriveName + " """ + SelectedPartition.Name + """ -unhide"
                         HDLDump.StartInfo.RedirectStandardError = True
                         HDLDump.StartInfo.UseShellExecute = False
@@ -223,7 +223,7 @@ Public Class PSXPartitionManager
                     Dim HDLDumpOutput As String
 
                     Using HDLDump As New Process()
-                        HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+                        HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
                         HDLDump.StartInfo.Arguments = "modify " + MountedDrive.HDLDriveName + " """ + SelectedPartition.Name + """ -hide"
                         HDLDump.StartInfo.RedirectStandardError = True
                         HDLDump.StartInfo.UseShellExecute = False
@@ -261,7 +261,7 @@ Public Class PSXPartitionManager
             If MsgBox("Do you really want to delete the partition " + SelectedPartition.Name + " ?" + vbCrLf + "This operation can be destructive !", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
 
                 'Set rmpart command
-                Using CommandFileWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Tools\cmdlist\rmpart.txt", False)
+                Using CommandFileWriter As New StreamWriter(Environment.CurrentDirectory + "\Tools\cmdlist\rmpart.txt", False)
                     CommandFileWriter.WriteLine("device " + MountedDrive.DriveID)
                     CommandFileWriter.WriteLine("rmpart " + SelectedPartition.Name)
                     CommandFileWriter.WriteLine("exit")
@@ -271,7 +271,7 @@ Public Class PSXPartitionManager
                 Dim PFSShellOutput As String
                 Using PFSShellProcess As New Process()
                     PFSShellProcess.StartInfo.FileName = "cmd"
-                    PFSShellProcess.StartInfo.Arguments = """/c type """ + My.Computer.FileSystem.CurrentDirectory + "\Tools\cmdlist\rmpart.txt"" | """ + My.Computer.FileSystem.CurrentDirectory + "\Tools\pfsshell.exe"" 2>&1"
+                    PFSShellProcess.StartInfo.Arguments = """/c type """ + Environment.CurrentDirectory + "\Tools\cmdlist\rmpart.txt"" | """ + Environment.CurrentDirectory + "\Tools\pfsshell.exe"" 2>&1"
 
                     PFSShellProcess.StartInfo.RedirectStandardOutput = True
                     PFSShellProcess.StartInfo.UseShellExecute = False

@@ -85,7 +85,7 @@ Public Class PS5PKGViewer
                     While totalBytesRead > 0
                         Dim bytesRead As Integer = CInt(Math.Min(buffer.Length, totalBytesRead))
                         PKGReader.Seek(totalBytesRead - bytesRead, SeekOrigin.Begin)
-                        PKGReader.Read(buffer, 0, bytesRead)
+                        PKGReader.ReadExactly(buffer, 0, bytesRead)
                         totalBytesRead -= bytesRead
 
                         For i As Integer = bytesRead - 1 To 0 Step -1
@@ -111,7 +111,7 @@ Public Class PS5PKGViewer
                         ParamJSONFileStream.Seek(startOffset, SeekOrigin.Begin)
 
                         Dim NewParamData(CInt(ParamDataSize) - 1) As Byte
-                        ParamJSONFileStream.Read(NewParamData, 0, CInt(ParamDataSize))
+                        ParamJSONFileStream.ReadExactly(NewParamData, 0, CInt(ParamDataSize))
 
                         Dim ExtractedData As String = Encoding.UTF8.GetString(NewParamData)
                         Dim ParamJSONData As List(Of String) = ExtractedData.Split(New String() {vbCrLf}, StringSplitOptions.None).ToList()
@@ -232,7 +232,7 @@ Public Class PS5PKGViewer
                 While totalBytesRead > 0
                     Dim bytesRead As Integer = CInt(Math.Min(buffer.Length, totalBytesRead))
                     PKGReader.Seek(totalBytesRead - bytesRead, SeekOrigin.Begin)
-                    PKGReader.Read(buffer, 0, bytesRead)
+                    PKGReader.ReadExactly(buffer, 0, bytesRead)
                     totalBytesRead -= bytesRead
 
                     ' Check buffer from end to start
@@ -265,7 +265,7 @@ Public Class PS5PKGViewer
 
                     ' Read the pkg configuration data
                     Dim data(CInt(PKGConfigurationDataSize) - 1) As Byte
-                    PKGReader.Read(data, 0, CInt(PKGConfigurationDataSize))
+                    PKGReader.ReadExactly(data, 0, CInt(PKGConfigurationDataSize))
 
                     ' Convert the data to a XML string
                     ExtractedPKGConfigurationData = Encoding.UTF8.GetString(data)
@@ -669,7 +669,7 @@ Public Class PS5PKGViewer
                         'Seek to the beginning of the param.json file and read
                         Dim ParamFileBuffer() As Byte = New Byte(EntrySizeDecValue - 1) {}
                         PKGReader.Seek(ParamJSONOffsetPosition, SeekOrigin.Begin)
-                        PKGReader.Read(ParamFileBuffer, 0, ParamFileBuffer.Length)
+                        PKGReader.ReadExactly(ParamFileBuffer, 0, ParamFileBuffer.Length)
 
                         If Not String.IsNullOrWhiteSpace(Encoding.UTF8.GetString(ParamFileBuffer)) Then
                             CurrentParamJSON = Encoding.UTF8.GetString(ParamFileBuffer)
@@ -770,7 +770,7 @@ Public Class PS5PKGViewer
                         'Seek to the beginning of the icon0.png file and read
                         Dim Icon0FileBuffer() As Byte = New Byte(EntrySizeDecValue - 1) {}
                         PKGReader.Seek(Icon0OffsetPosition, SeekOrigin.Begin)
-                        PKGReader.Read(Icon0FileBuffer, 0, Icon0FileBuffer.Length)
+                        PKGReader.ReadExactly(Icon0FileBuffer, 0, Icon0FileBuffer.Length)
 
                         'Check the buffer and display the icon
                         If Icon0FileBuffer IsNot Nothing Then
@@ -804,7 +804,7 @@ Public Class PS5PKGViewer
                         'Seek to the beginning of the icon0.png file and read
                         Dim Pic0FileBuffer() As Byte = New Byte(EntrySizeDecValue - 1) {}
                         PKGReader.Seek(Pic0OffsetPosition, SeekOrigin.Begin)
-                        PKGReader.Read(Pic0FileBuffer, 0, Pic0FileBuffer.Length)
+                        PKGReader.ReadExactly(Pic0FileBuffer, 0, Pic0FileBuffer.Length)
 
                         'Check the buffer and display the icon
                         If Pic0FileBuffer IsNot Nothing Then

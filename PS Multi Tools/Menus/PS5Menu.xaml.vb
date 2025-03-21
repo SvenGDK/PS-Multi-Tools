@@ -44,9 +44,9 @@ Public Class PS5Menu
 
     Private Sub PS5Menu_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Load config if exists
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini") Then
+        If File.Exists(Environment.CurrentDirectory + "\psmt-config.ini") Then
             Try
-                Dim MainConfig As New IniFile(My.Computer.FileSystem.CurrentDirectory + "\psmt-config.ini")
+                Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
                 SharedConsoleAddress = MainConfig.IniReadValue("PS5 Tools", "IP") + ":" + MainConfig.IniReadValue("PS5 Tools", "Port")
                 FTPIPTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "IP") + ":" + MainConfig.IniReadValue("PS5 Tools", "Port")
             Catch ex As FileNotFoundException
@@ -147,7 +147,7 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenGP5ManagerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenGP5ManagerMenuItem.Click
-        Dim NewGP5Creator As New GP5Creator() With {.PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe", .ShowActivated = True}
+        Dim NewGP5Creator As New GP5Creator() With {.PubToolsPath = Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe", .ShowActivated = True}
         NewGP5Creator.Show()
     End Sub
 
@@ -173,15 +173,15 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenPKGBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGBuilderMenuItem.Click
-        Dim NewPKGBuilder As New PS5PKGBuilder() With {.PubToolsPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe", .ShowActivated = True}
+        Dim NewPKGBuilder As New PS5PKGBuilder() With {.PubToolsPath = Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe", .ShowActivated = True}
         NewPKGBuilder.Show()
     End Sub
 
     Private Sub OpenAudioConverterMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenAudioConverterMenuItem.Click
         Dim NewAudioConverter As New PS5AT9Converter() With {.ShowActivated = True}
 
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\at9tool.exe") Then
-            NewAudioConverter.AT9Tool = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\at9tool.exe"
+        If File.Exists(Environment.CurrentDirectory + "\Tools\PS5\at9tool.exe") Then
+            NewAudioConverter.AT9Tool = Environment.CurrentDirectory + "\Tools\PS5\at9tool.exe"
         Else
             NewAudioConverter.IsEnabled = False
             MsgBox("Could not find the at9tool." + vbCrLf + "Please add it inside the 'Tools\PS5' folder inside PS Multi Tools.", MsgBoxStyle.Information, "at9tool not available")
@@ -286,7 +286,7 @@ Public Class PS5Menu
                     If NewFTPConnection.DirectoryExists("/mnt/disc/bd") Then
                         If NewFTPConnection.FileExists("/mnt/disc/bd/param.json") Then
                             'Get the param.json file
-                            If NewFTPConnection.DownloadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\param.json", "/mnt/disc/bd/param.json", FtpLocalExists.Overwrite, FtpVerify.None, Nothing) = FtpStatus.Success Then
+                            If NewFTPConnection.DownloadFile(Environment.CurrentDirectory + "\Cache\param.json", "/mnt/disc/bd/param.json", FtpLocalExists.Overwrite, FtpVerify.None, Nothing) = FtpStatus.Success Then
                                 ParamJSONDownloaded = True
                             Else
                                 ParamJSONDownloaded = False
@@ -303,7 +303,7 @@ Public Class PS5Menu
                 End Using
 
                 If ParamJSONDownloaded Then
-                    Dim ParamJSONData As List(Of String) = File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Cache\param.json").ToList()
+                    Dim ParamJSONData As List(Of String) = File.ReadAllLines(Environment.CurrentDirectory + "\Cache\param.json").ToList()
 
                     'Remove unreadable stuff
                     ParamJSONData.RemoveRange(0, 6)
@@ -351,7 +351,7 @@ Public Class PS5Menu
                 Exit Sub
             End Try
 
-            Dim SelectedELF As String = My.Computer.FileSystem.CurrentDirectory + "\Tools\PS5\spoof.elf"
+            Dim SelectedELF As String = Environment.CurrentDirectory + "\Tools\PS5\spoof.elf"
             Dim ELFFileInfo As New FileInfo(SelectedELF)
             Try
                 Using SenderSocket As New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) With {.ReceiveTimeout = 3000}
@@ -460,10 +460,37 @@ Public Class PS5Menu
         End If
     End Sub
 
+    Private Sub DownloadNewKStuff_Click(sender As Object, e As RoutedEventArgs) Handles DownloadNewKStuff.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_6.50.elf") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
     Private Sub DownloadetaHEN_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHEN.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/LightningMods/etaHEN/releases/download/1.08b/etaHEN-1.8B.bin") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/1.9b/etaHEN.bin") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadetaHENNoToolbox_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHENNoToolbox.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/1.9b/etaHEN_no_toolbox.bin") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadetaHENBeta_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHENBeta.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/2.0b-pre/etaHEN.bin") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -499,7 +526,7 @@ Public Class PS5Menu
     Private Sub DownloadELFLdr_Click(sender As Object, e As RoutedEventArgs) Handles DownloadELFLdr.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/elfldr_v0.16.elf") = False Then
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/elfldr_v0.18.1.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -526,7 +553,7 @@ Public Class PS5Menu
     Private Sub DownloadFTPSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFTPSrv.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/ftpsrv_v0.11.elf") = False Then
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/ftpsrv_v0.11.2.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -535,7 +562,7 @@ Public Class PS5Menu
     Private Sub DownloadSHSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadSHSrv.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/shsrv_v0.12.elf") = False Then
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/shsrv_v0.14.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -544,7 +571,7 @@ Public Class PS5Menu
     Private Sub DownloadWebSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadWebSrv.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/websrv_v0.14.elf") = False Then
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/websrv_v0.21.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -553,7 +580,7 @@ Public Class PS5Menu
     Private Sub DownloadOffAct_Click(sender As Object, e As RoutedEventArgs) Handles DownloadOffAct.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/OffAct_v0.1.elf") = False Then
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/OffAct_v0.3.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -562,7 +589,7 @@ Public Class PS5Menu
     Private Sub DownloadKLogSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadKLogSrv.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/klogsrv_v0.5.elf") = False Then
+        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/klogsrv_v0.5.3.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -640,10 +667,21 @@ Public Class PS5Menu
         End If
     End Sub
 
-    Private Sub DownloadJARFTPServer_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARFTPServer.Click
+#Region "JAR"
+
+    Private Sub DownloadByepervisor_Click(sender As Object, e As RoutedEventArgs) Handles DownloadByepervisor.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.1.0/ftpserver-1.0-SNAPSHOT.jar") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/byepervisor-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadDebugSettings_Click(sender As Object, e As RoutedEventArgs) Handles DownloadDebugSettings.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/debugsettings-1.0-SNAPSHOT.jar") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -652,43 +690,34 @@ Public Class PS5Menu
     Private Sub DownloadDumpClassPath_Click(sender As Object, e As RoutedEventArgs) Handles DownloadDumpClassPath.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.1.0/dumpclasspath-1.0-SNAPSHOT.jar") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/dumpclasspath-1.0-SNAPSHOT.jar") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
     End Sub
 
-    Private Sub DownloadMiniTennis_Click(sender As Object, e As RoutedEventArgs) Handles DownloadMiniTennis.Click
+    Private Sub DownloadCurProc_Click(sender As Object, e As RoutedEventArgs) Handles DownloadCurProc.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.1.0/minitennis-1.0-SNAPSHOT.jar") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/dumpcurproc-1.0-SNAPSHOT.jar") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
     End Sub
 
-    Private Sub DownloadPrintSysProps_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPrintSysProps.Click
+    Private Sub DownloadJARFTPServer_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARFTPServer.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.1.0/printsysprops-1.0-SNAPSHOT.jar") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/ftpserver-1.0-SNAPSHOT.jar") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
     End Sub
 
-    Private Sub DownloadUMTXBug_Click(sender As Object, e As RoutedEventArgs) Handles DownloadUMTXBug.Click
+    Private Sub DownloadJailbreak_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJailbreak.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.1.0/umtx2-1.0-SNAPSHOT.jar") = False Then
-            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
-            NewDownloader.Close()
-        End If
-    End Sub
-
-    Private Sub DownloadByepervisor_Click(sender As Object, e As RoutedEventArgs) Handles DownloadByepervisor.Click
-        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
-        NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.1.0/byepervisor-1.0-SNAPSHOT.jar") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/jailbreak-1.0-SNAPSHOT.jar") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -697,11 +726,67 @@ Public Class PS5Menu
     Private Sub DownloadKerneldump_Click(sender As Object, e As RoutedEventArgs) Handles DownloadKerneldump.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.1.0/kerneldump-1.0-SNAPSHOT.jar") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/kerneldump-1.0-SNAPSHOT.jar") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
     End Sub
+
+    Private Sub DownloadJARKlogSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARKlogSrv.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/klogserver-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadListDirEnts_Click(sender As Object, e As RoutedEventArgs) Handles DownloadListDirEnts.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/listdirents-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadMiniTennis_Click(sender As Object, e As RoutedEventArgs) Handles DownloadMiniTennis.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/minitennis-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadPrintSysProps_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPrintSysProps.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/printsysprops-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadUMTX1_Click(sender As Object, e As RoutedEventArgs) Handles DownloadUMTX1.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/umtx1-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Sub DownloadUMTX2_Click(sender As Object, e As RoutedEventArgs) Handles DownloadUMTX2.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/umtx2-1.0-SNAPSHOT.jar") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+#End Region
 
 #End Region
 
@@ -770,19 +855,10 @@ Public Class PS5Menu
         Process.Start("https://github.com/hammer-83/ps5-jar-loader")
     End Sub
 
-    Private Sub DownloadPS5BDJBElfLoader_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPS5BDJBElfLoader.Click
-        Dim NewDownloader As New Downloader() With {.ShowActivated = True}
-        NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/PS5_BD-JB_ELF_Loader_v1.6.2.iso") = False Then
-            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
-            NewDownloader.Close()
-        End If
-    End Sub
-
     Private Sub DownloadJARLoader_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARLoader.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v2.1.0/ps5-jar-loader-2.1.0.iso") = False Then
+        If NewDownloader.CreateNewDownload("https://github.com/hammer-83/ps5-jar-loader/releases/download/v4.1.1/ps5-jar-loader-4.1.1.iso") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If

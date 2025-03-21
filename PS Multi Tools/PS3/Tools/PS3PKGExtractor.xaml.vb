@@ -481,8 +481,8 @@ Public Class PS3PKGExtractor
 
         LockUI()
 
-        If MsgBox("PKG extracted!" + vbNewLine + "Open folder ?", MsgBoxStyle.OkCancel, "Done") = MsgBoxResult.Ok Then
-            Process.Start(OutputDir)
+        If MsgBox("PKG extracted!" + vbCrLf + "Open folder ?", MsgBoxStyle.OkCancel, "Done") = MsgBoxResult.Ok Then
+            Process.Start("explorer", OutputDir)
             Close()
         Else
             Close()

@@ -98,7 +98,7 @@ Public Class USBWriter
                       " This will destroy all data on the drive !", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
 
                 Using DD As New Process()
-                    DD.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\dd.exe"
+                    DD.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\dd.exe"
                     DD.StartInfo.Arguments = "if=" + """" + SelectedFileTextBox.Text + """ of=" + SelectedDrive.DriveDeviceID + " bs=1440k"
                     DD.StartInfo.RedirectStandardOutput = True
                     DD.StartInfo.RedirectStandardError = True

@@ -41,7 +41,7 @@ Public Class PS1Library
         GamesListView.ContextMenu = NewContextMenu
 
         'Add supplemental emulator menu item
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe") Then
             NewPS1Menu.Items.Add(EMU_Settings)
         End If
     End Sub
@@ -60,8 +60,8 @@ Public Class PS1Library
             Dim GameInfo As New FileInfo(Game)
 
             'Skip multiple "Track" files and only read the first one
-            If GameInfo.Name.ToLower().Contains("track") Then
-                If Not Game.ToLower().Contains("(track 1).bin") OrElse Not GameInfo.Name.ToLower().Contains("(track 01).bin") Then
+            If GameInfo.Name.Contains("track", StringComparison.CurrentCultureIgnoreCase) Then
+                If Not Game.Contains("(track 1).bin", StringComparison.CurrentCultureIgnoreCase) OrElse Not GameInfo.Name.Contains("(track 01).bin", StringComparison.CurrentCultureIgnoreCase) Then
                     'Skip
                     Continue For
                 End If
@@ -498,8 +498,8 @@ Public Class PS1Library
     End Sub
 
     Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
-        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
         End If
     End Sub
 
@@ -528,12 +528,12 @@ Public Class PS1Library
     End Sub
 
     Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe") Then
             If GamesListView.SelectedItem IsNot Nothing Then
                 Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
 
                 'Check if any PS1 BIOS file is available
-                If Not Directory.GetFiles(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\bios", "*.bin", SearchOption.TopDirectoryOnly).Count > 0 Then
+                If Not Directory.GetFiles(Environment.CurrentDirectory + "\Emulators\ePSXe\bios", "*.bin", SearchOption.TopDirectoryOnly).Count > 0 Then
                     If MsgBox("No PS1 BIOS file available." + vbCrLf + "You need at least one BIOS file installed in order to play " + SelectedPS1Game.GameTitle + "." + vbCrLf +
                               "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
 
@@ -544,15 +544,15 @@ Public Class PS1Library
                             Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
 
                             'Copy to the BIOS folder
-                            File.Copy(SelectedBIOSFile, My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\bios\" + SelectedBIOSFileName, True)
+                            File.Copy(SelectedBIOSFile, Environment.CurrentDirectory + "\Emulators\ePSXe\bios\" + SelectedBIOSFileName, True)
 
                             'Proceed
                             If MsgBox("Start " + SelectedPS1Game.GameTitle + " using ePSXe ?" + vbCrLf + vbCrLf +
                                       "If the game doesn't start then you have to set the BIOS manually using ePSXe.exe in \Emulators\ePSXe (Config -> BIOS).", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
                                 Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                                 Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                                EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
-                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
+                                EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
+                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
                                 EmulatorLauncherStartInfo.Arguments = "-nogui -loadbin """ + SelectedPS1Game.GameFilePath + """"
                                 EmulatorLauncher.Start()
                             End If
@@ -572,8 +572,8 @@ Public Class PS1Library
                                       "If the game doesn't start then you have to set the BIOS manually using ePSXe.exe in \Emulators\ePSXe (Config -> BIOS).", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
                         Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                         Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
-                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
+                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
                         EmulatorLauncherStartInfo.Arguments = "-nogui -loadbin """ + SelectedPS1Game.GameFilePath + """"
                         EmulatorLauncher.Start()
                     End If
@@ -631,7 +631,7 @@ Public Class PS1Library
 
             If Path.GetExtension(SelectedPS1Game.GameFilePath) = ".VCD" Then
                 Dim GameProjectDirectory As String = SelectedPS1Game.GameTitle + " [" + SelectedPS1Game.GameID + "]"
-                Dim NewGameProjectDirectory As String = My.Computer.FileSystem.CurrentDirectory + "\Projects\" + SelectedPS1Game.GameTitle + " [" + SelectedPS1Game.GameID + "]"
+                Dim NewGameProjectDirectory As String = Environment.CurrentDirectory + "\Projects\" + SelectedPS1Game.GameTitle + " [" + SelectedPS1Game.GameID + "]"
 
                 Dim NewGameProjectWindow As New PSXNewPS1GameProject() With {.ShowActivated = True}
                 Dim NewGameEditor As New PSXPS1GameEditor() With {.ProjectDirectory = NewGameProjectDirectory, .Title = "Game Ressources Editor - " + NewGameProjectDirectory}
@@ -645,7 +645,7 @@ Public Class PS1Library
                 End If
 
                 'Write Project settings to .CFG
-                Using ProjectWriter As New StreamWriter(My.Computer.FileSystem.CurrentDirectory + "\Projects\" + SelectedPS1Game.GameTitle + ".CFG", False)
+                Using ProjectWriter As New StreamWriter(Environment.CurrentDirectory + "\Projects\" + SelectedPS1Game.GameTitle + ".CFG", False)
                     ProjectWriter.WriteLine("TITLE=" + SelectedPS1Game.GameTitle)
                     ProjectWriter.WriteLine("ID=" + SelectedPS1Game.GameID)
                     ProjectWriter.WriteLine("DIR=" + NewGameProjectDirectory)

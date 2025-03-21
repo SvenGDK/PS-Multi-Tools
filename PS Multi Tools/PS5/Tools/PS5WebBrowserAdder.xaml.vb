@@ -1,7 +1,7 @@
-﻿Imports System.Data.SQLite
-Imports System.IO
+﻿Imports System.IO
 Imports System.Security.Authentication
 Imports FluentFTP
+Imports Microsoft.Data.Sqlite
 Imports WinSCP
 
 Public Class PS5WebBrowserAdder
@@ -55,7 +55,7 @@ Public Class PS5WebBrowserAdder
             Dim TotalDirs As Integer = 0
 
             'Enumerate a folder to check if we have access
-            For Each FileInFTP In NewSession.EnumerateRemoteFiles("/dev", "", EnumerationOptions.AllDirectories)
+            For Each FileInFTP In NewSession.EnumerateRemoteFiles("/dev", "", WinSCP.EnumerationOptions.AllDirectories)
                 TotalDirs += 1
             Next
 
@@ -71,7 +71,7 @@ Public Class PS5WebBrowserAdder
     End Function
 
     Public Function GetDatabaseOverFTP() As Boolean
-        If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache") Then Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Cache")
+        If Not Directory.Exists(Environment.CurrentDirectory + "\Cache") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Cache")
 
         Try
             Using conn As New FtpClient(ConsoleIP, "anonymous", "anonymous", 1337)
@@ -84,7 +84,7 @@ Public Class PS5WebBrowserAdder
                 conn.Connect()
 
                 'Get app.db
-                conn.DownloadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\app.db", "/system_data/priv/mms/app.db", FtpLocalExists.Overwrite)
+                conn.DownloadFile(Environment.CurrentDirectory + "\Cache\app.db", "/system_data/priv/mms/app.db", FtpLocalExists.Overwrite)
 
                 'Disconnect
                 conn.Disconnect()
@@ -97,13 +97,13 @@ Public Class PS5WebBrowserAdder
         Try
             Dim RecordsCount As Integer = 0
 
-            Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\app.db")
+            Using conn As New SqliteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\app.db")
                 conn.Open()
 
                 Dim SelectCommand = conn.CreateCommand()
                 SelectCommand.CommandText = "select name from sqlite_master where type='table' order by name"
 
-                Dim DataReader As SQLiteDataReader = SelectCommand.ExecuteReader()
+                Dim DataReader As SqliteDataReader = SelectCommand.ExecuteReader()
 
                 'Get all tables from each profile
                 While DataReader.Read
@@ -148,7 +148,7 @@ Public Class PS5WebBrowserAdder
             End Using
 
             'Completely close the SQLiteConnection and release access to app.db
-            SQLiteConnection.ClearAllPools()
+            SqliteConnection.ClearAllPools()
             GC.Collect()
             GC.WaitForPendingFinalizers()
 
@@ -157,7 +157,7 @@ Public Class PS5WebBrowserAdder
             Else
                 Return True
             End If
-        Catch ex As SQLiteException
+        Catch ex As SqliteException
             MsgBox(ex.Message)
             MsgBox("Could not read app.db, please verify your connection.", MsgBoxStyle.Exclamation)
             Return False
@@ -179,11 +179,11 @@ Public Class PS5WebBrowserAdder
                 conn.DeleteFile("/system_data/priv/mms/app.db")
 
                 'Send the app.db back
-                conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\app.db", "/system_data/priv/mms/app.db", FtpRemoteExists.NoCheck)
+                conn.UploadFile(Environment.CurrentDirectory + "\Cache\app.db", "/system_data/priv/mms/app.db", FtpRemoteExists.NoCheck)
 
                 'Send the data/app folder
-                conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS20102\icon0.png", "/data/apps/NPXS20102/icon0.png", FtpRemoteExists.NoCheck, True)
-                conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS20102\param.json", "/data/apps/NPXS20102/param.json", FtpRemoteExists.NoCheck, True)
+                conn.UploadFile(Environment.CurrentDirectory + "\Tools\NPXS20102\icon0.png", "/data/apps/NPXS20102/icon0.png", FtpRemoteExists.NoCheck, True)
+                conn.UploadFile(Environment.CurrentDirectory + "\Tools\NPXS20102\param.json", "/data/apps/NPXS20102/param.json", FtpRemoteExists.NoCheck, True)
 
                 'Disconnect
                 conn.Disconnect()
@@ -202,7 +202,7 @@ Public Class PS5WebBrowserAdder
             'Check if we can connect to the FTP server
             If FilesAvailable(ConsoleIP) = True Then
                 'Check if the browser is still located in the Tools folder
-                If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS20102") = True Then
+                If Directory.Exists(Environment.CurrentDirectory + "\Tools\NPXS20102") = True Then
                     'Get the database and store temporarly in the Cache folder
                     If GetDatabaseOverFTP() = True Then
 
@@ -236,13 +236,13 @@ Public Class PS5WebBrowserAdder
                     conn.Connect()
 
                     'Send the content of NPXS40169
-                    conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS40169\license.txt", "/system_ex/rnps/apps/NPXS40169/license.txt", FtpRemoteExists.NoCheck, True)
-                    conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS40169\manifest.json", "/system_ex/rnps/apps/NPXS40169/manifest.json", FtpRemoteExists.NoCheck, True)
+                    conn.UploadFile(Environment.CurrentDirectory + "\Tools\NPXS40169\license.txt", "/system_ex/rnps/apps/NPXS40169/license.txt", FtpRemoteExists.NoCheck, True)
+                    conn.UploadFile(Environment.CurrentDirectory + "\Tools\NPXS40169\manifest.json", "/system_ex/rnps/apps/NPXS40169/manifest.json", FtpRemoteExists.NoCheck, True)
 
-                    conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS40169\appdb\NPXS40169\icon0.png", "/system_ex/rnps/apps/NPXS40169/appdb/NPXS40169/icon0.png", FtpRemoteExists.NoCheck, True)
-                    conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS40169\appdb\NPXS40169\ignore_devkit.dat", "/system_ex/rnps/apps/NPXS40169/appdb/NPXS40169/ignore_devkit.dat", FtpRemoteExists.NoCheck, True)
-                    conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS40169\appdb\NPXS40169\ignore_testkit.dat", "/system_ex/rnps/apps/NPXS40169/appdb/NPXS40169/ignore_testkit.dat", FtpRemoteExists.NoCheck, True)
-                    conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Tools\NPXS40169\appdb\NPXS40169\param.json", "/system_ex/rnps/apps/NPXS40169/appdb/NPXS40169/param.json", FtpRemoteExists.NoCheck, True)
+                    conn.UploadFile(Environment.CurrentDirectory + "\Tools\NPXS40169\appdb\NPXS40169\icon0.png", "/system_ex/rnps/apps/NPXS40169/appdb/NPXS40169/icon0.png", FtpRemoteExists.NoCheck, True)
+                    conn.UploadFile(Environment.CurrentDirectory + "\Tools\NPXS40169\appdb\NPXS40169\ignore_devkit.dat", "/system_ex/rnps/apps/NPXS40169/appdb/NPXS40169/ignore_devkit.dat", FtpRemoteExists.NoCheck, True)
+                    conn.UploadFile(Environment.CurrentDirectory + "\Tools\NPXS40169\appdb\NPXS40169\ignore_testkit.dat", "/system_ex/rnps/apps/NPXS40169/appdb/NPXS40169/ignore_testkit.dat", FtpRemoteExists.NoCheck, True)
+                    conn.UploadFile(Environment.CurrentDirectory + "\Tools\NPXS40169\appdb\NPXS40169\param.json", "/system_ex/rnps/apps/NPXS40169/appdb/NPXS40169/param.json", FtpRemoteExists.NoCheck, True)
 
                     'Disconnect
                     conn.Disconnect()
@@ -261,7 +261,7 @@ Public Class PS5WebBrowserAdder
 
             Try
                 'Update the app.db
-                Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\app.db")
+                Using conn As New SqliteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\app.db")
                     conn.Open()
 
                     'Insert required values
@@ -326,7 +326,7 @@ Public Class PS5WebBrowserAdder
                 End Using
 
                 'Completely close the SQLiteConnection and release access to app.db
-                SQLiteConnection.ClearAllPools()
+                SqliteConnection.ClearAllPools()
                 GC.Collect()
                 GC.WaitForPendingFinalizers()
 

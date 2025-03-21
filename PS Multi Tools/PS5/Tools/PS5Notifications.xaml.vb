@@ -1,8 +1,8 @@
 ﻿Imports System.Data
-Imports System.Data.SQLite
 Imports System.IO
 Imports System.Security.Authentication
 Imports FluentFTP
+Imports Microsoft.Data.Sqlite
 Imports Newtonsoft.Json
 
 Public Class PS5Notifications
@@ -18,7 +18,7 @@ Public Class PS5Notifications
     Dim WebBrowserJSONActions As New List(Of Action)()
 
     Private Sub ConnectButton_Click(sender As Object, e As RoutedEventArgs) Handles ConnectButton.Click
-        If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache") Then Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Cache")
+        If Not Directory.Exists(Environment.CurrentDirectory + "\Cache") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Cache")
 
         UserProfilesComboBox.Items.Clear()
 
@@ -34,10 +34,10 @@ Public Class PS5Notifications
                     conn.Connect()
 
                     'Get notification2.db
-                    conn.DownloadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db", "/system_data/priv/mms/notification2.db", FtpLocalExists.Overwrite)
+                    conn.DownloadFile(Environment.CurrentDirectory + "\Cache\notification2.db", "/system_data/priv/mms/notification2.db", FtpLocalExists.Overwrite)
 
                     'Also get notification.db in case we can't find any user_id
-                    conn.DownloadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification.db", "/system_data/priv/mms/notification.db", FtpLocalExists.Overwrite)
+                    conn.DownloadFile(Environment.CurrentDirectory + "\Cache\notification.db", "/system_data/priv/mms/notification.db", FtpLocalExists.Overwrite)
 
                     'Disconnect
                     conn.Disconnect()
@@ -47,15 +47,15 @@ Public Class PS5Notifications
             End Try
 
             'Create a backup that will not be overwritten
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db") Then
-                If Not File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2-backup.db") Then
-                    File.Copy(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db", My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2-backup.db", False)
+            If File.Exists(Environment.CurrentDirectory + "\Cache\notification2.db") Then
+                If Not File.Exists(Environment.CurrentDirectory + "\Cache\notification2-backup.db") Then
+                    File.Copy(Environment.CurrentDirectory + "\Cache\notification2.db", Environment.CurrentDirectory + "\Cache\notification2-backup.db", False)
                 End If
             End If
 
             'Load values
             Try
-                Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db")
+                Using conn As New SqliteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\notification2.db")
                     conn.Open()
 
                     Dim SelectCommand = conn.CreateCommand()
@@ -105,7 +105,7 @@ Public Class PS5Notifications
 
                 'Try to get user profiles from notification.db if we can't find them inside notification2.db
                 If UserProfiles.Count = 0 Then
-                    Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\notification.db")
+                    Using conn As New SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\notification.db")
                         conn.Open()
 
                         Dim SelectCommand = conn.CreateCommand()
@@ -163,9 +163,9 @@ Public Class PS5Notifications
     Private Sub AddDebugSettingsButton_Click(sender As Object, e As RoutedEventArgs) Handles AddDebugSettingsButton.Click
 
         'Add to the notification2.db
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db") Then
+        If File.Exists(Environment.CurrentDirectory + "\Cache\notification2.db") Then
             Try
-                Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db")
+                Using conn As New SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\notification2.db")
                     conn.Open()
 
                     'Insert required values
@@ -253,9 +253,9 @@ Public Class PS5Notifications
         Dim rawDataJSON As String = JsonConvert.SerializeObject(NewPS5Notification)
 
         'Add to the notification2.db
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db") Then
+        If File.Exists(Environment.CurrentDirectory + "\Cache\notification2.db") Then
             Try
-                Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db")
+                Using conn As New SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\notification2.db")
                     conn.Open()
 
                     'Insert required values
@@ -331,9 +331,9 @@ Public Class PS5Notifications
         Dim CustomActionName As String = "★Saved Data Management"
 
         'Add to the notification2.db
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db") Then
+        If File.Exists(Environment.CurrentDirectory + "\Cache\notification2.db") Then
             Try
-                Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db")
+                Using conn As New SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\notification2.db")
                     conn.Open()
 
                     'Insert required values
@@ -406,9 +406,9 @@ Public Class PS5Notifications
         Dim CustomActionName As String = "★Saved Data Management PS4"
 
         'Add to the notification2.db
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db") Then
+        If File.Exists(Environment.CurrentDirectory + "\Cache\notification2.db") Then
             Try
-                Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db")
+                Using conn As New SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\notification2.db")
                     conn.Open()
 
                     'Insert required values
@@ -541,9 +541,9 @@ Public Class PS5Notifications
         Dim CustomActionName As String = CustomActionNameTextBox.Text
 
         'Add to the notification2.db
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db") Then
+        If File.Exists(Environment.CurrentDirectory + "\Cache\notification2.db") Then
             Try
-                Using conn As New SQLiteConnection("Data Source=" + My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db")
+                Using conn As New SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\Cache\notification2.db")
                     conn.Open()
 
                     'Insert required values
@@ -625,7 +625,7 @@ Public Class PS5Notifications
                 conn.DeleteFile("/system_data/priv/mms/notification2.db")
 
                 'Upload updated notification2.db
-                Dim NewFTPStatus As FtpStatus = conn.UploadFile(My.Computer.FileSystem.CurrentDirectory + "\Cache\notification2.db", "/system_data/priv/mms/notification2.db", FtpRemoteExists.NoCheck)
+                Dim NewFTPStatus As FtpStatus = conn.UploadFile(Environment.CurrentDirectory + "\Cache\notification2.db", "/system_data/priv/mms/notification2.db", FtpRemoteExists.NoCheck)
 
                 If NewFTPStatus = FtpStatus.Success Then
                     MsgBox("Notifications on the console have been updated." + vbCrLf + "Check your notifications on the PS5.", MsgBoxStyle.Information)

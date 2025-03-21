@@ -1,1251 +1,312 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD8063C6-8D12-49C2-990E-9FDA4B38DC3B}</ProjectGuid>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
     <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <RootNamespace>PS_Multi_Tools</RootNamespace>
-    <AssemblyName>PS Multi Tools</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <SatelliteResourceLanguages>en-US;en</SatelliteResourceLanguages>
-    <MyType>Custom</MyType>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <IncrementalBuild>true</IncrementalBuild>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>
-    </DocumentationFile>
-    <NoWarn>
-    </NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <DebugSymbols>false</DebugSymbols>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <IncrementalBuild>false</IncrementalBuild>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>
-    </DocumentationFile>
-    <NoWarn>
-    </NoWarn>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
+	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <OptionStrict>On</OptionStrict>
+    <AssemblyVersion>15.0.0.0</AssemblyVersion>
+    <FileVersion>15.0.0.0</FileVersion>
+    <ApplicationIcon>psicon.ico</ApplicationIcon>
+	<NoWarn>$(NoWarn);MSB3270;SYSLIB0014;SYSLIB0021;SYSLIB0022</NoWarn>
+	<Title>PS Multi Tools</Title>
+	<Version>15.0.0</Version>
+	<Company>SvenGDK</Company>
+	<Copyright>Copyright © SvenGDK 2011-2025</Copyright>
+	<Product>PS Multi Tools</Product>
+	<Description>Backup manager for PS1, PS2, PSX, PS3, PS4, PS5, PSP &amp; PS Vita, containing homebrews, firmwares &amp; tools.</Description>
+	<RepositoryUrl>https://github.com/SvenGDK/PS-Multi-Tools.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageProjectUrl>https://github.com/SvenGDK/PS-Multi-Tools</PackageProjectUrl>
+	<PackageIcon>ps128.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageTags>homebrew;ps1;ps4;ps3;toolset;psp;psx;backupmanager;ps2;psvita;sfo;param;ps5;firmwares</PackageTags>
   </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>none</DebugType>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>v14Icon.ico</ApplicationIcon>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DiscUtils.Core, Version=0.16.0.0, Culture=neutral, PublicKeyToken=5fa5b410cc9c6289, processorArchitecture=MSIL">
-      <HintPath>..\packages\DiscUtils.Core.0.16.13\lib\net45\DiscUtils.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DiscUtils.Iso9660, Version=0.16.0.0, Culture=neutral, PublicKeyToken=5fa5b410cc9c6289, processorArchitecture=MSIL">
-      <HintPath>..\packages\DiscUtils.Iso9660.0.16.13\lib\net45\DiscUtils.Iso9660.dll</HintPath>
-    </Reference>
-    <Reference Include="DiscUtils.Streams, Version=0.16.0.0, Culture=neutral, PublicKeyToken=5fa5b410cc9c6289, processorArchitecture=MSIL">
-      <HintPath>..\packages\DiscUtils.Streams.0.16.13\lib\net45\DiscUtils.Streams.dll</HintPath>
-    </Reference>
-    <Reference Include="DiscUtils.Udf, Version=0.16.0.0, Culture=neutral, PublicKeyToken=5fa5b410cc9c6289, processorArchitecture=MSIL">
-      <HintPath>..\packages\DiscUtils.Udf.0.16.13\lib\net45\DiscUtils.Udf.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentFTP, Version=51.1.0.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentFTP.51.1.0\lib\net472\FluentFTP.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\..\..\..\Desktop\Debug\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=6.3.0.90, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\AvalonEdit.6.3.0.90\lib\net462\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
-    <Reference Include="Interop.IMAPI2">
-      <HintPath>..\..\PSMT-Library\psmt-lib\bin\x64\Release\Interop.IMAPI2.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Interop.IMAPI2FS">
-      <HintPath>..\..\PSMT-Library\psmt-lib\bin\x64\Release\Interop.IMAPI2FS.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="LibOrbisPkg, Version=0.2.245.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Desktop\Classics\PS2\LibOrbisPkg.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2849.39, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2849.39\lib\net462\Microsoft.Web.WebView2.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="nQuant.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\nQuant.1.0.3\lib\net40\nQuant.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PARAM.SFO">
-      <HintPath>..\..\..\..\Desktop\Debug\PARAM.SFO.dll</HintPath>
-    </Reference>
-    <Reference Include="PS4_Tools">
-      <HintPath>..\..\..\..\Desktop\Debug\PS4_Tools.dll</HintPath>
-    </Reference>
-    <Reference Include="System.CodeDom, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.CodeDom.8.0.0\lib\net462\System.CodeDom.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.119.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\lib\net46\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.119.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.119.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.119.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.119.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="WinSCPnet, Version=1.15.0.14991, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL">
-      <HintPath>..\packages\WinSCP.6.3.5\lib\net40\WinSCPnet.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL" ExcludeAssets="All">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
+    <None Remove="Images\Assets-icon.png" />
+    <None Remove="Images\av.png" />
+    <None Remove="Images\blankcover.png" />
+    <None Remove="Images\BlankPS1Cover.png" />
+    <None Remove="Images\BlankPS2Cover.png" />
+    <None Remove="Images\blu-ray.png" />
+    <None Remove="Images\box.png" />
+    <None Remove="Images\burn.png" />
+    <None Remove="Images\controller.png" />
+    <None Remove="Images\convert.png" />
+    <None Remove="Images\ConvertISO.png" />
+    <None Remove="Images\copy-icon.png" />
+    <None Remove="Images\create.png" />
+    <None Remove="Images\de.png" />
+    <None Remove="Images\delete.png" />
+    <None Remove="Images\DIC-File.png" />
+    <None Remove="Images\disc.png" />
+    <None Remove="Images\download.png" />
+    <None Remove="Images\Downloader.png" />
+    <None Remove="Images\editor.png" />
+    <None Remove="Images\es.png" />
+    <None Remove="Images\eu.png" />
+    <None Remove="Images\explore.png" />
+    <None Remove="Images\extract.png" />
+    <None Remove="Images\Folder-Open.png" />
+    <None Remove="Images\Font-File.png" />
+    <None Remove="Images\fr.png" />
+    <None Remove="Images\ftp.png" />
+    <None Remove="Images\gallery.png" />
+    <None Remove="Images\gamelibrary.png" />
+    <None Remove="Images\gamepatches.png" />
+    <None Remove="Images\github-mark.png" />
+    <None Remove="Images\HDD.png" />
+    <None Remove="Images\Image-Edit.png" />
+    <None Remove="Images\Image-File.png" />
+    <None Remove="Images\Info.png" />
+    <None Remove="Images\information-button.png" />
+    <None Remove="Images\iso.png" />
+    <None Remove="Images\it.png" />
+    <None Remove="Images\jp.png" />
+    <None Remove="Images\klog.png" />
+    <None Remove="Images\merge.png" />
+    <None Remove="Images\Movie-File.png" />
+    <None Remove="Images\Music-File.png" />
+    <None Remove="Images\NewFolder.png" />
+    <None Remove="Images\nothing.png" />
+    <None Remove="Images\notifications.png" />
+    <None Remove="Images\OpenFolder-icon.png" />
+    <None Remove="Images\patch.png" />
+    <None Remove="Images\Pause-icon.png" />
+    <None Remove="Images\PKG.png" />
+    <None Remove="Images\Play-icon.png" />
+    <None Remove="Images\Project.png" />
+    <None Remove="Images\Projects.png" />
+    <None Remove="Images\PS1.png" />
+    <None Remove="Images\PS1Disc.png" />
+    <None Remove="Images\ps1mc.png" />
+    <None Remove="Images\PS2.png" />
+    <None Remove="Images\PS2Disc.png" />
+    <None Remove="Images\ps2mc.png" />
+    <None Remove="Images\PS3.png" />
+    <None Remove="Images\PS3Disc.png" />
+    <None Remove="Images\ps4.png" />
+    <None Remove="Images\PS5.png" />
+    <None Remove="Images\psp.png" />
+    <None Remove="Images\PSV.png" />
+    <None Remove="Images\psx.png" />
+    <None Remove="Images\PSXProjects.png" />
+    <None Remove="Images\Refresh-icon.png" />
+    <None Remove="Images\rename.png" />
+    <None Remove="Images\Replace-File.png" />
+    <None Remove="Images\Replace-icon.png" />
+    <None Remove="Images\ResolutionsIcon.png" />
+    <None Remove="Images\rpcs3-black-png.png" />
+    <None Remove="Images\rpcs3-color-png.png" />
+    <None Remove="Images\rpcs3-white-png.png" />
+    <None Remove="Images\send-icon.png" />
+    <None Remove="Images\sendfile.png" />
+    <None Remove="Images\Sign.png" />
+    <None Remove="Images\SoundFormatsIcon.png" />
+    <None Remove="Images\split.png" />
+    <None Remove="Images\Stop-icon.png" />
+    <None Remove="Images\Tools.png" />
+    <None Remove="Images\Twitter.png" />
+    <None Remove="Images\UMD.png" />
+    <None Remove="Images\Update.png" />
+    <None Remove="Images\upload.png" />
+    <None Remove="Images\us.png" />
+    <None Remove="Images\usb.png" />
+    <None Remove="Images\Wrap.png" />
+    <None Remove="Images\XMBicons.png" />
+    <None Remove="Images\XML-File.png" />
   </ItemGroup>
+
   <ItemGroup>
-    <ApplicationDefinition Include="Application.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Classes\AESEngine.vb" />
-    <Compile Include="Classes\BytesConverter.vb" />
-    <Compile Include="Classes\ComboBoxProjectItem.vb" />
-    <Compile Include="Classes\DownloadQueueItem.vb" />
-    <Compile Include="Classes\ImageUtils.vb" />
-    <Compile Include="Classes\MD5Hash.vb" />
-    <Compile Include="Classes\NPSPKG.vb" />
-    <Compile Include="Classes\PKGDecryptor.vb" />
-    <Compile Include="Classes\PKGDownloadListViewItem.vb" />
-    <Compile Include="Classes\PS5Game.vb" />
-    <Compile Include="Classes\PS5Notification.vb" />
-    <Compile Include="Classes\SFONew.vb" />
-    <Compile Include="Classes\SmartUtils.vb" />
-    <Compile Include="Classes\Structures.vb" />
-    <Compile Include="Classes\Translations.vb" />
-    <Compile Include="Classes\Utils.vb" />
-    <Compile Include="Classes\XOREngine.vb" />
-    <Compile Include="Dialogs\CopyWindow.xaml.vb">
-      <DependentUpon>CopyWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\PS1Game.vb" />
-    <Compile Include="Dialogs\CustomDialog.xaml.vb">
-      <DependentUpon>CustomDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\Downloader.xaml.vb">
-      <DependentUpon>Downloader.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HomeWindow.xaml.vb">
-      <DependentUpon>HomeWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MultiPlatformTools\DownloadPackageInfoWindow.xaml.vb">
-      <DependentUpon>DownloadPackageInfoWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MultiPlatformTools\FTPBrowser.xaml.vb">
-      <DependentUpon>FTPBrowser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\InputDialog.xaml.vb">
-      <DependentUpon>InputDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MC\MCManager.xaml.vb">
-      <DependentUpon>MCManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\PS1Menu.xaml.vb">
-      <DependentUpon>PS1Menu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\PS2Menu.xaml.vb">
-      <DependentUpon>PS2Menu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\PS3Menu.xaml.vb">
-      <DependentUpon>PS3Menu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\PS4Menu.xaml.vb">
-      <DependentUpon>PS4Menu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\PS5Menu.xaml.vb">
-      <DependentUpon>PS5Menu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\PSPMenu.xaml.vb">
-      <DependentUpon>PSPMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\PSVMenu.xaml.vb">
-      <DependentUpon>PSVMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MultiPlatformTools\PSClassicsfPKGBuilder.xaml.vb">
-      <DependentUpon>PSClassicsfPKGBuilder.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MultiPlatformTools\PackageInfoWindow.xaml.vb">
-      <DependentUpon>PackageInfoWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MultiPlatformTools\PKGBrowser.xaml.vb">
-      <DependentUpon>PKGBrowser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MultiPlatformTools\PKGInfo.xaml.vb">
-      <DependentUpon>PKGInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS1\PS1EmulatorSettings.xaml.vb">
-      <DependentUpon>PS1EmulatorSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS1\PS1Library.xaml.vb">
-      <DependentUpon>PS1Library.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\PS2Game.vb" />
-    <Compile Include="PS1\Tools\MergeBinTool.xaml.vb">
-      <DependentUpon>MergeBinTool.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS2\PS2EmulatorSettings.xaml.vb">
-      <DependentUpon>PS2EmulatorSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS2\PS2Library.xaml.vb">
-      <DependentUpon>PS2Library.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\PS3Game.vb" />
-    <Compile Include="PS2\Tools\BINCUEConverter.xaml.vb">
-      <DependentUpon>BINCUEConverter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS2\Tools\CUE2POPSConverter.xaml.vb">
-      <DependentUpon>CUE2POPSConverter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS2\Tools\ELFWrapper.xaml.vb">
-      <DependentUpon>ELFWrapper.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\PS3EmulatorSettings.xaml.vb">
-      <DependentUpon>PS3EmulatorSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\PS3Library.xaml.vb">
-      <DependentUpon>PS3Library.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\PS4Game.vb" />
-    <Compile Include="PS3\Tools\PS3CoreOSTools.xaml.vb">
-      <DependentUpon>PS3CoreOSTools.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\Tools\PS3FixTar.xaml.vb">
-      <DependentUpon>PS3FixTar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\Tools\PS3ISOTools.xaml.vb">
-      <DependentUpon>PS3ISOTools.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\Tools\PS3PKGExtractor.xaml.vb">
-      <DependentUpon>PS3PKGExtractor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\Tools\PS3PUPUnpacker.xaml.vb">
-      <DependentUpon>PS3PUPUnpacker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\Tools\PS3RCODumper.xaml.vb">
-      <DependentUpon>PS3RCODumper.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\Tools\PS3ReadSELF.xaml.vb">
-      <DependentUpon>PS3ReadSELF.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\Tools\PS3VirtualFolderManager.xaml.vb">
-      <DependentUpon>PS3VirtualFolderManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS3\Tools\PS3webMANBrowser.xaml.vb">
-      <DependentUpon>PS3webMANBrowser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS4\PS4EmulatorSettings.xaml.vb">
-      <DependentUpon>PS4EmulatorSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS4\PS4Library.xaml.vb">
-      <DependentUpon>PS4Library.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\PSPGame.vb" />
-    <Compile Include="PS4\Tools\PPPwner.xaml.vb">
-      <DependentUpon>PPPwner.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS4\Tools\PS4PKGExtractor.xaml.vb">
-      <DependentUpon>PS4PKGExtractor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS4\Tools\PSNInfo.xaml.vb">
-      <DependentUpon>PSNInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS4\Tools\PUPExtractor.xaml.vb">
-      <DependentUpon>PUPExtractor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS4\Tools\USBWriter.xaml.vb">
-      <DependentUpon>USBWriter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\PS5AssetsBrowser.xaml.vb">
-      <DependentUpon>PS5AssetsBrowser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\PS5Library.xaml.vb">
-      <DependentUpon>PS5Library.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\PS5Log.xaml.vb">
-      <DependentUpon>PS5Log.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\BDBurner.xaml.vb">
-      <DependentUpon>BDBurner.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PKGBuilder\GP5Creator.xaml.vb">
-      <DependentUpon>GP5Creator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PKGBuilder\GP5PKGBuilder.xaml.vb">
-      <DependentUpon>GP5PKGBuilder.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5AT9Converter.xaml.vb">
-      <DependentUpon>PS5AT9Converter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5etaHENConfigurator.xaml.vb">
-      <DependentUpon>PS5etaHENConfigurator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5FTPGrabber.xaml.vb">
-      <DependentUpon>PS5FTPGrabber.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\GamePatches\PS5GamePatches.xaml.vb">
-      <DependentUpon>PS5GamePatches.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\GamePatches\PS5GamePatchSelector.xaml.vb">
-      <DependentUpon>PS5GamePatchSelector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5MakefSelfs.xaml.vb">
-      <DependentUpon>PS5MakefSelfs.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\Editors\PS5ManifestEditor.xaml.vb">
-      <DependentUpon>PS5ManifestEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5Notifications.xaml.vb">
-      <DependentUpon>PS5Notifications.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\Editors\PS5ParamAdvanced.xaml.vb">
-      <DependentUpon>PS5ParamAdvanced.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\Editors\PS5ParamEditor.xaml.vb">
-      <DependentUpon>PS5ParamEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PKGBuilder\PS5PKGBuilder.xaml.vb">
-      <DependentUpon>PS5PKGBuilder.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PKGBuilder\PS5PKGMerger.xaml.vb">
-      <DependentUpon>PS5PKGMerger.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5PKGSender.xaml.vb">
-      <DependentUpon>PS5PKGSender.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5PKGViewer.xaml.vb">
-      <DependentUpon>PS5PKGViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5RcoDumper.xaml.vb">
-      <DependentUpon>PS5RcoDumper.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5RcoExtractor.xaml.vb">
-      <DependentUpon>PS5RcoExtractor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5Sender.xaml.vb">
-      <DependentUpon>PS5Sender.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\PS5WebBrowserAdder.xaml.vb">
-      <DependentUpon>PS5WebBrowserAdder.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\WebSrv\PS5webMANBrowser.xaml.vb">
-      <DependentUpon>PS5webMANBrowser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\WebSrv\WebSrvHomebrewManager.xaml.vb">
-      <DependentUpon>WebSrvHomebrewManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\WebSrv\WebSrvMediaManager.xaml.vb">
-      <DependentUpon>WebSrvMediaManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PS5\Tools\WebSrv\WebSrvROMManager.xaml.vb">
-      <DependentUpon>WebSrvROMManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSP\PSPEmulatorSettings.xaml.vb">
-      <DependentUpon>PSPEmulatorSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSP\PSPLibrary.xaml.vb">
-      <DependentUpon>PSPLibrary.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\PSVGame.vb" />
-    <Compile Include="PSP\Tools\CISOConverter.xaml.vb">
-      <DependentUpon>CISOConverter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSP\Tools\PBPISOConverter.xaml.vb">
-      <DependentUpon>PBPISOConverter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSP\Tools\PBPPacker.xaml.vb">
-      <DependentUpon>PBPPacker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSSettings.xaml.vb">
-      <DependentUpon>PSSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSV\PSVEmulatorSettings.xaml.vb">
-      <DependentUpon>PSVEmulatorSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSV\PSVLibrary.xaml.vb">
-      <DependentUpon>PSVLibrary.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSV\Tools\PKGExtractor.xaml.vb">
-      <DependentUpon>PKGExtractor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSV\Tools\PSVIMGTools.xaml.vb">
-      <DependentUpon>PSVIMGTools.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSV\Tools\PSVPFSTools.xaml.vb">
-      <DependentUpon>PSVPFSTools.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\InstallWindow.xaml.vb">
-      <DependentUpon>InstallWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\PartitionManager\PSXNewPartition.xaml.vb">
-      <DependentUpon>PSXNewPartition.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\PartitionManager\PSXPartitionManager.xaml.vb">
-      <DependentUpon>PSXPartitionManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\Projects\PSXAppEditor.xaml.vb">
-      <DependentUpon>PSXAppEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\Projects\PSXNewAppProject.xaml.vb">
-      <DependentUpon>PSXNewAppProject.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\Projects\PSXNewPS1GameProject.xaml.vb">
-      <DependentUpon>PSXNewPS1GameProject.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\Projects\PSXNewPS2GameProject.xaml.vb">
-      <DependentUpon>PSXNewPS2GameProject.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\Projects\PSXPS1GameEditor.xaml.vb">
-      <DependentUpon>PSXPS1GameEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\Projects\PSXPS2GameEditor.xaml.vb">
-      <DependentUpon>PSXPS2GameEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\PSXMainWindow.xaml.vb">
-      <DependentUpon>PSXMainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\PSXSyncWindow.xaml.vb">
-      <DependentUpon>PSXSyncWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\XMB\PSXAdvancedEditor.xaml.vb">
-      <DependentUpon>PSXAdvancedEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\XMB\PSXAssetsBrowser.xaml.vb">
-      <DependentUpon>PSXAssetsBrowser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\XMB\PSXColorSelection.xaml.vb">
-      <DependentUpon>PSXColorSelection.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PSX\XMB\PSXSimpleGraphicsEditor.xaml.vb">
-      <DependentUpon>PSXSimpleGraphicsEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MultiPlatformTools\SFOEditor.xaml.vb">
-      <DependentUpon>SFOEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SyncWindow.xaml.vb">
-      <DependentUpon>SyncWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Dialogs\CopyWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Application.xaml.vb">
-      <DependentUpon>Application.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Dialogs\CustomDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\Downloader.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="HomeWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MultiPlatformTools\DownloadPackageInfoWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MultiPlatformTools\FTPBrowser.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\InputDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MC\MCManager.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Menus\PS1Menu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Menus\PS2Menu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Menus\PS3Menu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Menus\PS4Menu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Menus\PS5Menu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Menus\PSPMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Menus\PSVMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MultiPlatformTools\PSClassicsfPKGBuilder.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MultiPlatformTools\PackageInfoWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MultiPlatformTools\PKGBrowser.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MultiPlatformTools\PKGInfo.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS1\PS1EmulatorSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS1\PS1Library.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS1\Tools\MergeBinTool.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS2\PS2EmulatorSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS2\PS2Library.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS2\Tools\BINCUEConverter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS2\Tools\CUE2POPSConverter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS2\Tools\ELFWrapper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\PS3EmulatorSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS3\PS3Library.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS3\Tools\PS3CoreOSTools.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\Tools\PS3FixTar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\Tools\PS3ISOTools.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\Tools\PS3PKGExtractor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\Tools\PS3PUPUnpacker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\Tools\PS3RCODumper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\Tools\PS3ReadSELF.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\Tools\PS3VirtualFolderManager.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS3\Tools\PS3webMANBrowser.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS4\PS4EmulatorSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS4\PS4Library.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS4\Tools\PPPwner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS4\Tools\PS4PKGExtractor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS4\Tools\PSNInfo.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS4\Tools\PUPExtractor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS4\Tools\USBWriter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\PS5AssetsBrowser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS5\PS5Library.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS5\PS5Log.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS5\Tools\BDBurner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PKGBuilder\GP5Creator.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PKGBuilder\GP5PKGBuilder.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5AT9Converter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5etaHENConfigurator.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5FTPGrabber.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\GamePatches\PS5GamePatches.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\GamePatches\PS5GamePatchSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5MakefSelfs.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\Editors\PS5ManifestEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5Notifications.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\Editors\PS5ParamAdvanced.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\Editors\PS5ParamEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PKGBuilder\PS5PKGBuilder.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PKGBuilder\PS5PKGMerger.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5PKGSender.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5PKGViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PS5\Tools\PS5RcoDumper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5RcoExtractor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5Sender.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\PS5WebBrowserAdder.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\WebSrv\PS5webMANBrowser.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\WebSrv\WebSrvHomebrewManager.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\WebSrv\WebSrvMediaManager.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PS5\Tools\WebSrv\WebSrvROMManager.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSP\PSPEmulatorSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PSP\PSPLibrary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PSP\Tools\CISOConverter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSP\Tools\PBPISOConverter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSP\Tools\PBPPacker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PSV\PSVEmulatorSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PSV\PSVLibrary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PSV\Tools\PKGExtractor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSV\Tools\PSVIMGTools.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSV\Tools\PSVPFSTools.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\InstallWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\PartitionManager\PSXNewPartition.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\PartitionManager\PSXPartitionManager.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\Projects\PSXAppEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\Projects\PSXNewAppProject.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\Projects\PSXNewPS1GameProject.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\Projects\PSXNewPS2GameProject.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\Projects\PSXPS1GameEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\Projects\PSXPS2GameEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\PSXMainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\PSXSyncWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\XMB\PSXAdvancedEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\XMB\PSXAssetsBrowser.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\XMB\PSXColorSelection.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PSX\XMB\PSXSimpleGraphicsEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MultiPlatformTools\SFOEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\SyncWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Content Include="psicon.ico" />
   </ItemGroup>
+
   <ItemGroup>
-    <Import Include="System.Threading.Tasks" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Diagnostics" />
     <Import Include="System.Windows" />
     <Import Include="System.Windows.Controls" />
     <Import Include="System.Windows.Data" />
     <Import Include="System.Windows.Documents" />
     <Import Include="System.Windows.Input" />
-    <Import Include="System.Windows.Shapes" />
     <Import Include="System.Windows.Media" />
     <Import Include="System.Windows.Media.Imaging" />
     <Import Include="System.Windows.Navigation" />
+    <Import Include="System.Windows.Shapes" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="My Project\AssemblyInfo.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="My Project\MyExtensions\MyWpfExtension.vb">
-      <VBMyExtensionTemplateID>Microsoft.VisualBasic.WPF.MyExtension</VBMyExtensionTemplateID>
-      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
+    <None Include="..\..\..\..\Desktop\ps128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\..\Desktop\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Assets-icon.png" />
+    <Resource Include="Images\av.png" />
+    <Resource Include="Images\blankcover.png" />
+    <Resource Include="Images\BlankPS1Cover.png" />
+    <Resource Include="Images\BlankPS2Cover.png" />
+    <Resource Include="Images\blu-ray.png" />
+    <Resource Include="Images\box.png" />
+    <Resource Include="Images\burn.png" />
+    <Resource Include="Images\controller.png" />
+    <Resource Include="Images\convert.png" />
+    <Resource Include="Images\ConvertISO.png" />
+    <Resource Include="Images\copy-icon.png" />
+    <Resource Include="Images\create.png" />
+    <Resource Include="Images\de.png" />
+    <Resource Include="Images\delete.png" />
+    <Resource Include="Images\DIC-File.png" />
+    <Resource Include="Images\disc.png" />
+    <Resource Include="Images\download.png" />
+    <Resource Include="Images\Downloader.png" />
+    <Resource Include="Images\editor.png" />
+    <Resource Include="Images\es.png" />
+    <Resource Include="Images\eu.png" />
+    <Resource Include="Images\explore.png" />
+    <Resource Include="Images\extract.png" />
+    <Resource Include="Images\Folder-Open.png" />
+    <Resource Include="Images\Font-File.png" />
+    <Resource Include="Images\fr.png" />
+    <Resource Include="Images\ftp.png" />
+    <Resource Include="Images\gallery.png" />
+    <Resource Include="Images\gamelibrary.png" />
+    <Resource Include="Images\gamepatches.png" />
+    <Resource Include="Images\github-mark.png" />
+    <Resource Include="Images\HDD.png" />
+    <Resource Include="Images\Image-Edit.png" />
+    <Resource Include="Images\Image-File.png" />
+    <Resource Include="Images\Info.png" />
+    <Resource Include="Images\information-button.png" />
+    <Resource Include="Images\iso.png" />
+    <Resource Include="Images\it.png" />
+    <Resource Include="Images\jp.png" />
+    <Resource Include="Images\klog.png" />
+    <Resource Include="Images\merge.png" />
+    <Resource Include="Images\Movie-File.png" />
+    <Resource Include="Images\Music-File.png" />
+    <Resource Include="Images\NewFolder.png" />
+    <Resource Include="Images\nothing.png" />
+    <Resource Include="Images\notifications.png" />
+    <Resource Include="Images\OpenFolder-icon.png" />
+    <Resource Include="Images\patch.png" />
+    <Resource Include="Images\Pause-icon.png" />
+    <Resource Include="Images\PKG.png" />
+    <Resource Include="Images\Play-icon.png" />
+    <Resource Include="Images\Project.png" />
+    <Resource Include="Images\Projects.png" />
+    <Resource Include="Images\PS1.png" />
+    <Resource Include="Images\PS1Disc.png" />
+    <Resource Include="Images\ps1mc.png" />
+    <Resource Include="Images\PS2.png" />
+    <Resource Include="Images\PS2Disc.png" />
+    <Resource Include="Images\ps2mc.png" />
+    <Resource Include="Images\PS3.png" />
+    <Resource Include="Images\PS3Disc.png" />
+    <Resource Include="Images\ps4.png" />
+    <Resource Include="Images\PS5.png" />
+    <Resource Include="Images\psp.png" />
+    <Resource Include="Images\PSV.png" />
+    <Resource Include="Images\psx.png" />
+    <Resource Include="Images\PSXProjects.png" />
+    <Resource Include="Images\Refresh-icon.png" />
+    <Resource Include="Images\rename.png" />
+    <Resource Include="Images\Replace-File.png" />
+    <Resource Include="Images\Replace-icon.png" />
+    <Resource Include="Images\ResolutionsIcon.png" />
+    <Resource Include="Images\rpcs3-black-png.png" />
+    <Resource Include="Images\rpcs3-color-png.png" />
+    <Resource Include="Images\rpcs3-white-png.png" />
+    <Resource Include="Images\send-icon.png" />
+    <Resource Include="Images\sendfile.png" />
+    <Resource Include="Images\Sign.png" />
+    <Resource Include="Images\SoundFormatsIcon.png" />
+    <Resource Include="Images\split.png" />
+    <Resource Include="Images\Stop-icon.png" />
+    <Resource Include="Images\Tools.png" />
+    <Resource Include="Images\Twitter.png" />
+    <Resource Include="Images\UMD.png" />
+    <Resource Include="Images\Update.png" />
+    <Resource Include="Images\upload.png" />
+    <Resource Include="Images\us.png" />
+    <Resource Include="Images\usb.png" />
+    <Resource Include="Images\Wrap.png" />
+    <Resource Include="Images\XMBicons.png" />
+    <Resource Include="Images\XML-File.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+    <PackageReference Include="DiscUtils.Iso9660" Version="0.16.13" />
+    <PackageReference Include="DiscUtils.Udf" Version="0.16.13" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25104.5739" />
+    <PackageReference Include="FluentFTP" Version="52.1.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.3" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3124.44" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
+    <PackageReference Include="WinSCP" Version="6.3.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="BigInteger">
+      <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\BigInteger.dll</HintPath>
+    </Reference>
+    <Reference Include="GameArchives">
+      <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\GameArchives.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.IMAPI2">
+      <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\Interop.IMAPI2.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.IMAPI2FS">
+      <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\Interop.IMAPI2FS.dll</HintPath>
+    </Reference>
+    <Reference Include="LibOrbisPkg">
+      <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\LibOrbisPkg.dll</HintPath>
+    </Reference>
+    <Reference Include="PARAM.SFO">
+      <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\PARAM.SFO.dll</HintPath>
+    </Reference>
+    <Reference Include="PS4_Tools">
+      <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\PS4_Tools.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="My Project\Settings.Designer.vb">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <None Include="My Project\app.manifest" />
-    <None Include="My Project\Settings.settings">
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PS1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PS2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PS3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ps4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\psp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PSV.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PS5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\av.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\github-mark.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\rpcs3-black-png.png" />
-    <Resource Include="Images\rpcs3-white-png.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\rpcs3-color-png.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\iso.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\download.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\information-button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\create.png" />
-    <Resource Include="Images\patch.png" />
-    <Resource Include="Images\split.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Twitter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Play-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\copy-icon.png" />
-    <Resource Include="Images\send-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\delete.png" />
-    <Resource Include="Images\NewFolder.png" />
-    <Resource Include="Images\rename.png" />
-    <Resource Include="Images\upload.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\gamelibrary.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\merge.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\convert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\box.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\usb.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\burn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ftp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\gamepatches.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\notifications.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\editor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\extract.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\sendfile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\eu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\jp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\us.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\de.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\es.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\fr.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\it.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\blu-ray.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Stop-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Refresh-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Replace-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\OpenFolder-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Pause-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Assets-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Image-File.png" />
-    <Resource Include="Images\Movie-File.png" />
-    <Resource Include="Images\Music-File.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Font-File.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\klog.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Update.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Tools.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Info.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Sign.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Downloader.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ResolutionsIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\SoundFormatsIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PS1Disc.png" />
-    <Resource Include="Images\PS2Disc.png" />
-    <Resource Include="Images\PS3Disc.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\UMD.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="v14Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\controller.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\psx.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\HDD.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Project.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Projects.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\XMBicons.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\BlankPS2Cover.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\PSXProjects.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Wrap.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ConvertISO.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ps2mc.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\blankcover.png" />
-    <Resource Include="Images\BlankPS1Cover.png" />
-    <Resource Include="Images\DIC-File.png" />
-    <Resource Include="Images\disc.png" />
-    <Resource Include="Images\explore.png" />
-    <Resource Include="Images\Folder-Open.png" />
-    <Resource Include="Images\gallery.png" />
-    <Resource Include="Images\Image-Edit.png" />
-    <Resource Include="Images\nothing.png" />
-    <Resource Include="Images\PKG.png" />
-    <Resource Include="Images\ps1mc.png" />
-    <Resource Include="Images\Replace-File.png" />
-    <Resource Include="Images\XML-File.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\color-picker.cur" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('..\packages\WinSCP.6.3.5\build\WinSCP.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WinSCP.6.3.5\build\WinSCP.targets'))" />
-    <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets'))" />
-  </Target>
-  <Target Name="RemoveSatelliteAssemblies" AfterTargets="ResolveAssemblyReferences">
-    <ItemGroup>
-      <ReferenceCopyLocalPaths Remove="@(ReferenceSatellitePaths)" />
-    </ItemGroup>
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
-  <Import Project="..\packages\WinSCP.6.3.5\build\WinSCP.targets" Condition="Exists('..\packages\WinSCP.6.3.5\build\WinSCP.targets')" />
-  <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
-  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2849.39\build\Microsoft.Web.WebView2.targets')" />
+
 </Project>

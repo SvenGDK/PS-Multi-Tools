@@ -25,8 +25,8 @@ Public Class PS5GamePatches
         DownloadQueueListView.ContextMenu = DownloadsContextMenu
 
         'Add already downloaded patch pkgs
-        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
-            For Each PKG In Directory.GetFiles(My.Computer.FileSystem.CurrentDirectory + "\Downloads", "*.pkg", SearchOption.AllDirectories)
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            For Each PKG In Directory.GetFiles(Environment.CurrentDirectory + "\Downloads", "*.pkg", SearchOption.AllDirectories)
                 Dim PKGFileInfo As New FileInfo(PKG)
                 Dim PKGFileName As String = PKGFileInfo.Name
 
@@ -134,13 +134,13 @@ Public Class PS5GamePatches
 
                     'Create a folder to move the downloaded packages into it for merging
                     Dim BaseName As String = SelectedItemAsQueueItem.FileName.Split(New String() {"_sc.pkg"}, StringSplitOptions.None)(0)
-                    Dim NewMergeFolder As String = My.Computer.FileSystem.CurrentDirectory + "\Downloads\" + BaseName
+                    Dim NewMergeFolder As String = Environment.CurrentDirectory + "\Downloads\" + BaseName
                     If Not Directory.Exists(NewMergeFolder) Then
                         Directory.CreateDirectory(NewMergeFolder)
                     End If
 
                     'Get all downloaded packages of this patch and move to the new folder
-                    For Each DownloadedPatchPKG In Directory.GetFiles(My.Computer.FileSystem.CurrentDirectory + "\Downloads", BaseName + "_*.pkg", SearchOption.TopDirectoryOnly)
+                    For Each DownloadedPatchPKG In Directory.GetFiles(Environment.CurrentDirectory + "\Downloads", BaseName + "_*.pkg", SearchOption.TopDirectoryOnly)
                         Dim PackageFileName As String = Path.GetFileName(DownloadedPatchPKG)
                         File.Move(DownloadedPatchPKG, NewMergeFolder + "\" + PackageFileName)
                     Next

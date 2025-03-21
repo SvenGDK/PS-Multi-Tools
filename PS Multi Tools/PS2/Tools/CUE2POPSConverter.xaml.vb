@@ -6,7 +6,7 @@ Public Class CUE2POPSConverter
 
     Private Sub BrowseCueButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseCueButton.Click
         Dim OFD As New Forms.OpenFileDialog() With {.CheckFileExists = True, .Filter = "CUE files (*.cue)|*.cue", .Multiselect = False}
-        If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedCueTextBox.Text = OFD.FileName
         End If
     End Sub
@@ -31,7 +31,7 @@ Public Class CUE2POPSConverter
 
                 'Set CUE2POPS process properties
                 CUE2POPS = New Process()
-                CUE2POPS.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\cue2pops.exe"
+                CUE2POPS.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\cue2pops.exe"
 
                 'Build the arguments string
                 Dim NewStringBuilder As New StringBuilder()

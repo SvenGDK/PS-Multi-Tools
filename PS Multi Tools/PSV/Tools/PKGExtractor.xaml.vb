@@ -13,11 +13,11 @@ Public Class PKGExtractor
 
     Private Sub BrowsePKGButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowsePKGButton.Click
         Dim OFD As New OpenFileDialog With {.Multiselect = False, .Filter = "", .CheckFileExists = True}
-        If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedPKGTextBox.Text = OFD.FileName
 
             Using SFOReader As New Process()
-                SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\PSN_get_pkg_info.exe"
+                SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PSN_get_pkg_info.exe"
                 SFOReader.StartInfo.Arguments = """" + OFD.FileName + """"
                 SFOReader.StartInfo.RedirectStandardOutput = True
                 SFOReader.StartInfo.UseShellExecute = False
@@ -42,7 +42,7 @@ Public Class PKGExtractor
 
     Private Sub BrowseOutputFolderButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseOutputFolderButton.Click
         Dim FBD As New FolderBrowserDialog() With {.RootFolder = Environment.SpecialFolder.Desktop, .ShowNewFolderButton = True}
-        If FBD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
             OutputFolderTextBox.Text = FBD.SelectedPath
         End If
     End Sub
@@ -69,8 +69,8 @@ Public Class PKGExtractor
                 Next
             End Using
         Else 'Use local .tsv file
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Databases\PSV_GAMES.tsv") Then
-                Dim FileReader As String() = File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Databases\PSV_GAMES.tsv", Text.Encoding.UTF8)
+            If File.Exists(Environment.CurrentDirectory + "\Databases\PSV_GAMES.tsv") Then
+                Dim FileReader As String() = File.ReadAllLines(Environment.CurrentDirectory + "\Databases\PSV_GAMES.tsv", Text.Encoding.UTF8)
                 For Each GameLine As String In FileReader.Skip(1) 'Skip 1st line in TSV
                     Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
                     Dim AdditionalInfo As Structures.PackageInfo = Utils.GetFileSizeAndDate(SplittedValues(8), SplittedValues(6))
@@ -127,7 +127,7 @@ Public Class PKGExtractor
     Private Sub PKG2ZIPWoker_DoWork(sender As Object, e As DoWorkEventArgs) Handles PKG2ZIPWoker.DoWork
         'Set PKG2ZIP process properties
         PKG2ZIP = New Process()
-        PKG2ZIP.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\pkg2zip.exe"
+        PKG2ZIP.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\pkg2zip.exe"
         PKG2ZIP.StartInfo.Arguments = e.Argument.ToString()
         PKG2ZIP.StartInfo.RedirectStandardOutput = True
         PKG2ZIP.StartInfo.RedirectStandardError = True

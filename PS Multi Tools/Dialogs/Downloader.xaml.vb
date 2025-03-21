@@ -47,7 +47,7 @@ Public Class Downloader
 
     Public Function CreateNewDownload(Source As String, Optional ModifyName As Boolean = False, Optional NewName As String = "") As Boolean
         'Create Downloads directory if not exists
-        If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        If Not Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads")
 
         If DownloadIcon IsNot Nothing Then DownloadImage.Source = DownloadIcon
 
@@ -64,7 +64,7 @@ Public Class Downloader
             DownloadFileSizeTB.Text = "File Size: " + Utils.WebFileSize(Source).ToString + " MB"
             FileToDownloadTB.Text = "Downloading " + FileName + " ..."
 
-            DownloadClient.DownloadFileAsync(New Uri(Source), My.Computer.FileSystem.CurrentDirectory + "\Downloads\" + FileName)
+            DownloadClient.DownloadFileAsync(New Uri(Source), Environment.CurrentDirectory + "\Downloads\" + FileName)
             Return True
         Else
             Return False
@@ -122,7 +122,7 @@ Public Class Downloader
                 If Not String.IsNullOrEmpty(DownloadQueueItem.FileName) Then
                     'Update progress in PS5GamePatches (if open)
                     Dim OpenGamePatchesWindow As PS5GamePatches
-                    For Each OpenWin In Windows.Application.Current.Windows()
+                    For Each OpenWin In System.Windows.Application.Current.Windows()
                         If OpenWin.ToString = "psmt_lib.PS5GamePatches" Then
                             OpenGamePatchesWindow = CType(OpenWin, PS5GamePatches)
 
@@ -142,7 +142,7 @@ Public Class Downloader
             End If
 
             If MsgBox("Download completed. Open the Downloads folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
-                Process.Start("explorer", My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+                Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
             End If
         End If
     End Sub

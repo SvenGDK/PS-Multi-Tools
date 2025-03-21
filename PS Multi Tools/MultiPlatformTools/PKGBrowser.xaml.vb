@@ -167,8 +167,8 @@ Public Class PKGBrowser
                 Next
             End Using
         Else 'Use local .tsv file
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Databases\" + RequestedList) Then
-                Dim FileReader As String() = File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Databases\" + RequestedList, Text.Encoding.UTF8)
+            If File.Exists(Environment.CurrentDirectory + "\Databases\" + RequestedList) Then
+                Dim FileReader As String() = File.ReadAllLines(Environment.CurrentDirectory + "\Databases\" + RequestedList, Text.Encoding.UTF8)
                 For Each GameLine As String In FileReader.Skip(1) 'Skip 1st line in TSV
                     Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
                     Dim AdditionalInfo As Structures.PackageInfo = Utils.GetFileSizeAndDate(SplittedValues(8), SplittedValues(6))
@@ -258,9 +258,9 @@ Public Class PKGBrowser
 
     Private Sub CreateNewDownload(NPSPKG As NPSPKG)
 
-        If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads\" + Console) Then
-            Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Downloads\" + Console + "\packages")
-            Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Downloads\PS3\exdata")
+        If Not Directory.Exists(Environment.CurrentDirectory + "\Downloads\" + Console) Then
+            Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads\" + Console + "\packages")
+            Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads\PS3\exdata")
         End If
 
         Dim NewWebClient As New WebClient()
@@ -271,14 +271,14 @@ Public Class PKGBrowser
             .PackageSize = NPSPKG.PackageSize,
             .PackageContentID = NPSPKG.PackageContentID,
             .PackageTitleID = NPSPKG.PackageTitleID,
-            .PackageDownloadDestination = My.Computer.FileSystem.CurrentDirectory + "\Downloads\" + Console + "\packages\" + NPSPKG.PackageName + ".pkg",
+            .PackageDownloadDestination = Environment.CurrentDirectory + "\Downloads\" + Console + "\packages\" + NPSPKG.PackageName + ".pkg",
             .PackageDownloadState = "Downloading"}
 
         DownloadsListView.Items.Add(NewPKGDL)
         DownloadsListView.Items.Refresh()
 
         If Not String.IsNullOrEmpty(NPSPKG.PackageURL) Then
-            NewWebClient.DownloadFileAsync(New Uri(NPSPKG.PackageURL), My.Computer.FileSystem.CurrentDirectory + "\Downloads\" + Console + "\packages\" + NPSPKG.PackageName + ".pkg", Stopwatch.StartNew)
+            NewWebClient.DownloadFileAsync(New Uri(NPSPKG.PackageURL), Environment.CurrentDirectory + "\Downloads\" + Console + "\packages\" + NPSPKG.PackageName + ".pkg", Stopwatch.StartNew)
 
             AddHandler NewWebClient.DownloadProgressChanged, Sub(sender As Object, e As DownloadProgressChangedEventArgs)
                                                                  'Update values
@@ -347,13 +347,13 @@ Public Class PKGBrowser
             If Not String.IsNullOrEmpty(ContentID) AndAlso RAP.Length Mod 2 = 0 Then
 
                 'Create exdata folder if not exists
-                If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads\PS3\exdata") Then Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Downloads\PS3\exdata")
+                If Not Directory.Exists(Environment.CurrentDirectory + "\Downloads\PS3\exdata") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads\PS3\exdata")
 
                 Dim bytes As Byte() = New Byte(CInt((RAP.Length / 2) - 1)) {}
                 For index As Integer = 0 To CInt((RAP.Length / 2) - 1)
                     bytes(index) = Convert.ToByte(RAP.Substring(index * 2, 2), 16)
                 Next
-                File.WriteAllBytes(My.Computer.FileSystem.CurrentDirectory + "\Downloads\PS3\exdata\" + ContentID & ".rap", bytes)
+                File.WriteAllBytes(Environment.CurrentDirectory + "\Downloads\PS3\exdata\" + ContentID & ".rap", bytes)
 
                 MsgBox(ContentID & ".rap file created!" & vbCrLf & "You can find it in the 'Downloads\PS3\exdata' folder.", MsgBoxStyle.Information)
             Else
@@ -460,7 +460,7 @@ Public Class PKGBrowser
 
     Private Sub ShowDownloadMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles ShowDownloadMenuItem.Click
         If DownloadsListView.SelectedItem IsNot Nothing Then
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads\" + Console + "\packages")
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads\" + Console + "\packages")
         End If
     End Sub
 
@@ -484,7 +484,7 @@ Public Class PKGBrowser
 
             If Not String.IsNullOrEmpty(SelectedDownload.PackageDownloadDestination) Then
                 If Not File.Exists(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination) + "\pkg2zip.exe") Then
-                    File.Copy(My.Computer.FileSystem.CurrentDirectory + "\Tools\pkg2zip.exe", Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination) + "\pkg2zip.exe", True)
+                    File.Copy(Environment.CurrentDirectory + "\Tools\pkg2zip.exe", Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination) + "\pkg2zip.exe", True)
                 End If
             End If
 
@@ -519,8 +519,8 @@ Public Class PKGBrowser
                     Next
                 End Using
             Else 'Use local .tsv file
-                If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Databases\" + DatabaseToLoad) Then
-                    Dim FileReader As String() = File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Databases\" + DatabaseToLoad, Text.Encoding.UTF8)
+                If File.Exists(Environment.CurrentDirectory + "\Databases\" + DatabaseToLoad) Then
+                    Dim FileReader As String() = File.ReadAllLines(Environment.CurrentDirectory + "\Databases\" + DatabaseToLoad, Text.Encoding.UTF8)
                     For Each GameLine As String In FileReader.Skip(1) 'Skip 1st line in TSV
                         Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
                         Dim AdditionalInfo As Structures.PackageInfo = Utils.GetFileSizeAndDate(SplittedValues(8), SplittedValues(6))

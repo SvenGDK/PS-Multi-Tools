@@ -38,7 +38,7 @@ Public Class PS4Library
         GamesListView.ContextMenu = NewContextMenu
 
         'Add supplemental emulator menu item
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\psOff\psoff.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\psOff\psoff.exe") Then
             NewPS4Menu.Items.Add(EMU_Settings)
         End If
     End Sub
@@ -128,7 +128,7 @@ Public Class PS4Library
             Dim NewPS4Game As New PS4Game()
 
             Using SFOReader As New Process()
-                SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\sfo.exe"
+                SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\sfo.exe"
                 SFOReader.StartInfo.Arguments = """" + Game + """"
                 SFOReader.StartInfo.RedirectStandardOutput = True
                 SFOReader.StartInfo.UseShellExecute = False
@@ -355,7 +355,7 @@ Public Class PS4Library
     End Sub
 
     Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\psOff\psoff.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\psOff\psoff.exe") Then
             If GamesListView.SelectedItem IsNot Nothing Then
                 Dim SelectedPS4Game As PS4Game = CType(GamesListView.SelectedItem, PS4Game)
                 If SelectedPS4Game.GameFileType = PS4Game.GameFileTypes.Backup Then
@@ -363,8 +363,8 @@ Public Class PS4Library
                     If MsgBox("Start " + SelectedPS4Game.GameTitle + " using psOff ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
                         Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                         Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\psOff\psoff.exe"
-                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\psOff\psoff.exe")
+                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\psOff\psoff.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\psOff\psoff.exe")
                         EmulatorLauncherStartInfo.Arguments = "--file """ + SelectedPS4Game.GameFolderPath + "\eboot.bin"""
 
                         EmulatorLauncher.Start()
@@ -411,8 +411,8 @@ Public Class PS4Library
     End Sub
 
     Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
-        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
         End If
     End Sub
 

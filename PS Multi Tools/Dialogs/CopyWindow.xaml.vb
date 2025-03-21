@@ -110,14 +110,14 @@ Public Class CopyWindow
     Private Sub CopyWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles CopyWorker.RunWorkerCompleted
         If MultipleFileList.Count > 1 Then
             If MsgBox("All selected backups copied with success!" + vbCrLf + "Do you want to open the destination folder?", MsgBoxStyle.YesNo, "Done") = MsgBoxResult.Yes Then
-                Process.Start(BackupDestinationPath)
+                Process.Start("explorer", BackupDestinationPath)
                 Close()
             Else
                 Close()
             End If
         Else
             If MsgBox("Selected backup copied with success!" + vbCrLf + "Do you want to open the destination folder?", MsgBoxStyle.YesNo, "Done") = MsgBoxResult.Yes Then
-                Process.Start(BackupDestinationPath)
+                Process.Start("explorer", BackupDestinationPath)
                 Close()
             Else
                 Close()

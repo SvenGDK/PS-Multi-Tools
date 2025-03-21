@@ -11,7 +11,7 @@ Public Class PSVPFSTools
 
     Private Sub BrowseFolderButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseFolderButton.Click
         Dim FBD As New FolderBrowserDialog()
-        If FBD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedFolderTextBox.Text = FBD.SelectedPath
 
             'Check if \sce_sys\param.sfo exists to get the CONTENT ID
@@ -19,7 +19,7 @@ Public Class PSVPFSTools
                 Dim ParamSFOFilePath As String = FBD.SelectedPath + "\sce_sys\param.sfo"
 
                 Using SFOReader As New Process()
-                    SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\sfo.exe"
+                    SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\sfo.exe"
                     SFOReader.StartInfo.Arguments = """" + ParamSFOFilePath + """"
                     SFOReader.StartInfo.RedirectStandardOutput = True
                     SFOReader.StartInfo.UseShellExecute = False
@@ -46,7 +46,7 @@ Public Class PSVPFSTools
 
     Private Sub BrowseOutputFolderButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseOutputFolderButton.Click
         Dim FBD As New FolderBrowserDialog() With {.ShowNewFolderButton = True}
-        If FBD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
             OutputFolderTextBox.Text = FBD.SelectedPath
         End If
     End Sub
@@ -73,8 +73,8 @@ Public Class PSVPFSTools
                 Next
             End Using
         Else 'Use local .tsv file
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Databases\PSV_GAMES.tsv") Then
-                Dim FileReader As String() = File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Databases\PSV_GAMES.tsv", Text.Encoding.UTF8)
+            If File.Exists(Environment.CurrentDirectory + "\Databases\PSV_GAMES.tsv") Then
+                Dim FileReader As String() = File.ReadAllLines(Environment.CurrentDirectory + "\Databases\PSV_GAMES.tsv", Text.Encoding.UTF8)
                 For Each GameLine As String In FileReader.Skip(1) 'Skip 1st line in TSV
                     Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
                     Dim AdditionalInfo As Structures.PackageInfo = Utils.GetFileSizeAndDate(SplittedValues(8), SplittedValues(6))
@@ -115,11 +115,11 @@ Public Class PSVPFSTools
                         Dim OutputPath As String = OutputFolderTextBox.Text
                         Dim zRIFKey As String = zRIFTextBox.Text
 
-                        Cursor = Windows.Input.Cursors.Wait
+                        Cursor = Input.Cursors.Wait
 
                         'Set PSVPFSParser process properties
                         PSVPFSParser = New Process()
-                        PSVPFSParser.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\psvpfsparser.exe"
+                        PSVPFSParser.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\psvpfsparser.exe"
                         PSVPFSParser.StartInfo.Arguments = "-i """ + InputPath + """ -o """ + OutputPath + """ -z " + zRIFKey + " -f cma.henkaku.xyz"
                         PSVPFSParser.StartInfo.RedirectStandardOutput = True
                         PSVPFSParser.StartInfo.RedirectStandardError = True
@@ -182,7 +182,7 @@ Public Class PSVPFSTools
 
         If Dispatcher.CheckAccess() = False Then
             Dispatcher.BeginInvoke(Sub()
-                                       Cursor = Windows.Input.Cursors.Arrow
+                                       Cursor = Input.Cursors.Arrow
                                        If LogTextBox.Text.Contains("keystone: matched retail hmac") Then
                                            If MsgBox("Decryption done! Do you want to open the decrypted folder ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                                                If Not String.IsNullOrEmpty(OutputFolderTextBox.Text) AndAlso Directory.Exists(OutputFolderTextBox.Text) Then
@@ -194,7 +194,7 @@ Public Class PSVPFSTools
                                        End If
                                    End Sub)
         Else
-            Cursor = Windows.Input.Cursors.Arrow
+            Cursor = Input.Cursors.Arrow
             If LogTextBox.Text.Contains("keystone: matched retail hmac") Then
                 If MsgBox("Decryption done! Do you want to open the decrypted folder ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                     If Not String.IsNullOrEmpty(OutputFolderTextBox.Text) AndAlso Directory.Exists(OutputFolderTextBox.Text) Then

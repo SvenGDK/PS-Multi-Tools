@@ -1,21 +1,13 @@
-﻿Imports System.Drawing
-Imports System.IO
-Imports nQuant
+﻿Imports System.IO
+Imports SixLabors.ImageSharp
+Imports SixLabors.ImageSharp.Formats.Png
+Imports SixLabors.ImageSharp.PixelFormats
+Imports SixLabors.ImageSharp.Processing
+Imports SixLabors.ImageSharp.Processing.Processors.Quantization
 
 Public Class PSXAppEditor
 
     Public ProjectDirectory As String
-
-    Private Shared Sub ConvertTo32bppAndDisposeOriginal(ByRef img As Bitmap)
-        Dim bmp = New Bitmap(img.Width, img.Height, Imaging.PixelFormat.Format32bppArgb)
-
-        Using gr = Graphics.FromImage(bmp)
-            gr.DrawImage(img, New Rectangle(0, 0, 76, 108))
-        End Using
-
-        img.Dispose()
-        img = bmp
-    End Sub
 
     Private Sub CoverPictureBox_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles CoverPictureBox.MouseLeftButtonDown
         Dim OFD As New Forms.OpenFileDialog() With {.Title = "Choose your .png file.", .Filter = "png files (*.png)|*.png"}
@@ -29,23 +21,21 @@ Public Class PSXAppEditor
     Private Sub SaveButton_Click(sender As Object, e As RoutedEventArgs) Handles SaveButton.Click
         'Save selected XMB cover as compressed PNG
         If CoverPictureBox.Tag IsNot Nothing Then
-            If CoverPictureBox.Tag.ToString() = ProjectDirectory + "\res\jkt_002.png" = False Then
-                Dim Quantizer As New WuQuantizer()
-                Dim ResizedBitmap As New Bitmap(CType(Image.FromFile(CoverPictureBox.Tag.ToString), Bitmap), New Size(74, 108))
-
-                If ResizedBitmap.PixelFormat <> Imaging.PixelFormat.Format32bppArgb Then
-                    ConvertTo32bppAndDisposeOriginal(ResizedBitmap)
-                End If
-
+            If CoverPictureBox.Tag.ToString() <> ProjectDirectory + "\res\jkt_002.png" Then
                 Try
-                    Using CompressedImage = Quantizer.QuantizeImage(ResizedBitmap)
-                        CompressedImage.Save(ProjectDirectory + "\res\jkt_001.png", Imaging.ImageFormat.Png)
-                        CompressedImage.Save(ProjectDirectory + "\res\jkt_002.png", Imaging.ImageFormat.Png)
-                    End Using
+                    Dim Quantizer As New WuQuantizer()
+
+                    Dim Cover1BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(CoverPictureBox.Tag.ToString(), 74, 108))
+                    Cover1BitmapStream.Position = 0
+
+                    Dim Cover1Image As Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(Cover1BitmapStream)
+                    Cover1Image.Mutate(Function(qtz) qtz.Quantize(Quantizer))
+
+                    Cover1Image.Save(ProjectDirectory + "\res\jkt_001.png", New PngEncoder())
+                    Cover1Image.Save(ProjectDirectory + "\res\jkt_002.png", New PngEncoder())
+
                 Catch ex As Exception
                     MsgBox("Could not compress PNG." + vbCrLf + ex.Message)
-                Finally
-                    ResizedBitmap.Dispose()
                 End Try
             End If
         End If

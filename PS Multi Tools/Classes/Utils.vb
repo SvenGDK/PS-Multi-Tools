@@ -47,7 +47,7 @@ Public Class Utils
 
     Public Shared Sub PlayGameSound(SoundFile As String)
         Using FFPlay As New Process()
-            FFPlay.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ffplay.exe"
+            FFPlay.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ffplay.exe"
             FFPlay.StartInfo.Arguments = "-nodisp -autoexit """ + SoundFile + """"
             FFPlay.StartInfo.UseShellExecute = False
             FFPlay.StartInfo.CreateNoWindow = True
@@ -273,7 +273,7 @@ Public Class Utils
 
     Public Shared Function IsWindowOpen(WindowName As String) As Boolean
         Dim WinFound As Boolean = False
-        For Each OpenWin In Windows.Application.Current.Windows()
+        For Each OpenWin In System.Windows.Application.Current.Windows()
             If OpenWin.ToString = "PS_Multi_Tools." + WindowName Then
                 WinFound = True
                 Return True
@@ -363,7 +363,7 @@ Public Class Utils
         Dim NewProcessStartInfo As New ProcessStartInfo With {
             .UseShellExecute = True,
             .WorkingDirectory = Environment.CurrentDirectory,
-            .FileName = AppDomain.CurrentDomain.BaseDirectory + "PS Multi Tools.exe",
+            .FileName = AppDomain.CurrentDomain.BaseDirectory + "PS Multi Tools NC.exe",
             .Verb = "runas"
         }
 
@@ -373,7 +373,7 @@ Public Class Utils
             Return
         End Try
 
-        Windows.Application.Current.Shutdown()
+        System.Windows.Application.Current.Shutdown()
     End Sub
 
     Public Shared Function IsInt(Input As String) As Boolean
@@ -386,7 +386,7 @@ Public Class Utils
     End Function
 
     Public Shared Sub UpdatePS5ParamEditor(UpdatedParams As PS5ParamClass.PS5Param)
-        For Each OpenWin In Windows.Application.Current.Windows()
+        For Each OpenWin In System.Windows.Application.Current.Windows()
             If OpenWin.ToString = "psmt_lib.PS5ParamEditor" Then
                 CType(OpenWin, PS5ParamEditor).CurrentParamJson = UpdatedParams
                 Exit For
@@ -395,7 +395,7 @@ Public Class Utils
     End Sub
 
     Public Shared Sub UpdatePS5ManifestEditor(UpdatedParams As PS5ManifestClass.PS5Manifest)
-        For Each OpenWin In Windows.Application.Current.Windows()
+        For Each OpenWin In System.Windows.Application.Current.Windows()
             If OpenWin.ToString = "psmt_lib.PS5ManifestEditor" Then
                 CType(OpenWin, PS5ManifestEditor).CurrentManifestJson = UpdatedParams
                 Exit For
@@ -440,7 +440,7 @@ Public Class Utils
 
     Public Shared Function IsPSMultiToolsUpdateAvailable() As Boolean
         If IsURLValid("https://github.com/SvenGDK/PS-Multi-Tools/raw/main/LatestBuild.txt") Then
-            Dim PSMTInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(My.Computer.FileSystem.CurrentDirectory + "\PS Multi Tools.exe")
+            Dim PSMTInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\PS Multi Tools.exe")
             Dim CurrentOrbisProVersion As String = PSMTInfo.FileVersion
 
             Dim VerCheckClient As New WebClient()
@@ -457,20 +457,20 @@ Public Class Utils
     End Function
 
     Public Shared Sub DownloadAndExecuteUpdater()
-        If Not File.Exists(My.Computer.FileSystem.CurrentDirectory + "\PSMT-Update.exe") Then
+        If Not File.Exists(Environment.CurrentDirectory + "\PSMT-Update.exe") Then
             Dim NewWebClient As New WebClient()
-            NewWebClient.DownloadFileAsync(New Uri("https://raw.githubusercontent.com/SvenGDK/PS-Multi-Tools/main/PSMT-Update.exe"), My.Computer.FileSystem.CurrentDirectory + "\PSMT-Update.exe", Stopwatch.StartNew)
+            NewWebClient.DownloadFileAsync(New Uri("https://raw.githubusercontent.com/SvenGDK/PS-Multi-Tools/main/PSMT-Update.exe"), Environment.CurrentDirectory + "\PSMT-Update.exe", Stopwatch.StartNew)
 
             AddHandler NewWebClient.DownloadFileCompleted, Sub(sender As Object, e As AsyncCompletedEventArgs)
                                                                If Not e.Cancelled Then
                                                                    If MsgBox("Do you want to install the update now ?", MsgBoxStyle.YesNo, "Install Update") = MsgBoxResult.Yes Then
-                                                                       Process.Start(My.Computer.FileSystem.CurrentDirectory + "\PSMT-Update.exe")
+                                                                       Process.Start(Environment.CurrentDirectory + "\PSMT-Update.exe")
                                                                        Application.Current.Shutdown()
                                                                    End If
                                                                End If
                                                            End Sub
         Else
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\PSMT-Update.exe")
+            Process.Start(Environment.CurrentDirectory + "\PSMT-Update.exe")
             Application.Current.Shutdown()
         End If
     End Sub
@@ -498,8 +498,8 @@ Public Class Utils
                 Next
             End Using
         Else 'Use local .tsv file
-            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Databases\PSV_GAMES.tsv") Then
-                Dim FileReader As String() = File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Databases\PSV_GAMES.tsv", Encoding.UTF8)
+            If File.Exists(Environment.CurrentDirectory + "\Databases\PSV_GAMES.tsv") Then
+                Dim FileReader As String() = File.ReadAllLines(Environment.CurrentDirectory + "\Databases\PSV_GAMES.tsv", Encoding.UTF8)
                 For Each GameLine As String In FileReader.Skip(1) 'Skip 1st line in TSV
                     Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
                     Dim AdditionalInfo As Structures.PackageInfo = GetFileSizeAndDate(SplittedValues(8), SplittedValues(6))
@@ -626,9 +626,9 @@ Public Class Utils
 
     Public Shared Function IsLocalHDDConnected() As String
         'Query the drives
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Tools\hdl_dump.exe") Then
             Using HDLDump As New Process()
-                HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+                HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
                 HDLDump.StartInfo.Arguments = "query"
                 HDLDump.StartInfo.RedirectStandardOutput = True
                 HDLDump.StartInfo.UseShellExecute = False
@@ -700,12 +700,12 @@ Public Class Utils
     End Function
 
     Public Shared Function GetHDLDriveName() As String
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Tools\hdl_dump.exe") Then
             Dim HDLDriveName As String = ""
 
             'Query the drives
             Using HDLDump As New Process()
-                HDLDump.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\hdl_dump.exe"
+                HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
                 HDLDump.StartInfo.Arguments = "query"
                 HDLDump.StartInfo.RedirectStandardOutput = True
                 HDLDump.StartInfo.UseShellExecute = False
@@ -771,7 +771,7 @@ Public Class Utils
     End Function
 
     Public Shared Sub ReloadProjects()
-        For Each Win In Windows.Application.Current.Windows()
+        For Each Win In System.Windows.Application.Current.Windows()
             If Win.ToString = "psmt_lib.PSXMainWindow" Then
                 CType(Win, PSXMainWindow).ReloadProjects()
                 Exit For
@@ -780,7 +780,7 @@ Public Class Utils
     End Sub
 
     Public Shared Sub ReloadPartitions()
-        For Each Win In Windows.Application.Current.Windows()
+        For Each Win In System.Windows.Application.Current.Windows()
             If Win.ToString = "psmt_lib.PSXPartitionManager" Then
                 CType(Win, PSXPartitionManager).ReloadPartitions()
                 Exit For
@@ -870,6 +870,31 @@ Public Class Utils
             NewGraphics.DrawImage(ImageToConvert, New Rectangle(0, 0, ImageToConvert.Width, ImageToConvert.Height))
         End Using
         Return NewBitmap
+    End Function
+
+    Public Shared Sub CopyDirectory(sourceDir As String, destinationDir As String, recursive As Boolean)
+        Dim dir = New DirectoryInfo(sourceDir)
+        If Not dir.Exists Then Throw New DirectoryNotFoundException($"Source directory not found: {dir.FullName}")
+        Dim dirs As DirectoryInfo() = dir.GetDirectories()
+        Directory.CreateDirectory(destinationDir)
+
+        For Each file As FileInfo In dir.GetFiles()
+            Dim targetFilePath As String = Path.Combine(destinationDir, file.Name)
+            file.CopyTo(targetFilePath)
+        Next
+
+        If recursive Then
+            For Each subDir As DirectoryInfo In dirs
+                Dim newDestinationDir As String = Path.Combine(destinationDir, subDir.Name)
+                CopyDirectory(subDir.FullName, newDestinationDir, True)
+            Next
+        End If
+    End Sub
+
+    Public Shared Function ToMemoryStream(BitmapImage As Bitmap) As MemoryStream
+        Dim NewMemoryStream As New MemoryStream()
+        BitmapImage.Save(NewMemoryStream, Imaging.ImageFormat.Png)
+        Return NewMemoryStream
     End Function
 
 End Class

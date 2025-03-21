@@ -33,7 +33,7 @@ Public Class PS3RCODumper
             End If
 
             Using PS3RCOMage As New Process()
-                PS3RCOMage.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\rcomage.exe"
+                PS3RCOMage.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\rcomage.exe"
                 PS3RCOMage.StartInfo.Arguments = "dump """ + SelectedRCOFileTextBox.Text + """ """ + SelectedOutputFolderTextBox.Text + "\" + XMLFileName + """ --resdir """ + ResDir + """"
                 PS3RCOMage.StartInfo.RedirectStandardOutput = True
                 PS3RCOMage.StartInfo.UseShellExecute = False

@@ -16,12 +16,12 @@ Public Class PSXMainWindow
     Private Sub NewMainWindow_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
         Title = "PSX XMB Manager"
 
-        If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Projects") Then
+        If Not Directory.Exists(Environment.CurrentDirectory + "\Projects") Then
             'Set up a projects directory to save all created projects
-            Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Projects")
+            Directory.CreateDirectory(Environment.CurrentDirectory + "\Projects")
         Else
             'Load saved projects
-            For Each SavedProject In Directory.GetFiles(My.Computer.FileSystem.CurrentDirectory + "\Projects", "*.CFG")
+            For Each SavedProject In Directory.GetFiles(Environment.CurrentDirectory + "\Projects", "*.CFG")
                 Dim NewCBProjectItem As New ComboBoxProjectItem() With {.ProjectFile = Path.GetFullPath(SavedProject), .ProjectName = Path.GetFileNameWithoutExtension(SavedProject)}
                 Dim ProjectState As String = File.ReadAllLines(SavedProject)(5).Split("="c)(1)
 
@@ -39,10 +39,10 @@ Public Class PSXMainWindow
         PreparedProjectsComboBox.DisplayMemberPath = "ProjectName"
 
         'Set wnbd-client
-        If File.Exists(My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\Ceph\bin\wnbd-client.exe") Then
-            WNBDClientPath = My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\Ceph\bin\wnbd-client.exe"
-        ElseIf File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\wnbd-client.exe") Then
-            WNBDClientPath = My.Computer.FileSystem.CurrentDirectory + "\Tools\wnbd-client.exe"
+        If File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\Ceph\bin\wnbd-client.exe") Then
+            WNBDClientPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\Ceph\bin\wnbd-client.exe"
+        ElseIf File.Exists(Environment.CurrentDirectory + "\Tools\wnbd-client.exe") Then
+            WNBDClientPath = Environment.CurrentDirectory + "\Tools\wnbd-client.exe"
         End If
 
         'Check if NBD driver is installed
@@ -134,9 +134,9 @@ Public Class PSXMainWindow
         End If
 
         'Check if Dokan driver is installed
-        If Directory.Exists(My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\Dokan") Then
+        If Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\Dokan") Then
             Dim DokanLibraryFolder As String = ""
-            For Each Folder In Directory.GetDirectories(My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\Dokan")
+            For Each Folder In Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\Dokan")
                 Dim FolderInfo As New DirectoryInfo(Folder)
                 If FolderInfo.Name.Contains("DokanLibrary") Or FolderInfo.Name.Contains("Dokan Library") Then
                     DokanLibraryFolder = Folder
@@ -176,10 +176,10 @@ Public Class PSXMainWindow
         If ConnectButton.Content.ToString = "Connect" Then
 
             Using WNBDConnectClient As New Process()
-                If File.Exists(My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\Ceph\bin\wnbd-client.exe") Then
-                    WNBDConnectClient.StartInfo.FileName = My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\Ceph\bin\wnbd-client.exe"
+                If File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\Ceph\bin\wnbd-client.exe") Then
+                    WNBDConnectClient.StartInfo.FileName = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\Ceph\bin\wnbd-client.exe"
                 Else
-                    WNBDConnectClient.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\wnbd-client.exe"
+                    WNBDConnectClient.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\wnbd-client.exe"
                 End If
 
                 WNBDConnectClient.StartInfo.Arguments = "map PSXHDD " + PSXIPTextBox.Text
@@ -193,10 +193,10 @@ Public Class PSXMainWindow
         ElseIf ConnectButton.Content.ToString = "Disconnect" Then
 
             Using WNBDProcess As New Process()
-                If File.Exists(My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\Ceph\bin\wnbd-client.exe") Then
-                    WNBDProcess.StartInfo.FileName = My.Computer.FileSystem.SpecialDirectories.ProgramFiles + "\Ceph\bin\wnbd-client.exe"
+                If File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\Ceph\bin\wnbd-client.exe") Then
+                    WNBDProcess.StartInfo.FileName = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\Ceph\bin\wnbd-client.exe"
                 Else
-                    WNBDProcess.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\wnbd-client.exe"
+                    WNBDProcess.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\wnbd-client.exe"
                 End If
 
                 WNBDProcess.StartInfo.Arguments = "unmap PSXHDD"
@@ -219,9 +219,9 @@ Public Class PSXMainWindow
         ProjectListComboBox.Items.Clear()
         PreparedProjectsComboBox.Items.Clear()
 
-        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Projects") Then
+        If Directory.Exists(Environment.CurrentDirectory + "\Projects") Then
             'Load saved projects
-            For Each SavedProject In Directory.GetFiles(My.Computer.FileSystem.CurrentDirectory + "\Projects", "*.CFG")
+            For Each SavedProject In Directory.GetFiles(Environment.CurrentDirectory + "\Projects", "*.CFG")
                 Dim NewCBProjectItem As New ComboBoxProjectItem() With {.ProjectFile = SavedProject, .ProjectName = Path.GetFileNameWithoutExtension(SavedProject)}
                 Dim ProjectState As String = File.ReadAllLines(SavedProject)(5).Split("="c)(1)
 
@@ -233,7 +233,7 @@ Public Class PSXMainWindow
                 End If
             Next
         Else
-            MsgBox("Could not find the Projects directory at " + My.Computer.FileSystem.CurrentDirectory + "\Projects", MsgBoxStyle.Critical, "Error")
+            MsgBox("Could not find the Projects directory at " + Environment.CurrentDirectory + "\Projects", MsgBoxStyle.Critical, "Error")
         End If
     End Sub
 
@@ -431,7 +431,7 @@ Public Class PSXMainWindow
                 If ProjectTYPE = "APP" Then
                     'Wrap the application ELF as EXECUTE.KELF
                     Dim WrapProcess As New Process()
-                    WrapProcess.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\SCEDoormat_NoME.exe"
+                    WrapProcess.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\SCEDoormat_NoME.exe"
                     WrapProcess.StartInfo.Arguments = """" + ProjectELForISO + """ " + ProjectDIR + "\EXECUTE.KELF"
                     WrapProcess.StartInfo.CreateNoWindow = True
                     WrapProcess.Start()
@@ -451,15 +451,15 @@ Public Class PSXMainWindow
                     Select Case GameType
                         Case "PS1"
                             'Copy included POPSTARTER to project folder
-                            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\POPSTARTER.KELF") Then
-                                File.Copy(My.Computer.FileSystem.CurrentDirectory + "\Tools\POPSTARTER.KELF", ProjectDIR + "\EXECUTE.KELF", True) 'Save as EXECUTE.KELF
+                            If File.Exists(Environment.CurrentDirectory + "\Tools\POPSTARTER.KELF") Then
+                                File.Copy(Environment.CurrentDirectory + "\Tools\POPSTARTER.KELF", ProjectDIR + "\EXECUTE.KELF", True) 'Save as EXECUTE.KELF
                             Else
                                 MsgBox("POPSTARTER.KELF is missing in the Tools directory.", MsgBoxStyle.Critical, "Error setting up the project")
                             End If
                         Case "PS2"
                             'Copy included OPL-Launcher to project folder
-                            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\EXECUTE.KELF") Then
-                                File.Copy(My.Computer.FileSystem.CurrentDirectory + "\Tools\EXECUTE.KELF", ProjectDIR + "\EXECUTE.KELF", True)
+                            If File.Exists(Environment.CurrentDirectory + "\Tools\EXECUTE.KELF") Then
+                                File.Copy(Environment.CurrentDirectory + "\Tools\EXECUTE.KELF", ProjectDIR + "\EXECUTE.KELF", True)
                             Else
                                 'OPL-Launcher not found...
                                 Dim HomebrewELF As String = ""
@@ -471,7 +471,7 @@ Public Class PSXMainWindow
                                 If Not String.IsNullOrEmpty(HomebrewELF) Then
                                     If HomebrewELF = "https://github.com/ps2homebrew/OPL-Launcher/releases/download/latest/OPL-Launcher.elf" Then
                                         'Download latest OPL-Launcher
-                                        ContentDownloader.DownloadFile("https://github.com/ps2homebrew/OPL-Launcher/releases/download/latest/OPL-Launcher.elf", My.Computer.FileSystem.CurrentDirectory + "\Tools\OPL-Launcher.elf")
+                                        ContentDownloader.DownloadFile("https://github.com/ps2homebrew/OPL-Launcher/releases/download/latest/OPL-Launcher.elf", Environment.CurrentDirectory + "\Tools\OPL-Launcher.elf")
                                     End If
                                 Else
                                     MsgBox("Not valid file provided, aborting ...", MsgBoxStyle.Exclamation, "Aborting")
@@ -480,8 +480,8 @@ Public Class PSXMainWindow
 
                                 'Wrap OPL-Launcher as EXECUTE.KELF
                                 Dim WrapProcess As New Process()
-                                WrapProcess.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\SCEDoormat_NoME.exe"
-                                WrapProcess.StartInfo.Arguments = """" + My.Computer.FileSystem.CurrentDirectory + "\Tools\OPL-Launcher.elf"" """ + ProjectDIR + "\EXECUTE.KELF"""
+                                WrapProcess.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\SCEDoormat_NoME.exe"
+                                WrapProcess.StartInfo.Arguments = """" + Environment.CurrentDirectory + "\Tools\OPL-Launcher.elf"" """ + ProjectDIR + "\EXECUTE.KELF"""
                                 WrapProcess.StartInfo.CreateNoWindow = True
                                 WrapProcess.Start()
                                 WrapProcess.WaitForExit()

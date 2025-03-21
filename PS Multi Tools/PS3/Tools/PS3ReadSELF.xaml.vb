@@ -14,7 +14,7 @@ Public Class PS3ReadSELF
         If Not String.IsNullOrEmpty(SelectedFileTextBox.Text) And File.Exists(SelectedFileTextBox.Text) Then
             Dim ProcessOutput As String = ""
             Using ReadSelf As New Process()
-                ReadSelf.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\readself.exe"
+                ReadSelf.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\readself.exe"
                 ReadSelf.StartInfo.Arguments = """" + SelectedFileTextBox.Text + """"
                 ReadSelf.StartInfo.RedirectStandardOutput = True
                 ReadSelf.StartInfo.UseShellExecute = False

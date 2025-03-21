@@ -3,7 +3,6 @@ Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
 Imports WinSCP
-Imports Cursors = System.Windows.Input.Cursors
 
 Public Class PS5FTPGrabber
 
@@ -70,11 +69,11 @@ Public Class PS5FTPGrabber
                 If String.IsNullOrEmpty(SelectedDirectoryTextBox.Text) Then
 
                     'If not path is specified then create a "Dumps" folder
-                    If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Dumps") Then
-                        Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Dumps")
+                    If Not Directory.Exists(Environment.CurrentDirectory + "\Dumps") Then
+                        Directory.CreateDirectory(Environment.CurrentDirectory + "\Dumps")
                     End If
                     'Set the new folder
-                    SelectedPath = My.Computer.FileSystem.CurrentDirectory + "\Dumps"
+                    SelectedPath = Environment.CurrentDirectory + "\Dumps"
 
                 End If
 
@@ -170,7 +169,7 @@ Public Class PS5FTPGrabber
             NewSession.Open(sessionOptions)
 
             ' Get the app0 folder
-            For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/mnt/sandbox/pfsmnt/", "", EnumerationOptions.MatchDirectories)
+            For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/mnt/sandbox/pfsmnt/", "", WinSCP.EnumerationOptions.MatchDirectories)
                 If DirectoryInFTP.Name.EndsWith("app0") Then
                     App0RemoteFolderName = DirectoryInFTP.Name
                     App0RemoteFolder = DirectoryInFTP.FullName
@@ -191,7 +190,7 @@ Public Class PS5FTPGrabber
                 TotalFiles = 0
                 CopiedFiles = 0
 
-                For Each FileInFTP In NewSession.EnumerateRemoteFiles(App0RemoteFolder, "", EnumerationOptions.AllDirectories)
+                For Each FileInFTP In NewSession.EnumerateRemoteFiles(App0RemoteFolder, "", WinSCP.EnumerationOptions.AllDirectories)
                     TotalFiles += 1
                 Next
             Catch ex As Exception
@@ -223,7 +222,7 @@ Public Class PS5FTPGrabber
 
             If String.IsNullOrEmpty(App0RemoteFolderName) Then
                 ' Get the app0 folder
-                For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/mnt/sandbox/pfsmnt/", "", EnumerationOptions.MatchDirectories)
+                For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/mnt/sandbox/pfsmnt/", "", WinSCP.EnumerationOptions.MatchDirectories)
                     If DirectoryInFTP.Name.EndsWith("app0") Then
                         App0RemoteFolderName = DirectoryInFTP.Name
                         App0RemoteFolder = DirectoryInFTP.FullName
@@ -235,13 +234,13 @@ Public Class PS5FTPGrabber
             GameID = App0RemoteFolderName.Split("-"c)(0)
 
             'Check if the metadata exists
-            For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/user/appmeta/", "", EnumerationOptions.MatchDirectories)
+            For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/user/appmeta/", "", WinSCP.EnumerationOptions.MatchDirectories)
                 If DirectoryInFTP.Name = GameID Then
                     AppMetadataRemoteFolder = DirectoryInFTP.FullName
                     Exit For
                 End If
             Next
-            For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/system_data/priv/appmeta/", "", EnumerationOptions.MatchDirectories)
+            For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/system_data/priv/appmeta/", "", WinSCP.EnumerationOptions.MatchDirectories)
                 If DirectoryInFTP.Name = GameID Then
                     SystemAppMetadataRemoteFolder = DirectoryInFTP.FullName
                     Exit For
@@ -249,7 +248,7 @@ Public Class PS5FTPGrabber
             Next
 
             'Check for npbind.dat
-            For Each FileInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/system_data/priv/appmeta/" + GameID + "/trophy2/", "", EnumerationOptions.AllDirectories)
+            For Each FileInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/system_data/priv/appmeta/" + GameID + "/trophy2/", "", WinSCP.EnumerationOptions.AllDirectories)
                 If FileInFTP.Name = "npbind.dat" Then
                     NPBind = FileInFTP.FullName
                     Exit For
@@ -269,10 +268,10 @@ Public Class PS5FTPGrabber
                 TotalFiles = 3
                 CopiedFiles = 0
 
-                For Each FileInFTP In NewSession.EnumerateRemoteFiles(AppMetadataRemoteFolder, "", EnumerationOptions.AllDirectories)
+                For Each FileInFTP In NewSession.EnumerateRemoteFiles(AppMetadataRemoteFolder, "", WinSCP.EnumerationOptions.AllDirectories)
                     TotalFiles += 1
                 Next
-                For Each FileInFTP In NewSession.EnumerateRemoteFiles(SystemAppMetadataRemoteFolder, "", EnumerationOptions.AllDirectories)
+                For Each FileInFTP In NewSession.EnumerateRemoteFiles(SystemAppMetadataRemoteFolder, "", WinSCP.EnumerationOptions.AllDirectories)
                     TotalFiles += 1
                 Next
             Catch ex As Exception
@@ -303,7 +302,7 @@ Public Class PS5FTPGrabber
         TotalFiles = 0
         CopiedFiles = 0
 
-        For Each FileInFTP In NewSession.EnumerateRemoteFiles(RemotePath, "", EnumerationOptions.AllDirectories)
+        For Each FileInFTP In NewSession.EnumerateRemoteFiles(RemotePath, "", WinSCP.EnumerationOptions.AllDirectories)
             TotalFiles += 1
         Next
 
@@ -419,9 +418,9 @@ Public Class PS5FTPGrabber
     End Sub
 
     Private Sub BrowseFolderButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseFolderButton.Click
-        Dim FBD As New Windows.Forms.FolderBrowserDialog()
+        Dim FBD As New Forms.FolderBrowserDialog()
 
-        If FBD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedDirectoryTextBox.Text = FBD.SelectedPath
             SelectedPath = FBD.SelectedPath
         End If
@@ -449,20 +448,20 @@ Public Class PS5FTPGrabber
         'Get npbind.dat
         If Not String.IsNullOrEmpty(NPBind) Then
 
-            If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "/Cache") Then
-                Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "/Cache")
+            If Not Directory.Exists(Environment.CurrentDirectory + "/Cache") Then
+                Directory.CreateDirectory(Environment.CurrentDirectory + "/Cache")
             End If
 
-            NewSession.GetFileToDirectory(NPBind, My.Computer.FileSystem.CurrentDirectory + "\Cache")
+            NewSession.GetFileToDirectory(NPBind, Environment.CurrentDirectory + "\Cache")
         End If
 
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\npbind.dat") Then
+        If File.Exists(Environment.CurrentDirectory + "\Cache\npbind.dat") Then
 
             'Get NPWR id
             Dim NPWR As String = String.Empty
             Using WindowsCMD As New Process()
                 WindowsCMD.StartInfo.FileName = "cmd"
-                WindowsCMD.StartInfo.Arguments = "/c strings -nobanner """ + My.Computer.FileSystem.CurrentDirectory + "\Cache\npbind.dat" + """ | findstr NPWR"
+                WindowsCMD.StartInfo.Arguments = "/c strings -nobanner """ + Environment.CurrentDirectory + "\Cache\npbind.dat" + """ | findstr NPWR"
                 WindowsCMD.StartInfo.RedirectStandardOutput = True
                 WindowsCMD.StartInfo.UseShellExecute = False
                 WindowsCMD.StartInfo.CreateNoWindow = True
@@ -481,7 +480,7 @@ Public Class PS5FTPGrabber
             If Not String.IsNullOrEmpty(NPWR) Then
 
                 'Check if folder exists for uds and get the file
-                For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/user/np_uds/nobackup/conf/", "", EnumerationOptions.MatchDirectories)
+                For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/user/np_uds/nobackup/conf/", "", WinSCP.EnumerationOptions.MatchDirectories)
                     If DirectoryInFTP.Name = NPWR Then
                         NewSession.GetFileToDirectory(DirectoryInFTP.FullName + "/uds.ucp", SelectedPath + "\sce_sys\uds")
                         Exit For
@@ -490,12 +489,12 @@ Public Class PS5FTPGrabber
 
                 If File.Exists(SelectedPath + "\sce_sys\uds\uds.ucp") Then
                     If Not File.Exists(SelectedPath + "\sce_sys\uds\uds00.ucp") Then
-                        My.Computer.FileSystem.RenameFile(SelectedPath + "\sce_sys\uds\uds.ucp", "uds00.ucp")
+                        Rename(SelectedPath + "\sce_sys\uds\uds.ucp", "uds00.ucp")
                     End If
                 End If
 
                 'Check if folder exists for trophy and get the file
-                For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/user/trophy2/nobackup/conf/", "", EnumerationOptions.MatchDirectories)
+                For Each DirectoryInFTP As RemoteFileInfo In NewSession.EnumerateRemoteFiles("/user/trophy2/nobackup/conf/", "", WinSCP.EnumerationOptions.MatchDirectories)
                     If DirectoryInFTP.Name = NPWR Then
                         NewSession.GetFileToDirectory(DirectoryInFTP.FullName + "/TROPHY.UCP", SelectedPath + "\sce_sys\trophy2")
                         Exit For
@@ -504,7 +503,7 @@ Public Class PS5FTPGrabber
 
                 If File.Exists(SelectedPath + "\sce_sys\trophy2\TROPHY.UCP") Then
                     If Not File.Exists(SelectedPath + "\sce_sys\trophy2\trophy00.ucp") Then
-                        My.Computer.FileSystem.RenameFile(SelectedPath + "\sce_sys\trophy2\TROPHY.UCP", "trophy00.ucp")
+                        Rename(SelectedPath + "\sce_sys\trophy2\TROPHY.UCP", "trophy00.ucp")
                     End If
                 End If
 
@@ -547,7 +546,7 @@ Public Class PS5FTPGrabber
 
     End Sub
 
-    Private Sub SelectedFolderComboBox_SelectionChanged(sender As Object, e As Windows.Controls.SelectionChangedEventArgs) Handles SelectedFolderComboBox.SelectionChanged
+    Private Sub SelectedFolderComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles SelectedFolderComboBox.SelectionChanged
         If SelectedFolderComboBox.SelectedItem IsNot Nothing Then
             'Make options available if first entry is selected (should be "/mnt/sandbox/pfsmnt/")
             If SelectedFolderComboBox.SelectedIndex = 0 Then
@@ -679,9 +678,9 @@ Public Class PS5FTPGrabber
 
         Cursor = Cursors.Arrow
 
-        If SelectedPath = My.Computer.FileSystem.CurrentDirectory + "\Dumps" Then
+        If SelectedPath = Environment.CurrentDirectory + "\Dumps" Then
             If MsgBox("SELF files dumped!" + vbCrLf + "Open the 'Dumps' folder ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                Process.Start("explorer", My.Computer.FileSystem.CurrentDirectory + "\Dumps")
+                Process.Start("explorer", Environment.CurrentDirectory + "\Dumps")
             End If
         Else
             MsgBox("SELF files dumped!", MsgBoxStyle.Information)

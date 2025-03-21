@@ -161,7 +161,7 @@ Public Class PS3ISOTools
     Private Sub CreateISOButton_Click(sender As Object, e As RoutedEventArgs) Handles CreateISOButton.Click
         If Not String.IsNullOrEmpty(SelectedGameBackupFolderTextBox.Text) And Not String.IsNullOrEmpty(SelectedISOOutputTextBox.Text) Then
             Using makeps3iso As New Process()
-                makeps3iso.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\makeps3iso.exe"
+                makeps3iso.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\makeps3iso.exe"
 
                 If SplitISOCheckBox.IsChecked Then
                     makeps3iso.StartInfo.Arguments = "-s """ + SelectedGameBackupFolderTextBox.Text + """ """ + SelectedISOOutputTextBox.Text + """"
@@ -190,7 +190,7 @@ Public Class PS3ISOTools
     Private Sub ExtractISOButton_Click(sender As Object, e As RoutedEventArgs) Handles ExtractISOButton.Click
         If Not String.IsNullOrEmpty(SelectedExtractISOTextBox.Text) And Not String.IsNullOrEmpty(SelectedISOExtractOutputTextBox.Text) Then
             Using extractps3iso As New Process()
-                extractps3iso.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\extractps3iso.exe"
+                extractps3iso.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\extractps3iso.exe"
 
                 If SplitExtractISOCheckBox.IsChecked Then
                     extractps3iso.StartInfo.Arguments = "-s """ + SelectedExtractISOTextBox.Text + """ """ + SelectedISOExtractOutputTextBox.Text + """"
@@ -219,7 +219,7 @@ Public Class PS3ISOTools
     Private Sub SplitISOButton_Click(sender As Object, e As RoutedEventArgs) Handles SplitISOButton.Click
         If Not String.IsNullOrEmpty(SelectedSplitISOTextBox.Text) Then
             Using splitps3iso As New Process()
-                splitps3iso.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\splitps3iso.exe"
+                splitps3iso.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\splitps3iso.exe"
                 splitps3iso.StartInfo.Arguments = """" + SelectedSplitISOTextBox.Text + """"
                 splitps3iso.StartInfo.RedirectStandardOutput = True
                 splitps3iso.StartInfo.RedirectStandardError = True
@@ -242,7 +242,7 @@ Public Class PS3ISOTools
     Private Sub PatchISOButton_Click(sender As Object, e As RoutedEventArgs) Handles PatchISOButton.Click
         If Not String.IsNullOrEmpty(SelectedPatchISOTextBox.Text) And SelectedPatchVersionComboBox.SelectedItem IsNot Nothing Then
             Using patchps3iso As New Process()
-                patchps3iso.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\patchps3iso.exe"
+                patchps3iso.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\patchps3iso.exe"
                 patchps3iso.StartInfo.Arguments = """" + SelectedPatchISOTextBox.Text + """ " + SelectedPatchVersionComboBox.Text
                 patchps3iso.StartInfo.RedirectStandardOutput = True
                 patchps3iso.StartInfo.RedirectStandardError = True
@@ -266,7 +266,7 @@ Public Class PS3ISOTools
         If Not String.IsNullOrEmpty(SelectedGameBackupFolderUsingPS3netsrvTextBox.Text) And Not String.IsNullOrEmpty(SelectedISOOutputUsingPS3netsrvTextBox.Text) Then
             PS3NetSrvProcessAction = "CreateISO"
             PS3NetSrvProcess = New Process() With {.EnableRaisingEvents = True}
-            PS3NetSrvProcess.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe"
+            PS3NetSrvProcess.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\ps3netsrv\ps3netsrv.exe"
             PS3NetSrvProcess.StartInfo.Arguments = """" + SelectedGameBackupFolderUsingPS3netsrvTextBox.Text + """ ISO"
             PS3NetSrvProcess.Start()
             PS3NetSrvProcess.WaitForExit()
@@ -285,10 +285,10 @@ Public Class PS3ISOTools
             Case "CreateISO"
                 Dim InputFolderName As String = New DirectoryInfo(SelectedGameBackupFolderUsingPS3netsrvTextBox.Text).Name
 
-                If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv\" + InputFolderName + ".iso") Then
-                    File.Move(My.Computer.FileSystem.CurrentDirectory + "\Tools\ps3netsrv\" + InputFolderName + ".iso", SelectedISOOutputUsingPS3netsrvTextBox.Text + "\" + InputFolderName + ".iso")
-                ElseIf File.Exists(My.Computer.FileSystem.CurrentDirectory + "\" + InputFolderName + ".iso") Then
-                    File.Move(My.Computer.FileSystem.CurrentDirectory + "\" + InputFolderName + ".iso", SelectedISOOutputUsingPS3netsrvTextBox.Text + "\" + InputFolderName + ".iso")
+                If File.Exists(Environment.CurrentDirectory + "\Tools\ps3netsrv\" + InputFolderName + ".iso") Then
+                    File.Move(Environment.CurrentDirectory + "\Tools\ps3netsrv\" + InputFolderName + ".iso", SelectedISOOutputUsingPS3netsrvTextBox.Text + "\" + InputFolderName + ".iso")
+                ElseIf File.Exists(Environment.CurrentDirectory + "\" + InputFolderName + ".iso") Then
+                    File.Move(Environment.CurrentDirectory + "\" + InputFolderName + ".iso", SelectedISOOutputUsingPS3netsrvTextBox.Text + "\" + InputFolderName + ".iso")
                 End If
 
                 MsgBox("ISO file created with success!" + vbCrLf + SelectedISOOutputUsingPS3netsrvTextBox.Text + "\" + InputFolderName + ".iso", MsgBoxStyle.Information)

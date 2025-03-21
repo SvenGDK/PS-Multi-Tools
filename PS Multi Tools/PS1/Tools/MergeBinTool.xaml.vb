@@ -18,9 +18,9 @@ Public Class MergeBinTool
         End Property
     End Structure
 
-    Private Sub BrowseCUEFilesButton_Click(sender As Object, e As Windows.RoutedEventArgs) Handles BrowseCUEFilesButton.Click
+    Private Sub BrowseCUEFilesButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseCUEFilesButton.Click
         Dim OFD As New OpenFileDialog() With {.CheckFileExists = True, .Multiselect = True, .Filter = "cue files (*.cue)|*.cue"}
-        If OFD.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
 
             If OFD.FileNames.Count > 1 Then
                 For Each SelectedCUE In OFD.FileNames
@@ -35,7 +35,7 @@ Public Class MergeBinTool
         End If
     End Sub
 
-    Private Sub MergeSelectedButton_Click(sender As Object, e As Windows.RoutedEventArgs) Handles MergeSelectedButton.Click
+    Private Sub MergeSelectedButton_Click(sender As Object, e As RoutedEventArgs) Handles MergeSelectedButton.Click
         If CUEsListView.SelectedItem IsNot Nothing Then
 
             If Dispatcher.CheckAccess() = False Then
@@ -54,7 +54,7 @@ Public Class MergeBinTool
 
             'Set BinMerge process properties
             BinMerge = New Process()
-            BinMerge.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\binmerge.exe"
+            BinMerge.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\binmerge.exe"
             BinMerge.StartInfo.Arguments = """" + SelectedCUEFile.FileName + """ " + """" + NewBaseNameTitle + """"
             BinMerge.StartInfo.RedirectStandardOutput = True
             BinMerge.StartInfo.RedirectStandardError = True
@@ -99,7 +99,7 @@ Public Class MergeBinTool
         End If
     End Sub
 
-    Private Sub MergeAllButton_Click(sender As Object, e As Windows.RoutedEventArgs) Handles MergeAllButton.Click
+    Private Sub MergeAllButton_Click(sender As Object, e As RoutedEventArgs) Handles MergeAllButton.Click
         Dim FailCount As Integer = 0
 
         If Not CUEsListView.Items.Count = 0 Then
@@ -119,7 +119,7 @@ Public Class MergeBinTool
 
                 'Set BinMerge process properties
                 BinMerge = New Process()
-                BinMerge.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\binmerge.exe"
+                BinMerge.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\binmerge.exe"
                 BinMerge.StartInfo.Arguments = """" + CUE.FileName + """ " + """" + NewBaseNameTitle + """"
                 BinMerge.StartInfo.RedirectStandardOutput = True
                 BinMerge.StartInfo.RedirectStandardError = True
@@ -164,7 +164,7 @@ Public Class MergeBinTool
                 BinMerge.WaitForExit()
             Next
 
-            Cursor = Windows.Input.Cursors.Arrow
+            Cursor = Input.Cursors.Arrow
         End If
     End Sub
 

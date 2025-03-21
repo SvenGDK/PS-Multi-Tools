@@ -35,7 +35,7 @@ Public Class PSPLibrary
         GamesListView.ContextMenu = NewContextMenu
 
         'Add supplemental emulator menu item
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe") Then
             NewPSPMenu.Items.Add(EMU_Settings)
         End If
     End Sub
@@ -49,7 +49,7 @@ Public Class PSPLibrary
             Dim NewPSPGame As New PSPGame()
 
             Using SFOReader As New Process()
-                SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\sfo.exe"
+                SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\sfo.exe"
                 SFOReader.StartInfo.Arguments = """" + Game + """"
                 SFOReader.StartInfo.RedirectStandardOutput = True
                 SFOReader.StartInfo.UseShellExecute = False
@@ -156,14 +156,14 @@ Public Class PSPLibrary
             Dim ISOCacheFolderName As String = Path.GetFileNameWithoutExtension(ISOFileInfo.Name)
 
             'Create cache dir for PSP games
-            If Not Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName) Then
-                Directory.CreateDirectory(My.Computer.FileSystem.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName)
+            If Not Directory.Exists(Environment.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName) Then
+                Directory.CreateDirectory(Environment.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName)
 
                 'Extract files to display infos
                 Using ISOExtractor As New Process()
-                    ISOExtractor.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\7z.exe"
+                    ISOExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
                     ISOExtractor.StartInfo.Arguments = "e """ + GameISO + """" +
-                        " -o""" + My.Computer.FileSystem.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName + """" +
+                        " -o""" + Environment.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName + """" +
                         " PSP_GAME/PARAM.SFO PARAM.SFO PSP_GAME/ICON0.PNG ICON0.PNG PSP_GAME/PIC1.PNG PIC1.PNG PSP_GAME/SND0.AT3 SND0.AT3"
                     ISOExtractor.StartInfo.RedirectStandardOutput = True
                     ISOExtractor.StartInfo.UseShellExecute = False
@@ -175,8 +175,8 @@ Public Class PSPLibrary
 
             'Read PARAM.SFO
             Using SFOReader As New Process()
-                SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\sfo.exe"
-                SFOReader.StartInfo.Arguments = """" + My.Computer.FileSystem.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName + "\PARAM.SFO" + """"
+                SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\sfo.exe"
+                SFOReader.StartInfo.Arguments = """" + Environment.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName + "\PARAM.SFO" + """"
                 SFOReader.StartInfo.RedirectStandardOutput = True
                 SFOReader.StartInfo.UseShellExecute = False
                 SFOReader.StartInfo.CreateNoWindow = True
@@ -203,7 +203,7 @@ Public Class PSPLibrary
                     Next
 
                     'Load game files
-                    Dim PSPGAMEFolder As String = My.Computer.FileSystem.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName
+                    Dim PSPGAMEFolder As String = Environment.CurrentDirectory + "\Cache\PSP\" + ISOCacheFolderName
                     If File.Exists(PSPGAMEFolder + "\ICON0.PNG") Then
                         If Dispatcher.CheckAccess() = False Then
                             Dispatcher.BeginInvoke(Sub()
@@ -301,8 +301,8 @@ Public Class PSPLibrary
     End Sub
 
     Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
-        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
         End If
     End Sub
 
@@ -336,15 +336,15 @@ Public Class PSPLibrary
     End Sub
 
     Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe") Then
             If GamesListView.SelectedItem IsNot Nothing Then
                 Dim SelectedPSPGame As PSPGame = CType(GamesListView.SelectedItem, PSPGame)
 
                 If MsgBox("Start " + SelectedPSPGame.GameTitle + " using PPSSPP ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
                     Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                     Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                    EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe"
-                    EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe")
+                    EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe"
+                    EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\ppsspp\PPSSPPWindows64.exe")
 
                     Select Case SelectedPSPGame.GameFileType
                         Case PSPGame.GameFileTypes.Backup

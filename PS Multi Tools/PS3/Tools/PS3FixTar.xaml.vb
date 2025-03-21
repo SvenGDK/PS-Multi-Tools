@@ -14,7 +14,7 @@ Public Class PS3FixTar
         If Not String.IsNullOrEmpty(SelectedTarFileTextBox.Text) And File.Exists(SelectedTarFileTextBox.Text) Then
             Dim ProcessOutput As String = ""
             Using FixTar As New Process()
-                FixTar.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\fix_tar_v3.exe"
+                FixTar.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\fix_tar_v3.exe"
                 FixTar.StartInfo.Arguments = """" + SelectedTarFileTextBox.Text + """"
                 FixTar.StartInfo.RedirectStandardOutput = True
                 FixTar.StartInfo.UseShellExecute = False

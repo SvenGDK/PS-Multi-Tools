@@ -50,7 +50,7 @@ Public Class PSVLibrary
         GamesListView.ContextMenu = NewContextMenu
 
         'Add supplemental emulator menu item
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
             NewPSVMenu.Items.Add(EMU_Settings)
         End If
     End Sub
@@ -63,7 +63,7 @@ Public Class PSVLibrary
             For Each Game In Directory.GetFiles(e.Argument.ToString(), "*.sfo", SearchOption.AllDirectories)
                 Dim NewPSVGame As New PSVGame() With {.GridWidth = 125, .GridHeight = 175, .ImageWidth = 100, .ImageHeight = 128}
                 Using SFOReader As New Process()
-                    SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\sfo.exe"
+                    SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\sfo.exe"
                     SFOReader.StartInfo.Arguments = """" + Game + """"
                     SFOReader.StartInfo.RedirectStandardOutput = True
                     SFOReader.StartInfo.UseShellExecute = False
@@ -144,7 +144,7 @@ Public Class PSVLibrary
                 Dim GameInfo As New FileInfo(GamePKG)
 
                 Using SFOReader As New Process()
-                    SFOReader.StartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Tools\PSN_get_pkg_info.exe"
+                    SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PSN_get_pkg_info.exe"
                     SFOReader.StartInfo.Arguments = """" + GamePKG + """"
                     SFOReader.StartInfo.RedirectStandardOutput = True
                     SFOReader.StartInfo.UseShellExecute = False
@@ -263,17 +263,17 @@ Public Class PSVLibrary
     End Sub
 
     Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
             If GamesListView.SelectedItem IsNot Nothing Then
                 Dim SelectedPSVGame As PSVGame = CType(GamesListView.SelectedItem, PSVGame)
 
                 'Check if vita3k has been configured before
-                If Not File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
+                If Not File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml") Then
                     If MsgBox("In order to play PS Vita games using vita3k you need to finish the initial setup." + vbCrLf + "Do you want to start the initial setup now ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
-                            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
+                        If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
+                            Process.Start(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
                         Else
-                            MsgBox("vita3k not found at " + My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k", MsgBoxStyle.Critical, "Error")
+                            MsgBox("vita3k not found at " + Environment.CurrentDirectory + "\Emulators\vita3k", MsgBoxStyle.Critical, "Error")
                             Exit Sub
                         End If
                     Else
@@ -282,13 +282,13 @@ Public Class PSVLibrary
                     End If
                 Else
                     'Read vita3k config & check if initial setup done
-                    Dim ConfigLines() As String = File.ReadAllLines(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\config.yml", Text.Encoding.UTF8)
+                    Dim ConfigLines() As String = File.ReadAllLines(Environment.CurrentDirectory + "\Emulators\vita3k\config.yml", Text.Encoding.UTF8)
                     If Not ConfigLines(1) = "initial-setup: true" Then
                         If MsgBox("In order to play PS Vita games using vita3k you need to finish the initial setup." + vbCrLf + "Do you want to start the initial setup now ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                            If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
-                                Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
+                            If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
+                                Process.Start(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
                             Else
-                                MsgBox("vita3k not found at " + My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k", MsgBoxStyle.Critical, "Error")
+                                MsgBox("vita3k not found at " + Environment.CurrentDirectory + "\Emulators\vita3k", MsgBoxStyle.Critical, "Error")
                                 Exit Sub
                             End If
                         Else
@@ -329,8 +329,8 @@ Public Class PSVLibrary
                                         'Set up rpcs3 to install the selected PS3 firmware
                                         Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                                         Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe"
-                                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
+                                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe"
+                                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
                                         EmulatorLauncherStartInfo.Arguments = "--firmware """ + OFD.FileName + """"
                                         EmulatorLauncher.Start()
                                         EmulatorLauncher.WaitForExit()
@@ -359,8 +359,8 @@ Public Class PSVLibrary
                                         'Set up rpcs3 to install the selected PS3 firmware
                                         Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                                         Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                                        EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe"
-                                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
+                                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe"
+                                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
                                         EmulatorLauncherStartInfo.Arguments = "--firmware """ + OFD.FileName + """"
                                         EmulatorLauncher.Start()
                                         EmulatorLauncher.WaitForExit()
@@ -384,8 +384,8 @@ Public Class PSVLibrary
                                 If MsgBox("Start " + SelectedPSVGame.GameTitle + " using vita3k ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
                                     Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
                                     Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                                    EmulatorLauncherStartInfo.FileName = My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe"
-                                    EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(My.Computer.FileSystem.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
+                                    EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe"
+                                    EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe")
 
                                     Select Case SelectedPSVGame.GameFileType
                                         Case PSVGame.GameFileTypes.PKG
@@ -480,8 +480,8 @@ Public Class PSVLibrary
     End Sub
 
     Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
-        If Directory.Exists(My.Computer.FileSystem.CurrentDirectory + "\Downloads") Then
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Downloads")
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
         End If
     End Sub
 

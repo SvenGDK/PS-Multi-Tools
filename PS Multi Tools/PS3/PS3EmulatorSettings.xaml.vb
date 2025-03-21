@@ -40,8 +40,8 @@ Public Class PS3EmulatorSettings
     End Sub
 
     Private Sub StartEmulatorButton_Click(sender As Object, e As RoutedEventArgs) Handles StartEmulatorButton.Click
-        If File.Exists(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
-            Process.Start(My.Computer.FileSystem.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
+            Process.Start(Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe")
         End If
     End Sub
 

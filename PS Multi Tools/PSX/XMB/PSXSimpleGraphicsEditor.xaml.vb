@@ -1,15 +1,12 @@
-﻿Imports System.Drawing
-Imports System.Drawing.Imaging
-Imports System.Windows.Forms
-Imports Color = System.Windows.Media.Color
+﻿Imports Color = System.Windows.Media.Color
 
 Public Class PSXSimpleGraphicsEditor
 
     Public LoadedImageFilePath As String
 
-    Private LoadedImageOriginalState As Bitmap
-    Private LoadedImageOldState As Bitmap
-    Private LoadedImageNewState As Bitmap
+    Private LoadedImageOriginalState As System.Drawing.Bitmap
+    Private LoadedImageOldState As System.Drawing.Bitmap
+    Private LoadedImageNewState As System.Drawing.Bitmap
 
     Private IsColorPicking As Boolean = False
     Private PickedColor As System.Drawing.Color
@@ -21,10 +18,10 @@ Public Class PSXSimpleGraphicsEditor
             LoadedImage.Source = New BitmapImage(New Uri(LoadedImageFilePath))
 
             'Save the original image state
-            LoadedImageOriginalState = New Bitmap(LoadedImageFilePath)
+            LoadedImageOriginalState = New System.Drawing.Bitmap(LoadedImageFilePath)
 
             'Set LoadedImageOldState to enable 'Undo' after first change
-            LoadedImageOldState = New Bitmap(LoadedImageFilePath)
+            LoadedImageOldState = New System.Drawing.Bitmap(LoadedImageFilePath)
 
             'Enable menu items for editing
             EnableImageMenuItems()
@@ -32,16 +29,16 @@ Public Class PSXSimpleGraphicsEditor
     End Sub
 
     Private Sub LoadImageMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadImageMenuItem.Click
-        Dim OFD As New OpenFileDialog() With {.Title = "Select an image file", .Filter = "PNG files (*.png)|*.png|JPG files (*.jpg)|*.jpg"}
+        Dim OFD As New Forms.OpenFileDialog() With {.Title = "Select an image file", .Filter = "PNG files (*.png)|*.png|JPG files (*.jpg)|*.jpg"}
         If OFD.ShowDialog() = Forms.DialogResult.OK Then
             'Show the image
             LoadedImage.Source = New BitmapImage(New Uri(OFD.FileName))
 
             'Save the original image state
-            LoadedImageOriginalState = New Bitmap(OFD.FileName)
+            LoadedImageOriginalState = New System.Drawing.Bitmap(OFD.FileName)
 
             'Set LoadedImageOldState to enable 'Undo' after first change
-            LoadedImageOldState = New Bitmap(OFD.FileName)
+            LoadedImageOldState = New System.Drawing.Bitmap(OFD.FileName)
 
             'Set LoadedImageFilePath
             LoadedImageFilePath = OFD.FileName
@@ -99,7 +96,7 @@ Public Class PSXSimpleGraphicsEditor
         'Check if colors have been selected
         If DidSelectNewColor Then
             'Recolor the Bitmap (LoadedImageOldState stays untouched)
-            Dim NewBitmap As Bitmap = ImageUtils.RecolorImage(LoadedImageOldState, ColorToReplace, NewColorToApply)
+            Dim NewBitmap As System.Drawing.Bitmap = ImageUtils.RecolorImage(LoadedImageOldState, ColorToReplace, NewColorToApply)
 
             'Create a new BitmapSource to show the new image in LoadedImage
             Dim NewBitmapSource As BitmapSource = Interop.Imaging.CreateBitmapSourceFromHBitmap(NewBitmap.GetHbitmap(), IntPtr.Zero, New Int32Rect(), BitmapSizeOptions.FromWidthAndHeight(NewBitmap.Width, NewBitmap.Height))
@@ -153,7 +150,7 @@ Public Class PSXSimpleGraphicsEditor
 
     Private Sub LoadedImage_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles LoadedImage.MouseLeftButtonDown
         If IsColorPicking Then
-            Dim MousePoint As Windows.Point = e.GetPosition(LoadedImage)
+            Dim MousePoint As System.Windows.Point = e.GetPosition(LoadedImage)
             Dim SelectedPixelAsDrawingColor As System.Drawing.Color = LoadedImageOldState.GetPixel(CInt(MousePoint.X), CInt(MousePoint.Y))
 
             'Save picked color in PickedColor & RectangleForPickedColor
@@ -167,26 +164,26 @@ Public Class PSXSimpleGraphicsEditor
     End Sub
 
     Private Sub SaveImageMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles SaveImageMenuItem.Click
-        Dim SFD As New SaveFileDialog() With {.FileName = IO.Path.GetFileNameWithoutExtension(LoadedImageFilePath), .Filter = "PNG files (*.png)|*.png|JPG files (*.jpg)|*.jpg|BMP files (*.bmp)|*.bmp"}
+        Dim SFD As New Forms.SaveFileDialog() With {.FileName = IO.Path.GetFileNameWithoutExtension(LoadedImageFilePath), .Filter = "PNG files (*.png)|*.png|JPG files (*.jpg)|*.jpg|BMP files (*.bmp)|*.bmp"}
         If SFD.ShowDialog() = Forms.DialogResult.OK Then
 
             If SFD.FileName.EndsWith(".jpg") Then
                 If LoadedImageNewState IsNot Nothing Then
-                    LoadedImageNewState.Save(SFD.FileName, ImageFormat.Jpeg)
+                    LoadedImageNewState.Save(SFD.FileName, System.Drawing.Imaging.ImageFormat.Jpeg)
                 Else
-                    LoadedImageOriginalState.Save(SFD.FileName, ImageFormat.Jpeg)
+                    LoadedImageOriginalState.Save(SFD.FileName, System.Drawing.Imaging.ImageFormat.Jpeg)
                 End If
             ElseIf SFD.FileName.EndsWith(".png") Then
                 If LoadedImageNewState IsNot Nothing Then
-                    LoadedImageNewState.Save(SFD.FileName, ImageFormat.Png)
+                    LoadedImageNewState.Save(SFD.FileName, System.Drawing.Imaging.ImageFormat.Png)
                 Else
-                    LoadedImageOriginalState.Save(SFD.FileName, ImageFormat.Png)
+                    LoadedImageOriginalState.Save(SFD.FileName, System.Drawing.Imaging.ImageFormat.Png)
                 End If
             ElseIf SFD.FileName.EndsWith(".bmp") Then
                 If LoadedImageNewState IsNot Nothing Then
-                    LoadedImageNewState.Save(SFD.FileName, ImageFormat.Bmp)
+                    LoadedImageNewState.Save(SFD.FileName, System.Drawing.Imaging.ImageFormat.Bmp)
                 Else
-                    LoadedImageOriginalState.Save(SFD.FileName, ImageFormat.Bmp)
+                    LoadedImageOriginalState.Save(SFD.FileName, System.Drawing.Imaging.ImageFormat.Bmp)
                 End If
             End If
         End If
