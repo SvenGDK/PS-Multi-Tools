@@ -1,11 +1,12 @@
-<p align="center"><img width="128" height="128" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/ba33e13f-b634-49ef-858e-3a3cef462916">
+<p align="center">
+<img width="128" height="128" src="https://github.com/user-attachments/assets/de858e28-357d-46ed-97a9-728cde69c965">
 </p>
 
 # PS Multi Tools
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
-  <summary>v14.5 contains following tools</summary>
+  <summary>v15 contains following tools</summary>
   
 ## General:
 - FTP Browser
