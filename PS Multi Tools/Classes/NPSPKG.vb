@@ -159,7 +159,7 @@ Public Class NPSPKG
         End Get
         Set
             _GameCoverSource = Value
-            NotifyPropertyChanged("GameCoverSource")
+            NotifyPropertyChanged(NameOf(GameCoverSource))
         End Set
 
     End Property

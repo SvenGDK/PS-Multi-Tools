@@ -185,11 +185,11 @@ Public Class PS5PKGSender
 
     End Sub
 
-    Private Sub SendPKGFromURLButton_Click(sender As Object, e As RoutedEventArgs) Handles SendPKGFromURLButton.Click
+    Private Async Sub SendPKGFromURLButton_Click(sender As Object, e As RoutedEventArgs) Handles SendPKGFromURLButton.Click
         If Not String.IsNullOrEmpty(PKGFileURLTextBox.Text) Then
 
             'Check if link is valid
-            If Utils.IsURLValid(PKGFileURLTextBox.Text) Then
+            If Await Utils.IsURLValid(PKGFileURLTextBox.Text) Then
 
                 LogTextBox.AppendText("Sending " & PKGFileURLTextBox.Text & vbCrLf)
                 LogTextBox.ScrollToEnd()

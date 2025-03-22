@@ -1,9 +1,7 @@
-﻿Imports System.ComponentModel
-Imports System.IO
+﻿Imports System.IO
 
 Public Class PS1Library
 
-    Dim WithEvents GameLoaderWorker As New BackgroundWorker() With {.WorkerReportsProgress = True}
     Dim WithEvents PSXDatacenterBrowser As New Forms.WebBrowser()
     Dim WithEvents NewLoadingWindow As New SyncWindow() With {.Title = "Loading PS1 files", .ShowActivated = True}
 
@@ -46,255 +44,372 @@ Public Class PS1Library
         End If
     End Sub
 
-#Region "Game Loader"
+#Region "Menu Actions"
 
-    Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
+    Private Async Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
+        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS1 backup folder"}
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
 
-        Dim GamesList As New List(Of String)()
-        Dim FailList As New List(Of String)()
+            'Reset
+            GamesListView.Items.Clear()
+            URLs.Clear()
+            BINCount = 0
+            VCDCount = 0
 
-        Dim FoundGames As IEnumerable(Of String) = Directory.EnumerateFiles(e.Argument.ToString, "*.*", SearchOption.AllDirectories).Where(Function(s) s.EndsWith(".bin") OrElse s.EndsWith(".BIN") OrElse s.EndsWith(".VCD"))
+            Dim BINFiles As String() = Directory.GetFiles(FBD.SelectedPath, "*.bin", SearchOption.AllDirectories)
+            Dim VCDFiles As String() = Directory.GetFiles(FBD.SelectedPath, "*.vcd", SearchOption.AllDirectories)
+            Dim FailList As New List(Of String)()
+            Dim AllFoundFiles = BINFiles.Concat(VCDFiles)
 
-        For Each Game In FoundGames
+            VCDCount = VCDFiles.Length
 
-            Dim GameInfo As New FileInfo(Game)
-
-            'Skip multiple "Track" files and only read the first one
-            If GameInfo.Name.Contains("track", StringComparison.CurrentCultureIgnoreCase) Then
-                If Not Game.Contains("(track 1).bin", StringComparison.CurrentCultureIgnoreCase) OrElse Not GameInfo.Name.Contains("(track 01).bin", StringComparison.CurrentCultureIgnoreCase) Then
-                    'Skip
-                    Continue For
-                End If
-            End If
-
-            Dim GameStartLetter As String = GameInfo.Name.Substring(0, 1) 'Take the first letter of the file name (required to browse PSXDatacenter)
-            Dim NewPS1Game As New PS1Game With {.GameFilePath = Game, .GameSize = FormatNumber(GameInfo.Length / 1048576, 2) + " MB"}
-
-            'Search for the game ID within the first 7MB with strings & findstr
-            'We could also use StreamReader & BinaryReader but there are many methods, this is an easy way and also used in PS Mac Tools
-            Using WindowsCMD As New Process()
-                WindowsCMD.StartInfo.FileName = "cmd"
-                WindowsCMD.StartInfo.Arguments = "/c strings.exe /accepteula -nobanner -b 7340032 """ + Game + """ | findstr BOOT"
-                WindowsCMD.StartInfo.RedirectStandardOutput = True
-                WindowsCMD.StartInfo.UseShellExecute = False
-                WindowsCMD.StartInfo.CreateNoWindow = True
-                WindowsCMD.Start()
-                WindowsCMD.WaitForExit()
-
-                Dim OutputReader As StreamReader = WindowsCMD.StandardOutput
-                Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
-                Dim GameIDFound As Boolean = False
-
-                If ProcessOutput.Length > 0 Then
-                    For Each OutputLine In ProcessOutput
-                        If OutputLine.Contains("BOOT =") Or OutputLine.Contains("BOOT=") Then
-                            GameIDFound = True
-                            Dim GameID As String = OutputLine.Replace("BOOT = cdrom:\", "").Replace("BOOT=cdrom:\", "").Replace("BOOT = cdrom:", "").Replace(";1", "").Replace("_", "-").Replace(".", "").Replace("MGS\", "").Trim()
-                            Dim RegionCharacter As String = PS1Game.GetRegionChar(GameID)
-
-                            'Set known values
-                            NewPS1Game.GameID = UCase(GameID)
-
-                            'Check game id length & if the generated url is valid
-                            If GameID.Length = 10 Then
-                                If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg") Then
-                                    If Dispatcher.CheckAccess() = False Then
-                                        Dispatcher.BeginInvoke(Sub()
-                                                                   Dim TempBitmapImage = New BitmapImage()
-                                                                   TempBitmapImage.BeginInit()
-                                                                   TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                                   TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                                   TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                                                                   TempBitmapImage.EndInit()
-                                                                   NewPS1Game.GameCoverSource = TempBitmapImage
-                                                               End Sub)
-                                    Else
-                                        Dim TempBitmapImage = New BitmapImage()
-                                        TempBitmapImage.BeginInit()
-                                        TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                        TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                        TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                                        TempBitmapImage.EndInit()
-                                        NewPS1Game.GameCoverSource = TempBitmapImage
-                                    End If
-
-                                    If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
-                                        URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
-                                    Else
-                                        NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
-                                    End If
-                                Else
-                                    If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
-                                        URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
-                                    Else
-                                        NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
-                                    End If
-                                End If
-                            End If
-
-                            GameIDFound = True
-                            Exit For
-                        Else
-                            NewPS1Game.GameTitle = GameInfo.Name
-                        End If
-                    Next
-                Else
-                    NewPS1Game.GameTitle = GameInfo.Name
-                End If
-
-                If GameIDFound = False Then
-                    FailList.Add(Game)
-                Else
-                    'Update progress
-                    Dispatcher.BeginInvoke(Sub()
-                                               NewLoadingWindow.LoadProgressBar.Value += 1
-                                               NewLoadingWindow.LoadStatusTextBlock.Text = "Loading bin " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + (BINCount + VCDCount).ToString()
-                                           End Sub)
-
-                    'Add to the ListView
-                    If GamesListView.Dispatcher.CheckAccess() = False Then
-                        GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS1Game))
+            'Skip multiple "Track" files and only add the first one
+            For Each GameBIN In BINFiles
+                Dim GameInfo As New FileInfo(GameBIN)
+                If GameInfo.Name.Contains("track", StringComparison.CurrentCultureIgnoreCase) Then
+                    If Not GameBIN.Contains("(track 1).bin", StringComparison.CurrentCultureIgnoreCase) OrElse Not GameInfo.Name.Contains("(track 01).bin", StringComparison.CurrentCultureIgnoreCase) Then
+                        'Skip
+                        Continue For
                     Else
-                        GamesListView.Items.Add(NewPS1Game)
+                        BINCount += 1
+                    End If
+                Else
+                    BINCount += 1
+                End If
+            Next
+
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS1 files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = BINCount + VCDCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (BINCount + VCDCount).ToString()
+            NewLoadingWindow.Show()
+
+            For Each Game In AllFoundFiles
+
+                Dim GameInfo As New FileInfo(Game)
+
+                'Skip multiple "Track" files and only read the first one
+                If GameInfo.Name.Contains("track", StringComparison.CurrentCultureIgnoreCase) Then
+                    If Not Game.Contains("(track 1).bin", StringComparison.CurrentCultureIgnoreCase) OrElse Not GameInfo.Name.Contains("(track 01).bin", StringComparison.CurrentCultureIgnoreCase) Then
+                        'Skip
+                        Continue For
                     End If
                 End If
 
-            End Using
-        Next
+                Dim GameStartLetter As String = GameInfo.Name.Substring(0, 1) 'Take the first letter of the file name (required to browse PSXDatacenter)
+                Dim NewPS1Game As New PS1Game With {.GameFilePath = Game, .GameSize = FormatNumber(GameInfo.Length / 1048576, 2) + " MB"}
 
-        If FailList.Count > 0 Then 'Ask for an extended search
-            If MsgBox("Some Game IDs could not be found quickly, do you want to extend the search ? This requires about 1-5min for each game (depending on your hardware).", MsgBoxStyle.YesNo, "Not all Game IDs could be found") = MsgBoxResult.Yes Then
+                'Search for the game ID within the first 7MB with strings & findstr
+                'We could also use StreamReader & BinaryReader but there are many methods, this is an easy way and also used in PS Mac Tools
+                Using WindowsCMD As New Process()
+                    WindowsCMD.StartInfo.FileName = "cmd"
+                    WindowsCMD.StartInfo.Arguments = "/c strings.exe /accepteula -nobanner -b 7340032 """ + Game + """ | findstr BOOT"
+                    WindowsCMD.StartInfo.RedirectStandardOutput = True
+                    WindowsCMD.StartInfo.UseShellExecute = False
+                    WindowsCMD.StartInfo.CreateNoWindow = True
+                    WindowsCMD.Start()
+                    WindowsCMD.WaitForExit()
 
-                'Update progress
-                Dispatcher.BeginInvoke(Sub()
-                                           NewLoadingWindow.LoadProgressBar.Value = 0
-                                           NewLoadingWindow.LoadProgressBar.Maximum = FailList.Count
-                                           NewLoadingWindow.LoadStatusTextBlock.Text = "Loading bin 1 of " + FailList.Count.ToString()
-                                       End Sub)
+                    Dim OutputReader As StreamReader = WindowsCMD.StandardOutput
+                    Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
+                    Dim GameIDFound As Boolean = False
 
-                For Each Game In FailList
+                    If ProcessOutput.Length > 0 Then
+                        For Each OutputLine In ProcessOutput
+                            If OutputLine.Contains("BOOT =") Or OutputLine.Contains("BOOT=") Then
+                                GameIDFound = True
+                                Dim GameID As String = OutputLine.Replace("BOOT = cdrom:\", "").Replace("BOOT=cdrom:\", "").Replace("BOOT = cdrom:", "").Replace(";1", "").Replace("_", "-").Replace(".", "").Replace("MGS\", "").Trim()
+                                Dim RegionCharacter As String = PS1Game.GetRegionChar(GameID)
 
-                    Dim GameInfo As New FileInfo(Game)
+                                'Set known values
+                                NewPS1Game.GameID = UCase(GameID)
 
-                    'Skip multiple "Track" files and only read the first one
-                    If GameInfo.Name.ToLower().Contains("track") Then
-                        If Not Game.ToLower().Contains("(track 1).bin") OrElse Not GameInfo.Name.ToLower().Contains("(track 01).bin") Then
-                            'Skip
-                            Continue For
-                        End If
-                    End If
-
-                    Dim GameStartLetter As String = GameInfo.Name.Substring(0, 1) 'Take the first letter of the file name (required to browse PSXDatacenter)
-                    Dim NewPS1Game As New PS1Game With {.GameFilePath = Game, .GameSize = FormatNumber(GameInfo.Length / 1048576, 2) + " MB"}
-                    Dim GameFileSizeAsString As String = GameInfo.Length.ToString()
-
-                    'Search for the game ID within the first 7MB with strings & findstr
-                    'We could also use StreamReader & BinaryReader but there are many methods, this is an easy way and also used in PS Mac Tools
-                    Using WindowsCMD As New Process()
-                        WindowsCMD.StartInfo.FileName = "cmd"
-                        WindowsCMD.StartInfo.Arguments = "/c strings -nobanner -b " + GameFileSizeAsString + " """ + Game + """ | findstr BOOT"
-                        WindowsCMD.StartInfo.RedirectStandardOutput = True
-                        WindowsCMD.StartInfo.UseShellExecute = False
-                        WindowsCMD.StartInfo.CreateNoWindow = True
-                        WindowsCMD.Start()
-                        WindowsCMD.WaitForExit()
-
-                        Dim OutputReader As StreamReader = WindowsCMD.StandardOutput
-                        Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
-
-                        If ProcessOutput.Length > 0 Then 'Game ID found
-                            For Each OutputLine In ProcessOutput
-                                If OutputLine.Contains("BOOT =") Or OutputLine.Contains("BOOT=") Then
-                                    Dim GameID As String = OutputLine.Replace("BOOT = cdrom:\", "").Replace("BOOT=cdrom:\", "").Replace("BOOT = cdrom:", "").Replace(";1", "").Replace("_", "-").Replace(".", "").Replace("MGS\", "").Trim()
-                                    Dim RegionCharacter As String = PS1Game.GetRegionChar(GameID)
-
-                                    'Set known values
-                                    NewPS1Game.GameID = UCase(GameID)
-
-                                    'Check game id length & if the generated url is valid
-                                    If GameID.Length = 10 Then
-                                        If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg") Then
-                                            If Dispatcher.CheckAccess() = False Then
-                                                Dispatcher.BeginInvoke(Sub()
-                                                                           Dim TempBitmapImage = New BitmapImage()
-                                                                           TempBitmapImage.BeginInit()
-                                                                           TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                                           TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                                           TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                                                                           TempBitmapImage.EndInit()
-                                                                           NewPS1Game.GameCoverSource = TempBitmapImage
-                                                                       End Sub)
-                                            Else
-                                                Dim TempBitmapImage = New BitmapImage()
-                                                TempBitmapImage.BeginInit()
-                                                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                                                TempBitmapImage.EndInit()
-                                                NewPS1Game.GameCoverSource = TempBitmapImage
-                                            End If
-
-                                            If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
-                                                URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
-                                            Else
-                                                NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
-                                            End If
+                                'Check game id length & if the generated url is valid
+                                If GameID.Length = 10 Then
+                                    If Await Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg") Then
+                                        If Dispatcher.CheckAccess() = False Then
+                                            Await Dispatcher.BeginInvoke(Sub()
+                                                                             Dim TempBitmapImage = New BitmapImage()
+                                                                             TempBitmapImage.BeginInit()
+                                                                             TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                                             TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                                             TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                                                                             TempBitmapImage.EndInit()
+                                                                             NewPS1Game.GameCoverSource = TempBitmapImage
+                                                                         End Sub)
                                         Else
-                                            If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
-                                                URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
-                                            Else
-                                                NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
-                                            End If
+                                            Dim TempBitmapImage = New BitmapImage()
+                                            TempBitmapImage.BeginInit()
+                                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                            TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                                            TempBitmapImage.EndInit()
+                                            NewPS1Game.GameCoverSource = TempBitmapImage
+                                        End If
+
+                                        If Await Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
+                                            URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
+                                        Else
+                                            NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
+                                        End If
+                                    Else
+                                        If Await Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
+                                            URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
+                                        Else
+                                            NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
                                         End If
                                     End If
-
-                                    Exit For
-                                Else
-                                    NewPS1Game.GameTitle = GameInfo.Name
                                 End If
-                            Next
-                        Else
-                            NewPS1Game.GameTitle = GameInfo.Name
-                        End If
 
-                    End Using
+                                GameIDFound = True
+                                Exit For
+                            Else
+                                NewPS1Game.GameTitle = GameInfo.Name
+                            End If
+                        Next
+                    Else
+                        NewPS1Game.GameTitle = GameInfo.Name
+                    End If
+
+                    If GameIDFound = False Then
+                        FailList.Add(Game)
+                    Else
+                        'Update progress
+                        Await Dispatcher.BeginInvoke(Sub()
+                                                         NewLoadingWindow.LoadProgressBar.Value += 1
+                                                         NewLoadingWindow.LoadStatusTextBlock.Text = "Loading bin " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + (BINCount + VCDCount).ToString()
+                                                     End Sub)
+
+                        'Add to the ListView
+                        If GamesListView.Dispatcher.CheckAccess() = False Then
+                            Await GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS1Game))
+                        Else
+                            GamesListView.Items.Add(NewPS1Game)
+                        End If
+                    End If
+
+                End Using
+            Next
+
+            If FailList.Count > 0 Then 'Ask for an extended search
+                If MsgBox("Some Game IDs could not be found quickly, do you want to extend the search ? This requires about 1-5min for each game (depending on your hardware).", MsgBoxStyle.YesNo, "Not all Game IDs could be found") = MsgBoxResult.Yes Then
 
                     'Update progress
-                    Dispatcher.BeginInvoke(Sub()
-                                               NewLoadingWindow.LoadProgressBar.Value += 1
-                                               NewLoadingWindow.LoadStatusTextBlock.Text = "Loading bin " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + FailList.Count.ToString()
-                                           End Sub)
+                    Await Dispatcher.BeginInvoke(Sub()
+                                                     NewLoadingWindow.LoadProgressBar.Value = 0
+                                                     NewLoadingWindow.LoadProgressBar.Maximum = FailList.Count
+                                                     NewLoadingWindow.LoadStatusTextBlock.Text = "Loading bin 1 of " + FailList.Count.ToString()
+                                                 End Sub)
 
-                    'Add to the ListView
-                    If GamesListView.Dispatcher.CheckAccess() = False Then
-                        GamesListView.Dispatcher.BeginInvoke(Sub()
-                                                                 GamesListView.Items.Add(NewPS1Game)
-                                                                 GamesListView.Items.Refresh()
-                                                             End Sub)
-                    Else
-                        GamesListView.Items.Add(NewPS1Game)
-                        GamesListView.Items.Refresh()
-                    End If
-                Next
+                    For Each Game In FailList
 
+                        Dim GameInfo As New FileInfo(Game)
+
+                        'Skip multiple "Track" files and only read the first one
+                        If GameInfo.Name.Contains("track", StringComparison.CurrentCultureIgnoreCase) Then
+                            If Not Game.Contains("(track 1).bin", StringComparison.CurrentCultureIgnoreCase) OrElse Not GameInfo.Name.Contains("(track 01).bin", StringComparison.CurrentCultureIgnoreCase) Then
+                                'Skip
+                                Continue For
+                            End If
+                        End If
+
+                        Dim GameStartLetter As String = GameInfo.Name.Substring(0, 1) 'Take the first letter of the file name (required to browse PSXDatacenter)
+                        Dim NewPS1Game As New PS1Game With {.GameFilePath = Game, .GameSize = FormatNumber(GameInfo.Length / 1048576, 2) + " MB"}
+                        Dim GameFileSizeAsString As String = GameInfo.Length.ToString()
+
+                        'Search for the game ID within the first 7MB with strings & findstr
+                        'We could also use StreamReader & BinaryReader but there are many methods, this is an easy way and also used in PS Mac Tools
+                        Using WindowsCMD As New Process()
+                            WindowsCMD.StartInfo.FileName = "cmd"
+                            WindowsCMD.StartInfo.Arguments = "/c strings -nobanner -b " + GameFileSizeAsString + " """ + Game + """ | findstr BOOT"
+                            WindowsCMD.StartInfo.RedirectStandardOutput = True
+                            WindowsCMD.StartInfo.UseShellExecute = False
+                            WindowsCMD.StartInfo.CreateNoWindow = True
+                            WindowsCMD.Start()
+                            WindowsCMD.WaitForExit()
+
+                            Dim OutputReader As StreamReader = WindowsCMD.StandardOutput
+                            Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
+
+                            If ProcessOutput.Length > 0 Then 'Game ID found
+                                For Each OutputLine In ProcessOutput
+                                    If OutputLine.Contains("BOOT =") Or OutputLine.Contains("BOOT=") Then
+                                        Dim GameID As String = OutputLine.Replace("BOOT = cdrom:\", "").Replace("BOOT=cdrom:\", "").Replace("BOOT = cdrom:", "").Replace(";1", "").Replace("_", "-").Replace(".", "").Replace("MGS\", "").Trim()
+                                        Dim RegionCharacter As String = PS1Game.GetRegionChar(GameID)
+
+                                        'Set known values
+                                        NewPS1Game.GameID = UCase(GameID)
+
+                                        'Check game id length & if the generated url is valid
+                                        If GameID.Length = 10 Then
+                                            If Await Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg") Then
+                                                If Dispatcher.CheckAccess() = False Then
+                                                    Await Dispatcher.BeginInvoke(Sub()
+                                                                                     Dim TempBitmapImage = New BitmapImage()
+                                                                                     TempBitmapImage.BeginInit()
+                                                                                     TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                                                     TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                                                     TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                                                                                     TempBitmapImage.EndInit()
+                                                                                     NewPS1Game.GameCoverSource = TempBitmapImage
+                                                                                 End Sub)
+                                                Else
+                                                    Dim TempBitmapImage = New BitmapImage()
+                                                    TempBitmapImage.BeginInit()
+                                                    TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                    TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                    TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                                                    TempBitmapImage.EndInit()
+                                                    NewPS1Game.GameCoverSource = TempBitmapImage
+                                                End If
+
+                                                If Await Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
+                                                    URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
+                                                Else
+                                                    NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
+                                                End If
+                                            Else
+                                                If Await Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html") Then
+                                                    URLs.Add("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameID + ".html")
+                                                Else
+                                                    NewPS1Game.GameTitle = PS1Game.GetPS1GameTitleFromDatabaseList(UCase(GameID).Trim())
+                                                End If
+                                            End If
+                                        End If
+
+                                        Exit For
+                                    Else
+                                        NewPS1Game.GameTitle = GameInfo.Name
+                                    End If
+                                Next
+                            Else
+                                NewPS1Game.GameTitle = GameInfo.Name
+                            End If
+
+                        End Using
+
+                        'Update progress
+                        Await Dispatcher.BeginInvoke(Sub()
+                                                         NewLoadingWindow.LoadProgressBar.Value += 1
+                                                         NewLoadingWindow.LoadStatusTextBlock.Text = "Loading bin " + NewLoadingWindow.LoadProgressBar.Value.ToString + " of " + FailList.Count.ToString()
+                                                     End Sub)
+
+                        'Add to the ListView
+                        If GamesListView.Dispatcher.CheckAccess() = False Then
+                            Await GamesListView.Dispatcher.BeginInvoke(Sub()
+                                                                           GamesListView.Items.Add(NewPS1Game)
+                                                                           GamesListView.Items.Refresh()
+                                                                       End Sub)
+                        Else
+                            GamesListView.Items.Add(NewPS1Game)
+                            GamesListView.Items.Refresh()
+                        End If
+                    Next
+
+                End If
+            End If
+
+            If URLs.Count > 0 Then
+                Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Getting " + URLs.Count.ToString() + " available game infos and missing covers.")
+                Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value = 0)
+                Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Maximum = URLs.Count)
+
+                PSXDatacenterBrowser.Navigate(URLs.Item(0))
+            Else
+                NewLoadingWindow.Close()
+                Cursor = Input.Cursors.Arrow
             End If
         End If
-
     End Sub
 
-    Private Sub GameLoaderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles GameLoaderWorker.RunWorkerCompleted
-        NewLoadingWindow.LoadStatusTextBlock.Text = "Getting " + URLs.Count.ToString() + " available game infos and missing covers."
-        NewLoadingWindow.LoadProgressBar.Value = 0
-        NewLoadingWindow.LoadProgressBar.Maximum = URLs.Count
-
-        GetGameInfos()
-    End Sub
-
-    Private Sub GetGameInfos()
-        If URLs.Count > 0 Then
-            PSXDatacenterBrowser.Navigate(URLs.Item(0))
+    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
         End If
     End Sub
+
+#End Region
+
+#Region "Contextmenu Actions"
+
+    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
+            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
+
+            If FBD.ShowDialog() = Forms.DialogResult.OK Then
+                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
+                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    .BackupPath = SelectedPS1Game.GameFilePath,
+                    .BackupDestinationPath = FBD.SelectedPath + "\",
+                    .Title = "Copying " + SelectedPS1Game.GameID + " to " + FBD.SelectedPath}
+
+                If NewCopyWindow.ShowDialog() = True Then
+                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
+                End If
+            End If
+
+        End If
+    End Sub
+
+    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe") Then
+            If GamesListView.SelectedItem IsNot Nothing Then
+                Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
+
+                'Check if any PS1 BIOS file is available
+                If Not Directory.GetFiles(Environment.CurrentDirectory + "\Emulators\ePSXe\bios", "*.bin", SearchOption.TopDirectoryOnly).Length > 0 Then
+                    If MsgBox("No PS1 BIOS file available." + vbCrLf + "You need at least one BIOS file installed in order to play " + SelectedPS1Game.GameTitle + "." + vbCrLf +
+                              "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
+
+                        'Get a BIOS file from OpenFileDialog
+                        Dim OFD As New Forms.OpenFileDialog() With {.Title = "Select a PS1 BIOS file", .Filter = "PS1 BIOS (*.bin)|*.bin", .Multiselect = False}
+                        If OFD.ShowDialog() = Forms.DialogResult.OK Then
+                            Dim SelectedBIOSFile As String = OFD.FileName
+                            Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
+
+                            'Copy to the BIOS folder
+                            File.Copy(SelectedBIOSFile, Environment.CurrentDirectory + "\Emulators\ePSXe\bios\" + SelectedBIOSFileName, True)
+
+                            'Proceed
+                            If MsgBox("Start " + SelectedPS1Game.GameTitle + " using ePSXe ?" + vbCrLf + vbCrLf +
+                                      "If the game doesn't start then you have to set the BIOS manually using ePSXe.exe in \Emulators\ePSXe (Config -> BIOS).", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                                Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                                Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                                EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
+                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
+                                EmulatorLauncherStartInfo.Arguments = "-nogui -loadbin """ + SelectedPS1Game.GameFilePath + """"
+                                EmulatorLauncher.Start()
+                            End If
+
+                        Else
+                            MsgBox("No BIOS file specied, aborting.", MsgBoxStyle.Critical, "Error")
+                            Exit Sub
+                        End If
+                    Else
+                        MsgBox("No BIOS file available, aborting.", MsgBoxStyle.Critical, "Error")
+                        Exit Sub
+                    End If
+
+                Else
+                    'Proceed
+                    If MsgBox("Start " + SelectedPS1Game.GameTitle + " using ePSXe ?" + vbCrLf + vbCrLf +
+                                      "If the game doesn't start then you have to set the BIOS manually using ePSXe.exe in \Emulators\ePSXe (Config -> BIOS).", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                        Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                        Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
+                        EmulatorLauncherStartInfo.Arguments = "-nogui -loadbin """ + SelectedPS1Game.GameFilePath + """"
+                        EmulatorLauncher.Start()
+                    End If
+
+                End If
+            End If
+        Else
+            MsgBox("Cannot start ePSXe." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
+        End If
+    End Sub
+
+#End Region
 
     Private Sub PSXDatacenterBrowser_DocumentCompleted(sender As Object, e As Forms.WebBrowserDocumentCompletedEventArgs) Handles PSXDatacenterBrowser.DocumentCompleted
         RemoveHandler PSXDatacenterBrowser.DocumentCompleted, AddressOf PSXDatacenterBrowser_DocumentCompleted
@@ -459,134 +574,6 @@ Public Class PS1Library
         End If
     End Sub
 
-#End Region
-
-#Region "Menu Actions"
-
-    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
-        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS1 backup folder"}
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-
-            GamesListView.Items.Clear()
-            URLs.Clear()
-            BINCount = 0
-            VCDCount = 0
-
-            For Each GameBIN In Directory.GetFiles(FBD.SelectedPath, "*.bin", SearchOption.AllDirectories)
-                Dim GameInfo As New FileInfo(GameBIN)
-                If GameInfo.Name.ToLower().Contains("track") Then
-                    If Not GameBIN.ToLower().Contains("(track 1).bin") OrElse Not GameInfo.Name.ToLower().Contains("(track 01).bin") Then
-                        'Skip
-                        Continue For
-                    Else
-                        BINCount += 1
-                    End If
-                Else
-                    BINCount += 1
-                End If
-            Next
-
-            VCDCount = Directory.GetFiles(FBD.SelectedPath, "*.VCD", SearchOption.AllDirectories).Count
-
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS1 files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = BINCount + VCDCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (BINCount + VCDCount).ToString()
-            NewLoadingWindow.Show()
-
-            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
-        End If
-    End Sub
-
-    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
-        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
-            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
-        End If
-    End Sub
-
-#End Region
-
-#Region "Contextmenu Actions"
-
-    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
-            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
-
-            If FBD.ShowDialog() = Forms.DialogResult.OK Then
-                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
-                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    .BackupPath = SelectedPS1Game.GameFilePath,
-                    .BackupDestinationPath = FBD.SelectedPath + "\",
-                    .Title = "Copying " + SelectedPS1Game.GameID + " to " + FBD.SelectedPath}
-
-                If NewCopyWindow.ShowDialog() = True Then
-                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
-                End If
-            End If
-
-        End If
-    End Sub
-
-    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
-        If File.Exists(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe") Then
-            If GamesListView.SelectedItem IsNot Nothing Then
-                Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
-
-                'Check if any PS1 BIOS file is available
-                If Not Directory.GetFiles(Environment.CurrentDirectory + "\Emulators\ePSXe\bios", "*.bin", SearchOption.TopDirectoryOnly).Count > 0 Then
-                    If MsgBox("No PS1 BIOS file available." + vbCrLf + "You need at least one BIOS file installed in order to play " + SelectedPS1Game.GameTitle + "." + vbCrLf +
-                              "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
-
-                        'Get a BIOS file from OpenFileDialog
-                        Dim OFD As New Forms.OpenFileDialog() With {.Title = "Select a PS1 BIOS file", .Filter = "PS1 BIOS (*.bin)|*.bin", .Multiselect = False}
-                        If OFD.ShowDialog() = Forms.DialogResult.OK Then
-                            Dim SelectedBIOSFile As String = OFD.FileName
-                            Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
-
-                            'Copy to the BIOS folder
-                            File.Copy(SelectedBIOSFile, Environment.CurrentDirectory + "\Emulators\ePSXe\bios\" + SelectedBIOSFileName, True)
-
-                            'Proceed
-                            If MsgBox("Start " + SelectedPS1Game.GameTitle + " using ePSXe ?" + vbCrLf + vbCrLf +
-                                      "If the game doesn't start then you have to set the BIOS manually using ePSXe.exe in \Emulators\ePSXe (Config -> BIOS).", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
-                                Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
-                                Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                                EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
-                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
-                                EmulatorLauncherStartInfo.Arguments = "-nogui -loadbin """ + SelectedPS1Game.GameFilePath + """"
-                                EmulatorLauncher.Start()
-                            End If
-
-                        Else
-                            MsgBox("No BIOS file specied, aborting.", MsgBoxStyle.Critical, "Error")
-                            Exit Sub
-                        End If
-                    Else
-                        MsgBox("No BIOS file available, aborting.", MsgBoxStyle.Critical, "Error")
-                        Exit Sub
-                    End If
-
-                Else
-                    'Proceed
-                    If MsgBox("Start " + SelectedPS1Game.GameTitle + " using ePSXe ?" + vbCrLf + vbCrLf +
-                                      "If the game doesn't start then you have to set the BIOS manually using ePSXe.exe in \Emulators\ePSXe (Config -> BIOS).", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
-                        Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
-                        Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe"
-                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\ePSXe\ePSXe.exe")
-                        EmulatorLauncherStartInfo.Arguments = "-nogui -loadbin """ + SelectedPS1Game.GameFilePath + """"
-                        EmulatorLauncher.Start()
-                    End If
-
-                End If
-            End If
-        Else
-            MsgBox("Cannot start ePSXe." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
-        End If
-    End Sub
-
-#End Region
-
     Private Sub GamesListView_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles GamesListView.PreviewMouseWheel
         Dim OpenWindowsListViewScrollViewer As ScrollViewer = Utils.FindScrollViewer(GamesListView)
         Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
@@ -625,7 +612,7 @@ Public Class PS1Library
         NewPS1EmulatorSettingsWindow.Show()
     End Sub
 
-    Private Sub CreateProjectMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CreateProjectMenuItem.Click
+    Private Async Sub CreateProjectMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CreateProjectMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS1Game As PS1Game = CType(GamesListView.SelectedItem, PS1Game)
 
@@ -762,7 +749,7 @@ Public Class PS1Library
                 Dim GameStartLetter As String = SelectedPS1Game.GameTitle.Substring(0, 1)
                 Dim RegionCharacter As String = PS1Game.GetRegionChar(SelectedPS1Game.GameID)
 
-                If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + SelectedPS1Game.GameID + ".html") Then
+                If Await Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + SelectedPS1Game.GameID + ".html") Then
                     NewGameEditor.PSXDatacenterBrowser.Navigate("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + SelectedPS1Game.GameID + ".html")
                 Else
                     'Apply cover, title and region only if no data is available on PSXDatacenter

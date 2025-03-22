@@ -462,7 +462,7 @@ Public Class PSXMainWindow
                                 File.Copy(Environment.CurrentDirectory + "\Tools\EXECUTE.KELF", ProjectDIR + "\EXECUTE.KELF", True)
                             Else
                                 'OPL-Launcher not found...
-                                Dim HomebrewELF As String = ""
+                                Dim HomebrewELF As String
 
                                 HomebrewELF = InputBox("OPL-Launcher has been deleted from the Tools folder." + vbCrLf + "Please enter the full path to the .elf file or leave the URL to download OPL-Launcher.",
                                                            "Missing file",

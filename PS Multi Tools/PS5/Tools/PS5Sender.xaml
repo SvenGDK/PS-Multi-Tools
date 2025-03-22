@@ -5,25 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS4 / PS5 Payload and PS5 Mast1c0re Game Sender" Height="400" Width="505" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="PS4 / PS5 Payload and PS5 Mast1c0re Game Sender" Height="420" Width="505" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBox x:Name="IPTextBox" HorizontalAlignment="Left" Margin="10,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,39,0,0" TextWrapping="Wrap" Text="Enter your PS4 / PS5 IP:" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
-        <TextBox x:Name="SelectedELFTextBox" HorizontalAlignment="Left" Margin="10,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="20"/>
-        <Button x:Name="SendButton" Content="Send" HorizontalAlignment="Left" Margin="330,176,0,0" VerticalAlignment="Top" Width="80"/>
-        <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="415,151,0,0" VerticalAlignment="Top" Width="66"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="Select an ELF or BIN file :" VerticalAlignment="Top" FontSize="14" Width="400" Foreground="White"/>
-        <TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,254,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="20"/>
-        <Button x:Name="SendISOButton" Content="Send ISO" HorizontalAlignment="Left" Margin="245,279,0,0" VerticalAlignment="Top" Width="80"/>
-        <Button x:Name="BrowseISOButton" Content="Browse" HorizontalAlignment="Left" Margin="415,254,0,0" VerticalAlignment="Top" Width="66"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,230,0,0" TextWrapping="Wrap" Text="Select an ISO file :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
-        <Button x:Name="SendConfigButton" Content="Send Config" HorizontalAlignment="Left" Margin="330,279,0,0" VerticalAlignment="Top" Width="80" IsEnabled="False"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,98,0,0" TextWrapping="Wrap" Text="Send a Payload" VerticalAlignment="Top" FontSize="18" Foreground="White" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,201,0,0" TextWrapping="Wrap" Text="Send a PS2 Game" VerticalAlignment="Top" FontSize="18" Foreground="White" FontWeight="Bold"/>
-        <ProgressBar x:Name="SendProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,325,0,0" VerticalAlignment="Top" Width="471" Foreground="#FF00A4E3"/>
-        <TextBlock x:Name="SendStatusTextBlock" HorizontalAlignment="Left" Margin="10,304,0,0" TextWrapping="Wrap" Text="Send Status:" VerticalAlignment="Top" Width="471" Foreground="White"/>
-        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="265,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" Height="20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="265,39,0,0" TextWrapping="Wrap" Text="Port :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Sender Configuration" VerticalAlignment="Top" FontSize="18" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="IPTextBox" HorizontalAlignment="Left" Margin="10,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,39,0,0" TextWrapping="Wrap" Text="Enter your PS4 / PS5 IP :" VerticalAlignment="Top" FontSize="14" />
+        <TextBox x:Name="SelectedELFTextBox" HorizontalAlignment="Left" Margin="10,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400"/>
+        <Button x:Name="SendButton" Content="Send" HorizontalAlignment="Left" Margin="330,190,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="415,156,0,0" VerticalAlignment="Top" Width="66"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,132,0,0" TextWrapping="Wrap" Text="Select an ELF or BIN file :" VerticalAlignment="Top" FontSize="14" />
+        <TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,266,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400"/>
+        <Button x:Name="SendISOButton" Content="Send ISO" HorizontalAlignment="Left" Margin="245,300,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="BrowseISOButton" Content="Browse" HorizontalAlignment="Left" Margin="415,266,0,0" VerticalAlignment="Top" Width="66"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,242,0,0" TextWrapping="Wrap" Text="Select an ISO file :" VerticalAlignment="Top" FontSize="14" />
+        <Button x:Name="SendConfigButton" Content="Send Config" HorizontalAlignment="Left" Margin="330,300,0,0" VerticalAlignment="Top" Width="80" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,103,0,0" TextWrapping="Wrap" Text="Send a Payload" VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,213,0,0" TextWrapping="Wrap" Text="Send a PS2 Game" VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"/>
+        <ProgressBar x:Name="SendProgressBar" HorizontalAlignment="Left" Margin="10,346,0,0" VerticalAlignment="Top" Width="471" Height="20"/>
+        <TextBlock x:Name="SendStatusTextBlock" HorizontalAlignment="Left" Margin="10,325,0,0" TextWrapping="Wrap" Text="Send Status:" VerticalAlignment="Top" />
+        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="265,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
+        <TextBlock HorizontalAlignment="Left" Margin="265,39,0,0" TextWrapping="Wrap" Text="Port :" VerticalAlignment="Top" FontSize="14" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Configuration" VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"/>
     </Grid>
 </Window>

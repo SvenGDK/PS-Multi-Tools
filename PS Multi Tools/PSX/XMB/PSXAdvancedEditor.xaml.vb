@@ -159,12 +159,12 @@ Public Class PSXAdvancedEditor
         End If
     End Function
 
-    Private Sub TranslateButton_Click(sender As Object, e As RoutedEventArgs) Handles TranslateButton.Click
+    Private Async Sub TranslateButton_Click(sender As Object, e As RoutedEventArgs) Handles TranslateButton.Click
         If SelectedLanguageComboBox.SelectedItem IsNot Nothing AndAlso SelectedSyntaxComboBox.SelectedItem IsNot Nothing Then
             Dim SelectedLanguageComboBoxItem As LanguageComboBoxItem = CType(SelectedLanguageComboBox.SelectedItem, LanguageComboBoxItem)
             Dim SelectedSyntaxComboboxItem As SyntaxComboBoxItem = CType(SelectedSyntaxComboBox.SelectedItem, SyntaxComboBoxItem)
 
-            If Utils.IsURLValid("http://X.X.X.X:5050/translate") Then
+            If Await Utils.IsURLValid("http://X.X.X.X:5050/translate") Then
                 Select Case SelectedSyntaxComboboxItem.SyntaxName
                     Case "XML"
                         TranslateXML(SelectedLanguageComboBoxItem.LanguageCode)
@@ -209,7 +209,7 @@ Public Class PSXAdvancedEditor
                                 'Do not take empty words
                                 'lineText.Trim().Count = 2 prevents str="&quot;" to be added
                                 'Do not digit strings
-                                If previousCharsText = "str" AndAlso Not String.IsNullOrEmpty(lineText) AndAlso Not lineText.Trim().Count = 2 AndAlso Not IsInt(lineText.Replace("""", "")) AndAlso Not lineText.Contains("::") Then
+                                If previousCharsText = "str" AndAlso Not String.IsNullOrEmpty(lineText) AndAlso Not lineText.Trim().Length = 2 AndAlso Not IsInt(lineText.Replace("""", "")) AndAlso Not lineText.Contains("::") Then
                                     WordsToTranslate.Add(lineText)
                                 End If
 

@@ -59,7 +59,7 @@ Public Class PSPLibrary
                 Dim OutputReader As StreamReader = SFOReader.StandardOutput
                 Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
 
-                If ProcessOutput.Count > 0 Then
+                If ProcessOutput.Length > 0 Then
 
                     'Load game infos
                     For Each Line In ProcessOutput
@@ -185,7 +185,7 @@ Public Class PSPLibrary
                 Dim OutputReader As StreamReader = SFOReader.StandardOutput
                 Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
 
-                If ProcessOutput.Count > 0 Then
+                If ProcessOutput.Length > 0 Then
 
                     'Load game infos
                     For Each Line In ProcessOutput
@@ -288,8 +288,8 @@ Public Class PSPLibrary
     Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
         Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PSP backup folder"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Count
-            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
+            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Length
+            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Length
 
             NewLoadingWindow = New SyncWindow() With {.Title = "Loading PSP files", .ShowActivated = True}
             NewLoadingWindow.LoadProgressBar.Maximum = FoldersCount + ISOCount

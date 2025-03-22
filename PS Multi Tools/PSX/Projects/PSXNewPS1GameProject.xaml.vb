@@ -283,7 +283,7 @@ Public Class PSXNewPS1GameProject
                     NewGameEditor.GameGenreTextBox.Text = GameInfos(14).Split("="c)(1).Trim()
                     NewGameEditor.GameRegionTextBox.Text = GameInfos(18).Split("="c)(1).Trim()
                 Else
-                    If ProjectIDTextBox.Text.Contains("_") Then
+                    If ProjectIDTextBox.Text.Contains("_"c) Then
                         NewGameEditor.GameIDTextBox.Text = ProjectIDTextBox.Text.Replace("_", "-").Replace(".", "").Trim()
                     Else
                         NewGameEditor.GameIDTextBox.Text = ProjectIDTextBox.Text
@@ -320,7 +320,7 @@ Public Class PSXNewPS1GameProject
         BrowseIMAGE3Button.IsEnabled = False
     End Sub
 
-    Public Function GetPS1GameTitleFromDatabaseList(GameID As String) As String
+    Public Shared Function GetPS1GameTitleFromDatabaseList(GameID As String) As String
         Dim FoundGameTitle As String = ""
 
         For Each GameTitle As String In File.ReadLines(Environment.CurrentDirectory + "\Tools\ps1ids.txt")

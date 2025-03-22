@@ -36,7 +36,7 @@ Public Class PSXNewPS2GameProject
                                     ProjectIDTextBox.Text = Line.Split(New String() {"Volume: "}, StringSplitOptions.RemoveEmptyEntries)(1)
                                     Exit For
                                 Else 'ID found in the ISO files
-                                    ProjectIDTextBox.Text = String.Join(" ", Line.Split(New Char() {}, StringSplitOptions.RemoveEmptyEntries)).Split(" "c)(5).Trim()
+                                    ProjectIDTextBox.Text = String.Join(" ", Line.Split(Array.Empty(Of Char)(), StringSplitOptions.RemoveEmptyEntries)).Split(" "c)(5).Trim()
                                     Exit For
                                 End If
                             End If
@@ -99,7 +99,7 @@ Public Class PSXNewPS2GameProject
                     NewGameEditor.GameGenreTextBox.Text = GameInfos(14).Split("="c)(1).Trim()
                     NewGameEditor.RegionTextBox.Text = GameInfos(18).Split("="c)(1).Trim()
                 Else
-                    If ProjectIDTextBox.Text.Contains("_") Then
+                    If ProjectIDTextBox.Text.Contains("_"c) Then
                         NewGameEditor.GameIDTextBox.Text = ProjectIDTextBox.Text.Replace("_", "-").Replace(".", "").Trim()
                     Else
                         NewGameEditor.GameIDTextBox.Text = ProjectIDTextBox.Text

@@ -7,13 +7,13 @@ Public Class PackageInfoWindow
 
     Dim WithEvents NPSBrowser As New WebBrowser() With {.ScriptErrorsSuppressed = True}
 
-    Private Sub PackageInfoWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+    Private Async Sub PackageInfoWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If Not CurrentPackage.PackageContentID = "" Then
             Dim TitleID As String = CurrentPackage.PackageTitleID
             Dim ContentID As String = CurrentPackage.PackageContentID.Split("-"c)(2)
 
             Try
-                If Utils.IsURLValid("https://nopaystation.com/view/" + PackageConsole + "/" + TitleID + "/" + ContentID + "/1") Then
+                If Await Utils.IsURLValid("https://nopaystation.com/view/" + PackageConsole + "/" + TitleID + "/" + ContentID + "/1") Then
                     NPSBrowser.Navigate("https://nopaystation.com/view/" + PackageConsole + "/" + TitleID + "/" + ContentID + "/1")
                 End If
             Catch ex As Exception

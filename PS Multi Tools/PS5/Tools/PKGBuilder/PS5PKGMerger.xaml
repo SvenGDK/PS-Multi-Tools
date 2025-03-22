@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="PS4/PS5 PKG Merger" Height="410" Width="605" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+             Title="PS4/PS5 PKG Merger" Height="430" Width="605" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBlock HorizontalAlignment="Center" TextWrapping="NoWrap" Text="Merge PKG files into a single one" VerticalAlignment="Top" Foreground="White" Width="558" FontSize="18" Margin="0,10,0,0" FontFamily="Calibri" TextAlignment="Center" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" Height="20"/>
+        <TextBlock HorizontalAlignment="Center" TextWrapping="NoWrap" Text="Merge PKG files into a single one" VerticalAlignment="Top"  FontSize="18" Margin="0,10,0,0" FontFamily="Calibri" TextAlignment="Center" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491"/>
         <Button x:Name="BrowseFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="506,74,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a folder containing all _x.pkg files :" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="10,49,0,0" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="PKG Merge Log :" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="10,127,0,0" FontFamily="Calibri"/>
-        <TextBox x:Name="MergeLogTextBox" HorizontalAlignment="Left" Margin="10,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="571" Height="213"/>
-        <Button x:Name="MergeButton" Content="Merge" HorizontalAlignment="Left" Margin="426,99,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a folder containing all _x.pkg files :" VerticalAlignment="Top"  FontSize="16" Margin="10,49,0,0" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="PKG Merge Log :" VerticalAlignment="Top"  FontSize="16" Margin="10,149,0,0" FontFamily="Calibri"/>
+        <TextBox x:Name="MergeLogTextBox" HorizontalAlignment="Left" Margin="10,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="571" Height="213"/>
+        <Button x:Name="MergeButton" Content="Merge" HorizontalAlignment="Left" Margin="426,110,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" FontWeight="Bold"/>
     </Grid>
 </Window>

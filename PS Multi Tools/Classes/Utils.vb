@@ -5,8 +5,10 @@ Imports System.Drawing.Drawing2D
 Imports System.Globalization
 Imports System.IO
 Imports System.Net
+Imports System.Net.Http
 Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
+Imports System.Security.Policy
 Imports System.Security.Principal
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -16,8 +18,13 @@ Public Class Utils
 
     Public Shared ReadOnly ByBytes() As Byte = {&H62, &H79, &H20, &H53, &H76, &H65, &H6E, &H47, &H44, &H4B}
     Public Shared ConnectedPSXHDD As Structures.MountedPSXDrive
-    Public Declare Auto Function PlaySound Lib "winmm.dll" (pszSound As String, hmod As IntPtr, fdwSound As Integer) As Boolean
-    Public Declare Auto Function PlaySound Lib "winmm.dll" (pszSound As Byte(), hmod As IntPtr, fdwSound As PlaySoundFlags) As Boolean
+
+    <DllImport("winmm.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
+    Private Shared Function PlaySound(<MarshalAs(UnmanagedType.LPWStr)> pszSound As String, hmod As IntPtr, fdwSound As Integer) As Boolean
+    End Function
+    <DllImport("winmm.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
+    Private Shared Function PlaySound(<MarshalAs(UnmanagedType.LPArray)> pszSound As Byte(), hmod As IntPtr, fdwSound As PlaySoundFlags) As Boolean
+    End Function
 
     Public Enum PlaySoundFlags As Integer
         SND_SYNC = 0
@@ -286,38 +293,24 @@ Public Class Utils
         Return WinFound
     End Function
 
-    Public Shared Function IsURLValid(Url As String) As Boolean
+    Public Shared Async Function IsURLValid(Url As String) As Task(Of Boolean)
         If NetworkInterface.GetIsNetworkAvailable Then
             Try
-                Dim request As HttpWebRequest = CType(WebRequest.Create(Url), HttpWebRequest)
-                Using response As HttpWebResponse = CType(request.GetResponse(), HttpWebResponse)
-                    If response.StatusCode = HttpStatusCode.OK Then
-                        Return True
-                    ElseIf response.StatusCode = HttpStatusCode.Found Then
-                        Return True
-                    ElseIf response.StatusCode = HttpStatusCode.NotFound Then
-                        Return False
-                    ElseIf response.StatusCode = HttpStatusCode.Unauthorized Then
-                        Return False
-                    ElseIf response.StatusCode = HttpStatusCode.Forbidden Then
-                        Return False
-                    ElseIf response.StatusCode = HttpStatusCode.BadGateway Then
-                        Return False
-                    ElseIf response.StatusCode = HttpStatusCode.BadRequest Then
-                        Return False
-                    ElseIf response.StatusCode = HttpStatusCode.RequestTimeout Then
-                        Return False
-                    ElseIf response.StatusCode = HttpStatusCode.GatewayTimeout Then
-                        Return False
-                    ElseIf response.StatusCode = HttpStatusCode.InternalServerError Then
-                        Return False
-                    ElseIf response.StatusCode = HttpStatusCode.ServiceUnavailable Then
-                        Return False
-                    Else
-                        Return False
-                    End If
+                Using client As New HttpClient()
+                    Dim response As HttpResponseMessage = Await client.GetAsync(Url)
+
+                    Select Case response.StatusCode
+                        Case HttpStatusCode.OK, HttpStatusCode.Found
+                            Return True
+                        Case HttpStatusCode.NotFound, HttpStatusCode.Unauthorized, HttpStatusCode.Forbidden,
+                         HttpStatusCode.BadGateway, HttpStatusCode.BadRequest, HttpStatusCode.RequestTimeout,
+                         HttpStatusCode.GatewayTimeout, HttpStatusCode.InternalServerError, HttpStatusCode.ServiceUnavailable
+                            Return False
+                        Case Else
+                            Return False
+                    End Select
                 End Using
-            Catch Ex As WebException
+            Catch Ex As HttpRequestException
                 Return False
             End Try
         Else
@@ -403,9 +396,9 @@ Public Class Utils
         Next
     End Sub
 
-    Public Shared Sub CheckForMissingFiles()
+    Public Shared Async Sub CheckForMissingFiles()
         If Not File.Exists("strings.exe") Then
-            If IsURLValid("http://X.X.X.X/strings.exe") Then
+            If Await IsURLValid("http://X.X.X.X/strings.exe") Then
                 Dim NewWebCl As New WebClient()
                 NewWebCl.DownloadFile("http://X.X.X.X/strings.exe", "strings.exe")
             End If
@@ -416,30 +409,21 @@ Public Class Utils
         Return FileURL.Segments(FileURL.Segments.Length - 1)
     End Function
 
-    Public Shared Function WebFileSize(sURL As String) As Double
-        If sURL.StartsWith("ftp://") Then
-            Dim myRequest As FtpWebRequest
-
-            myRequest = CType(WebRequest.Create(sURL), FtpWebRequest)
-            myRequest.Method = WebRequestMethods.Ftp.GetFileSize
-            myRequest.Credentials = New NetworkCredential("anonymous", "")
-
-            Dim myResponse As FtpWebResponse = CType(myRequest.GetResponse(), FtpWebResponse)
-            Dim ResponseLenght As Long = myResponse.ContentLength
-            myResponse.Close()
-
-            Return Math.Round(ResponseLenght / 1024 / 1024, 2)
-        Else
-            Dim myRequest As HttpWebRequest = CType(WebRequest.Create(sURL), HttpWebRequest)
-            Dim myResponse As HttpWebResponse = CType(myRequest.GetResponse(), HttpWebResponse)
-            myResponse.Close()
-
-            Return Math.Round(myResponse.ContentLength / 1024 / 1024, 2)
-        End If
+    Public Shared Async Function WebFileSize(sURL As String) As Task(Of Double)
+        Dim client As New HttpClient()
+        Using request = New HttpRequestMessage(HttpMethod.Head, sURL)
+            Using response = Await client.SendAsync(request)
+                If response.IsSuccessStatusCode AndAlso response.Content.Headers.ContentLength.HasValue Then
+                    Return Math.Round(response.Content.Headers.ContentLength.Value / 1024 / 1024, 2)
+                Else
+                    Return 0
+                End If
+            End Using
+        End Using
     End Function
 
-    Public Shared Function IsPSMultiToolsUpdateAvailable() As Boolean
-        If IsURLValid("https://github.com/SvenGDK/PS-Multi-Tools/raw/main/LatestBuild.txt") Then
+    Public Shared Async Function IsPSMultiToolsUpdateAvailable() As Task(Of Boolean)
+        If Await IsURLValid("https://github.com/SvenGDK/PS-Multi-Tools/raw/main/LatestBuild.txt") Then
             Dim PSMTInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\PS Multi Tools.exe")
             Dim CurrentOrbisProVersion As String = PSMTInfo.FileVersion
 

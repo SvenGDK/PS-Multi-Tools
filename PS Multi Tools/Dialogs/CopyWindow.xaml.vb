@@ -56,7 +56,7 @@ Public Class CopyWindow
     End Sub
 
     Private Sub CountFiles(InFolder As String, ByRef Result As Integer)
-        Result += Directory.GetFiles(InFolder).Count
+        Result += Directory.GetFiles(InFolder).Length
         For Each f As String In Directory.GetDirectories(InFolder)
             CountFiles(f, Result)
         Next

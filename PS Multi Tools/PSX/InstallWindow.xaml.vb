@@ -17,7 +17,7 @@ Public Class InstallWindow
     Public InstallStatus As String
     Public InstallForPS2 As Boolean = False
 
-    Private Sub InstallWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+    Private Async Sub InstallWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If ProjectToInstall IsNot Nothing Then
 
             If File.Exists(ProjectToInstall.ProjectFile) Then
@@ -28,36 +28,36 @@ Public Class InstallWindow
 
                 'Set cover
                 If File.Exists(GameAppDirectory + "\res\jkt_001.png") Then
-                    Dispatcher.BeginInvoke(Sub()
-                                               Dim TempBitmapImage = New BitmapImage()
-                                               TempBitmapImage.BeginInit()
-                                               TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                               TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                               TempBitmapImage.UriSource = New Uri(GameAppDirectory + "\res\jkt_001.png", UriKind.RelativeOrAbsolute)
-                                               TempBitmapImage.EndInit()
-                                               InstallImage.Source = TempBitmapImage
-                                           End Sub)
+                    Await Dispatcher.BeginInvoke(Sub()
+                                                     Dim TempBitmapImage = New BitmapImage()
+                                                     TempBitmapImage.BeginInit()
+                                                     TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                     TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                     TempBitmapImage.UriSource = New Uri(GameAppDirectory + "\res\jkt_001.png", UriKind.RelativeOrAbsolute)
+                                                     TempBitmapImage.EndInit()
+                                                     InstallImage.Source = TempBitmapImage
+                                                 End Sub)
                 Else
-                    If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameAppID + ".jpg") Then
-                        Dispatcher.BeginInvoke(Sub()
-                                                   Dim TempBitmapImage = New BitmapImage()
-                                                   TempBitmapImage.BeginInit()
-                                                   TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                   TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                   TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameAppID + ".jpg", UriKind.RelativeOrAbsolute)
-                                                   TempBitmapImage.EndInit()
-                                                   InstallImage.Source = TempBitmapImage
-                                               End Sub)
-                    ElseIf Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameAppID + ".jpg") Then
-                        Dispatcher.BeginInvoke(Sub()
-                                                   Dim TempBitmapImage = New BitmapImage()
-                                                   TempBitmapImage.BeginInit()
-                                                   TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                   TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                   TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameAppID + ".jpg", UriKind.RelativeOrAbsolute)
-                                                   TempBitmapImage.EndInit()
-                                                   InstallImage.Source = TempBitmapImage
-                                               End Sub)
+                    If Await IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameAppID + ".jpg") Then
+                        Await Dispatcher.BeginInvoke(Sub()
+                                                         Dim TempBitmapImage = New BitmapImage()
+                                                         TempBitmapImage.BeginInit()
+                                                         TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                         TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                         TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameAppID + ".jpg", UriKind.RelativeOrAbsolute)
+                                                         TempBitmapImage.EndInit()
+                                                         InstallImage.Source = TempBitmapImage
+                                                     End Sub)
+                    ElseIf Await IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameAppID + ".jpg") Then
+                        Await Dispatcher.BeginInvoke(Sub()
+                                                         Dim TempBitmapImage = New BitmapImage()
+                                                         TempBitmapImage.BeginInit()
+                                                         TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                         TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                         TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameAppID + ".jpg", UriKind.RelativeOrAbsolute)
+                                                         TempBitmapImage.EndInit()
+                                                         InstallImage.Source = TempBitmapImage
+                                                     End Sub)
                     End If
                 End If
             End If
@@ -182,9 +182,9 @@ Public Class InstallWindow
                 If PPPartitionName.StartsWith("PP.") Then
                     If PPPartitionName.Length < 50 Then
 
-                        If PPPartitionName.Contains("+") Then
+                        If PPPartitionName.Contains("+"c) Then
                             MsgBox("A + sign has been detected in the partition name and will be replaced with ""_"".", MsgBoxStyle.Information, "Unallowed character detected")
-                            PPPartitionName.Replace("+", "_")
+                            PPPartitionName = PPPartitionName.Replace("+", "_")
                         End If
 
                         'Trim the final PPPartitionName
@@ -312,7 +312,7 @@ Public Class InstallWindow
         '2. Search for the created hidden partition
         For Each HDDPartition As String In QueryOutput
             If Not String.IsNullOrEmpty(HDDPartition) Then
-                If HDDPartition.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries).Count >= 3 Then
+                If HDDPartition.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries).Length >= 3 Then
                     HDDPartition = HDDPartition.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries)(4)
                     If HDDPartition.Trim().StartsWith("__." + HDLGameID) Then 'The created hidden partition
                         CreatedGamePartition = HDDPartition.Trim()

@@ -45,14 +45,14 @@ Public Class PSXAssetsBrowser
         If Not String.IsNullOrEmpty(SelectedDirectory) Then
             'Load playable assets
             FilesCount = 0
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.mp4", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.webm", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.ogg", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.png", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.jpg", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.ttf", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.xml", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.dic", SearchOption.AllDirectories).Count
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.mp4", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.webm", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.ogg", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.png", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.jpg", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.ttf", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.xml", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.dic", SearchOption.AllDirectories).Length
 
             NewLoadingWindow = New PSXSyncWindow() With {.Title = "Loading XMB files", .ShowActivated = True}
             NewLoadingWindow.LoadProgressBar.Maximum = FilesCount
@@ -351,14 +351,14 @@ Public Class PSXAssetsBrowser
 
             'Load playable assets
             FilesCount = 0
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.mp4", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.webm", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.ogg", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.png", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.jpg", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.ttf", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.xml", SearchOption.AllDirectories).Count
-            FilesCount += Directory.GetFiles(SelectedDirectory, "*.dic", SearchOption.AllDirectories).Count
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.mp4", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.webm", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.ogg", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.png", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.jpg", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.ttf", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.xml", SearchOption.AllDirectories).Length
+            FilesCount += Directory.GetFiles(SelectedDirectory, "*.dic", SearchOption.AllDirectories).Length
 
             NewLoadingWindow = New PSXSyncWindow() With {.Title = "Loading XMB files", .ShowActivated = True}
             NewLoadingWindow.LoadProgressBar.Maximum = FilesCount

@@ -356,7 +356,7 @@ Public Class PS3Library
                     Dim OutputReader As StreamReader = SFOReader.StandardOutput
                     Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
 
-                    If ProcessOutput.Count > 0 Then
+                    If ProcessOutput.Length > 0 Then
 
                         'Load game infos
                         For Each Line In ProcessOutput
@@ -471,35 +471,44 @@ Public Class PS3Library
                     'Load game infos
                     If NewPKGDecryptor.GetPARAMSFO IsNot Nothing Then
                         Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(NewPKGDecryptor.GetPARAMSFO)
-                        If SFOKeys.ContainsKey("TITLE") Then
-                            NewPS3Game.GameTitle = Utils.CleanTitle(SFOKeys("TITLE").ToString)
+                        Dim TITLEValue As Object = Nothing
+                        If SFOKeys.TryGetValue("TITLE", TITLEValue) Then
+                            NewPS3Game.GameTitle = Utils.CleanTitle(TITLEValue.ToString)
                         End If
-                        If SFOKeys.ContainsKey("TITLE_ID") Then
-                            NewPS3Game.GameID = SFOKeys("TITLE_ID").ToString
+                        Dim TITLEIDValue As Object = Nothing
+                        If SFOKeys.TryGetValue("TITLE_ID", TITLEIDValue) Then
+                            NewPS3Game.GameID = TITLEIDValue.ToString
                         End If
-                        If SFOKeys.ContainsKey("CATEGORY") Then
-                            NewPS3Game.GameCategory = PS3Game.GetCategory(SFOKeys("CATEGORY").ToString)
+                        Dim CATEGORYValue As Object = Nothing
+                        If SFOKeys.TryGetValue("CATEGORY", CATEGORYValue) Then
+                            NewPS3Game.GameCategory = PS3Game.GetCategory(CATEGORYValue.ToString)
                         End If
-                        If SFOKeys.ContainsKey("CONTENT_ID") Then
-                            NewPS3Game.ContentID = SFOKeys("CONTENT_ID").ToString
+                        Dim CONTENTIDValue As Object = Nothing
+                        If SFOKeys.TryGetValue("CONTENT_ID", CONTENTIDValue) Then
+                            NewPS3Game.ContentID = CONTENTIDValue.ToString
                         End If
-                        If SFOKeys.ContainsKey("APP_VER") Then
-                            Dim AppVer As String = SFOKeys("APP_VER").ToString().Substring(0, 5)
+                        Dim APPVERValue As Object = Nothing
+                        If SFOKeys.TryGetValue("APP_VER", APPVERValue) Then
+                            Dim AppVer As String = APPVERValue.ToString().Substring(0, 5)
                             NewPS3Game.GameAppVer = AppVer
                         End If
-                        If SFOKeys.ContainsKey("PS3_SYSTEM_VER") Then
-                            Dim SystemVer As String = SFOKeys("PS3_SYSTEM_VER").ToString().Substring(0, 5)
+                        Dim PS3SYSTEMVERValue As Object = Nothing
+                        If SFOKeys.TryGetValue("PS3_SYSTEM_VER", PS3SYSTEMVERValue) Then
+                            Dim SystemVer As String = PS3SYSTEMVERValue.ToString().Substring(0, 5)
                             NewPS3Game.GameRequiredFW = SystemVer
                         End If
-                        If SFOKeys.ContainsKey("VERSION") Then
-                            Dim Ver As String = SFOKeys("VERSION").ToString().Substring(0, 5)
+                        Dim VERSIONValue As Object = Nothing
+                        If SFOKeys.TryGetValue("VERSION", VERSIONValue) Then
+                            Dim Ver As String = VERSIONValue.ToString().Substring(0, 5)
                             NewPS3Game.GameVer = Ver
                         End If
-                        If SFOKeys.ContainsKey("RESOLUTION") Then
-                            NewPS3Game.GameResolution = PS3Game.GetGameResolution(SFOKeys("RESOLUTION").ToString)
+                        Dim RESOLUTIONValue As Object = Nothing
+                        If SFOKeys.TryGetValue("RESOLUTION", RESOLUTIONValue) Then
+                            NewPS3Game.GameResolution = PS3Game.GetGameResolution(RESOLUTIONValue.ToString)
                         End If
-                        If SFOKeys.ContainsKey("SOUND_FORMAT") Then
-                            NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(SFOKeys("SOUND_FORMAT").ToString)
+                        Dim SOUNDFORMATValue As Object = Nothing
+                        If SFOKeys.TryGetValue("SOUND_FORMAT", SOUNDFORMATValue) Then
+                            NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(SOUNDFORMATValue.ToString)
                         End If
                     End If
 
@@ -591,35 +600,44 @@ Public Class PS3Library
                 Using ParamFileStream As New FileStream(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO", FileMode.Open, FileAccess.Read)
                     Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(ParamFileStream)
                     If SFOKeys IsNot Nothing AndAlso SFOKeys.Count > 0 Then
-                        If SFOKeys.ContainsKey("APP_VER") Then
-                            Dim AppVer As String = SFOKeys("APP_VER").ToString().Substring(0, 5)
+                        Dim TITLEValue As Object = Nothing
+                        If SFOKeys.TryGetValue("TITLE", TITLEValue) Then
+                            NewPS3Game.GameTitle = Utils.CleanTitle(TITLEValue.ToString)
+                        End If
+                        Dim TITLEIDValue As Object = Nothing
+                        If SFOKeys.TryGetValue("TITLE_ID", TITLEIDValue) Then
+                            NewPS3Game.GameID = TITLEIDValue.ToString
+                        End If
+                        Dim CATEGORYValue As Object = Nothing
+                        If SFOKeys.TryGetValue("CATEGORY", CATEGORYValue) Then
+                            NewPS3Game.GameCategory = PS3Game.GetCategory(CATEGORYValue.ToString)
+                        End If
+                        Dim CONTENTIDValue As Object = Nothing
+                        If SFOKeys.TryGetValue("CONTENT_ID", CONTENTIDValue) Then
+                            NewPS3Game.ContentID = CONTENTIDValue.ToString
+                        End If
+                        Dim APPVERValue As Object = Nothing
+                        If SFOKeys.TryGetValue("APP_VER", APPVERValue) Then
+                            Dim AppVer As String = APPVERValue.ToString().Substring(0, 5)
                             NewPS3Game.GameAppVer = AppVer
                         End If
-                        If SFOKeys.ContainsKey("CATEGORY") Then
-                            NewPS3Game.GameCategory = PS3Game.GetCategory(SFOKeys("CATEGORY").ToString)
-                        End If
-                        If SFOKeys.ContainsKey("CONTENT_ID") Then
-                            NewPS3Game.ContentID = SFOKeys("CONTENT_ID").ToString
-                        End If
-                        If SFOKeys.ContainsKey("PS3_SYSTEM_VER") Then
-                            Dim SystemVer As String = SFOKeys("PS3_SYSTEM_VER").ToString().Substring(0, 5)
+                        Dim PS3SYSTEMVERValue As Object = Nothing
+                        If SFOKeys.TryGetValue("PS3_SYSTEM_VER", PS3SYSTEMVERValue) Then
+                            Dim SystemVer As String = PS3SYSTEMVERValue.ToString().Substring(0, 5)
                             NewPS3Game.GameRequiredFW = SystemVer
                         End If
-                        If SFOKeys.ContainsKey("RESOLUTION") Then
-                            NewPS3Game.GameResolution = PS3Game.GetGameResolution(SFOKeys("RESOLUTION").ToString)
-                        End If
-                        If SFOKeys.ContainsKey("SOUND_FORMAT") Then
-                            NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(SFOKeys("SOUND_FORMAT").ToString)
-                        End If
-                        If SFOKeys.ContainsKey("TITLE") Then
-                            NewPS3Game.GameTitle = Utils.CleanTitle(SFOKeys("TITLE").ToString)
-                        End If
-                        If SFOKeys.ContainsKey("TITLE_ID") Then
-                            NewPS3Game.GameID = SFOKeys("TITLE_ID").ToString
-                        End If
-                        If SFOKeys.ContainsKey("VERSION") Then
-                            Dim Ver As String = SFOKeys("VERSION").ToString().Substring(0, 5)
+                        Dim VERSIONValue As Object = Nothing
+                        If SFOKeys.TryGetValue("VERSION", VERSIONValue) Then
+                            Dim Ver As String = VERSIONValue.ToString().Substring(0, 5)
                             NewPS3Game.GameVer = Ver
+                        End If
+                        Dim RESOLUTIONValue As Object = Nothing
+                        If SFOKeys.TryGetValue("RESOLUTION", RESOLUTIONValue) Then
+                            NewPS3Game.GameResolution = PS3Game.GetGameResolution(RESOLUTIONValue.ToString)
+                        End If
+                        Dim SOUNDFORMATValue As Object = Nothing
+                        If SFOKeys.TryGetValue("SOUND_FORMAT", SOUNDFORMATValue) Then
+                            NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(SOUNDFORMATValue.ToString)
                         End If
                     End If
                 End Using
@@ -971,7 +989,7 @@ Public Class PS3Library
 
                             'Get the new drive name
                             Dim NewDriveNames As IEnumerable(Of String) = NewDrivesList.Except(CurrentDrives)
-                            If NewDriveNames.Count > 0 Then
+                            If NewDriveNames.Any() Then
 
                                 Dim NewDriveName As String = NewDriveNames(0)
 
@@ -1004,9 +1022,9 @@ Public Class PS3Library
 
             PS3GamesListView.Items.Clear()
 
-            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Count
-            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
-            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
+            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Length
+            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Length
+            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Length
 
             'Show the loading progress window
             NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS3 files", .ShowActivated = True}

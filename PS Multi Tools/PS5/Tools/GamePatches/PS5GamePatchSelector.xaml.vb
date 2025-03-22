@@ -32,7 +32,7 @@ Public Class PS5GamePatchSelector
         End If
     End Sub
 
-    Private Sub DownloadStarting(sender As Object, args As CoreWebView2DownloadStartingEventArgs)
+    Private Async Sub DownloadStarting(sender As Object, args As CoreWebView2DownloadStartingEventArgs)
         'Supress default download window & DownloadOperation
         args.Handled = True
         args.Cancel = True
@@ -51,7 +51,7 @@ Public Class PS5GamePatchSelector
             Dim NewDownloader As New Downloader() With {.ShowActivated = True}
             NewDownloader.Show()
 
-            If NewDownloader.CreateNewDownload(args.DownloadOperation.Uri) = False Then
+            If Await NewDownloader.CreateNewDownload(args.DownloadOperation.Uri) = False Then
                 MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
                 NewDownloader.Close()
             End If

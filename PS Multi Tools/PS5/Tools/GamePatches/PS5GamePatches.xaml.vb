@@ -52,9 +52,9 @@ Public Class PS5GamePatches
         End If
     End Sub
 
-    Private Sub SearchButton_Click(sender As Object, e As RoutedEventArgs) Handles SearchButton.Click
+    Private Async Sub SearchButton_Click(sender As Object, e As RoutedEventArgs) Handles SearchButton.Click
         If Not String.IsNullOrEmpty(SearchGameIDTextBox.Text) Then
-            If Utils.IsURLValid("https://prosperopatches.com/" + SearchGameIDTextBox.Text) Then
+            If Await Utils.IsURLValid("https://prosperopatches.com/" + SearchGameIDTextBox.Text) Then
                 Dim NewWin As New PS5GamePatchSelector() With {.CurrentGameID = SearchGameIDTextBox.Text}
                 NewWin.GamePatchesWebView.Source = New Uri("https://prosperopatches.com/" + SearchGameIDTextBox.Text)
                 NewWin.Show()
@@ -66,11 +66,11 @@ Public Class PS5GamePatches
         Process.Start("https://prosperopatches.com/" + SearchGameIDTextBox.Text)
     End Sub
 
-    Private Sub PS5GamePatches_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
+    Private Async Sub PS5GamePatches_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
         If Not String.IsNullOrEmpty(SearchForGamePatchWithID) Then
             SearchGameIDTextBox.Text = SearchForGamePatchWithID
 
-            If Utils.IsURLValid("https://prosperopatches.com/" + SearchForGamePatchWithID) Then
+            If Await Utils.IsURLValid("https://prosperopatches.com/" + SearchForGamePatchWithID) Then
                 Dim NewWin As New PS5GamePatchSelector() With {.CurrentGameID = SearchForGamePatchWithID}
                 NewWin.GamePatchesWebView.Source = New Uri("https://prosperopatches.com/" + SearchForGamePatchWithID)
                 NewWin.Show()
@@ -89,7 +89,7 @@ Public Class PS5GamePatches
         End If
     End Sub
 
-    Private Sub DownloadButton_Click(sender As Object, e As RoutedEventArgs) Handles DownloadButton.Click
+    Private Async Sub DownloadButton_Click(sender As Object, e As RoutedEventArgs) Handles DownloadButton.Click
         If DownloadQueueListView.SelectedItem IsNot Nothing Then
             If DownloadQueueListView.SelectedItems.Count > 1 Then
                 'Create a new download window for each selected item
@@ -99,7 +99,7 @@ Public Class PS5GamePatches
 
                     Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5", .DownloadQueueItem = SelectedItemAsQueueItem}
                     NewDownloader.Show()
-                    If NewDownloader.CreateNewDownload(SelectedItemAsQueueItem.DownloadURL) = False Then
+                    If Await NewDownloader.CreateNewDownload(SelectedItemAsQueueItem.DownloadURL) = False Then
                         MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
                         NewDownloader.Close()
                         SelectedItemAsQueueItem.DownloadState = "Download failed"
@@ -113,7 +113,7 @@ Public Class PS5GamePatches
 
                 Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5", .DownloadQueueItem = SelectedItemAsQueueItem}
                 NewDownloader.Show()
-                If NewDownloader.CreateNewDownload(SelectedItemAsQueueItem.DownloadURL) = False Then
+                If Await NewDownloader.CreateNewDownload(SelectedItemAsQueueItem.DownloadURL) = False Then
                     MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
                     NewDownloader.Close()
                     SelectedItemAsQueueItem.DownloadState = "Download failed"
@@ -146,7 +146,7 @@ Public Class PS5GamePatches
                     Next
 
                     'Rename _sc.pkg
-                    Dim PKGCount As Integer = Directory.GetFiles(NewMergeFolder).Count - 1
+                    Dim PKGCount As Integer = Directory.GetFiles(NewMergeFolder).Length - 1
                     Dim SCPKGName As String = BaseName + "_sc.pkg"
                     Dim NewPKGName As String = BaseName + "_" + PKGCount.ToString + ".pkg"
                     If File.Exists(NewMergeFolder + "\" + SCPKGName) Then

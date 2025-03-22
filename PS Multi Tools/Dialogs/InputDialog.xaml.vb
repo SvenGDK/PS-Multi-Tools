@@ -21,7 +21,7 @@ Public Class InputDialog
         End Get
         Set
             _InputDialogTitleTextBlock_Text = Value
-            NotifyPropertyChanged("InputDialogTitleTextBlock_Text")
+            NotifyPropertyChanged(NameOf(InputDialogTitleTextBlock_Text))
         End Set
     End Property
 
@@ -31,7 +31,7 @@ Public Class InputDialog
         End Get
         Set
             _NewValueTextBox_Text = Value
-            NotifyPropertyChanged("NewValueTextBox_Text")
+            NotifyPropertyChanged(NameOf(NewValueTextBox_Text))
         End Set
     End Property
 
@@ -41,7 +41,7 @@ Public Class InputDialog
         End Get
         Set
             _ConfirmButton_Text = Value
-            NotifyPropertyChanged("ConfirmButton_Text")
+            NotifyPropertyChanged(NameOf(ConfirmButton_Text))
         End Set
     End Property
 

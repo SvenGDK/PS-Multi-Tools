@@ -22,7 +22,7 @@ Public Class MergeBinTool
         Dim OFD As New OpenFileDialog() With {.CheckFileExists = True, .Multiselect = True, .Filter = "cue files (*.cue)|*.cue"}
         If OFD.ShowDialog() = Forms.DialogResult.OK Then
 
-            If OFD.FileNames.Count > 1 Then
+            If OFD.FileNames.Length > 1 Then
                 For Each SelectedCUE In OFD.FileNames
                     Dim NewCUELVItem As New CueListViewItem() With {.FileName = SelectedCUE}
                     CUEsListView.Items.Add(NewCUELVItem)

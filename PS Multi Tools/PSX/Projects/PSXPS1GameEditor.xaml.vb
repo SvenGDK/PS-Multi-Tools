@@ -12,13 +12,13 @@ Public Class PSXPS1GameEditor
     Public WithEvents PSXDatacenterBrowser As New WebBrowser()
     Public AutoSave As Boolean = False
 
-    Private Sub LoadFromPSXButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadFromPSXButton.Click
+    Private Async Sub LoadFromPSXButton_Click(sender As Object, e As RoutedEventArgs) Handles LoadFromPSXButton.Click
         Try
             If Not String.IsNullOrWhiteSpace(GameTitleTextBox.Text) AndAlso Not String.IsNullOrWhiteSpace(GameIDTextBox.Text) Then
                 Dim GameStartLetter As String = GameTitleTextBox.Text.Substring(0, 1) 'Take the first letter of the game title (required to browse PSXDatacenter)
                 Dim RegionCharacter As String = PS1Game.GetRegionChar(GameIDTextBox.Text)
 
-                If Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameIDTextBox.Text + ".html") Then
+                If Await Utils.IsURLValid("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameIDTextBox.Text + ".html") Then
                     PSXDatacenterBrowser.Navigate("https://psxdatacenter.com/games/" + RegionCharacter + "/" + GameStartLetter + "/" + GameIDTextBox.Text + ".html")
                 Else
                     MsgBox("Could not find any data for this game.", MsgBoxStyle.Information)
@@ -142,28 +142,28 @@ Public Class PSXPS1GameEditor
         End If
     End Sub
 
-    Public Sub ApplyKnownValues(GameID As String, GameTitle As String)
+    Public Async Sub ApplyKnownValues(GameID As String, GameTitle As String)
         'Set Title, ID & Region
         GameTitleTextBox.Text = GameTitle
         GameIDTextBox.Text = GameID
         GameRegionTextBox.Text = PS1Game.GetRegionChar(GameID)
 
         'Set Cover
-        If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg") Then
+        If Await Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg") Then
 
             'Set Tag
             GameCoverImage.Tag = "https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg"
 
             'Load the Cover
-            Dispatcher.BeginInvoke(Sub()
-                                       Dim TempBitmapImage = New BitmapImage()
-                                       TempBitmapImage.BeginInit()
-                                       TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                       TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                       TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                                       TempBitmapImage.EndInit()
-                                       GameCoverImage.Source = TempBitmapImage
-                                   End Sub)
+            Await Dispatcher.BeginInvoke(Sub()
+                                             Dim TempBitmapImage = New BitmapImage()
+                                             TempBitmapImage.BeginInit()
+                                             TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                             TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                             TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS1/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                                             TempBitmapImage.EndInit()
+                                             GameCoverImage.Source = TempBitmapImage
+                                         End Sub)
         End If
 
         'Save automatically if project is created using the Game Library

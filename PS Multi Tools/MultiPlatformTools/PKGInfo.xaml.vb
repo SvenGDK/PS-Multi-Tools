@@ -221,7 +221,7 @@ Public Class PKGInfo
         End If
 
         If NewPKGDecryptor.GetPARAMSFO IsNot Nothing Then
-            Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSFO(NewPKGDecryptor.GetPARAMSFO)
+            Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(NewPKGDecryptor.GetPARAMSFO)
             If SFOKeys.ContainsKey("TITLE") Then
                 PKGTitleTextBlock.Dispatcher.BeginInvoke(Sub() Utils.CleanTitle(SFOKeys("TITLE").ToString))
             End If
@@ -251,14 +251,14 @@ Public Class PKGInfo
 
     End Sub
 
-    Private Sub LoadPSVInfo()
+    Private Async Sub LoadPSVInfo()
         Dim PKGFileInfo As New FileInfo(SelectedPKG)
         Dim PKGIconURL As String = String.Empty
         Dim PKGTitleID As String = String.Empty
         Dim PKGContentID As String = String.Empty
 
-        PKGConsoleTextBlock.Dispatcher.BeginInvoke(Sub() PKGConsoleTextBlock.Text = "PS Vita")
-        PKGSizeTextBlock.Dispatcher.BeginInvoke(Sub() PKGSizeTextBlock.Text = FormatNumber(PKGFileInfo.Length / 1073741824, 2) + " GB")
+        Await PKGConsoleTextBlock.Dispatcher.BeginInvoke(Sub() PKGConsoleTextBlock.Text = "PS Vita")
+        Await PKGSizeTextBlock.Dispatcher.BeginInvoke(Sub() PKGSizeTextBlock.Text = FormatNumber(PKGFileInfo.Length / 1073741824, 2) + " GB")
 
         Using SFOReader As New Process()
             SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PSN_get_pkg_info.exe"
@@ -271,42 +271,42 @@ Public Class PKGInfo
             Dim OutputReader As StreamReader = SFOReader.StandardOutput
             Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
 
-            If ProcessOutput.Count > 0 Then
+            If ProcessOutput.Length > 0 Then
                 For Each Line In ProcessOutput
                     If Line.StartsWith("Title:") Then
-                        PKGTitleTextBlock.Dispatcher.BeginInvoke(Sub() PKGTitleTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
+                        Await PKGTitleTextBlock.Dispatcher.BeginInvoke(Sub() PKGTitleTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
                     ElseIf Line.StartsWith("Title ID:") Then
-                        PKGTitleDTextBlock.Dispatcher.BeginInvoke(Sub() PKGTitleDTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
+                        Await PKGTitleDTextBlock.Dispatcher.BeginInvoke(Sub() PKGTitleDTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
                         PKGTitleID = Line.Split(":"c)(1).Trim(""""c).Trim()
                     ElseIf Line.StartsWith("NPS Type:") Then
-                        PKGTypeTextBlock.Dispatcher.BeginInvoke(Sub() PKGTypeTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
-                        PKGCategoryTextBlock.Dispatcher.BeginInvoke(Sub() PKGCategoryTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
+                        Await PKGTypeTextBlock.Dispatcher.BeginInvoke(Sub() PKGTypeTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
+                        Await PKGCategoryTextBlock.Dispatcher.BeginInvoke(Sub() PKGCategoryTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
                     ElseIf Line.StartsWith("App Ver:") Then
-                        PKGAppVerTextBlock.Dispatcher.BeginInvoke(Sub() PKGAppVerTextBlock.Text = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2))
+                        Await PKGAppVerTextBlock.Dispatcher.BeginInvoke(Sub() PKGAppVerTextBlock.Text = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2))
                     ElseIf Line.StartsWith("Min FW:") Then
-                        PKGFirmwareVersionTextBlock.Dispatcher.BeginInvoke(Sub() PKGFirmwareVersionTextBlock.Text = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2))
+                        Await PKGFirmwareVersionTextBlock.Dispatcher.BeginInvoke(Sub() PKGFirmwareVersionTextBlock.Text = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2))
                     ElseIf Line.StartsWith("Version:") Then
-                        PKGVersionTextBlock.Dispatcher.BeginInvoke(Sub() PKGVersionTextBlock.Text = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2))
+                        Await PKGVersionTextBlock.Dispatcher.BeginInvoke(Sub() PKGVersionTextBlock.Text = FormatNumber(Line.Split(":"c)(1).Trim(""""c), 2))
                     ElseIf Line.StartsWith("Content ID:") Then
-                        PKGContentIDTextBlock.Dispatcher.BeginInvoke(Sub() PKGContentIDTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
+                        Await PKGContentIDTextBlock.Dispatcher.BeginInvoke(Sub() PKGContentIDTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
                         PKGContentID = Line.Split(":"c)(1).Trim(""""c).Trim()
                     ElseIf Line.StartsWith("Region:") Then
-                        PKGRegionTextBlock.Dispatcher.BeginInvoke(Sub() PKGRegionTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
+                        Await PKGRegionTextBlock.Dispatcher.BeginInvoke(Sub() PKGRegionTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
                     ElseIf Line.StartsWith("c_date:") Then
-                        PKGBuildDateTextBlock.Dispatcher.BeginInvoke(Sub() PKGBuildDateTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
+                        Await PKGBuildDateTextBlock.Dispatcher.BeginInvoke(Sub() PKGBuildDateTextBlock.Text = Line.Split(":"c)(1).Trim(""""c).Trim())
                     End If
                 Next
 
-                If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + PKGTitleID + ".png") Then
+                If Await Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + PKGTitleID + ".png") Then
                     GameIcon.Source = New BitmapImage(New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + PKGTitleID + ".png", UriKind.RelativeOrAbsolute))
                 End If
 
             End If
         End Using
 
-        PKGStateTextBlock.Dispatcher.BeginInvoke(Sub() PKGStateTextBlock.Text = "Not available")
-        PKGDataTypeTextBlock.Dispatcher.BeginInvoke(Sub() PKGDataTypeTextBlock.Text = "Not available")
-        PKGAttributesTextBlock.Dispatcher.BeginInvoke(Sub() PKGAttributesTextBlock.Text = "Not available")
+        Await PKGStateTextBlock.Dispatcher.BeginInvoke(Sub() PKGStateTextBlock.Text = "Not available")
+        Await PKGDataTypeTextBlock.Dispatcher.BeginInvoke(Sub() PKGDataTypeTextBlock.Text = "Not available")
+        Await PKGAttributesTextBlock.Dispatcher.BeginInvoke(Sub() PKGAttributesTextBlock.Text = "Not available")
     End Sub
 
     Public Shared Function GetPS4Category(SFOCategory As String) As String

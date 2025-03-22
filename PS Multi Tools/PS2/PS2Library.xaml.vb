@@ -1,9 +1,7 @@
-﻿Imports System.ComponentModel
-Imports System.IO
+﻿Imports System.IO
 
 Public Class PS2Library
 
-    Dim WithEvents GameLoaderWorker As New BackgroundWorker() With {.WorkerReportsProgress = True}
     Dim WithEvents PSXDatacenterBrowser As New Forms.WebBrowser() With {.ScriptErrorsSuppressed = True}
     Dim WithEvents NewLoadingWindow As New SyncWindow() With {.Title = "Loading PS2 files", .ShowActivated = True}
 
@@ -49,173 +47,285 @@ Public Class PS2Library
         End If
     End Sub
 
-#Region "Game Loader"
+#Region "Menu Actions"
 
-    Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
+    Private Async Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
+        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS2 backup folder"}
+        If FBD.ShowDialog() = Forms.DialogResult.OK Then
+            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Length
+            CSOCount = Directory.GetFiles(FBD.SelectedPath, "*.cso", SearchOption.AllDirectories).Length
 
-        'PS2 ISOs
-        For Each GameISO In Directory.GetFiles(e.Argument.ToString, "*.iso", SearchOption.AllDirectories)
+            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS2 files", .ShowActivated = True}
+            NewLoadingWindow.LoadProgressBar.Maximum = ISOCount
+            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading ISO 1 of " + ISOCount.ToString()
+            NewLoadingWindow.Show()
 
-            Dim NewPS2Game As New PS2Game()
-            Dim GameID As String = PS2Game.GetPS2GameID(GameISO)
+            'PS2 ISOs
+            For Each GameISO In Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories)
 
-            If GameID = "" Then
-                NewPS2Game.GameFilePath = GameISO
-                Dim PS2ISOFileInfo As New FileInfo(GameISO)
-                NewPS2Game.GameSize = FormatNumber(PS2ISOFileInfo.Length / 1073741824, 2) + " GB"
-                NewPS2Game.GameID = "Unknown"
-                NewPS2Game.GameBackupType = PS2Game.GameFileType.ISO
+                Dim NewPS2Game As New PS2Game()
+                Dim GameID As String = PS2Game.GetPS2GameID(GameISO)
 
-                'Update progress
-                Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
-                Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading ISO " + (NewLoadingWindow.LoadProgressBar.Value - CSOCount).ToString() + " of " + ISOCount.ToString())
+                If GameID = "" Then
+                    NewPS2Game.GameFilePath = GameISO
+                    Dim PS2ISOFileInfo As New FileInfo(GameISO)
+                    NewPS2Game.GameSize = FormatNumber(PS2ISOFileInfo.Length / 1073741824, 2) + " GB"
+                    NewPS2Game.GameID = "Unknown"
+                    NewPS2Game.GameBackupType = PS2Game.GameFileType.ISO
 
-                'Add to the ListView
-                If GamesListView.Dispatcher.CheckAccess() = False Then
-                    GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS2Game))
-                Else
-                    GamesListView.Items.Add(NewPS2Game)
-                End If
+                    'Update progress
+                    Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
+                    Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading ISO " + NewLoadingWindow.LoadProgressBar.Value.ToString() + " of " + ISOCount.ToString())
 
-            Else
-                GameID = GameID.Replace(".", "").Replace("_", "-").Trim()
-
-                Dim PS2ISOFileInfo As New FileInfo(GameISO)
-                NewPS2Game.GameSize = FormatNumber(PS2ISOFileInfo.Length / 1073741824, 2) + " GB"
-                NewPS2Game.GameID = GameID
-                NewPS2Game.GameFilePath = GameISO
-                NewPS2Game.GameBackupType = PS2Game.GameFileType.ISO
-
-                If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg") Then
-                    If Dispatcher.CheckAccess() = False Then
-                        Dispatcher.BeginInvoke(Sub()
-                                                   Dim TempBitmapImage = New BitmapImage()
-                                                   TempBitmapImage.BeginInit()
-                                                   TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                   TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                   TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                                                   TempBitmapImage.EndInit()
-                                                   NewPS2Game.GameCoverSource = TempBitmapImage
-                                               End Sub)
+                    'Add to the ListView
+                    If GamesListView.Dispatcher.CheckAccess() = False Then
+                        Await GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS2Game))
                     Else
-                        Dim TempBitmapImage = New BitmapImage()
-                        TempBitmapImage.BeginInit()
-                        TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                        TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                        TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                        TempBitmapImage.EndInit()
-                        NewPS2Game.GameCoverSource = TempBitmapImage
+                        GamesListView.Items.Add(NewPS2Game)
+                    End If
+
+                Else
+                    GameID = GameID.Replace(".", "").Replace("_", "-").Trim()
+
+                    Dim PS2ISOFileInfo As New FileInfo(GameISO)
+                    NewPS2Game.GameSize = FormatNumber(PS2ISOFileInfo.Length / 1073741824, 2) + " GB"
+                    NewPS2Game.GameID = GameID
+                    NewPS2Game.GameFilePath = GameISO
+                    NewPS2Game.GameBackupType = PS2Game.GameFileType.ISO
+
+                    If Await Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg") Then
+                        If Dispatcher.CheckAccess() = False Then
+                            Await Dispatcher.BeginInvoke(Sub()
+                                                             Dim TempBitmapImage = New BitmapImage()
+                                                             TempBitmapImage.BeginInit()
+                                                             TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                             TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                             TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                                                             TempBitmapImage.EndInit()
+                                                             NewPS2Game.GameCoverSource = TempBitmapImage
+                                                         End Sub)
+                        Else
+                            Dim TempBitmapImage = New BitmapImage()
+                            TempBitmapImage.BeginInit()
+                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                            TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                            TempBitmapImage.EndInit()
+                            NewPS2Game.GameCoverSource = TempBitmapImage
+                        End If
+                    End If
+
+                    'Update progress
+                    Await Dispatcher.BeginInvoke(Sub()
+                                                     NewLoadingWindow.LoadProgressBar.Value += 1
+                                                     NewLoadingWindow.LoadStatusTextBlock.Text = "Loading ISO " + NewLoadingWindow.LoadProgressBar.Value.ToString() + " of " + ISOCount.ToString()
+                                                 End Sub)
+
+                    'Add to the ListView
+                    If GamesListView.Dispatcher.CheckAccess() = False Then
+                        Await GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS2Game))
+                    Else
+                        GamesListView.Items.Add(NewPS2Game)
+                    End If
+
+                    If Await Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + GameID + ".html") Then
+                        URLs.Add("https://psxdatacenter.com/psx2/games2/" + GameID + ".html")
+                    Else
+                        NewPS2Game.GameTitle = PS2Game.GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
                     End If
                 End If
+            Next
 
-                'Update progress
-                Dispatcher.BeginInvoke(Sub()
-                                           NewLoadingWindow.LoadProgressBar.Value += 1
-                                           NewLoadingWindow.LoadStatusTextBlock.Text = "Loading ISO " + (NewLoadingWindow.LoadProgressBar.Value - CSOCount).ToString() + " of " + ISOCount.ToString()
-                                       End Sub)
+            'Reset
+            Await Dispatcher.BeginInvoke(Sub()
+                                             NewLoadingWindow.LoadProgressBar.Value = 0
+                                             NewLoadingWindow.LoadProgressBar.Maximum = CSOCount
+                                             NewLoadingWindow.LoadStatusTextBlock.Text = "Loading CSO 1 of " + ISOCount.ToString()
+                                         End Sub)
 
-                'Add to the ListView
-                If GamesListView.Dispatcher.CheckAccess() = False Then
-                    GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS2Game))
-                Else
-                    GamesListView.Items.Add(NewPS2Game)
-                End If
+            'PS2 CSOs
+            For Each GameCSO In Directory.GetFiles(FBD.SelectedPath, "*.cso", SearchOption.AllDirectories)
 
-                If Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + GameID + ".html") Then
-                    URLs.Add("https://psxdatacenter.com/psx2/games2/" + GameID + ".html")
-                Else
-                    NewPS2Game.GameTitle = PS2Game.GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
-                End If
-            End If
-        Next
+                Dim NewPS2Game As New PS2Game()
+                Dim GameID As String = PS2Game.GetPS2GameID(GameCSO)
 
-        'PS2 CSOs
-        For Each GameCSO In Directory.GetFiles(e.Argument.ToString, "*.cso", SearchOption.AllDirectories)
+                If GameID = "" Then
 
-            Dim NewPS2Game As New PS2Game()
-            Dim GameID As String = PS2Game.GetPS2GameID(GameCSO)
+                    'Add to the GamesListView
+                    NewPS2Game.GameFilePath = GameCSO
+                    Dim PS2CSOFileInfo As New FileInfo(GameCSO)
+                    NewPS2Game.GameSize = FormatNumber(PS2CSOFileInfo.Length / 1073741824, 2) + " GB"
+                    NewPS2Game.GameBackupType = PS2Game.GameFileType.CSO
 
-            If GameID = "" Then
+                    'Update progress
+                    Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
+                    Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading CSO " + NewLoadingWindow.LoadProgressBar.Value.ToString() + " of " + CSOCount.ToString())
 
-                'Add to the GamesListView
-                NewPS2Game.GameFilePath = GameCSO
-                Dim PS2CSOFileInfo As New FileInfo(GameCSO)
-                NewPS2Game.GameSize = FormatNumber(PS2CSOFileInfo.Length / 1073741824, 2) + " GB"
-                NewPS2Game.GameBackupType = PS2Game.GameFileType.CSO
-
-                'Update progress
-                Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
-                Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading CSO " + (NewLoadingWindow.LoadProgressBar.Value - ISOCount).ToString() + " of " + CSOCount.ToString())
-
-                'Add to the ListView
-                If GamesListView.Dispatcher.CheckAccess() = False Then
-                    GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS2Game))
-                Else
-                    GamesListView.Items.Add(NewPS2Game)
-                End If
-            Else
-                GameID = GameID.Replace(".", "").Replace("_", "-").Trim()
-
-                Dim PS2CSOFileInfo As New FileInfo(GameCSO)
-                NewPS2Game.GameSize = FormatNumber(PS2CSOFileInfo.Length / 1073741824, 2) + " GB"
-                NewPS2Game.GameID = GameID
-                NewPS2Game.GameFilePath = GameCSO
-                NewPS2Game.GameBackupType = PS2Game.GameFileType.CSO
-
-                If Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg") Then
-                    If Dispatcher.CheckAccess() = False Then
-                        Dispatcher.BeginInvoke(Sub()
-                                                   Dim TempBitmapImage = New BitmapImage()
-                                                   TempBitmapImage.BeginInit()
-                                                   TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                   TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                   TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                                                   TempBitmapImage.EndInit()
-                                                   NewPS2Game.GameCoverSource = TempBitmapImage
-                                               End Sub)
+                    'Add to the ListView
+                    If GamesListView.Dispatcher.CheckAccess() = False Then
+                        Await GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS2Game))
                     Else
-                        Dim TempBitmapImage = New BitmapImage()
-                        TempBitmapImage.BeginInit()
-                        TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                        TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                        TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
-                        TempBitmapImage.EndInit()
-                        NewPS2Game.GameCoverSource = TempBitmapImage
+                        GamesListView.Items.Add(NewPS2Game)
+                    End If
+                Else
+                    GameID = GameID.Replace(".", "").Replace("_", "-").Trim()
+
+                    Dim PS2CSOFileInfo As New FileInfo(GameCSO)
+                    NewPS2Game.GameSize = FormatNumber(PS2CSOFileInfo.Length / 1073741824, 2) + " GB"
+                    NewPS2Game.GameID = GameID
+                    NewPS2Game.GameFilePath = GameCSO
+                    NewPS2Game.GameBackupType = PS2Game.GameFileType.CSO
+
+                    If Await Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg") Then
+                        If Dispatcher.CheckAccess() = False Then
+                            Await Dispatcher.BeginInvoke(Sub()
+                                                             Dim TempBitmapImage = New BitmapImage()
+                                                             TempBitmapImage.BeginInit()
+                                                             TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                             TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                             TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                                                             TempBitmapImage.EndInit()
+                                                             NewPS2Game.GameCoverSource = TempBitmapImage
+                                                         End Sub)
+                        Else
+                            Dim TempBitmapImage = New BitmapImage()
+                            TempBitmapImage.BeginInit()
+                            TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                            TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                            TempBitmapImage.UriSource = New Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg", UriKind.RelativeOrAbsolute)
+                            TempBitmapImage.EndInit()
+                            NewPS2Game.GameCoverSource = TempBitmapImage
+                        End If
+                    End If
+
+                    'Update progress
+                    Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
+                    Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading CSO " + NewLoadingWindow.LoadProgressBar.Value.ToString() + " of " + CSOCount.ToString())
+
+                    'Add to the ListView
+                    If GamesListView.Dispatcher.CheckAccess() = False Then
+                        Await GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS2Game))
+                    Else
+                        GamesListView.Items.Add(NewPS2Game)
+                    End If
+
+                    If Await Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + GameID + ".html") Then
+                        URLs.Add("https://psxdatacenter.com/psx2/games2/" + GameID + ".html")
+                    Else
+                        NewPS2Game.GameTitle = PS2Game.GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
                     End If
                 End If
+            Next
 
-                'Update progress
-                Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
-                Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading CSO " + (NewLoadingWindow.LoadProgressBar.Value - ISOCount).ToString() + " of " + CSOCount.ToString())
+            If URLs.Count > 0 Then
+                Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Getting " + URLs.Count.ToString() + " available game infos.")
+                Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value = 0)
+                Await Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Maximum = URLs.Count)
 
-                'Add to the ListView
-                If GamesListView.Dispatcher.CheckAccess() = False Then
-                    GamesListView.Dispatcher.BeginInvoke(Sub() GamesListView.Items.Add(NewPS2Game))
-                Else
-                    GamesListView.Items.Add(NewPS2Game)
-                End If
+                PSXDatacenterBrowser.Navigate(URLs.Item(0))
+            Else
+                NewLoadingWindow.Close()
+                Cursor = Input.Cursors.Arrow
+            End If
+        End If
+    End Sub
 
-                If Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + GameID + ".html") Then
-                    URLs.Add("https://psxdatacenter.com/psx2/games2/" + GameID + ".html")
-                Else
-                    NewPS2Game.GameTitle = PS2Game.GetPS2GameTitleFromDatabaseList(GameID.Replace("-", ""))
+    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
+        End If
+    End Sub
+
+#End Region
+
+#Region "Contextmenu Actions"
+
+    Private Sub SendToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles SendToMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
+            Dim NewPS5Sender As New PS5Sender With {.SelectedISO = SelectedPS2Game.GameFilePath}
+            NewPS5Sender.Show()
+            MsgBox("Please continue with the PS5 Mast1c0re Sender and send the Network GAME Loader for your PS4/PS5 first.", MsgBoxStyle.Information)
+        End If
+    End Sub
+
+    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
+        If GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
+            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
+
+            If FBD.ShowDialog() = Forms.DialogResult.OK Then
+                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
+                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    .BackupPath = SelectedPS2Game.GameFilePath,
+                    .BackupDestinationPath = FBD.SelectedPath + "\",
+                    .Title = "Copying " + SelectedPS2Game.GameTitle + " to " + FBD.SelectedPath}
+
+                If NewCopyWindow.ShowDialog() = True Then
+                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
                 End If
             End If
-        Next
 
+        End If
     End Sub
 
-    Private Sub GameLoaderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles GameLoaderWorker.RunWorkerCompleted
-        NewLoadingWindow.LoadStatusTextBlock.Text = "Getting " + URLs.Count.ToString() + " available game infos."
-        NewLoadingWindow.LoadProgressBar.Value = 0
-        NewLoadingWindow.LoadProgressBar.Maximum = URLs.Count
+    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
+        If File.Exists(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe") Then
+            If GamesListView.SelectedItem IsNot Nothing Then
+                Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
 
-        GetGameInfos()
+                'Check if any PS2 BIOS file is available
+                If Not Directory.GetFiles(Environment.CurrentDirectory + "\Emulators\PCSX2\bios", "*.bin", SearchOption.TopDirectoryOnly).Length > 0 Then
+                    If MsgBox("No PS2 BIOS file available." + vbCrLf + "You need at least one BIOS file installed in order to play " + SelectedPS2Game.GameTitle + "." + vbCrLf +
+                              "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
+
+                        'Get a BIOS file from OpenFileDialog
+                        Dim OFD As New Forms.OpenFileDialog() With {.Title = "Select a PS2 BIOS file", .Filter = "PS2 BIOS (*.bin)|*.bin", .Multiselect = False}
+                        If OFD.ShowDialog() = Forms.DialogResult.OK Then
+                            Dim SelectedBIOSFile As String = OFD.FileName
+                            Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
+
+                            'Copy to the BIOS folder
+                            File.Copy(SelectedBIOSFile, Environment.CurrentDirectory + "\Emulators\PCSX2\bios\" + SelectedBIOSFileName, True)
+
+                            'Proceed
+                            If MsgBox("Start " + SelectedPS2Game.GameTitle + " using PCSX2 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                                Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                                Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                                EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
+                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
+                                EmulatorLauncherStartInfo.Arguments = """" + SelectedPS2Game.GameFilePath + """ --nogui --fullboot --portable"
+                                EmulatorLauncher.Start()
+                            End If
+
+                        Else
+                            MsgBox("No BIOS file specied, aborting.", MsgBoxStyle.Critical, "Error")
+                            Exit Sub
+                        End If
+                    Else
+                        MsgBox("No BIOS file available, aborting.", MsgBoxStyle.Critical, "Error")
+                        Exit Sub
+                    End If
+
+                Else
+                    'Proceed
+                    If MsgBox("Start " + SelectedPS2Game.GameTitle + " using PCSX2 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
+                        Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
+                        Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
+                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
+                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
+                        EmulatorLauncherStartInfo.Arguments = """" + SelectedPS2Game.GameFilePath + """ --nogui --fullboot --portable"
+                        EmulatorLauncher.Start()
+                    End If
+
+                End If
+            End If
+        Else
+            MsgBox("Cannot start pcsx2." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
+        End If
     End Sub
 
-    Private Sub GetGameInfos()
-        PSXDatacenterBrowser.Navigate(URLs.Item(0))
-    End Sub
+#End Region
 
     Private Sub PSXDatacenterBrowser_DocumentCompleted(sender As Object, e As Forms.WebBrowserDocumentCompletedEventArgs) Handles PSXDatacenterBrowser.DocumentCompleted
         RemoveHandler PSXDatacenterBrowser.DocumentCompleted, AddressOf PSXDatacenterBrowser_DocumentCompleted
@@ -332,122 +442,6 @@ Public Class PS2Library
         End If
     End Sub
 
-#End Region
-
-#Region "Menu Actions"
-
-    Private Sub LoadFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFolderMenuItem.Click
-        Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Select your PS2 backup folder"}
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Count
-            CSOCount = Directory.GetFiles(FBD.SelectedPath, "*.cso", SearchOption.AllDirectories).Count
-
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS2 files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = ISOCount + CSOCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (ISOCount + CSOCount).ToString()
-            NewLoadingWindow.Show()
-
-            GameLoaderWorker.RunWorkerAsync(FBD.SelectedPath)
-        End If
-    End Sub
-
-    Private Sub LoadDLFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadDLFolderMenuItem.Click
-        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
-            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
-        End If
-    End Sub
-
-#End Region
-
-#Region "Contextmenu Actions"
-
-    Private Sub SendToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles SendToMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
-            Dim NewPS5Sender As New PS5Sender With {.SelectedISO = SelectedPS2Game.GameFilePath}
-            NewPS5Sender.Show()
-            MsgBox("Please continue with the PS5 Mast1c0re Sender and send the Network GAME Loader for your PS4/PS5 first.", MsgBoxStyle.Information)
-        End If
-    End Sub
-
-    Private Sub CopyToMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CopyToMenuItem.Click
-        If GamesListView.SelectedItem IsNot Nothing Then
-            Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
-            Dim FBD As New Forms.FolderBrowserDialog() With {.Description = "Where do you want to save the selected game ?"}
-
-            If FBD.ShowDialog() = Forms.DialogResult.OK Then
-                Dim NewCopyWindow As New CopyWindow() With {.ShowActivated = True,
-                    .WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    .BackupPath = SelectedPS2Game.GameFilePath,
-                    .BackupDestinationPath = FBD.SelectedPath + "\",
-                    .Title = "Copying " + SelectedPS2Game.GameTitle + " to " + FBD.SelectedPath}
-
-                If NewCopyWindow.ShowDialog() = True Then
-                    MsgBox("Game copied with success !", MsgBoxStyle.Information, "Completed")
-                End If
-            End If
-
-        End If
-    End Sub
-
-    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
-        If File.Exists(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe") Then
-            If GamesListView.SelectedItem IsNot Nothing Then
-                Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
-
-                'Check if any PS2 BIOS file is available
-                If Not Directory.GetFiles(Environment.CurrentDirectory + "\Emulators\PCSX2\bios", "*.bin", SearchOption.TopDirectoryOnly).Count > 0 Then
-                    If MsgBox("No PS2 BIOS file available." + vbCrLf + "You need at least one BIOS file installed in order to play " + SelectedPS2Game.GameTitle + "." + vbCrLf +
-                              "Do you want to copy a BIOS file to the Emulators folder of PS Multi Tools ?", MsgBoxStyle.YesNo, "Cannot launch game") = MsgBoxResult.Yes Then
-
-                        'Get a BIOS file from OpenFileDialog
-                        Dim OFD As New Forms.OpenFileDialog() With {.Title = "Select a PS2 BIOS file", .Filter = "PS2 BIOS (*.bin)|*.bin", .Multiselect = False}
-                        If OFD.ShowDialog() = Forms.DialogResult.OK Then
-                            Dim SelectedBIOSFile As String = OFD.FileName
-                            Dim SelectedBIOSFileName As String = Path.GetFileName(SelectedBIOSFile)
-
-                            'Copy to the BIOS folder
-                            File.Copy(SelectedBIOSFile, Environment.CurrentDirectory + "\Emulators\PCSX2\bios\" + SelectedBIOSFileName, True)
-
-                            'Proceed
-                            If MsgBox("Start " + SelectedPS2Game.GameTitle + " using PCSX2 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
-                                Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
-                                Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                                EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
-                                EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
-                                EmulatorLauncherStartInfo.Arguments = """" + SelectedPS2Game.GameFilePath + """ --nogui --fullboot --portable"
-                                EmulatorLauncher.Start()
-                            End If
-
-                        Else
-                            MsgBox("No BIOS file specied, aborting.", MsgBoxStyle.Critical, "Error")
-                            Exit Sub
-                        End If
-                    Else
-                        MsgBox("No BIOS file available, aborting.", MsgBoxStyle.Critical, "Error")
-                        Exit Sub
-                    End If
-
-                Else
-                    'Proceed
-                    If MsgBox("Start " + SelectedPS2Game.GameTitle + " using PCSX2 ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
-                        Dim EmulatorLauncherStartInfo As New ProcessStartInfo()
-                        Dim EmulatorLauncher As New Process() With {.StartInfo = EmulatorLauncherStartInfo}
-                        EmulatorLauncherStartInfo.FileName = Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe"
-                        EmulatorLauncherStartInfo.WorkingDirectory = Path.GetDirectoryName(Environment.CurrentDirectory + "\Emulators\PCSX2\pcsx2.exe")
-                        EmulatorLauncherStartInfo.Arguments = """" + SelectedPS2Game.GameFilePath + """ --nogui --fullboot --portable"
-                        EmulatorLauncher.Start()
-                    End If
-
-                End If
-            End If
-        Else
-            MsgBox("Cannot start pcsx2." + vbCrLf + "Emulator pack is not installed.", MsgBoxStyle.Critical, "Error")
-        End If
-    End Sub
-
-#End Region
-
     Private Sub GamesListView_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles GamesListView.PreviewMouseWheel
         Dim OpenWindowsListViewScrollViewer As ScrollViewer = Utils.FindScrollViewer(GamesListView)
         Dim HorizontalOffset As Double = OpenWindowsListViewScrollViewer.HorizontalOffset
@@ -487,7 +481,7 @@ Public Class PS2Library
         NewPS2EmulatorSettingsWindow.Show()
     End Sub
 
-    Private Sub CreateProjectMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CreateProjectMenuItem.Click
+    Private Async Sub CreateProjectMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CreateProjectMenuItem.Click
         If GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedPS2Game As PS2Game = CType(GamesListView.SelectedItem, PS2Game)
             Dim GameProjectDirectory As String = SelectedPS2Game.GameTitle + " [" + SelectedPS2Game.GameID + "]"
@@ -619,7 +613,7 @@ Public Class PS2Library
             NewGameEditor.AutoSave = True
 
             'Open the Game Editor and try to load values from PSXDatacenter
-            If Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + SelectedPS2Game.GameID + ".html") Then
+            If Await Utils.IsURLValid("https://psxdatacenter.com/psx2/games2/" + SelectedPS2Game.GameID + ".html") Then
                 NewGameEditor.PSXDatacenterBrowser.Navigate("https://psxdatacenter.com/psx2/games2/" + SelectedPS2Game.GameID + ".html")
             Else
                 'Apply cover, title and region only if no data is available on PSXDatacenter

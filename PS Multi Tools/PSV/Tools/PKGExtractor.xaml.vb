@@ -27,7 +27,7 @@ Public Class PKGExtractor
                 Dim OutputReader As StreamReader = SFOReader.StandardOutput
                 Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
 
-                If ProcessOutput.Count > 0 Then
+                If ProcessOutput.Length > 0 Then
                     'Load game infos
                     For Each Line In ProcessOutput
                         If Line.StartsWith("Content ID:") Then

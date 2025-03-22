@@ -33,7 +33,7 @@ Public Class PSXPartitionManager
         End Using
 
         For Each HDDPartition As String In QueryOutput.Skip(1)
-            If HDDPartition.StartsWith("0") Then
+            If HDDPartition.StartsWith("0"c) Then
 
                 Dim Part As New Partition() With {.Type = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(0),
                     .Start = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(1),

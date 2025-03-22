@@ -376,13 +376,13 @@ Public Class PPPwner
         End If
     End Sub
 
-    Private Sub DownloadGoldHENButton_Click(sender As Object, e As RoutedEventArgs) Handles DownloadGoldHENButton.Click
+    Private Async Sub DownloadGoldHENButton_Click(sender As Object, e As RoutedEventArgs) Handles DownloadGoldHENButton.Click
         Dim FBD As New FolderBrowserDialog() With {.Description = "Select an USB drive"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
             Try
-                If Utils.IsURLValid("http://89.58.2.209/ps4/ex/goldhen_v2.4b18.3.bin") Then
+                If Await Utils.IsURLValid("http://X.X.X.X/ps4/ex/goldhen_v2.4b18.3.bin") Then
                     Dim DownloadClient As New WebClient()
-                    DownloadClient.DownloadFile(New Uri("http://89.58.2.209/ps4/ex/goldhen_v2.4b18.3.bin"), FBD.SelectedPath + "goldhen.bin")
+                    DownloadClient.DownloadFile(New Uri("http://X.X.X.X/ps4/ex/goldhen_v2.4b18.3.bin"), FBD.SelectedPath + "goldhen.bin")
                     MsgBox("GoldHEN downloaded to : " + FBD.SelectedPath + "goldhen.bin", MsgBoxStyle.Information, "Success")
                 Else
                     MsgBox("Could not download GoldHEN to : " + FBD.SelectedPath + "goldhen.bin" + vbCrLf + "File is not available.", MsgBoxStyle.Information, "Error")

@@ -28,7 +28,7 @@ Public Class PSVPFSTools
 
                     Dim OutputReader As StreamReader = SFOReader.StandardOutput
                     Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
-                    If ProcessOutput.Count > 0 Then
+                    If ProcessOutput.Length > 0 Then
 
                         'Load game infos
                         For Each Line In ProcessOutput
@@ -105,12 +105,12 @@ Public Class PSVPFSTools
         Next
     End Sub
 
-    Private Sub ExtractButton_Click(sender As Object, e As RoutedEventArgs) Handles ExtractButton.Click
+    Private Async Sub ExtractButton_Click(sender As Object, e As RoutedEventArgs) Handles ExtractButton.Click
         If Not String.IsNullOrEmpty(SelectedFolderTextBox.Text) AndAlso Directory.Exists(SelectedFolderTextBox.Text) Then
             If Not String.IsNullOrEmpty(OutputFolderTextBox.Text) Then
                 If Not String.IsNullOrEmpty(zRIFTextBox.Text) Then
 
-                    If Utils.IsURLValid("http://cma.henkaku.xyz/") Then
+                    If Await Utils.IsURLValid("http://cma.henkaku.xyz/") Then
                         Dim InputPath As String = SelectedFolderTextBox.Text
                         Dim OutputPath As String = OutputFolderTextBox.Text
                         Dim zRIFKey As String = zRIFTextBox.Text

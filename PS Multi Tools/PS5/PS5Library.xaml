@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="PS5 Library" Height="800" Width="1435" Background="#2D2D30" WindowStartupLocation="CenterScreen">
     <Grid>
-        <local:PS5Menu x:Name="NewPS5Menu" VerticalAlignment="Top"></local:PS5Menu>
+        <local:PS5Menu x:Name="NewPS5Menu" VerticalAlignment="Top" Height="20"></local:PS5Menu>
         <wv2:WebView2 x:Name="ContentWebView" HorizontalAlignment="Right" Height="326" Margin="0,0,0,0" Width="830" Source="about:blank" Visibility="Hidden"/>
         <TabControl Margin="0,21,0,0" Background="{x:Null}" Foreground="White">
             <TabItem Header="Games" FontSize="16" >

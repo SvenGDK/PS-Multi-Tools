@@ -417,26 +417,26 @@ Public Class PKGBrowser
         End If
     End Sub
 
-    Private Sub GamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles GamesListView.SelectionChanged
+    Private Async Sub GamesListView_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles GamesListView.SelectionChanged
         If GamesListView.SelectedItem IsNot Nothing Then
 
             Dim SelectedGame As NPSPKG = CType(GamesListView.SelectedItem, NPSPKG)
             If Not String.IsNullOrEmpty(SelectedGame.PackageCoverSource) Then
-                If Utils.IsURLValid(SelectedGame.PackageCoverSource) Then
+                If Await Utils.IsURLValid(SelectedGame.PackageCoverSource) Then
                     Select Case Console
                         Case "PS3"
                             ContentWebView.CoreWebView2.Navigate(SelectedGame.PackageCoverSource)
                         Case "PSV"
                             If Dispatcher.CheckAccess() = False Then
-                                Dispatcher.BeginInvoke(Sub()
-                                                           Dim TempBitmapImage = New BitmapImage()
-                                                           TempBitmapImage.BeginInit()
-                                                           TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                           TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                           TempBitmapImage.UriSource = New Uri(SelectedGame.PackageCoverSource, UriKind.RelativeOrAbsolute)
-                                                           TempBitmapImage.EndInit()
-                                                           SelectedGame.GameCoverSource = TempBitmapImage
-                                                       End Sub)
+                                Await Dispatcher.BeginInvoke(Sub()
+                                                                 Dim TempBitmapImage = New BitmapImage()
+                                                                 TempBitmapImage.BeginInit()
+                                                                 TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                                 TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                                 TempBitmapImage.UriSource = New Uri(SelectedGame.PackageCoverSource, UriKind.RelativeOrAbsolute)
+                                                                 TempBitmapImage.EndInit()
+                                                                 SelectedGame.GameCoverSource = TempBitmapImage
+                                                             End Sub)
                             Else
                                 Dim TempBitmapImage = New BitmapImage()
                                 TempBitmapImage.BeginInit()

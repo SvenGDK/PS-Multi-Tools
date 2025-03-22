@@ -102,8 +102,8 @@ Class MainWindow
         End If
     End Sub
 
-    Private Sub UpdateImage_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles UpdateImage.MouseLeftButtonDown
-        If Utils.IsPSMultiToolsUpdateAvailable() Then
+    Private Async Sub UpdateImage_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles UpdateImage.MouseLeftButtonDown
+        If Await Utils.IsPSMultiToolsUpdateAvailable() Then
             If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
                 Utils.DownloadAndExecuteUpdater()
             End If
@@ -112,8 +112,8 @@ Class MainWindow
         End If
     End Sub
 
-    Private Sub UpdateTextBlock_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles UpdateTextBlock.MouseLeftButtonDown
-        If Utils.IsPSMultiToolsUpdateAvailable() Then
+    Private Async Sub UpdateTextBlock_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles UpdateTextBlock.MouseLeftButtonDown
+        If Await Utils.IsPSMultiToolsUpdateAvailable() Then
             If MsgBox("An update is available, do you want to download it now ?", MsgBoxStyle.YesNo, "PS Multi Tools Update found") = MsgBoxResult.Yes Then
                 Utils.DownloadAndExecuteUpdater()
             End If

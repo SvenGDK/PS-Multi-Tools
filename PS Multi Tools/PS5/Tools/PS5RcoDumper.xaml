@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="RCO Dumper" Height="150" Width="330" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+             Title="RCO Dumper" Height="170" Width="335" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <Button x:Name="LoadFilesButton" Content="Get files" HorizontalAlignment="Left" Margin="29,82,0,0" VerticalAlignment="Top" Width="267"/>
-        <TextBlock HorizontalAlignment="Left" Margin="29,10,0,0" TextWrapping="Wrap" Text="Dump .rco files using FTP" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="267" TextAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="29,37,0,0" TextWrapping="Wrap" Text="Dump to :" VerticalAlignment="Top" Foreground="White"/>
+        <Button x:Name="LoadFilesButton" Content="Get files" HorizontalAlignment="Left" Margin="29,92,0,0" VerticalAlignment="Top" Width="270"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Dump .rco files using FTP" VerticalAlignment="Top"  FontSize="14" TextAlignment="Center" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="29,37,0,0" TextWrapping="Wrap" Text="Dump to :" VerticalAlignment="Top" />
         <TextBox x:Name="SaveToTextBox" HorizontalAlignment="Left" Margin="29,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="207"/>
-        <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="241,57,0,0" VerticalAlignment="Top" Width="55"/>
+        <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="241,57,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

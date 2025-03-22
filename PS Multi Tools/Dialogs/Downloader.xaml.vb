@@ -45,11 +45,15 @@ Public Class Downloader
         AddHandler SystemEvents.TimerElapsed, AddressOf DownloadUpdating
     End Sub
 
-    Public Function CreateNewDownload(Source As String, Optional ModifyName As Boolean = False, Optional NewName As String = "") As Boolean
+    Public Async Function CreateNewDownload(Source As String, Optional ModifyName As Boolean = False, Optional NewName As String = "") As Task(Of Boolean)
         'Create Downloads directory if not exists
         If Not Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads")
 
-        If DownloadIcon IsNot Nothing Then DownloadImage.Source = DownloadIcon
+        If Dispatcher.CheckAccess() = False Then
+            Await Dispatcher.BeginInvoke(Sub() If DownloadIcon IsNot Nothing Then DownloadImage.Source = DownloadIcon)
+        Else
+            If DownloadIcon IsNot Nothing Then DownloadImage.Source = DownloadIcon
+        End If
 
         Dim FileName As String = Utils.GetFilenameFromUrl(New Uri(Source))
         If Not String.IsNullOrEmpty(FileName) Then
@@ -61,35 +65,68 @@ Public Class Downloader
                 FileName = NewName
             End If
 
-            DownloadFileSizeTB.Text = "File Size: " + Utils.WebFileSize(Source).ToString + " MB"
-            FileToDownloadTB.Text = "Downloading " + FileName + " ..."
+            Dim URLFileSize As Double = Await Utils.WebFileSize(Source)
 
-            DownloadClient.DownloadFileAsync(New Uri(Source), Environment.CurrentDirectory + "\Downloads\" + FileName)
+            If Dispatcher.CheckAccess() = False Then
+                Await Dispatcher.BeginInvoke(Sub()
+                                                 DownloadFileSizeTB.Text = "File Size: " + URLFileSize.ToString + " MB"
+                                                 FileToDownloadTB.Text = "Downloading " + FileName + " ..."
+                                             End Sub)
+            Else
+                DownloadFileSizeTB.Text = "File Size: " + URLFileSize.ToString + " MB"
+                FileToDownloadTB.Text = "Downloading " + FileName + " ..."
+            End If
+
+            Await DownloadClient.DownloadFileTaskAsync(New Uri(Source), Environment.CurrentDirectory + "\Downloads\" + FileName)
             Return True
         Else
             Return False
         End If
     End Function
 
-    Public Sub DownloadUpdating(sender As Object, e As TimerElapsedEventArgs)
+    Public Async Sub DownloadUpdating(sender As Object, e As TimerElapsedEventArgs)
         DownloadSpeed = CInt(CurrentBytes - PreviousBytes)
         ElapsedTime = TimeSpan.FromTicks(Now.Ticks - StartTime)
-        DownloadETATB.Text = "Time elapsed: " + String.Format("{0:00}h {1:00}m {2:00}s", ElapsedTime.TotalHours, ElapsedTime.Minutes, ElapsedTime.Seconds)
 
-        If DownloadSpeed < 1 Then
-            DownloadSpeedTB.Text = "< 1 KB/s"
+        If Dispatcher.CheckAccess() = False Then
+            Await Dispatcher.BeginInvoke(Sub()
+                                             DownloadETATB.Text = "Time elapsed: " + String.Format("{0:00}h {1:00}m {2:00}s", ElapsedTime.TotalHours, ElapsedTime.Minutes, ElapsedTime.Seconds)
+
+                                             If DownloadSpeed < 1 Then
+                                                 DownloadSpeedTB.Text = "< 1 KB/s"
+                                             Else
+                                                 DownloadSpeedTB.Text = FormatNumber(DownloadSpeed / 1024 / 1024, 2).ToString & " MB/s"
+                                             End If
+
+                                             If Not DownloadSpeed < 1 Then
+                                                 LoopCount += 1
+                                                 ByteCount += DownloadSpeed
+
+                                                 TimeLeftAverage = ElapsedTime.TotalSeconds / CurrentBytes
+                                                 TimeLeft = TimeSpan.FromSeconds(TimeLeftAverage * (DownloadSize - CurrentBytes))
+
+                                                 DownloadETALeftTB.Text = "Time left: " + String.Format("{0:00}h {1:00}m {2:00}s", TimeLeft.TotalHours, TimeLeft.Minutes, TimeLeft.Seconds)
+                                             End If
+
+                                         End Sub)
         Else
-            DownloadSpeedTB.Text = FormatNumber(DownloadSpeed / 1024 / 1024, 2).ToString & " MB/s"
-        End If
+            DownloadETATB.Text = "Time elapsed: " + String.Format("{0:00}h {1:00}m {2:00}s", ElapsedTime.TotalHours, ElapsedTime.Minutes, ElapsedTime.Seconds)
 
-        If Not DownloadSpeed < 1 Then
-            LoopCount += 1
-            ByteCount += DownloadSpeed
+            If DownloadSpeed < 1 Then
+                DownloadSpeedTB.Text = "< 1 KB/s"
+            Else
+                DownloadSpeedTB.Text = FormatNumber(DownloadSpeed / 1024 / 1024, 2).ToString & " MB/s"
+            End If
 
-            TimeLeftAverage = ElapsedTime.TotalSeconds / CurrentBytes
-            TimeLeft = TimeSpan.FromSeconds(TimeLeftAverage * (DownloadSize - CurrentBytes))
+            If Not DownloadSpeed < 1 Then
+                LoopCount += 1
+                ByteCount += DownloadSpeed
 
-            DownloadETALeftTB.Text = "Time left: " + String.Format("{0:00}h {1:00}m {2:00}s", TimeLeft.TotalHours, TimeLeft.Minutes, TimeLeft.Seconds)
+                TimeLeftAverage = ElapsedTime.TotalSeconds / CurrentBytes
+                TimeLeft = TimeSpan.FromSeconds(TimeLeftAverage * (DownloadSize - CurrentBytes))
+
+                DownloadETALeftTB.Text = "Time left: " + String.Format("{0:00}h {1:00}m {2:00}s", TimeLeft.TotalHours, TimeLeft.Minutes, TimeLeft.Seconds)
+            End If
         End If
 
         PreviousBytes = CurrentBytes
@@ -148,7 +185,13 @@ Public Class Downloader
     End Sub
 
     Private Sub Downloader_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        DownloadImage.Source = New BitmapImage(New Uri("/Images/PKG.png", UriKind.Relative))
+
+        If Dispatcher.CheckAccess() = False Then
+            Dispatcher.BeginInvoke(Sub() DownloadImage.Source = New BitmapImage(New Uri("/Images/PKG.png", UriKind.Relative)))
+        Else
+            DownloadImage.Source = New BitmapImage(New Uri("/Images/PKG.png", UriKind.Relative))
+        End If
+
         ServicePointManager.ServerCertificateValidationCallback = AddressOf ValidateRemoteCertificate 'Allows downloading the sc package that causes an certificate error
     End Sub
 

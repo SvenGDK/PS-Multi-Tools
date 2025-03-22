@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="RCO Extractor" Height="140" Width="380" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+             Title="RCO Extractor" Height="145" Width="360" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a .rco file or a folder containing .rco files:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="320"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a .rco file or a folder containing .rco files:" VerticalAlignment="Top"  FontSize="14" Width="320"/>
         <TextBox x:Name="SelectedRCOPathTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="320"/>
-        <Button x:Name="BrowseFileButton" Content="Browse file" Width="85" Margin="10,57,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button x:Name="BrowseFolderButton" Content="Browse folder" Margin="100,57,0,0" Width="90" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button x:Name="ExtractButton" Content="Extract" Margin="245,57,0,0" Width="85" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="BrowseFileButton" Content="Browse file" Width="85" Margin="10,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="BrowseFolderButton" Content="Browse folder" Margin="100,67,0,0" Width="90" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="ExtractButton" Content="Extract" Margin="245,67,0,0" Width="85" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

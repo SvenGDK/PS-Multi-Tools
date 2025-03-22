@@ -398,12 +398,12 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Trophies Fixer">
-                <MenuItem Header="Download v1.1" x:Name="DownloaTrophiesFixer">
+                <MenuItem Header="Download v1.1" x:Name="DownloadTrophiesFixer">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Download latest version from GitHub" x:Name="DownloaTrophiesFixerGitHub">
+                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadTrophiesFixerGitHub">
                     <MenuItem.Icon>
                         <Image Source="/Images/github-mark.png"/>
                     </MenuItem.Icon>

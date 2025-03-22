@@ -25,7 +25,7 @@ Public Class PKGDownloadListViewItem
         End Get
         Set
             _AssociatedWebClient = Value
-            NotifyPropertyChanged("AssociatedWebClient")
+            NotifyPropertyChanged(NameOf(AssociatedWebClient))
         End Set
     End Property
 
@@ -35,7 +35,7 @@ Public Class PKGDownloadListViewItem
         End Get
         Set
             _PackageContentID = Value
-            NotifyPropertyChanged("PackageContentID")
+            NotifyPropertyChanged(NameOf(PackageContentID))
         End Set
     End Property
 
@@ -45,7 +45,7 @@ Public Class PKGDownloadListViewItem
         End Get
         Set
             _PackageTitleID = Value
-            NotifyPropertyChanged("PackageTitleID")
+            NotifyPropertyChanged(NameOf(PackageTitleID))
         End Set
     End Property
 
@@ -55,7 +55,7 @@ Public Class PKGDownloadListViewItem
         End Get
         Set
             _PackageName = Value
-            NotifyPropertyChanged("PackageName")
+            NotifyPropertyChanged(NameOf(PackageName))
         End Set
     End Property
 
@@ -65,7 +65,7 @@ Public Class PKGDownloadListViewItem
         End Get
         Set
             _PackageSize = Value
-            NotifyPropertyChanged("PackageSize")
+            NotifyPropertyChanged(NameOf(PackageSize))
         End Set
     End Property
 
@@ -75,7 +75,7 @@ Public Class PKGDownloadListViewItem
         End Get
         Set
             _PackageDownloadState = Value
-            NotifyPropertyChanged("PackageDownloadState")
+            NotifyPropertyChanged(NameOf(PackageDownloadState))
         End Set
     End Property
 
@@ -85,7 +85,7 @@ Public Class PKGDownloadListViewItem
         End Get
         Set
             _PackageDownloadDestination = Value
-            NotifyPropertyChanged("PackageDownloadDestination")
+            NotifyPropertyChanged(NameOf(PackageDownloadDestination))
         End Set
     End Property
 

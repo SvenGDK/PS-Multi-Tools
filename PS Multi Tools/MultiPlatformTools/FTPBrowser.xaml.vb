@@ -445,10 +445,10 @@ Public Class FTPBrowser
         End Try
     End Sub
 
-    Public Sub DownloadContent(ConsoleIP As String, ConsolePort As String, FileOrDir As String)
+    Public Async Sub DownloadContent(ConsoleIP As String, ConsolePort As String, FileOrDir As String)
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
-        If NewDownloader.CreateNewDownload("ftp://" + ConsoleIP + ":" + ConsolePort + FileOrDir) = False Then
+        If Await NewDownloader.CreateNewDownload("ftp://" + ConsoleIP + ":" + ConsolePort + FileOrDir) = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If

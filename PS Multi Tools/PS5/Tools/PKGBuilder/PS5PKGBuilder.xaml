@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="PKG Builder" Height="422" Width="760" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+             Title="PKG Builder" Height="475" Width="760" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBox x:Name="BuildLogTextBox" HorizontalAlignment="Left" Margin="10,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="720" Height="218"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="NoWrap" Text="Build Log:" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="638,357,0,0" VerticalAlignment="Top" Width="93" IsEnabled="False" FontWeight="Bold" Height="20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="PKG Builder Options :" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="NoWrap" Text="Select your GP5 project :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="BuildLogTextBox" HorizontalAlignment="Left" Margin="10,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="720" Height="218"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,150,0,0" TextWrapping="NoWrap" Text="Build Log :" VerticalAlignment="Top"  FontSize="14"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="638,397,0,0" VerticalAlignment="Top" Width="93" IsEnabled="False" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="PKG Builder Options" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="NoWrap" Text="Select your GP5 project :" VerticalAlignment="Top"  FontSize="14"/>
         <TextBox x:Name="SelectedProjectTextBox" HorizontalAlignment="Left" Margin="175,37,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="506"/>
-        <Button x:Name="BrowseProjectButton" Content="..." HorizontalAlignment="Left" Margin="686,36,0,0" VerticalAlignment="Top" Width="45" Height="20" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="NoWrap" Text="Save output PKG to :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBox x:Name="SaveToTextBox" HorizontalAlignment="Left" Margin="175,61,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="506"/>
-        <Button x:Name="BrowseSavePathButton" Content="..." Margin="686,60,0,0" VerticalAlignment="Top" Height="20" HorizontalAlignment="Left" Width="45" FontWeight="Bold"/>
-        <Button x:Name="BuildButton" Content="Build PKG" HorizontalAlignment="Left" Margin="640,85,0,0" VerticalAlignment="Top" Width="91" FontWeight="Bold" Height="20"/>
+        <Button x:Name="BrowseProjectButton" Content="..." HorizontalAlignment="Left" Margin="686,36,0,0" VerticalAlignment="Top" Width="45" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="NoWrap" Text="Save output PKG to :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SaveToTextBox" HorizontalAlignment="Left" Margin="175,74,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="506"/>
+        <Button x:Name="BrowseSavePathButton" Content="..." Margin="686,73,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="45" FontWeight="Bold"/>
+        <Button x:Name="BuildButton" Content="Build PKG" HorizontalAlignment="Left" Margin="640,112,0,0" VerticalAlignment="Top" Width="91" FontWeight="Bold"/>
 
     </Grid>
 </Window>

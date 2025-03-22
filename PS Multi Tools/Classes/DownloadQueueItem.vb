@@ -23,7 +23,7 @@ Public Class DownloadQueueItem
         End Get
         Set
             _GameID = Value
-            NotifyPropertyChanged("GameID")
+            NotifyPropertyChanged(NameOf(GameID))
         End Set
     End Property
 
@@ -33,7 +33,7 @@ Public Class DownloadQueueItem
         End Get
         Set
             _FileName = Value
-            NotifyPropertyChanged("FileName")
+            NotifyPropertyChanged(NameOf(FileName))
         End Set
     End Property
 
@@ -43,7 +43,7 @@ Public Class DownloadQueueItem
         End Get
         Set
             _PKGSize = Value
-            NotifyPropertyChanged("PKGSize")
+            NotifyPropertyChanged(NameOf(PKGSize))
         End Set
     End Property
 
@@ -53,7 +53,7 @@ Public Class DownloadQueueItem
         End Get
         Set
             _DownloadURL = Value
-            NotifyPropertyChanged("DownloadURL")
+            NotifyPropertyChanged(NameOf(DownloadURL))
         End Set
     End Property
 
@@ -63,7 +63,7 @@ Public Class DownloadQueueItem
         End Get
         Set
             _DownloadState = Value
-            NotifyPropertyChanged("DownloadState")
+            NotifyPropertyChanged(NameOf(DownloadState))
         End Set
     End Property
 
@@ -73,7 +73,7 @@ Public Class DownloadQueueItem
         End Get
         Set
             _MergeState = Value
-            NotifyPropertyChanged("MergeState")
+            NotifyPropertyChanged(NameOf(MergeState))
         End Set
     End Property
 
