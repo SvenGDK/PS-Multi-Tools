@@ -41,7 +41,7 @@ Public Class Downloader
         DownloadClient = SetHttpClientServerCertificateCustomValidationCallback()
     End Sub
 
-    Public Async Function CreateNewDownload(Source As String, Optional ModifyName As Boolean = False, Optional NewName As String = "") As Task(Of Boolean)
+    Public Async Function CreateNewDownload(Source As String, Optional ModifyName As Boolean = False, Optional NewName As String = "", Optional FileSize As String = "") As Task(Of Boolean)
         'Create Downloads directory if not exists
         If Not Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads")
 
@@ -51,6 +51,7 @@ Public Class Downloader
             If DownloadIcon IsNot Nothing Then DownloadImage.Source = DownloadIcon
         End If
 
+        'Get file name of requested download
         Dim FileName As String = Utils.GetFilenameFromUrl(New Uri(Source))
         If Not String.IsNullOrEmpty(FileName) Then
 
@@ -59,32 +60,65 @@ Public Class Downloader
                 FileName = NewName
             End If
 
+            'Get size of requested download
             Dim URLFileSize As Double = Await Utils.WebFileSize(Source)
+            If URLFileSize > 0 Then
+                If Dispatcher.CheckAccess() = False Then
+                    Await Dispatcher.BeginInvoke(Sub()
+                                                     DownloadFileSizeTB.Text = "File Size: " + URLFileSize.ToString + " MB"
+                                                     FileToDownloadTB.Text = "Downloading " + FileName + " ..."
+                                                 End Sub)
+                Else
+                    DownloadFileSizeTB.Text = "File Size: " + URLFileSize.ToString + " MB"
+                    FileToDownloadTB.Text = "Downloading " + FileName + " ..."
+                End If
 
-            If Dispatcher.CheckAccess() = False Then
-                Await Dispatcher.BeginInvoke(Sub()
-                                                 DownloadFileSizeTB.Text = "File Size: " + URLFileSize.ToString + " MB"
-                                                 FileToDownloadTB.Text = "Downloading " + FileName + " ..."
-                                             End Sub)
-            Else
-                DownloadFileSizeTB.Text = "File Size: " + URLFileSize.ToString + " MB"
-                FileToDownloadTB.Text = "Downloading " + FileName + " ..."
-            End If
-
-            'Prompt for new file name if download already exists in the Downloads folder
-            If File.Exists(Environment.CurrentDirectory + "\Downloads\" + FileName) Then
-                Dim NewSaveFileName As String = InputBox("The file " + FileName + " already exists in the Downloads folder. Please enter a new name for the file or leave it to overwrite the existing file.", "File already exists", FileName)
-                If Not String.IsNullOrEmpty(NewSaveFileName) Then
-                    Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + NewSaveFileName)
+                'Prompt for new file name if download already exists in the Downloads folder
+                If File.Exists(Environment.CurrentDirectory + "\Downloads\" + FileName) Then
+                    Dim NewSaveFileName As String = InputBox("The file " + FileName + " already exists in the Downloads folder. Please enter a new name for the file or leave it to overwrite the existing file.", "File already exists", FileName)
+                    If Not String.IsNullOrEmpty(NewSaveFileName) Then
+                        Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + NewSaveFileName)
+                    Else
+                        Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
+                    End If
                 Else
                     Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
                 End If
-            Else
-                Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
-            End If
 
-            Return True
+                Return True
+            Else
+                'Set file size from 
+                If Not String.IsNullOrEmpty(FileSize) Then
+
+                    If Dispatcher.CheckAccess() = False Then
+                        Await Dispatcher.BeginInvoke(Sub()
+                                                         DownloadFileSizeTB.Text = "File Size: " + FileSize
+                                                         FileToDownloadTB.Text = "Downloading " + FileName + " ..."
+                                                     End Sub)
+                    Else
+                        DownloadFileSizeTB.Text = "File Size: " + FileSize
+                        FileToDownloadTB.Text = "Downloading " + FileName + " ..."
+                    End If
+
+                    'Prompt for new file name if download already exists in the Downloads folder
+                    If File.Exists(Environment.CurrentDirectory + "\Downloads\" + FileName) Then
+                        Dim NewSaveFileName As String = InputBox("The file " + FileName + " already exists in the Downloads folder. Please enter a new name for the file or leave it to overwrite the existing file.", "File already exists", FileName)
+                        If Not String.IsNullOrEmpty(NewSaveFileName) Then
+                            Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + NewSaveFileName)
+                        Else
+                            Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
+                        End If
+                    Else
+                        Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
+                    End If
+
+                    Return True
+                Else
+                    Return False
+                End If
+            End If
         Else
+            MsgBox("FileName: " + FileName)
             Return False
         End If
     End Function
@@ -191,6 +225,8 @@ Public Class Downloader
             End Using
         Catch ex As OperationCanceledException
             MsgBox("Download canceled.", MsgBoxStyle.Exclamation, "Info")
+        Catch ex As Exception
+            MsgBox(ex.ToString())
         Finally
             If DownloadClientCTS IsNot Nothing Then
                 DownloadClientCTS.Dispose()

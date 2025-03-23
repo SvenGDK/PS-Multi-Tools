@@ -99,7 +99,7 @@ Public Class PS5GamePatches
 
                     Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5", .DownloadQueueItem = SelectedItemAsQueueItem}
                     NewDownloader.Show()
-                    If Await NewDownloader.CreateNewDownload(SelectedItemAsQueueItem.DownloadURL) = False Then
+                    If Await NewDownloader.CreateNewDownload(SelectedItemAsQueueItem.DownloadURL, FileSize:=SelectedItemAsQueueItem.PKGSize) = False Then
                         MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
                         NewDownloader.Close()
                         SelectedItemAsQueueItem.DownloadState = "Download failed"
@@ -113,14 +113,13 @@ Public Class PS5GamePatches
 
                 Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5", .DownloadQueueItem = SelectedItemAsQueueItem}
                 NewDownloader.Show()
-                If Await NewDownloader.CreateNewDownload(SelectedItemAsQueueItem.DownloadURL) = False Then
+                If Await NewDownloader.CreateNewDownload(SelectedItemAsQueueItem.DownloadURL, FileSize:=SelectedItemAsQueueItem.PKGSize) = False Then
                     MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
                     NewDownloader.Close()
                     SelectedItemAsQueueItem.DownloadState = "Download failed"
                 Else
                 End If
             End If
-
         End If
     End Sub
 

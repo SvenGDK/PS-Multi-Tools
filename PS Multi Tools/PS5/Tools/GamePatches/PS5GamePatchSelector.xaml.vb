@@ -1,5 +1,4 @@
-﻿Imports System.Net
-Imports Microsoft.Web.WebView2.Core
+﻿Imports Microsoft.Web.WebView2.Core
 
 Public Class PS5GamePatchSelector
 
@@ -40,18 +39,23 @@ Public Class PS5GamePatchSelector
         Dim MsgBoxResult = MsgBox("Do you want to add this download to the queue ?" + vbCrLf + "Selecting 'No' will download the file instantly.", MsgBoxStyle.YesNoCancel, "Select Download Option")
         If MsgBoxResult = MsgBoxResult.Yes Then
 
+            'Add to download queue
             Dim DownloadUri As String = args.DownloadOperation.Uri
             Dim DownloadFileName As String = Utils.GetFilenameFromUrl(New Uri(args.DownloadOperation.Uri))
             Dim TotalBytes As ULong? = args.DownloadOperation.TotalBytesToReceive
 
-            'Add to queue
             AddToQueue(DownloadUri, DownloadFileName, TotalBytes)
         ElseIf MsgBoxResult = MsgBoxResult.No Then
+
             'Start the download directly
+            Dim DownloadUri As String = args.DownloadOperation.Uri
+            Dim TotalBytes As ULong? = args.DownloadOperation.TotalBytesToReceive
+            Dim TotalFileSize As String = FormatNumber(TotalBytes / 1073741824, 2) + " GB"
+
             Dim NewDownloader As New Downloader() With {.ShowActivated = True}
             NewDownloader.Show()
 
-            If Await NewDownloader.CreateNewDownload(args.DownloadOperation.Uri) = False Then
+            If Await NewDownloader.CreateNewDownload(DownloadUri, FileSize:=TotalFileSize) = False Then
                 MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
                 NewDownloader.Close()
             End If
@@ -66,7 +70,7 @@ Public Class PS5GamePatchSelector
         LoadingTextBlock.Text = "Loading game patches for" + vbCrLf + vbCrLf + CurrentGameID + vbCrLf + vbCrLf + "Please wait ..."
     End Sub
 
-    Private Sub AddToQueue(URL As String, FileName As String, TotalSize As ULong?)
+    Private Async Sub AddToQueue(URL As String, FileName As String, TotalSize As ULong?)
         Dim NewQueueItem As New DownloadQueueItem() With {.FileName = FileName, .GameID = CurrentGameID, .DownloadURL = URL, .DownloadState = "Not started", .MergeState = "Not merged"}
 
         'Set the download file size
@@ -74,16 +78,15 @@ Public Class PS5GamePatchSelector
             Dim FileSize As String = FormatNumber(TotalSize / 1073741824, 2) + " GB"
             NewQueueItem.PKGSize = FileSize
         Else
-            Dim myRequest As HttpWebRequest = CType(WebRequest.Create(URL), HttpWebRequest)
-            Dim myResponse As HttpWebResponse = CType(myRequest.GetResponse(), HttpWebResponse)
-            myResponse.Close()
-            Dim NewRetrievedSize As String = FormatNumber(myResponse.ContentLength / 1073741824, 2) + " GB"
+            'Get size of requested download
+            Dim URLFileSize As Double = Await Utils.WebFileSize(URL)
+            Dim NewRetrievedSize As String = FormatNumber(URLFileSize / 1073741824, 2) + " GB"
             NewQueueItem.PKGSize = NewRetrievedSize
         End If
 
         'Add to queue in the PS5GamePatches window
         Dim OpenGamePatchesWindow As PS5GamePatches
-        For Each OpenWin In Application.Current.Windows()
+        For Each OpenWin In System.Windows.Application.Current.Windows()
             If OpenWin.ToString = "PS_Multi_Tools.PS5GamePatches" Then
                 OpenGamePatchesWindow = CType(OpenWin, PS5GamePatches)
                 OpenGamePatchesWindow.DownloadQueueItemCollection.Add(NewQueueItem)

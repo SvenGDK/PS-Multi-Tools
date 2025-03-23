@@ -396,15 +396,19 @@ Public Class Utils
 
     Public Shared Async Sub CheckForMissingFiles()
         If Not File.Exists("strings.exe") Then
-            Using NewHttpClient As New HttpClient()
-                Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync("http://X.X.X.X/strings.exe")
-                If NewHttpResponseMessage.IsSuccessStatusCode Then
-                    Dim NewStream As Stream = Await NewHttpResponseMessage.Content.ReadAsStreamAsync()
-                    Using NewFileStream As New FileStream("strings.exe", FileMode.Create)
-                        NewStream.CopyTo(NewFileStream)
-                    End Using
-                End If
-            End Using
+            Try
+                Using NewHttpClient As New HttpClient()
+                    Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync("http://X.X.X.X/strings.exe")
+                    If NewHttpResponseMessage.IsSuccessStatusCode Then
+                        Dim NewStream As Stream = Await NewHttpResponseMessage.Content.ReadAsStreamAsync()
+                        Using NewFileStream As New FileStream("strings.exe", FileMode.Create)
+                            NewStream.CopyTo(NewFileStream)
+                        End Using
+                    End If
+                End Using
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
         End If
     End Sub
 
@@ -414,15 +418,19 @@ Public Class Utils
 
     Public Shared Async Function WebFileSize(sURL As String) As Task(Of Double)
         Dim client As New HttpClient()
-        Using request = New HttpRequestMessage(HttpMethod.Head, sURL)
-            Using response = Await client.SendAsync(request)
-                If response.IsSuccessStatusCode AndAlso response.Content.Headers.ContentLength.HasValue Then
-                    Return Math.Round(response.Content.Headers.ContentLength.Value / 1024 / 1024, 2)
-                Else
-                    Return 0
-                End If
+        Try
+            Using request = New HttpRequestMessage(HttpMethod.Head, sURL)
+                Using response = Await client.SendAsync(request)
+                    If response.IsSuccessStatusCode AndAlso response.Content.Headers.ContentLength.HasValue Then
+                        Return Math.Round(response.Content.Headers.ContentLength.Value / 1024 / 1024, 2)
+                    Else
+                        Return 0
+                    End If
+                End Using
             End Using
-        End Using
+        Catch ex As Exception
+            Return 0
+        End Try
     End Function
 
     Public Shared Async Function IsPSMultiToolsUpdateAvailable() As Task(Of Boolean)

@@ -49,7 +49,7 @@ Public Class PS3Library
 
     Private Sub PS3Library_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         'Add supplemental library menu items that will be handled in the app
-        Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS3Menu.Items(1), Controls.MenuItem)
+        Dim LibraryMenuItem As Controls.MenuItem = CType(NewPS3Menu.Items(0), Controls.MenuItem)
         LibraryMenuItem.Items.Add(LoadFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadRemoteFolderMenuItem)
         LibraryMenuItem.Items.Add(LoadDLFolderMenuItem)
@@ -57,15 +57,15 @@ Public Class PS3Library
         'Add the new PKG Browser
         Dim PKGDownloaderMenuItem As New Controls.MenuItem() With {.Header = "PKG Browser & Downloader"}
         AddHandler PKGDownloaderMenuItem.Click, AddressOf OpenPKGBrowser
-        NewPS3Menu.Items.Add(PKGDownloaderMenuItem)
-
-        'Load available context menu options
-        PS3GamesListView.ContextMenu = NewContextMenu
+        NewPS3Menu.Items.Insert(5, PKGDownloaderMenuItem)
 
         'Add supplemental emulator menu item
         If File.Exists(Environment.CurrentDirectory + "\Emulators\rpcs3\rpcs3.exe") Then
             NewPS3Menu.Items.Add(EMU_Settings)
         End If
+
+        'Load available context menu options
+        PS3GamesListView.ContextMenu = NewContextMenu
     End Sub
 
     Private Sub PS3Library_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
