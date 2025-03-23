@@ -141,6 +141,16 @@
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Download 5.50" x:Name="DownloadRecoveryFW550">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download 6.50" x:Name="DownloadRecoveryFW650">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="System Firmware">
                 <MenuItem Header="Download 4.03" x:Name="DownloadSystemFW403">
@@ -149,6 +159,16 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Download 4.51" x:Name="DownloadSystemFW451">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download 5.50" x:Name="DownloadSystemFW550">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Download 6.50" x:Name="DownloadSystemFW650">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -461,7 +481,7 @@
     </MenuItem>
     <MenuItem x:Name="SettingsMenuItem" Header="Settings">
         <MenuItem x:Name="SettingsSetPS5IPMenuItem" Header="Set FTP IP address with port (IP:PORT) :">
-            <TextBox x:Name="FTPIPTextBox" Width="200"></TextBox>
+            <TextBox x:Name="FTPIPTextBox" Width="200"/>
         </MenuItem>
     </MenuItem>
 

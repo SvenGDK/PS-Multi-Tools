@@ -172,7 +172,7 @@ Public Class PSXPS1GameEditor
         End If
     End Sub
 
-    Private Sub SaveButton_Click(sender As Object, e As RoutedEventArgs) Handles SaveButton.Click
+    Private Async Sub SaveButton_Click(sender As Object, e As RoutedEventArgs) Handles SaveButton.Click
 
         Dim Quantizer As New WuQuantizer()
 
@@ -186,8 +186,10 @@ Public Class PSXPS1GameEditor
         If GameCoverImage.Tag IsNot Nothing Then
 
             'Load URL of image into a Bitmap, resize it and get the MemoryStream to use with SixLabors.ImageSharp.Image.Load
-            Dim Cover1BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(GameCoverImage.Tag.ToString(), 90, 200))
-            Dim Cover2BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(GameCoverImage.Tag.ToString(), 102, 108))
+            Dim ResizedCover1Bitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(GameCoverImage.Tag.ToString(), 90, 200)
+            Dim ResizedCover2Bitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(GameCoverImage.Tag.ToString(), 102, 108)
+            Dim Cover1BitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedCover1Bitmap)
+            Dim Cover2BitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedCover2Bitmap)
 
             Cover1BitmapStream.Position = 0
             Cover2BitmapStream.Position = 0
@@ -208,7 +210,8 @@ Public Class PSXPS1GameEditor
         'Background image
         If BackgroundImagePictureBox.Tag IsNot Nothing Then
             Try
-                Dim BackgroundImageBitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(BackgroundImagePictureBox.Tag.ToString, 640, 350))
+                Dim ResizedBackgroundImageBitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(BackgroundImagePictureBox.Tag.ToString, 640, 350)
+                Dim BackgroundImageBitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedBackgroundImageBitmap)
                 BackgroundImageBitmapStream.Position = 0
 
                 Dim BackgroundImage As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(BackgroundImageBitmapStream)
@@ -222,7 +225,8 @@ Public Class PSXPS1GameEditor
         'Screenshots
         If ScreenshotImage1PictureBox.Tag IsNot Nothing Then
             Try
-                Dim ScreenshotImageBitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(ScreenshotImage1PictureBox.Tag.ToString, 640, 350))
+                Dim ResizedScreenshotImageBitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(ScreenshotImage1PictureBox.Tag.ToString, 640, 350)
+                Dim ScreenshotImageBitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedScreenshotImageBitmap)
                 ScreenshotImageBitmapStream.Position = 0
 
                 Dim Screenshot1Image As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(ScreenshotImageBitmapStream)
@@ -234,7 +238,8 @@ Public Class PSXPS1GameEditor
         End If
         If ScreenshotImage2PictureBox.Tag IsNot Nothing Then
             Try
-                Dim ScreenshotImage2BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(ScreenshotImage2PictureBox.Tag.ToString, 640, 350))
+                Dim ResizedScreenshotImage2 As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(ScreenshotImage2PictureBox.Tag.ToString, 640, 350)
+                Dim ScreenshotImage2BitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedScreenshotImage2)
                 ScreenshotImage2BitmapStream.Position = 0
 
                 Dim Screenshot2Image As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(ScreenshotImage2BitmapStream)

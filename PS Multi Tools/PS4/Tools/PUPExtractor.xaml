@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS4 PUP.dec Extractor" Height="370" Width="615" Background="#2D2D30" ResizeMode="CanMinimize">
+        Title="PS4 PUP.dec Extractor" Height="400" Width="615" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBox x:Name="LogTextBox" HorizontalAlignment="Center" Margin="0,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" Height="173" FontSize="14" VerticalScrollBarVisibility="Auto"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" Height="173" FontSize="14" VerticalScrollBarVisibility="Auto"/>
         <TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select a decrypted PS4 Update File (PUP.dec) :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <Button x:Name="ExtractButton" Content="Unpack" HorizontalAlignment="Left" Margin="515,105,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="Extraction Log :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select a decrypted PS4 Update File (PUP.dec) :" VerticalAlignment="Top"  FontSize="14"/>
+        <Button x:Name="ExtractButton" Content="Unpack" HorizontalAlignment="Left" Margin="515,122,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,157,0,0" TextWrapping="Wrap" Text="Extraction Log :" VerticalAlignment="Top"  FontSize="14"/>
         <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="515,33,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" TextWrapping="Wrap" Text="Output Folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <Button x:Name="BrowseOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="515,80,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,65,0,0" TextWrapping="Wrap" Text="Output Folder :" VerticalAlignment="Top"  FontSize="14"/>
+        <Button x:Name="BrowseOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="515,88,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Window>

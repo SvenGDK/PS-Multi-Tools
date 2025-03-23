@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS5 klog Viewer" Height="650" Width="1000" Background="#2D2D30" WindowStartupLocation="CenterScreen">
+        Title="PS5 klog Viewer" Height="700" Width="1000" ThemeMode="System" WindowStartupLocation="CenterScreen">
     <Grid>
-        <RichTextBox x:Name="LogRichTextBox" Margin="10,142,10,10" FontFamily="Calibri" Background="#FF474747" BorderBrush="White" Foreground="White">
+        <RichTextBox x:Name="LogRichTextBox" Margin="10,180,10,10" FontFamily="Calibri" >
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
@@ -16,14 +16,14 @@
             <FlowDocument>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="ReconnectButton" Content="Connect" HorizontalAlignment="Left" Margin="339,45,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="10,36,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="Port :" Margin="45,60,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="ReconnectButton" Content="Connect" HorizontalAlignment="Left" Margin="339,55,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="10,36,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Port :" Margin="45,70,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="84,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
-        <TextBox x:Name="PS5KlogPortTextBox" HorizontalAlignment="Left" Margin="84,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center" Text="9081"/>
-        <Button x:Name="ClearButton" Content="Clear klog" HorizontalAlignment="Left" Margin="34,110,0,0" VerticalAlignment="Top" Width="120" FontFamily="Calibri"/>
-        <TextBlock FontFamily="Calibri" FontSize="16" Text="Log Settings :" Margin="438,11,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="Font Size :" Margin="438,36,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="PS5KlogPortTextBox" HorizontalAlignment="Left" Margin="84,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center" Text="9081"/>
+        <Button x:Name="ClearButton" Content="Clear klog" HorizontalAlignment="Left" Margin="34,140,0,0" VerticalAlignment="Top" Width="120" FontFamily="Calibri"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Log Settings :" Margin="438,11,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Font Size :" Margin="438,36,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <ComboBox x:Name="FontSizeComboBox" HorizontalAlignment="Left" Margin="551,34,0,0" VerticalAlignment="Top" Width="157" FontFamily="Calibri" SelectedIndex="6">
             <ComboBoxItem Content="6"/>
             <ComboBoxItem Content="7"/>
@@ -37,8 +37,8 @@
             <ComboBoxItem Content="18"/>
             <ComboBoxItem Content="20"/>
         </ComboBox>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="Highlight word :" Margin="438,62,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <ComboBox x:Name="HighlightSelectionComboBox" HorizontalAlignment="Left" Margin="551,60,0,0" VerticalAlignment="Top" Width="157" FontFamily="Calibri" SelectedIndex="0" IsEditable="True">
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Highlight word :" Margin="438,72,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox x:Name="HighlightSelectionComboBox" HorizontalAlignment="Left" Margin="551,70,0,0" VerticalAlignment="Top" Width="157" FontFamily="Calibri" SelectedIndex="0" IsEditable="True">
             <ComboBoxItem Content="[Amm]"/>
             <ComboBoxItem Content="[AppMgr]"/>
             <ComboBoxItem Content="[AppMgr Trace]"/>
@@ -86,19 +86,19 @@
             <ComboBoxItem Content="[Syscore Umd]"/>
             <ComboBoxItem Content="[TTS Arbitrator]"/>
         </ComboBox>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="with color :" Margin="713,62,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="ColorCodeTextBox" HorizontalAlignment="Left" Margin="782,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
-        <Button x:Name="AddHightlightButton" Content="Add" HorizontalAlignment="Left" Margin="887,61,0,0" VerticalAlignment="Top" Width="75" FontFamily="Calibri"/>
-        <Button x:Name="ClearHighlightsButton" Content="Clear highlight rules" HorizontalAlignment="Left" Margin="159,110,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri"/>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="Background Color :" Margin="438,87,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="BackgroundColorTextBox" HorizontalAlignment="Left" Margin="551,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="Text Color :" Margin="713,87,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="FontColorTextBox" HorizontalAlignment="Left" Margin="782,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
-        <TextBlock FontFamily="Calibri" FontSize="16" Text="Connection Settings :" Margin="10,11,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Button x:Name="ApplyBGColorButton" Content="Apply Color" HorizontalAlignment="Left" Margin="608,110,0,0" VerticalAlignment="Top" Width="100" FontFamily="Calibri"/>
-        <Button x:Name="ApplyTextColorButton" Content="Apply Color" HorizontalAlignment="Left" Margin="782,110,0,0" VerticalAlignment="Top" Width="100" FontFamily="Calibri"/>
-        <TextBlock FontFamily="Calibri" FontSize="10" Text="(changes by selection)" Margin="713,38,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock FontFamily="Calibri" FontSize="16" Text="Utilities :" Margin="10,85,0,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Button x:Name="ResetColorButton" Content="Reset BG &amp; Text color" HorizontalAlignment="Left" Margin="289,110,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="with color :" Margin="713,72,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="ColorCodeTextBox" HorizontalAlignment="Left" Margin="782,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <Button x:Name="AddHightlightButton" Content="Add" HorizontalAlignment="Left" Margin="887,71,0,0" VerticalAlignment="Top" Width="75" FontFamily="Calibri"/>
+        <Button x:Name="ClearHighlightsButton" Content="Clear highlight rules" HorizontalAlignment="Left" Margin="159,140,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Background Color :" Margin="438,107,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="BackgroundColorTextBox" HorizontalAlignment="Left" Margin="551,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Text Color :" Margin="713,107,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="FontColorTextBox" HorizontalAlignment="Left" Margin="782,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Connection Settings :" Margin="10,11,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Button x:Name="ApplyBGColorButton" Content="Apply Color" HorizontalAlignment="Left" Margin="608,140,0,0" VerticalAlignment="Top" Width="100" FontFamily="Calibri"/>
+        <Button x:Name="ApplyTextColorButton" Content="Apply Color" HorizontalAlignment="Left" Margin="782,140,0,0" VerticalAlignment="Top" Width="100" FontFamily="Calibri"/>
+        <TextBlock FontFamily="Calibri" FontSize="10" Text="(changes by selection)" Margin="713,38,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Utilities :" Margin="10,115,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Button x:Name="ResetColorButton" Content="Reset BG &amp; Text color" HorizontalAlignment="Left" Margin="289,140,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri"/>
     </Grid>
 </Window>

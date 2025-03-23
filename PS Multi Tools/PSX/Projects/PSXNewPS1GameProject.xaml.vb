@@ -224,7 +224,7 @@ Public Class PSXNewPS1GameProject
 
                 'Reactivate the main window
                 For Each Win In System.Windows.Application.Current.Windows()
-                    If Win.ToString = "psmt_lib.PSXMainWindow" Then
+                    If Win.ToString = "PS_Multi_Tools.PSXMainWindow" Then
                         CType(Win, PSXMainWindow).Activate()
                         Exit For
                     End If

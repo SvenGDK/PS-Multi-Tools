@@ -258,7 +258,6 @@ Public Class Utils
     End Sub
 
     Public Shared Function GetBackupFolders(DestinationPath As String) As Structures.BackupFolders
-
         Dim DestinationBackupStructure As New Structures.BackupFolders()
 
         If Directory.Exists(DestinationPath + "GAMES") Then
@@ -275,7 +274,6 @@ Public Class Utils
         End If
 
         Return DestinationBackupStructure
-
     End Function
 
     Public Shared Function IsWindowOpen(WindowName As String) As Boolean
@@ -356,7 +354,7 @@ Public Class Utils
         Dim NewProcessStartInfo As New ProcessStartInfo With {
             .UseShellExecute = True,
             .WorkingDirectory = Environment.CurrentDirectory,
-            .FileName = AppDomain.CurrentDomain.BaseDirectory + "PS Multi Tools NC.exe",
+            .FileName = AppDomain.CurrentDomain.BaseDirectory + "PS Multi Tools.exe",
             .Verb = "runas"
         }
 
@@ -380,7 +378,7 @@ Public Class Utils
 
     Public Shared Sub UpdatePS5ParamEditor(UpdatedParams As PS5ParamClass.PS5Param)
         For Each OpenWin In System.Windows.Application.Current.Windows()
-            If OpenWin.ToString = "psmt_lib.PS5ParamEditor" Then
+            If OpenWin.ToString = "PS_Multi_Tools.PS5ParamEditor" Then
                 CType(OpenWin, PS5ParamEditor).CurrentParamJson = UpdatedParams
                 Exit For
             End If
@@ -389,7 +387,7 @@ Public Class Utils
 
     Public Shared Sub UpdatePS5ManifestEditor(UpdatedParams As PS5ManifestClass.PS5Manifest)
         For Each OpenWin In System.Windows.Application.Current.Windows()
-            If OpenWin.ToString = "psmt_lib.PS5ManifestEditor" Then
+            If OpenWin.ToString = "PS_Multi_Tools.PS5ManifestEditor" Then
                 CType(OpenWin, PS5ManifestEditor).CurrentManifestJson = UpdatedParams
                 Exit For
             End If
@@ -398,10 +396,15 @@ Public Class Utils
 
     Public Shared Async Sub CheckForMissingFiles()
         If Not File.Exists("strings.exe") Then
-            If Await IsURLValid("http://X.X.X.X/strings.exe") Then
-                Dim NewWebCl As New WebClient()
-                NewWebCl.DownloadFile("http://X.X.X.X/strings.exe", "strings.exe")
-            End If
+            Using NewHttpClient As New HttpClient()
+                Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync("http://X.X.X.X/strings.exe")
+                If NewHttpResponseMessage.IsSuccessStatusCode Then
+                    Dim NewStream As Stream = Await NewHttpResponseMessage.Content.ReadAsStreamAsync()
+                    Using NewFileStream As New FileStream("strings.exe", FileMode.Create)
+                        NewStream.CopyTo(NewFileStream)
+                    End Using
+                End If
+            End Using
         End If
     End Sub
 
@@ -425,45 +428,50 @@ Public Class Utils
     Public Shared Async Function IsPSMultiToolsUpdateAvailable() As Task(Of Boolean)
         If Await IsURLValid("https://github.com/SvenGDK/PS-Multi-Tools/raw/main/LatestBuild.txt") Then
             Dim PSMTInfo As FileVersionInfo = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\PS Multi Tools.exe")
-            Dim CurrentOrbisProVersion As String = PSMTInfo.FileVersion
+            Dim CurrentPSMultiToolsVersion As String = PSMTInfo.FileVersion
 
-            Dim VerCheckClient As New WebClient()
-            Dim NewOrbisProVersion As String = VerCheckClient.DownloadString("https://github.com/SvenGDK/PS-Multi-Tools/raw/main/LatestBuild.txt")
+            Using VerCheckClient As New HttpClient()
+                Dim NewPSMultiToolsVersion As String = Await VerCheckClient.GetStringAsync("https://github.com/SvenGDK/PS-Multi-Tools/raw/main/LatestBuild.txt")
 
-            If CurrentOrbisProVersion < NewOrbisProVersion Then
-                Return True
-            Else
-                Return False
-            End If
+                If CurrentPSMultiToolsVersion < NewPSMultiToolsVersion Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End Using
         Else
             Return False
         End If
     End Function
 
-    Public Shared Sub DownloadAndExecuteUpdater()
+    Public Shared Async Sub DownloadAndExecuteUpdater()
         If Not File.Exists(Environment.CurrentDirectory + "\PSMT-Update.exe") Then
-            Dim NewWebClient As New WebClient()
-            NewWebClient.DownloadFileAsync(New Uri("https://raw.githubusercontent.com/SvenGDK/PS-Multi-Tools/main/PSMT-Update.exe"), Environment.CurrentDirectory + "\PSMT-Update.exe", Stopwatch.StartNew)
+            Using NewHttpClient As New HttpClient()
+                Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync("https://raw.githubusercontent.com/SvenGDK/PS-Multi-Tools/main/PSMT-Update.exe")
+                If NewHttpResponseMessage.IsSuccessStatusCode Then
 
-            AddHandler NewWebClient.DownloadFileCompleted, Sub(sender As Object, e As AsyncCompletedEventArgs)
-                                                               If Not e.Cancelled Then
-                                                                   If MsgBox("Do you want to install the update now ?", MsgBoxStyle.YesNo, "Install Update") = MsgBoxResult.Yes Then
-                                                                       Process.Start(Environment.CurrentDirectory + "\PSMT-Update.exe")
-                                                                       Application.Current.Shutdown()
-                                                                   End If
-                                                               End If
-                                                           End Sub
+                    Dim NewStream As Stream = Await NewHttpResponseMessage.Content.ReadAsStreamAsync()
+                    Using NewFileStream As New FileStream("PSMT-Update.exe", FileMode.Create)
+                        NewStream.CopyTo(NewFileStream)
+                    End Using
+
+                    If MsgBox("Do you want to install the update now ?", MsgBoxStyle.YesNo, "Install Update") = MsgBoxResult.Yes Then
+                        Process.Start(Environment.CurrentDirectory + "\PSMT-Update.exe")
+                        System.Windows.Application.Current.Shutdown()
+                    End If
+                End If
+            End Using
         Else
             Process.Start(Environment.CurrentDirectory + "\PSMT-Update.exe")
-            Application.Current.Shutdown()
+            System.Windows.Application.Current.Shutdown()
         End If
     End Sub
 
-    Public Shared Function GetzRIF(PKGContentID As String) As String
+    Public Shared Async Function GetzRIF(PKGContentID As String) As Task(Of String)
         Dim DownloadsList As New List(Of Structures.Package)()
         If MsgBox("Load zRIF from the latest database ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-            Using NewWebClient As New WebClient
-                Dim GamesList As String = NewWebClient.DownloadString(New Uri("https://nopaystation.com/tsv/PSV_GAMES.tsv"))
+            Using NewWebClient As New HttpClient()
+                Dim GamesList As String = Await NewWebClient.GetStringAsync("https://nopaystation.com/tsv/PSV_GAMES.tsv")
                 Dim GamesListLines As String() = GamesList.Split(CChar(vbCrLf))
                 For Each GameLine As String In GamesListLines.Skip(1)
                     Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
@@ -756,7 +764,7 @@ Public Class Utils
 
     Public Shared Sub ReloadProjects()
         For Each Win In System.Windows.Application.Current.Windows()
-            If Win.ToString = "psmt_lib.PSXMainWindow" Then
+            If Win.ToString = "PS_Multi_Tools.PSXMainWindow" Then
                 CType(Win, PSXMainWindow).ReloadProjects()
                 Exit For
             End If
@@ -765,7 +773,7 @@ Public Class Utils
 
     Public Shared Sub ReloadPartitions()
         For Each Win In System.Windows.Application.Current.Windows()
-            If Win.ToString = "psmt_lib.PSXPartitionManager" Then
+            If Win.ToString = "PS_Multi_Tools.PSXPartitionManager" Then
                 CType(Win, PSXPartitionManager).ReloadPartitions()
                 Exit For
             End If
@@ -781,15 +789,19 @@ Public Class Utils
         Return Convert.ToInt32(ReturnValue)
     End Function
 
-    Public Shared Function GetResizedBitmap(ImageLocation As String, NewWidth As Integer, NewHeight As Integer) As Bitmap
-        Dim Request As WebRequest = WebRequest.Create(ImageLocation)
-        Dim Response As WebResponse = Request.GetResponse()
-        Dim ResponseStream As Stream = Response.GetResponseStream()
-
-        Dim OriginalBitmap As New Bitmap(ResponseStream)
-        Dim ResizedBitmap As New Bitmap(OriginalBitmap, New System.Drawing.Size(NewWidth, NewHeight))
-
-        Return ResizedBitmap
+    Public Shared Async Function GetResizedBitmap(ImageLocation As String, NewWidth As Integer, NewHeight As Integer) As Task(Of Bitmap)
+        Using NewHttpClient As New HttpClient()
+            Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync(ImageLocation)
+            If NewHttpResponseMessage.IsSuccessStatusCode Then
+                Using NewStream As Stream = Await NewHttpResponseMessage.Content.ReadAsStreamAsync()
+                    Dim OriginalBitmap As New Bitmap(NewStream)
+                    Dim ResizedBitmap As New Bitmap(OriginalBitmap, New Size(NewWidth, NewHeight))
+                    Return ResizedBitmap
+                End Using
+            Else
+                Return Nothing
+            End If
+        End Using
     End Function
 
     Public Shared Sub ConvertTo32bppAndDisposeOriginal(ByRef img As Bitmap)

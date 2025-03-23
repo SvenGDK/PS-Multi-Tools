@@ -5,31 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="PBP ~ ISO Converter" Height="300" Width="810" Background="#2D2D30">
+             Title="PBP ~ ISO Converter" Height="340" Width="810" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <Rectangle HorizontalAlignment="Left" Height="250" Margin="399,10,0,0" Stroke="White" VerticalAlignment="Top" Width="384"/>
-        <Rectangle HorizontalAlignment="Left" Height="250" Margin="10,10,0,0" Stroke="White" VerticalAlignment="Top" Width="384"/>
-        <TextBlock HorizontalAlignment="Left" Margin="23,43,0,0" TextWrapping="Wrap" Text="Select a .PBP file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBox x:Name="SelectedPBPTextBox" HorizontalAlignment="Left" Margin="23,67,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
-        <Button x:Name="BrowsePBPButton" Content="Browse" HorizontalAlignment="Left" Margin="303,66,0,0" VerticalAlignment="Top" Width="70"/>
-        <Button x:Name="ConvertToPBPButton" Content="Convert to .PBP" HorizontalAlignment="Left" Margin="642,189,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="412,43,0,0" TextWrapping="Wrap" Text="Select an .iso file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="412,67,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
-        <Button x:Name="BrowseISOButton" Content="Browse" HorizontalAlignment="Left" Margin="692,66,0,0" VerticalAlignment="Top" Width="70"/>
-        <Button x:Name="ConvertToISOButton" Content="Convert to .iso" HorizontalAlignment="Left" Margin="253,189,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="412,17,0,0" TextWrapping="Wrap" Text="Convert to PBP" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="23,17,0,0" TextWrapping="Wrap" Text="Convert to ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock x:Name="ConvertISOStatusTextBlock" HorizontalAlignment="Left" Margin="23,214,0,0" VerticalAlignment="Top" Foreground="White" FontSize="12" Width="350" Height="35"/>
-        <TextBlock x:Name="ConvertPBPStatusTextBlock" HorizontalAlignment="Left" Margin="412,214,0,0" VerticalAlignment="Top" Foreground="White" FontSize="12" Width="350" Height="35"/>
-        <TextBlock HorizontalAlignment="Left" Margin="412,90,0,0" TextWrapping="Wrap" Text="Select a STARTDAT image :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBox x:Name="SelectedIMGTextBox" HorizontalAlignment="Left" Margin="412,114,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
-        <Button x:Name="BrowseIMGButton" Content="Browse" HorizontalAlignment="Left" Margin="692,113,0,0" VerticalAlignment="Top" Width="70"/>
-        <TextBlock HorizontalAlignment="Left" Margin="23,90,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBox x:Name="SelectedPBPOutputFolderTextBox" HorizontalAlignment="Left" Margin="412,161,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
-        <Button x:Name="BrowsePBPOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="692,160,0,0" VerticalAlignment="Top" Width="70"/>
-        <TextBlock HorizontalAlignment="Left" Margin="412,137,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBox x:Name="SelectedISOOutputFolderTextBox" HorizontalAlignment="Left" Margin="23,114,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
-        <Button x:Name="BrowseISOOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="303,113,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" Text="Select a .PBP file :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedPBPTextBox" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <Button x:Name="BrowsePBPButton" Content="Browse" HorizontalAlignment="Left" Margin="290,59,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="ConvertToPBPButton" Content="Convert to .PBP" HorizontalAlignment="Left" Margin="624,225,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="399,36,0,0" TextWrapping="Wrap" Text="Select an .iso file :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="399,60,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <Button x:Name="BrowseISOButton" Content="Browse" HorizontalAlignment="Left" Margin="679,59,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="ConvertToISOButton" Content="Convert to .iso" HorizontalAlignment="Left" Margin="235,161,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="399,10,0,0" TextWrapping="Wrap" Text="Convert to PBP" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Convert to ISO" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
+        <TextBlock x:Name="ConvertISOStatusTextBlock" HorizontalAlignment="Left" Margin="10,200,0,0" VerticalAlignment="Top"  FontSize="12" Width="350" Height="35"/>
+        <TextBlock x:Name="ConvertPBPStatusTextBlock" HorizontalAlignment="Left" Margin="399,263,0,0" VerticalAlignment="Top"  FontSize="12" Width="350" Height="35"/>
+        <TextBlock HorizontalAlignment="Left" Margin="399,97,0,0" TextWrapping="Wrap" Text="Select a STARTDAT image :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedIMGTextBox" HorizontalAlignment="Left" Margin="399,121,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <Button x:Name="BrowseIMGButton" Content="Browse" HorizontalAlignment="Left" Margin="679,120,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,97,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedPBPOutputFolderTextBox" HorizontalAlignment="Left" Margin="399,186,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <Button x:Name="BrowsePBPOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="679,185,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBlock HorizontalAlignment="Left" Margin="399,162,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedISOOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top" Width="275" IsReadOnly="True"/>
+        <Button x:Name="BrowseISOOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="290,120,0,0" VerticalAlignment="Top" Width="70"/>
 
     </Grid>
 </Window>

@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="USB Writer" Height="180" Width="515" Background="#2D2D30">
+        Title="USB Writer" Height="230" Width="515" ResizeMode="CanMinimize" ThemeMode="System" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select your .img file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,58,0,0" TextWrapping="Wrap" Text="Select your USB drive :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <ComboBox x:Name="DrivesComboBox" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" Width="400"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select your .img file :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,69,0,0" TextWrapping="Wrap" Text="Select your USB drive :" VerticalAlignment="Top"  FontSize="14"/>
+        <ComboBox x:Name="DrivesComboBox" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="400"/>
         <Button x:Name="BrowseFileButton" Content="Browse" HorizontalAlignment="Left" Margin="415,33,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="415,83,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="WriteButton" Content="Write" HorizontalAlignment="Left" Margin="335,109,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,112,0,0" TextWrapping="Wrap" Text="Warning: All data on this drive will be deleted!&#x0a;Please close all programs that could access the drive." VerticalAlignment="Top" Foreground="White" FontSize="11" FontStyle="Italic" Height="42" Width="320"/>
+        <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="415,94,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="WriteButton" Content="Write" HorizontalAlignment="Left" Margin="335,136,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,136,0,0" TextWrapping="Wrap" Text="Warning: All data on this drive will be deleted!&#x0a;Please close all programs that could access the drive." VerticalAlignment="Top"  FontSize="11" FontStyle="Italic" Height="42" Width="320"/>
 
     </Grid>
 </Window>

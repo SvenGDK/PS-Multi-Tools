@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="Create a new partition" Height="170" Width="425" ResizeMode="CanMinimize" Background="#FF252525">
+        Title="Create a new partition" Height="200" Width="425" ResizeMode="CanMinimize" ThemeMode="System">
     <Grid>
         <TextBox x:Name="NewPartitionNameTextBox" Margin="10,31,15,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400"/>
-        <TextBox x:Name="NewPartitionSizeTextBox" Margin="10,75,15,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400"/>
-        <TextBlock Margin="10,10,15,0" TextWrapping="Wrap" Text="Please enter a name for the new partition :" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Left" Width="400"/>
-        <TextBlock Margin="10,54,15,0" TextWrapping="Wrap" Text="Please enter the size of the new partition in MB (number only) :" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Left" Width="400"/>
-        <Button x:Name="CreatePartitionButton" Content="Create partition" HorizontalAlignment="Center" Margin="0,98,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="150" Height="21" FontFamily="Calibri" FontSize="14"/>
+        <TextBox x:Name="NewPartitionSizeTextBox" Margin="10,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400"/>
+        <TextBlock Margin="10,10,15,0" TextWrapping="Wrap" Text="Please enter a name for the new partition :" VerticalAlignment="Top"  HorizontalAlignment="Left" Width="400"/>
+        <TextBlock Margin="10,64,0,0" TextWrapping="Wrap" Text="Please enter the size of the new partition in MB (number only) :" VerticalAlignment="Top"  HorizontalAlignment="Left" Width="400"/>
+        <Button x:Name="CreatePartitionButton" Content="Create partition" HorizontalAlignment="Left" Margin="135,120,0,0" VerticalAlignment="Top" Width="150" FontFamily="Calibri" FontSize="14"/>
 
     </Grid>
 </Window>

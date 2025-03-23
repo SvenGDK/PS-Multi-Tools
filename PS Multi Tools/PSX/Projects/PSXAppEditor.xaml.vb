@@ -18,14 +18,15 @@ Public Class PSXAppEditor
         End If
     End Sub
 
-    Private Sub SaveButton_Click(sender As Object, e As RoutedEventArgs) Handles SaveButton.Click
+    Private Async Sub SaveButton_Click(sender As Object, e As RoutedEventArgs) Handles SaveButton.Click
         'Save selected XMB cover as compressed PNG
         If CoverPictureBox.Tag IsNot Nothing Then
             If CoverPictureBox.Tag.ToString() <> ProjectDirectory + "\res\jkt_002.png" Then
                 Try
                     Dim Quantizer As New WuQuantizer()
 
-                    Dim Cover1BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(CoverPictureBox.Tag.ToString(), 74, 108))
+                    Dim ResizedCover1Bitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(CoverPictureBox.Tag.ToString(), 74, 108)
+                    Dim Cover1BitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedCover1Bitmap)
                     Cover1BitmapStream.Position = 0
 
                     Dim Cover1Image As Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(Cover1BitmapStream)

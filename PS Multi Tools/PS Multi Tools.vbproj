@@ -8,12 +8,12 @@
     <UseWindowsForms>True</UseWindowsForms>
 	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <OptionStrict>On</OptionStrict>
-    <AssemblyVersion>15.1.0.0</AssemblyVersion>
-    <FileVersion>15.1.0.0</FileVersion>
+    <AssemblyVersion>15.2.0.0</AssemblyVersion>
+    <FileVersion>15.2.0.0</FileVersion>
     <ApplicationIcon>psicon.ico</ApplicationIcon>
-	<NoWarn>$(NoWarn);MSB3270;SYSLIB0014;SYSLIB0021;SYSLIB0022;CA1416</NoWarn>
+	<NoWarn>$(NoWarn);MSB3270</NoWarn>
 	<Title>PS Multi Tools</Title>
-	<Version>15.1.0</Version>
+	<Version>15.2.0</Version>
 	<Company>SvenGDK</Company>
 	<Copyright>Copyright © SvenGDK 2011-2025</Copyright>
 	<Product>PS Multi Tools</Product>

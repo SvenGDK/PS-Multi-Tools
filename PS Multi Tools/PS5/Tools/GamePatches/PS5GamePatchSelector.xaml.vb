@@ -84,7 +84,7 @@ Public Class PS5GamePatchSelector
         'Add to queue in the PS5GamePatches window
         Dim OpenGamePatchesWindow As PS5GamePatches
         For Each OpenWin In Application.Current.Windows()
-            If OpenWin.ToString = "psmt_lib.PS5GamePatches" Then
+            If OpenWin.ToString = "PS_Multi_Tools.PS5GamePatches" Then
                 OpenGamePatchesWindow = CType(OpenWin, PS5GamePatches)
                 OpenGamePatchesWindow.DownloadQueueItemCollection.Add(NewQueueItem)
                 Exit For

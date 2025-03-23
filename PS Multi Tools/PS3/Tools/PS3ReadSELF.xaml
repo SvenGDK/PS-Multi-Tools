@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="PS3 Readself" Height="330" Width="540" Background="#2D2D30" ResizeMode="CanMinimize">
+             Title="PS3 Readself" Height="340" Width="505" ThemeMode="System" ResizeMode="CanMinimize">
     <Grid>
-        <TextBox x:Name="OutputTextBox" HorizontalAlignment="Left" Margin="27,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="469" Height="175"/>
-        <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="315,33,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Selected a .self file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <Button x:Name="ReadSelfButton" Content="Read" HorizontalAlignment="Left" Margin="236,57,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBlock HorizontalAlignment="Left" Margin="27,79,0,0" TextWrapping="Wrap" Text="Output :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="OutputTextBox" HorizontalAlignment="Left" Margin="10,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="469" Height="175"/>
+        <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="405,34,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="390"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Selected a .self file :" VerticalAlignment="Top"  FontSize="14"/>
+        <Button x:Name="ReadSelfButton" Content="Read" HorizontalAlignment="Left" Margin="326,66,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,92,0,0" TextWrapping="Wrap" Text="Output :" VerticalAlignment="Top"  FontSize="14"/>
 
     </Grid>
 </Window>

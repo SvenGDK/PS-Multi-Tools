@@ -25,7 +25,7 @@ Public Class PSXPS2GameEditor
         End Try
     End Sub
 
-    Private Sub SaveButton_Click(sender As Object, e As RoutedEventArgs) Handles SaveButton.Click
+    Private Async Sub SaveButton_Click(sender As Object, e As RoutedEventArgs) Handles SaveButton.Click
         If Not Directory.Exists(ProjectDirectory + "\res\image") Then
             Directory.CreateDirectory(ProjectDirectory + "\res\image")
         End If
@@ -36,8 +36,10 @@ Public Class PSXPS2GameEditor
         'Skips now already saved art
         If CoverPictureBox.Tag IsNot Nothing Then
             'Load URL of image into a Bitmap, resize it and get the MemoryStream to use with SixLabors.ImageSharp.Image.Load
-            Dim Cover1BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(CoverPictureBox.Tag.ToString(), 140, 200))
-            Dim Cover2BitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(CoverPictureBox.Tag.ToString(), 74, 108))
+            Dim ResizedCover1Bitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(CoverPictureBox.Tag.ToString(), 140, 200)
+            Dim ResizedCover2Bitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(CoverPictureBox.Tag.ToString(), 74, 108)
+            Dim Cover1BitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedCover1Bitmap)
+            Dim Cover2BitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedCover2Bitmap)
 
             Cover1BitmapStream.Position = 0
             Cover2BitmapStream.Position = 0
@@ -56,7 +58,8 @@ Public Class PSXPS2GameEditor
         End If
 
         If BackgroundImagePictureBox.Tag IsNot Nothing Then
-            Dim BackgroundImageBitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(BackgroundImagePictureBox.Tag.ToString, 640, 350))
+            Dim ResizedBackgroundImageBitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(BackgroundImagePictureBox.Tag.ToString, 640, 350)
+            Dim BackgroundImageBitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedBackgroundImageBitmap)
             BackgroundImageBitmapStream.Position = 0
 
             Dim BackgroundImage As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(BackgroundImageBitmapStream)
@@ -65,7 +68,8 @@ Public Class PSXPS2GameEditor
         End If
 
         If ScreenshotImage1PictureBox.Tag IsNot Nothing Then
-            Dim ScreenshotImageBitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(ScreenshotImage1PictureBox.Tag.ToString, 640, 350))
+            Dim ResizedScreenshotImageBitmap As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(ScreenshotImage1PictureBox.Tag.ToString, 640, 350)
+            Dim ScreenshotImageBitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedScreenshotImageBitmap)
             ScreenshotImageBitmapStream.Position = 0
 
             Dim Screenshot1Image As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(ScreenshotImageBitmapStream)
@@ -73,10 +77,11 @@ Public Class PSXPS2GameEditor
             Screenshot1Image.Save(ProjectDirectory + "\res\image\1.png", New PngEncoder())
         End If
         If ScreenshotImage2PictureBox.Tag IsNot Nothing Then
-            Dim Screenshot2ImageBitmapStream As MemoryStream = Utils.ToMemoryStream(Utils.GetResizedBitmap(ScreenshotImage2PictureBox.Tag.ToString, 640, 350))
-            Screenshot2ImageBitmapStream.Position = 0
+            Dim ResizedScreenshotImage2 As System.Drawing.Bitmap = Await Utils.GetResizedBitmap(ScreenshotImage2PictureBox.Tag.ToString, 640, 350)
+            Dim ScreenshotImage2BitmapStream As MemoryStream = Utils.ToMemoryStream(ResizedScreenshotImage2)
+            ScreenshotImage2BitmapStream.Position = 0
 
-            Dim Screenshot2Image As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(Screenshot2ImageBitmapStream)
+            Dim Screenshot2Image As SixLabors.ImageSharp.Image(Of Argb32) = SixLabors.ImageSharp.Image.Load(Of Argb32)(ScreenshotImage2BitmapStream)
             Screenshot2Image.Mutate(Function(qtz) qtz.Quantize(Quantizer))
             Screenshot2Image.Save(ProjectDirectory + "\res\image\2.png", New PngEncoder())
         End If

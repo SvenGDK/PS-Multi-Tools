@@ -102,7 +102,7 @@
                                        'Update progress in PS5GamePatches (if open)
                                        Dim OpenGamePatchesWindow As PS5GamePatches
                                        For Each OpenWin In System.Windows.Application.Current.Windows()
-                                           If OpenWin.ToString = "psmt_lib.PS5GamePatches" Then
+                                           If OpenWin.ToString = "PS_Multi_Tools.PS5GamePatches" Then
                                                OpenGamePatchesWindow = CType(OpenWin, PS5GamePatches)
 
                                                For Each DownloadItem In OpenGamePatchesWindow.DownloadQueueListView.Items

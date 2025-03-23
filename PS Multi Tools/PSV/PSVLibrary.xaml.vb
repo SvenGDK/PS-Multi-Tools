@@ -88,7 +88,7 @@ Public Class PSVLibrary
         End If
     End Sub
 
-    Private Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
+    Private Async Sub PlayGameMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PlayGameMenuItem.Click
         If File.Exists(Environment.CurrentDirectory + "\Emulators\vita3k\Vita3K.exe") Then
             If GamesListView.SelectedItem IsNot Nothing Then
                 Dim SelectedPSVGame As PSVGame = CType(GamesListView.SelectedItem, PSVGame)
@@ -224,7 +224,7 @@ Public Class PSVLibrary
                                                           "Do you want to continue ?", MsgBoxStyle.YesNo, "Please confirm") = MsgBoxResult.Yes Then
 
                                                     'Get zRIF using the online or offline database or user input
-                                                    Dim RequiredzRIF As String = Utils.GetzRIF(SelectedPSVGame.ContentID)
+                                                    Dim RequiredzRIF As String = Await Utils.GetzRIF(SelectedPSVGame.ContentID)
                                                     If String.IsNullOrEmpty(RequiredzRIF) Then
                                                         RequiredzRIF = InputBox("Enter the zRIF Key string for the selected PKG:", "zRIF required", "")
                                                     End If

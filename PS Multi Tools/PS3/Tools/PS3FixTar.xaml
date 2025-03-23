@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="FixTar Tool" Height="120" Width="420" Background="#2D2D30" ResizeMode="CanMinimize">
+             Title="FixTar Tool" Height="145" Width="420" ThemeMode="System" ResizeMode="CanMinimize">
     <Grid>
         <Button x:Name="BrowseTarButton" Content="Browse" HorizontalAlignment="Left" Margin="315,33,0,0" VerticalAlignment="Top" Width="74"/>
         <TextBox x:Name="SelectedTarFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Selected a .tar file :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <Button x:Name="FixTarButton" Content="Fix" HorizontalAlignment="Left" Margin="236,57,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Selected a .tar file :" VerticalAlignment="Top"  FontSize="14"/>
+        <Button x:Name="FixTarButton" Content="Fix" HorizontalAlignment="Left" Margin="236,70,0,0" VerticalAlignment="Top" Width="74"/>
 
     </Grid>
 </Window>
