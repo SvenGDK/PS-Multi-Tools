@@ -79,6 +79,8 @@ Public Class Downloader
                 Else
                     Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
                 End If
+            Else
+                Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
             End If
 
             Return True
