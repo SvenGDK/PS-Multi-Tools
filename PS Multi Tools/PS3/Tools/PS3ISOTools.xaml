@@ -12,22 +12,22 @@
         <Rectangle HorizontalAlignment="Left" Height="155" Margin="10,10,0,0" Stroke="White" VerticalAlignment="Top" Width="375"/>
         <Rectangle HorizontalAlignment="Left" Height="155" Margin="10,170,0,0" Stroke="White" VerticalAlignment="Top" Width="375"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="26,19,0,0" TextWrapping="Wrap" Text="Create new PS3 ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,179,0,0" TextWrapping="Wrap" Text="Extract PS3 ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,340,0,0" TextWrapping="Wrap" Text="Split PS3 ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,465,0,0" TextWrapping="Wrap" Text="Patch PS3 ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,45,0,0" TextWrapping="Wrap" Text="Select game backup folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,205,0,0" TextWrapping="Wrap" Text="Select game ISO :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,366,0,0" TextWrapping="Wrap" Text="Select game ISO :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,491,0,0" TextWrapping="Wrap" Text="Select game ISO :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedGameBackupFolderTextBox" HorizontalAlignment="Left" Margin="26,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
-        <TextBox x:Name="SelectedExtractISOTextBox" HorizontalAlignment="Left" Margin="26,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
-        <TextBox x:Name="SelectedSplitISOTextBox" HorizontalAlignment="Left" Margin="26,387,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
-        <TextBox x:Name="SelectedPatchISOTextBox" HorizontalAlignment="Left" Margin="26,512,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,89,0,0" TextWrapping="Wrap" Text="Select output folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedISOOutputTextBox" HorizontalAlignment="Left" Margin="26,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,249,0,0" TextWrapping="Wrap" Text="Select output folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedISOExtractOutputTextBox" HorizontalAlignment="Left" Margin="26,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,19,0,0"  Text="Create new PS3 ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,179,0,0"  Text="Extract PS3 ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,340,0,0"  Text="Split PS3 ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,465,0,0"  Text="Patch PS3 ISO" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,45,0,0"  Text="Select game backup folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,205,0,0"  Text="Select game ISO :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,366,0,0"  Text="Select game ISO :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,491,0,0"  Text="Select game ISO :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedGameBackupFolderTextBox" HorizontalAlignment="Left" Margin="26,66,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBox x:Name="SelectedExtractISOTextBox" HorizontalAlignment="Left" Margin="26,226,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBox x:Name="SelectedSplitISOTextBox" HorizontalAlignment="Left" Margin="26,387,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBox x:Name="SelectedPatchISOTextBox" HorizontalAlignment="Left" Margin="26,512,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,89,0,0"  Text="Select output folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedISOOutputTextBox" HorizontalAlignment="Left" Margin="26,110,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,249,0,0"  Text="Select output folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedISOExtractOutputTextBox" HorizontalAlignment="Left" Margin="26,270,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
         <Button x:Name="BrowseBackupFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="316,65,0,0" VerticalAlignment="Top" Width="50"/>
         <Button x:Name="BrowseExtractISOButton" Content="Browse" HorizontalAlignment="Left" Margin="316,225,0,0" VerticalAlignment="Top" Width="50"/>
         <Button x:Name="BrowseSplitSOButton" Content="Browse" HorizontalAlignment="Left" Margin="316,386,0,0" VerticalAlignment="Top" Width="50"/>
@@ -51,28 +51,28 @@
             <ComboBoxItem Content="4.55"/>
             <ComboBoxItem Content="4.60"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="26,535,0,0" TextWrapping="Wrap" Text="Version :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,535,0,0"  Text="Version :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
         <CheckBox x:Name="SplitISOCheckBox" Content="Split" HorizontalAlignment="Left" Margin="218,137,0,0" VerticalAlignment="Top" Foreground="White"/>
         <CheckBox x:Name="SplitExtractISOCheckBox" Content="Split" HorizontalAlignment="Left" Margin="218,296,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Rectangle HorizontalAlignment="Left" Height="155" Margin="390,10,0,0" Stroke="White" VerticalAlignment="Top" Width="375"/>
-        <TextBlock HorizontalAlignment="Left" Margin="406,19,0,0" TextWrapping="Wrap" Text="Create new PS3 ISO using ps3netsrv" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="406,45,0,0" TextWrapping="Wrap" Text="Select game backup folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedGameBackupFolderUsingPS3netsrvTextBox" HorizontalAlignment="Left" Margin="406,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
-        <TextBlock HorizontalAlignment="Left" Margin="406,89,0,0" TextWrapping="Wrap" Text="Select output folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedISOOutputUsingPS3netsrvTextBox" HorizontalAlignment="Left" Margin="406,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="406,19,0,0"  Text="Create new PS3 ISO using ps3netsrv" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="406,45,0,0"  Text="Select game backup folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedGameBackupFolderUsingPS3netsrvTextBox" HorizontalAlignment="Left" Margin="406,66,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="406,89,0,0"  Text="Select output folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedISOOutputUsingPS3netsrvTextBox" HorizontalAlignment="Left" Margin="406,110,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
         <Button x:Name="BrowseBackupFolderUsingPS3netsrvButton" Content="Browse" HorizontalAlignment="Left" Margin="696,65,0,0" VerticalAlignment="Top" Width="50"/>
         <Button x:Name="CreateISOUsingPS3netsrvButton" Content="Create ISO" HorizontalAlignment="Left" Margin="646,134,0,0" VerticalAlignment="Top" Width="100"/>
         <Button x:Name="BrowseNewISOUsingPS3netsrvButton" Content="Browse" HorizontalAlignment="Left" Margin="696,109,0,0" VerticalAlignment="Top" Width="50"/>
         <Rectangle HorizontalAlignment="Left" Height="155" Margin="390,170,0,0" Stroke="White" VerticalAlignment="Top" Width="375"/>
-        <TextBlock HorizontalAlignment="Left" Margin="406,179,0,0" TextWrapping="Wrap" Text="Decrypt PS3 ISO using ps3netsrv" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="406,205,0,0" TextWrapping="Wrap" Text="Select game ISO :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedGameISOUsingPS3netsrvTextBox" HorizontalAlignment="Left" Margin="406,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
-        <TextBlock HorizontalAlignment="Left" Margin="406,249,0,0" TextWrapping="Wrap" Text="Select output folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedISOExtractFolderUsingPS3netsrvTextBox" HorizontalAlignment="Left" Margin="406,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="406,179,0,0"  Text="Decrypt PS3 ISO using ps3netsrv" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="406,205,0,0"  Text="Select game ISO :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedGameISOUsingPS3netsrvTextBox" HorizontalAlignment="Left" Margin="406,226,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="406,249,0,0"  Text="Select output folder :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedISOExtractFolderUsingPS3netsrvTextBox" HorizontalAlignment="Left" Margin="406,270,0,0"  VerticalAlignment="Top" Width="285" IsReadOnly="True"/>
         <Button x:Name="BrowseISOUsingPS3netsrvButton" Content="Browse" HorizontalAlignment="Left" Margin="696,225,0,0" VerticalAlignment="Top" Width="50"/>
         <Button x:Name="DecryptISOUsingPS3netsrvButton" Content="Decrypt ISO" HorizontalAlignment="Left" Margin="646,294,0,0" VerticalAlignment="Top" Width="100"/>
         <Button x:Name="BrowseNewExtractFolderUsingPS3netsrvButton" Content="Browse" HorizontalAlignment="Left" Margin="696,269,0,0" VerticalAlignment="Top" Width="50"/>
-        <TextBlock HorizontalAlignment="Left" Margin="406,296,0,0" TextWrapping="Wrap" Text="Not available yet" VerticalAlignment="Top" Foreground="#FFB10000" FontWeight="Bold" Width="235" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="406,296,0,0"  Text="Not available yet" VerticalAlignment="Top" Foreground="#FFB10000" FontWeight="Bold" Width="235" TextAlignment="Center"/>
 
     </Grid>
 </Window>

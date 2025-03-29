@@ -10,12 +10,12 @@
     <Grid>
         <avalonEdit:TextEditor x:Name="CodeBox" FontFamily="Calibri" Margin="15,70,15,15" FontSize="16"/>
         <CheckBox x:Name="ShowLineNumbersCheckBox" Content="Show Line Numbers" HorizontalAlignment="Right" Margin="0,13,17,0" VerticalAlignment="Top" Foreground="White" FontSize="14" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" Margin="15,13,0,0" TextWrapping="Wrap" Text="Change syntax highlighting :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="15,13,0,0"  Text="Change syntax highlighting :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontFamily="Calibri"/>
         <ComboBox x:Name="SelectedSyntaxComboBox" HorizontalAlignment="Left" Margin="178,11,0,0" VerticalAlignment="Top" Width="170" FontFamily="Calibri"/>
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,36,159,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="75" Height="22" FontFamily="Calibri" FontSize="14"/>
         <Button x:Name="SaveNewButton" Content="Save as new file" HorizontalAlignment="Right" Margin="0,36,15,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="135" Height="22" FontFamily="Calibri" FontSize="14"/>
         <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="353,36,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="100" Height="22" FontFamily="Calibri" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="47,39,0,0" TextWrapping="Wrap" Text="Translate Strings into :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Left" Margin="47,39,0,0"  Text="Translate Strings into :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontFamily="Calibri"/>
         <ComboBox x:Name="SelectedLanguageComboBox" HorizontalAlignment="Left" Margin="178,37,0,0" VerticalAlignment="Top" Width="170" FontFamily="Calibri"/>
         <Button x:Name="OpenFileButton" Content="Open" HorizontalAlignment="Right" Margin="0,9,159,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="75" Height="22" FontFamily="Calibri" FontSize="14"/>
     </Grid>

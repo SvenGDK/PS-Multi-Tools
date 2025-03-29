@@ -23,23 +23,23 @@
         <Button x:Name="CreateDirectoryButton" Content="Create a new directory at current path" HorizontalAlignment="Left" Margin="165,381,0,0" VerticalAlignment="Top" Width="250" FontWeight="Bold"/>
         <Button x:Name="DeleteSelectedDirectoryButton" Content="Delete the selected directory" HorizontalAlignment="Left" Margin="165,406,0,0" VerticalAlignment="Top" Width="250" FontWeight="Bold"/>
         <Button x:Name="InjectFileButton" Content="Add a new file" HorizontalAlignment="Left" Margin="10,381,0,0" VerticalAlignment="Top" Width="150" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,116,0,0" TextWrapping="Wrap" Text="Current MC Path :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBox x:Name="CurrentMCPathTextBox" HorizontalAlignment="Left" Margin="10,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" TextAlignment="Center" Text="/"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,116,0,0"  Text="Current MC Path :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="CurrentMCPathTextBox" HorizontalAlignment="Left" Margin="10,140,0,0"  VerticalAlignment="Top" Width="601" TextAlignment="Center" Text="/"/>
         <Button x:Name="OpenPathButton" Content="Open" HorizontalAlignment="Left" Margin="616,139,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="113,24,0,0" TextWrapping="Wrap" Text="Page Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="113,48,0,0" TextWrapping="Wrap" Text="Block Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="113,72,0,0" TextWrapping="Wrap" Text="MC Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock x:Name="PageSizeTextBlock" HorizontalAlignment="Left" Margin="190,24,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
-        <TextBlock x:Name="BlockSizeTextBlock" HorizontalAlignment="Left" Margin="190,48,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
-        <TextBlock x:Name="MCSizeTextBlock" HorizontalAlignment="Left" Margin="190,72,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
-        <TextBlock HorizontalAlignment="Left" Margin="301,24,0,0" TextWrapping="Wrap" Text="ECC Support :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="301,48,0,0" TextWrapping="Wrap" Text="Bad Blocks Management :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="301,72,0,0" TextWrapping="Wrap" Text="Erase Byte :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock x:Name="ECCSupportTextBlock" HorizontalAlignment="Left" Margin="396,24,0,0" TextWrapping="Wrap" Text="/" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="152"/>
-        <TextBlock x:Name="BBManagementTextBlock" HorizontalAlignment="Left" Margin="476,48,0,0" TextWrapping="Wrap" Text="/" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
-        <TextBlock x:Name="EraseByteTextBlock" HorizontalAlignment="Left" Margin="381,72,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="167"/>
-        <TextBlock HorizontalAlignment="Left" Margin="578,39,0,0" TextWrapping="Wrap" Text="Available Space" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock x:Name="MCFreeSpaceTextBlock" HorizontalAlignment="Left" Margin="578,63,0,0" TextWrapping="Wrap" Text="0 KB" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" Width="102" TextAlignment="Center" FontStyle="Italic"/>
+        <TextBlock HorizontalAlignment="Left" Margin="113,24,0,0"  Text="Page Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="113,48,0,0"  Text="Block Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="113,72,0,0"  Text="MC Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock x:Name="PageSizeTextBlock" HorizontalAlignment="Left" Margin="190,24,0,0"  Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
+        <TextBlock x:Name="BlockSizeTextBlock" HorizontalAlignment="Left" Margin="190,48,0,0"  Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
+        <TextBlock x:Name="MCSizeTextBlock" HorizontalAlignment="Left" Margin="190,72,0,0"  Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
+        <TextBlock HorizontalAlignment="Left" Margin="301,24,0,0"  Text="ECC Support :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="301,48,0,0"  Text="Bad Blocks Management :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="301,72,0,0"  Text="Erase Byte :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock x:Name="ECCSupportTextBlock" HorizontalAlignment="Left" Margin="396,24,0,0"  Text="/" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="152"/>
+        <TextBlock x:Name="BBManagementTextBlock" HorizontalAlignment="Left" Margin="476,48,0,0"  Text="/" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
+        <TextBlock x:Name="EraseByteTextBlock" HorizontalAlignment="Left" Margin="381,72,0,0"  Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="167"/>
+        <TextBlock HorizontalAlignment="Left" Margin="578,39,0,0"  Text="Available Space" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock x:Name="MCFreeSpaceTextBlock" HorizontalAlignment="Left" Margin="578,63,0,0"  Text="0 KB" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" Width="102" TextAlignment="Center" FontStyle="Italic"/>
         <Button x:Name="InstallFMCBButton" Content="Install FMCB v1.94" HorizontalAlignment="Left" Margin="515,431,0,0" VerticalAlignment="Top" Width="175" FontWeight="Bold" ToolTip="Free MC Boot v1.94 Multi Region/Model Full Installation"/>
 
     </Grid>

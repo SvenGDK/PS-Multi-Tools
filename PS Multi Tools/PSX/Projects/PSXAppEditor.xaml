@@ -8,25 +8,25 @@
         Title="AppEditor" Height="550" Width="600" ResizeMode="CanMinimize" Background="#FF252525">
     <Grid>
         <Image x:Name="CoverPictureBox" HorizontalAlignment="Left" Height="200" Margin="76,49,0,0" VerticalAlignment="Top" Width="140" Source="/Images/blankcover.png"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,10,0,0" TextWrapping="Wrap" Text="Release Date :" VerticalAlignment="Top" Width="265" Foreground="White"/>
-        <TextBox x:Name="HomebrewReleaseDateTextBox" HorizontalAlignment="Left" Margin="300,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,76,0,0" TextWrapping="Wrap" Text="Developer :" VerticalAlignment="Top" Width="265" Foreground="White"/>
-        <TextBox x:Name="HomebrewDeveloperTextBox" HorizontalAlignment="Left" Margin="300,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,142,0,0" TextWrapping="Wrap" Text="Publisher :" VerticalAlignment="Top" Width="265" Foreground="White"/>
-        <TextBox x:Name="PublisherTextBox" HorizontalAlignment="Left" Margin="300,163,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,208,0,0" TextWrapping="Wrap" Text="Note :" VerticalAlignment="Top" Width="265" Foreground="White"/>
-        <TextBox x:Name="HomebrewNoteTextBox" HorizontalAlignment="Left" Margin="300,229,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Homebrew Cover :" VerticalAlignment="Top" Width="225" Foreground="White"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,274,0,0" TextWrapping="Wrap" Text="Website :" VerticalAlignment="Top" Width="265" Foreground="White"/>
-        <TextBox x:Name="HomebrewWebsiteTextBox" HorizontalAlignment="Left" Margin="300,295,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,340,0,0" TextWrapping="Wrap" Text="Genre :" VerticalAlignment="Top" Width="265" Foreground="White"/>
-        <TextBox x:Name="HomebrewGenreTextBox" HorizontalAlignment="Left" Margin="300,361,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,406,0,0" TextWrapping="Wrap" Text="Region :" VerticalAlignment="Top" Width="265" Foreground="White"/>
-        <TextBox x:Name="RegionTextBox" HorizontalAlignment="Left" Margin="300,427,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,261,0,0" TextWrapping="Wrap" Text="Homebrew Title :" VerticalAlignment="Top" Width="250" Foreground="White"/>
-        <TextBox x:Name="HomebrewTitleTextBox" HorizontalAlignment="Left" Margin="10,282,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,327,0,0" TextWrapping="Wrap" Text="Homebrew Subtitle :" VerticalAlignment="Top" Width="250" Foreground="White"/>
-        <TextBox x:Name="HomebrewSubtitleTextBox" HorizontalAlignment="Left" Margin="10,348,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,10,0,0"  Text="Release Date :" VerticalAlignment="Top" Width="265" Foreground="White"/>
+        <TextBox x:Name="HomebrewReleaseDateTextBox" HorizontalAlignment="Left" Margin="300,31,0,0"  Text="" VerticalAlignment="Top" Width="265" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,76,0,0"  Text="Developer :" VerticalAlignment="Top" Width="265" Foreground="White"/>
+        <TextBox x:Name="HomebrewDeveloperTextBox" HorizontalAlignment="Left" Margin="300,97,0,0"  Text="" VerticalAlignment="Top" Width="265" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,142,0,0"  Text="Publisher :" VerticalAlignment="Top" Width="265" Foreground="White"/>
+        <TextBox x:Name="PublisherTextBox" HorizontalAlignment="Left" Margin="300,163,0,0"  Text="" VerticalAlignment="Top" Width="265" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,208,0,0"  Text="Note :" VerticalAlignment="Top" Width="265" Foreground="White"/>
+        <TextBox x:Name="HomebrewNoteTextBox" HorizontalAlignment="Left" Margin="300,229,0,0"  Text="" VerticalAlignment="Top" Width="265" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Homebrew Cover :" VerticalAlignment="Top" Width="225" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,274,0,0"  Text="Website :" VerticalAlignment="Top" Width="265" Foreground="White"/>
+        <TextBox x:Name="HomebrewWebsiteTextBox" HorizontalAlignment="Left" Margin="300,295,0,0"  Text="" VerticalAlignment="Top" Width="265" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,340,0,0"  Text="Genre :" VerticalAlignment="Top" Width="265" Foreground="White"/>
+        <TextBox x:Name="HomebrewGenreTextBox" HorizontalAlignment="Left" Margin="300,361,0,0"  Text="" VerticalAlignment="Top" Width="265" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,406,0,0"  Text="Region :" VerticalAlignment="Top" Width="265" Foreground="White"/>
+        <TextBox x:Name="RegionTextBox" HorizontalAlignment="Left" Margin="300,427,0,0"  Text="" VerticalAlignment="Top" Width="265" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,261,0,0"  Text="Homebrew Title :" VerticalAlignment="Top" Width="250" Foreground="White"/>
+        <TextBox x:Name="HomebrewTitleTextBox" HorizontalAlignment="Left" Margin="10,282,0,0"  Text="" VerticalAlignment="Top" Width="250" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,327,0,0"  Text="Homebrew Subtitle :" VerticalAlignment="Top" Width="250" Foreground="White"/>
+        <TextBox x:Name="HomebrewSubtitleTextBox" HorizontalAlignment="Left" Margin="10,348,0,0"  Text="" VerticalAlignment="Top" Width="250" Height="40"/>
         <CheckBox x:Name="ShowGameIDCheckBox" Content="Show the subtitle in XMB" HorizontalAlignment="Left" Margin="10,411,0,0" VerticalAlignment="Top" Width="250" Foreground="White"/>
         <CheckBox x:Name="ShowCopyrightCheckBox" Content="Show copyright informations on XMB" HorizontalAlignment="Left" Margin="10,431,0,0" VerticalAlignment="Top" Width="250" Foreground="White"/>
         <Button x:Name="SaveButton" Content="Save Homebrew Resources" HorizontalAlignment="Left" Margin="332,480,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="200" Height="24" FontFamily="Calibri" FontSize="14"/>

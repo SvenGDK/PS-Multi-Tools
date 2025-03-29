@@ -18,8 +18,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,66,0,0" Text="Select an output folder :" VerticalAlignment="Top"  FontSize="14"/>
         <Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="376,89,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,157,0,0" Text="Options (Optional) :" VerticalAlignment="Top"  FontSize="14"/>
-        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="441" Height="160"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,306,0,0" TextWrapping="Wrap" Text="Log :" VerticalAlignment="Top"  FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,330,0,0"  VerticalAlignment="Top" Width="441" Height="160"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,306,0,0"  Text="Log :" VerticalAlignment="Top"  FontSize="14" FontWeight="Bold"/>
         <Button x:Name="ConvertButton" Content="Convert" HorizontalAlignment="Left" Margin="296,126,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
 
     </Grid>

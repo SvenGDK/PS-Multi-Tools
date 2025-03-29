@@ -14,9 +14,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock x:Name="DirectoriesInINITextBlock" HorizontalAlignment="Left" Margin="10,148,0,0" TextWrapping="Wrap" Text="Directories :" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock x:Name="DirectoriesInINITextBlock" HorizontalAlignment="Left" Margin="10,148,0,0"  Text="Directories :" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
         <Button x:Name="LoadGAMESButton" Content="Load GAMES.INI" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="135"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select Virtual Content Directory" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Select Virtual Content Directory" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
         <Button x:Name="LoadPS3ISOButton" Content="Load PS3ISO.INI" HorizontalAlignment="Left" Margin="150,36,0,0" VerticalAlignment="Top" Width="135"/>
         <Button x:Name="LoadPS2ISOButton" Content="Load PS2ISO.INI" HorizontalAlignment="Left" Margin="290,36,0,0" VerticalAlignment="Top" Width="135"/>
         <Button x:Name="LoadPSXISOButton" Content="Load PSXISO.INI" HorizontalAlignment="Left" Margin="430,36,0,0" VerticalAlignment="Top" Width="135"/>

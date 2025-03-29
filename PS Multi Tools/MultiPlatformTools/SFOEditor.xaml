@@ -62,7 +62,7 @@
             </TabItem>
             <TabItem Header="PS4 Parameters" BorderBrush="{x:Null}" x:Name="PS4TabItem">
                 <Grid Background="#2D2D30">
-                    <TextBlock HorizontalAlignment="Left" Margin="11,10,0,0" TextWrapping="Wrap" Text="Application Type" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="11,10,0,0"  Text="Application Type" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
 
                     <ComboBox x:Name="PS4AppTypeComboBox" HorizontalAlignment="Left" Margin="11,34,0,0" VerticalAlignment="Top" Width="375">
                         <ComboBoxItem Content="Not Specified"></ComboBoxItem>
@@ -72,20 +72,20 @@
                         <ComboBoxItem Content="Freemium App"></ComboBoxItem>
                     </ComboBox>
 
-                    <TextBlock HorizontalAlignment="Left" Margin="11,71,0,0" TextWrapping="Wrap" Text="Pub Tool Info" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBox x:Name="PS4PubToolInfoTextBox" HorizontalAlignment="Left" Margin="11,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="375" Height="100"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="397,71,0,0" TextWrapping="Wrap" Text="Pub Tool Version" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="11,71,0,0"  Text="Pub Tool Info" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBox x:Name="PS4PubToolInfoTextBox" HorizontalAlignment="Left" Margin="11,95,0,0"  VerticalAlignment="Top" Width="375" Height="100"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="397,71,0,0"  Text="Pub Tool Version" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
 
-                    <TextBlock HorizontalAlignment="Left" Margin="11,212,0,0" TextWrapping="Wrap" Text="App Settings (Read-only)" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="11,212,0,0"  Text="App Settings (Read-only)" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
                     <CheckBox x:Name="PS4InitLogoutCheckBox" Content="This app does not support the intial user's logout." HorizontalAlignment="Left" Margin="11,236,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="11,498,0,0" TextWrapping="Wrap" Text="Download Data Size" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="11,498,0,0"  Text="Download Data Size" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
                     <RadioButton Content="0 MB (The app does not use Download Data)" HorizontalAlignment="Left" Margin="12,522,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
                     <RadioButton Content="64 MB (For SDK 4000 or older)" HorizontalAlignment="Left" Margin="11,545,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
                     <RadioButton Content="128 MB (For SDK 4000 or older)" HorizontalAlignment="Left" Margin="11,568,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
                     <RadioButton Content="256 MB" HorizontalAlignment="Left" Margin="319,522,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
                     <RadioButton Content="512 MB" HorizontalAlignment="Left" Margin="319,545,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
                     <RadioButton Content="1 GB" HorizontalAlignment="Left" Margin="319,568,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-                    <TextBox x:Name="PS4PubToolVersionTextBox" HorizontalAlignment="Left" Margin="397,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320"/>
+                    <TextBox x:Name="PS4PubToolVersionTextBox" HorizontalAlignment="Left" Margin="397,95,0,0"  VerticalAlignment="Top" Width="320"/>
                     <CheckBox x:Name="PS4ButtonAssignmentCrossButtonCheckBox" Content="Enter Button Assignment for the common dialog: Cross button" HorizontalAlignment="Left" Margin="10,259,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
                     <CheckBox x:Name="PS4PSMoveWarningDialogCheckBox" Content="Menu for Warning Dialog for PS Move is displayed in the option menu." HorizontalAlignment="Left" Margin="10,282,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
                     <CheckBox x:Name="PS43DSupportCheckBox" Content="The application supports Stereoscopic 3D." HorizontalAlignment="Left" Margin="10,305,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>

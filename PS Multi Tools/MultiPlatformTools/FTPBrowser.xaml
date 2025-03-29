@@ -8,8 +8,8 @@
         Title="FTP Browser" Height="620" Width="1100" Background="#2D2D30">
     <Grid>
         <Button x:Name="ConnectButton" Content="Connect and list content" HorizontalAlignment="Left" Margin="370,33,0,0" VerticalAlignment="Top" Width="170"/>
-        <TextBox x:Name="ConsoleIPTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Console IP:" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="ConsoleIPTextBox" HorizontalAlignment="Left" Margin="10,34,0,0"  VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Console IP:" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
         <ListView x:Name="FTPItemsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,81,10,123" Height="400">
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
@@ -22,11 +22,11 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" TextWrapping="Wrap" Text="Files and directories :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="265,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
-        <TextBlock HorizontalAlignment="Left" Margin="265,10,0,0" TextWrapping="Wrap" Text="Port :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,486,0,0" TextWrapping="Wrap" Text="Current directory :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,510,0,0" TextWrapping="Wrap" Text="Status :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0"  Text="Files and directories :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="265,34,0,0"  VerticalAlignment="Top" Width="100"/>
+        <TextBlock HorizontalAlignment="Left" Margin="265,10,0,0"  Text="Port :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,486,0,0"  Text="Current directory :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,510,0,0"  Text="Status :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
         <TextBlock x:Name="CurrentDirTextBlock" HorizontalAlignment="Left" Margin="136,486,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="942"/>
         <TextBlock x:Name="FTPStatusTextBlock" HorizontalAlignment="Left" Margin="63,510,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="1015"/>
         <ProgressBar x:Name="FTPTransferProgressBar" HorizontalAlignment="Left" Height="15" Margin="63,534,0,0" VerticalAlignment="Top" Width="1015"/>

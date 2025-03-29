@@ -8,8 +8,8 @@
         Title="Copying" Height="330" Width="560" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
         <ProgressBar x:Name="CopyProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,230,0,0" VerticalAlignment="Top" Width="520" />
-        <TextBlock x:Name="StatusTextBlock" HorizontalAlignment="Left" Margin="10,203,0,0" TextWrapping="Wrap" Text="Please wait ..." VerticalAlignment="Top"  FontSize="14" Width="520"/>
+        <TextBlock x:Name="StatusTextBlock" HorizontalAlignment="Left" Margin="10,203,0,0"  Text="Please wait ..." VerticalAlignment="Top"  FontSize="14" Width="520"/>
         <Image x:Name="GameIconImage" Height="176" VerticalAlignment="Top" Width="320" Margin="120,15,120,0"/>
-        <TextBlock x:Name="StatusTextBlock2" HorizontalAlignment="Left" Margin="10,260,0,0" TextWrapping="Wrap" Text="Please wait ..." VerticalAlignment="Top"  FontSize="14" Width="520"/>
+        <TextBlock x:Name="StatusTextBlock2" HorizontalAlignment="Left" Margin="10,260,0,0"  Text="Please wait ..." VerticalAlignment="Top"  FontSize="14" Width="520"/>
     </Grid>
 </Window>

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="PS5 PKG Viewer" Height="585" Width="1000" Background="#2D2D30" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
-        <TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="845" Height="20"/>
+        <TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0"  VerticalAlignment="Top" Width="845" Height="20"/>
         <Button x:Name="BrowsePKGFileButton" Content="Browse" HorizontalAlignment="Left" Margin="860,35,0,0" VerticalAlignment="Top" Width="110"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a PS5 PKG file :" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="10,10,0,0" FontFamily="Calibri"/>
         <Image x:Name="PKGIconImage" HorizontalAlignment="Left" Height="128" Margin="25,70,0,0" VerticalAlignment="Top" Width="128"/>

@@ -9,37 +9,37 @@
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="120" Margin="10,10,0,0" Stroke="White" VerticalAlignment="Top" Width="743"/>
         <Button x:Name="BrowseCoreOSPKGButton" Content="Browse" HorizontalAlignment="Left" Margin="252,92,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedCoreOSPKGForDecTextBox" HorizontalAlignment="Left" Margin="26,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,45,0,0" TextWrapping="Wrap" Text="Selected the core_os .pkg :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,19,0,0" TextWrapping="Wrap" Text="Decrypt Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedCoreOSPKGForDecTextBox" HorizontalAlignment="Left" Margin="26,69,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,45,0,0"  Text="Selected the core_os .pkg :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,19,0,0"  Text="Decrypt Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
         <Button x:Name="BrowseDecOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="644,68,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedOutputFolderForDecTextBox" HorizontalAlignment="Left" Margin="339,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="339,45,0,0" TextWrapping="Wrap" Text="Select a decryption output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedOutputFolderForDecTextBox" HorizontalAlignment="Left" Margin="339,69,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="339,45,0,0"  Text="Select a decryption output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
         <Button x:Name="DecryptButton" Content="Decrypt" HorizontalAlignment="Left" Margin="565,92,0,0" VerticalAlignment="Top" Width="74"/>
         <Rectangle HorizontalAlignment="Left" Height="120" Margin="10,135,0,0" Stroke="White" VerticalAlignment="Top" Width="743"/>
         <Button x:Name="ExtractButton" Content="Extract" HorizontalAlignment="Left" Margin="411,223,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedDecFolderForExtrTextBox" HorizontalAlignment="Left" Margin="185,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="185,176,0,0" TextWrapping="Wrap" Text="Selected the decrypted output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,144,0,0" TextWrapping="Wrap" Text="Extract Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedDecFolderForExtrTextBox" HorizontalAlignment="Left" Margin="185,200,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="185,176,0,0"  Text="Selected the decrypted output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,144,0,0"  Text="Extract Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
         <Button x:Name="BrowseExtrOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="490,199,0,0" VerticalAlignment="Top" Width="74"/>
         <Rectangle HorizontalAlignment="Left" Height="120" Margin="10,260,0,0" Stroke="White" VerticalAlignment="Top" Width="743"/>
         <Button x:Name="BrowseDecFolderForEncButton" Content="Browse" HorizontalAlignment="Left" Margin="252,342,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedDecFolderForEncTextBox" HorizontalAlignment="Left" Margin="26,319,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,295,0,0" TextWrapping="Wrap" Text="Selected the decrypted output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,269,0,0" TextWrapping="Wrap" Text="Encrypt Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedDecFolderForEncTextBox" HorizontalAlignment="Left" Margin="26,319,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,295,0,0"  Text="Selected the decrypted output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,269,0,0"  Text="Encrypt Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
         <Button x:Name="BrowseOutFolderForEncButton" Content="Browse" HorizontalAlignment="Left" Margin="644,318,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedNewFolderForEncTextBox" HorizontalAlignment="Left" Margin="339,319,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="339,295,0,0" TextWrapping="Wrap" Text="Select a new folder for the encryption :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedNewFolderForEncTextBox" HorizontalAlignment="Left" Margin="339,319,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="339,295,0,0"  Text="Select a new folder for the encryption :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
         <Button x:Name="EncryptButton" Content="Encrypt" HorizontalAlignment="Left" Margin="565,342,0,0" VerticalAlignment="Top" Width="74"/>
         <Rectangle HorizontalAlignment="Left" Height="120" Margin="10,385,0,0" Stroke="White" VerticalAlignment="Top" Width="743"/>
         <Button x:Name="ReadButton" Content="Read" HorizontalAlignment="Left" Margin="252,467,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedCoreOSPKGForReadTextBox" HorizontalAlignment="Left" Margin="26,444,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="221"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,420,0,0" TextWrapping="Wrap" Text="Select the core_os .pkg :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="26,394,0,0" TextWrapping="Wrap" Text="Core_OS Image Info" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedDecFolderForDumpTextBox" HorizontalAlignment="Left" Margin="339,444,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="339,420,0,0" TextWrapping="Wrap" Text="Selected an decrypted core_os folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="SelectedCoreOSPKGForReadTextBox" HorizontalAlignment="Left" Margin="26,444,0,0"  VerticalAlignment="Top" Width="221"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,420,0,0"  Text="Select the core_os .pkg :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="26,394,0,0"  Text="Core_OS Image Info" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedDecFolderForDumpTextBox" HorizontalAlignment="Left" Margin="339,444,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="339,420,0,0"  Text="Selected an decrypted core_os folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
         <Button x:Name="DumpButton" Content="Dump" HorizontalAlignment="Left" Margin="565,467,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBlock HorizontalAlignment="Left" Margin="339,394,0,0" TextWrapping="Wrap" Text="Core_OS Hex Dumper" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="339,394,0,0"  Text="Core_OS Hex Dumper" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
         <Button x:Name="BrowseReadButton" Content="Browse" HorizontalAlignment="Left" Margin="252,443,0,0" VerticalAlignment="Top" Width="74"/>
         <Button x:Name="BrowseDumpButton" Content="Browse" HorizontalAlignment="Left" Margin="644,443,0,0" VerticalAlignment="Top" Width="74"/>
 

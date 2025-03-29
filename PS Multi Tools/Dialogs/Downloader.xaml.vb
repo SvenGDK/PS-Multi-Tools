@@ -17,6 +17,8 @@ Public Class Downloader
 
     Public DownloadIcon As ImageSource = Nothing
     Public DownloadQueueItem As DownloadQueueItem = Nothing
+    Public DownloadCompleted As Boolean = False
+    Public DownloadFileName As String = ""
 
     Public Sub New()
         InitializeComponent()
@@ -55,6 +57,8 @@ Public Class Downloader
         Dim FileName As String = Utils.GetFilenameFromUrl(New Uri(Source))
         If Not String.IsNullOrEmpty(FileName) Then
 
+            DownloadFileName = FileName
+
             'Change the file name for .pkgs
             If ModifyName = True And Not String.IsNullOrEmpty(NewName) Then
                 FileName = NewName
@@ -77,6 +81,7 @@ Public Class Downloader
                 If File.Exists(Environment.CurrentDirectory + "\Downloads\" + FileName) Then
                     Dim NewSaveFileName As String = InputBox("The file " + FileName + " already exists in the Downloads folder. Please enter a new name for the file or leave it to overwrite the existing file.", "File already exists", FileName)
                     If Not String.IsNullOrEmpty(NewSaveFileName) Then
+                        DownloadFileName = NewSaveFileName
                         Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + NewSaveFileName)
                     Else
                         Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
@@ -104,6 +109,7 @@ Public Class Downloader
                     If File.Exists(Environment.CurrentDirectory + "\Downloads\" + FileName) Then
                         Dim NewSaveFileName As String = InputBox("The file " + FileName + " already exists in the Downloads folder. Please enter a new name for the file or leave it to overwrite the existing file.", "File already exists", FileName)
                         If Not String.IsNullOrEmpty(NewSaveFileName) Then
+                            DownloadFileName = NewSaveFileName
                             Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + NewSaveFileName)
                         Else
                             Await DownloadFileWithProgressAsync(Source, Environment.CurrentDirectory + "\Downloads\" + FileName)
@@ -118,7 +124,6 @@ Public Class Downloader
                 End If
             End If
         Else
-            MsgBox("FileName: " + FileName)
             Return False
         End If
     End Function
@@ -214,15 +219,62 @@ Public Class Downloader
                                     End If
                                 End If
 
-                                If MsgBox("Download completed. Do you want to open the Downloads folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
-                                    Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
-                                End If
-
+                                DownloadCompleted = True
                             End Using
                         End Using
                     End If
                 End Using
             End Using
+
+            If DownloadCompleted Then
+                'Prompt for extracting a downloaded archive and opening the downloads folder
+                If DownloadFileName.EndsWith(".zip") Or DownloadFileName.EndsWith(".7z") Or DownloadFileName.EndsWith(".rar") Then
+                    If MsgBox("Download completed!" + vbCrLf + "The downloaded file is an archive that can be extracted, do you want to extract it now ?", MsgBoxStyle.YesNo, "Extract download ?") = MsgBoxResult.Yes Then
+
+                        'Check and extract the downloaded archive into the downloads folder
+                        If File.Exists(Environment.CurrentDirectory + "\Downloads\" + DownloadFileName) Then
+
+                            Using ArchiveExtractor As New Process()
+                                ArchiveExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
+                                ArchiveExtractor.StartInfo.Arguments = "x """ + Environment.CurrentDirectory + "\Downloads\" + DownloadFileName + """" +
+                                    " -o""" + Environment.CurrentDirectory + "\Downloads\" + """"
+                                ArchiveExtractor.StartInfo.RedirectStandardOutput = True
+                                ArchiveExtractor.StartInfo.UseShellExecute = False
+                                ArchiveExtractor.StartInfo.CreateNoWindow = True
+                                ArchiveExtractor.Start()
+                                ArchiveExtractor.WaitForExit()
+
+                                'Read the output
+                                Dim OutputReader As StreamReader = ArchiveExtractor.StandardOutput
+                                Dim ProcessOutput As String = OutputReader.ReadToEnd()
+                                If ProcessOutput.Length > 0 Then
+                                    MsgBox(ProcessOutput)
+                                End If
+                            End Using
+
+                            If MsgBox("Extraction done!" + vbCrLf + "Do you want to open the Downloads folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
+                                Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
+                            End If
+                        Else
+                            MsgBox("Could not find the downloaded archive.", MsgBoxStyle.Critical, "Error while extracting")
+                            If MsgBox("Do you want to open the Downloads folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
+                                Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
+                            End If
+                        End If
+
+                    Else
+                        If MsgBox("Do you want to open the Downloads folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
+                            Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
+                        End If
+                    End If
+                Else
+                    If MsgBox("Download completed!" + vbCrLf + "Do you want to open the Downloads folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
+                        Process.Start("explorer", Environment.CurrentDirectory + "\Downloads")
+                    End If
+                End If
+            Else
+                MsgBox("Download canceled.", MsgBoxStyle.Exclamation, "Info")
+            End If
         Catch ex As OperationCanceledException
             MsgBox("Download canceled.", MsgBoxStyle.Exclamation, "Info")
         Catch ex As Exception

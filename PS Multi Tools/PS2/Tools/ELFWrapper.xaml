@@ -17,8 +17,8 @@
         <CheckBox x:Name="ForAllCheckBox" Content="For All - DNAS With HDD container" HorizontalAlignment="Left" Margin="10,225,0,0" VerticalAlignment="Top" />
         <CheckBox x:Name="ForRetailCheckBox" Content="For Retail PS2 (CEX Only)" HorizontalAlignment="Left" Margin="10,167,0,0" VerticalAlignment="Top" />
         <TextBlock HorizontalAlignment="Left" Margin="10,143,0,0" Text="Options (Optional) :" VerticalAlignment="Top"  FontSize="14"/>
-        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="496" Height="160"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,262,0,0" TextWrapping="Wrap" Text="Log :" VerticalAlignment="Top"  FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,287,0,0"  VerticalAlignment="Top" Width="496" Height="160"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,262,0,0"  Text="Log :" VerticalAlignment="Top"  FontSize="14" FontWeight="Bold"/>
         <Button x:Name="WrapButton" Content="Wrap ELF" HorizontalAlignment="Left" Margin="351,130,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
 
     </Grid>

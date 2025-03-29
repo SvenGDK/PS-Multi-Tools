@@ -24,8 +24,8 @@
             <ComboBoxItem Content="Vibration 1ch: 24kbps"/>
             <ComboBoxItem Content="Vibration 2ch: 48kbps"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" Text="Select bitrate or leave empty:" VerticalAlignment="Top"  FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,115,0,0" TextWrapping="Wrap" Text="Select sampling rate or leave empty:" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,75,0,0"  Text="Select bitrate or leave empty:" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,115,0,0"  Text="Select sampling rate or leave empty:" VerticalAlignment="Top"  FontSize="14"/>
         <ComboBox x:Name="EncodeSamplingRateComboBox" HorizontalAlignment="Left" Margin="248,115,0,0" VerticalAlignment="Top" Width="117">
             <ComboBoxItem Content="12000"/>
             <ComboBoxItem Content="24000"/>
@@ -37,8 +37,8 @@
             <ComboBoxItem Content="24bit Integer PCM"/>
             <ComboBoxItem Content="IEEE float PCM"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="10,293,0,0" TextWrapping="Wrap" Text="WAV Output Format:" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,293,0,0"  Text="WAV Output Format:" VerticalAlignment="Top"  FontSize="14"/>
         <Button x:Name="ConvertToWavButton" Content="Convert" HorizontalAlignment="Left" Margin="290,333,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
-        <TextBlock x:Name="WAVInfoTextBlock" HorizontalAlignment="Left" Margin="10,190,0,0" TextWrapping="Wrap" Text="WAV File Info:" VerticalAlignment="Top"  Width="355" FontWeight="Bold" FontStyle="Italic"/>
+        <TextBlock x:Name="WAVInfoTextBlock" HorizontalAlignment="Left" Margin="10,190,0,0"  Text="WAV File Info:" VerticalAlignment="Top"  Width="355" FontWeight="Bold" FontStyle="Italic"/>
     </Grid>
 </Window>

@@ -10,45 +10,45 @@
         <TabControl>
             <TabItem Header="PS1 Classics">
                 <Grid Background="#2D2D30">
-                    <TextBlock HorizontalAlignment="Left" Margin="19,184,0,0" TextWrapping="Wrap" Text="Disc 1 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,160,0,0" TextWrapping="Wrap" Text="Discs Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,208,0,0" TextWrapping="Wrap" Text="Disc 2 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,231,0,0" TextWrapping="Wrap" Text="Disc 3 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,254,0,0" TextWrapping="Wrap" Text="Disc 4 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="PS1SelectedDisc1TextBox" HorizontalAlignment="Left" Margin="62,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-                    <TextBox x:Name="PS1SelectedDisc2TextBox" HorizontalAlignment="Left" Margin="62,207,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-                    <TextBox x:Name="PS1SelectedDisc3TextBox" HorizontalAlignment="Left" Margin="62,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-                    <TextBox x:Name="PS1SelectedDisc4TextBox" HorizontalAlignment="Left" Margin="62,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,184,0,0"  Text="Disc 1 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,160,0,0"  Text="Discs Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,208,0,0"  Text="Disc 2 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,231,0,0"  Text="Disc 3 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,254,0,0"  Text="Disc 4 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="PS1SelectedDisc1TextBox" HorizontalAlignment="Left" Margin="62,184,0,0"  VerticalAlignment="Top" Width="500"/>
+                    <TextBox x:Name="PS1SelectedDisc2TextBox" HorizontalAlignment="Left" Margin="62,207,0,0"  VerticalAlignment="Top" Width="500"/>
+                    <TextBox x:Name="PS1SelectedDisc3TextBox" HorizontalAlignment="Left" Margin="62,230,0,0"  VerticalAlignment="Top" Width="500"/>
+                    <TextBox x:Name="PS1SelectedDisc4TextBox" HorizontalAlignment="Left" Margin="62,253,0,0"  VerticalAlignment="Top" Width="500"/>
                     <Button x:Name="BrowsePS1Disc1Button" Content="Browse" HorizontalAlignment="Left" Margin="567,183,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="BrowsePS1Disc2Button" Content="Browse" HorizontalAlignment="Left" Margin="567,206,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="BrowsePS1Disc3Button" Content="Browse" HorizontalAlignment="Left" Margin="567,229,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="BrowsePS1Disc4Button" Content="Browse" HorizontalAlignment="Left" Margin="567,252,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,10,0,0" TextWrapping="Wrap" Text="Create a PS1 fPKG" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,34,0,0" TextWrapping="Wrap" Text="PKG Details" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,58,0,0" TextWrapping="Wrap" Text="Icon :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedPS1IconTextBox" HorizontalAlignment="Left" Margin="130,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,10,0,0"  Text="Create a PS1 fPKG" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,34,0,0"  Text="PKG Details" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,58,0,0"  Text="Icon :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedPS1IconTextBox" HorizontalAlignment="Left" Margin="130,58,0,0"  VerticalAlignment="Top" Width="432"/>
                     <Button x:Name="BrowsePS1IconButton" Content="Browse" HorizontalAlignment="Left" Margin="567,57,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,81,0,0" TextWrapping="Wrap" Text="Background Image :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedPS1BGTextBox" HorizontalAlignment="Left" Margin="130,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,81,0,0"  Text="Background Image :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedPS1BGTextBox" HorizontalAlignment="Left" Margin="130,81,0,0"  VerticalAlignment="Top" Width="432"/>
                     <Button x:Name="BrowsePS1StartupImageButton" Content="Browse" HorizontalAlignment="Left" Margin="567,80,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,104,0,0" TextWrapping="Wrap" Text="Title :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="PS1TitleTextBox" HorizontalAlignment="Left" Margin="130,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,127,0,0" TextWrapping="Wrap" Text="NP Title :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="PS1NPTitleTextBox" HorizontalAlignment="Left" Margin="130,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,104,0,0"  Text="Title :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="PS1TitleTextBox" HorizontalAlignment="Left" Margin="130,104,0,0"  VerticalAlignment="Top" Width="432"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,127,0,0"  Text="NP Title :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="PS1NPTitleTextBox" HorizontalAlignment="Left" Margin="130,127,0,0"  VerticalAlignment="Top" Width="432"/>
                     <Button x:Name="BuildPS1fPKGButton" Content="Build fPKG" HorizontalAlignment="Left" Margin="676,57,0,0" VerticalAlignment="Top" Width="198" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="676,34,0,0" TextWrapping="Wrap" Text="PKG Build Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,291,0,0" TextWrapping="Wrap" Text="Emulator Configuration &amp; Fixes" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBox x:Name="SelectedPS1TXTConfigTextBox" HorizontalAlignment="Left" Margin="88,315,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="474"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,316,0,0" TextWrapping="Wrap" Text="TXT Config :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedPS1LUAConfigTextBox" HorizontalAlignment="Left" Margin="88,338,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="474"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,339,0,0" TextWrapping="Wrap" Text="LUA Config :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="676,34,0,0"  Text="PKG Build Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,291,0,0"  Text="Emulator Configuration &amp; Fixes" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBox x:Name="SelectedPS1TXTConfigTextBox" HorizontalAlignment="Left" Margin="88,315,0,0"  VerticalAlignment="Top" Width="474"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,316,0,0"  Text="TXT Config :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedPS1LUAConfigTextBox" HorizontalAlignment="Left" Margin="88,338,0,0"  VerticalAlignment="Top" Width="474"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,339,0,0"  Text="LUA Config :" VerticalAlignment="Top" Foreground="White"/>
                     <CheckBox x:Name="PS1SkipBootlogoCheckBox" Content="Skip Bootlogo" HorizontalAlignment="Left" Margin="19,396,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="False"/>
                     <CheckBox x:Name="PS1EmulateAnalogSticksCheckBox" Content="Emulate Analog Sticks" HorizontalAlignment="Left" Margin="19,416,0,0" VerticalAlignment="Top" Foreground="White"/>
                     <Button x:Name="BrowsePS1TXTConfigButton" Content="Browse" HorizontalAlignment="Left" Margin="567,314,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="BrowsePS1LUAConfigButton" Content="Browse" HorizontalAlignment="Left" Margin="567,337,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,372,0,0" TextWrapping="Wrap" Text="More Emulator Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,372,0,0"  Text="More Emulator Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
                     <CheckBox x:Name="PS1Force60HzCheckBox" Content="Force 60Hz" HorizontalAlignment="Left" Margin="19,436,0,0" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="190,395,0,0" TextWrapping="Wrap" Text="Upscaling :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="190,395,0,0"  Text="Upscaling :" VerticalAlignment="Top" Foreground="White"/>
                     <ComboBox x:Name="PS1UpscalingComboBox" HorizontalAlignment="Left" Margin="259,392,0,0" VerticalAlignment="Top" Width="64" SelectedIndex="2">
                         <ComboBoxItem Content="6"/>
                         <ComboBoxItem Content="4"/>
@@ -60,47 +60,47 @@
             </TabItem>
             <TabItem Header="PS2 Classics">
                 <Grid Background="#2D2D30">
-                    <TextBlock HorizontalAlignment="Left" Margin="19,10,0,0" TextWrapping="Wrap" Text="Create a PS2 fPKG" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,180,0,0" TextWrapping="Wrap" Text="Disc 1 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,156,0,0" TextWrapping="Wrap" Text="Discs Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,204,0,0" TextWrapping="Wrap" Text="Disc 2 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,227,0,0" TextWrapping="Wrap" Text="Disc 3 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,250,0,0" TextWrapping="Wrap" Text="Disc 4 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,273,0,0" TextWrapping="Wrap" Text="Disc 5 :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedDisc1TextBox" HorizontalAlignment="Left" Margin="62,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-                    <TextBox x:Name="SelectedDisc2TextBox" HorizontalAlignment="Left" Margin="62,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-                    <TextBox x:Name="SelectedDisc3TextBox" HorizontalAlignment="Left" Margin="62,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-                    <TextBox x:Name="SelectedDisc4TextBox" HorizontalAlignment="Left" Margin="62,249,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-                    <TextBox x:Name="SelectedDisc5TextBox" HorizontalAlignment="Left" Margin="62,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,10,0,0"  Text="Create a PS2 fPKG" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,180,0,0"  Text="Disc 1 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,156,0,0"  Text="Discs Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,204,0,0"  Text="Disc 2 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,227,0,0"  Text="Disc 3 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,250,0,0"  Text="Disc 4 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,273,0,0"  Text="Disc 5 :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedDisc1TextBox" HorizontalAlignment="Left" Margin="62,180,0,0"  VerticalAlignment="Top" Width="500"/>
+                    <TextBox x:Name="SelectedDisc2TextBox" HorizontalAlignment="Left" Margin="62,203,0,0"  VerticalAlignment="Top" Width="500"/>
+                    <TextBox x:Name="SelectedDisc3TextBox" HorizontalAlignment="Left" Margin="62,226,0,0"  VerticalAlignment="Top" Width="500"/>
+                    <TextBox x:Name="SelectedDisc4TextBox" HorizontalAlignment="Left" Margin="62,249,0,0"  VerticalAlignment="Top" Width="500"/>
+                    <TextBox x:Name="SelectedDisc5TextBox" HorizontalAlignment="Left" Margin="62,272,0,0"  VerticalAlignment="Top" Width="500"/>
                     <CheckBox x:Name="PS2RestartEmulatorOnDiscChangeCheckBox" Content="Restart emulator on disc change" HorizontalAlignment="Left" Margin="676,180,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="False"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="676,156,0,0" TextWrapping="Wrap" Text="Disc Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="676,156,0,0"  Text="Disc Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
                     <ComboBox x:Name="PS2EmulatorComboBox" HorizontalAlignment="Left" Margin="676,244,0,0" VerticalAlignment="Top" Width="198" SelectedIndex="0">
                         <ComboBoxItem Content="Jak v2"/>
                         <ComboBoxItem Content="Rogue v1"/>
                     </ComboBox>
-                    <TextBlock HorizontalAlignment="Left" Margin="676,220,0,0" TextWrapping="Wrap" Text="PS2 Emulator" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,304,0,0" TextWrapping="Wrap" Text="Emulator Configuration &amp; Fixes" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBox x:Name="SelectedPS2TXTConfigTextBox" HorizontalAlignment="Left" Margin="88,328,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="474"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,329,0,0" TextWrapping="Wrap" Text="TXT Config :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedPS2LUAConfigTextBox" HorizontalAlignment="Left" Margin="88,351,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="474"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,352,0,0" TextWrapping="Wrap" Text="LUA Config :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="676,220,0,0"  Text="PS2 Emulator" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,304,0,0"  Text="Emulator Configuration &amp; Fixes" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBox x:Name="SelectedPS2TXTConfigTextBox" HorizontalAlignment="Left" Margin="88,328,0,0"  VerticalAlignment="Top" Width="474"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,329,0,0"  Text="TXT Config :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedPS2LUAConfigTextBox" HorizontalAlignment="Left" Margin="88,351,0,0"  VerticalAlignment="Top" Width="474"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,352,0,0"  Text="LUA Config :" VerticalAlignment="Top" Foreground="White"/>
                     <CheckBox x:Name="PS2FixGraphicsCheckBox" Content="Fix Graphics" HorizontalAlignment="Left" Margin="676,328,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True"/>
                     <CheckBox x:Name="PS2DisableMTVUCheckBox" Content="Disable MTVU" HorizontalAlignment="Left" Margin="771,328,0,0" VerticalAlignment="Top" Foreground="White"/>
                     <CheckBox x:Name="PS2ImproveSpeedCheckBox" Content="Improve Speed" HorizontalAlignment="Left" Margin="676,348,0,0" VerticalAlignment="Top" Foreground="White"/>
                     <CheckBox x:Name="PS2DisableInstantVIF1TransferCheckBox" Content="Disable instant VIF1 transfer" HorizontalAlignment="Left" Margin="676,368,0,0" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="197,427,0,0" TextWrapping="Wrap" Text="Uprender :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="197,427,0,0"  Text="Uprender :" VerticalAlignment="Top" Foreground="White"/>
                     <ComboBox x:Name="PS2UprenderComboBox" HorizontalAlignment="Left" Margin="197,448,0,0" VerticalAlignment="Top" Width="175" SelectedIndex="1">
                         <ComboBoxItem Content="None"/>
                         <ComboBoxItem Content="2x2"/>
                     </ComboBox>
-                    <TextBlock HorizontalAlignment="Left" Margin="197,475,0,0" TextWrapping="Wrap" Text="Display Mode :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="197,475,0,0"  Text="Display Mode :" VerticalAlignment="Top" Foreground="White"/>
                     <ComboBox x:Name="PS2DisplayModeComboBox" HorizontalAlignment="Left" Margin="197,496,0,0" VerticalAlignment="Top" Width="175" SelectedIndex="0">
                         <ComboBoxItem Content="Normal"/>
                         <ComboBoxItem Content="Full"/>
                         <ComboBoxItem Content="4:3"/>
                         <ComboBoxItem Content="16:9"/>
                     </ComboBox>
-                    <TextBlock HorizontalAlignment="Left" Margin="17,427,0,0" TextWrapping="Wrap" Text="Upscaling :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="17,427,0,0"  Text="Upscaling :" VerticalAlignment="Top" Foreground="White"/>
                     <ComboBox x:Name="PS2UpscalingComboBox" HorizontalAlignment="Left" Margin="17,448,0,0" VerticalAlignment="Top" Width="175" SelectedIndex="0">
                         <ComboBoxItem Content="None"/>
                         <ComboBoxItem Content="GPU"/>
@@ -108,13 +108,13 @@
                         <ComboBoxItem Content="Edgesmooth"/>
                         <ComboBoxItem Content="Point"/>
                     </ComboBox>
-                    <TextBlock HorizontalAlignment="Left" Margin="17,475,0,0" TextWrapping="Wrap" Text="Shader :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="17,475,0,0"  Text="Shader :" VerticalAlignment="Top" Foreground="White"/>
                     <ComboBox x:Name="PS2ShaderComboBox" HorizontalAlignment="Left" Margin="17,496,0,0" VerticalAlignment="Top" Width="175" SelectedIndex="0">
                         <ComboBoxItem Content="None"/>
                         <ComboBoxItem Content="Scanlines"/>
                     </ComboBox>
                     <CheckBox x:Name="PS2UseWidescreenPatchCheckBox" Content="Widescreen Patch" HorizontalAlignment="Left" Margin="383,499,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="18,403,0,0" TextWrapping="Wrap" Text="Emulator Graphics Settings" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="18,403,0,0"  Text="Emulator Graphics Settings" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
                     <Button x:Name="BrowsePS2Disc1Button" Content="Browse" HorizontalAlignment="Left" Margin="567,179,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="BrowsePS2Disc2Button" Content="Browse" HorizontalAlignment="Left" Margin="567,202,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="BrowsePS2Disc3Button" Content="Browse" HorizontalAlignment="Left" Margin="567,225,0,0" VerticalAlignment="Top" Width="75"/>
@@ -122,31 +122,31 @@
                     <Button x:Name="BrowsePS2Disc5Button" Content="Browse" HorizontalAlignment="Left" Margin="567,271,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="BrowsePS2TXTConfigButton" Content="Browse" HorizontalAlignment="Left" Margin="567,327,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="BrowsePS2LUAConfigButton" Content="Browse" HorizontalAlignment="Left" Margin="567,350,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="676,304,0,0" TextWrapping="Wrap" Text="More Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="17,537,0,0" TextWrapping="Wrap" Text="Memory Card &amp; Other Settings" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="18,562,0,0" TextWrapping="Wrap" Text="Import PS2 8MB Memory Card :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedPS2MemoryCardTextBox" HorizontalAlignment="Left" Margin="197,561,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="364"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="676,304,0,0"  Text="More Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="17,537,0,0"  Text="Memory Card &amp; Other Settings" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="18,562,0,0"  Text="Import PS2 8MB Memory Card :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedPS2MemoryCardTextBox" HorizontalAlignment="Left" Margin="197,561,0,0"  VerticalAlignment="Top" Width="364"/>
                     <Button x:Name="BrowsePS2MCButton" Content="Browse" HorizontalAlignment="Left" Margin="566,560,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="675,562,0,0" TextWrapping="Wrap" Text="Multitap :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="675,562,0,0"  Text="Multitap :" VerticalAlignment="Top" Foreground="White"/>
                     <ComboBox x:Name="PS2MultitapComboBox" HorizontalAlignment="Left" Margin="731,559,0,0" VerticalAlignment="Top" Width="106" SelectedIndex="0">
                         <ComboBoxItem Content="Disabled"/>
                         <ComboBoxItem Content="On Port 1"/>
                         <ComboBoxItem Content="On Port 2"/>
                         <ComboBoxItem Content="On Port 1 and 2"/>
                     </ComboBox>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,34,0,0" TextWrapping="Wrap" Text="PKG Details" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,58,0,0" TextWrapping="Wrap" Text="Icon :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedIconTextBox" HorizontalAlignment="Left" Margin="130,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,34,0,0"  Text="PKG Details" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,58,0,0"  Text="Icon :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedIconTextBox" HorizontalAlignment="Left" Margin="130,58,0,0"  VerticalAlignment="Top" Width="432"/>
                     <Button x:Name="BrowsePS2IconButton" Content="Browse" HorizontalAlignment="Left" Margin="567,57,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,81,0,0" TextWrapping="Wrap" Text="Background Image :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedStartupImageTextBox" HorizontalAlignment="Left" Margin="130,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,81,0,0"  Text="Background Image :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedStartupImageTextBox" HorizontalAlignment="Left" Margin="130,81,0,0"  VerticalAlignment="Top" Width="432"/>
                     <Button x:Name="BrowsePS2StartupImageButton" Content="Browse" HorizontalAlignment="Left" Margin="567,80,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,104,0,0" TextWrapping="Wrap" Text="Title :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="PS2TitleTextBox" HorizontalAlignment="Left" Margin="130,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,127,0,0" TextWrapping="Wrap" Text="NP Title :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="PS2NPTitleTextBox" HorizontalAlignment="Left" Margin="130,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,104,0,0"  Text="Title :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="PS2TitleTextBox" HorizontalAlignment="Left" Margin="130,104,0,0"  VerticalAlignment="Top" Width="432"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,127,0,0"  Text="NP Title :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="PS2NPTitleTextBox" HorizontalAlignment="Left" Margin="130,127,0,0"  VerticalAlignment="Top" Width="432"/>
                     <Button x:Name="BuildPS2fPKGButton" Content="Build fPKG" HorizontalAlignment="Left" Margin="676,57,0,0" VerticalAlignment="Top" Width="198" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="676,34,0,0" TextWrapping="Wrap" Text="PKG Build Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="676,34,0,0"  Text="PKG Build Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
                     <CheckBox x:Name="PS2AddTXTConfigFromDatabaseCheckBox" Content="Add TXT Config from DB" HorizontalAlignment="Left" Margin="88,374,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="False"/>
                     <CheckBox x:Name="PS2AddLUAConfigFromDatabaseCheckBox" Content="Add LUA Config from DB" HorizontalAlignment="Left" Margin="243,374,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="False"/>
                     <CheckBox x:Name="PS2AddPS3ConfigFromDatabaseCheckBox" Content="Add PS3 Config from DB" HorizontalAlignment="Left" Margin="400,374,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="False"/>
@@ -155,27 +155,27 @@
             </TabItem>
             <TabItem Header="PSP Classics">
                 <Grid Background="#2D2D30">
-                    <TextBlock HorizontalAlignment="Left" Margin="19,10,0,0" TextWrapping="Wrap" Text="Create a PSP fPKG" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,34,0,0" TextWrapping="Wrap" Text="PKG Details" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,58,0,0" TextWrapping="Wrap" Text="Icon :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedPSPIconTextBox" HorizontalAlignment="Left" Margin="132,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="430"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,10,0,0"  Text="Create a PSP fPKG" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,34,0,0"  Text="PKG Details" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,58,0,0"  Text="Icon :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedPSPIconTextBox" HorizontalAlignment="Left" Margin="132,58,0,0"  VerticalAlignment="Top" Width="430"/>
                     <Button x:Name="BrowsePSPIconButton" Content="Browse" HorizontalAlignment="Left" Margin="567,57,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,81,0,0" TextWrapping="Wrap" Text="Background Image :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="SelectedPSPBGImageTextBox" HorizontalAlignment="Left" Margin="132,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="430"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,81,0,0"  Text="Background Image :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="SelectedPSPBGImageTextBox" HorizontalAlignment="Left" Margin="132,81,0,0"  VerticalAlignment="Top" Width="430"/>
                     <Button x:Name="BrowsePSPBGButton" Content="Browse" HorizontalAlignment="Left" Margin="567,80,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,104,0,0" TextWrapping="Wrap" Text="Title :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="PSPTitleTextBox" HorizontalAlignment="Left" Margin="132,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="430"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,127,0,0" TextWrapping="Wrap" Text="NP Title :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBox x:Name="PSPNPTitleTextBox" HorizontalAlignment="Left" Margin="132,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="430"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,104,0,0"  Text="Title :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="PSPTitleTextBox" HorizontalAlignment="Left" Margin="132,104,0,0"  VerticalAlignment="Top" Width="430"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,127,0,0"  Text="NP Title :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="PSPNPTitleTextBox" HorizontalAlignment="Left" Margin="132,127,0,0"  VerticalAlignment="Top" Width="430"/>
                     <Button x:Name="BuildPSPfPKGButton" Content="Build fPKG" HorizontalAlignment="Left" Margin="676,57,0,0" VerticalAlignment="Top" Width="198" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="676,34,0,0" TextWrapping="Wrap" Text="PKG Build Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,186,0,0" TextWrapping="Wrap" Text="ISO File :" VerticalAlignment="Top" Foreground="White"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,162,0,0" TextWrapping="Wrap" Text="Disc Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBox x:Name="SelectedPSPDiscTextBox" HorizontalAlignment="Left" Margin="132,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="430"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="676,34,0,0"  Text="PKG Build Options" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,186,0,0"  Text="ISO File :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,162,0,0"  Text="Disc Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBox x:Name="SelectedPSPDiscTextBox" HorizontalAlignment="Left" Margin="132,186,0,0"  VerticalAlignment="Top" Width="430"/>
                     <Button x:Name="BrowsePSPDiscButton" Content="Browse" HorizontalAlignment="Left" Margin="567,185,0,0" VerticalAlignment="Top" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,220,0,0" TextWrapping="Wrap" Text="Emulator Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <TextBox x:Name="SelectedPSPConfigTextBox" HorizontalAlignment="Left" Margin="132,244,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="430"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,245,0,0" TextWrapping="Wrap" Text="Custom config-title :" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,220,0,0"  Text="Emulator Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <TextBox x:Name="SelectedPSPConfigTextBox" HorizontalAlignment="Left" Margin="132,244,0,0"  VerticalAlignment="Top" Width="430"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="19,245,0,0"  Text="Custom config-title :" VerticalAlignment="Top" Foreground="White"/>
                     <Button x:Name="BrowsePSPConfigButton" Content="Browse" HorizontalAlignment="Left" Margin="567,243,0,0" VerticalAlignment="Top" Width="75"/>
                 </Grid>
             </TabItem>

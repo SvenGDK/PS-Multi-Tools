@@ -7,25 +7,25 @@
              mc:Ignorable="d" 
              Title="Notification Manager" Height="560" Width="855" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="The Notification Manager allows editing PS5 notifications on the console" VerticalAlignment="Top" Foreground="White" FontSize="18" TextAlignment="Center" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="11,47,0,0" TextWrapping="Wrap" Text="Connect to the PS5 via FTP" VerticalAlignment="Top" FontSize="16" Foreground="White" FontWeight="Bold"/>
-        <TextBox x:Name="IPTextBox" HorizontalAlignment="Left" Margin="11,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="278" Height="20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="11,73,0,0" TextWrapping="Wrap" Text="PS5 IP:" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
-        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="294,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146" Height="20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="294,73,0,0" TextWrapping="Wrap" Text="Port:" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0"  Text="The Notification Manager allows editing PS5 notifications on the console" VerticalAlignment="Top" Foreground="White" FontSize="18" TextAlignment="Center" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="11,47,0,0"  Text="Connect to the PS5 via FTP" VerticalAlignment="Top" FontSize="16" Foreground="White" FontWeight="Bold"/>
+        <TextBox x:Name="IPTextBox" HorizontalAlignment="Left" Margin="11,97,0,0"  VerticalAlignment="Top" Width="278" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="11,73,0,0"  Text="PS5 IP:" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
+        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="294,97,0,0"  VerticalAlignment="Top" Width="146" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="294,73,0,0"  Text="Port:" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
         <Button x:Name="ConnectButton" Content="Connect &amp; load notifications" HorizontalAlignment="Left" Margin="456,97,0,0" VerticalAlignment="Top" Width="324" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="12,149,0,0" TextWrapping="Wrap" Text="Choose an user profile or select 'All User Profiles'" VerticalAlignment="Top" FontSize="16" Width="399" Foreground="White" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="11,177,0,0" TextWrapping="Wrap" Text="User Profile:" VerticalAlignment="Top" FontSize="14" Width="90" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,149,0,0"  Text="Choose an user profile or select 'All User Profiles'" VerticalAlignment="Top" FontSize="16" Width="399" Foreground="White" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="11,177,0,0"  Text="User Profile:" VerticalAlignment="Top" FontSize="14" Width="90" Foreground="White"/>
         <ComboBox x:Name="UserProfilesComboBox" HorizontalAlignment="Left" Margin="106,175,0,0" VerticalAlignment="Top" Width="334"/>
         <CheckBox x:Name="AllUserProfilesCheckBox" Content="All User Profiles" HorizontalAlignment="Left" Margin="323,202,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,225,0,0" TextWrapping="Wrap" Text="Add Shortcuts to Notifications" VerticalAlignment="Top" FontSize="16" Width="429" Foreground="White" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="457,364,0,0" TextWrapping="Wrap" Text="Add Web Browser Bookmarks" VerticalAlignment="Top" FontSize="16" Width="318" Foreground="White" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,225,0,0"  Text="Add Shortcuts to Notifications" VerticalAlignment="Top" FontSize="16" Width="429" Foreground="White" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="457,364,0,0"  Text="Add Web Browser Bookmarks" VerticalAlignment="Top" FontSize="16" Width="318" Foreground="White" FontWeight="Bold"/>
         <Button x:Name="AddDebugSettingsButton" Content="Add ★Debug Settings" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top" FontSize="14" Width="429"/>
         <Button x:Name="AddWebBrowserButton" Content="Add ★Web Browser with current list of bookmarks" HorizontalAlignment="Left" Margin="10,279,0,0" VerticalAlignment="Top" FontSize="14" Width="429"/>
-        <TextBox x:Name="ShortcutNameTextBox" HorizontalAlignment="Left" Margin="457,414,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370" Height="20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="457,390,0,0" TextWrapping="Wrap" Text="New Bookmark Name :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
-        <TextBox x:Name="ShortcutLinkTextBox" HorizontalAlignment="Left" Margin="457,463,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370" Height="20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="457,439,0,0" TextWrapping="Wrap" Text="URL :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
+        <TextBox x:Name="ShortcutNameTextBox" HorizontalAlignment="Left" Margin="457,414,0,0"  VerticalAlignment="Top" Width="370" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="457,390,0,0"  Text="New Bookmark Name :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
+        <TextBox x:Name="ShortcutLinkTextBox" HorizontalAlignment="Left" Margin="457,463,0,0"  VerticalAlignment="Top" Width="370" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="457,439,0,0"  Text="URL :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
         <Button x:Name="AddSaveDataManagerButton" Content="Add ★Saved Data Management" HorizontalAlignment="Left" Margin="10,307,0,0" VerticalAlignment="Top" FontSize="14" Width="429"/>
         <Button x:Name="AddSaveDataManagerPS4Button" Content="Add ★Saved Data Management PS4" HorizontalAlignment="Left" Margin="10,335,0,0" VerticalAlignment="Top" FontSize="14" Width="429"/>
         <ComboBox x:Name="OtherActionsComboBox" HorizontalAlignment="Left" Margin="117,411,0,0" VerticalAlignment="Top" Width="323">
@@ -130,17 +130,17 @@
             <ComboBoxItem Content="psaccounts:switchuser?userId="/>
             <ComboBoxItem Content="psaccounts:logout?userId="/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="12,413,0,0" TextWrapping="Wrap" Text="Other actions :" VerticalAlignment="Top" FontSize="14" Width="100" Foreground="White"/>
-        <TextBlock HorizontalAlignment="Left" Margin="12,439,0,0" TextWrapping="Wrap" Text="Custom URL :" VerticalAlignment="Top" FontSize="14" Width="100" Foreground="White"/>
-        <TextBox x:Name="CustomDefinedActionTextBox" HorizontalAlignment="Left" Margin="117,438,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="323" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,413,0,0"  Text="Other actions :" VerticalAlignment="Top" FontSize="14" Width="100" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,439,0,0"  Text="Custom URL :" VerticalAlignment="Top" FontSize="14" Width="100" Foreground="White"/>
+        <TextBox x:Name="CustomDefinedActionTextBox" HorizontalAlignment="Left" Margin="117,438,0,0"  VerticalAlignment="Top" Width="323" Height="20"/>
         <Button x:Name="AddCustomActionButton" Content="Add custom action to notifications" HorizontalAlignment="Left" Margin="117,488,0,0" VerticalAlignment="Top" Width="323" FontWeight="Bold"/>
         <Button x:Name="AddShortcutButton" Content="Add bookmark" HorizontalAlignment="Left" Margin="672,488,0,0" VerticalAlignment="Top" Width="154" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="456,281,0,0" TextWrapping="Wrap" Text="List of bookmarks that will be added with the Web Browser :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="456,281,0,0"  Text="List of bookmarks that will be added with the Web Browser :" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
         <ComboBox x:Name="WebBrowserShorcutsComboBox" HorizontalAlignment="Left" Margin="456,305,0,0" VerticalAlignment="Top" Width="370"/>
         <Button x:Name="RemoveShortcutButton" Content="Remove" HorizontalAlignment="Left" Margin="671,331,0,0" VerticalAlignment="Top" Width="155" FontWeight="Bold"/>
         <Button x:Name="UploadButton" Content="Upload updated notifications" HorizontalAlignment="Left" Margin="456,122,0,0" VerticalAlignment="Top" Width="324" IsEnabled="False" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="12,464,0,0" TextWrapping="Wrap" Text="Display Name :" VerticalAlignment="Top" FontSize="14" Width="100" Foreground="White"/>
-        <TextBox x:Name="CustomActionNameTextBox" HorizontalAlignment="Left" Margin="117,463,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="323" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,464,0,0"  Text="Display Name :" VerticalAlignment="Top" FontSize="14" Width="100" Foreground="White"/>
+        <TextBox x:Name="CustomActionNameTextBox" HorizontalAlignment="Left" Margin="117,463,0,0"  VerticalAlignment="Top" Width="323" Height="20"/>
 
     </Grid>
 </Window>

@@ -30,7 +30,7 @@
                                 <DropShadowEffect/>
                             </Image.Effect>
                         </Image>
-                        <TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,155,0,0" FontSize="12" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,155,0,0" FontSize="12"  TextAlignment="Center"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

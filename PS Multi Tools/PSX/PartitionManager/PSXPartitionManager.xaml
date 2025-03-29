@@ -30,8 +30,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock HorizontalAlignment="Left" Margin="15,335,0,0" TextWrapping="Wrap" Text="Installed PS2 Games on HDD :" VerticalAlignment="Top" FontSize="16" Foreground="White"/>
-        <TextBlock HorizontalAlignment="Left" Margin="15,50,0,0" TextWrapping="Wrap" Text="Partition List :" VerticalAlignment="Top" FontSize="16" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="15,335,0,0"  Text="Installed PS2 Games on HDD :" VerticalAlignment="Top" FontSize="16" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="15,50,0,0"  Text="Partition List :" VerticalAlignment="Top" FontSize="16" Foreground="White"/>
         <Menu Height="20" VerticalAlignment="Bottom">
             <TextBlock x:Name="HDDSpaceTextBlock" Text="HDD Space :"/>
         </Menu>

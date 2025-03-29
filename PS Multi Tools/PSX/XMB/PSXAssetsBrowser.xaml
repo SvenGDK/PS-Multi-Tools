@@ -27,12 +27,12 @@
 
         <MediaElement x:Name="AssetPlayer" Height="700" Margin="350,0,0,0" MinHeight="680" MinWidth="950" LoadedBehavior="Manual" UnloadedBehavior="Manual"/>
         <Image x:Name="ImageViewer" HorizontalAlignment="Left" Height="512" Margin="550,100,0,0" VerticalAlignment="Top" Width="512" Visibility="Hidden"/>
-        <TextBlock x:Name="FontPreviewTextBlock" HorizontalAlignment="Left" Margin="565,200,0,0" TextWrapping="Wrap" Text="Font Preview :&#10;&#10;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" VerticalAlignment="Top" Foreground="White" FontSize="36" Width="500" Height="300" TextAlignment="Center" Visibility="Hidden"/>
+        <TextBlock x:Name="FontPreviewTextBlock" HorizontalAlignment="Left" Margin="565,200,0,0"  Text="Font Preview :&#10;&#10;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" VerticalAlignment="Top" Foreground="White" FontSize="36" Width="500" Height="300" TextAlignment="Center" Visibility="Hidden"/>
         
         <Image x:Name="OpenFolderImage" HorizontalAlignment="Left" Height="48" Margin="34,10,0,0" VerticalAlignment="Top" Width="48" Source="/Images/Folder-Open.png" Cursor="Hand"/>
-        <TextBlock HorizontalAlignment="Left" Margin="15,63,0,0" TextWrapping="Wrap" Text="Open a folder" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="15,63,0,0"  Text="Open a folder" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
         
         <Image x:Name="OpenImageEditorImage" HorizontalAlignment="Left" Height="40" Margin="175,14,0,0" VerticalAlignment="Top" Width="40" Source="/Images/Image-Edit.png" Cursor="Hand" Visibility="Hidden"/>
-        <TextBlock x:Name="OpenImageEditorTextBlock" HorizontalAlignment="Left" Margin="122,63,0,0" TextWrapping="Wrap" Text="Open in Graphics Editor" VerticalAlignment="Top" Foreground="White" FontSize="14" Visibility="Hidden"/>
+        <TextBlock x:Name="OpenImageEditorTextBlock" HorizontalAlignment="Left" Margin="122,63,0,0"  Text="Open in Graphics Editor" VerticalAlignment="Top" Foreground="White" FontSize="14" Visibility="Hidden"/>
     </Grid>
 </Window>

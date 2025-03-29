@@ -27,7 +27,7 @@
                             <DataTemplate>
                                 <Grid Width="135" Height="170">
                                     <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
-                                    <TextBlock Text="{Binding PackageName}" FocusVisualStyle="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding PackageName}" FocusVisualStyle="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27"  TextAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -46,7 +46,7 @@
                             <DataTemplate>
                                 <Grid Width="135" Height="170">
                                     <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
-                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27"  TextAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -65,7 +65,7 @@
                             <DataTemplate>
                                 <Grid Width="135" Height="170">
                                     <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
-                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27"  TextAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -84,7 +84,7 @@
                             <DataTemplate>
                                 <Grid Width="135" Height="170">
                                     <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
-                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27"  TextAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -103,7 +103,7 @@
                             <DataTemplate>
                                 <Grid Width="135" Height="170">
                                     <Image Width="128" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
-                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27"  TextAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -115,11 +115,11 @@
         <TextBox x:Name="NameSearchTextBox" HorizontalAlignment="Left" Margin="22,498,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
         <TextBox x:Name="TitleIDSearchTextBox" HorizontalAlignment="Left" Margin="22,552,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
         <TextBox x:Name="ContentIDSearchTextBox" HorizontalAlignment="Left" Margin="22,606,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="22,472,0,0" TextWrapping="Wrap" Text="By Name :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="22,526,0,0" TextWrapping="Wrap" Text="By Title ID :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="22,580,0,0" TextWrapping="Wrap" Text="By Content ID :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="22,443,0,0" TextWrapping="Wrap" Text="Search for a Game" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="301,443,0,0" TextWrapping="Wrap" Text="Downloads" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,472,0,0"  Text="By Name :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,526,0,0"  Text="By Title ID :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,580,0,0"  Text="By Content ID :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="22,443,0,0"  Text="Search for a Game" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="301,443,0,0"  Text="Downloads" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
         <ListView x:Name="DownloadsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="301,472,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1000" Height="157">
             <ListView.View>
                 <GridView>
@@ -146,11 +146,11 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock x:Name="PKGTitleTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TITLE" VerticalAlignment="Top" Foreground="White" FontSize="24" FontWeight="Bold" Margin="0,269,0,0"/>
-        <TextBlock x:Name="TitleIDTextBlock" HorizontalAlignment="Center" Margin="0,306,0,0" TextWrapping="Wrap" Text="Title ID:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
-        <TextBlock x:Name="ContentIDTextBlock" HorizontalAlignment="Center" Margin="0,335,0,0" TextWrapping="Wrap" Text="Content ID:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
-        <TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Center" Margin="0,364,0,0" TextWrapping="Wrap" Text="Region:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
-        <TextBlock x:Name="SizeTextBlock" HorizontalAlignment="Center" Margin="0,393,0,0" TextWrapping="Wrap" Text="Size:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock x:Name="PKGTitleTextBlock" HorizontalAlignment="Center"  Text="TITLE" VerticalAlignment="Top" Foreground="White" FontSize="24" FontWeight="Bold" Margin="0,269,0,0"/>
+        <TextBlock x:Name="TitleIDTextBlock" HorizontalAlignment="Center" Margin="0,306,0,0"  Text="Title ID:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock x:Name="ContentIDTextBlock" HorizontalAlignment="Center" Margin="0,335,0,0"  Text="Content ID:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Center" Margin="0,364,0,0"  Text="Region:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+        <TextBlock x:Name="SizeTextBlock" HorizontalAlignment="Center" Margin="0,393,0,0"  Text="Size:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
 
     </Grid>
 </Window>

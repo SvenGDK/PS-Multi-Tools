@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              Title="PPPwner GUI" Height="755" Width="870" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ThemeMode="System">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="PPPwn Options" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="PPPwn Options" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
         <ComboBox x:Name="FirmwaresComboBox" HorizontalAlignment="Left" Margin="12,141,0,0" VerticalAlignment="Top" Width="400">
             <ComboBoxItem Content="7.50 / 7.51 / 7.55"/>
             <ComboBoxItem Content="8.00 / 8.01 / 8.03"/>
@@ -20,20 +20,20 @@
             <ComboBoxItem Content="11.00"/>
         </ComboBox>
         <ComboBox x:Name="EthernetInterfacesComboBox" HorizontalAlignment="Left" Margin="12,57,0,0" VerticalAlignment="Top" Width="400"/>
-        <TextBlock HorizontalAlignment="Left" Margin="12,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Text="Select your Ethernet Adapter :"/>
-        <TextBlock HorizontalAlignment="Left" Margin="12,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Text="Select your PS4 Firmware :"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,36,0,0"  VerticalAlignment="Top"  Text="Select your Ethernet Adapter :"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,120,0,0"  VerticalAlignment="Top"  Text="Select your PS4 Firmware :"/>
         <Button x:Name="StartPPPwnButton" Content="Start PPPwn" HorizontalAlignment="Left" Margin="681,405,0,0" VerticalAlignment="Top" Width="130" FontWeight="Bold" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="459,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Text="Select a custom stage1 payload :"/>
+        <TextBlock HorizontalAlignment="Left" Margin="459,68,0,0"  VerticalAlignment="Top"  Text="Select a custom stage1 payload :"/>
         <TextBox x:Name="CustomStage1PayloadTextBox" HorizontalAlignment="Left" Margin="459,89,0,0" VerticalAlignment="Top" Width="317"/>
         <Button x:Name="BrowseStage1PayloadButton" Content="..." HorizontalAlignment="Left" Margin="781,89,0,0" VerticalAlignment="Top" Width="30"/>
-        <TextBlock HorizontalAlignment="Left" Margin="459,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Text="Select a custom stage2 payload :"/>
+        <TextBlock HorizontalAlignment="Left" Margin="459,128,0,0"  VerticalAlignment="Top"  Text="Select a custom stage2 payload :"/>
         <TextBox x:Name="CustomStage2PayloadTextBox" HorizontalAlignment="Left" Margin="459,149,0,0" VerticalAlignment="Top" Width="317"/>
         <Button x:Name="BrowseStage2PayloadButton" Content="..." HorizontalAlignment="Left" Margin="781,149,0,0" VerticalAlignment="Top" Width="30"/>
-        <TextBlock Text="Customize (advanced)" VerticalAlignment="Top" TextWrapping="Wrap" Margin="459,10,0,0" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" />
+        <TextBlock Text="Customize (advanced)" VerticalAlignment="Top"  Margin="459,10,0,0" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" />
         <Button x:Name="CopyGoldHENButton" Content="Copy cached goldhen.bin (v2.4b17.3) to an USB drive" HorizontalAlignment="Left" Margin="457,265,0,0" VerticalAlignment="Top" Width="352" FontWeight="Bold"/>
         <CheckBox x:Name="AutoRetryCheckBox" Content="Enable Auto-Retry" HorizontalAlignment="Left" Margin="10,226,0,0" VerticalAlignment="Top" />
-        <TextBlock VerticalAlignment="Top" Text="PPPwn Log" TextWrapping="Wrap" Margin="10,451,0,0" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" />
-        <TextBox x:Name="LogTextBox" Width="830" VerticalAlignment="Top" TextWrapping="Wrap" Margin="12,477,0,0" Height="232" HorizontalAlignment="Left"/>
+        <TextBlock VerticalAlignment="Top" Text="PPPwn Log"  Margin="10,451,0,0" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" />
+        <TextBox x:Name="LogTextBox" Width="830" VerticalAlignment="Top"  Margin="12,477,0,0" Height="232" HorizontalAlignment="Left"/>
         <Button x:Name="DownloadGoldHENButton" Content="Download latest GoldHEN to an USB drive" HorizontalAlignment="Left" Margin="457,226,0,0" VerticalAlignment="Top" Width="352" FontWeight="Bold"/>
         <TextBox x:Name="ResponseTimeoutValueTextBox" HorizontalAlignment="Left" Margin="254,260,0,0" VerticalAlignment="Top" Width="30" Text="0" TextAlignment="Center"/>
         <CheckBox x:Name="UseWaitingTimeCheckBox" Content="Specify waiting time in seconds after first round CPU pinning :" HorizontalAlignment="Left" Margin="10,292,0,0" VerticalAlignment="Top" />
@@ -48,8 +48,8 @@
         <CheckBox VerticalAlignment="Top" x:Name="UseResponseTimeoutCheckBox" Margin="10,261,0,0" HorizontalAlignment="Left"  Content="Set timeout in seconds for PS4 response :" ToolTip="Waiting for PADI is not included, which allows you to start pppwn_cpp before the ps4 is launched."/>
         <CheckBox VerticalAlignment="Top" x:Name="UsePinningWaitingTimeCheckBox" Margin="10,292,0,0" HorizontalAlignment="Left"  Content="Specify waiting time in seconds after first round CPU pinning :" ToolTip="According to SiSTR0/PPPwn/pull/1 set this parameter to 20 helps to improve stability"/>
         <TextBox Width="30" VerticalAlignment="Top" Text="1" TextAlignment="Center" x:Name="PinningWaitingTimeValueTextBox" Margin="362,291,0,0" HorizontalAlignment="Left"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,196,0,0" TextWrapping="Wrap" Text="Optional PPPwn Options" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="457,196,0,0" TextWrapping="Wrap" Text="GoldHEN Options" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,196,0,0"  Text="Optional PPPwn Options" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="457,196,0,0"  Text="GoldHEN Options" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
     </Grid>
 
 </Window>

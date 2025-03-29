@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="Create a new partition" Height="200" Width="425" ResizeMode="CanMinimize" ThemeMode="System">
     <Grid>
-        <TextBox x:Name="NewPartitionNameTextBox" Margin="10,31,15,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400"/>
-        <TextBox x:Name="NewPartitionSizeTextBox" Margin="10,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400"/>
-        <TextBlock Margin="10,10,15,0" TextWrapping="Wrap" Text="Please enter a name for the new partition :" VerticalAlignment="Top"  HorizontalAlignment="Left" Width="400"/>
-        <TextBlock Margin="10,64,0,0" TextWrapping="Wrap" Text="Please enter the size of the new partition in MB (number only) :" VerticalAlignment="Top"  HorizontalAlignment="Left" Width="400"/>
+        <TextBox x:Name="NewPartitionNameTextBox" Margin="10,31,15,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="400"/>
+        <TextBox x:Name="NewPartitionSizeTextBox" Margin="10,85,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="400"/>
+        <TextBlock Margin="10,10,15,0"  Text="Please enter a name for the new partition :" VerticalAlignment="Top"  HorizontalAlignment="Left" Width="400"/>
+        <TextBlock Margin="10,64,0,0"  Text="Please enter the size of the new partition in MB (number only) :" VerticalAlignment="Top"  HorizontalAlignment="Left" Width="400"/>
         <Button x:Name="CreatePartitionButton" Content="Create partition" HorizontalAlignment="Left" Margin="135,120,0,0" VerticalAlignment="Top" Width="150" FontFamily="Calibri" FontSize="14"/>
 
     </Grid>

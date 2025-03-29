@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              Title="PS5 Manifest Editor" Height="530" Width="960" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,25,0,0" TextWrapping="Wrap" Text="Current parameters" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="940" FontWeight="Bold" FontStyle="Italic"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,25,0,0"  Text="Current parameters" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="940" FontWeight="Bold" FontStyle="Italic"/>
         <ListView x:Name="ManifestParamListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,51,0,0" Height="309" VerticalAlignment="Top" HorizontalAlignment="Left" Width="920">
             <ListView.View>
                 <GridView>
@@ -24,7 +24,7 @@
                 <MenuItem Header="Save" x:Name="SaveMenuItem"/>
             </MenuItem>
         </Menu>
-        <TextBlock HorizontalAlignment="Left" Margin="10,365,0,0" TextWrapping="Wrap" Text="Add a parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150" FontStyle="Italic" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,365,0,0"  Text="Add a parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150" FontStyle="Italic" FontWeight="Bold"/>
         <ComboBox x:Name="ManifestParamsComboBox" HorizontalAlignment="Left" Margin="165,393,0,0" VerticalAlignment="Top" Width="300">
             <ComboBoxItem Content="applicationData"/>
             <ComboBoxItem Content="applicationName"/>

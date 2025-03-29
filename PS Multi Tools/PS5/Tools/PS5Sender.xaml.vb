@@ -17,6 +17,29 @@ Public Class PS5Sender
     Dim CurrentType As SendType
     Public SelectedISO As String
 
+    Private Sub PS5Sender_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If Not String.IsNullOrEmpty(SelectedISO) Then
+            SelectedELFTextBox.Text = SelectedISO
+        End If
+        If Not String.IsNullOrEmpty(ConsoleIP) Then
+            IPTextBox.Text = ConsoleIP
+        End If
+
+        'Check for downloaded payloads and add to DownloadedPayloadsComboBox
+        If Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then
+            Dim PayloadList As IEnumerable(Of String) = Directory.EnumerateFiles(Environment.CurrentDirectory + "\Downloads",
+                                                                                 "*.*",
+                                                                                 SearchOption.AllDirectories).Where(Function(s) s.EndsWith(".elf") OrElse s.EndsWith(".bin"))
+            For Each Payload In PayloadList
+                Dim NewDownloadedPayloadItem As New DownloadedPayloadItem() With {.PayloadName = Path.GetFileName(Payload), .PayloadPath = Payload}
+                DownloadedPayloadsComboBox.Items.Add(NewDownloadedPayloadItem)
+            Next
+
+            DownloadedPayloadsComboBox.DisplayMemberPath = "PayloadName"
+            DownloadedPayloadsComboBox.Items.Refresh()
+        End If
+    End Sub
+
     Public Structure WorkerArgs
         Private _DeviceIP As IPAddress
         Private _FileToSend As String
@@ -61,6 +84,30 @@ Public Class PS5Sender
 
     End Structure
 
+    Public Structure DownloadedPayloadItem
+
+        Private _PayloadPath As String
+        Private _PayloadName As String
+
+        Public Property PayloadPath As String
+            Get
+                Return _PayloadPath
+            End Get
+            Set
+                _PayloadPath = Value
+            End Set
+        End Property
+
+        Public Property PayloadName As String
+            Get
+                Return _PayloadName
+            End Get
+            Set
+                _PayloadName = Value
+            End Set
+        End Property
+    End Structure
+
     Enum SendType
         PAYLOAD
         ISO
@@ -68,46 +115,65 @@ Public Class PS5Sender
     End Enum
 
     Private Sub SendButton_Click(sender As Object, e As RoutedEventArgs) Handles SendButton.Click
-        'Check if a file is selected
-        If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) Then
-            'Check if an IP address was entered
-            If Not String.IsNullOrWhiteSpace(IPTextBox.Text) Then
-                Dim DeviceIP As IPAddress
-
-                Try
-                    DeviceIP = IPAddress.Parse(IPTextBox.Text)
-                Catch ex As FormatException
-                    MsgBox("Could not send selected payload. Please check your IP.", MsgBoxStyle.Exclamation, "Error sending payload")
-                    Exit Sub
-                End Try
-
-                Dim SelectedELF As String = SelectedELFTextBox.Text
-                Dim ELFFileInfo As New FileInfo(SelectedELF)
-
-                SendButton.IsEnabled = False
-                SendISOButton.IsEnabled = False
-                BrowseButton.IsEnabled = False
-                BrowseISOButton.IsEnabled = False
-
-                'Set the progress bar maximum and TotalBytes to send
-                SendProgressBar.Value = 0
-                SendProgressBar.Maximum = CDbl(ELFFileInfo.Length)
-                TotalBytes = CInt(ELFFileInfo.Length)
-
-                'Start sending
-                CurrentType = SendType.PAYLOAD
-                If Not String.IsNullOrEmpty(PortTextBox.Text) Then
-                    Dim DevicePort As Integer = Integer.Parse(PortTextBox.Text)
-                    DefaultSenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedELF, .DevicePort = DevicePort})
-                Else
-                    SenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedELF, .ChunkSize = 4096})
-                End If
-
-            Else
-                MsgBox("No IP address was entered." + vbCrLf + "Please enter an IP address.", MsgBoxStyle.Exclamation, "No IP address")
-            End If
+        'Check first if not both items are selected
+        If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) AndAlso DownloadedPayloadsComboBox.SelectedItem IsNot Nothing Then
+            MsgBox("To prevent sending 2 payloads at the same time you need to mnually remove the selected payload or downloaded payload.")
         Else
-            MsgBox("Please select a file first.", MsgBoxStyle.Exclamation, "No file selected")
+            'Check if anything is selected
+            If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) Or DownloadedPayloadsComboBox.SelectedItem IsNot Nothing Then
+                'Check if an IP address was entered
+                If Not String.IsNullOrWhiteSpace(IPTextBox.Text) Then
+
+                    Dim DeviceIP As IPAddress
+                    Try
+                        DeviceIP = IPAddress.Parse(IPTextBox.Text)
+                    Catch ex As FormatException
+                        MsgBox("Could not send selected payload. Please check your IP.", MsgBoxStyle.Exclamation, "Error sending payload")
+                        Exit Sub
+                    End Try
+
+                    Dim SelectedPayload As String = ""
+                    If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) Then
+                        'Set payload to manually selected file
+                        SelectedPayload = SelectedELFTextBox.Text
+                    Else
+                        'Set payload to selected downloaded file
+                        If TypeOf DownloadedPayloadsComboBox.SelectedItem Is DownloadedPayloadItem Then
+                            SelectedPayload = CType(DownloadedPayloadsComboBox.SelectedItem, DownloadedPayloadItem).PayloadPath
+                        End If
+                    End If
+
+                    If Not String.IsNullOrEmpty(SelectedPayload) Then
+                        Dim ELFFileInfo As New FileInfo(SelectedPayload)
+
+                        SendButton.IsEnabled = False
+                        SendISOButton.IsEnabled = False
+                        BrowseButton.IsEnabled = False
+                        BrowseISOButton.IsEnabled = False
+
+                        'Set the progress bar maximum and TotalBytes to send
+                        SendProgressBar.Value = 0
+                        SendProgressBar.Maximum = CDbl(ELFFileInfo.Length)
+                        TotalBytes = CInt(ELFFileInfo.Length)
+
+                        'Start sending
+                        CurrentType = SendType.PAYLOAD
+                        If Not String.IsNullOrEmpty(PortTextBox.Text) Then
+                            Dim DevicePort As Integer = Integer.Parse(PortTextBox.Text)
+                            DefaultSenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedPayload, .DevicePort = DevicePort})
+                        Else
+                            SenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedPayload, .ChunkSize = 4096})
+                        End If
+                    Else
+                        'This should only happen if the selection of DownloadedPayloadsComboBox.SelectedItem is empty
+                        MsgBox("Please select a file first.", MsgBoxStyle.Exclamation, "No file selected")
+                    End If
+                Else
+                    MsgBox("No IP address was entered." + vbCrLf + "Please enter an IP address.", MsgBoxStyle.Exclamation, "No IP address")
+                End If
+            Else
+                MsgBox("Please select a file first.", MsgBoxStyle.Exclamation, "No file selected")
+            End If
         End If
     End Sub
 
@@ -269,15 +335,6 @@ Public Class PS5Sender
         Dim OFD As New OpenFileDialog() With {.Title = "Select an .iso file", .Filter = "ELF files (*.iso)|*.iso"}
         If OFD.ShowDialog() = Forms.DialogResult.OK Then
             SelectedISOTextBox.Text = OFD.FileName
-        End If
-    End Sub
-
-    Private Sub PS5Sender_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        If Not String.IsNullOrEmpty(SelectedISO) Then
-            SelectedELFTextBox.Text = SelectedISO
-        End If
-        If Not String.IsNullOrEmpty(ConsoleIP) Then
-            IPTextBox.Text = ConsoleIP
         End If
     End Sub
 

@@ -33,7 +33,7 @@
                                             <DropShadowEffect/>
                                         </Image.Effect>
                                     </Image>
-                                    <TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" FocusVisualStyle="{x:Null}" VerticalAlignment="Bottom" Margin="0,0,0,0" FontSize="12" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" FocusVisualStyle="{x:Null}" VerticalAlignment="Bottom" Margin="0,0,0,0" FontSize="12"  TextAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -102,11 +102,11 @@
                         <DataTemplate>
                             <Grid Width="455">
                                 <Image Width="64" Height="64" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}"  FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}"  FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -123,11 +123,11 @@
                         <DataTemplate>
                             <Grid Width="455">
                                 <Image Width="64" Height="64" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}"  FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}"  FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -144,11 +144,11 @@
                         <DataTemplate>
                             <Grid Width="455">
                                 <Image Width="64" Height="64" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
-                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}" TextWrapping="Wrap" FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FocusVisualStyle="{x:Null}"  FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FocusVisualStyle="{x:Null}"  FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FocusVisualStyle="{x:Null}"  FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

@@ -7,11 +7,11 @@
              mc:Ignorable="d" 
              Title="Make fakeSELFs" Height="400" Width="700" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="585"/>
+        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,35,0,0"  VerticalAlignment="Top" Width="585"/>
         <Button x:Name="BrowseFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="600,35,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a game backup folder :" VerticalAlignment="Top"  FontSize="16" Margin="10,10,0,0" FontFamily="Calibri"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Log :" VerticalAlignment="Top"  FontSize="16" Margin="10,88,0,0" FontFamily="Calibri"/>
-        <TextBox x:Name="MakeLogTextBox" HorizontalAlignment="Left" Margin="10,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="665" Height="240"/>
+        <TextBox x:Name="MakeLogTextBox" HorizontalAlignment="Left" Margin="10,113,0,0"  VerticalAlignment="Top" Width="665" Height="240"/>
         <Button x:Name="MakeButton" Content="Make" HorizontalAlignment="Left" Margin="520,70,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
 
     </Grid>

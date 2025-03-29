@@ -8,9 +8,9 @@
         Title="PSN Info" Height="580" Width="1280" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
         <Image x:Name="GameImage" HorizontalAlignment="Left" Height="512" Margin="10,0,0,0" VerticalAlignment="Center" Width="512"/>
-        <TextBlock x:Name="GameTitleTextBlock" HorizontalAlignment="Left" Margin="532,10,0,0" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top"  FontSize="36"/>
-        <TextBlock x:Name="DescriptionTextBlock" HorizontalAlignment="Left" Margin="532,63,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"  FontSize="18"/>
-        <TextBlock x:Name="CategoryTextBlock" HorizontalAlignment="Left" Margin="532,467,0,55" TextWrapping="Wrap" Text="Full or Demo Version :" VerticalAlignment="Bottom"  FontSize="18"/>
-        <TextBlock x:Name="GameCodeTextBlock" HorizontalAlignment="Left" Margin="532,0,0,25" TextWrapping="Wrap" Text="Game Code :" VerticalAlignment="Bottom"  FontSize="18"/>
+        <TextBlock x:Name="GameTitleTextBlock" HorizontalAlignment="Left" Margin="532,10,0,0"  Text="Title" VerticalAlignment="Top"  FontSize="36"/>
+        <TextBlock x:Name="DescriptionTextBlock" HorizontalAlignment="Left" Margin="532,63,0,0"  Text="Description" VerticalAlignment="Top"  FontSize="18"/>
+        <TextBlock x:Name="CategoryTextBlock" HorizontalAlignment="Left" Margin="532,467,0,55"  Text="Full or Demo Version :" VerticalAlignment="Bottom"  FontSize="18"/>
+        <TextBlock x:Name="GameCodeTextBlock" HorizontalAlignment="Left" Margin="532,0,0,25"  Text="Game Code :" VerticalAlignment="Bottom"  FontSize="18"/>
     </Grid>
 </Window>

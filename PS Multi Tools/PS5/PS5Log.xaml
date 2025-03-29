@@ -19,8 +19,8 @@
         <Button x:Name="ReconnectButton" Content="Connect" HorizontalAlignment="Left" Margin="339,55,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="10,36,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBlock FontFamily="Calibri" FontSize="14" Text="Port :" Margin="45,70,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="84,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
-        <TextBox x:Name="PS5KlogPortTextBox" HorizontalAlignment="Left" Margin="84,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center" Text="9081"/>
+        <TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="84,35,0,0"  VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBox x:Name="PS5KlogPortTextBox" HorizontalAlignment="Left" Margin="84,69,0,0"  VerticalAlignment="Top" Width="250" FontFamily="Calibri" FontSize="14" TextAlignment="Center" Text="9081"/>
         <Button x:Name="ClearButton" Content="Clear klog" HorizontalAlignment="Left" Margin="34,140,0,0" VerticalAlignment="Top" Width="120" FontFamily="Calibri"/>
         <TextBlock FontFamily="Calibri" FontSize="16" Text="Log Settings :" Margin="438,11,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
         <TextBlock FontFamily="Calibri" FontSize="14" Text="Font Size :" Margin="438,36,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -87,13 +87,13 @@
             <ComboBoxItem Content="[TTS Arbitrator]"/>
         </ComboBox>
         <TextBlock FontFamily="Calibri" FontSize="14" Text="with color :" Margin="713,72,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="ColorCodeTextBox" HorizontalAlignment="Left" Margin="782,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBox x:Name="ColorCodeTextBox" HorizontalAlignment="Left" Margin="782,71,0,0"  VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
         <Button x:Name="AddHightlightButton" Content="Add" HorizontalAlignment="Left" Margin="887,71,0,0" VerticalAlignment="Top" Width="75" FontFamily="Calibri"/>
         <Button x:Name="ClearHighlightsButton" Content="Clear highlight rules" HorizontalAlignment="Left" Margin="159,140,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri"/>
         <TextBlock FontFamily="Calibri" FontSize="14" Text="Background Color :" Margin="438,107,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="BackgroundColorTextBox" HorizontalAlignment="Left" Margin="551,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBox x:Name="BackgroundColorTextBox" HorizontalAlignment="Left" Margin="551,106,0,0"  VerticalAlignment="Top" Width="157" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
         <TextBlock FontFamily="Calibri" FontSize="14" Text="Text Color :" Margin="713,107,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="FontColorTextBox" HorizontalAlignment="Left" Margin="782,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
+        <TextBox x:Name="FontColorTextBox" HorizontalAlignment="Left" Margin="782,106,0,0"  VerticalAlignment="Top" Width="100" FontFamily="Calibri" FontSize="14" TextAlignment="Center"/>
         <TextBlock FontFamily="Calibri" FontSize="16" Text="Connection Settings :" Margin="10,11,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
         <Button x:Name="ApplyBGColorButton" Content="Apply Color" HorizontalAlignment="Left" Margin="608,140,0,0" VerticalAlignment="Top" Width="100" FontFamily="Calibri"/>
         <Button x:Name="ApplyTextColorButton" Content="Apply Color" HorizontalAlignment="Left" Margin="782,140,0,0" VerticalAlignment="Top" Width="100" FontFamily="Calibri"/>

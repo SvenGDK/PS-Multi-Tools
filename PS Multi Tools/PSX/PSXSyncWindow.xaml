@@ -8,6 +8,6 @@
         Title="Loading" Height="115" Width="450" ResizeMode="CanMinimize" ThemeMode="System" WindowStartupLocation="CenterScreen">
     <Grid>
         <ProgressBar x:Name="LoadProgressBar" Height="25" Margin="10,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="420"/>
-        <TextBlock x:Name="LoadStatusTextBlock" Margin="10,10,0,0" TextWrapping="Wrap" Text="Loading files x / x" VerticalAlignment="Top"  FontSize="16" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="LoadStatusTextBlock" Margin="10,10,0,0"  Text="Loading files x / x" VerticalAlignment="Top"  FontSize="16" HorizontalAlignment="Left"/>
     </Grid>
 </Window>

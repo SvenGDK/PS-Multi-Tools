@@ -12,8 +12,8 @@
         <Button x:Name="BrowseCueButton" Content="Browse" HorizontalAlignment="Left" Margin="395,33,0,0" VerticalAlignment="Top" Width="75"/>
         <CheckBox x:Name="IsForPSXCheckBox" Content="Convert for PS1" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" />
         <Button x:Name="ConvertButton" Content="Convert" HorizontalAlignment="Left" Margin="315,68,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
-        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Height="210"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,105,0,0" TextWrapping="Wrap" Text="Log :" VerticalAlignment="Top"  FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,129,0,0"  VerticalAlignment="Top" Width="460" Height="210"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,105,0,0"  Text="Log :" VerticalAlignment="Top"  FontSize="14" FontWeight="Bold"/>
 
     </Grid>
 </Window>

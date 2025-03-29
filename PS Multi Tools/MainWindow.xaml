@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="PS Multi Tools - Home" Height="365" Width="1000" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="273,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="273,20,0,0"  VerticalAlignment="Top" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
 
         <Image x:Name="PS1Image" HorizontalAlignment="Left" Height="84" Margin="39,96,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS1.png" UseLayoutRounding="True" Cursor="Hand"/>
         <Image x:Name="PS2Image" HorizontalAlignment="Left" Height="84" Margin="159,96,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS2.png" UseLayoutRounding="True" Cursor="Hand"/>
@@ -26,7 +26,7 @@
         <TextBlock x:Name="PS5TextBlock" HorizontalAlignment="Left" Margin="653,185,0,0" VerticalAlignment="Top" Text="PS5" FontSize="22" Cursor="Hand"/>
         <TextBlock x:Name="PSPTextBlock" HorizontalAlignment="Left" Margin="770,185,0,0" VerticalAlignment="Top" Text="PSP" FontSize="22" Cursor="Hand"/>
         <TextBlock x:Name="PSVTextBlock" HorizontalAlignment="Left" Margin="877,185,0,0" VerticalAlignment="Top" Text="PS Vita" FontSize="22" Cursor="Hand"/>
-        <TextBlock HorizontalAlignment="Left" Margin="309,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Select a console or handheld to continue" FontSize="20" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="309,240,0,0"  VerticalAlignment="Top" Text="Select a console or handheld to continue" FontSize="20" FontWeight="Bold"/>
         <Image x:Name="UpdateImage" HorizontalAlignment="Left" Height="24" Margin="10,294,0,0" VerticalAlignment="Top" Width="24" Source="/Images/Update.png" UseLayoutRounding="True" Cursor="Hand" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>

@@ -8,13 +8,13 @@
         Title="Package Info" Height="520" Width="800" ThemeMode="System" ResizeMode="CanMinimize">
     <Grid>
         <Image x:Name="PackageIcon" HorizontalAlignment="Left" Height="128" Margin="33,33,0,0" VerticalAlignment="Top" Width="128"/>
-        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Margin="170,33,0,0" TextWrapping="Wrap" Text="Title not found" VerticalAlignment="Top"  FontSize="18" Width="580" FontWeight="Bold"/>
-        <TextBlock x:Name="ContentIDTextBlock" HorizontalAlignment="Left" Margin="170,71,0,0" TextWrapping="Wrap" Text="Content ID not found" VerticalAlignment="Top"  FontSize="14" Width="580"/>
-        <TextBlock x:Name="TitleIDTextBlock" HorizontalAlignment="Left" Margin="170,95,0,0" TextWrapping="Wrap" Text="Title ID not found" VerticalAlignment="Top"  FontSize="14" Width="580"/>
-        <TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Left" Margin="170,119,0,0" TextWrapping="Wrap" Text="Region not found" VerticalAlignment="Top"  FontSize="14" Width="580"/>
-        <TextBlock x:Name="LockedTextBlock" HorizontalAlignment="Left" Margin="170,143,0,0" TextWrapping="Wrap" Text="Platform not found" VerticalAlignment="Top"  FontSize="14" Width="580"/>
-        <TextBlock x:Name="DescriptionTextBlock" HorizontalAlignment="Left" Margin="33,196,0,0" TextWrapping="Wrap" Text="Description not found" VerticalAlignment="Top"  FontSize="14" Width="729" Height="278"/>
-        <TextBlock HorizontalAlignment="Left" Margin="33,167,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"  FontSize="18" Width="729" FontWeight="Bold"/>
+        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Margin="170,33,0,0"  Text="Title not found" VerticalAlignment="Top"  FontSize="18" Width="580" FontWeight="Bold"/>
+        <TextBlock x:Name="ContentIDTextBlock" HorizontalAlignment="Left" Margin="170,71,0,0"  Text="Content ID not found" VerticalAlignment="Top"  FontSize="14" Width="580"/>
+        <TextBlock x:Name="TitleIDTextBlock" HorizontalAlignment="Left" Margin="170,95,0,0"  Text="Title ID not found" VerticalAlignment="Top"  FontSize="14" Width="580"/>
+        <TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Left" Margin="170,119,0,0"  Text="Region not found" VerticalAlignment="Top"  FontSize="14" Width="580"/>
+        <TextBlock x:Name="LockedTextBlock" HorizontalAlignment="Left" Margin="170,143,0,0"  Text="Platform not found" VerticalAlignment="Top"  FontSize="14" Width="580"/>
+        <TextBlock x:Name="DescriptionTextBlock" HorizontalAlignment="Left" Margin="33,196,0,0"  Text="Description not found" VerticalAlignment="Top"  FontSize="14" Width="729" Height="278"/>
+        <TextBlock HorizontalAlignment="Left" Margin="33,167,0,0"  Text="Description" VerticalAlignment="Top"  FontSize="18" Width="729" FontWeight="Bold"/>
 
     </Grid>
 </Window>

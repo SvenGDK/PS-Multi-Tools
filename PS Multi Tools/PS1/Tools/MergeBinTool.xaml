@@ -13,13 +13,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock x:Name="LockedTextBlock" HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="Wrap" Text="Selected .cue files :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
-        <TextBlock x:Name="LockedTextBlock_Copy" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select the .cue files of games that have multiple .bin (Track x) files" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock x:Name="LockedTextBlock" HorizontalAlignment="Left" Margin="10,68,0,0"  Text="Selected .cue files :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBlock x:Name="LockedTextBlock_Copy" HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Select the .cue files of games that have multiple .bin (Track x) files" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
         <Button x:Name="BrowseCUEFilesButton" Content="Browse .cue files" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
         <Button x:Name="MergeSelectedButton" Content="Merge only selected" HorizontalAlignment="Left" Margin="525,297,0,0" VerticalAlignment="Top" Width="150" FontWeight="Bold"/>
         <Button x:Name="MergeAllButton" Content="Merge all" HorizontalAlignment="Left" Margin="420,297,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold"/>
-        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="665" Height="160"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,325,0,0" TextWrapping="Wrap" Text="Merge Log :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,349,0,0"  VerticalAlignment="Top" Width="665" Height="160"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,325,0,0"  Text="Merge Log :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
 
     </Grid>
 </Window>

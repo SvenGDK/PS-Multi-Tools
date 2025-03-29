@@ -8,9 +8,9 @@
              Title="PS5 Web Browser Installer" Height="200" Width="410" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
         <Button x:Name="CheckButton" Content="Check before install" HorizontalAlignment="Center" Margin="0,63,0,0" VerticalAlignment="Top" Width="150"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="This will add the Web Browser to your PS5 Home Screen" VerticalAlignment="Top" Width="380"  TextAlignment="Center" FontWeight="Bold" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,42,0,0" TextWrapping="Wrap" Text="Please check your FTP connection with the button below." VerticalAlignment="Top" Width="324"  TextAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,101,0,0" TextWrapping="Wrap" Text="Install and update app.db with the button below." VerticalAlignment="Top" Width="324"  TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="This will add the Web Browser to your PS5 Home Screen" VerticalAlignment="Top" Width="380"  TextAlignment="Center" FontWeight="Bold" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,42,0,0"  Text="Please check your FTP connection with the button below." VerticalAlignment="Top" Width="324"  TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,101,0,0"  Text="Install and update app.db with the button below." VerticalAlignment="Top" Width="324"  TextAlignment="Center"/>
         <Button x:Name="AddButton" Content="Add the Web Browser" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
 
     </Grid>

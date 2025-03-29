@@ -7,18 +7,18 @@
              mc:Ignorable="d" 
              Height="500" Width="460" ThemeMode="System" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Title="PS Vita PKG Extractor">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select a PS Vita .pkg file :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Select a PS Vita .pkg file :" VerticalAlignment="Top"  FontSize="14"/>
         <TextBox x:Name="SelectedPKGTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="350"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="Wrap" Text="Select an output folder :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,68,0,0"  Text="Select an output folder :" VerticalAlignment="Top"  FontSize="14"/>
         <TextBox x:Name="OutputFolderTextBox" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="350"/>
         <Button x:Name="BrowsePKGButton" Content="Browse" HorizontalAlignment="Left" Margin="365,33,0,0" VerticalAlignment="Top" Width="70"/>
         <Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="365,91,0,0" VerticalAlignment="Top" Width="70"/>
         <Button x:Name="ExtractButton" Content="Extract .pkg" HorizontalAlignment="Left" Margin="260,183,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,126,0,0" TextWrapping="Wrap" Text="zRIF Key :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,126,0,0"  Text="zRIF Key :" VerticalAlignment="Top"  FontSize="14"/>
         <TextBox x:Name="zRIFTextBox" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Width="350"/>
         <Button x:Name="GetzRIFKeyButton" Content="Get" HorizontalAlignment="Left" Margin="365,149,0,0" VerticalAlignment="Top" Width="70"/>
-        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,239,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Height="205"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,215,0,0" TextWrapping="Wrap" Text="Extraction Log :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,239,0,0"  VerticalAlignment="Top" Width="425" Height="205"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,215,0,0"  Text="Extraction Log :" VerticalAlignment="Top"  FontSize="14"/>
 
     </Grid>
 </Window>

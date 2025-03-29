@@ -8,11 +8,11 @@
              Title="PS3 PUP Unpacker" Height="205" Width="420" ThemeMode="System" ResizeMode="CanMinimize">
     <Grid>
         <Button x:Name="BrowsePUPButton" Content="Browse" HorizontalAlignment="Left" Margin="315,32,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedPUPTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Selected a PS3UPDAT.PUP file :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedPUPTextBox" HorizontalAlignment="Left" Margin="10,34,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Selected a PS3UPDAT.PUP file :" VerticalAlignment="Top"  FontSize="14"/>
         <Button x:Name="BrowseOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="315,94,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,71,0,0" TextWrapping="Wrap" Text="Selected an output folder :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,95,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,71,0,0"  Text="Selected an output folder :" VerticalAlignment="Top"  FontSize="14"/>
         <Button x:Name="UnpackButton" Content="Unpack" HorizontalAlignment="Left" Margin="236,129,0,0" VerticalAlignment="Top" Width="74"/>
 
     </Grid>

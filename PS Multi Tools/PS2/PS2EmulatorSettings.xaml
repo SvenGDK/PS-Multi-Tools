@@ -12,9 +12,9 @@
         <CheckBox x:Name="EnablePresetsCheckBox" Content="Enable Presets" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Foreground="White"/>
         <CheckBox x:Name="EnableVSyncCheckBox" Content="Enable VSync" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Button x:Name="BrowseBIOSFileButton" Content="Browse" HorizontalAlignment="Left" Margin="265,110,0,0" VerticalAlignment="Top" Width="55"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="Current BIOS :" VerticalAlignment="Top" Foreground="White"/>
-        <TextBox x:Name="CurrentBIOSNameTextBox" HorizontalAlignment="Left" Margin="10,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,134,0,0" TextWrapping="Wrap" Text="Aspect Ratio :" VerticalAlignment="Top" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0"  Text="Current BIOS :" VerticalAlignment="Top" Foreground="White"/>
+        <TextBox x:Name="CurrentBIOSNameTextBox" HorizontalAlignment="Left" Margin="10,111,0,0"  VerticalAlignment="Top" Width="250"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,134,0,0"  Text="Aspect Ratio :" VerticalAlignment="Top" Foreground="White"/>
         <RadioButton x:Name="WideAspectRadioButton" Content="16:9" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Foreground="White"/>
         <RadioButton x:Name="LBRadioButton" Content="4:3" HorizontalAlignment="Left" Margin="65,155,0,0" VerticalAlignment="Top" Foreground="White"/>
 

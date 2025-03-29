@@ -10,13 +10,13 @@
         <Button x:Name="BurnDiscButton" Content="Burn Disc" HorizontalAlignment="Left" Margin="335,215,0,0" VerticalAlignment="Top" Width="100"/>
         <ComboBox x:Name="DiscDrivesComboBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="425"/>
         <Button x:Name="CheckDiscButton" Content="Check Disc" HorizontalAlignment="Left" Margin="335,75,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Select your Blu-Ray Disc Drive :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
-        <TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="425"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Select your Blu-Ray Disc Drive :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
+        <TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,180,0,0"  VerticalAlignment="Top" Width="425"/>
         <Button x:Name="BrowseISOButton" Content="Browse" HorizontalAlignment="Left" Margin="225,215,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,156,0,0" TextWrapping="Wrap" Text="Select an ISO file to burn on the disc :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
-        <TextBlock x:Name="DiscInfoTextBlock" HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="Wrap" Text="Disc info :" VerticalAlignment="Top"  FontStyle="Italic"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,156,0,0"  Text="Select an ISO file to burn on the disc :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
+        <TextBlock x:Name="DiscInfoTextBlock" HorizontalAlignment="Left" Margin="10,110,0,0"  Text="Disc info :" VerticalAlignment="Top"  FontStyle="Italic"/>
         <ProgressBar x:Name="BurnProgressBar" HorizontalAlignment="Left" Height="28" Margin="10,284,0,0" VerticalAlignment="Top" Width="425"/>
-        <TextBlock x:Name="BurnStatusTextBlock" HorizontalAlignment="Left" Margin="10,263,0,0" TextWrapping="Wrap" Text="Burn Status :" VerticalAlignment="Top" FontStyle="Italic" />
+        <TextBlock x:Name="BurnStatusTextBlock" HorizontalAlignment="Left" Margin="10,263,0,0"  Text="Burn Status :" VerticalAlignment="Top" FontStyle="Italic" />
 
     </Grid>
 </Window>

@@ -8,11 +8,11 @@
         Title="Downloader" Height="400" Width="700" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
         <ProgressBar x:Name="DownloadProgressBar" HorizontalAlignment="Center" Height="25" Margin="0,248,0,0" VerticalAlignment="Top" Width="520"/>
-        <TextBlock x:Name="FileToDownloadTB" HorizontalAlignment="Center" Margin="0,224,0,0" TextWrapping="Wrap" Text="Downloading ..." VerticalAlignment="Top"  FontSize="14" Width="520"/>
+        <TextBlock x:Name="FileToDownloadTB" HorizontalAlignment="Center" Margin="0,224,0,0"  Text="Downloading ..." VerticalAlignment="Top"  FontSize="14" Width="520"/>
         <Grid HorizontalAlignment="Center" Height="68" Margin="0,280,0,0" VerticalAlignment="Top">
-            <TextBlock x:Name="DownloadSpeedTB" Margin="260,0,0,0" TextWrapping="Wrap" Text="0 kb/s" VerticalAlignment="Top"  FontSize="14" TextAlignment="Right" HorizontalAlignment="Left" Width="260"/>
-            <TextBlock x:Name="DownloadETA" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Time left:" VerticalAlignment="Center"  FontSize="14" Width="520"/>
-            <TextBlock x:Name="DownloadFileSizeTB" Margin="0,0,300,0" TextWrapping="Wrap" Text="File Size:" VerticalAlignment="Top"  FontSize="14"/>
+            <TextBlock x:Name="DownloadSpeedTB" Margin="260,0,0,0"  Text="0 kb/s" VerticalAlignment="Top"  FontSize="14" TextAlignment="Right" HorizontalAlignment="Left" Width="260"/>
+            <TextBlock x:Name="DownloadETA" HorizontalAlignment="Center"  Text="Time left:" VerticalAlignment="Center"  FontSize="14" Width="520"/>
+            <TextBlock x:Name="DownloadFileSizeTB" Margin="0,0,300,0"  Text="File Size:" VerticalAlignment="Top"  FontSize="14"/>
         </Grid>
         <Image x:Name="DownloadImage" HorizontalAlignment="Center" Height="128" Margin="0,40,0,0" VerticalAlignment="Top" Width="128"/>
     </Grid>

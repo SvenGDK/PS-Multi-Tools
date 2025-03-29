@@ -8,12 +8,12 @@
              Title="PS3 RCO Dumper" Height="200" Width="420" ThemeMode="System" ResizeMode="CanMinimize">
     <Grid>
         <Button x:Name="BrowseRCOButton" Content="Browse" HorizontalAlignment="Left" Margin="315,32,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Selected an .rco file :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Selected an .rco file :" VerticalAlignment="Top"  FontSize="14"/>
         <Button x:Name="BrowseOutputButton" Content="Browse" HorizontalAlignment="Left" Margin="315,87,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" Text="Selected an output folder :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,88,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,64,0,0"  Text="Selected an output folder :" VerticalAlignment="Top"  FontSize="14"/>
         <Button x:Name="UnpackButton" Content="Dump" HorizontalAlignment="Left" Margin="236,123,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedRCOFileTextBox" HorizontalAlignment="Left" Margin="10,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <TextBox x:Name="SelectedRCOFileTextBox" HorizontalAlignment="Left" Margin="10,32,0,0"  VerticalAlignment="Top" Width="300"/>
 
     </Grid>
 </Window>

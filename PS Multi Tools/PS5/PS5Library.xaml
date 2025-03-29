@@ -41,7 +41,7 @@
                                             </WrapPanel>
                                         </Image.ToolTip>
                                     </Image>
-                                    <TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14" TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,5"/>
+                                    <TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14"  TextAlignment="Center" Margin="0,0,0,5"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

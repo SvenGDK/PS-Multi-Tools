@@ -8,8 +8,8 @@
              Title="FixTar Tool" Height="145" Width="420" ThemeMode="System" ResizeMode="CanMinimize">
     <Grid>
         <Button x:Name="BrowseTarButton" Content="Browse" HorizontalAlignment="Left" Margin="315,33,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="SelectedTarFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Selected a .tar file :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="SelectedTarFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Selected a .tar file :" VerticalAlignment="Top"  FontSize="14"/>
         <Button x:Name="FixTarButton" Content="Fix" HorizontalAlignment="Left" Margin="236,70,0,0" VerticalAlignment="Top" Width="74"/>
 
     </Grid>

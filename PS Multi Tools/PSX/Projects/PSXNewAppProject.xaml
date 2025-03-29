@@ -7,20 +7,20 @@
         mc:Ignorable="d"
         Title="New Homebrew Project" Height="240" Width="785" ResizeMode="CanMinimize" Background="#FF252525">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Project Name :" VerticalAlignment="Top" Width="300" Foreground="White"/>
-        <TextBox x:Name="ProjectNameTextBox" HorizontalAlignment="Left" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,54,0,0" TextWrapping="Wrap" Text="Save Project at :" VerticalAlignment="Top" Width="300" Foreground="White"/>
-        <TextBox x:Name="ProjectDirectoryTextBox" HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,98,0,0" TextWrapping="Wrap" Text="Homebrew ELF file :" VerticalAlignment="Top" Width="300" Foreground="White"/>
-        <TextBox x:Name="ProjectELFFileTextBox" HorizontalAlignment="Left" Margin="10,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,142,0,0" TextWrapping="Wrap" Text="Homebrew Title :" VerticalAlignment="Top" Width="300" Foreground="White"/>
-        <TextBox x:Name="ProjectTitleTextBox" HorizontalAlignment="Left" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="386,10,0,0" TextWrapping="Wrap" Text="Homebrew subtitle (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
-        <TextBox x:Name="ProjectSubTitleTextBox" HorizontalAlignment="Left" Margin="386,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="386,54,0,0" TextWrapping="Wrap" Text="Uninstall message (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
-        <TextBox x:Name="ProjectUninstallMsgTextBox" HorizontalAlignment="Left" Margin="386,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock HorizontalAlignment="Left" Margin="386,98,0,0" TextWrapping="Wrap" Text="Custom icon (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
-        <TextBox x:Name="ProjectIconPathTextBox" HorizontalAlignment="Left" Margin="386,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Project Name :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+        <TextBox x:Name="ProjectNameTextBox" HorizontalAlignment="Left" Margin="10,31,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,54,0,0"  Text="Save Project at :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+        <TextBox x:Name="ProjectDirectoryTextBox" HorizontalAlignment="Left" Margin="10,75,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,98,0,0"  Text="Homebrew ELF file :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+        <TextBox x:Name="ProjectELFFileTextBox" HorizontalAlignment="Left" Margin="10,119,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,142,0,0"  Text="Homebrew Title :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+        <TextBox x:Name="ProjectTitleTextBox" HorizontalAlignment="Left" Margin="10,163,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="386,10,0,0"  Text="Homebrew subtitle (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+        <TextBox x:Name="ProjectSubTitleTextBox" HorizontalAlignment="Left" Margin="386,31,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="386,54,0,0"  Text="Uninstall message (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+        <TextBox x:Name="ProjectUninstallMsgTextBox" HorizontalAlignment="Left" Margin="386,75,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="386,98,0,0"  Text="Custom icon (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+        <TextBox x:Name="ProjectIconPathTextBox" HorizontalAlignment="Left" Margin="386,119,0,0"  VerticalAlignment="Top" Width="300"/>
         <Button x:Name="BrowseProjectPathButton" Content="Browse" HorizontalAlignment="Left" Margin="315,74,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="60" Height="20" FontFamily="Calibri"/>
         <Button x:Name="BrowseELFButton" Content="Browse" HorizontalAlignment="Left" Margin="315,117,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="60" Height="20" FontFamily="Calibri"/>
         <Button x:Name="BrowseIconButton" Content="Browse" HorizontalAlignment="Left" Margin="691,118,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="60" Height="20" FontFamily="Calibri"/>

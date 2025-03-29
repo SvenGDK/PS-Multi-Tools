@@ -8,14 +8,14 @@
              Title="PS5 PKG Sender" Height="410" Width="610" Background="#2D2D30" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBox x:Name="PKGFileURLTextBox" HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="500"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,44,0,0" TextWrapping="Wrap" Text="Enter the .pkg URL file link to install :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Install from URL Link" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,99,0,0" TextWrapping="Wrap" Text="Install from PC (not working yet)" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
-        <TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,133,0,0" TextWrapping="Wrap" Text="Select a .pkg file to install :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,44,0,0"  Text="Enter the .pkg URL file link to install :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Install from URL Link" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,99,0,0"  Text="Install from PC (not working yet)" VerticalAlignment="Top" Foreground="White" FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
+        <TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,157,0,0"  VerticalAlignment="Top" Width="500"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,133,0,0"  Text="Select a .pkg file to install :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
         <Button x:Name="BrowsePKGButton" Content="Browse" HorizontalAlignment="Left" Margin="515,156,0,0" VerticalAlignment="Top" Width="70"/>
-        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="575" Height="140"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,199,0,0" TextWrapping="Wrap" Text="Log :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,223,0,0"  VerticalAlignment="Top" Width="575" Height="140"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,199,0,0"  Text="Log :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
         <Button x:Name="StartWebServerButton" Content="Start WebServer" HorizontalAlignment="Left" Margin="310,180,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold"/>
         <Button x:Name="SendPKGFromPCButton" Content="Send" HorizontalAlignment="Left" Margin="440,180,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold"/>
         <Button x:Name="SendPKGFromURLButton" Content="Send" HorizontalAlignment="Left" Margin="515,67,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold"/>
