@@ -5,37 +5,36 @@
 #Region "Exploit Infos"
 
     Private Sub OpenFortunaGithub_Click(sender As Object, e As RoutedEventArgs) Handles OpenFortunaGithub.Click
-        Process.Start("https://github.com/ps2homebrew/opentuna-installer")
+        Process.Start(New ProcessStartInfo("https://github.com/ps2homebrew/opentuna-installer") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenFreeDVDBootGithub_Click(sender As Object, e As RoutedEventArgs) Handles OpenFreeDVDBootGithub.Click
-        Process.Start("https://github.com/CTurt/FreeDVDBoot")
+        Process.Start(New ProcessStartInfo("https://github.com/CTurt/FreeDVDBoot") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenFreeHDBootGithub_Click(sender As Object, e As RoutedEventArgs) Handles OpenFreeHDBootGithub.Click
-        Process.Start("https://israpps.github.io/FreeMcBoot-Installer/test/FHDB-TUTO.html")
+        Process.Start(New ProcessStartInfo("https://israpps.github.io/FreeMcBoot-Installer/test/FHDB-TUTO.html") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenFreeMCBootGithub_Click(sender As Object, e As RoutedEventArgs) Handles OpenFreeMCBootGithub.Click
-        Process.Start("https://israpps.github.io/FreeMcBoot-Installer/test/1_Introduction.html")
+        Process.Start(New ProcessStartInfo("https://israpps.github.io/FreeMcBoot-Installer/test/1_Introduction.html") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenFreeMCBootPSXGithub_Click(sender As Object, e As RoutedEventArgs) Handles OpenFreeMCBootPSXGithub.Click
-        Process.Start("https://israpps.github.io/FreeMcBoot-Installer/test/1_Introduction.html")
+        Process.Start(New ProcessStartInfo("https://israpps.github.io/FreeMcBoot-Installer/test/1_Introduction.html") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenIndependenceArchive_Click(sender As Object, e As RoutedEventArgs) Handles OpenIndependenceArchive.Click
-        Process.Start("https://web.archive.org/web/20050529124415/http://www.0xd6.org/ps2-independence.html")
+        Process.Start(New ProcessStartInfo("https://web.archive.org/web/20050529124415/http://www.0xd6.org/ps2-independence.html") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenSwapGithub_Click(sender As Object, e As RoutedEventArgs) Handles OpenSwapGithub.Click
-        Process.Start("https://en.wikipedia.org/wiki/Swap_Magic")
+        Process.Start(New ProcessStartInfo("https://www.psdevwiki.com/ps2/Swap_Magic") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenYabasicGithub_Click(sender As Object, e As RoutedEventArgs) Handles OpenYabasicGithub.Click
-        Process.Start("https://github.com/CTurt/PS2-Yabasic-Exploit")
+        Process.Start(New ProcessStartInfo("https://github.com/CTurt/PS2-Yabasic-Exploit") With {.UseShellExecute = True})
     End Sub
-
 
 #End Region
 

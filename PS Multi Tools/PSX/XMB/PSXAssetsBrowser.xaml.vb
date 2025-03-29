@@ -3,7 +3,6 @@ Imports System.IO
 Imports System.Windows.Forms
 Imports System.Windows.Media.Animation
 Imports DDSReader
-Imports MS.Internal
 Imports PS_Multi_Tools.Structures
 
 Public Class PSXAssetsBrowser

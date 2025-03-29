@@ -1,4 +1,5 @@
 ﻿Public Class XOREngine
+
     Public Shared Function GetXOR(inByteArray As Byte(), offsetPos As Integer, length As Integer, XORKey As Byte()) As Byte()
         If inByteArray.Length < offsetPos + length Then
             Throw New Exception("Combination of chosen offset pos. & Length goes outside of the array to be xored.")
@@ -20,4 +21,5 @@
 
         Return outByteArray
     End Function
+
 End Class

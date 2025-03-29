@@ -222,30 +222,39 @@ Public Class PKGInfo
 
         If NewPKGDecryptor.GetPARAMSFO IsNot Nothing Then
             Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(NewPKGDecryptor.GetPARAMSFO)
-            If SFOKeys.ContainsKey("TITLE") Then
-                PKGTitleTextBlock.Dispatcher.BeginInvoke(Sub() Utils.CleanTitle(SFOKeys("TITLE").ToString))
+
+            Dim TITLEValue As Object = Nothing
+            If SFOKeys.TryGetValue("TITLE", TITLEValue) Then
+                PKGTitleTextBlock.Dispatcher.BeginInvoke(Sub() Utils.CleanTitle(TITLEValue.ToString))
             End If
-            If SFOKeys.ContainsKey("TITLE_ID") Then
-                PKGTitleDTextBlock.Dispatcher.BeginInvoke(Sub() PKGTitleDTextBlock.Text = SFOKeys("TITLE_ID").ToString)
-                PKGRegionTextBlock.Dispatcher.BeginInvoke(Sub() PKGRegionTextBlock.Text = GetPS3GameRegion(SFOKeys("TITLE_ID").ToString))
+            Dim TITLEIDValue As Object = Nothing
+            If SFOKeys.TryGetValue("TITLE_ID", TITLEIDValue) Then
+                PKGTitleDTextBlock.Dispatcher.BeginInvoke(Sub() PKGTitleDTextBlock.Text = TITLEIDValue.ToString)
+                PKGRegionTextBlock.Dispatcher.BeginInvoke(Sub() PKGRegionTextBlock.Text = GetPS3GameRegion(TITLEIDValue.ToString))
             End If
-            If SFOKeys.ContainsKey("CATEGORY") Then
-                PKGCategoryTextBlock.Dispatcher.BeginInvoke(Sub() PKGCategoryTextBlock.Text = GetPS3Category(SFOKeys("CATEGORY").ToString))
+            Dim CATEGORYValue As Object = Nothing
+            If SFOKeys.TryGetValue("CATEGORY", CATEGORYValue) Then
+                PKGCategoryTextBlock.Dispatcher.BeginInvoke(Sub() PKGCategoryTextBlock.Text = GetPS3Category(CATEGORYValue.ToString))
             End If
-            If SFOKeys.ContainsKey("CONTENT_ID") Then
-                PKGContentIDTextBlock.Dispatcher.BeginInvoke(Sub() PKGContentIDTextBlock.Text = SFOKeys("CONTENT_ID").ToString)
+            Dim CONTENTIDValue As Object = Nothing
+            If SFOKeys.TryGetValue("CONTENT_ID", CONTENTIDValue) Then
+                PKGContentIDTextBlock.Dispatcher.BeginInvoke(Sub() PKGContentIDTextBlock.Text = CONTENTIDValue.ToString)
             End If
-            If SFOKeys.ContainsKey("APP_TYPE") Then
-                PKGTypeTextBlock.Dispatcher.BeginInvoke(Sub() PKGTypeTextBlock.Text = SFOKeys("APP_TYPE").ToString)
+            Dim APPTYPEValue As Object = Nothing
+            If SFOKeys.TryGetValue("APP_TYPE", APPTYPEValue) Then
+                PKGTypeTextBlock.Dispatcher.BeginInvoke(Sub() PKGTypeTextBlock.Text = APPTYPEValue.ToString)
             End If
-            If SFOKeys.ContainsKey("APP_VER") Then
-                PKGAppVerTextBlock.Dispatcher.BeginInvoke(Sub() PKGAppVerTextBlock.Text = FormatNumber(SFOKeys("APP_VER").ToString, 2))
+            Dim APPVERValue As Object = Nothing
+            If SFOKeys.TryGetValue("APP_VER", APPVERValue) Then
+                PKGAppVerTextBlock.Dispatcher.BeginInvoke(Sub() PKGAppVerTextBlock.Text = FormatNumber(APPVERValue.ToString, 2))
             End If
-            If SFOKeys.ContainsKey("PS3_SYSTEM_VER") Then
-                PKGFirmwareVersionTextBlock.Dispatcher.BeginInvoke(Sub() PKGFirmwareVersionTextBlock.Text = FormatNumber(SFOKeys("PS3_SYSTEM_VER").ToString))
+            Dim PS3SYSTEMVERValue As Object = Nothing
+            If SFOKeys.TryGetValue("PS3_SYSTEM_VER", PS3SYSTEMVERValue) Then
+                PKGFirmwareVersionTextBlock.Dispatcher.BeginInvoke(Sub() PKGFirmwareVersionTextBlock.Text = FormatNumber(PS3SYSTEMVERValue.ToString))
             End If
-            If SFOKeys.ContainsKey("VERSION") Then
-                PKGVersionTextBlock.Dispatcher.BeginInvoke(Sub() PKGVersionTextBlock.Text = SFOKeys("VERSION").ToString)
+            Dim VERSIONValue As Object = Nothing
+            If SFOKeys.TryGetValue("VERSION", VERSIONValue) Then
+                PKGVersionTextBlock.Dispatcher.BeginInvoke(Sub() PKGVersionTextBlock.Text = VERSIONValue.ToString)
             End If
         End If
 

@@ -35,11 +35,11 @@ Public Class PSXPartitionManager
         For Each HDDPartition As String In QueryOutput.Skip(1)
             If HDDPartition.StartsWith("0"c) Then
 
-                Dim Part As New Partition() With {.Type = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(0),
-                    .Start = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(1),
-                    .Parts = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(2),
-                    .Size = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(3),
-                    .Name = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(4)}
+                Dim Part As New Partition() With {.Type = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(0),
+                    .Start = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(1),
+                    .Parts = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(2),
+                    .Size = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(3),
+                    .Name = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(4)}
 
                 PartitionsListView.Items.Add(Part)
             ElseIf HDDPartition.StartsWith("Total") Then
@@ -49,7 +49,6 @@ Public Class PSXPartitionManager
                 Dim AvailableSpaceInGB = Utils.GetIntOnly(HDDSizes(2)) / 1024
 
                 HDDSpaceTextBlock.Text = "Total Space : " + FormatNumber(TotalSpaceInGB, 2) + " GB - Used : " + FormatNumber(UsedSpaceInGB, 2) + " GB - Available : " + FormatNumber(AvailableSpaceInGB, 2) + " GB"
-
             End If
         Next
     End Sub
@@ -73,15 +72,15 @@ Public Class PSXPartitionManager
         For Each HDDPartition As String In QueryOutput.Skip(1)
             If HDDPartition.StartsWith("DVD") Or HDDPartition.StartsWith("CD") Then
 
-                Dim GameSize = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(1).Trim().Replace("KB", "")
+                Dim GameSize = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(1).Trim().Replace("KB", "")
                 Dim GameSizeInMB = CInt(GameSize) / 1024
 
-                Dim GamePart As New GamePartition() With {.Type = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(0),
+                Dim GamePart As New GamePartition() With {.Type = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(0),
                     .Size = FormatNumber(GameSizeInMB, 2) + " MB",
-                    .Flags = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(2),
-                    .DMA = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(3),
-                    .Startup = HDDPartition.Split({" "}, StringSplitOptions.RemoveEmptyEntries)(4),
-                    .Name = HDDPartition.Split({"  "}, StringSplitOptions.RemoveEmptyEntries)(2)}
+                    .Flags = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(2),
+                    .DMA = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(3),
+                    .Startup = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(4),
+                    .Name = HDDPartition.Split(Utils.SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(2)}
 
                 GamesPartitionsListView.Items.Add(GamePart)
             End If

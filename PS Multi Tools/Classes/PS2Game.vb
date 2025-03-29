@@ -226,8 +226,8 @@ Public Class PS2Game
                                 Exit For
                             End If
                         Else 'ID found in the ISO files
-                            If String.Join(" ", Line.Split(New Char() {}, StringSplitOptions.RemoveEmptyEntries)).Split(" "c).Length > 4 Then
-                                GameID = String.Join(" ", Line.Split(New Char() {}, StringSplitOptions.RemoveEmptyEntries)).Split(" "c)(5).Trim()
+                            If String.Join(" ", Line.Split(Array.Empty(Of Char)(), StringSplitOptions.RemoveEmptyEntries)).Split(" "c).Length > 4 Then
+                                GameID = String.Join(" ", Line.Split(Array.Empty(Of Char)(), StringSplitOptions.RemoveEmptyEntries)).Split(" "c)(5).Trim()
                                 Exit For
                             End If
                         End If

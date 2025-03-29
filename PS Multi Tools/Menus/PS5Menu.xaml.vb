@@ -463,7 +463,7 @@ Public Class PS5Menu
     Private Async Sub DownloadNewKStuff_Click(sender As Object, e As RoutedEventArgs) Handles DownloadNewKStuff.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_6.50.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_6.50_v1.3.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -472,7 +472,7 @@ Public Class PS5Menu
     Private Async Sub DownloadetaHEN_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHEN.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/1.9b/etaHEN.bin") = False Then
+        If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/2.0b/etaHEN-2.0b.bin") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -481,16 +481,16 @@ Public Class PS5Menu
     Private Async Sub DownloadetaHENNoToolbox_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHENNoToolbox.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/1.9b/etaHEN_no_toolbox.bin") = False Then
+        If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/2.0b/Payload.zip") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
     End Sub
 
-    Private Async Sub DownloadetaHENBeta_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHENBeta.Click
+    Private Async Sub DownloadetaHENBDJB_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHENBDJB.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/2.0b-pre/etaHEN.bin") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/etaHEN_v2.0b-BDJ-IPV6.iso") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -508,7 +508,7 @@ Public Class PS5Menu
     Private Async Sub DownloadItemzflow_Click(sender As Object, e As RoutedEventArgs) Handles DownloadItemzflow.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/ItemzflowGameManager_v1.08.pkg") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/ItemzflowGameManager_v1.09.pkg") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -526,7 +526,7 @@ Public Class PS5Menu
     Private Async Sub DownloadELFLdr_Click(sender As Object, e As RoutedEventArgs) Handles DownloadELFLdr.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/elfldr_v0.18.1.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/elfldr_v0.19.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -571,7 +571,7 @@ Public Class PS5Menu
     Private Async Sub DownloadWebSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadWebSrv.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/websrv_v0.21.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/websrv_v0.22.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -871,7 +871,7 @@ Public Class PS5Menu
 #Region "Exploits"
 
     Private Sub OpenMast1c0reGitHub_Click(sender As Object, e As RoutedEventArgs) Handles OpenMast1c0reGitHub.Click
-        Process.Start("https://github.com/McCaulay/mast1c0re")
+        Process.Start(New ProcessStartInfo("https://github.com/McCaulay/mast1c0re") With {.UseShellExecute = True})
     End Sub
 
     Private Async Sub DownloadPS5IPV6Expl_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPS5IPV6Expl.Click
@@ -884,11 +884,11 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenKexGitHub_Click(sender As Object, e As RoutedEventArgs) Handles OpenKexGitHub.Click
-        Process.Start("https://github.com/Cryptogenic/PS5-IPV6-Kernel-Exploit")
+        Process.Start(New ProcessStartInfo("https://github.com/Cryptogenic/PS5-IPV6-Kernel-Exploit") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenJARLoaderGitHub_Click(sender As Object, e As RoutedEventArgs) Handles OpenJARLoaderGitHub.Click
-        Process.Start("https://github.com/hammer-83/ps5-jar-loader")
+        Process.Start(New ProcessStartInfo("https://github.com/hammer-83/ps5-jar-loader") With {.UseShellExecute = True})
     End Sub
 
     Private Async Sub DownloadJARLoader_Click(sender As Object, e As RoutedEventArgs) Handles DownloadJARLoader.Click
@@ -910,7 +910,7 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenUMTXJailbreakGitHub_Click(sender As Object, e As RoutedEventArgs) Handles OpenUMTXJailbreakGitHub.Click
-        Process.Start("https://github.com/PS5Dev/PS5-UMTX-Jailbreak")
+        Process.Start(New ProcessStartInfo("https://github.com/PS5Dev/PS5-UMTX-Jailbreak") With {.UseShellExecute = True})
     End Sub
 
 #End Region

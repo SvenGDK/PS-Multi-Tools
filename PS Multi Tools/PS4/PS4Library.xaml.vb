@@ -137,7 +137,7 @@ Public Class PS4Library
 
                 Dim OutputReader As StreamReader = SFOReader.StandardOutput
                 Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
-                If ProcessOutput.Count > 0 Then
+                If ProcessOutput.Length > 0 Then
 
                     For Each Line In ProcessOutput
                         If Line.StartsWith("TITLE=") Then
@@ -396,8 +396,8 @@ Public Class PS4Library
 
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
             'Set the count of pkg files & backup folders
-            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Count
-            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.sfo", SearchOption.AllDirectories).Count
+            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Length
+            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.sfo", SearchOption.AllDirectories).Length
 
             'Show the loading progress window
             NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS4 files", .ShowActivated = True}

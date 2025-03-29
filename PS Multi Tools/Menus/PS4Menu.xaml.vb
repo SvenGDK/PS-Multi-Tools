@@ -172,7 +172,7 @@
     End Sub
 
     Private Sub OpenPPPwnGitHub_Click(sender As Object, e As RoutedEventArgs) Handles OpenPPPwnGitHub.Click
-        Process.Start("https://github.com/TheOfficialFloW/PPPwn")
+        Process.Start(New ProcessStartInfo("https://github.com/TheOfficialFloW/PPPwn") With {.UseShellExecute = True})
     End Sub
 
     Private Sub OpenPPPwnTool_Click(sender As Object, e As RoutedEventArgs) Handles OpenPPPwnTool.Click

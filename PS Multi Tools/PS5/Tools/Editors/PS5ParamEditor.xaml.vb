@@ -617,7 +617,7 @@ Public Class PS5ParamEditor
     End Sub
 
     Private Sub LoadPSDevWikiMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadPSDevWikiMenuItem.Click
-        Process.Start("https://www.psdevwiki.com/ps5/Param.json")
+        Process.Start(New ProcessStartInfo("https://www.psdevwiki.com/ps5/Param.json") With {.UseShellExecute = True})
     End Sub
 
     Private Sub RemoveParamButton_Click(sender As Object, e As RoutedEventArgs) Handles RemoveParamButton.Click

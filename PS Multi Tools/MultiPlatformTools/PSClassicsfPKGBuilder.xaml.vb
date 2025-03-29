@@ -871,7 +871,7 @@ Public Class PSClassicsfPKGBuilder
 
 #Region "PSP"
 
-    Public Function FileExistInISO(GameISOPath As String, FileToSearch As String) As Boolean
+    Public Shared Function FileExistInISO(GameISOPath As String, FileToSearch As String) As Boolean
         Dim Exists As Boolean = False
         Try
             Using NewFileStream As New FileStream(GameISOPath, FileMode.Open, FileAccess.Read)
@@ -889,7 +889,7 @@ Public Class PSClassicsfPKGBuilder
         Return Exists
     End Function
 
-    Public Function ExtractFileFromPSPISO(path As String, fileName As String, DestinationPath As String) As String
+    Public Shared Function ExtractFileFromPSPISO(path As String, fileName As String, DestinationPath As String) As String
         Dim OutputDestination As String = ""
         Dim DesinationDirectoryName As String = IO.Path.GetDirectoryName(DestinationPath)
         If Not Directory.Exists(DesinationDirectoryName) Then
@@ -914,7 +914,7 @@ Public Class PSClassicsfPKGBuilder
         Return OutputDestination
     End Function
 
-    Public Function ReadUMDData(DataFile As String, Offset As Long, Lenght As Integer) As Byte()
+    Public Shared Function ReadUMDData(DataFile As String, Offset As Long, Lenght As Integer) As Byte()
         Dim NewByte(Lenght - 1 + 1 - 1) As Byte
         Using NewBinaryReader As New BinaryReader(File.Open(DataFile, FileMode.Open))
             Dim BaseStreamLenght As Long = NewBinaryReader.BaseStream.Length
@@ -929,7 +929,7 @@ Public Class PSClassicsfPKGBuilder
         Return NewByte
     End Function
 
-    Public Function FindOffset(FileName As String, Query As Byte()) As Object
+    Public Shared Function FindOffset(FileName As String, Query As Byte()) As Object
         Dim ReturnLenght As Object
         Using NewBinaryReader As New BinaryReader(File.Open(FileName, FileMode.Open))
             Dim BaseStreamLength As Double = NewBinaryReader.BaseStream.Length
@@ -984,7 +984,7 @@ Public Class PSClassicsfPKGBuilder
         Return ReturnLenght
     End Function
 
-    Public Sub WriteData(FileToWrite As String, Offset As Long, DataToWrite As String)
+    Public Shared Sub WriteData(FileToWrite As String, Offset As Long, DataToWrite As String)
         Dim NewFileStream As New FileStream(FileToWrite, FileMode.Open, FileAccess.Write, FileShare.Write)
         Dim NewStringArray As String() = DataToWrite.Split(New Char() {"-"c})
         NewFileStream.Seek(Offset, SeekOrigin.Begin)

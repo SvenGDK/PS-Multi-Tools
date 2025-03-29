@@ -418,7 +418,7 @@ Public Class PKGDecryptor
         End Try
     End Function
 
-    Public Function GetBytesFromFile(FileName As String) As Byte()
+    Public Shared Function GetBytesFromFile(FileName As String) As Byte()
         Dim BytesFromFile As Byte()
 
         Try
@@ -840,7 +840,7 @@ Public Class PKGDecryptor
         End Try
     End Function
 
-    Private Function NewBitmapImage(imageData As Byte()) As BitmapImage
+    Private Shared Function NewBitmapImage(imageData As Byte()) As BitmapImage
         If imageData Is Nothing OrElse imageData.Length = 0 Then Return Nothing
         Dim image = New BitmapImage()
         Using mem = New MemoryStream(imageData)

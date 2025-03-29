@@ -66,19 +66,19 @@ Public Class SFOEditor
 #Region "Help Buttons"
 
     Private Sub PS3ParamHelpButton_Click(sender As Object, e As RoutedEventArgs) Handles PS3ParamHelpButton.Click
-        Process.Start("https://www.psdevwiki.com/ps3/PARAM.SFO")
+        Process.Start(New ProcessStartInfo("https://www.psdevwiki.com/ps3/PARAM.SF") With {.UseShellExecute = True})
     End Sub
 
     Private Sub PSPParamHelpButton_Click(sender As Object, e As RoutedEventArgs) Handles PSPParamHelpButton.Click
-        Process.Start("https://www.psdevwiki.com/psp/Param.sfo")
+        Process.Start(New ProcessStartInfo("https://www.psdevwiki.com/psp/Param.sfo") With {.UseShellExecute = True})
     End Sub
 
     Private Sub PSVParamHelpButton_Click(sender As Object, e As RoutedEventArgs) Handles PSVParamHelpButton.Click
-        Process.Start("https://www.psdevwiki.com/vita/System_File_Object_(SFO)_(PSF)")
+        Process.Start(New ProcessStartInfo("https://www.psdevwiki.com/vita/System_File_Object_(SFO)_(PSF)") With {.UseShellExecute = True})
     End Sub
 
     Private Sub PS4ParamHelpButton_Click(sender As Object, e As RoutedEventArgs) Handles PS4ParamHelpButton.Click
-        Process.Start("https://www.psdevwiki.com/ps4/Param.sfo")
+        Process.Start(New ProcessStartInfo("https://www.psdevwiki.com/ps4/Param.sfo") With {.UseShellExecute = True})
     End Sub
 
 #End Region
@@ -798,7 +798,7 @@ Public Class SFOEditor
 
     End Sub
 
-    Public Function AddNewParam(Index As Integer, Name As String, Value As String, Format As Param_SFO.PARAM_SFO.FMT, Lenght As Integer, MaxLength As Integer, ParamTable As List(Of Param_SFO.PARAM_SFO.Table)) As List(Of Param_SFO.PARAM_SFO.Table)
+    Public Shared Function AddNewParam(Index As Integer, Name As String, Value As String, Format As Param_SFO.PARAM_SFO.FMT, Lenght As Integer, MaxLength As Integer, ParamTable As List(Of Param_SFO.PARAM_SFO.Table)) As List(Of Param_SFO.PARAM_SFO.Table)
         Dim IndexTable As New Param_SFO.PARAM_SFO.index_table With {.param_data_fmt = Format, .param_data_len = Convert.ToUInt32(Lenght), .param_data_max_len = Convert.ToUInt32(MaxLength)}
         Dim TableItem As New Param_SFO.PARAM_SFO.Table With {.index = Index, .Indextable = IndexTable, .Name = Name, .Value = Value}
         ParamTable.Add(TableItem)

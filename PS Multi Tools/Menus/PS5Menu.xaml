@@ -200,7 +200,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="Itemzflow by LightningMods">
-                <MenuItem Header="Download v1.08 PKG" x:Name="DownloadItemzflow">
+                <MenuItem Header="Download v1.09 PKG" x:Name="DownloadItemzflow">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -227,7 +227,7 @@
 
         <MenuItem Header="Payloads">
             <MenuItem Header="ELFLdr by john-tornblom">
-                <MenuItem Header="Download v0.18.1" x:Name="DownloadELFLdr">
+                <MenuItem Header="Download v0.19" x:Name="DownloadELFLdr">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -239,17 +239,17 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="etaHEN by LightningMods">
-                <MenuItem Header="Download v1.9B" x:Name="DownloadetaHEN">
+                <MenuItem Header="Download v2.0b" x:Name="DownloadetaHEN">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Download v1.9B (No Toolbox)" x:Name="DownloadetaHENNoToolbox">
+                <MenuItem Header="Download v2.0b (No Toolbox)" x:Name="DownloadetaHENNoToolbox">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Download v2.0B (Pre Release)" x:Name="DownloadetaHENBeta">
+                <MenuItem Header="Download v2.0b IPV6 BD-J ISO" x:Name="DownloadetaHENBDJB">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -442,7 +442,7 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="By sleirsgoevy &amp; EchoStretch for 3.00 - 6.50">
-                    <MenuItem Header="Download" x:Name="DownloadNewKStuff">
+                    <MenuItem Header="Download v1.3" x:Name="DownloadNewKStuff">
                         <MenuItem.Icon>
                             <Image Source="/Images/download.png"/>
                         </MenuItem.Icon>
@@ -462,7 +462,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="WebSrv by john-tornblom">
-                <MenuItem Header="Download v0.21" x:Name="DownloadWebSrv">
+                <MenuItem Header="Download v0.22" x:Name="DownloadWebSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

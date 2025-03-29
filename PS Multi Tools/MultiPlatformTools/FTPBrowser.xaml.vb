@@ -319,7 +319,7 @@ Public Class FTPBrowser
 
                 Dim NewFTPLVItem As New FTPListViewItem()
 
-                If Line.StartsWith("d") Then
+                If Line.StartsWith("d"c) Then
                     Dim SplittedValues As String() = Line.Split(" "c)
 
                     If String.IsNullOrWhiteSpace(SplittedValues(6)) Then
@@ -334,7 +334,7 @@ Public Class FTPBrowser
                     NewFTPLVItem.FileOrDirPermissions = SplittedValues(0)
                     NewFTPLVItem.FileOrDirOwner = SplittedValues(2) + " " + SplittedValues(3)
                     NewFTPLVItem.FileOrDirType = "Folder"
-                ElseIf Line.StartsWith("-") Then
+                ElseIf Line.StartsWith("-"c) Then
                     Dim SplittedValues As String() = Line.Split(" "c)
 
                     If String.IsNullOrWhiteSpace(SplittedValues(6)) Then
@@ -418,7 +418,7 @@ Public Class FTPBrowser
         FTPResponse.Close()
     End Sub
 
-    Public Sub RenameContent2(ConsoleIP As String, RemotePath As String, RenameTo As String, IsFile As Boolean)
+    Public Shared Sub RenameContent2(ConsoleIP As String, RemotePath As String, RenameTo As String, IsFile As Boolean)
         Try
             Using conn As New FtpClient(ConsoleIP, "anonymous", "anonymous", 1337)
                 'Configurate the FTP connection
@@ -445,7 +445,7 @@ Public Class FTPBrowser
         End Try
     End Sub
 
-    Public Async Sub DownloadContent(ConsoleIP As String, ConsolePort As String, FileOrDir As String)
+    Public Shared Async Sub DownloadContent(ConsoleIP As String, ConsolePort As String, FileOrDir As String)
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
         If Await NewDownloader.CreateNewDownload("ftp://" + ConsoleIP + ":" + ConsolePort + FileOrDir) = False Then
@@ -454,7 +454,7 @@ Public Class FTPBrowser
         End If
     End Sub
 
-    Public Sub DownloadContent2(ConsoleIP As String, FileOrDir As String)
+    Public Shared Sub DownloadContent2(ConsoleIP As String, FileOrDir As String)
         If Not Directory.Exists(Environment.CurrentDirectory + "\Downloads") Then Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads")
 
         Dim FileName As String = FileOrDir.Split("/"c).Last()
@@ -528,7 +528,7 @@ Public Class FTPBrowser
         FTPResponse.Close()
     End Sub
 
-    Public Sub DeleteContent2(ConsoleIP As String, FileOrDirName As String, IsFile As Boolean)
+    Public Shared Sub DeleteContent2(ConsoleIP As String, FileOrDirName As String, IsFile As Boolean)
         Try
             Using conn As New FtpClient(ConsoleIP, "anonymous", "anonymous", 1337)
                 'Configurate the FTP connection

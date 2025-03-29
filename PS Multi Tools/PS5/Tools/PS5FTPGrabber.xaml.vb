@@ -471,7 +471,7 @@ Public Class PS5FTPGrabber
                 Dim OutputReader As StreamReader = WindowsCMD.StandardOutput
                 Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {""}, StringSplitOptions.RemoveEmptyEntries)
 
-                If ProcessOutput.Count > -1 Then
+                If ProcessOutput.Length > -1 Then
                     NPWR = ProcessOutput(0).Trim
                 End If
             End Using

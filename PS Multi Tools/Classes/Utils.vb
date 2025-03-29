@@ -8,7 +8,6 @@ Imports System.Net
 Imports System.Net.Http
 Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
-Imports System.Security.Policy
 Imports System.Security.Principal
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -18,6 +17,8 @@ Public Class Utils
 
     Public Shared ReadOnly ByBytes() As Byte = {&H62, &H79, &H20, &H53, &H76, &H65, &H6E, &H47, &H44, &H4B}
     Public Shared ConnectedPSXHDD As Structures.MountedPSXDrive
+
+    Public Shared ReadOnly SpaceSeparator As String() = New String() {" "}
 
     <DllImport("winmm.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
     Private Shared Function PlaySound(<MarshalAs(UnmanagedType.LPWStr)> pszSound As String, hmod As IntPtr, fdwSound As Integer) As Boolean
@@ -198,12 +199,21 @@ Public Class Utils
 
     Public Shared Function GetFileSizeAndDate(FileSize As String, TheDate As String) As Structures.PackageInfo
         Dim PKGSizeStr As Long
-        Long.TryParse(FileSize.ToString.Trim, PKGSizeStr)
-
         Dim PKGDate As Date
-        Date.TryParseExact(TheDate, "yyyy-MM-dd HH:mm:ss", Nothing, DateTimeStyles.None, PKGDate)
+        Dim NewPKGInfo As New Structures.PackageInfo()
 
-        Return New Structures.PackageInfo With {.FileSize = GetFileSize(PKGSizeStr), .FileDate = CStr(PKGDate.Date)}
+        If Long.TryParse(FileSize.ToString.Trim, PKGSizeStr) Then
+            NewPKGInfo.FileSize = GetFileSize(PKGSizeStr)
+        Else
+            NewPKGInfo.FileSize = FileSize
+        End If
+        If Date.TryParseExact(TheDate, "yyyy-MM-dd HH:mm:ss", Nothing, DateTimeStyles.None, PKGDate) Then
+            NewPKGInfo.FileDate = CStr(PKGDate.Date)
+        Else
+            NewPKGInfo.FileDate = TheDate
+        End If
+
+        Return NewPKGInfo
     End Function
 
     Public Shared Function GetPKGTitleID(PKGFilePath As String) As String
@@ -611,7 +621,7 @@ Public Class Utils
 
             For Each ReturnedLine As String In ProcessOutput
                 If ReturnedLine.Contains("wnbd-client") Then
-                    NBDDriveName = ReturnedLine.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries)(4).Trim()
+                    NBDDriveName = ReturnedLine.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(4).Trim()
                     Exit For
                 End If
             Next
@@ -646,7 +656,7 @@ Public Class Utils
                     If Not String.IsNullOrWhiteSpace(Line) Then
                         If Line.Contains("formatted Playstation 2 HDD") Then
                             'Set the found drive as mounted PSX drive
-                            Dim DriveInfos As String() = Line.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries)
+                            Dim DriveInfos As String() = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)
                             If DriveInfos(0) IsNot Nothing Then
                                 DriveHDLName = DriveInfos(0).Trim()
                                 Exit For
@@ -722,7 +732,7 @@ Public Class Utils
                     If Not String.IsNullOrWhiteSpace(Line) Then
                         If Line.Contains("formatted Playstation 2 HDD") Then
                             'Set the found drive as mounted PSX drive
-                            Dim DriveInfos As String() = Line.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries)
+                            Dim DriveInfos As String() = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)
                             HDLDriveName = DriveInfos(0).Trim()
                             Exit For
                         End If
@@ -757,10 +767,10 @@ Public Class Utils
             For Each Line As String In ProcessOutput
                 If Not String.IsNullOrWhiteSpace(Line) Then
                     If Line.Contains("WNBD WNBD_DISK SCSI Disk Device") Then
-                        DriveID = Line.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries)(5).Trim()
+                        DriveID = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(5).Trim()
                         Exit For
                     ElseIf Line.Contains("Microsoft Virtual Disk") Then 'For testing with local VHD
-                        DriveID = Line.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries)(3).Trim()
+                        DriveID = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(3).Trim()
                         Exit For
                     End If
                 End If
@@ -911,11 +921,11 @@ Namespace INI
     Public Class IniFile
         Public path As String
 
-        <DllImport("kernel32")>
+        <DllImport("kernel32", CharSet:=CharSet.Unicode)>
         Private Shared Function WritePrivateProfileString(section As String, key As String, val As String, filePath As String) As Long
         End Function
 
-        <DllImport("kernel32")>
+        <DllImport("kernel32", CharSet:=CharSet.Unicode)>
         Private Shared Function GetPrivateProfileString(section As String, key As String, def As String, retVal As StringBuilder, size As Integer, filePath As String) As Integer
         End Function
 

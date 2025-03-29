@@ -111,15 +111,15 @@ Public Class PKGBrowser
         CurrentListView.Items.Clear()
 
         If TxtBox.Name = NameSearchTextBox.Name Then
-            For Each item As NPSPKG In DownloadsList.Where(Function(lvi) lvi.PackageName.ToLower().Contains(TxtBox.Text.ToLower().Trim()))
+            For Each item As NPSPKG In DownloadsList.Where(Function(lvi) lvi.PackageName.Contains(TxtBox.Text.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase))
                 CurrentListView.Items.Add(item)
             Next
         ElseIf TxtBox.Name = TitleIDSearchTextBox.Name Then
-            For Each item As NPSPKG In DownloadsList.Where(Function(lvi) lvi.PackageTitleID.ToLower().Contains(TxtBox.Text.ToLower().Trim()))
+            For Each item As NPSPKG In DownloadsList.Where(Function(lvi) lvi.PackageTitleID.Contains(TxtBox.Text.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase))
                 CurrentListView.Items.Add(item)
             Next
         ElseIf TxtBox.Name = ContentIDSearchTextBox.Name Then
-            For Each item As NPSPKG In DownloadsList.Where(Function(lvi) lvi.PackageContentID.ToLower().Contains(TxtBox.Text.ToLower().Trim()))
+            For Each item As NPSPKG In DownloadsList.Where(Function(lvi) lvi.PackageContentID.Contains(TxtBox.Text.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase))
                 CurrentListView.Items.Add(item)
             Next
         End If

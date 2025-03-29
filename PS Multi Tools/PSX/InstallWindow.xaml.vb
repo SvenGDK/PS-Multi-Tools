@@ -312,8 +312,8 @@ Public Class InstallWindow
         '2. Search for the created hidden partition
         For Each HDDPartition As String In QueryOutput
             If Not String.IsNullOrEmpty(HDDPartition) Then
-                If HDDPartition.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries).Length >= 3 Then
-                    HDDPartition = HDDPartition.Split(New String() {" "}, StringSplitOptions.RemoveEmptyEntries)(4)
+                If HDDPartition.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries).Length >= 3 Then
+                    HDDPartition = HDDPartition.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(4)
                     If HDDPartition.Trim().StartsWith("__." + HDLGameID) Then 'The created hidden partition
                         CreatedGamePartition = HDDPartition.Trim()
                         Exit For

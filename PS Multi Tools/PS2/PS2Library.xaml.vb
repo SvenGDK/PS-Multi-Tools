@@ -348,6 +348,7 @@ Public Class PS2Library
         If infoRows IsNot Nothing AndAlso infoRows.Count > 0 Then
             'Game Title
             If infoRows.Item(4).InnerText IsNot Nothing Then
+
                 If infoRows.Item(4).InnerText.Split(New String() {"OFFICIAL TITLE "}, StringSplitOptions.RemoveEmptyEntries).Length > 0 Then
                     GameTitle = infoRows.Item(4).InnerText.Split(New String() {"OFFICIAL TITLE "}, StringSplitOptions.RemoveEmptyEntries)(0)
                 End If

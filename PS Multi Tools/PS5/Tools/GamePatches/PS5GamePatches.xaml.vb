@@ -63,7 +63,7 @@ Public Class PS5GamePatches
     End Sub
 
     Private Sub VisitButton_Click(sender As Object, e As RoutedEventArgs) Handles VisitButton.Click
-        Process.Start("https://prosperopatches.com/" + SearchGameIDTextBox.Text)
+        Process.Start(New ProcessStartInfo("https://prosperopatches.com/" + SearchGameIDTextBox.Text) With {.UseShellExecute = True})
     End Sub
 
     Private Async Sub PS5GamePatches_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
