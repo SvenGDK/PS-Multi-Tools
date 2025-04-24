@@ -1823,7 +1823,7 @@ Public Class PS5Library
 
     End Sub
 
-    Public Function GetDirSize(RootFolder As String) As Long
+    Private Function GetDirSize(RootFolder As String) As Long
         Dim FolderInfo = New DirectoryInfo(RootFolder)
         For Each File In FolderInfo.GetFiles
             If Not File.Name.EndsWith("-merged.pkg") Then 'skip merged .pkg

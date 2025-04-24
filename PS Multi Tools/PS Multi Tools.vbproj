@@ -8,12 +8,12 @@
     <UseWindowsForms>True</UseWindowsForms>
 	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <OptionStrict>On</OptionStrict>
-    <AssemblyVersion>15.2.3.0</AssemblyVersion>
-    <FileVersion>15.2.3.0</FileVersion>
+    <AssemblyVersion>15.3.0.0</AssemblyVersion>
+    <FileVersion>15.3.0.0</FileVersion>
     <ApplicationIcon>psicon.ico</ApplicationIcon>
 	<NoWarn>$(NoWarn);MSB3270</NoWarn>
 	<Title>PS Multi Tools</Title>
-	<Version>15.2.3</Version>
+	<Version>15.3.0</Version>
 	<Company>SvenGDK</Company>
 	<Copyright>Copyright © SvenGDK 2011-2025</Copyright>
 	<Product>PS Multi Tools</Product>
@@ -254,16 +254,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+    <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
     <PackageReference Include="DiscUtils.Iso9660" Version="0.16.13" />
     <PackageReference Include="DiscUtils.Udf" Version="0.16.13" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25104.5739" />
     <PackageReference Include="FluentFTP" Version="52.1.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3124.44" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3179.45" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
-    <PackageReference Include="WinSCP" Version="6.3.7" />
+    <PackageReference Include="WinSCP" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>

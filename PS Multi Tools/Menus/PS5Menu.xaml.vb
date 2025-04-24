@@ -451,19 +451,19 @@ Public Class PS5Menu
         End If
     End Sub
 
-    Private Async Sub DownloadKStuff_Click(sender As Object, e As RoutedEventArgs) Handles DownloadKStuff.Click
+    Private Async Sub DownloadNewKStuff_Click(sender As Object, e As RoutedEventArgs) Handles DownloadNewKStuff.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("https://sleirsgoevy.github.io/ps4jb2/ps5-403/ps5-kstuff.bin") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_3xx-7xx.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
     End Sub
 
-    Private Async Sub DownloadNewKStuff_Click(sender As Object, e As RoutedEventArgs) Handles DownloadNewKStuff.Click
+    Private Async Sub DownloadKStuffToggle_Click(sender As Object, e As RoutedEventArgs) Handles DownloadKStuffToggle.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_6.50_v1.3.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff-toggle.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -562,7 +562,7 @@ Public Class PS5Menu
     Private Async Sub DownloadSHSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadSHSrv.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/shsrv_v0.14.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/shsrv_v0.15.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If

@@ -212,7 +212,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="PS5-Xplorer PKG by Lapy">
-                <MenuItem Header="Download v1.02" x:Name="DownloadPS5Xplorer">
+                <MenuItem Header="Download v1.04" x:Name="DownloadPS5Xplorer">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -421,6 +421,22 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="kstuff">
+                <MenuItem Header="By sleirsgoevy &amp; EchoStretch for 3.XX - 7.XX">
+                    <MenuItem Header="Download v1.4" x:Name="DownloadNewKStuff">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/download.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="kstuff-Toggle yy EchoStretch">
+                <MenuItem Header="Download v1.0" x:Name="DownloadKStuffToggle">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="OffAct by john-tornblom">
                 <MenuItem Header="Download v0.3" x:Name="DownloadOffAct">
                     <MenuItem.Icon>
@@ -433,24 +449,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="PS5-kstuff">
-                <MenuItem Header="By sleirsgoevy for 3.00, 3.20, 3.21, 4.00, 4.02, 4.03, 4.50, 4.51">
-                    <MenuItem Header="Download" x:Name="DownloadKStuff">
-                        <MenuItem.Icon>
-                            <Image Source="/Images/download.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="By sleirsgoevy &amp; EchoStretch for 3.00 - 6.50">
-                    <MenuItem Header="Download v1.3" x:Name="DownloadNewKStuff">
-                        <MenuItem.Icon>
-                            <Image Source="/Images/download.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-            </MenuItem>
             <MenuItem Header="SHSrv by john-tornblom">
-                <MenuItem Header="Download v0.14" x:Name="DownloadSHSrv">
+                <MenuItem Header="Download v0.15" x:Name="DownloadSHSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

@@ -5,14 +5,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="Make fakeSELFs" Height="400" Width="700" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
+             Title="Make fakeSELFs" Height="550" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,35,0,0"  VerticalAlignment="Top" Width="585"/>
-        <Button x:Name="BrowseFolderButton" Content="Browse" HorizontalAlignment="Left" Margin="600,35,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,35,0,0"  VerticalAlignment="Top" Width="680"/>
+        <Button x:Name="BrowseFolderButton" Content="Browse" HorizontalAlignment="Right" Margin="0,34,10,0" VerticalAlignment="Top" Width="76"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a game backup folder :" VerticalAlignment="Top"  FontSize="16" Margin="10,10,0,0" FontFamily="Calibri"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Log :" VerticalAlignment="Top"  FontSize="16" Margin="10,88,0,0" FontFamily="Calibri"/>
-        <TextBox x:Name="MakeLogTextBox" HorizontalAlignment="Left" Margin="10,113,0,0"  VerticalAlignment="Top" Width="665" Height="240"/>
-        <Button x:Name="MakeButton" Content="Make" HorizontalAlignment="Left" Margin="520,70,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Log :" VerticalAlignment="Bottom"  FontSize="16" Margin="12,0,0,280" FontFamily="Calibri"/>
+        <TextBox x:Name="MakeLogTextBox"  VerticalAlignment="Bottom" Height="263" Margin="13,0,13,11"/>
+        <Button x:Name="MakeButton" Content="Make" HorizontalAlignment="Right" Margin="0,0,12,280" VerticalAlignment="Bottom" Width="76" IsEnabled="False"/>
+        <Image x:Name="BackupIconImage" HorizontalAlignment="Left" Height="128" Margin="27,81,0,0" VerticalAlignment="Top" Width="128"/>
+        <ComboBox x:Name="BaseSDKVersionComboBox" HorizontalAlignment="Left" Margin="500,158,0,0" VerticalAlignment="Top" Width="125" IsEditable="True" SelectedIndex="0">
+            <ComboBoxItem Content="0x02000000"/>
+            <ComboBoxItem Content="0x03000000"/>
+            <ComboBoxItem Content="0x04000000"/>
+            <ComboBoxItem Content="0x05000000"/>
+            <ComboBoxItem Content="0x06000000"/>
+            <ComboBoxItem Content="0x07000000"/>
+        </ComboBox>
+        <CheckBox x:Name="PatchSDKCheckBox" Content="Patch SDK Version" HorizontalAlignment="Left" Margin="500,108,0,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="500,137,0,0" Text="Base SDK Version :" VerticalAlignment="Top"/>
+        <ComboBox x:Name="TargetSDKVersionComboBox" HorizontalAlignment="Left" Margin="641,158,0,0" VerticalAlignment="Top" Width="125" IsEditable="True" SelectedIndex="2">
+            <ComboBoxItem Content="0x02000000"/>
+            <ComboBoxItem Content="0x03000000"/>
+            <ComboBoxItem Content="0x04030000"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="641,137,0,0" Text="Target SDK Version :" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="500,86,0,0" Text="Options" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Margin="165,85,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="330"/>
+        <TextBlock x:Name="TitleIDTextBlock" HorizontalAlignment="Left" Margin="165,106,0,0" VerticalAlignment="Top" Width="330"/>
+        <TextBlock x:Name="ContentIDTextBlock" HorizontalAlignment="Left" Margin="165,127,0,0" VerticalAlignment="Top" Width="330"/>
+        <TextBlock x:Name="TypeTextBlock" HorizontalAlignment="Left" Margin="165,148,0,0" VerticalAlignment="Top" Width="330"/>
+        <TextBlock x:Name="SizeTextBlock" HorizontalAlignment="Left" Margin="165,169,0,0" VerticalAlignment="Top" Width="330"/>
+        <TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Left" Margin="165,190,0,0" VerticalAlignment="Top" Width="330"/>
+        <CheckBox x:Name="CreateBackupCheckBox" Content="Create backup files" HorizontalAlignment="Left" Margin="641,108,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
