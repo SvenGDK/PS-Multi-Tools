@@ -586,6 +586,15 @@ Public Class PS5Menu
         End If
     End Sub
 
+    Private Async Sub DownloadSELFDecrypter_Click(sender As Object, e As RoutedEventArgs) Handles DownloadSELFDecrypter.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/ps5-self-decrypter_v0.3.elf") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
     Private Async Sub DownloadKLogSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadKLogSrv.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()

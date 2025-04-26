@@ -244,82 +244,91 @@
             </MenuItem>
         </MenuItem>
         <MenuItem Header="Homebrew &amp; Payloads">
-            <MenuItem Header="Apollo Save Tool">
-                <MenuItem Header="Download v1.6.0" x:Name="DownloadApolloST">
+            <MenuItem Header="Apollo Save Tool by bucanero">
+                <MenuItem Header="Download v2.0.0" x:Name="DownloadApolloST">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Brew">
-                <MenuItem Header="Download v1" x:Name="DownloadBrew">
+            <MenuItem Header="Brew by Flatz &amp; TOXXIC407">
+                <MenuItem Header="Download v1.00" x:Name="DownloadBrew">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="FTP Client">
+            <MenuItem Header="ezRemote Client by cy33hc">
+                <MenuItem Header="Download v1.37" x:Name="DownloadezRemoteClient">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FPKGi by ItsJokerZz &amp; Bucanero">
+                <MenuItem Header="Download v0.87.7" x:Name="DownloadFPKGi">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="FTP Client by cy33hc">
                 <MenuItem Header="Download v1.0.8" x:Name="DownloadFTPClient">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="GoldHEN">
+            <MenuItem Header="GoldHEN by SiSTRo">
                 <MenuItem Header="Download v2.4b18.3" x:Name="DownloadGoldHEN">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="GoldHEN Cheats Manager" >
-                <MenuItem Header="Download v1.0.3" x:Name="DownloadGoldHENCM">
+            <MenuItem Header="GoldHEN Cheats Manager by bucanero" >
+                <MenuItem Header="Download v1.1.4" x:Name="DownloadGoldHENCM">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Download latest version from GitHub" x:Name="DownloadGoldHENCMGithub">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/github-mark.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
             </MenuItem>
-            <MenuItem Header="Homebrew Store" >
+            <MenuItem Header="Homebrew Store by LightningMods" >
                 <MenuItem Header="Download R2" x:Name="DownloadHomebrewStore">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="IconMask" >
-                <MenuItem Header="Download v1.10" x:Name="DownloadIconMask">
+            <MenuItem Header="IconMask by Lapy &amp; Anubis" >
+                <MenuItem Header="Download v1.16" x:Name="DownloadIconMask">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Itemzflow Game Manager" >
-                <MenuItem Header="Download v1.03" x:Name="DownloadItemzflowGM">
+            <MenuItem Header="Itemzflow Game Manager by LightningMods" >
+                <MenuItem Header="Download v1.06" x:Name="DownloadItemzflowGM">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="LogMeIn Hamachi" >
+            <MenuItem Header="LogMeIn Hamachi by Sleirsgoevy" >
                 <MenuItem Header="Download v0.2.3" x:Name="DownloadHamachi">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="NoBDToolkit" >
-                <MenuItem Header="Download v2" x:Name="DownloadNoBDToolkit">
+            <MenuItem Header="NoBDToolkit by LightningMods" >
+                <MenuItem Header="Download v2.04" x:Name="DownloadNoBDToolkit">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="PayloadGuest" >
+            <MenuItem Header="PayloadGuest by AlAzif" >
                 <MenuItem Header="Download v0.98" x:Name="DownloadPayloadGuest">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
@@ -331,49 +340,63 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="PKGi" >
+            <MenuItem Header="PKGi by ThoeryWrong" >
                 <MenuItem Header="Download v1" x:Name="DownloadPKGi">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="PS4Player" >
-                <MenuItem Header="Download v1.07" x:Name="DownloadPS4Player">
+            <MenuItem Header="PS4 Player by Lapy" >
+                <MenuItem Header="Download v1.08" x:Name="DownloadPS4Player">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="PS4TOOLSET" >
-                <MenuItem Header="Download v2" x:Name="DownloadPS4ToolSet">
+            <MenuItem Header="PS4 Player 3D by Lapy" >
+                <MenuItem Header="Download v1.01" x:Name="DownloadPS4Player3D">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="PS4-Xplorer 2" >
-                <MenuItem Header="Download v2.01" x:Name="DownloadPS4Xplorer">
+            <MenuItem Header="PS4 Cheats Manager by bucanero" >
+                <MenuItem Header="Download v1.2.2" x:Name="DownloadPS4CheatsManager">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="SMB Client" >
-                <MenuItem Header="Download v1.10" x:Name="DownloadSMBClient">
+            <MenuItem Header="PS4 Toolset by Snake" >
+                <MenuItem Header="Download v2.20" x:Name="DownloadPS4ToolSet">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="RemotePKGInstaller" >
+            <MenuItem Header="PS4-Xplorer 2 by Lapy" >
+                <MenuItem Header="Download v2.04" x:Name="DownloadPS4Xplorer">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RemotePKGInstaller by Flatz" >
                 <MenuItem Header="Download v1.02" x:Name="DownloadRemotePKGInstaller">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="WebDAV Client" >
+            <MenuItem Header="SMB Client by cy33hc" >
+                <MenuItem Header="Download v1.10" x:Name="DownloadSMBClient">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="WebDAV Client by cy33hc" >
                 <MenuItem Header="Download v1.04" x:Name="DownloadWebDAVClient">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>

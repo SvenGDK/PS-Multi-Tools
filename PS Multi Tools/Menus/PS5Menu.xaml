@@ -430,7 +430,7 @@
                     </MenuItem>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="kstuff-Toggle yy EchoStretch">
+            <MenuItem Header="kstuff-Toggle by EchoStretch">
                 <MenuItem Header="Download v1.0" x:Name="DownloadKStuffToggle">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
@@ -444,6 +444,13 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Download latest build from GitHub" x:Name="DownloadOffActGithub">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="SELF Decrypter by idlesauce &amp; EchoStretch">
+                <MenuItem Header="Download v0.4" x:Name="DownloadSELFDecrypter">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
