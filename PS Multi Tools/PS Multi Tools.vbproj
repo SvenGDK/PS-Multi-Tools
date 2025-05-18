@@ -8,12 +8,12 @@
     <UseWindowsForms>True</UseWindowsForms>
 	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <OptionStrict>On</OptionStrict>
-    <AssemblyVersion>15.3.1.0</AssemblyVersion>
-    <FileVersion>15.3.1.0</FileVersion>
+    <AssemblyVersion>15.4.0.0</AssemblyVersion>
+    <FileVersion>15.4.0.0</FileVersion>
     <ApplicationIcon>psicon.ico</ApplicationIcon>
 	<NoWarn>$(NoWarn);MSB3270</NoWarn>
 	<Title>PS Multi Tools</Title>
-	<Version>15.3.1</Version>
+	<Version>15.4.0</Version>
 	<Company>SvenGDK</Company>
 	<Copyright>Copyright © SvenGDK 2011-2025</Copyright>
 	<Product>PS Multi Tools</Product>
@@ -29,11 +29,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>none</DebugType>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,6 +53,7 @@
     <None Remove="Images\copy-icon.png" />
     <None Remove="Images\create.png" />
     <None Remove="Images\de.png" />
+    <None Remove="Images\decrypt.png" />
     <None Remove="Images\delete.png" />
     <None Remove="Images\DIC-File.png" />
     <None Remove="Images\disc.png" />
@@ -75,6 +78,7 @@
     <None Remove="Images\Info.png" />
     <None Remove="Images\information-button.png" />
     <None Remove="Images\iso.png" />
+    <None Remove="Images\isodisc.png" />
     <None Remove="Images\it.png" />
     <None Remove="Images\jp.png" />
     <None Remove="Images\klog.png" />
@@ -173,6 +177,7 @@
     <Resource Include="Images\copy-icon.png" />
     <Resource Include="Images\create.png" />
     <Resource Include="Images\de.png" />
+    <Resource Include="Images\decrypt.png" />
     <Resource Include="Images\delete.png" />
     <Resource Include="Images\DIC-File.png" />
     <Resource Include="Images\disc.png" />
@@ -197,6 +202,7 @@
     <Resource Include="Images\Info.png" />
     <Resource Include="Images\information-button.png" />
     <Resource Include="Images\iso.png" />
+    <Resource Include="Images\isodisc.png" />
     <Resource Include="Images\it.png" />
     <Resource Include="Images\jp.png" />
     <Resource Include="Images\klog.png" />
@@ -255,15 +261,15 @@
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
-    <PackageReference Include="DiscUtils.Iso9660" Version="0.16.13" />
-    <PackageReference Include="DiscUtils.Udf" Version="0.16.13" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25104.5739" />
     <PackageReference Include="FluentFTP" Version="52.1.0" />
+    <PackageReference Include="LTRData.DiscUtils.Iso9660" Version="1.0.55" />
+    <PackageReference Include="LTRData.DiscUtils.Udf" Version="1.0.55" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.4" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3179.45" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
-    <PackageReference Include="WinSCP" Version="6.5.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
+    <PackageReference Include="WinSCP" Version="6.5.1" />
   </ItemGroup>
 
   <ItemGroup>

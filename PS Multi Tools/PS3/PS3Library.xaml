@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PS_Multi_Tools"
         mc:Ignorable="d"
-        Title="PS3 Library" Height="700" Width="1350" Background="#2D2D30" ResizeMode="CanMinimize">
+        Title="PS3 Library" Height="750" Width="1350" Background="#2D2D30" ResizeMode="CanMinimize">
     <Grid>
         <Rectangle x:Name="BlurringShape">
             <Rectangle.Fill>
@@ -41,64 +41,64 @@
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FocusVisualStyle="{x:Null}" FontSize="24" Margin="117,422,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FocusVisualStyle="{x:Null}" FontSize="24" Margin="126,431,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,490,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="126,499,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,524,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="126,533,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,422,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="913,431,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameVersionTextBlock" VerticalAlignment="Top" Text="GameVersion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,456,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameVersionTextBlock" VerticalAlignment="Top" Text="GameVersion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="913,465,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,524,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="913,533,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameAppVersionTextBlock" VerticalAlignment="Top" Text="GameAppVersion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,490,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameAppVersionTextBlock" VerticalAlignment="Top" Text="GameAppVersion" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="913,499,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,456,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="126,465,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <Image x:Name="ResolutionsImage" HorizontalAlignment="Left" Height="32" Margin="354,557,0,0" VerticalAlignment="Top" Width="32" Source="/Images/ResolutionsIcon.png" Cursor="Hand"/>
-        <Image x:Name="SoundFormatsImage" HorizontalAlignment="Left" Height="32" Margin="388,593,0,0" VerticalAlignment="Top" Width="32" Source="/Images/SoundFormatsIcon.png" Cursor="Hand"/>
-        <TextBlock VerticalAlignment="Top" Text="Supported Resolutions :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,558,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <Image x:Name="ResolutionsImage" HorizontalAlignment="Left" Height="32" Margin="363,566,0,0" VerticalAlignment="Top" Width="32" Source="/Images/ResolutionsIcon.png" Cursor="Hand"/>
+        <Image x:Name="SoundFormatsImage" HorizontalAlignment="Left" Height="32" Margin="397,602,0,0" VerticalAlignment="Top" Width="32" Source="/Images/SoundFormatsIcon.png" Cursor="Hand"/>
+        <TextBlock VerticalAlignment="Top" Text="Supported Resolutions :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="126,567,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock VerticalAlignment="Top" Text="Supported Sound Formats :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="117,594,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock VerticalAlignment="Top" Text="Supported Sound Formats :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="126,603,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameBackupTypeTextBlock" VerticalAlignment="Top" Text="Backup Type :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,558,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameBackupTypeTextBlock" VerticalAlignment="Top" Text="Backup Type:" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="913,567,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder :" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="904,592,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+        <TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder:" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="913,601,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
             </TextBlock.Effect>
@@ -117,6 +117,11 @@
         <Button x:Name="FilterByPKGButton" Content="Filter by PKG" HorizontalAlignment="Left" Margin="730,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
         <Button x:Name="FilterByLocalGamesButton" Content="Only local games" HorizontalAlignment="Left" Margin="860,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
         <Button x:Name="FilterByRemoteGamesButton" Content="Only remote games" HorizontalAlignment="Left" Margin="990,303,0,0" VerticalAlignment="Top" Width="125" Height="20" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <TextBlock x:Name="ISOEncryptionStatusTextBlock" VerticalAlignment="Top" Text="ISO Status:" FocusVisualStyle="{x:Null}" FontSize="24" TextAlignment="Left" Margin="913,635,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+            </TextBlock.Effect>
+        </TextBlock>
 
     </Grid>
 </Window>

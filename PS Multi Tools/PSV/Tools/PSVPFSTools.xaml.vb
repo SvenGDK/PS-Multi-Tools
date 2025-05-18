@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports System.Net.Http
 Imports System.Windows.Forms
+Imports FluentFTP
 
 Public Class PSVPFSTools
 
@@ -53,9 +55,10 @@ Public Class PSVPFSTools
 
     Private Async Sub GetzRIFKeyButton_Click(sender As Object, e As RoutedEventArgs) Handles GetzRIFKeyButton.Click
         If MsgBox("Load from the latest database ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-            Using NewWebClient As New WebClient
-                Dim GamesList As String = Await NewWebClient.DownloadStringTaskAsync(New Uri("https://nopaystation.com/tsv/PSV_GAMES.tsv"))
-                Dim GamesListLines As String() = GamesList.Split(CChar(vbCrLf))
+            Using NewWebClient As New HttpClient()
+                Dim GamesList As String = Await NewWebClient.GetStringAsync("https://nopaystation.com/tsv/PSV_GAMES.tsv")
+                Dim GamesListLines As String() = GamesList.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+
                 For Each GameLine As String In GamesListLines.Skip(1)
                     Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
                     Dim AdditionalInfo As Structures.PackageInfo = Utils.GetFileSizeAndDate(SplittedValues(8).Trim(), SplittedValues(6).Trim())

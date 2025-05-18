@@ -1,15 +1,14 @@
-﻿Imports System.ComponentModel
-Imports System.IO
+﻿Imports System.IO
 Imports System.Security.Authentication
 Imports System.Threading
 Imports System.Windows.Forms
 Imports System.Windows.Media.Animation
+Imports DiscUtils.Iso9660
 Imports FluentFTP
 Imports PS_Multi_Tools.INI
 
 Public Class PS3Library
 
-    Dim WithEvents GameLoaderWorker As New BackgroundWorker() With {.WorkerReportsProgress = True}
     Dim WithEvents NewLoadingWindow As New SyncWindow() With {.Title = "Loading PS3 files", .ShowActivated = True}
 
     Dim GamesList As New List(Of PS3Game)()
@@ -29,15 +28,16 @@ Public Class PS3Library
     Dim WithEvents PlayGameMenuItem As New Controls.MenuItem() With {.Header = "Play with rpcs3", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/controller.png", UriKind.Relative))}}
 
     'ISO tools context menu items
-    Dim WithEvents ISOToolsMenuItem As New Controls.MenuItem() With {.Header = "ISO Tools", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/iso.png", UriKind.Relative))}}
+    Dim WithEvents ISOToolsMenuItem As New Controls.MenuItem() With {.Header = "ISO Tools", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/isodisc.png", UriKind.Relative))}}
     Dim WithEvents ExtractISOMenuItem As New Controls.MenuItem() With {.Header = "Extract ISO", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/extract.png", UriKind.Relative))}}
     Dim WithEvents CreateISOMenuItem As New Controls.MenuItem() With {.Header = "Create ISO", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/create.png", UriKind.Relative))}}
     Dim WithEvents PatchISOMenuItem As New Controls.MenuItem() With {.Header = "Patch ISO", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/patch.png", UriKind.Relative))}}
     Dim WithEvents SplitISOMenuItem As New Controls.MenuItem() With {.Header = "Split ISO", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/split.png", UriKind.Relative))}}
+    Dim WithEvents DecryptISOMenuItem As New Controls.MenuItem() With {.Header = "Decrypt ISO", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/decrypt.png", UriKind.Relative))}}
 
     'webMAN MOD ISO utilities context menu items
-    Dim WithEvents MountISOMenuItem As New Controls.MenuItem() With {.Header = "Mount selected game", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/iso.png", UriKind.Relative))}}
-    Dim WithEvents MountAndPlayISOMenuItem As New Controls.MenuItem() With {.Header = "Mount & Play selected game", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/iso.png", UriKind.Relative))}}
+    Dim WithEvents MountISOMenuItem As New Controls.MenuItem() With {.Header = "Mount selected game", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/isodisc.png", UriKind.Relative))}}
+    Dim WithEvents MountAndPlayISOMenuItem As New Controls.MenuItem() With {.Header = "Mount & Play selected game", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/isodisc.png", UriKind.Relative))}}
 
     'Supplemental library menu items
     Dim WithEvents LoadFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a local backup folder"}
@@ -135,554 +135,527 @@ Public Class PS3Library
         End Property
     End Structure
 
-    Private Sub GameLoaderWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles GameLoaderWorker.DoWork
-        Dim WorkerArgs As GameLoaderArgs = CType(e.Argument, GameLoaderArgs)
-
-        If WorkerArgs.Type = LoadType.FTP Then
-            Try
-                Using conn As New FtpClient(WorkerArgs.ConsoleIP, "anonymous", "anonymous", 21)
-                    'Configurate the FTP connection
-                    conn.Config.ValidateAnyCertificate = True
-                    conn.Config.SslProtocols = SslProtocols.None
-                    conn.Config.DataConnectionEncryption = False
-                    conn.Config.DataConnectionType = FtpDataConnectionType.PASV
-
-                    'Connect
-                    conn.Connect()
-
-                    'Get /dev_hdd0/game
-                    If conn.DirectoryExists("/dev_hdd0/game") Then
-                        For Each item In conn.GetListing("/dev_hdd0/game")
-
-                            Dim NewPS3Game As New PS3Game()
-
-                        Next
-                    End If
-
-                    'Get /dev_hdd0/GAMES
-                    If conn.DirectoryExists("/dev_hdd0/GAMES") Then
-                        For Each item In conn.GetListing("/dev_hdd0/GAMES")
-
-                            Dim NewPS3Game As New PS3Game()
-
-                            If item.Type = FtpObjectType.Directory Then
-                                If conn.DirectoryExists(item.FullName + "/PS3_GAME") Then
-
-                                    If conn.FileExists(item.FullName + "/PS3_GAME/PARAM.SFO") Then
-
-                                    End If
-
-                                End If
-
-                            End If
-                        Next
-                    End If
-
-                    'Get PS3ISO games
-                    If conn.DirectoryExists("/dev_hdd0/PS3ISO") Then
-                        For Each item In conn.GetListing("/dev_hdd0/PS3ISO")
-                            If item.Type = FtpObjectType.File Then
-                                If item.Name.EndsWith(".iso") Then
-
-                                    'Dim ISOCacheFolderName As String = Path.GetFileNameWithoutExtension(item.FullName)
-                                    'Dim FullFTPPath As String = "ftp://" + WorkerArgs.ConsoleIP + item.FullName
-
-                                    Dim NewPS3Game As New PS3Game With {
-                                        .GridWidth = 210,
-                                        .GridHeight = 210,
-                                        .ImageWidth = 200,
-                                        .ImageHeight = 200,
-                                        .GameSize = FormatNumber(item.Size / 1073741824, 2) + " GB",
-                                        .GameFilePath = item.FullName,
-                                        .GameFileType = PS3Game.GameFileTypes.PS3ISO,
-                                        .GameRootLocation = PS3Game.GameLocation.WebMANMOD,
-                                        .GameTitle = item.Name
-                                    }
-
-                                    GamesList.Add(NewPS3Game)
-
-                                    If Dispatcher.CheckAccess() = False Then
-                                        Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS3Disc.png", UriKind.RelativeOrAbsolute)))
-                                    Else
-                                        NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS3Disc.png", UriKind.RelativeOrAbsolute))
-                                    End If
-
-                                    'Add to the ListView
-                                    If PS3GamesListView.Dispatcher.CheckAccess() = False Then
-                                        PS3GamesListView.Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
-                                    Else
-                                        PS3GamesListView.Items.Add(NewPS3Game)
-                                    End If
-
-                                End If
-                            End If
-                        Next
-                    End If
-
-                    'Get PS2ISO games
-                    If conn.DirectoryExists("/dev_hdd0/PS2ISO") Then
-                        For Each item In conn.GetListing("/dev_hdd0/PS2ISO")
-                            If item.Type = FtpObjectType.File Then
-                                If item.Name.EndsWith(".bin.enc") Then
-
-                                    Dim NewPS3Game As New PS3Game With {
-                                        .GridWidth = 210,
-                                        .GridHeight = 210,
-                                        .ImageWidth = 200,
-                                        .ImageHeight = 200,
-                                        .GameSize = FormatNumber(item.Size / 1073741824, 2) + " GB",
-                                        .GameFilePath = item.FullName,
-                                        .GameFileType = PS3Game.GameFileTypes.PS2ISO,
-                                        .GameRootLocation = PS3Game.GameLocation.WebMANMOD,
-                                        .GameTitle = item.Name
-                                    }
-
-                                    GamesList.Add(NewPS3Game)
-
-                                    If Dispatcher.CheckAccess() = False Then
-                                        Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS2Disc.png", UriKind.RelativeOrAbsolute)))
-                                    Else
-                                        NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS2Disc.png", UriKind.RelativeOrAbsolute))
-                                    End If
-
-                                    'Add to the ListView
-                                    If PS3GamesListView.Dispatcher.CheckAccess() = False Then
-                                        PS3GamesListView.Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
-                                    Else
-                                        PS3GamesListView.Items.Add(NewPS3Game)
-                                    End If
-
-                                End If
-                            End If
-                        Next
-                    End If
-
-                    'Get PSXISO games
-                    If conn.DirectoryExists("/dev_hdd0/PSXISO") Then
-                        For Each item In conn.GetListing("/dev_hdd0/PSXISO")
-                            If item.Type = FtpObjectType.File Then
-                                If item.Name.EndsWith(".bin") Then
-
-                                    Dim NewPS3Game As New PS3Game With {
-                                        .GridWidth = 210,
-                                        .GridHeight = 210,
-                                        .ImageWidth = 200,
-                                        .ImageHeight = 200,
-                                        .GameSize = FormatNumber(item.Size / 1073741824, 2) + " GB",
-                                        .GameFilePath = item.FullName,
-                                        .GameFileType = PS3Game.GameFileTypes.PSXISO,
-                                        .GameRootLocation = PS3Game.GameLocation.WebMANMOD,
-                                        .GameTitle = item.Name
-                                    }
-
-                                    GamesList.Add(NewPS3Game)
-
-                                    If Dispatcher.CheckAccess() = False Then
-                                        Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS1Disc.png", UriKind.RelativeOrAbsolute)))
-                                    Else
-                                        NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS1Disc.png", UriKind.RelativeOrAbsolute))
-                                    End If
-
-                                    'Add to the ListView
-                                    If PS3GamesListView.Dispatcher.CheckAccess() = False Then
-                                        PS3GamesListView.Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
-                                    Else
-                                        PS3GamesListView.Items.Add(NewPS3Game)
-                                    End If
-
-                                End If
-                            End If
-                        Next
-                    End If
-
-                    'Get PSPISO games
-                    If conn.DirectoryExists("/dev_hdd0/PSPISO") Then
-                        For Each item In conn.GetListing("/dev_hdd0/PSPISO")
-                            If item.Type = FtpObjectType.File Then
-                                If item.Name.EndsWith(".iso") Then
-
-                                    Dim NewPS3Game As New PS3Game With {
-                                        .GridWidth = 210,
-                                        .GridHeight = 210,
-                                        .ImageWidth = 200,
-                                        .ImageHeight = 200,
-                                        .GameSize = FormatNumber(item.Size / 1073741824, 2) + " GB",
-                                        .GameFilePath = item.FullName,
-                                        .GameFileType = PS3Game.GameFileTypes.PSPISO,
-                                        .GameRootLocation = PS3Game.GameLocation.WebMANMOD,
-                                        .GameTitle = item.Name
-                                    }
-
-                                    GamesList.Add(NewPS3Game)
-
-                                    If Dispatcher.CheckAccess() = False Then
-                                        Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/UMD.png", UriKind.RelativeOrAbsolute)))
-                                    Else
-                                        NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/UMD.png", UriKind.RelativeOrAbsolute))
-                                    End If
-
-                                    'Add to the ListView
-                                    If PS3GamesListView.Dispatcher.CheckAccess() = False Then
-                                        PS3GamesListView.Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
-                                    Else
-                                        PS3GamesListView.Items.Add(NewPS3Game)
-                                    End If
-
-                                End If
-                            End If
-                        Next
-                    End If
-
-                    'Disconnect
-                    conn.Disconnect()
-                End Using
-            Catch ex As Exception
-                MsgBox(ex.ToString())
-            End Try
-        ElseIf WorkerArgs.Type = LoadType.BackupFolder Then
-            'PS3 classic backup folders
-            For Each Game In Directory.GetFiles(WorkerArgs.FolderPath, "*.SFO", SearchOption.AllDirectories)
-
-                Dim NewPS3Game As New PS3Game() With {.GridWidth = 325, .GridHeight = 180, .ImageWidth = 320, .ImageHeight = 176}
-
-                Using SFOReader As New Process()
-                    SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\sfo.exe"
-                    SFOReader.StartInfo.Arguments = """" + Game + """ --decimal"
-                    SFOReader.StartInfo.RedirectStandardOutput = True
-                    SFOReader.StartInfo.UseShellExecute = False
-                    SFOReader.StartInfo.CreateNoWindow = True
-                    SFOReader.Start()
-
-                    Dim OutputReader As StreamReader = SFOReader.StandardOutput
-                    Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
-
-                    If ProcessOutput.Length > 0 Then
-
-                        'Load game infos
-                        For Each Line In ProcessOutput
-                            If Line.StartsWith("TITLE=") Then
-                                NewPS3Game.GameTitle = Utils.CleanTitle(Line.Split("="c)(1).Trim(""""c))
-                            ElseIf Line.StartsWith("TITLE_ID=") Then
-                                NewPS3Game.GameID = Line.Split("="c)(1).Trim(""""c)
-                            ElseIf Line.StartsWith("CATEGORY=") Then
-                                NewPS3Game.GameCategory = PS3Game.GetCategory(Line.Split("="c)(1).Trim(""""c))
-                            ElseIf Line.StartsWith("APP_VER=") Then
-                                NewPS3Game.GameAppVer = FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
-                            ElseIf Line.StartsWith("PS3_SYSTEM_VER=") Then
-                                NewPS3Game.GameRequiredFW = FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
-                            ElseIf Line.StartsWith("VERSION=") Then
-                                NewPS3Game.GameVer = "Version: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
-                            ElseIf Line.StartsWith("RESOLUTION=") Then
-                                NewPS3Game.GameResolution = PS3Game.GetGameResolution(Line.Split("="c)(1).Trim(""""c))
-                            ElseIf Line.StartsWith("SOUND_FORMAT=") Then
-                                NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(Line.Split("="c)(1).Trim(""""c))
-                            End If
-                        Next
-
-                        'Load game files
-                        Dim PS3GAMEFolder As String = Path.GetDirectoryName(Game)
-                        If File.Exists(PS3GAMEFolder + "\ICON0.PNG") Then
-                            If Dispatcher.CheckAccess() = False Then
-                                Dispatcher.BeginInvoke(Sub()
-                                                           Dim TempBitmapImage = New BitmapImage()
-                                                           TempBitmapImage.BeginInit()
-                                                           TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                           TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                           TempBitmapImage.UriSource = New Uri(PS3GAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)
-                                                           TempBitmapImage.EndInit()
-                                                           NewPS3Game.GameCoverSource = TempBitmapImage
-                                                       End Sub)
-                            Else
-                                Dim TempBitmapImage = New BitmapImage()
-                                TempBitmapImage.BeginInit()
-                                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                TempBitmapImage.UriSource = New Uri(PS3GAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)
-                                TempBitmapImage.EndInit()
-                                NewPS3Game.GameCoverSource = TempBitmapImage
-                            End If
-                        End If
-                        If File.Exists(PS3GAMEFolder + "\PIC1.PNG") Then
-                            If Dispatcher.CheckAccess() = False Then
-                                Dispatcher.BeginInvoke(Sub()
-                                                           Dim TempBitmapImage = New BitmapImage()
-                                                           TempBitmapImage.BeginInit()
-                                                           TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                                           TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                                           TempBitmapImage.UriSource = New Uri(PS3GAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)
-                                                           TempBitmapImage.EndInit()
-                                                           NewPS3Game.GameBackgroundSource = TempBitmapImage
-                                                       End Sub)
-                            Else
-                                Dim TempBitmapImage = New BitmapImage()
-                                TempBitmapImage.BeginInit()
-                                TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
-                                TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
-                                TempBitmapImage.UriSource = New Uri(PS3GAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)
-                                TempBitmapImage.EndInit()
-                                NewPS3Game.GameBackgroundSource = TempBitmapImage
-                            End If
-                        End If
-                        If File.Exists(PS3GAMEFolder + "\SND0.AT3") Then
-                            NewPS3Game.GameBackgroundSoundFile = PS3GAMEFolder + "\SND0.AT3"
-                        End If
-
-                        Dim PS3GAMEFolderSize As Long = Utils.DirSize(PS3GAMEFolder, True)
-                        NewPS3Game.GameSize = FormatNumber(PS3GAMEFolderSize / 1073741824, 2) + " GB"
-                        NewPS3Game.GameFolderPath = Directory.GetParent(PS3GAMEFolder).FullName
-
-                        NewPS3Game.GameFileType = PS3Game.GameFileTypes.Backup
-                        NewPS3Game.GameRootLocation = PS3Game.GameLocation.Local
-
-                        If Not String.IsNullOrWhiteSpace(NewPS3Game.GameID) Then
-                            NewPS3Game.GameRegion = PS3Game.GetGameRegion(NewPS3Game.GameID)
-                        End If
-
-                        'Update progress
-                        Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
-                        Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading folder " + (NewLoadingWindow.LoadProgressBar.Value - ISOCount - PKGCount).ToString + " of " + FoldersCount.ToString())
-
-                        GamesList.Add(NewPS3Game)
-
-                        'Add to the ListView
-                        If PS3GamesListView.Dispatcher.CheckAccess() = False Then
-                            PS3GamesListView.Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
-                        Else
-                            PS3GamesListView.Items.Add(NewPS3Game)
-                        End If
-
-                    End If
-
-                End Using
-
-            Next
-
-            'PS3 PKGs
-            For Each GamePKG In Directory.GetFiles(WorkerArgs.FolderPath, "*.pkg", SearchOption.AllDirectories)
-
-                Dim NewPS3Game As New PS3Game() With {.GridWidth = 325, .GridHeight = 180, .ImageWidth = 320, .ImageHeight = 176}
-                Dim PKGFileInfo As New FileInfo(GamePKG)
-                Dim NewPKGDecryptor As New PKGDecryptor()
-
-                Try
-                    'Decrypt pkg file
-                    NewPKGDecryptor.ProcessPKGFile(GamePKG)
-
-                    'Load game infos
-                    If NewPKGDecryptor.GetPARAMSFO IsNot Nothing Then
-                        Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(NewPKGDecryptor.GetPARAMSFO)
-                        Dim TITLEValue As Object = Nothing
-                        If SFOKeys.TryGetValue("TITLE", TITLEValue) Then
-                            NewPS3Game.GameTitle = Utils.CleanTitle(TITLEValue.ToString)
-                        End If
-                        Dim TITLEIDValue As Object = Nothing
-                        If SFOKeys.TryGetValue("TITLE_ID", TITLEIDValue) Then
-                            NewPS3Game.GameID = TITLEIDValue.ToString
-                        End If
-                        Dim CATEGORYValue As Object = Nothing
-                        If SFOKeys.TryGetValue("CATEGORY", CATEGORYValue) Then
-                            NewPS3Game.GameCategory = PS3Game.GetCategory(CATEGORYValue.ToString)
-                        End If
-                        Dim CONTENTIDValue As Object = Nothing
-                        If SFOKeys.TryGetValue("CONTENT_ID", CONTENTIDValue) Then
-                            NewPS3Game.ContentID = CONTENTIDValue.ToString
-                        End If
-                        Dim APPVERValue As Object = Nothing
-                        If SFOKeys.TryGetValue("APP_VER", APPVERValue) Then
-                            Dim AppVer As String = APPVERValue.ToString().Substring(0, 5)
-                            NewPS3Game.GameAppVer = AppVer
-                        End If
-                        Dim PS3SYSTEMVERValue As Object = Nothing
-                        If SFOKeys.TryGetValue("PS3_SYSTEM_VER", PS3SYSTEMVERValue) Then
-                            Dim SystemVer As String = PS3SYSTEMVERValue.ToString().Substring(0, 5)
-                            NewPS3Game.GameRequiredFW = SystemVer
-                        End If
-                        Dim VERSIONValue As Object = Nothing
-                        If SFOKeys.TryGetValue("VERSION", VERSIONValue) Then
-                            Dim Ver As String = VERSIONValue.ToString().Substring(0, 5)
-                            NewPS3Game.GameVer = Ver
-                        End If
-                        Dim RESOLUTIONValue As Object = Nothing
-                        If SFOKeys.TryGetValue("RESOLUTION", RESOLUTIONValue) Then
-                            NewPS3Game.GameResolution = PS3Game.GetGameResolution(RESOLUTIONValue.ToString)
-                        End If
-                        Dim SOUNDFORMATValue As Object = Nothing
-                        If SFOKeys.TryGetValue("SOUND_FORMAT", SOUNDFORMATValue) Then
-                            NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(SOUNDFORMATValue.ToString)
-                        End If
-                    End If
-
-                    NewPS3Game.GameSize = FormatNumber(PKGFileInfo.Length / 1073741824, 2) + " GB"
-                    NewPS3Game.GameFileType = PS3Game.GameFileTypes.PKG
-                    NewPS3Game.GameRootLocation = PS3Game.GameLocation.Local
-
-                    If Not String.IsNullOrWhiteSpace(NewPS3Game.GameID) Then
-                        NewPS3Game.GameRegion = PS3Game.GetGameRegion(NewPS3Game.GameID)
-                    End If
-
-                    NewPS3Game.GameFilePath = GamePKG
-
-                    'Check for additional content
-                    If NewPKGDecryptor.ICON0 IsNot Nothing Then
-                        If Dispatcher.CheckAccess = False Then
-                            Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = NewPKGDecryptor.ICON0)
-                        Else
-                            NewPS3Game.GameCoverSource = NewPKGDecryptor.ICON0
-                        End If
-                    End If
-                    If NewPKGDecryptor.PIC1 IsNot Nothing Then
-                        If Dispatcher.CheckAccess = False Then
-                            Dispatcher.BeginInvoke(Sub() NewPS3Game.GameBackgroundSource = NewPKGDecryptor.PIC1)
-                        Else
-                            NewPS3Game.GameBackgroundSource = NewPKGDecryptor.PIC1
-                        End If
-                    End If
-                    If NewPKGDecryptor.SND0 IsNot Nothing Then
-                        If Dispatcher.CheckAccess = False Then
-                            Dispatcher.BeginInvoke(Sub() NewPS3Game.GameBackgroundSoundBytes = NewPKGDecryptor.SND0)
-                        Else
-                            NewPS3Game.GameBackgroundSoundBytes = NewPKGDecryptor.SND0
-                        End If
-                    End If
-
-                    'Update progress
-                    Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
-                    Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading PKG " + (NewLoadingWindow.LoadProgressBar.Value - ISOCount - FoldersCount).ToString + " of " + PKGCount.ToString())
-
-                    GamesList.Add(NewPS3Game)
-
-                    'Add to the ListView
-                    If PS3GamesListView.Dispatcher.CheckAccess() = False Then
-                        PS3GamesListView.Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
-                    Else
-                        PS3GamesListView.Items.Add(NewPS3Game)
-                    End If
-
-                Catch ex As Exception
-                    If NewPKGDecryptor.ContentID IsNot Nothing Then
-                        NewPS3Game.GameTitle = NewPKGDecryptor.ContentID
-                        NewPS3Game.GameID = "ID: " + Utils.GetPKGTitleID(GamePKG)
-                    Else
-                        NewPS3Game.GameTitle = "Unsupported PS3 .pkg"
-                    End If
-                    Continue For
-                End Try
-
-            Next
-
-            'PS3 ISOs
-            For Each GameISO In Directory.GetFiles(WorkerArgs.FolderPath, "*.iso", SearchOption.AllDirectories)
-
-                Dim NewPS3Game As New PS3Game() With {.GridWidth = 325, .GridHeight = 180, .ImageWidth = 320, .ImageHeight = 176}
-                Dim ISOFileInfo As New FileInfo(GameISO)
-                Dim ISOCacheFolderName As String = Path.GetFileNameWithoutExtension(ISOFileInfo.Name)
-
-                'Create cache dir for PS3 games
-                If Not Directory.Exists(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName) Then
-                    Directory.CreateDirectory(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName)
-                End If
-
-                'Extract files to display infos
-                If Not File.Exists(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO") Then
-                    Using ISOExtractor As New Process()
-                        ISOExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
-                        ISOExtractor.StartInfo.Arguments = "e """ + GameISO + """" +
-                            " -o""" + Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + """" +
-                            " PS3_GAME/PARAM.SFO PARAM.SFO PS3_GAME/ICON0.PNG ICON0.PNG PS3_GAME/PIC1.PNG PIC1.PNG PS3_GAME/SND0.AT3 SND0.AT3"
-                        ISOExtractor.StartInfo.RedirectStandardOutput = True
-                        ISOExtractor.StartInfo.UseShellExecute = False
-                        ISOExtractor.StartInfo.CreateNoWindow = True
-                        ISOExtractor.Start()
-                        ISOExtractor.WaitForExit()
-                    End Using
-                End If
-
-                Using ParamFileStream As New FileStream(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO", FileMode.Open, FileAccess.Read)
-                    Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(ParamFileStream)
-                    If SFOKeys IsNot Nothing AndAlso SFOKeys.Count > 0 Then
-                        Dim TITLEValue As Object = Nothing
-                        If SFOKeys.TryGetValue("TITLE", TITLEValue) Then
-                            NewPS3Game.GameTitle = Utils.CleanTitle(TITLEValue.ToString)
-                        End If
-                        Dim TITLEIDValue As Object = Nothing
-                        If SFOKeys.TryGetValue("TITLE_ID", TITLEIDValue) Then
-                            NewPS3Game.GameID = TITLEIDValue.ToString
-                        End If
-                        Dim CATEGORYValue As Object = Nothing
-                        If SFOKeys.TryGetValue("CATEGORY", CATEGORYValue) Then
-                            NewPS3Game.GameCategory = PS3Game.GetCategory(CATEGORYValue.ToString)
-                        End If
-                        Dim CONTENTIDValue As Object = Nothing
-                        If SFOKeys.TryGetValue("CONTENT_ID", CONTENTIDValue) Then
-                            NewPS3Game.ContentID = CONTENTIDValue.ToString
-                        End If
-                        Dim APPVERValue As Object = Nothing
-                        If SFOKeys.TryGetValue("APP_VER", APPVERValue) Then
-                            Dim AppVer As String = APPVERValue.ToString().Substring(0, 5)
-                            NewPS3Game.GameAppVer = AppVer
-                        End If
-                        Dim PS3SYSTEMVERValue As Object = Nothing
-                        If SFOKeys.TryGetValue("PS3_SYSTEM_VER", PS3SYSTEMVERValue) Then
-                            Dim SystemVer As String = PS3SYSTEMVERValue.ToString().Substring(0, 5)
-                            NewPS3Game.GameRequiredFW = SystemVer
-                        End If
-                        Dim VERSIONValue As Object = Nothing
-                        If SFOKeys.TryGetValue("VERSION", VERSIONValue) Then
-                            Dim Ver As String = VERSIONValue.ToString().Substring(0, 5)
-                            NewPS3Game.GameVer = Ver
-                        End If
-                        Dim RESOLUTIONValue As Object = Nothing
-                        If SFOKeys.TryGetValue("RESOLUTION", RESOLUTIONValue) Then
-                            NewPS3Game.GameResolution = PS3Game.GetGameResolution(RESOLUTIONValue.ToString)
-                        End If
-                        Dim SOUNDFORMATValue As Object = Nothing
-                        If SFOKeys.TryGetValue("SOUND_FORMAT", SOUNDFORMATValue) Then
-                            NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(SOUNDFORMATValue.ToString)
-                        End If
-                    End If
-                End Using
-
-                'Load game files
-                Dim PS3GAMEFolder As String = Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName
-
-                If File.Exists(PS3GAMEFolder + "\ICON0.PNG") Then
-                    Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri(PS3GAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)))
-                End If
-                If File.Exists(PS3GAMEFolder + "\PIC1.PNG") Then
-                    Dispatcher.BeginInvoke(Sub() NewPS3Game.GameBackgroundPath = PS3GAMEFolder + "\PIC1.PNG")
-                End If
-                If File.Exists(PS3GAMEFolder + "\SND0.AT3") Then
-                    NewPS3Game.GameBackgroundSoundFile = PS3GAMEFolder + "\SND0.AT3"
-                End If
-
-                NewPS3Game.GameSize = FormatNumber(ISOFileInfo.Length / 1073741824, 2) + " GB"
-
-                If Not String.IsNullOrWhiteSpace(NewPS3Game.GameID) Then
-                    NewPS3Game.GameRegion = PS3Game.GetGameRegion(NewPS3Game.GameID)
-                End If
-
-                NewPS3Game.GameFilePath = GameISO
-                NewPS3Game.GameFileType = PS3Game.GameFileTypes.PS3ISO
-                NewPS3Game.GameRootLocation = PS3Game.GameLocation.Local
-
-                'Update progress
-                Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
-                Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading ISO " + (NewLoadingWindow.LoadProgressBar.Value - FoldersCount - PKGCount).ToString + " of " + ISOCount.ToString())
-
-                GamesList.Add(NewPS3Game)
-
-                'Add to the ListView
-                If PS3GamesListView.Dispatcher.CheckAccess() = False Then
-                    PS3GamesListView.Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
-                Else
-                    PS3GamesListView.Items.Add(NewPS3Game)
-                End If
-
-            Next
-        End If
-    End Sub
-
-    Private Sub GameLoaderWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles GameLoaderWorker.RunWorkerCompleted
+    Private Async Sub ProcessBackups(WorkerArgs As GameLoaderArgs)
+        Await Task.Run(Sub()
+                           If WorkerArgs.Type = LoadType.FTP Then
+                               Try
+                                   Using conn As New FtpClient(WorkerArgs.ConsoleIP, "anonymous", "anonymous", 21)
+                                       'Configurate the FTP connection
+                                       conn.Config.ValidateAnyCertificate = True
+                                       conn.Config.SslProtocols = SslProtocols.None
+                                       conn.Config.DataConnectionEncryption = False
+                                       conn.Config.DataConnectionType = FtpDataConnectionType.PASV
+
+                                       'Connect
+                                       conn.Connect()
+
+                                       'Get /dev_hdd0/game
+                                       If conn.DirectoryExists("/dev_hdd0/game") Then
+                                           For Each item In conn.GetListing("/dev_hdd0/game")
+
+                                               Dim NewPS3Game As New PS3Game()
+
+                                           Next
+                                       End If
+
+                                       'Get /dev_hdd0/GAMES
+                                       If conn.DirectoryExists("/dev_hdd0/GAMES") Then
+                                           For Each item In conn.GetListing("/dev_hdd0/GAMES")
+
+                                               Dim NewPS3Game As New PS3Game()
+
+                                               If item.Type = FtpObjectType.Directory Then
+                                                   If conn.DirectoryExists(item.FullName + "/PS3_GAME") Then
+
+                                                       If conn.FileExists(item.FullName + "/PS3_GAME/PARAM.SFO") Then
+
+                                                       End If
+
+                                                   End If
+
+                                               End If
+                                           Next
+                                       End If
+
+                                       'Get PS3ISO games
+                                       If conn.DirectoryExists("/dev_hdd0/PS3ISO") Then
+                                           For Each item In conn.GetListing("/dev_hdd0/PS3ISO")
+                                               If item.Type = FtpObjectType.File Then
+                                                   If item.Name.EndsWith(".iso") Then
+
+                                                       'Dim ISOCacheFolderName As String = Path.GetFileNameWithoutExtension(item.FullName)
+                                                       'Dim FullFTPPath As String = "ftp://" + WorkerArgs.ConsoleIP + item.FullName
+
+                                                       Dim NewPS3Game As New PS3Game With {
+                                                           .GridWidth = 210,
+                                                           .GridHeight = 210,
+                                                           .ImageWidth = 200,
+                                                           .ImageHeight = 200,
+                                                           .GameSize = FormatNumber(item.Size / 1073741824, 2) + " GB",
+                                                           .GameFilePath = item.FullName,
+                                                           .GameFileType = PS3Game.GameFileTypes.PS3ISO,
+                                                           .GameRootLocation = PS3Game.GameLocation.WebMANMOD,
+                                                           .GameTitle = item.Name
+                                                       }
+                                                       GamesList.Add(NewPS3Game)
+                                                       Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS3Disc.png", UriKind.RelativeOrAbsolute)))
+
+                                                       'Add to the ListView
+                                                       Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
+                                                   End If
+                                               End If
+                                           Next
+                                       End If
+
+                                       'Get PS2ISO games
+                                       If conn.DirectoryExists("/dev_hdd0/PS2ISO") Then
+                                           For Each item In conn.GetListing("/dev_hdd0/PS2ISO")
+                                               If item.Type = FtpObjectType.File Then
+                                                   If item.Name.EndsWith(".bin.enc") Then
+
+                                                       Dim NewPS3Game As New PS3Game With {
+                                                           .GridWidth = 210,
+                                                           .GridHeight = 210,
+                                                           .ImageWidth = 200,
+                                                           .ImageHeight = 200,
+                                                           .GameSize = FormatNumber(item.Size / 1073741824, 2) + " GB",
+                                                           .GameFilePath = item.FullName,
+                                                           .GameFileType = PS3Game.GameFileTypes.PS2ISO,
+                                                           .GameRootLocation = PS3Game.GameLocation.WebMANMOD,
+                                                           .GameTitle = item.Name
+                                                       }
+                                                       GamesList.Add(NewPS3Game)
+                                                       Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS2Disc.png", UriKind.RelativeOrAbsolute)))
+
+                                                       'Add to the ListView
+                                                       Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
+                                                   End If
+                                               End If
+                                           Next
+                                       End If
+
+                                       'Get PSXISO games
+                                       If conn.DirectoryExists("/dev_hdd0/PSXISO") Then
+                                           For Each item In conn.GetListing("/dev_hdd0/PSXISO")
+                                               If item.Type = FtpObjectType.File Then
+                                                   If item.Name.EndsWith(".bin") Then
+
+                                                       Dim NewPS3Game As New PS3Game With {
+                                                           .GridWidth = 210,
+                                                           .GridHeight = 210,
+                                                           .ImageWidth = 200,
+                                                           .ImageHeight = 200,
+                                                           .GameSize = FormatNumber(item.Size / 1073741824, 2) + " GB",
+                                                           .GameFilePath = item.FullName,
+                                                           .GameFileType = PS3Game.GameFileTypes.PSXISO,
+                                                           .GameRootLocation = PS3Game.GameLocation.WebMANMOD,
+                                                           .GameTitle = item.Name
+                                                       }
+                                                       GamesList.Add(NewPS3Game)
+
+                                                       Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/PS1Disc.png", UriKind.RelativeOrAbsolute)))
+
+                                                       'Add to the ListView
+                                                       Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
+
+                                                   End If
+                                               End If
+                                           Next
+                                       End If
+
+                                       'Get PSPISO games
+                                       If conn.DirectoryExists("/dev_hdd0/PSPISO") Then
+                                           For Each item In conn.GetListing("/dev_hdd0/PSPISO")
+                                               If item.Type = FtpObjectType.File Then
+                                                   If item.Name.EndsWith(".iso") Then
+
+                                                       Dim NewPS3Game As New PS3Game With {
+                                                           .GridWidth = 210,
+                                                           .GridHeight = 210,
+                                                           .ImageWidth = 200,
+                                                           .ImageHeight = 200,
+                                                           .GameSize = FormatNumber(item.Size / 1073741824, 2) + " GB",
+                                                           .GameFilePath = item.FullName,
+                                                           .GameFileType = PS3Game.GameFileTypes.PSPISO,
+                                                           .GameRootLocation = PS3Game.GameLocation.WebMANMOD,
+                                                           .GameTitle = item.Name
+                                                       }
+                                                       GamesList.Add(NewPS3Game)
+                                                       Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri("/Images/UMD.png", UriKind.RelativeOrAbsolute)))
+
+                                                       'Add to the ListView
+                                                       Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
+                                                   End If
+                                               End If
+                                           Next
+                                       End If
+
+                                       'Disconnect
+                                       conn.Disconnect()
+                                   End Using
+                               Catch ex As Exception
+                                   MsgBox(ex.ToString())
+                               End Try
+                           ElseIf WorkerArgs.Type = LoadType.BackupFolder Then
+                               Try
+                                   Dim FolderBackups As IEnumerable(Of String) = Directory.EnumerateFiles(WorkerArgs.FolderPath, "*.SFO", SearchOption.AllDirectories)
+                                   Dim PKGBackups As IEnumerable(Of String) = Directory.EnumerateFiles(WorkerArgs.FolderPath, "*.pkg", SearchOption.AllDirectories)
+                                   Dim ISOBackups As IEnumerable(Of String) = Directory.EnumerateFiles(WorkerArgs.FolderPath, "*.iso", SearchOption.AllDirectories)
+
+                                   FoldersCount = FolderBackups.Count
+                                   PKGCount = PKGBackups.Count
+                                   ISOCount = ISOBackups.Count
+
+                                   Dispatcher.BeginInvoke(Sub()
+                                                              NewLoadingWindow.LoadProgressBar.Maximum = FoldersCount + ISOCount + PKGCount
+                                                              NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (FoldersCount + ISOCount + PKGCount).ToString()
+                                                          End Sub)
+
+                                   'PS3 classic backup folders
+                                   For Each FolderBackup As String In FolderBackups
+                                       Try
+                                           Dim NewPS3Game As New PS3Game() With {.GridWidth = 325, .GridHeight = 180, .ImageWidth = 320, .ImageHeight = 176}
+
+                                           Dim ProcessOutput As String()
+                                           Using SFOReader As New Process()
+                                               SFOReader.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\sfo.exe"
+                                               SFOReader.StartInfo.Arguments = """" + FolderBackup + """ --decimal"
+                                               SFOReader.StartInfo.RedirectStandardOutput = True
+                                               SFOReader.StartInfo.UseShellExecute = False
+                                               SFOReader.StartInfo.CreateNoWindow = True
+                                               SFOReader.Start()
+
+                                               Dim OutputReader As StreamReader = SFOReader.StandardOutput
+                                               ProcessOutput = OutputReader.ReadToEnd().Split(New String() {vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
+                                           End Using
+
+                                           If ProcessOutput.Length > 0 Then
+                                               'Load game infos
+                                               For Each Line In ProcessOutput
+                                                   If Line.StartsWith("TITLE=") Then
+                                                       NewPS3Game.GameTitle = Utils.CleanTitle(Line.Split("="c)(1).Trim(""""c))
+                                                   ElseIf Line.StartsWith("TITLE_ID=") Then
+                                                       NewPS3Game.GameID = Line.Split("="c)(1).Trim(""""c)
+                                                   ElseIf Line.StartsWith("CATEGORY=") Then
+                                                       NewPS3Game.GameCategory = PS3Game.GetCategory(Line.Split("="c)(1).Trim(""""c))
+                                                   ElseIf Line.StartsWith("APP_VER=") Then
+                                                       NewPS3Game.GameAppVer = FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                                                   ElseIf Line.StartsWith("PS3_SYSTEM_VER=") Then
+                                                       NewPS3Game.GameRequiredFW = FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                                                   ElseIf Line.StartsWith("VERSION=") Then
+                                                       NewPS3Game.GameVer = "Version: " + FormatNumber(Line.Split("="c)(1).Trim(""""c), 2)
+                                                   ElseIf Line.StartsWith("RESOLUTION=") Then
+                                                       NewPS3Game.GameResolution = PS3Game.GetGameResolution(Line.Split("="c)(1).Trim(""""c))
+                                                   ElseIf Line.StartsWith("SOUND_FORMAT=") Then
+                                                       NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(Line.Split("="c)(1).Trim(""""c))
+                                                   End If
+                                               Next
+
+                                               'Load game files
+                                               Dim PS3GAMEFolder As String = Path.GetDirectoryName(FolderBackup)
+                                               If File.Exists(PS3GAMEFolder + "\ICON0.PNG") Then
+                                                   Dispatcher.BeginInvoke(Sub()
+                                                                              Dim TempBitmapImage = New BitmapImage()
+                                                                              TempBitmapImage.BeginInit()
+                                                                              TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                                              TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                                              TempBitmapImage.UriSource = New Uri(PS3GAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)
+                                                                              TempBitmapImage.EndInit()
+                                                                              NewPS3Game.GameCoverSource = TempBitmapImage
+                                                                          End Sub)
+                                               End If
+                                               If File.Exists(PS3GAMEFolder + "\PIC1.PNG") Then
+                                                   Dispatcher.BeginInvoke(Sub()
+                                                                              Dim TempBitmapImage = New BitmapImage()
+                                                                              TempBitmapImage.BeginInit()
+                                                                              TempBitmapImage.CacheOption = BitmapCacheOption.OnLoad
+                                                                              TempBitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache
+                                                                              TempBitmapImage.UriSource = New Uri(PS3GAMEFolder + "\PIC1.PNG", UriKind.RelativeOrAbsolute)
+                                                                              TempBitmapImage.EndInit()
+                                                                              NewPS3Game.GameBackgroundSource = TempBitmapImage
+                                                                          End Sub)
+                                               End If
+                                               If File.Exists(PS3GAMEFolder + "\SND0.AT3") Then
+                                                   NewPS3Game.GameBackgroundSoundFile = PS3GAMEFolder + "\SND0.AT3"
+                                               End If
+
+                                               Dim PS3GAMEFolderSize As Long = Utils.DirSize(PS3GAMEFolder, True)
+                                               NewPS3Game.GameSize = FormatNumber(PS3GAMEFolderSize / 1073741824, 2) + " GB"
+                                               NewPS3Game.GameFolderPath = Directory.GetParent(PS3GAMEFolder).FullName
+
+                                               NewPS3Game.GameFileType = PS3Game.GameFileTypes.Backup
+                                               NewPS3Game.GameRootLocation = PS3Game.GameLocation.Local
+
+                                               If Not String.IsNullOrWhiteSpace(NewPS3Game.GameID) Then
+                                                   NewPS3Game.GameRegion = PS3Game.GetGameRegion(NewPS3Game.GameID)
+                                               End If
+
+                                               'Update progress
+                                               Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
+                                               Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading folder " + (NewLoadingWindow.LoadProgressBar.Value - ISOCount - PKGCount).ToString + " of " + FoldersCount.ToString())
+
+                                               GamesList.Add(NewPS3Game)
+
+                                               'Add to the ListView
+                                               Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
+                                           Else
+                                               Continue For
+                                           End If
+                                       Catch ex As UnauthorizedAccessException
+                                           Continue For
+                                       Catch ex As IOException
+                                           Continue For
+                                       Catch ex As Exception
+                                           MsgBox("Unexpected error: " + ex.Message, MsgBoxStyle.Critical, "Error accessing files")
+                                           Continue For
+                                       End Try
+                                   Next
+
+                                   'PS3 PKGs
+                                   For Each GamePKG As String In PKGBackups
+
+                                       Dim NewPS3Game As New PS3Game() With {.GridWidth = 325, .GridHeight = 180, .ImageWidth = 320, .ImageHeight = 176}
+                                       Dim PKGFileInfo As New FileInfo(GamePKG)
+                                       Dim NewPKGDecryptor As New PKGDecryptor()
+
+                                       Try
+                                           'Decrypt pkg file
+                                           NewPKGDecryptor.ProcessPKGFile(GamePKG)
+
+                                           'Load game infos
+                                           If NewPKGDecryptor.GetPARAMSFO IsNot Nothing Then
+                                               Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(NewPKGDecryptor.GetPARAMSFO)
+                                               Dim TITLEValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("TITLE", TITLEValue) Then
+                                                   NewPS3Game.GameTitle = Utils.CleanTitle(TITLEValue.ToString)
+                                               End If
+                                               Dim TITLEIDValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("TITLE_ID", TITLEIDValue) Then
+                                                   NewPS3Game.GameID = TITLEIDValue.ToString
+                                               End If
+                                               Dim CATEGORYValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("CATEGORY", CATEGORYValue) Then
+                                                   NewPS3Game.GameCategory = PS3Game.GetCategory(CATEGORYValue.ToString)
+                                               End If
+                                               Dim CONTENTIDValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("CONTENT_ID", CONTENTIDValue) Then
+                                                   NewPS3Game.ContentID = CONTENTIDValue.ToString
+                                               End If
+                                               Dim APPVERValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("APP_VER", APPVERValue) Then
+                                                   Dim AppVer As String = APPVERValue.ToString().Substring(0, 5)
+                                                   NewPS3Game.GameAppVer = AppVer
+                                               End If
+                                               Dim PS3SYSTEMVERValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("PS3_SYSTEM_VER", PS3SYSTEMVERValue) Then
+                                                   Dim SystemVer As String = PS3SYSTEMVERValue.ToString().Substring(0, 5)
+                                                   NewPS3Game.GameRequiredFW = SystemVer
+                                               End If
+                                               Dim VERSIONValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("VERSION", VERSIONValue) Then
+                                                   Dim Ver As String = VERSIONValue.ToString().Substring(0, 5)
+                                                   NewPS3Game.GameVer = Ver
+                                               End If
+                                               Dim RESOLUTIONValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("RESOLUTION", RESOLUTIONValue) Then
+                                                   NewPS3Game.GameResolution = PS3Game.GetGameResolution(RESOLUTIONValue.ToString)
+                                               End If
+                                               Dim SOUNDFORMATValue As Object = Nothing
+                                               If SFOKeys.TryGetValue("SOUND_FORMAT", SOUNDFORMATValue) Then
+                                                   NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(SOUNDFORMATValue.ToString)
+                                               End If
+                                           Else
+                                               Continue For
+                                           End If
+
+                                           NewPS3Game.GameSize = FormatNumber(PKGFileInfo.Length / 1073741824, 2) + " GB"
+                                           NewPS3Game.GameFileType = PS3Game.GameFileTypes.PKG
+                                           NewPS3Game.GameRootLocation = PS3Game.GameLocation.Local
+
+                                           If Not String.IsNullOrWhiteSpace(NewPS3Game.GameID) Then
+                                               NewPS3Game.GameRegion = PS3Game.GetGameRegion(NewPS3Game.GameID)
+                                           End If
+
+                                           NewPS3Game.GameFilePath = GamePKG
+
+                                           'Check for additional content
+                                           If NewPKGDecryptor.ICON0 IsNot Nothing Then
+                                               Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = NewPKGDecryptor.ICON0)
+                                           End If
+                                           If NewPKGDecryptor.PIC1 IsNot Nothing Then
+                                               Dispatcher.BeginInvoke(Sub() NewPS3Game.GameBackgroundSource = NewPKGDecryptor.PIC1)
+                                           End If
+                                           If NewPKGDecryptor.SND0 IsNot Nothing Then
+                                               Dispatcher.BeginInvoke(Sub() NewPS3Game.GameBackgroundSoundBytes = NewPKGDecryptor.SND0)
+                                           End If
+
+                                           'Update progress
+                                           Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
+                                           Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading PKG " + (NewLoadingWindow.LoadProgressBar.Value - ISOCount - FoldersCount).ToString + " of " + PKGCount.ToString())
+
+                                           GamesList.Add(NewPS3Game)
+
+                                           'Add to the ListView
+                                           Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
+                                       Catch ex As UnauthorizedAccessException
+                                           Continue For
+                                       Catch ex As IOException
+                                           Continue For
+                                       Catch ex As Exception
+                                           If NewPKGDecryptor.ContentID IsNot Nothing Then
+                                               NewPS3Game.GameTitle = NewPKGDecryptor.ContentID
+                                               NewPS3Game.GameID = "ID: " + Utils.GetPKGTitleID(GamePKG)
+                                           Else
+                                               NewPS3Game.GameTitle = "Unsupported PS3 .pkg"
+                                           End If
+                                           Continue For
+                                       End Try
+                                   Next
+
+                                   'PS3 ISOs
+                                   For Each GameISO As String In ISOBackups
+                                       Try
+                                           Dim NewPS3Game As New PS3Game() With {.GridWidth = 325, .GridHeight = 180, .ImageWidth = 320, .ImageHeight = 176}
+                                           Dim ISOFileInfo As New FileInfo(GameISO)
+                                           Dim ISOCacheFolderName As String = Path.GetFileNameWithoutExtension(ISOFileInfo.Name)
+
+                                           'Create cache dir for PS3 games
+                                           If Not Directory.Exists(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName) Then
+                                               Directory.CreateDirectory(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName)
+                                           End If
+
+                                           'Extract files to display infos
+                                           If Not File.Exists(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO") Then
+                                               Using ISOExtractor As New Process()
+                                                   ISOExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
+                                                   ISOExtractor.StartInfo.Arguments = "e """ + GameISO + """" +
+                                                                   " -o""" + Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + """" +
+                                                                   " PS3_GAME/PARAM.SFO PARAM.SFO PS3_GAME/ICON0.PNG ICON0.PNG PS3_GAME/PIC1.PNG PIC1.PNG PS3_GAME/SND0.AT3 SND0.AT3"
+                                                   ISOExtractor.StartInfo.RedirectStandardOutput = True
+                                                   ISOExtractor.StartInfo.UseShellExecute = False
+                                                   ISOExtractor.StartInfo.CreateNoWindow = True
+                                                   ISOExtractor.Start()
+                                                   ISOExtractor.WaitForExit()
+                                               End Using
+                                           End If
+
+                                           'Check if ISO is encrypted/decrypted
+                                           Using NewISOStream As FileStream = File.Open(GameISO, FileMode.Open)
+                                               Dim NewCDReader As New CDReader(NewISOStream, True)
+                                               Try
+                                                   Using NewFileStream As Stream = NewCDReader.OpenFile("PS3_GAME\USRDIR\EBOOT.BIN", FileMode.Open)
+                                                       Dim TempBuffer(2) As Byte
+                                                       NewFileStream.ReadExactly(TempBuffer)
+                                                       Dim Output As String = Text.Encoding.ASCII.GetString(TempBuffer)
+                                                       If Not String.IsNullOrEmpty(Output) Then
+                                                           If Output = "SCE" Then
+                                                               NewPS3Game.ISOEncryption = "Decrypted"
+                                                           Else
+                                                               NewPS3Game.ISOEncryption = "Encrypted"
+                                                           End If
+                                                       End If
+                                                   End Using
+                                               Catch ex As Exception
+                                                   'No valid PS3 ISO
+                                                   Continue For
+                                               End Try
+                                           End Using
+
+                                           'Read PARAM.SFO
+                                           If File.Exists(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO") Then
+                                               Using ParamFileStream As New FileStream(Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName + "\PARAM.SFO", FileMode.Open, FileAccess.Read)
+                                                   Dim SFOKeys As Dictionary(Of String, Object) = SFONew.ReadSfo(ParamFileStream)
+                                                   If SFOKeys IsNot Nothing AndAlso SFOKeys.Count > 0 Then
+                                                       Dim TITLEValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("TITLE", TITLEValue) Then
+                                                           NewPS3Game.GameTitle = Utils.CleanTitle(TITLEValue.ToString)
+                                                       End If
+                                                       Dim TITLEIDValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("TITLE_ID", TITLEIDValue) Then
+                                                           NewPS3Game.GameID = TITLEIDValue.ToString
+                                                       End If
+                                                       Dim CATEGORYValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("CATEGORY", CATEGORYValue) Then
+                                                           NewPS3Game.GameCategory = PS3Game.GetCategory(CATEGORYValue.ToString)
+                                                       End If
+                                                       Dim CONTENTIDValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("CONTENT_ID", CONTENTIDValue) Then
+                                                           NewPS3Game.ContentID = CONTENTIDValue.ToString
+                                                       End If
+                                                       Dim APPVERValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("APP_VER", APPVERValue) Then
+                                                           Dim AppVer As String = APPVERValue.ToString().Substring(0, 5)
+                                                           NewPS3Game.GameAppVer = AppVer
+                                                       End If
+                                                       Dim PS3SYSTEMVERValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("PS3_SYSTEM_VER", PS3SYSTEMVERValue) Then
+                                                           Dim SystemVer As String = PS3SYSTEMVERValue.ToString().Substring(0, 5)
+                                                           NewPS3Game.GameRequiredFW = SystemVer
+                                                       End If
+                                                       Dim VERSIONValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("VERSION", VERSIONValue) Then
+                                                           Dim Ver As String = VERSIONValue.ToString().Substring(0, 5)
+                                                           NewPS3Game.GameVer = Ver
+                                                       End If
+                                                       Dim RESOLUTIONValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("RESOLUTION", RESOLUTIONValue) Then
+                                                           NewPS3Game.GameResolution = PS3Game.GetGameResolution(RESOLUTIONValue.ToString)
+                                                       End If
+                                                       Dim SOUNDFORMATValue As Object = Nothing
+                                                       If SFOKeys.TryGetValue("SOUND_FORMAT", SOUNDFORMATValue) Then
+                                                           NewPS3Game.GameSoundFormat = PS3Game.GetGameSoundFormat(SOUNDFORMATValue.ToString)
+                                                       End If
+                                                   End If
+                                               End Using
+                                           Else
+                                               Continue For
+                                           End If
+
+                                           'Load game files
+                                           Dim PS3GAMEFolder As String = Environment.CurrentDirectory + "\Cache\PS3\" + ISOCacheFolderName
+                                           If File.Exists(PS3GAMEFolder + "\ICON0.PNG") Then
+                                               Dispatcher.BeginInvoke(Sub() NewPS3Game.GameCoverSource = New BitmapImage(New Uri(PS3GAMEFolder + "\ICON0.PNG", UriKind.RelativeOrAbsolute)))
+                                           End If
+                                           If File.Exists(PS3GAMEFolder + "\PIC1.PNG") Then
+                                               Dispatcher.BeginInvoke(Sub() NewPS3Game.GameBackgroundPath = PS3GAMEFolder + "\PIC1.PNG")
+                                           End If
+                                           If File.Exists(PS3GAMEFolder + "\SND0.AT3") Then
+                                               NewPS3Game.GameBackgroundSoundFile = PS3GAMEFolder + "\SND0.AT3"
+                                           End If
+
+                                           NewPS3Game.GameSize = FormatNumber(ISOFileInfo.Length / 1073741824, 2) + " GB"
+
+                                           If Not String.IsNullOrWhiteSpace(NewPS3Game.GameID) Then
+                                               NewPS3Game.GameRegion = PS3Game.GetGameRegion(NewPS3Game.GameID)
+                                           End If
+
+                                           NewPS3Game.GameFilePath = GameISO
+                                           NewPS3Game.GameFileType = PS3Game.GameFileTypes.PS3ISO
+                                           NewPS3Game.GameRootLocation = PS3Game.GameLocation.Local
+
+                                           'Update progress
+                                           Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadProgressBar.Value += 1)
+                                           Dispatcher.BeginInvoke(Sub() NewLoadingWindow.LoadStatusTextBlock.Text = "Loading ISO " + (NewLoadingWindow.LoadProgressBar.Value - FoldersCount - PKGCount).ToString + " of " + ISOCount.ToString())
+
+                                           GamesList.Add(NewPS3Game)
+
+                                           'Add to the ListView
+                                           Dispatcher.BeginInvoke(Sub() PS3GamesListView.Items.Add(NewPS3Game))
+                                       Catch ex As UnauthorizedAccessException
+                                           Continue For
+                                       Catch ex As IOException
+                                           Continue For
+                                       Catch ex As Exception
+                                           MsgBox("Unexpected error: " + ex.Message, MsgBoxStyle.Critical, "Error accessing files")
+                                           Continue For
+                                       End Try
+                                   Next
+                               Catch ex As Exception
+                                   MsgBox("Error accessing files. Please retry while running as Administrator.", MsgBoxStyle.Critical, "Error")
+                               End Try
+                           End If
+                       End Sub)
+
         NewLoadingWindow.Close()
     End Sub
 
@@ -693,10 +666,10 @@ Public Class PS3Library
     Private Sub ExtractISOMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles ExtractISOMenuItem.Click
         If PS3GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedGame As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
-            If File.Exists(SelectedGame.GameFolderPath) Then
-                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToExtract = SelectedGame.GameFolderPath}
-                NewISOTools.Show()
+            If File.Exists(SelectedGame.GameFilePath) Then
                 MsgBox("Please continue with PS3 ISO Tools and specify an output folder.", MsgBoxStyle.Information)
+                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToExtract = SelectedGame.GameFilePath}
+                NewISOTools.Show()
             End If
         End If
     End Sub
@@ -704,10 +677,10 @@ Public Class PS3Library
     Private Sub CreateISOMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles CreateISOMenuItem.Click
         If PS3GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedGame As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
-            If Directory.Exists(SelectedGame.GameFolderPath) Then
-                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToCreate = SelectedGame.GameFolderPath}
-                NewISOTools.Show()
+            If Directory.Exists(SelectedGame.GameFilePath) Then
                 MsgBox("Please continue with PS3 ISO Tools and specify an output folder.", MsgBoxStyle.Information)
+                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToCreate = SelectedGame.GameFilePath}
+                NewISOTools.Show()
             End If
         End If
     End Sub
@@ -715,10 +688,10 @@ Public Class PS3Library
     Private Sub PatchISOMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PatchISOMenuItem.Click
         If PS3GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedGame As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
-            If File.Exists(SelectedGame.GameFolderPath) Then
-                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToPatch = SelectedGame.GameFolderPath}
+            If File.Exists(SelectedGame.GameFilePath) Then
+                MsgBox("Please continue with PS3 ISO Tools.", MsgBoxStyle.Information)
+                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToPatch = SelectedGame.GameFilePath}
                 NewISOTools.Show()
-                MsgBox("Please continue with PS3 ISO Tools and specify an output folder.", MsgBoxStyle.Information)
             End If
         End If
     End Sub
@@ -726,10 +699,21 @@ Public Class PS3Library
     Private Sub SplitISOMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles SplitISOMenuItem.Click
         If PS3GamesListView.SelectedItem IsNot Nothing Then
             Dim SelectedGame As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
-            If File.Exists(SelectedGame.GameFolderPath) Then
-                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToSplit = SelectedGame.GameFolderPath}
+            If File.Exists(SelectedGame.GameFilePath) Then
+                MsgBox("Please continue with PS3 ISO Tools.", MsgBoxStyle.Information)
+                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToSplit = SelectedGame.GameFilePath}
                 NewISOTools.Show()
-                MsgBox("Please continue with PS3 ISO Tools and specify an output folder.", MsgBoxStyle.Information)
+            End If
+        End If
+    End Sub
+
+    Private Sub DecryptISOMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles DecryptISOMenuItem.Click
+        If PS3GamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedGame As PS3Game = CType(PS3GamesListView.SelectedItem, PS3Game)
+            If File.Exists(SelectedGame.GameFilePath) Then
+                MsgBox("Please continue with PS3 ISO Tools.", MsgBoxStyle.Information)
+                Dim NewISOTools As New PS3ISOTools With {.ShowActivated = True, .ISOToDecrypt = SelectedGame.GameFilePath}
+                NewISOTools.Show()
             End If
         End If
     End Sub
@@ -784,22 +768,32 @@ Public Class PS3Library
                 If IsSoundPlaying Then
                     Utils.StopGameSound()
                     IsSoundPlaying = False
+                    PlayMenuItem.Header = "Play Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
                 Else
                     Utils.PlayGameSound(SelectedPS3Game.GameBackgroundSoundFile)
                     IsSoundPlaying = True
+                    PlayMenuItem.Header = "Stop Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Stop-icon.png", UriKind.Relative))}
                 End If
             ElseIf SelectedPS3Game.GameBackgroundSoundBytes IsNot Nothing Then
                 If IsSoundPlaying Then
                     Utils.StopSND()
                     IsSoundPlaying = False
+                    PlayMenuItem.Header = "Play Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
                 Else
                     Utils.PlaySND(SelectedPS3Game.GameBackgroundSoundBytes)
                     IsSoundPlaying = True
+                    PlayMenuItem.Header = "Stop Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Stop-icon.png", UriKind.Relative))}
                 End If
             Else
                 If IsSoundPlaying Then
                     Utils.StopGameSound()
                     IsSoundPlaying = False
+                    PlayMenuItem.Header = "Play Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
                 Else
                     MsgBox("No game soundtrack found.", MsgBoxStyle.Information)
                 End If
@@ -1022,17 +1016,12 @@ Public Class PS3Library
 
             PS3GamesListView.Items.Clear()
 
-            FoldersCount = Directory.GetFiles(FBD.SelectedPath, "*.SFO", SearchOption.AllDirectories).Length
-            ISOCount = Directory.GetFiles(FBD.SelectedPath, "*.iso", SearchOption.AllDirectories).Length
-            PKGCount = Directory.GetFiles(FBD.SelectedPath, "*.pkg", SearchOption.AllDirectories).Length
-
             'Show the loading progress window
             NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS3 files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.Maximum = FoldersCount + ISOCount + PKGCount
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading file 1 of " + (FoldersCount + ISOCount + PKGCount).ToString()
             NewLoadingWindow.Show()
 
-            GameLoaderWorker.RunWorkerAsync(New GameLoaderArgs() With {.Type = LoadType.BackupFolder, .FolderPath = FBD.SelectedPath})
+            Dim NewGameLoaderArgs As New GameLoaderArgs() With {.Type = LoadType.BackupFolder, .FolderPath = FBD.SelectedPath}
+            ProcessBackups(NewGameLoaderArgs)
         End If
     End Sub
 
@@ -1051,7 +1040,8 @@ Public Class PS3Library
                     NewLoadingWindow.Show()
 
                     'Load the files
-                    GameLoaderWorker.RunWorkerAsync(New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = ConsoleIP, .FolderPath = String.Empty})
+                    Dim NewGameLoaderArgs As New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = ConsoleIP, .FolderPath = String.Empty}
+                    ProcessBackups(NewGameLoaderArgs)
                 Else
                     Dim NewInputDialog As New InputDialog With {
                     .Title = "Enter PS3 IP Address",
@@ -1070,7 +1060,8 @@ Public Class PS3Library
                         NewLoadingWindow.Show()
 
                         'Load the files
-                        GameLoaderWorker.RunWorkerAsync(New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = InputDialogResult, .FolderPath = String.Empty})
+                        Dim NewGameLoaderArgs As New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = InputDialogResult, .FolderPath = String.Empty}
+                        ProcessBackups(NewGameLoaderArgs)
                     End If
                 End If
             End If
@@ -1083,7 +1074,8 @@ Public Class PS3Library
                 NewLoadingWindow.Show()
 
                 'Load the files
-                GameLoaderWorker.RunWorkerAsync(New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = ConsoleIP, .FolderPath = String.Empty})
+                Dim NewGameLoaderArgs As New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = ConsoleIP, .FolderPath = String.Empty}
+                ProcessBackups(NewGameLoaderArgs)
             Else
                 Dim NewInputDialog As New InputDialog With {
                 .Title = "Enter PS3 IP Address",
@@ -1102,7 +1094,8 @@ Public Class PS3Library
                     NewLoadingWindow.Show()
 
                     'Load the files
-                    GameLoaderWorker.RunWorkerAsync(New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = InputDialogResult, .FolderPath = String.Empty})
+                    Dim NewGameLoaderArgs As New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = InputDialogResult, .FolderPath = String.Empty}
+                    ProcessBackups(NewGameLoaderArgs)
                 End If
             End If
         End If
@@ -1181,23 +1174,47 @@ Public Class PS3Library
                 If IsSoundPlaying Then
                     Utils.StopGameSound()
                     IsSoundPlaying = False
+                    PlayMenuItem.Header = "Play Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
                 Else
                     Utils.PlayGameSound(SelectedPS3Game.GameBackgroundSoundFile)
                     IsSoundPlaying = True
+                    PlayMenuItem.Header = "Stop Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Stop-icon.png", UriKind.Relative))}
                 End If
             ElseIf SelectedPS3Game.GameBackgroundSoundBytes IsNot Nothing Then
                 If IsSoundPlaying Then
                     Utils.StopSND()
                     IsSoundPlaying = False
+                    PlayMenuItem.Header = "Play Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
                 Else
                     Utils.PlaySND(SelectedPS3Game.GameBackgroundSoundBytes)
                     IsSoundPlaying = True
+                    PlayMenuItem.Header = "Stop Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Stop-icon.png", UriKind.Relative))}
                 End If
             Else
                 If IsSoundPlaying Then
                     Utils.StopGameSound()
                     IsSoundPlaying = False
+                    PlayMenuItem.Header = "Play Soundtrack"
+                    PlayMenuItem.Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}
                 End If
+            End If
+
+            If Not String.IsNullOrEmpty(SelectedPS3Game.ISOEncryption) Then
+                ISOEncryptionStatusTextBlock.Visibility = Visibility.Visible
+                ISOEncryptionStatusTextBlock.Text = "ISO Status: " + SelectedPS3Game.ISOEncryption
+
+                If SelectedPS3Game.ISOEncryption = "Encrypted" Then
+                    ISOEncryptionStatusTextBlock.Foreground = Brushes.Red
+                Else
+                    ISOEncryptionStatusTextBlock.Foreground = Brushes.Green
+                End If
+            Else
+                ISOEncryptionStatusTextBlock.Visibility = Visibility.Hidden
+                ISOEncryptionStatusTextBlock.Text = ""
             End If
         End If
     End Sub
@@ -1228,11 +1245,16 @@ Public Class PS3Library
                         ISOToolsMenuItem.Items.Add(MountAndPlayISOMenuItem)
                         ISOToolsMenuItem.Items.Add(MountISOMenuItem)
                     Else
+                        NewContextMenu.Items.Add(PlayMenuItem)
                         NewContextMenu.Items.Add(ISOToolsMenuItem)
                         NewContextMenu.Items.Add(PlayGameMenuItem)
                         ISOToolsMenuItem.Items.Add(ExtractISOMenuItem)
                         ISOToolsMenuItem.Items.Add(PatchISOMenuItem)
                         ISOToolsMenuItem.Items.Add(SplitISOMenuItem)
+
+                        If SelectedPS3Game.ISOEncryption = "Encrypted" Then
+                            ISOToolsMenuItem.Items.Add(DecryptISOMenuItem)
+                        End If
                     End If
                 Case PS3Game.GameFileTypes.PS2ISO, PS3Game.GameFileTypes.PSXISO, PS3Game.GameFileTypes.PSPISO
                     NewContextMenu.Items.Add(ISOToolsMenuItem)

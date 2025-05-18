@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports System.Net.Http
 Imports System.Windows.Media.Animation
 Imports System.Windows.Threading
 Imports PS_Multi_Tools.Structures
@@ -11,7 +12,6 @@ Public Class PSXMainWindow
     Private WNBDClientPath As String = ""
 
     Private WithEvents ConnectDelay As New DispatcherTimer With {.Interval = TimeSpan.FromSeconds(2)}
-    Private WithEvents ContentDownloader As New WebClient()
 
     Private Sub NewMainWindow_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
         Title = "PSX XMB Manager"
@@ -412,7 +412,7 @@ Public Class PSXMainWindow
         End If
     End Sub
 
-    Private Sub PrepareProjectButton_Click(sender As Object, e As RoutedEventArgs) Handles PrepareProjectButton.Click
+    Private Async Sub PrepareProjectButton_Click(sender As Object, e As RoutedEventArgs) Handles PrepareProjectButton.Click
         If ProjectListComboBox.SelectedItem IsNot Nothing Then
             Dim SelectedProject As ComboBoxProjectItem = CType(ProjectListComboBox.SelectedItem, ComboBoxProjectItem)
             Dim ProjectDIR As String = File.ReadAllLines(SelectedProject.ProjectFile)(2).Split("="c)(1)
@@ -471,7 +471,16 @@ Public Class PSXMainWindow
                                 If Not String.IsNullOrEmpty(HomebrewELF) Then
                                     If HomebrewELF = "https://github.com/ps2homebrew/OPL-Launcher/releases/download/latest/OPL-Launcher.elf" Then
                                         'Download latest OPL-Launcher
-                                        ContentDownloader.DownloadFile("https://github.com/ps2homebrew/OPL-Launcher/releases/download/latest/OPL-Launcher.elf", Environment.CurrentDirectory + "\Tools\OPL-Launcher.elf")
+                                        Dim OPLLauncherURL As String = "https://github.com/ps2homebrew/OPL-Launcher/releases/download/latest/OPL-Launcher.elf"
+                                        Dim DestinationPath As String = Environment.CurrentDirectory + "\Tools\OPL-Launcher.elf"
+                                        Using NewHttpClient As New HttpClient()
+                                            Using NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync(OPLLauncherURL, HttpCompletionOption.ResponseHeadersRead)
+                                                NewHttpResponseMessage.EnsureSuccessStatusCode()
+                                                Using NewFileStream As New FileStream(DestinationPath, FileMode.Create, FileAccess.Write, FileShare.None)
+                                                    Await NewHttpResponseMessage.Content.CopyToAsync(NewFileStream)
+                                                End Using
+                                            End Using
+                                        End Using
                                     End If
                                 Else
                                     MsgBox("Not valid file provided, aborting ...", MsgBoxStyle.Exclamation, "Aborting")

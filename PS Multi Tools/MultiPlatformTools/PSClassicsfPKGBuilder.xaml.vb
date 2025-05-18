@@ -5,6 +5,7 @@ Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports DiscUtils
 Imports LibOrbisPkg.SFO
+Imports Newtonsoft.Json.Linq
 
 Public Class PSClassicsfPKGBuilder
 
@@ -452,7 +453,7 @@ Public Class PSClassicsfPKGBuilder
         Dim ReturnedFileDestinationPath As String
         Try
             Using NewFileStream As New FileStream(GameISOFile, FileMode.Open, FileAccess.Read)
-                Dim NewUdfReader As New Udf.UdfReader(NewFileStream, &H800)
+                Dim NewUdfReader As New Udf.UdfReader(NewFileStream, 2048)
                 Try
                     Dim NewFileStream2 As New FileStream(FileDestinationPath, FileMode.Create)
                     NewUdfReader.OpenFile(FileToExtract, FileMode.Open).CopyTo(NewFileStream2)
@@ -871,49 +872,6 @@ Public Class PSClassicsfPKGBuilder
 
 #Region "PSP"
 
-    Public Shared Function FileExistInISO(GameISOPath As String, FileToSearch As String) As Boolean
-        Dim Exists As Boolean = False
-        Try
-            Using NewFileStream As New FileStream(GameISOPath, FileMode.Open, FileAccess.Read)
-                Dim NewIso9660CDReader As New Iso9660.CDReader(NewFileStream, True)
-                Try
-                    NewIso9660CDReader.OpenFile(FileToSearch, FileMode.Open)
-                    Exists = True
-                Catch exception As Exception
-                    Exists = False
-                End Try
-            End Using
-        Catch exception1 As Exception
-            Exists = False
-        End Try
-        Return Exists
-    End Function
-
-    Public Shared Function ExtractFileFromPSPISO(path As String, fileName As String, DestinationPath As String) As String
-        Dim OutputDestination As String = ""
-        Dim DesinationDirectoryName As String = IO.Path.GetDirectoryName(DestinationPath)
-        If Not Directory.Exists(DesinationDirectoryName) Then
-            Directory.CreateDirectory(DesinationDirectoryName)
-        End If
-        Try
-            Using NewFileStream As New FileStream(path, FileMode.Open, FileAccess.Read)
-                Dim NewIso9660CDReader As New Iso9660.CDReader(NewFileStream, True)
-                Try
-                    Dim NewSparseStream As Streams.SparseStream = NewIso9660CDReader.OpenFile(fileName, FileMode.Open)
-                    Dim OutputFileStream As New FileStream(DestinationPath, FileMode.Create)
-                    NewSparseStream.CopyTo(OutputFileStream)
-                    OutputFileStream.Close()
-                    OutputDestination = DestinationPath
-                Catch ex As Exception
-                    OutputDestination = ""
-                End Try
-            End Using
-        Catch ex As Exception
-            OutputDestination = ""
-        End Try
-        Return OutputDestination
-    End Function
-
     Public Shared Function ReadUMDData(DataFile As String, Offset As Long, Lenght As Integer) As Byte()
         Dim NewByte(Lenght - 1 + 1 - 1) As Byte
         Using NewBinaryReader As New BinaryReader(File.Open(DataFile, FileMode.Open))
@@ -1015,9 +973,9 @@ Public Class PSClassicsfPKGBuilder
         Dim OFD As New OpenFileDialog() With {.Title = "Select a PSP ISO file.", .Multiselect = False, .Filter = "ISO (*.iso)|*.iso"}
         If OFD.ShowDialog() = Forms.DialogResult.OK Then
 
-            If FileExistInISO(OFD.FileName, "\PSP_GAME\PARAM.SFO") Then
+            If Utils.FileExistInISO(OFD.FileName, "\PSP_GAME\PARAM.SFO") Then
                 Dim CacheDir As String = Environment.CurrentDirectory + ""
-                Dim ExtractedUMDDataPath As String = ExtractFileFromPSPISO(OFD.FileName, "UMD_DATA.BIN", CacheDir + "\temp_umd_data.bin")
+                Dim ExtractedUMDDataPath As String = Utils.ExtractFileFromISO9660(OFD.FileName, "UMD_DATA.BIN", CacheDir + "\temp_umd_data.bin")
 
                 If Not String.IsNullOrEmpty(ExtractedUMDDataPath) Then
                     PSPNPTitleTextBox.Text = Text.Encoding.ASCII.GetString(ReadUMDData(CacheDir + "\temp_umd_data.bin", 0, 10)).Replace("-", "")
@@ -1082,7 +1040,7 @@ Public Class PSClassicsfPKGBuilder
             Utils.CopyDirectory(Environment.CurrentDirectory + "\Tools\PS4\emus\psphd", GameCacheDirectory, True)
 
             'Get PSP EBOOT
-            If Not File.Exists(ExtractFileFromPSPISO(SelectedISOFile, "\PSP_GAME\SYSDIR\EBOOT.BIN", CacheDirectory + "\temp_eboot.bin")) Then
+            If Not File.Exists(Utils.ExtractFileFromISO9660(SelectedISOFile, "\PSP_GAME\SYSDIR\EBOOT.BIN", CacheDirectory + "\temp_eboot.bin")) Then
                 File.Copy(SelectedISOFile, GameCacheDirectory + "\data\USER_L0.IMG", True)
                 MsgBox("Cannot read the EBOOT.BIN file from the ISO." + vbCrLf + "Warning: This game may not work!", MsgBoxStyle.Exclamation)
             Else

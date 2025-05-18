@@ -1093,33 +1093,41 @@ Public Class SFOEditor
 #Region "PSP Value Changes"
 
     Private Sub PSPBootableCheckBox_Checked(sender As Object, e As RoutedEventArgs) Handles PSPBootableCheckBox.Checked
-        For i As Integer = 0 To CurrentSFO.Tables.Count - 1
-            If CurrentSFO.Tables(i).Name = "BOOTABLE" Then
-                Dim TempTableItem As Param_SFO.PARAM_SFO.Table = CurrentSFO.Tables(i)
+        If CurrentSFO IsNot Nothing Then
+            For i As Integer = 0 To CurrentSFO.Tables.Count - 1
+                If CurrentSFO.Tables(i).Name = "BOOTABLE" Then
+                    Dim TempTableItem As Param_SFO.PARAM_SFO.Table = CurrentSFO.Tables(i)
 
-                TempTableItem.Value = "1"
-                TempTableItem.Indextable.param_data_len = CurrentSFO.Tables(i).Indextable.param_data_len
-                TempTableItem.Indextable.param_data_max_len = CurrentSFO.Tables(i).Indextable.param_data_max_len
+                    TempTableItem.Value = "1"
+                    TempTableItem.Indextable.param_data_len = CurrentSFO.Tables(i).Indextable.param_data_len
+                    TempTableItem.Indextable.param_data_max_len = CurrentSFO.Tables(i).Indextable.param_data_max_len
 
-                CurrentSFO.Tables(i) = TempTableItem
-                Exit For
-            End If
-        Next
+                    CurrentSFO.Tables(i) = TempTableItem
+                    Exit For
+                End If
+            Next
+        Else
+            MsgBox("No Param.SFO loaded", MsgBoxStyle.Information)
+        End If
     End Sub
 
     Private Sub PSPBootableCheckBox_Unchecked(sender As Object, e As RoutedEventArgs) Handles PSPBootableCheckBox.Unchecked
-        For i As Integer = 0 To CurrentSFO.Tables.Count - 1
-            If CurrentSFO.Tables(i).Name = "BOOTABLE" Then
-                Dim TempTableItem As Param_SFO.PARAM_SFO.Table = CurrentSFO.Tables(i)
+        If CurrentSFO IsNot Nothing Then
+            For i As Integer = 0 To CurrentSFO.Tables.Count - 1
+                If CurrentSFO.Tables(i).Name = "BOOTABLE" Then
+                    Dim TempTableItem As Param_SFO.PARAM_SFO.Table = CurrentSFO.Tables(i)
 
-                TempTableItem.Value = "0"
-                TempTableItem.Indextable.param_data_len = CurrentSFO.Tables(i).Indextable.param_data_len
-                TempTableItem.Indextable.param_data_max_len = CurrentSFO.Tables(i).Indextable.param_data_max_len
+                    TempTableItem.Value = "0"
+                    TempTableItem.Indextable.param_data_len = CurrentSFO.Tables(i).Indextable.param_data_len
+                    TempTableItem.Indextable.param_data_max_len = CurrentSFO.Tables(i).Indextable.param_data_max_len
 
-                CurrentSFO.Tables(i) = TempTableItem
-                Exit For
-            End If
-        Next
+                    CurrentSFO.Tables(i) = TempTableItem
+                    Exit For
+                End If
+            Next
+        Else
+            MsgBox("No Param.SFO loaded", MsgBoxStyle.Information)
+        End If
     End Sub
 
 #End Region

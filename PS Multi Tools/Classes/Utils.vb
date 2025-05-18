@@ -12,13 +12,15 @@ Imports System.Security.Principal
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports DiscUtils
+Imports HtmlAgilityPack
 
 Public Class Utils
 
     Public Shared ReadOnly ByBytes() As Byte = {&H62, &H79, &H20, &H53, &H76, &H65, &H6E, &H47, &H44, &H4B}
-    Public Shared ConnectedPSXHDD As Structures.MountedPSXDrive
-
     Public Shared ReadOnly SpaceSeparator As String() = New String() {" "}
+
+#Region "Library Music"
 
     <DllImport("winmm.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
     Private Shared Function PlaySound(<MarshalAs(UnmanagedType.LPWStr)> pszSound As String, hmod As IntPtr, fdwSound As Integer) As Boolean
@@ -74,23 +76,9 @@ Public Class Utils
         Next
     End Sub
 
-    Public Shared Function IncrementArray(ByRef sourceArray As Byte(), position As Integer) As Boolean
-        If sourceArray(position) = 255 Then
-            If position <> 0 Then
-                If IncrementArray(sourceArray, position - 1) Then
-                    sourceArray(position) = 0
-                    Return True
-                Else
-                    Return False
-                End If
-            Else
-                Return False
-            End If
-        Else
-            sourceArray(position) += CByte(1)
-            Return True
-        End If
-    End Function
+#End Region
+
+#Region "Converters"
 
     Public Shared Function HexStringToAscii(HexString As String, CleanEndOfString As Boolean) As String
         Dim ascii As String
@@ -100,7 +88,7 @@ Public Class Utils
 
             While HexString.Length > 0
                 str += Convert.ToChar(Convert.ToUInt32(HexString.Substring(0, 2), 16)).ToString()
-                HexString = HexString.Substring(2, HexString.Length - 2)
+                HexString = HexString.Substring(2)
             End While
 
             If CleanEndOfString Then str = str.Replace(vbNullChar, "")
@@ -131,6 +119,328 @@ Public Class Utils
         Return hexString
     End Function
 
+    Public Shared Sub ConvertTo32bppAndDisposeOriginal(ByRef img As Bitmap)
+        Dim bmp = New Bitmap(img.Width, img.Height, Imaging.PixelFormat.Format32bppArgb)
+
+        Using gr = Graphics.FromImage(bmp)
+            gr.DrawImage(img, New Rectangle(0, 0, 76, 108))
+        End Using
+
+        img.Dispose()
+        img = bmp
+    End Sub
+
+    Public Shared Function ConvertTo24bppPNG(ImageToConvert As Image) As Bitmap
+        Dim NewBitmap As New Bitmap(ImageToConvert.Width, ImageToConvert.Height, Imaging.PixelFormat.Format24bppRgb)
+        Using NewGraphics As Graphics = Graphics.FromImage(NewBitmap)
+            NewGraphics.DrawImage(ImageToConvert, New Rectangle(0, 0, ImageToConvert.Width, ImageToConvert.Height))
+        End Using
+        Return NewBitmap
+    End Function
+
+    Public Shared Function ToMemoryStream(BitmapImage As Bitmap) As MemoryStream
+        Dim NewMemoryStream As New MemoryStream()
+        BitmapImage.Save(NewMemoryStream, Imaging.ImageFormat.Png)
+        Return NewMemoryStream
+    End Function
+
+#End Region
+
+#Region "Image Processing"
+
+    Public Shared Function BitmapSourceFromByteArray(buffer As Byte()) As BitmapSource
+        Dim bitmap = New BitmapImage()
+
+        Using stream = New MemoryStream(buffer)
+            bitmap.BeginInit()
+            bitmap.CacheOption = BitmapCacheOption.OnLoad
+            bitmap.StreamSource = stream
+            bitmap.EndInit()
+        End Using
+
+        bitmap.Freeze()
+        Return bitmap
+    End Function
+
+    Public Shared Function GetScaledImage(InputImage As Image, NewWidth As Integer, NewHeight As Integer) As Bitmap
+        Dim ScaledImage As New Bitmap(NewWidth, NewHeight)
+
+        Using gr As Graphics = Graphics.FromImage(ScaledImage)
+            gr.SmoothingMode = SmoothingMode.HighQuality
+            gr.InterpolationMode = InterpolationMode.HighQualityBicubic
+            gr.PixelOffsetMode = PixelOffsetMode.HighQuality
+            gr.DrawImage(InputImage, New Rectangle(0, 0, NewWidth, NewHeight))
+        End Using
+
+        Return ScaledImage
+    End Function
+
+    Public Shared Async Function GetResizedBitmap(ImageLocation As String, NewWidth As Integer, NewHeight As Integer) As Task(Of Bitmap)
+        Using NewHttpClient As New HttpClient()
+            Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync(ImageLocation)
+            If NewHttpResponseMessage.IsSuccessStatusCode Then
+                Using NewStream As Stream = Await NewHttpResponseMessage.Content.ReadAsStreamAsync()
+                    Dim OriginalBitmap As New Bitmap(NewStream)
+                    Dim ResizedBitmap As New Bitmap(OriginalBitmap, New System.Drawing.Size(NewWidth, NewHeight))
+                    Return ResizedBitmap
+                End Using
+            Else
+                Return Nothing
+            End If
+        End Using
+    End Function
+
+    Public Shared Function ResizeAsImage(InputImage As Image, NewSizeX As Integer, NewSizeY As Integer) As Image
+        Return New Bitmap(InputImage, New System.Drawing.Size(NewSizeX, NewSizeY))
+    End Function
+
+#End Region
+
+#Region "PSX Related"
+
+    Private Shared _ConnectedPSXHDD As Structures.MountedPSXDrive
+    Public Shared Property ConnectedPSXHDD As Structures.MountedPSXDrive
+        Get
+            Return _ConnectedPSXHDD
+        End Get
+        Set
+            _ConnectedPSXHDD = Value
+        End Set
+    End Property
+
+    Public Enum DiscType
+        CD
+        DVD
+    End Enum
+
+    Public Shared Function GetDiscType(ISOFile As String) As DiscType
+        Dim ISOFileSize As Double = New FileInfo(ISOFile).Length / 1048576
+
+        If ISOFileSize > 700 Then
+            Return DiscType.DVD
+        Else
+            Return DiscType.CD
+        End If
+    End Function
+
+    Public Shared Function IsNBDConnected(WNBDClientPath As String) As String
+        Dim ProcessOutput As String()
+        Dim NBDDriveName As String = ""
+
+        'List connected clients
+        If Not String.IsNullOrEmpty(WNBDClientPath) Then
+            Using WNBDClient As New Process()
+                WNBDClient.StartInfo.FileName = WNBDClientPath
+                WNBDClient.StartInfo.Arguments = "list"
+                WNBDClient.StartInfo.RedirectStandardOutput = True
+                WNBDClient.StartInfo.UseShellExecute = False
+                WNBDClient.StartInfo.CreateNoWindow = True
+                WNBDClient.Start()
+                WNBDClient.WaitForExit()
+
+                Dim OutputReader As StreamReader = WNBDClient.StandardOutput
+                ProcessOutput = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
+            End Using
+
+            For Each ReturnedLine As String In ProcessOutput
+                If ReturnedLine.Contains("wnbd-client") Then
+                    NBDDriveName = ReturnedLine.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(4).Trim()
+                    Exit For
+                End If
+            Next
+        End If
+
+        If Not String.IsNullOrEmpty(NBDDriveName) Then
+            Return NBDDriveName
+        Else
+            Return ""
+        End If
+    End Function
+
+    Public Shared Function IsLocalHDDConnected() As String
+        'Query the drives
+        If File.Exists(Environment.CurrentDirectory + "\Tools\hdl_dump.exe") Then
+            Using HDLDump As New Process()
+                HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
+                HDLDump.StartInfo.Arguments = "query"
+                HDLDump.StartInfo.RedirectStandardOutput = True
+                HDLDump.StartInfo.UseShellExecute = False
+                HDLDump.StartInfo.CreateNoWindow = True
+                HDLDump.Start()
+
+                'Read the output
+                Dim OutputReader As StreamReader = HDLDump.StandardOutput
+                Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
+
+                Dim DriveHDLName As String = ""
+
+                'Find the local drive
+                For Each Line As String In ProcessOutput
+                    If Not String.IsNullOrWhiteSpace(Line) Then
+                        If Line.Contains("formatted Playstation 2 HDD") Then
+                            'Set the found drive as mounted PSX drive
+                            Dim DriveInfos As String() = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)
+                            If DriveInfos(0) IsNot Nothing Then
+                                DriveHDLName = DriveInfos(0).Trim()
+                                Exit For
+                            End If
+                        End If
+                    End If
+                Next
+
+                If Not String.IsNullOrWhiteSpace(DriveHDLName) Then
+                    Return DriveHDLName
+                Else
+                    Return ""
+                End If
+
+            End Using
+        Else
+            Return ""
+        End If
+    End Function
+
+    Public Shared Function GetConnectedNBDIP(WNBDClientPath As String, NBDDriveName As String) As String
+        'Get the connected IP address
+        If Not String.IsNullOrEmpty(WNBDClientPath) Then
+            Dim ProcessOutput As String()
+            Dim NBDIP As String = ""
+
+            Using WNBDClient As New Process()
+                WNBDClient.StartInfo.FileName = WNBDClientPath
+                WNBDClient.StartInfo.Arguments = "show " + NBDDriveName
+                WNBDClient.StartInfo.RedirectStandardOutput = True
+                WNBDClient.StartInfo.UseShellExecute = False
+                WNBDClient.StartInfo.CreateNoWindow = True
+                WNBDClient.Start()
+                WNBDClient.WaitForExit()
+
+                Dim OutputReader As StreamReader = WNBDClient.StandardOutput
+                ProcessOutput = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
+            End Using
+
+            For Each ReturnedLine As String In ProcessOutput
+                If ReturnedLine.Contains("Hostname") Then
+                    NBDIP = ReturnedLine.Split(":"c)(1).Trim()
+                    Exit For
+                End If
+            Next
+
+            Return NBDIP
+        Else
+            Return ""
+        End If
+    End Function
+
+    Public Shared Function GetHDLDriveName() As String
+        If File.Exists(Environment.CurrentDirectory + "\Tools\hdl_dump.exe") Then
+            Dim HDLDriveName As String = ""
+
+            'Query the drives
+            Using HDLDump As New Process()
+                HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
+                HDLDump.StartInfo.Arguments = "query"
+                HDLDump.StartInfo.RedirectStandardOutput = True
+                HDLDump.StartInfo.UseShellExecute = False
+                HDLDump.StartInfo.CreateNoWindow = True
+                HDLDump.Start()
+                HDLDump.WaitForExit()
+
+                'Read the output
+                Dim OutputReader As StreamReader = HDLDump.StandardOutput
+                Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
+
+                'Find the drive
+                For Each Line As String In ProcessOutput
+                    If Not String.IsNullOrWhiteSpace(Line) Then
+                        If Line.Contains("formatted Playstation 2 HDD") Then
+                            'Set the found drive as mounted PSX drive
+                            Dim DriveInfos As String() = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)
+                            HDLDriveName = DriveInfos(0).Trim()
+                            Exit For
+                        End If
+                    End If
+                Next
+            End Using
+
+            Return HDLDriveName
+        Else
+            Return ""
+        End If
+    End Function
+
+    Public Shared Function GetHDDID() As String
+        Dim DriveID As String = ""
+
+        'Query the drives
+        Using WMIC As New Process()
+            WMIC.StartInfo.FileName = "wmic"
+            WMIC.StartInfo.Arguments = "diskdrive get Caption,DeviceID"
+            WMIC.StartInfo.RedirectStandardOutput = True
+            WMIC.StartInfo.UseShellExecute = False
+            WMIC.StartInfo.CreateNoWindow = True
+            WMIC.Start()
+            WMIC.WaitForExit()
+
+            'Read the output
+            Dim OutputReader As StreamReader = WMIC.StandardOutput
+            Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
+
+            'Find the drive
+            For Each Line As String In ProcessOutput
+                If Not String.IsNullOrWhiteSpace(Line) Then
+                    If Line.Contains("WNBD WNBD_DISK SCSI Disk Device") Then
+                        DriveID = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(5).Trim()
+                        Exit For
+                    ElseIf Line.Contains("Microsoft Virtual Disk") Then 'For testing with local VHD
+                        DriveID = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(3).Trim()
+                        Exit For
+                    End If
+                End If
+            Next
+        End Using
+
+        Return DriveID
+    End Function
+
+    Public Shared Sub ReloadProjects()
+        For Each Win In System.Windows.Application.Current.Windows()
+            If Win.ToString = "PS_Multi_Tools.PSXMainWindow" Then
+                CType(Win, PSXMainWindow).ReloadProjects()
+                Exit For
+            End If
+        Next
+    End Sub
+
+    Public Shared Sub ReloadPartitions()
+        For Each Win In System.Windows.Application.Current.Windows()
+            If Win.ToString = "PS_Multi_Tools.PSXPartitionManager" Then
+                CType(Win, PSXPartitionManager).ReloadPartitions()
+                Exit For
+            End If
+        Next
+    End Sub
+
+#End Region
+
+    Public Shared Function IncrementArray(ByRef sourceArray As Byte(), position As Integer) As Boolean
+        If sourceArray(position) = 255 Then
+            If position <> 0 Then
+                If IncrementArray(sourceArray, position - 1) Then
+                    sourceArray(position) = 0
+                    Return True
+                Else
+                    Return False
+                End If
+            Else
+                Return False
+            End If
+        Else
+            sourceArray(position) += CByte(1)
+            Return True
+        End If
+    End Function
+
     Public Shared Function DirSize(sourceDir As String, recurse As Boolean) As Long
         Dim size As Long = 0
         Dim fileEntries As String() = Directory.GetFiles(sourceDir)
@@ -154,21 +464,6 @@ Public Class Utils
 
         Return size
     End Function
-
-    Public Shared Sub CreateWorkingDirectories()
-        If Not Directory.Exists(".\Downloads") Then
-            With Directory.CreateDirectory(".\Downloads")
-                .CreateSubdirectory(".\exdata")
-                .CreateSubdirectory(".\pkgs")
-            End With
-        End If
-        If Not Directory.Exists(".\Extractions") Then
-            Directory.CreateDirectory(".\Extractions")
-        End If
-        If Not Directory.Exists(".\Decryptions") Then
-            Directory.CreateDirectory(".\Decryptions")
-        End If
-    End Sub
 
     Public Shared Function GetFileSize(Size As Long) As String
         Dim DoubleBytes As Double
@@ -242,20 +537,6 @@ Public Class Utils
         End Try
     End Function
 
-    Public Shared Function BitmapSourceFromByteArray(buffer As Byte()) As BitmapSource
-        Dim bitmap = New BitmapImage()
-
-        Using stream = New MemoryStream(buffer)
-            bitmap.BeginInit()
-            bitmap.CacheOption = BitmapCacheOption.OnLoad
-            bitmap.StreamSource = stream
-            bitmap.EndInit()
-        End Using
-
-        bitmap.Freeze()
-        Return bitmap
-    End Function
-
     Public Shared Sub ReCreateDirectoryStructure(SourceDirectory As String, TargetDirectory As String, Optional RootDirectory As String = "")
         If String.IsNullOrEmpty(RootDirectory) Then
             RootDirectory = SourceDirectory
@@ -266,40 +547,6 @@ Public Class Utils
             ReCreateDirectoryStructure(folder, TargetDirectory, RootDirectory)
         Next
     End Sub
-
-    Public Shared Function GetBackupFolders(DestinationPath As String) As Structures.BackupFolders
-        Dim DestinationBackupStructure As New Structures.BackupFolders()
-
-        If Directory.Exists(DestinationPath + "GAMES") Then
-            DestinationBackupStructure.IsGAMESPresent = True
-        End If
-        If Directory.Exists(DestinationPath + "GAMEZ") Then
-            DestinationBackupStructure.IsGAMEZPresent = True
-        End If
-        If Directory.Exists(DestinationPath + "packages") Then
-            DestinationBackupStructure.IspackagesPresent = True
-        End If
-        If Directory.Exists(DestinationPath + "exdata") Then
-            DestinationBackupStructure.IsexdataPresent = True
-        End If
-
-        Return DestinationBackupStructure
-    End Function
-
-    Public Shared Function IsWindowOpen(WindowName As String) As Boolean
-        Dim WinFound As Boolean = False
-        For Each OpenWin In System.Windows.Application.Current.Windows()
-            If OpenWin.ToString = "PS_Multi_Tools." + WindowName Then
-                WinFound = True
-                Return True
-                Exit For
-            Else
-                WinFound = False
-                Return False
-            End If
-        Next
-        Return WinFound
-    End Function
 
     Public Shared Async Function IsURLValid(Url As String) As Task(Of Boolean)
         If NetworkInterface.GetIsNetworkAvailable Then
@@ -339,19 +586,6 @@ Public Class Utils
         Next
 
         Return Nothing
-    End Function
-
-    Public Shared Function GetScaledImage(InputImage As Image, NewWidth As Integer, NewHeight As Integer) As Bitmap
-        Dim ScaledImage As New Bitmap(NewWidth, NewHeight)
-
-        Using gr As Graphics = Graphics.FromImage(ScaledImage)
-            gr.SmoothingMode = SmoothingMode.HighQuality
-            gr.InterpolationMode = InterpolationMode.HighQualityBicubic
-            gr.PixelOffsetMode = PixelOffsetMode.HighQuality
-            gr.DrawImage(InputImage, New Rectangle(0, 0, NewWidth, NewHeight))
-        End Using
-
-        Return ScaledImage
     End Function
 
     Public Shared Function IsRunningAsAdministrator() As Boolean
@@ -585,219 +819,6 @@ Public Class Utils
         End Select
     End Function
 
-    Public Enum DiscType
-        CD
-        DVD
-    End Enum
-
-    Public Shared Function GetDiscType(ISOFile As String) As DiscType
-        Dim ISOFileSize As Double = New FileInfo(ISOFile).Length / 1048576
-
-        If ISOFileSize > 700 Then
-            Return DiscType.DVD
-        Else
-            Return DiscType.CD
-        End If
-    End Function
-
-    Public Shared Function IsNBDConnected(WNBDClientPath As String) As String
-        Dim ProcessOutput As String()
-        Dim NBDDriveName As String = ""
-
-        'List connected clients
-        If Not String.IsNullOrEmpty(WNBDClientPath) Then
-            Using WNBDClient As New Process()
-                WNBDClient.StartInfo.FileName = WNBDClientPath
-                WNBDClient.StartInfo.Arguments = "list"
-                WNBDClient.StartInfo.RedirectStandardOutput = True
-                WNBDClient.StartInfo.UseShellExecute = False
-                WNBDClient.StartInfo.CreateNoWindow = True
-                WNBDClient.Start()
-                WNBDClient.WaitForExit()
-
-                Dim OutputReader As StreamReader = WNBDClient.StandardOutput
-                ProcessOutput = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
-            End Using
-
-            For Each ReturnedLine As String In ProcessOutput
-                If ReturnedLine.Contains("wnbd-client") Then
-                    NBDDriveName = ReturnedLine.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(4).Trim()
-                    Exit For
-                End If
-            Next
-        End If
-
-        If Not String.IsNullOrEmpty(NBDDriveName) Then
-            Return NBDDriveName
-        Else
-            Return ""
-        End If
-    End Function
-
-    Public Shared Function IsLocalHDDConnected() As String
-        'Query the drives
-        If File.Exists(Environment.CurrentDirectory + "\Tools\hdl_dump.exe") Then
-            Using HDLDump As New Process()
-                HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
-                HDLDump.StartInfo.Arguments = "query"
-                HDLDump.StartInfo.RedirectStandardOutput = True
-                HDLDump.StartInfo.UseShellExecute = False
-                HDLDump.StartInfo.CreateNoWindow = True
-                HDLDump.Start()
-
-                'Read the output
-                Dim OutputReader As StreamReader = HDLDump.StandardOutput
-                Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
-
-                Dim DriveHDLName As String = ""
-
-                'Find the local drive
-                For Each Line As String In ProcessOutput
-                    If Not String.IsNullOrWhiteSpace(Line) Then
-                        If Line.Contains("formatted Playstation 2 HDD") Then
-                            'Set the found drive as mounted PSX drive
-                            Dim DriveInfos As String() = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)
-                            If DriveInfos(0) IsNot Nothing Then
-                                DriveHDLName = DriveInfos(0).Trim()
-                                Exit For
-                            End If
-                        End If
-                    End If
-                Next
-
-                If Not String.IsNullOrWhiteSpace(DriveHDLName) Then
-                    Return DriveHDLName
-                Else
-                    Return ""
-                End If
-
-            End Using
-        Else
-            Return ""
-        End If
-    End Function
-
-    Public Shared Function GetConnectedNBDIP(WNBDClientPath As String, NBDDriveName As String) As String
-        'Get the connected IP address
-        If Not String.IsNullOrEmpty(WNBDClientPath) Then
-            Dim ProcessOutput As String()
-            Dim NBDIP As String = ""
-
-            Using WNBDClient As New Process()
-                WNBDClient.StartInfo.FileName = WNBDClientPath
-                WNBDClient.StartInfo.Arguments = "show " + NBDDriveName
-                WNBDClient.StartInfo.RedirectStandardOutput = True
-                WNBDClient.StartInfo.UseShellExecute = False
-                WNBDClient.StartInfo.CreateNoWindow = True
-                WNBDClient.Start()
-                WNBDClient.WaitForExit()
-
-                Dim OutputReader As StreamReader = WNBDClient.StandardOutput
-                ProcessOutput = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
-            End Using
-
-            For Each ReturnedLine As String In ProcessOutput
-                If ReturnedLine.Contains("Hostname") Then
-                    NBDIP = ReturnedLine.Split(":"c)(1).Trim()
-                    Exit For
-                End If
-            Next
-
-            Return NBDIP
-        Else
-            Return ""
-        End If
-    End Function
-
-    Public Shared Function GetHDLDriveName() As String
-        If File.Exists(Environment.CurrentDirectory + "\Tools\hdl_dump.exe") Then
-            Dim HDLDriveName As String = ""
-
-            'Query the drives
-            Using HDLDump As New Process()
-                HDLDump.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\hdl_dump.exe"
-                HDLDump.StartInfo.Arguments = "query"
-                HDLDump.StartInfo.RedirectStandardOutput = True
-                HDLDump.StartInfo.UseShellExecute = False
-                HDLDump.StartInfo.CreateNoWindow = True
-                HDLDump.Start()
-                HDLDump.WaitForExit()
-
-                'Read the output
-                Dim OutputReader As StreamReader = HDLDump.StandardOutput
-                Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
-
-                'Find the drive
-                For Each Line As String In ProcessOutput
-                    If Not String.IsNullOrWhiteSpace(Line) Then
-                        If Line.Contains("formatted Playstation 2 HDD") Then
-                            'Set the found drive as mounted PSX drive
-                            Dim DriveInfos As String() = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)
-                            HDLDriveName = DriveInfos(0).Trim()
-                            Exit For
-                        End If
-                    End If
-                Next
-            End Using
-
-            Return HDLDriveName
-        Else
-            Return ""
-        End If
-    End Function
-
-    Public Shared Function GetHDDID() As String
-        Dim DriveID As String = ""
-
-        'Query the drives
-        Using WMIC As New Process()
-            WMIC.StartInfo.FileName = "wmic"
-            WMIC.StartInfo.Arguments = "diskdrive get Caption,DeviceID"
-            WMIC.StartInfo.RedirectStandardOutput = True
-            WMIC.StartInfo.UseShellExecute = False
-            WMIC.StartInfo.CreateNoWindow = True
-            WMIC.Start()
-            WMIC.WaitForExit()
-
-            'Read the output
-            Dim OutputReader As StreamReader = WMIC.StandardOutput
-            Dim ProcessOutput As String() = OutputReader.ReadToEnd().Split({vbCrLf}, StringSplitOptions.None)
-
-            'Find the drive
-            For Each Line As String In ProcessOutput
-                If Not String.IsNullOrWhiteSpace(Line) Then
-                    If Line.Contains("WNBD WNBD_DISK SCSI Disk Device") Then
-                        DriveID = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(5).Trim()
-                        Exit For
-                    ElseIf Line.Contains("Microsoft Virtual Disk") Then 'For testing with local VHD
-                        DriveID = Line.Split(SpaceSeparator, StringSplitOptions.RemoveEmptyEntries)(3).Trim()
-                        Exit For
-                    End If
-                End If
-            Next
-        End Using
-
-        Return DriveID
-    End Function
-
-    Public Shared Sub ReloadProjects()
-        For Each Win In System.Windows.Application.Current.Windows()
-            If Win.ToString = "PS_Multi_Tools.PSXMainWindow" Then
-                CType(Win, PSXMainWindow).ReloadProjects()
-                Exit For
-            End If
-        Next
-    End Sub
-
-    Public Shared Sub ReloadPartitions()
-        For Each Win In System.Windows.Application.Current.Windows()
-            If Win.ToString = "PS_Multi_Tools.PSXPartitionManager" Then
-                CType(Win, PSXPartitionManager).ReloadPartitions()
-                Exit For
-            End If
-        Next
-    End Sub
-
     Public Shared Function GetIntOnly(Value As String) As Integer
         Dim ReturnValue As String = String.Empty
         Dim MatchCol As MatchCollection = Regex.Matches(Value, "\d+")
@@ -806,32 +827,6 @@ Public Class Utils
         Next
         Return Convert.ToInt32(ReturnValue)
     End Function
-
-    Public Shared Async Function GetResizedBitmap(ImageLocation As String, NewWidth As Integer, NewHeight As Integer) As Task(Of Bitmap)
-        Using NewHttpClient As New HttpClient()
-            Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync(ImageLocation)
-            If NewHttpResponseMessage.IsSuccessStatusCode Then
-                Using NewStream As Stream = Await NewHttpResponseMessage.Content.ReadAsStreamAsync()
-                    Dim OriginalBitmap As New Bitmap(NewStream)
-                    Dim ResizedBitmap As New Bitmap(OriginalBitmap, New Size(NewWidth, NewHeight))
-                    Return ResizedBitmap
-                End Using
-            Else
-                Return Nothing
-            End If
-        End Using
-    End Function
-
-    Public Shared Sub ConvertTo32bppAndDisposeOriginal(ByRef img As Bitmap)
-        Dim bmp = New Bitmap(img.Width, img.Height, Imaging.PixelFormat.Format32bppArgb)
-
-        Using gr = Graphics.FromImage(bmp)
-            gr.DrawImage(img, New Rectangle(0, 0, 76, 108))
-        End Using
-
-        img.Dispose()
-        img = bmp
-    End Sub
 
     Public Shared Function GetScrollViewer(DepObj As DependencyObject) As DependencyObject
         If TypeOf DepObj Is ScrollViewer Then
@@ -874,18 +869,6 @@ Public Class Utils
         End If
     End Function
 
-    Public Shared Function ResizeAsImage(InputImage As Image, NewSizeX As Integer, NewSizeY As Integer) As Image
-        Return New Bitmap(InputImage, New Size(NewSizeX, NewSizeY))
-    End Function
-
-    Public Shared Function ConvertTo24bppPNG(ImageToConvert As Image) As Bitmap
-        Dim NewBitmap As New Bitmap(ImageToConvert.Width, ImageToConvert.Height, Imaging.PixelFormat.Format24bppRgb)
-        Using NewGraphics As Graphics = Graphics.FromImage(NewBitmap)
-            NewGraphics.DrawImage(ImageToConvert, New Rectangle(0, 0, ImageToConvert.Width, ImageToConvert.Height))
-        End Using
-        Return NewBitmap
-    End Function
-
     Public Shared Sub CopyDirectory(sourceDir As String, destinationDir As String, recursive As Boolean)
         Dim dir = New DirectoryInfo(sourceDir)
         If Not dir.Exists Then Throw New DirectoryNotFoundException($"Source directory not found: {dir.FullName}")
@@ -905,10 +888,109 @@ Public Class Utils
         End If
     End Sub
 
-    Public Shared Function ToMemoryStream(BitmapImage As Bitmap) As MemoryStream
-        Dim NewMemoryStream As New MemoryStream()
-        BitmapImage.Save(NewMemoryStream, Imaging.ImageFormat.Png)
-        Return NewMemoryStream
+    Public Shared Function FileExistInISO(GameISOPath As String, FileToSearch As String) As Boolean
+        Dim Exists As Boolean = False
+        Try
+            Using NewFileStream As New FileStream(GameISOPath, FileMode.Open, FileAccess.Read)
+                Dim NewIso9660CDReader As New Iso9660.CDReader(NewFileStream, True)
+                Try
+                    NewIso9660CDReader.OpenFile(FileToSearch, FileMode.Open)
+                    Exists = True
+                Catch exception As Exception
+                    Exists = False
+                End Try
+            End Using
+        Catch exception1 As Exception
+            Exists = False
+        End Try
+        Return Exists
+    End Function
+
+    Public Shared Function ExtractFileFromISO9660(ISOPath As String, FileName As String, DestinationPath As String) As String
+        Dim OutputDestination As String = ""
+        Dim DesinationDirectoryName As String = Path.GetDirectoryName(DestinationPath)
+        If Not Directory.Exists(DesinationDirectoryName) Then
+            Directory.CreateDirectory(DesinationDirectoryName)
+        End If
+        Try
+            Using NewFileStream As New FileStream(ISOPath, FileMode.Open, FileAccess.Read)
+                Dim NewIso9660CDReader As New Iso9660.CDReader(NewFileStream, True)
+                Try
+                    Dim NewSparseStream As Streams.SparseStream = NewIso9660CDReader.OpenFile(FileName, FileMode.Open)
+                    Dim OutputFileStream As New FileStream(DestinationPath, FileMode.Create)
+                    NewSparseStream.CopyTo(OutputFileStream)
+                    OutputFileStream.Close()
+                    OutputDestination = DestinationPath
+                Catch ex As Exception
+                    OutputDestination = ""
+                End Try
+            End Using
+        Catch ex As Exception
+            OutputDestination = ""
+        End Try
+        Return OutputDestination
+    End Function
+
+    Public Shared Function GetDKeyFromGameID(HTMLKeysDatabase As String, GameID As String) As String
+        Dim NewHTMLDoc As New HtmlDocument()
+        NewHTMLDoc.Load(HTMLKeysDatabase)
+
+        Dim XPath As String = "//tr[td/a[normalize-space(text())='" & GameID & "']]"
+        Dim FoundHtmlNode As HtmlNode = NewHTMLDoc.DocumentNode.SelectSingleNode(XPath)
+
+        If FoundHtmlNode IsNot Nothing Then
+            Dim AlltdNodes As HtmlNodeCollection = FoundHtmlNode.SelectNodes("td")
+            If AlltdNodes IsNot Nothing AndAlso AlltdNodes.Count > 0 Then
+                Dim GameDKey As String = AlltdNodes(AlltdNodes.Count - 1).InnerText.Trim()
+                Return GameDKey
+            Else
+                Return String.Empty
+            End If
+        Else
+            Return String.Empty
+        End If
+    End Function
+
+    Public Shared Function GetRegionalTitleFromGameID(HTMLKeysDatabase As String, GameID As String) As String
+        Dim NewHTMLDoc As New HtmlDocument()
+        NewHTMLDoc.Load(HTMLKeysDatabase)
+
+        Dim XPath As String = "//tr[td/a[normalize-space(text())='" & GameID & "']]"
+        Dim FoundHtmlNode As HtmlNode = NewHTMLDoc.DocumentNode.SelectSingleNode(XPath)
+
+        If FoundHtmlNode IsNot Nothing Then
+            Dim tdNodes As HtmlNodeCollection = FoundHtmlNode.SelectNodes("td")
+            If tdNodes IsNot Nothing AndAlso tdNodes.Count > 1 Then
+                Dim FoundGameTitle As String = tdNodes(1).InnerText.Trim()
+                Return Path.GetFileNameWithoutExtension(FoundGameTitle)
+            Else
+                Return String.Empty
+            End If
+        Else
+            Return String.Empty
+        End If
+    End Function
+
+    Public Shared Function RenameFolderUsingPowershell(InputFolderPath As String, NewFolderName As String) As Boolean
+        Dim NewProcessStartInfo As New ProcessStartInfo("powershell.exe") With {
+            .Arguments = $"-NoProfile -Command ""Rename-Item -Path '{InputFolderPath}' -NewName '{NewFolderName}'""",
+            .Verb = "runas",
+            .UseShellExecute = True
+        }
+        Dim NewPowershellProcess As Process = Process.Start(NewProcessStartInfo)
+
+        If NewPowershellProcess Is Nothing Then
+            Return False
+        End If
+
+        NewPowershellProcess.WaitForExit()
+
+        Dim PowershellProcessExitCode As Integer = NewPowershellProcess.ExitCode
+        Dim ParentInputFolder As String = Path.GetDirectoryName(InputFolderPath)
+        Dim NewFolderPath As String = Path.Combine(ParentInputFolder, NewFolderName)
+        Dim RenameSucceeded As Boolean = (PowershellProcessExitCode = 0) AndAlso (Not Directory.Exists(InputFolderPath)) AndAlso Directory.Exists(NewFolderPath)
+
+        Return RenameSucceeded
     End Function
 
 End Class

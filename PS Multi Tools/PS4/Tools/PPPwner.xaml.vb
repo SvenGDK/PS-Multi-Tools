@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Net
+Imports System.Net.Http
 Imports System.Net.NetworkInformation
 Imports System.Text
 Imports System.Windows.Forms
@@ -381,8 +382,19 @@ Public Class PPPwner
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
             Try
                 If Await Utils.IsURLValid("http://X.X.X.X/ps4/ex/goldhen_v2.4b18.3.bin") Then
-                    Dim DownloadClient As New WebClient()
-                    DownloadClient.DownloadFile(New Uri("http://X.X.X.X/ps4/ex/goldhen_v2.4b18.3.bin"), FBD.SelectedPath + "goldhen.bin")
+
+                    Dim GoldHENURL As String = "http://X.X.X.X/ps4/ex/goldhen_v2.4b18.3.bin"
+                    Dim DestinationPath As String = Path.Combine(FBD.SelectedPath, "goldhen.bin")
+
+                    Using NewHttpClient As New HttpClient()
+                        Using NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync(GoldHENURL, HttpCompletionOption.ResponseHeadersRead)
+                            NewHttpResponseMessage.EnsureSuccessStatusCode()
+                            Using NewFileStream As New FileStream(DestinationPath, FileMode.Create, FileAccess.Write, FileShare.None)
+                                Await NewHttpResponseMessage.Content.CopyToAsync(NewFileStream)
+                            End Using
+                        End Using
+                    End Using
+
                     MsgBox("GoldHEN downloaded to : " + FBD.SelectedPath + "goldhen.bin", MsgBoxStyle.Information, "Success")
                 Else
                     MsgBox("Could not download GoldHEN to : " + FBD.SelectedPath + "goldhen.bin" + vbCrLf + "File is not available.", MsgBoxStyle.Information, "Error")

@@ -1,6 +1,8 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Net
+Imports System.Net.Http
+Imports FluentFTP
 Imports Microsoft.Web.WebView2.Core
 
 Public Class PKGBrowser
@@ -128,37 +130,36 @@ Public Class PKGBrowser
     Private Async Sub LoadDLList(RequestedList As String, LoadLatest As Boolean)
         'Get the latest database from NPS
         If LoadLatest = True Then
-            Using NewWebClient As New WebClient
-                Dim GamesList As String = Await NewWebClient.DownloadStringTaskAsync(New Uri("https://nopaystation.com/tsv/" + RequestedList))
-                Dim GamesListLines As String() = GamesList.Split(CChar(vbCrLf))
+            Using client As New HttpClient()
+                Dim ListURL As String = "https://nopaystation.com/tsv/" & RequestedList
+                Dim GamesList As String = Await client.GetStringAsync(ListURL)
+                Dim GamesListLines As String() = GamesList.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+
                 For Each GameLine As String In GamesListLines.Skip(1)
-                    Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
+                    Dim SplittedValues As String() = GameLine.Split(ControlChars.Tab)
                     Dim AdditionalInfo As Structures.PackageInfo = Utils.GetFileSizeAndDate(SplittedValues(8).Trim(), SplittedValues(6).Trim())
-                    Dim NewPackage As New NPSPKG() With {.PackageName = SplittedValues(2).Trim(),
+                    Dim NewPackage As New NPSPKG() With {
+                        .PackageName = SplittedValues(2).Trim(),
                         .PackageURL = SplittedValues(3).Trim(),
                         .PackageTitleID = SplittedValues(0).Trim(),
                         .PackageContentID = SplittedValues(5).Trim(),
                         .PackageRAP = SplittedValues(4).Trim(),
                         .PackageDate = AdditionalInfo.FileDate,
                         .PackageSize = AdditionalInfo.FileSize,
-                        .PackageRegion = SplittedValues(1).Trim()}
+                        .PackageRegion = SplittedValues(1).Trim()
+                    }
 
-                    If Not SplittedValues(3).Trim() = "MISSING" Then
-
+                    If Not SplittedValues(3).Trim().Equals("MISSING", StringComparison.OrdinalIgnoreCase) Then
                         Select Case Console
                             Case "PS3"
                                 If Not String.IsNullOrEmpty(NewPackage.PackageContentID) Then
                                     Dim TitleID As String = NewPackage.PackageTitleID
-                                    Dim ContentID As String = NewPackage.PackageContentID.Split("-"c)(2)
-
-                                    NewPackage.PackageCoverSource = "https://www.gametdb.com/PS3/" + TitleID
+                                    NewPackage.PackageCoverSource = "https://www.gametdb.com/PS3/" & TitleID
                                 End If
                             Case "PSV"
                                 If Not String.IsNullOrEmpty(NewPackage.PackageTitleID) Then
                                     Dim TitleID As String = NewPackage.PackageTitleID
-                                    Dim ContentID As String = NewPackage.PackageContentID.Split("-"c)(2)
-
-                                    NewPackage.PackageCoverSource = "https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" + TitleID + ".png"
+                                    NewPackage.PackageCoverSource = "https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PSVita/" & TitleID & ".png"
                                 End If
                         End Select
 
@@ -263,7 +264,9 @@ Public Class PKGBrowser
             Directory.CreateDirectory(Environment.CurrentDirectory + "\Downloads\PS3\exdata")
         End If
 
+#Disable Warning SYSLIB0014 ' Type or member is obsolete
         Dim NewWebClient As New WebClient()
+#Enable Warning SYSLIB0014 ' Type or member is obsolete
 
         Dim NewPKGDL As New PKGDownloadListViewItem() With {
             .AssociatedWebClient = NewWebClient,
@@ -499,9 +502,10 @@ Public Class PKGBrowser
             End Select
 
             If MsgBox("Load zRIF key from the latest database ?" + vbCrLf + "Selecting 'No' will use the local database file.", MsgBoxStyle.YesNoCancel) = MsgBoxResult.Yes Then
-                Using NewWebClient As New WebClient
-                    Dim GamesList As String = Await NewWebClient.DownloadStringTaskAsync(New Uri("https://nopaystation.com/tsv/" + DatabaseToLoad))
-                    Dim GamesListLines As String() = GamesList.Split(CChar(vbCrLf))
+                Using NewWebClient As New HttpClient()
+                    Dim ListURL As String = "https://nopaystation.com/tsv/" & DatabaseToLoad
+                    Dim GamesList As String = Await NewWebClient.GetStringAsync(ListURL)
+                    Dim GamesListLines As String() = GamesList.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
                     For Each GameLine As String In GamesListLines.Skip(1)
                         Dim SplittedValues As String() = GameLine.Split(CChar(vbTab))
                         Dim AdditionalInfo As Structures.PackageInfo = Utils.GetFileSizeAndDate(SplittedValues(8).Trim(), SplittedValues(6).Trim())
@@ -513,7 +517,7 @@ Public Class PKGBrowser
                             .PackageDate = AdditionalInfo.FileDate,
                             .PackageSize = AdditionalInfo.FileSize,
                             .PackageRegion = SplittedValues(1).Trim()}
-                        If Not SplittedValues(3).Trim() = "MISSING" Then 'Only add available PKGs
+                        If Not SplittedValues(3).Trim().Equals("MISSING", StringComparison.OrdinalIgnoreCase) Then 'Only add available PKGs
                             TempDownloadsList.Add(NewPackage)
                         End If
                     Next
@@ -532,7 +536,7 @@ Public Class PKGBrowser
                             .PackageDate = AdditionalInfo.FileDate,
                             .PackageSize = AdditionalInfo.FileSize,
                             .PackageRegion = SplittedValues(1)}
-                        If Not SplittedValues(3) = "MISSING" Then 'Only add available PKGs
+                        If Not SplittedValues(3).Trim().Equals("MISSING", StringComparison.OrdinalIgnoreCase) Then 'Only add available PKGs
                             TempDownloadsList.Add(NewPackage)
                         End If
                     Next

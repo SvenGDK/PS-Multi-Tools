@@ -379,6 +379,15 @@ Public Class PS5Menu
 
 #Region "Homebrew"
 
+    Private Async Sub DownloadAvatarChanger_Click(sender As Object, e As RoutedEventArgs) Handles DownloadAvatarChanger.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True}
+        NewDownloader.Show()
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/AvatarChanger_v1.00.pkg") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
     Private Async Sub DownloadFTPS5_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFTPS5.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
@@ -454,7 +463,7 @@ Public Class PS5Menu
     Private Async Sub DownloadNewKStuff_Click(sender As Object, e As RoutedEventArgs) Handles DownloadNewKStuff.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_3xx-7xx.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_3xx-7xx_v1.5.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -463,7 +472,16 @@ Public Class PS5Menu
     Private Async Sub DownloadKStuffToggle_Click(sender As Object, e As RoutedEventArgs) Handles DownloadKStuffToggle.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff-toggle.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff-toggle-0.2Beta.zip") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
+    Private Async Sub DownloadLatestetaHEN_Click(sender As Object, e As RoutedEventArgs) Handles DownloadLatestetaHEN.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
+        NewDownloader.Show()
+        If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/2.1B/etaHEN.bin") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -508,7 +526,7 @@ Public Class PS5Menu
     Private Async Sub DownloadItemzflow_Click(sender As Object, e As RoutedEventArgs) Handles DownloadItemzflow.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/ItemzflowGameManager_v1.09.pkg") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/ItemzflowGameManager_v1.10.pkg") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -571,7 +589,7 @@ Public Class PS5Menu
     Private Async Sub DownloadWebSrv_Click(sender As Object, e As RoutedEventArgs) Handles DownloadWebSrv.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/websrv_v0.22.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/websrv_v0.23.1.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If

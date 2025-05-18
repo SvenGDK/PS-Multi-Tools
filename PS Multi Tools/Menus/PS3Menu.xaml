@@ -9,7 +9,8 @@
              d:DesignHeight="18" d:DesignWidth="650">
     <MenuItem Header="Library"/>
     <MenuItem Header="Tools">
-        <MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems"></MenuItem>
+        <MenuItem Header="Batch Rename Utility" x:Name="BatchRenameMenuItem"></MenuItem>
+        <MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItem"></MenuItem>
         <MenuItem Header="Core_OS Tools" x:Name="OpenCoreOSTools"></MenuItem>
         <MenuItem Header="Extract a PKG File" x:Name="OpenPKGExtractor"></MenuItem>
         <MenuItem Header="Fix Tar" x:Name="OpenFixTar"></MenuItem>
@@ -150,8 +151,15 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="MultiMAN MOD">
+                <MenuItem Header="Download 04.85.01" x:Name="DownloadMultiMANMod">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="webMAN MOD">
-                <MenuItem Header="Download 1.47.46b" x:Name="DownloadWebManMod">
+                <MenuItem Header="Download 1.47.48i" x:Name="DownloadWebManMod">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -184,6 +192,13 @@
         <MenuItem Header="Emulators">
             <MenuItem Header="RetroArch PSX-Place Community Edition">
                 <MenuItem Header="Download Beta4" x:Name="DownloadRetroArchCommunity">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="RetroArch CE (WebMAN MOD) Edition">
+                <MenuItem Header="Download" x:Name="DownloadRetroArchWebMANMod">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -361,6 +376,33 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Evilnat Cobra 8.4 [DEX]" x:Name="DownloadEvilnatCobra490Dex">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="4.92" >
+                <MenuItem Header="Evilnat Cobra 8.5 [PEX]" x:Name="DownloadEvilnatCobra492PEX">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Evilnat Cobra 8.5 [PEX] [OC]" x:Name="DownloadEvilnatCobra492PEXOC">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Evilnat Cobra 8.5 [PEX] [noBD]" x:Name="DownloadEvilnatCobra492PEXNoBD">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Evilnat Cobra 8.5 [PEX] [noBT]" x:Name="DownloadEvilnatCobra492PEXNoBT">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Evilnat Cobra 8.5 [PEX] [noBD]+[noBT]" x:Name="DownloadEvilnatCobra492PEXNoBDNoBT">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

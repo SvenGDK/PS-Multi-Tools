@@ -27,6 +27,7 @@ Public Class PS3Game
     Private _ImageWidth As Double
     Private _ImageHeight As Double
     Private _GameRootLocation As GameLocation
+    Private _ISOEncryption As String
 
     Public Enum GameFileTypes
         Backup
@@ -264,6 +265,15 @@ Public Class PS3Game
         End Get
         Set
             _GameRootLocation = Value
+        End Set
+    End Property
+
+    Public Property ISOEncryption As String
+        Get
+            Return _ISOEncryption
+        End Get
+        Set
+            _ISOEncryption = Value
         End Set
     End Property
 

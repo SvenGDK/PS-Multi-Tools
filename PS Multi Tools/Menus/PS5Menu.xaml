@@ -177,6 +177,13 @@
         </MenuItem>
 
         <MenuItem Header="Homebrew">
+            <MenuItem Header="Avatar Changer by Lapy">
+                <MenuItem Header="Download v1.00 PKG" x:Name="DownloadAvatarChanger">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="Debug Settings PKG" x:Name="DownloadDebugPKG">
                 <MenuItem.Icon>
                     <Image Source="/Images/download.png"/>
@@ -200,7 +207,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="Itemzflow by LightningMods">
-                <MenuItem Header="Download v1.09 PKG" x:Name="DownloadItemzflow">
+                <MenuItem Header="Download v1.10 PKG" x:Name="DownloadItemzflow">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -239,6 +246,11 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="etaHEN by LightningMods">
+                <MenuItem Header="Download v2.1b" x:Name="DownloadLatestetaHEN">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="Download v2.0b" x:Name="DownloadetaHEN">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
@@ -423,7 +435,7 @@
             </MenuItem>
             <MenuItem Header="kstuff">
                 <MenuItem Header="By sleirsgoevy &amp; EchoStretch for 3.XX - 7.XX">
-                    <MenuItem Header="Download v1.4" x:Name="DownloadNewKStuff">
+                    <MenuItem Header="Download v1.5" x:Name="DownloadNewKStuff">
                         <MenuItem.Icon>
                             <Image Source="/Images/download.png"/>
                         </MenuItem.Icon>
@@ -431,7 +443,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="kstuff-Toggle by EchoStretch">
-                <MenuItem Header="Download v1.0" x:Name="DownloadKStuffToggle">
+                <MenuItem Header="Download v0.2 Beta" x:Name="DownloadKStuffToggle">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>
@@ -469,7 +481,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="WebSrv by john-tornblom">
-                <MenuItem Header="Download v0.22" x:Name="DownloadWebSrv">
+                <MenuItem Header="Download v0.23.1" x:Name="DownloadWebSrv">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

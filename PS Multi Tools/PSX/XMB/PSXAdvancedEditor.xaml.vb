@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports System.Net.Http
 Imports System.Reflection
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -124,39 +125,28 @@ Public Class PSXAdvancedEditor
         End Try
     End Sub
 
-    Private Function TranslateText(RequestedLanguage As String, TextToTranslate As String) As String
-        'Create a new TranslationRequest
+    Private Async Function TranslateTextAsync(RequestedLanguage As String, TextToTranslate As String) As Task(Of String)
         Dim NewTranslationRequest As New PSXTranslations.TranslationRequest() With {.q = TextToTranslate, .source = "auto", .target = RequestedLanguage}
         Dim NewTranslationRequestAsJSON As String = JsonConvert.SerializeObject(NewTranslationRequest)
+        Dim TranslationServer As String = "http://X.X.X.X:5050/translate"
 
-        'Set up the HttpWebRequest
-        Dim NewRequest As HttpWebRequest = CType(WebRequest.Create("http://X.X.X.X:5050/translate"), HttpWebRequest)
-        NewRequest.Method = "POST"
-        NewRequest.ContentType = "application/json"
-        Dim RequestByteArray As Byte() = Encoding.UTF8.GetBytes(NewTranslationRequestAsJSON)
-        NewRequest.ContentLength = RequestByteArray.Length
+        Using NewHttpClient As New HttpClient()
+            Dim NewStringContent As New StringContent(NewTranslationRequestAsJSON, Encoding.UTF8, "application/json")
+            Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.PostAsync(TranslationServer, NewStringContent)
+            NewHttpResponseMessage.EnsureSuccessStatusCode()
 
-        'POST the request
-        Dim RequestDataStream As Stream = NewRequest.GetRequestStream()
-        RequestDataStream.Write(RequestByteArray, 0, RequestByteArray.Length)
-        RequestDataStream.Close()
-
-        'Read the response of the request
-        Dim RequestResponse As HttpWebResponse = CType(NewRequest.GetResponse(), HttpWebResponse)
-        Dim RequestResponseStream As Stream = RequestResponse.GetResponseStream()
-        Dim RequestResponseReader As New StreamReader(RequestResponseStream)
-        Dim RequestResponseString As String = RequestResponseReader.ReadToEnd()
-
-        If Not String.IsNullOrEmpty(RequestResponseString) Then
-            Dim ParsedTranslation As PSXTranslations.ReceivedTranslation = JsonConvert.DeserializeObject(Of PSXTranslations.ReceivedTranslation)(RequestResponseString)
-            If ParsedTranslation IsNot Nothing Then
-                Return ParsedTranslation.translatedText
+            Dim ResponseString As String = Await NewHttpResponseMessage.Content.ReadAsStringAsync()
+            If Not String.IsNullOrWhiteSpace(ResponseString) Then
+                Dim ParsedTranslation As PSXTranslations.ReceivedTranslation = JsonConvert.DeserializeObject(Of PSXTranslations.ReceivedTranslation)(ResponseString)
+                If ParsedTranslation IsNot Nothing Then
+                    Return ParsedTranslation.translatedText
+                Else
+                    Return TextToTranslate
+                End If
             Else
                 Return TextToTranslate
             End If
-        Else
-            Return TextToTranslate
-        End If
+        End Using
     End Function
 
     Private Async Sub TranslateButton_Click(sender As Object, e As RoutedEventArgs) Handles TranslateButton.Click
@@ -258,7 +248,7 @@ Public Class PSXAdvancedEditor
             End If
 
             'Create a translation of ActualWordToTranslate & restore = and "
-            Dim TranslatedText As String = TranslateText(NewLanguage, ActualWordToTranslate)
+            Dim TranslatedText As String = Await TranslateTextAsync(NewLanguage, ActualWordToTranslate)
             Dim RestoredTextWithTranslation As String = "=" & """" & TranslatedText & """"
 
             'Apply translation directly on the document
@@ -378,7 +368,7 @@ Public Class PSXAdvancedEditor
             End If
 
             'Create a translation of ActualWordToTranslate & restore = and "
-            Dim TranslatedText As String = TranslateText(NewLanguage, ActualWordToTranslate)
+            Dim TranslatedText As String = Await TranslateTextAsync(NewLanguage, ActualWordToTranslate)
             Dim RestoredTextWithTranslation As String = """" & TranslatedText & """"
 
             'Apply translation directly on the document
