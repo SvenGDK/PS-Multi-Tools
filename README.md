@@ -6,7 +6,7 @@
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
-  <summary>v15 contains following tools</summary>
+  <summary>v15.4 contains following tools</summary>
   
 ## General:
 - FTP Browser
@@ -35,6 +35,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - Core_OS Tools
 - Fix Tar Tool
 - PS3 ISO Tools
+  - Create, Patch, Extract, Split or Decrypt an ISO
 - PKG Extractor
 - PKG Infos Reader
 - PUP Unpacker
@@ -113,6 +114,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - PKG Merger
 - Make fSELF tool to fake sign SELF files of created dumps
   - Based on EchoStretch's Make_FSELF_PY3.bat & LightningMods updated make_fself by Flatz
+  - Option to downgrade the SDK version
 - etaHEN Configurator (requires running FTP server)
 - klog Viewer
 - Shortcut PKG Creator
@@ -163,6 +165,7 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 ## PS Multi Tools currently uses the following tools & libraries from other developers
 | Tool / Library | Created by | Repository | Info |
 | --- | --- | --- | --- |
+| `AvalonEdit` | icsharpcode | [https://github.com/icsharpcode/AvalonEdit](https://github.com/icsharpcode/AvalonEdit)
 | `bchunk` | extramaster | [https://github.com/extramaster/bchunk](https://github.com/extramaster/bchunk)
 | `binmerge` | putnam | [https://github.com/putnam/binmerge](https://github.com/putnam/binmerge)
 | `CEX2DEX` |  | 
@@ -170,7 +173,7 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `cue2toc` | Goatman13 & NRGDEAD | https://github.com/Goatman13/Cue2toc
 | `dd` | John Newbigin | [http://www.chrysocome.net/dd](http://www.chrysocome.net/dd)
 | `dev_flash` | HSReina | 
-| `DiscUtils` | DiscUtils | [https://github.com/DiscUtils/DiscUtils](https://github.com/DiscUtils/DiscUtils)
+| `DiscUtils` | LTRData | [https://github.com/LTRData/DiscUtils](https://github.com/LTRData/DiscUtils)
 | `discore` |  | 
 | `DotNetZip` |  | [https://www.nuget.org/packages/DotNetZip/](https://www.nuget.org/packages/DotNetZip/)
 | `elf2pbp` | loser | [https://github.com/PSP-Archive/elf2pbp](https://github.com/PSP-Archive/elf2pbp)
@@ -178,10 +181,12 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `esrunpatch` | ffgriever | [https://www.psx-place.com/threads/esr-by-ffgriever.19136/](https://www.psx-place.com/threads/esr-by-ffgriever.19136/)
 | `ffplay` | FFmpeg | [https://github.com/FFmpeg/FFmpeg](https://github.com/FFmpeg/FFmpeg)
 | `fix_tar` | KaKaRoTo & cfwprpht | 
+| `FluentFTP` | robinrodricks | [https://github.com/robinrodricks/FluentFTP](https://github.com/robinrodricks/FluentFTP)
 | `fwpkg` | evilsperm | [https://github.com/evilsperm/fwtool](https://github.com/evilsperm/fwtool)
 | `hdl_dump` |  | [https://github.com/ps2homebrew/hdl-dump](https://github.com/ps2homebrew/hdl-dump)
 | `hexdump` | di-mgt | [https://www.di-mgt.com.au/hexdump-for-windows.html](https://www.di-mgt.com.au/hexdump-for-windows.html)
 | `HtmlAgilityPack` | ZZZ Projects | [https://html-agility-pack.net/](https://html-agility-pack.net/)
+| `ImageSharp` | SixLabors | [https://github.com/SixLabors/ImageSharp](https://github.com/SixLabors/ImageSharp)
 | `IsoPbpConverter` | LMAN | 
 | `kill_daemon` | illusion0001 | [https://github.com/illusion0001/libhijacker](https://github.com/illusion0001/libhijacker) | Python script -> single .exe
 | `klicencebruteforce` | MAGiC333X | 
@@ -190,6 +195,7 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `make_fself_python3-1` | Flatz (updated by LightningMods) |  | Python script -> single .exe
 | `maxcso` | unknownbrackets | [https://github.com/unknownbrackets/maxcso](https://github.com/unknownbrackets/maxcso)
 | `mCiso` | sindastra | [https://github.com/sindastra/psp-mciso](https://github.com/sindastra/psp-mciso)
+| `Microsoft.Data.Sqlite` | Microsoft | [https://learn.microsoft.com/en-gb/dotnet/standard/data/sqlite/?tabs=net-cli](https://learn.microsoft.com/en-gb/dotnet/standard/data/sqlite/?tabs=net-cli)
 | `Newtonsoft.Json` | Newtonsoft | [https://www.newtonsoft.com/json](https://www.newtonsoft.com/json)
 | `nQuant` | matt wrock | [https://www.nuget.org/packages/nQuant](https://www.nuget.org/packages/nQuant)
 | `PARAM.SFO Library` | xXxTheDarkprogramerxXx | [https://github.com/xXxTheDarkprogramerxXx/PS4_Tools](https://github.com/xXxTheDarkprogramerxXx/PS4_Tools)
@@ -198,6 +204,7 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `pkg2zip` | lusid1 | [https://github.com/lusid1/pkg2zip](https://github.com/lusid1/pkg2zip)
 | `pkg_merge` | aldo-o & Tustin | [https://github.com/aldo-o/pkg-merge](https://github.com/aldo-o/pkg-merge)
 | `pppwn` | TheOfficialFloW | [https://github.com/TheOfficialFloW/PPPwn](https://github.com/TheOfficialFloW/PPPwn) | Python script -> Single .exe
+| `ps3dec` | Redrrx | [https://github.com/Redrrx/ps3dec](https://github.com/Redrrx/ps3dec)
 | `ps3mca-ps1` | paolo-caroni | https://github.com/paolo-caroni/ps3mca-ps1
 | `ps3mca-tool` | jimmikaelkael | 
 | `ps3iso-utils` | bucanero | [https://github.com/bucanero/ps3iso-utils](https://github.com/bucanero/ps3iso-utils)
@@ -216,7 +223,9 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `sfo` | hippie68 | [https://github.com/hippie68/sfo](https://github.com/hippie68/sfo)
 | `sngre` | cfwprophet | [https://github.com/cfwprpht/Simply_Vita_RCO_Extractor](https://github.com/cfwprpht/Simply_Vita_RCO_Extractor)
 | `strings` | Mark Russinovich | [https://learn.microsoft.com/en-us/sysinternals/downloads/strings](https://learn.microsoft.com/en-us/sysinternals/downloads/strings)
-
+| `WebView2` | Microsoft | [https://learn.microsoft.com/en-gb/microsoft-edge/webview2/](https://learn.microsoft.com/en-gb/microsoft-edge/webview2/)
+| `WinSCP` | WinSCP | [https://winscp.net/eng/docs/library](https://winscp.net/eng/docs/library)
+| `wpftoolkit` | xceedsoftware | [https://github.com/xceedsoftware/wpftoolkit](https://github.com/xceedsoftware/wpftoolkit)
 
 ## v1-12
 All builds below v13 have broken links & downloads, v13+ is recommended.</br>
