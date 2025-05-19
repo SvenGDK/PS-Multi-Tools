@@ -13,8 +13,8 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - Downloader
 
 ## PS1
-- Merge BIN files
 - Convert BIN/CUE to ISO
+- Merge BIN files
 
 ## PS2
 - Convert BIN/CUE to ISO
@@ -22,9 +22,9 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - ELF2KELF Wrapper
 
 ## PSX
+- HDD Partition Manager (Create partition, Remove partition (destructive), Change partition visibility)
 - Install PS2 homebrew and games on the internal PSX HDD
 - Install PS1 games on the internal PSX HDD
-- HDD Partition Manager (Create partition, Remove partition (destructive), Change partition visibility)
 - PS2 Game Partition Manager (Dump partition header, Change game title, flags, DMA)
 - XMB Files Explorer (XMB Tools)
   - Open a _system or xosd folder to load, view and edit its content
@@ -34,15 +34,19 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 ## PS3
 - Core_OS Tools
 - Fix Tar Tool
-- PS3 ISO Tools
-  - Create, Patch, Extract, Split or Decrypt an ISO
+- PARAM.SFO Editor
+- ISO Tools
+  - Create an ISO of your backup folder
+  - Patch the ISO from 4.21 to 4.60
+  - Extract the content of an ISO
+  - Split the ISO in 4GB parts for FAT32 drives
+  - Decrypt an ISO using a decryption key or dkey file
 - PKG Extractor
 - PKG Infos Reader
 - PUP Unpacker
 - RCO Dumper
 - SELF Reader
-- PARAM.SFO Editor
-- webMAN MOD features
+- webMAN MOD Features
   - PS3NetSrv Utilities
     - Create folder structure (GAMES, PS3ISO, ...)
     - Manage virtual folders for ps3netsrv
@@ -77,74 +81,73 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
   - Show system info on PS3
 
 ## PS4
-- PKG Sender (currently broken)
-- PKG Infos Reader
-- Payload Sender
-- Show PSN Store Infos
 - Decrypted PUP Unpacker
-- USB Writer
 - PARAM.SFO Editor
+- Payload Sender
+- PKG Extractor
+- PKG Infos Reader
 - PKG Merger
 - PPPwn GUI
-- PKG Extractor
 - PS1 Classics fPKG Creator
 - PS2 Classics fPKG Creator
 - PSP Classics fPKG Creator
+- Show PSN Store Infos
+- USB Exploit Writer
 
 ## PS5
-- General ELF & BIN Payload Sender
-- Mast1c0re ELF Payload & PS2 ISO Sender
-- APP.DB Modifier (Add the Internet Browser to the home menu for every profile with a simple click (requires FTPS5 loaded first))
-- Burn Blu Ray ISO images to Blu Ray discs
-- NOTIFICATION2.DB Manager (requires running FTP server)
+- Add the Internet Browser to the home menu for every profile with a simple click [APP.DB] (requires FTPS5 loaded first)
+- AT9 <-> WAV Audio Converter
+- Burn Blu-Ray ISO images to Blu-Ray discs
 - Clear the console's error history (requires running FTP server)
-- PARAM.JSON Creator & Editor
-- MANIFEST.JSON Creator & Editor
-- GP5 Project Creator (requires prospero-pub-cmd at \Tools\PS5\ )
-- PKG Builder (requires prospero-pub-cmd at \Tools\PS5\ )
-- RCO Dumper (requires running FTP server)
-- RCO Extractor
-- AT9 <-> WAV Audio Converter (requires at9tool at \Tools\PS5\ )
-- FTP Grabber
-  - Allows dumping of games (/mnt/sandbox/pfsmnt) (detects the remote game folder automatically)
-  - Allows dumping of game metadata (/user/appmeta/ + /system_data/priv/appmeta/ & /user/np_uds/nobackup/conf/ + /user/trophy2/nobackup/conf/)
-  - Allows dumping SELF files using sleirsgoevy's ps5-self-dumper payload (https://github.com/sleirsgoevy/ps4jb-payloads/tree/bd-jb/ps5-self-dumper)
-- PS5 Game Patches Downloader
-- Unofficial patches loader (libhijack fork of illusion)
-- PKG Merger
-- Make fSELF tool to fake sign SELF files of created dumps
-  - Based on EchoStretch's Make_FSELF_PY3.bat & LightningMods updated make_fself by Flatz
-  - Option to downgrade the SDK version
-- etaHEN Configurator (requires running FTP server)
-- klog Viewer
-- Shortcut PKG Creator
-- etaHEN Remote PKG Installer
+- Console Notifications Manager [NOTIFICATION2.DB] (requires running FTP server)
 - Content Manager for the PS5 WebSrv of john-tornblom
   - Homebrew Manager
   - Game ROM Manager for games that use a roms folder
   - Media Content Manager for homebrew that use a media folder
+- etaHEN Configurator (requires running FTP server)
+- etaHEN Remote PKG Installer
+- FTP Grabber
+  - Allows dumping of games (/mnt/sandbox/pfsmnt) (detects the remote game folder automatically)
+  - Allows dumping of game metadata (/user/appmeta/ + /system_data/priv/appmeta/ & /user/np_uds/nobackup/conf/ + /user/trophy2/nobackup/conf/)
+  - Allows dumping SELF files using
+    - sleirsgoevy's ps5-self-dumper payload (https://github.com/sleirsgoevy/ps4jb-payloads/tree/bd-jb/ps5-self-dumper)
+    - idlesauce's ps5-self-decrypter payload (https://github.com/idlesauce/PS5-SELF-Decrypter)
+- Game Patches Downloader
+- General ELF & BIN Payload Sender
+- GP5 Project Creator
+- Kernel Log Viewer
+- Make fSELF tool to fake sign SELF files of created dumps
+  - Based on EchoStretch's Make_FSELF_PY3.bat & LightningMods updated make_fself by Flatz
+  - Option to downgrade the SDK version
+- MANIFEST.JSON & PARAM.JSON File Creator & Editor
+- Mast1c0re ELF Payload & PS2 ISO Sender
+- PKG Builder (requires prospero-pub-cmd at \Tools\PS5\ )
+- PKG Merger
+- Shortcut PKG Creator
+- RCO Dumper (requires running FTP server)
+- RCO Extractor
 
 ## PSP
-- ISO to CSO Converter
 - CSO Decompressor
-- PBP to ISO / ISO to PBP Converter
+- ISO to CSO Converter
 - PBP Packer/Unpacker
+- PBP to ISO / ISO to PBP Converter
 
 ## PSVita
 - PKG Extractor
 - PKG Infos Reader
+- PS Vita PFS Tools (psvpfstools) GUI
 - PSVIMAGE Tools (currently not working)
 - RCO Data Table Extractor
-- PS Vita PFS Tools (psvpfstools) GUI
 
 ## Memory Cards
-- Read PS2 Memory Card information
-- Browse the content of the PS2 Memory Cards
 - Add files and directories
-- Remove files and directories
+- Browse the content of the PS2 Memory Cards
 - Extract files from a PS2 Memory Card
 - Format PS2 Memory Cards
 - Install FMCB on PS2 Memory Cards
+- Read PS2 Memory Card information
+- Remove files and directories
 
 </details>
 
@@ -183,6 +186,7 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `fix_tar` | KaKaRoTo & cfwprpht | 
 | `FluentFTP` | robinrodricks | [https://github.com/robinrodricks/FluentFTP](https://github.com/robinrodricks/FluentFTP)
 | `fwpkg` | evilsperm | [https://github.com/evilsperm/fwtool](https://github.com/evilsperm/fwtool)
+| `GameArchives` | maxton | [https://ci.appveyor.com/project/maxton/gamearchives](https://ci.appveyor.com/project/maxton/gamearchives)
 | `hdl_dump` |  | [https://github.com/ps2homebrew/hdl-dump](https://github.com/ps2homebrew/hdl-dump)
 | `hexdump` | di-mgt | [https://www.di-mgt.com.au/hexdump-for-windows.html](https://www.di-mgt.com.au/hexdump-for-windows.html)
 | `HtmlAgilityPack` | ZZZ Projects | [https://html-agility-pack.net/](https://html-agility-pack.net/)
