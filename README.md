@@ -196,6 +196,7 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `IsoPbpConverter` | LMAN | 
 | `kill_daemon` | illusion0001 | [https://github.com/illusion0001/libhijacker](https://github.com/illusion0001/libhijacker) | Python script -> single .exe
 | `klicencebruteforce` | MAGiC333X | 
+| `Magick.NET` | dlemstra | [https://github.com/dlemstra/Magick.NET](https://github.com/dlemstra/Magick.NET)
 | `make_fself` | (PS3) | 
 | `Make_FSELF_PY3` | EchoStretch |  | Batch script translated to VB
 | `make_fself_python3-1` | Flatz (updated by LightningMods) |  | Python script -> single .exe
@@ -233,8 +234,8 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `WinSCP` | WinSCP | [https://winscp.net/eng/docs/library](https://winscp.net/eng/docs/library)
 | `wpftoolkit` | xceedsoftware | [https://github.com/xceedsoftware/wpftoolkit](https://github.com/xceedsoftware/wpftoolkit)
 
-## v1-12
-All builds below v13 have broken links & downloads, v13+ is recommended.</br>
+## Recommended Version
+All builds below v15 have broken links & downloads, v15+ is recommended.</br>
 Some builds can still be used while some do not start anymore and require updating the live menu (old PSMT Library).</br>
 
 ## History of PS(3) Multi Tools
