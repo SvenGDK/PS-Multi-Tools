@@ -67,14 +67,12 @@ Public Class PS5FTPGrabber
             ElseIf SELFDumpCheckBox.IsChecked Then
 
                 If String.IsNullOrEmpty(SelectedDirectoryTextBox.Text) Then
-
-                    'If not path is specified then create a "Dumps" folder
+                    'If no path is specified then create a "Dumps" folder
                     If Not Directory.Exists(Environment.CurrentDirectory + "\Dumps") Then
                         Directory.CreateDirectory(Environment.CurrentDirectory + "\Dumps")
                     End If
                     'Set the new folder
                     SelectedPath = Environment.CurrentDirectory + "\Dumps"
-
                 End If
 
                 LockUI()

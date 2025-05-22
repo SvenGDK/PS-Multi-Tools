@@ -1,7 +1,6 @@
 ﻿Imports System.Collections.Specialized
 Imports System.ComponentModel
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Globalization
 Imports System.IO
 Imports System.Net
@@ -13,6 +12,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports DiscUtils
+Imports FluentFTP
 Imports HtmlAgilityPack
 
 Public Class Utils
@@ -162,19 +162,6 @@ Public Class Utils
         Return bitmap
     End Function
 
-    Public Shared Function GetScaledImage(InputImage As Image, NewWidth As Integer, NewHeight As Integer) As Bitmap
-        Dim ScaledImage As New Bitmap(NewWidth, NewHeight)
-
-        Using gr As Graphics = Graphics.FromImage(ScaledImage)
-            gr.SmoothingMode = SmoothingMode.HighQuality
-            gr.InterpolationMode = InterpolationMode.HighQualityBicubic
-            gr.PixelOffsetMode = PixelOffsetMode.HighQuality
-            gr.DrawImage(InputImage, New Rectangle(0, 0, NewWidth, NewHeight))
-        End Using
-
-        Return ScaledImage
-    End Function
-
     Public Shared Async Function GetResizedBitmap(ImageLocation As String, NewWidth As Integer, NewHeight As Integer) As Task(Of Bitmap)
         Using NewHttpClient As New HttpClient()
             Dim NewHttpResponseMessage As HttpResponseMessage = Await NewHttpClient.GetAsync(ImageLocation)
@@ -199,6 +186,7 @@ Public Class Utils
 #Region "PSX Related"
 
     Private Shared _ConnectedPSXHDD As Structures.MountedPSXDrive
+
     Public Shared Property ConnectedPSXHDD As Structures.MountedPSXDrive
         Get
             Return _ConnectedPSXHDD
@@ -778,47 +766,6 @@ Public Class Utils
         Return zRIFStr
     End Function
 
-    Public Shared Function GetPS3Category(SFOCategory As String) As String
-        Select Case SFOCategory
-            Case "DG"
-                Return "Disc Game"
-            Case "AR"
-                Return "Autoinstall Root"
-            Case "DP"
-                Return "Disc Packages"
-            Case "IP"
-                Return "Install Package"
-            Case "TR"
-                Return "Theme Root"
-            Case "VR"
-                Return "Vide Root"
-            Case "VI"
-                Return "Video Item"
-            Case "XR"
-                Return "Extra Root"
-            Case "DM"
-                Return "Disc Movie"
-            Case "HG"
-                Return "HDD Game"
-            Case "GD"
-                Return "Game Data"
-            Case "SD"
-                Return "Save Data"
-            Case "PP"
-                Return "PSP"
-            Case "PE"
-                Return "PSP Emulator"
-            Case "MN"
-                Return "PSP Minis"
-            Case "1P"
-                Return "PS1 PSN"
-            Case "2P"
-                Return "PS2 PSN"
-            Case Else
-                Return "Unknown"
-        End Select
-    End Function
-
     Public Shared Function GetIntOnly(Value As String) As Integer
         Dim ReturnValue As String = String.Empty
         Dim MatchCol As MatchCollection = Regex.Matches(Value, "\d+")
@@ -991,6 +938,20 @@ Public Class Utils
         Dim RenameSucceeded As Boolean = (PowershellProcessExitCode = 0) AndAlso (Not Directory.Exists(InputFolderPath)) AndAlso Directory.Exists(NewFolderPath)
 
         Return RenameSucceeded
+    End Function
+
+    Public Shared Function GetFTPDirectorySize(client As FtpClient, path As String) As Long
+        Dim FolderSize As Long = 0
+
+        For Each BackupFileEntry In client.GetListing(path)
+            If BackupFileEntry.Type = FtpObjectType.File Then
+                FolderSize += BackupFileEntry.Size
+            ElseIf BackupFileEntry.Type = FtpObjectType.Directory Then
+                FolderSize += GetFTPDirectorySize(client, BackupFileEntry.FullName)
+            End If
+        Next
+
+        Return FolderSize
     End Function
 
 End Class

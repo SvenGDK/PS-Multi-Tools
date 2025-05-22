@@ -11,12 +11,15 @@ Imports PS_Multi_Tools.PS5ParamClass
 
 Public Class PS5Library
 
+    Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
     Dim WithEvents NewLoadingWindow As New SyncWindow() With {.Title = "Loading PS5 files", .ShowActivated = True}
 
     Dim SelectedPath As String = ""
     Public CurrentPath As String = ""
+
     Dim ConsoleIP As String = ""
-    Dim ConsolePort As String = ""
+    Dim ConsoleFTPPort As String = ""
+    Dim PayloadPort As String = ""
 
     Dim PKGCount As Integer = 0
     Dim FilesCount As Integer = 0
@@ -32,6 +35,7 @@ Public Class PS5Library
     Dim WithEvents LoadFTPFolderMenuItem As New Controls.MenuItem() With {.Header = "Load installed games & apps over FTP"}
     Dim WithEvents LoadPatchPKGFolderMenuItem As New Controls.MenuItem() With {.Header = "Load a local folder with Patch PKGs"}
     Dim WithEvents OpenDownloadsFolderMenuItem As New Controls.MenuItem() With {.Header = "Open the Downloads folder"}
+
     Dim WithEvents NewSettingsMenuItem As New Controls.MenuItem() With {.Header = "More Settings"}
 #End Region
 
@@ -42,7 +46,9 @@ Public Class PS5Library
     Dim WithEvents GamePlayMenuItem As New Controls.MenuItem() With {.Header = "Play Soundtrack", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}}
     Dim WithEvents GameCheckForUpdatesMenuItem As New Controls.MenuItem() With {.Header = "Check for updates", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Refresh-icon.png", UriKind.Relative))}}
     Dim WithEvents GameBrowseAssetsMenuItem As New Controls.MenuItem() With {.Header = "Browse assets", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/OpenFolder-icon.png", UriKind.Relative))}}
-    Dim WithEvents GamePackAsPKG As New Controls.MenuItem() With {.Header = "Pack as PS5 PKG", .Visibility = Visibility.Collapsed, .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/PKG.png", UriKind.Relative))}}
+    Dim WithEvents GamePackAsPKG As New Controls.MenuItem() With {.Header = "Pack as PS5 PKG", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/PKG.png", UriKind.Relative))}}
+
+    Dim WithEvents GameLaunchMenuItem As New Controls.MenuItem() With {.Header = "Launch on PS5", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/Play-icon.png", UriKind.Relative))}}
 
     Dim WithEvents GameChangeTypeMenuItem As New Controls.MenuItem() With {.Header = "Change game type", .Icon = New Controls.Image() With {.Source = New BitmapImage(New Uri("/Images/rename.png", UriKind.Relative))}}
     Dim WithEvents GameChangeToGameMenuItem As New Controls.MenuItem() With {.Header = "To Game App"}
@@ -95,16 +101,6 @@ Public Class PS5Library
 
         SettingsMenuItem.Items.Add(NewSettingsMenuItem)
 
-        'Add context menu for games
-        GamesContextMenu.Items.Add(GameOpenLocationMenuItem)
-        GamesContextMenu.Items.Add(GameCopyToMenuItem)
-        GamesContextMenu.Items.Add(GameBrowseAssetsMenuItem)
-        GamesContextMenu.Items.Add(GamePlayMenuItem)
-        GamesContextMenu.Items.Add(GameCheckForUpdatesMenuItem)
-        GamesContextMenu.Items.Add(GamePackAsPKG)
-        GamesContextMenu.Items.Add(New Separator())
-
-        'Add sub menu for GameChangeType
         GameChangeTypeMenuItem.Items.Add(GameChangeToGameMenuItem)
         GameChangeTypeMenuItem.Items.Add(GameChangeToNativeMediaMenuItem)
         GameChangeTypeMenuItem.Items.Add(GameChangeToRNPSMediaMenuItem)
@@ -113,12 +109,6 @@ Public Class PS5Library
         GameChangeTypeMenuItem.Items.Add(GameChangeToShellUIMenuItem)
         GameChangeTypeMenuItem.Items.Add(GameChangeToDaemonMenuItem)
         GameChangeTypeMenuItem.Items.Add(GameChangeToShellAppMenuItem)
-
-        GamesContextMenu.Items.Add(GameChangeTypeMenuItem)
-        GamesContextMenu.Items.Add(GameRenameMenuItem)
-        GamesContextMenu.Items.Add(GameChangeIconMenuItem)
-        GamesContextMenu.Items.Add(GameChangeBackgroundMenuItem)
-        GamesContextMenu.Items.Add(GameChangeSoundtrackMenuItem)
 
         'Add context menu for apps
         AppsContextMenu.Items.Add(AppOpenLocationMenuItem)
@@ -152,27 +142,50 @@ Public Class PS5Library
     Private Sub PS5Library_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
         'Load config
         Try
-            Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
             ConsoleIP = MainConfig.IniReadValue("PS5 Tools", "IP")
-            ConsolePort = MainConfig.IniReadValue("PS5 Tools", "Port")
-        Catch ex As FileNotFoundException
+            ConsoleFTPPort = MainConfig.IniReadValue("PS5 Tools", "FTPPort")
+            PayloadPort = MainConfig.IniReadValue("PS5 Tools", "PayloadPort")
+        Catch ex As Exception
             MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
         End Try
     End Sub
 
-    Private Sub NewPS5Menu_IPTextChanged(sender As Object, e As RoutedEventArgs) Handles NewPS5Menu.IPTextChanged
-        ConsoleIP = NewPS5Menu.SharedConsoleAddress.Split(":"c)(0)
-        ConsolePort = NewPS5Menu.SharedConsoleAddress.Split(":"c)(1)
+#Region "Menu TextBox Changed Events"
+
+    Private Sub NewPS5Menu_IPChanged(sender As Object, e As RoutedEventArgs) Handles NewPS5Menu.IPTextChanged
+        ConsoleIP = NewPS5Menu.SharedIPAddress
 
         'Save config
         Try
-            Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
-            MainConfig.IniWriteValue("PS5 Tools", "IP", NewPS5Menu.SharedConsoleAddress.Split(":"c)(0))
-            MainConfig.IniWriteValue("PS5 Tools", "Port", NewPS5Menu.SharedConsoleAddress.Split(":"c)(1))
-        Catch ex As FileNotFoundException
+            MainConfig.IniWriteValue("PS5 Tools", "IP", NewPS5Menu.SharedIPAddress)
+        Catch ex As Exception
             MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
         End Try
     End Sub
+
+    Private Sub NewPS5Menu_FTPPortChanged(sender As Object, e As RoutedEventArgs) Handles NewPS5Menu.FTPPortChanged
+        ConsoleFTPPort = NewPS5Menu.SharedFTPPort
+
+        'Save config
+        Try
+            MainConfig.IniWriteValue("PS5 Tools", "FTPPort", NewPS5Menu.SharedFTPPort)
+        Catch ex As Exception
+            MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    Private Sub NewPS5Menu_PayloadPortChanged(sender As Object, e As RoutedEventArgs) Handles NewPS5Menu.PayloadPortChanged
+        PayloadPort = NewPS5Menu.SharedPayloadPort
+
+        'Save config
+        Try
+            MainConfig.IniWriteValue("PS5 Tools", "PayloadPort", PayloadPort)
+        Catch ex As Exception
+            MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+#End Region
 
 #Region "Library Menu Actions"
 
@@ -210,8 +223,6 @@ Public Class PS5Library
 
             'Load library config before processing
             If File.Exists(Environment.CurrentDirectory + "\psmt-config.ini") Then
-                Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
-
                 If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Library", "LoadIcons")) Then
                     If MainConfig.IniReadValue("PS5 Library", "LoadIcons") = "False" Then
                         LoadIcons = False
@@ -233,62 +244,18 @@ Public Class PS5Library
             NewLoadingWindow = New SyncWindow() With {.Title = "PS5 Library Loader", .ShowActivated = True}
             NewLoadingWindow.Show()
 
-            Dim NewGameLoaderArgs As New GameLoaderArgs() With {.FolderPath = FBD.SelectedPath, .LoadIcons = LoadIcons, .LoadBackgrounds = LoadBackgrounds, .SkipFileChecks = SkipFileChecks}
+            Dim NewGameLoaderArgs As New Structures.PS5GameLoaderArgs() With {.FolderPath = FBD.SelectedPath, .LoadIcons = LoadIcons, .LoadBackgrounds = LoadBackgrounds, .SkipFileChecks = SkipFileChecks}
             ProcessBackups(NewGameLoaderArgs)
         End If
     End Sub
 
-    Public Structure GameLoaderArgs
-        Private _FolderPath As String
-        Private _LoadIcons As Boolean
-        Private _LoadBackgrounds As Boolean
-        Private _SkipFileChecks As Boolean
-
-        Public Property FolderPath As String
-            Get
-                Return _FolderPath
-            End Get
-            Set
-                _FolderPath = Value
-            End Set
-        End Property
-
-        Public Property LoadIcons As Boolean
-            Get
-                Return _LoadIcons
-            End Get
-            Set
-                _LoadIcons = Value
-            End Set
-        End Property
-
-        Public Property LoadBackgrounds As Boolean
-            Get
-                Return _LoadBackgrounds
-            End Get
-            Set
-                _LoadBackgrounds = Value
-            End Set
-        End Property
-
-        Public Property SkipFileChecks As Boolean
-            Get
-                Return _SkipFileChecks
-            End Get
-            Set
-                _SkipFileChecks = Value
-            End Set
-        End Property
-    End Structure
-
-    Private Async Sub ProcessBackups(WorkerArgs As GameLoaderArgs)
+    Private Async Sub ProcessBackups(WorkerArgs As Structures.PS5GameLoaderArgs)
         Await Task.Run(Sub()
                            'Search for files
                            Try
                                Dim ValidBackups As New List(Of String)()
                                Dim FoundDirectories As String() = Directory.GetDirectories(WorkerArgs.FolderPath)
                                For Each FoundDirectory In FoundDirectories
-                                   MsgBox(FoundDirectory)
                                    Dim ParamFilePath As String = FoundDirectory + "\sce_sys\param.json"
                                    If File.Exists(ParamFilePath) Then
                                        ValidBackups.Add(ParamFilePath)
@@ -303,7 +270,7 @@ Public Class PS5Library
                                For Each ValidBackup As String In ValidBackups
                                    TotalSize = 0
 
-                                   Dim NewPS5Game As New PS5Game() With {.GameBackupType = "Folder"}
+                                   Dim NewPS5Game As New PS5Game() With {.GameBackupType = "Folder", .GameLocation = PS5Game.Location.Local}
                                    Dim ParamData = JsonConvert.DeserializeObject(Of PS5Param)(File.ReadAllText(ValidBackup))
                                    Dim ParamFileInfo As New FileInfo(ValidBackup)
 
@@ -541,159 +508,310 @@ Public Class PS5Library
 
     Private Async Sub LoadFTPFolderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadFTPFolderMenuItem.Click
         If Not String.IsNullOrEmpty(ConsoleIP) Then
+            Await Task.Run(Sub()
 
-            NewGamesListView.Items.Clear()
-            AppsListView.Items.Clear()
+                               Dispatcher.BeginInvoke(Sub()
+                                                          'Clear
+                                                          NewGamesListView.Items.Clear()
+                                                          AppsListView.Items.Clear()
 
-            'Show the loading progress window
-            NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS5 files", .ShowActivated = True}
-            NewLoadingWindow.LoadProgressBar.IsIndeterminate = True
-            NewLoadingWindow.LoadStatusTextBlock.Text = "Loading files, please wait ..."
-            NewLoadingWindow.Show()
+                                                          'Show the loading progress window
+                                                          NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS5 files", .ShowActivated = True}
+                                                          NewLoadingWindow.LoadProgressBar.IsIndeterminate = True
+                                                          NewLoadingWindow.LoadStatusTextBlock.Text = "Loading files, please wait ..."
+                                                          NewLoadingWindow.Show()
+                                                      End Sub)
 
-            'Load the files
-            Dim LoadIcons As Boolean = True
-            Dim LoadBackgrounds As Boolean = True
-            Dim SkipFileChecks As Boolean = False
+                               'Get installed games and apps over FTP
+                               Dim CPort As Integer = Integer.Parse(ConsoleFTPPort)
+                               Using conn As New FtpClient(ConsoleIP, "anonymous", "anonymous", CPort)
+                                   'Configurate the FTP connection
+                                   conn.Config.EncryptionMode = FtpEncryptionMode.None
+                                   conn.Config.SslProtocols = SslProtocols.None
+                                   conn.Config.DataConnectionEncryption = False
 
-            'Load library config
-            If File.Exists(Environment.CurrentDirectory + "\psmt-config.ini") Then
-                Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
+                                   'Connect
+                                   conn.Connect()
 
-                If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Library", "LoadIcons")) Then
-                    If MainConfig.IniReadValue("PS5 Library", "LoadIcons") = "False" Then
-                        LoadIcons = False
-                    End If
-                End If
-                If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Library", "LoadBackgrounds")) Then
-                    If MainConfig.IniReadValue("PS5 Library", "LoadBackgrounds") = "False" Then
-                        LoadBackgrounds = False
-                    End If
-                End If
-                If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Library", "SkipFileChecks")) Then
-                    If MainConfig.IniReadValue("PS5 Library", "SkipFileChecks") = "True" Then
-                        SkipFileChecks = True
-                    End If
-                End If
-            End If
+                                   'List backups on /data/homebrew
+                                   For Each item In conn.GetListing("/data/homebrew")
+                                       If item.Type = FtpObjectType.Directory Then
+                                           Dim PS5GameLVItem As New PS5Game() With {.GameBackupType = "FTP", .GameLocation = PS5Game.Location.Remote, .GameRootLocation = PS5Game.RootLocation.Internal}
 
-            'Get installed games and apps over FTP
-            Dim CPort As Integer = Integer.Parse(ConsolePort)
-            Using conn As New FtpClient(ConsoleIP, "anonymous", "anonymous", CPort)
-                'Configurate the FTP connection
-                conn.Config.EncryptionMode = FtpEncryptionMode.None
-                conn.Config.SslProtocols = SslProtocols.None
-                conn.Config.DataConnectionEncryption = False
+                                           'Check for icon0.png
+                                           If conn.GetObjectInfo(item.FullName + "/sce_sys/icon0.png") IsNot Nothing Then
+                                               Dim Icon0Bytes As Byte() = Nothing
+                                               If conn.DownloadBytes(Icon0Bytes, item.FullName + "/sce_sys/icon0.png") Then
+                                                   PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Icon0Bytes)
+                                               End If
+                                           End If
 
-                'Connect
-                conn.Connect()
+                                           'Check for param.json
+                                           If conn.GetObjectInfo(item.FullName + "/sce_sys/param.json") IsNot Nothing Then
+                                               Dim ParamBytes As Byte() = Nothing
+                                               If conn.DownloadBytes(ParamBytes, item.FullName + "/sce_sys/param.json") Then
+                                                   Dim ParamBytesAsString = Encoding.UTF8.GetString(ParamBytes)
+                                                   Dim BackupInfos As PS5Param = JsonConvert.DeserializeObject(Of PS5Param)(ParamBytesAsString)
+                                                   If BackupInfos IsNot Nothing Then
+                                                       PS5GameLVItem.GameFileOrFolderPath = item.FullName
+                                                       PS5GameLVItem.GameID = "Title ID: " + BackupInfos.TitleId
+                                                       PS5GameLVItem.GameTitle = BackupInfos.LocalizedParameters.EnUS.TitleName
+                                                       PS5GameLVItem.GameContentID = "Content ID: " + BackupInfos.ContentId
+                                                       PS5GameLVItem.GameRegion = "Region: " + PS4Game.GetGameRegion(BackupInfos.ContentId)
 
-                'List appmeta directory for the games
-                For Each item In conn.GetListing("/user/appmeta")
+                                                       If BackupInfos.LocalizedParameters.EnUS IsNot Nothing Then
+                                                           PS5GameLVItem.GameTitle = BackupInfos.LocalizedParameters.EnUS.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.DeDE IsNot Nothing Then
+                                                           PS5GameLVItem.DEGameTitle = BackupInfos.LocalizedParameters.DeDE.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.FrFR IsNot Nothing Then
+                                                           PS5GameLVItem.FRGameTitle = BackupInfos.LocalizedParameters.FrFR.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.ItIT IsNot Nothing Then
+                                                           PS5GameLVItem.ITGameTitle = BackupInfos.LocalizedParameters.ItIT.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.EsES IsNot Nothing Then
+                                                           PS5GameLVItem.ESGameTitle = BackupInfos.LocalizedParameters.EsES.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.JaJP IsNot Nothing Then
+                                                           PS5GameLVItem.JPGameTitle = BackupInfos.LocalizedParameters.JaJP.TitleName
+                                                       End If
 
-                    Dim PS5GameLVItem As New PS5Game() With {.GameBackupType = "FTP"}
+                                                       If BackupInfos.ApplicationCategoryType = 0 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Game"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 65536 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Native Media App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 65792 Then
+                                                           PS5GameLVItem.GameCategory = "Type: RNPS Media App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 131328 Then
+                                                           PS5GameLVItem.GameCategory = "Type: System Built-in App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 131584 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Big Daemon"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 16777216 Then
+                                                           PS5GameLVItem.GameCategory = "Type: ShellUI"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 33554432 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Daemon"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 67108864 Then
+                                                           PS5GameLVItem.GameCategory = "Type: ShellApp"
+                                                       Else
+                                                           PS5GameLVItem.GameCategory = "Type: Unknown"
+                                                       End If
 
-                    If item.Type = FtpObjectType.Directory Then
+                                                       Dim BackupSize As Long = conn.GetObjectInfo(item.FullName + "/sce_sys/param.json").Size
+                                                       PS5GameLVItem.GameSize = "Size: " + FormatNumber(BackupSize / 1073741824, 2) + " GB" 'Will only display correct if all files are present.
 
-                        If item.Name = "push_resource" Or item.Name = "addcont" Or item.Name = "external" Then
+                                                       If BackupInfos.ContentVersion IsNot Nothing Then
+                                                           PS5GameLVItem.GameVersion = "Version: " + BackupInfos.ContentVersion
+                                                       End If
+                                                       If BackupInfos.RequiredSystemSoftwareVersion IsNot Nothing Then
+                                                           PS5GameLVItem.GameRequiredFirmware = "Required Firmware: " + BackupInfos.RequiredSystemSoftwareVersion.Replace("0x", "").Insert(2, "."c).Insert(5, "."c).Insert(8, "."c).Remove(11, 8)
+                                                       End If
+                                                   Else
+                                                       Continue For
+                                                   End If
+                                               Else
+                                                   Continue For
+                                               End If
+                                           Else
+                                               Continue For
+                                           End If
 
-                        Else
-                            PS5GameLVItem.GameID = item.Name
+                                           ''Check for existing dump_runner.elf
+                                           'If conn.GetObjectInfo(item.FullName + "/dump_runner.elf") IsNot Nothing Then
 
-                            If LoadIcons Then
-                                'Check for icon0.png
-                                If conn.GetObjectInfo(item.FullName + "/icon0.png") IsNot Nothing Then
-                                    Dim Icon0Bytes As Byte() = Nothing
-                                    If conn.DownloadBytes(Icon0Bytes, item.FullName + "/icon0.png") Then
-                                        PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Icon0Bytes)
-                                    End If
-                                End If
-                            End If
+                                           'Else
+                                           '    'Inject?
+                                           'End If
 
-                            If LoadBackgrounds Then
-                                'Check for pic0.png (can take some time)
-                                If conn.GetObjectInfo(item.FullName + "/pic0.png") IsNot Nothing Then
-                                    Dim Pic0Bytes As Byte() = Nothing
-                                    If conn.DownloadBytes(Pic0Bytes, item.FullName + "/pic0.png") Then
-                                        PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Pic0Bytes)
-                                    End If
-                                End If
-                            End If
+                                           'Add to the NewGamesListView
+                                           Dispatcher.BeginInvoke(Sub() NewGamesListView.Items.Add(PS5GameLVItem))
+                                       End If
+                                   Next
 
-                            'Check for param.json
-                            If conn.GetObjectInfo(item.FullName + "/param.json") IsNot Nothing Then
-                                Dim ParamBytes As Byte() = Nothing
-                                If conn.DownloadBytes(ParamBytes, item.FullName + "/param.json") Then
-                                    Dim ParamBytesAsString = Encoding.UTF8.GetString(ParamBytes)
-                                    Dim GameInfos As Structures.PS5GameParamJson = JsonConvert.DeserializeObject(Of Structures.PS5GameParamJson)(ParamBytesAsString)
+                                   'List backups on connected USB0
+                                   For Each item In conn.GetListing("/mnt/usb0/homebrew")
+                                       If item.Type = FtpObjectType.Directory Then
+                                           Dim PS5GameLVItem As New PS5Game() With {.GameBackupType = "FTP", .GameLocation = PS5Game.Location.Remote, .GameRootLocation = PS5Game.RootLocation.USB}
 
-                                    PS5GameLVItem.GameTitle = GameInfos.LocalizedParameters.EnUS.TitleName
-                                    PS5GameLVItem.GameContentID = GameInfos.ContentId
-                                    PS5GameLVItem.GameRegion = PS4Game.GetGameRegion(GameInfos.ContentId)
-                                End If
-                            End If
+                                           'Check for icon0.png
+                                           If conn.GetObjectInfo(item.FullName + "/sce_sys/icon0.png") IsNot Nothing Then
+                                               Dim Icon0Bytes As Byte() = Nothing
+                                               If conn.DownloadBytes(Icon0Bytes, item.FullName + "/sce_sys/icon0.png") Then
+                                                   PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Icon0Bytes)
+                                               End If
+                                           End If
 
-                            'Check for game pkg info
-                            If conn.GetObjectInfo("/user/app/" + item.Name + "/app.pkg") IsNot Nothing Then
-                                Dim PKG As FtpListItem = conn.GetObjectInfo("/user/app/" + item.Name + "/app.pkg")
-                                PS5GameLVItem.GameSize = FormatNumber(PKG.Size / 1048576, 2) + " MB"
-                            End If
+                                           'Check for param.json
+                                           If conn.GetObjectInfo(item.FullName + "/sce_sys/param.json") IsNot Nothing Then
+                                               Dim ParamBytes As Byte() = Nothing
+                                               If conn.DownloadBytes(ParamBytes, item.FullName + "/sce_sys/param.json") Then
+                                                   Dim ParamBytesAsString = Encoding.UTF8.GetString(ParamBytes)
+                                                   Dim BackupInfos As PS5Param = JsonConvert.DeserializeObject(Of PS5Param)(ParamBytesAsString)
+                                                   If BackupInfos IsNot Nothing Then
+                                                       PS5GameLVItem.GameFileOrFolderPath = item.FullName
+                                                       PS5GameLVItem.GameID = "Title ID: " + BackupInfos.TitleId
+                                                       PS5GameLVItem.GameTitle = BackupInfos.LocalizedParameters.EnUS.TitleName
+                                                       PS5GameLVItem.GameContentID = "Content ID: " + BackupInfos.ContentId
+                                                       PS5GameLVItem.GameRegion = "Region: " + PS4Game.GetGameRegion(BackupInfos.ContentId)
 
-                            'Add to the GamesListView
-                            If Dispatcher.CheckAccess() = False Then
-                                Await Dispatcher.BeginInvoke(Sub() NewGamesListView.Items.Add(PS5GameLVItem))
-                            Else
-                                NewGamesListView.Items.Add(PS5GameLVItem)
-                            End If
-                        End If
+                                                       If BackupInfos.LocalizedParameters.EnUS IsNot Nothing Then
+                                                           PS5GameLVItem.GameTitle = BackupInfos.LocalizedParameters.EnUS.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.DeDE IsNot Nothing Then
+                                                           PS5GameLVItem.DEGameTitle = BackupInfos.LocalizedParameters.DeDE.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.FrFR IsNot Nothing Then
+                                                           PS5GameLVItem.FRGameTitle = BackupInfos.LocalizedParameters.FrFR.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.ItIT IsNot Nothing Then
+                                                           PS5GameLVItem.ITGameTitle = BackupInfos.LocalizedParameters.ItIT.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.EsES IsNot Nothing Then
+                                                           PS5GameLVItem.ESGameTitle = BackupInfos.LocalizedParameters.EsES.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.JaJP IsNot Nothing Then
+                                                           PS5GameLVItem.JPGameTitle = BackupInfos.LocalizedParameters.JaJP.TitleName
+                                                       End If
 
-                    End If
+                                                       If BackupInfos.ApplicationCategoryType = 0 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Game"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 65536 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Native Media App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 65792 Then
+                                                           PS5GameLVItem.GameCategory = "Type: RNPS Media App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 131328 Then
+                                                           PS5GameLVItem.GameCategory = "Type: System Built-in App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 131584 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Big Daemon"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 16777216 Then
+                                                           PS5GameLVItem.GameCategory = "Type: ShellUI"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 33554432 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Daemon"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 67108864 Then
+                                                           PS5GameLVItem.GameCategory = "Type: ShellApp"
+                                                       Else
+                                                           PS5GameLVItem.GameCategory = "Type: Unknown"
+                                                       End If
 
-                Next
+                                                       Dim BackupSize As Long = conn.GetObjectInfo(item.FullName + "/sce_sys/param.json").Size
+                                                       PS5GameLVItem.GameSize = "Size: " + FormatNumber(BackupSize / 1073741824, 2) + " GB" 'Will only display correct if all files are present.
 
-                'List installed system apps 
-                For Each item In conn.GetListing("/system_ex/app")
+                                                       If BackupInfos.ContentVersion IsNot Nothing Then
+                                                           PS5GameLVItem.GameVersion = "Version: " + BackupInfos.ContentVersion
+                                                       End If
+                                                       If BackupInfos.RequiredSystemSoftwareVersion IsNot Nothing Then
+                                                           PS5GameLVItem.GameRequiredFirmware = "Required Firmware: " + BackupInfos.RequiredSystemSoftwareVersion.Replace("0x", "").Insert(2, "."c).Insert(5, "."c).Insert(8, "."c).Remove(11, 8)
+                                                       End If
+                                                   Else
+                                                       Continue For
+                                                   End If
+                                               Else
+                                                   Continue For
+                                               End If
+                                           Else
+                                               Continue For
+                                           End If
 
-                    Dim PS5GameLVItem As New PS5Game() With {.GameBackupType = "FTP"}
+                                           'Add to the NewGamesListView
+                                           Dispatcher.BeginInvoke(Sub() NewGamesListView.Items.Add(PS5GameLVItem))
+                                       End If
+                                   Next
+                                   'List backups on connected USB1
+                                   For Each item In conn.GetListing("/mnt/usb1/homebrew")
+                                       If item.Type = FtpObjectType.Directory Then
+                                           Dim PS5GameLVItem As New PS5Game() With {.GameBackupType = "FTP", .GameLocation = PS5Game.Location.Remote, .GameRootLocation = PS5Game.RootLocation.USB}
 
-                    If item.Type = FtpObjectType.Directory Then
+                                           'Check for icon0.png
+                                           If conn.GetObjectInfo(item.FullName + "/sce_sys/icon0.png") IsNot Nothing Then
+                                               Dim Icon0Bytes As Byte() = Nothing
+                                               If conn.DownloadBytes(Icon0Bytes, item.FullName + "/sce_sys/icon0.png") Then
+                                                   PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Icon0Bytes)
+                                               End If
+                                           End If
 
-                        PS5GameLVItem.GameID = item.Name
+                                           'Check for param.json
+                                           If conn.GetObjectInfo(item.FullName + "/sce_sys/param.json") IsNot Nothing Then
+                                               Dim ParamBytes As Byte() = Nothing
+                                               If conn.DownloadBytes(ParamBytes, item.FullName + "/sce_sys/param.json") Then
+                                                   Dim ParamBytesAsString = Encoding.UTF8.GetString(ParamBytes)
+                                                   Dim BackupInfos As PS5Param = JsonConvert.DeserializeObject(Of PS5Param)(ParamBytesAsString)
+                                                   If BackupInfos IsNot Nothing Then
+                                                       PS5GameLVItem.GameFileOrFolderPath = item.FullName
+                                                       PS5GameLVItem.GameID = "Title ID: " + BackupInfos.TitleId
+                                                       PS5GameLVItem.GameTitle = BackupInfos.LocalizedParameters.EnUS.TitleName
+                                                       PS5GameLVItem.GameContentID = "Content ID: " + BackupInfos.ContentId
+                                                       PS5GameLVItem.GameRegion = "Region: " + PS4Game.GetGameRegion(BackupInfos.ContentId)
 
-                        'Check for pic0.png (currently not used - can take also some more time)
-                        'If conn.GetObjectInfo(item.FullName + "/pic0.png") IsNot Nothing Then
-                        '    Dim Pic0Bytes As Byte() = Nothing
-                        '    If conn.DownloadBytes(Pic0Bytes, item.FullName + "/pic0.png") Then
-                        '        PS5GameLVItem.GameCoverSource = Utils.BitmapSourceFromByteArray(Pic0Bytes)
-                        '    End If
-                        'End If
+                                                       If BackupInfos.LocalizedParameters.EnUS IsNot Nothing Then
+                                                           PS5GameLVItem.GameTitle = BackupInfos.LocalizedParameters.EnUS.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.DeDE IsNot Nothing Then
+                                                           PS5GameLVItem.DEGameTitle = BackupInfos.LocalizedParameters.DeDE.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.FrFR IsNot Nothing Then
+                                                           PS5GameLVItem.FRGameTitle = BackupInfos.LocalizedParameters.FrFR.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.ItIT IsNot Nothing Then
+                                                           PS5GameLVItem.ITGameTitle = BackupInfos.LocalizedParameters.ItIT.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.EsES IsNot Nothing Then
+                                                           PS5GameLVItem.ESGameTitle = BackupInfos.LocalizedParameters.EsES.TitleName
+                                                       End If
+                                                       If BackupInfos.LocalizedParameters.JaJP IsNot Nothing Then
+                                                           PS5GameLVItem.JPGameTitle = BackupInfos.LocalizedParameters.JaJP.TitleName
+                                                       End If
 
-                        'Check for param.json
-                        If conn.GetObjectInfo(item.FullName + "/sce_sys/param.json") IsNot Nothing Then
-                            Dim ParamBytes As Byte() = Nothing
-                            If conn.DownloadBytes(ParamBytes, item.FullName + "/sce_sys/param.json") Then
-                                Dim ParamBytesAsString = Encoding.UTF8.GetString(ParamBytes)
-                                Dim AppInfos As Structures.AppParamJson = JsonConvert.DeserializeObject(Of Structures.AppParamJson)(ParamBytesAsString)
+                                                       If BackupInfos.ApplicationCategoryType = 0 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Game"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 65536 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Native Media App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 65792 Then
+                                                           PS5GameLVItem.GameCategory = "Type: RNPS Media App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 131328 Then
+                                                           PS5GameLVItem.GameCategory = "Type: System Built-in App"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 131584 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Big Daemon"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 16777216 Then
+                                                           PS5GameLVItem.GameCategory = "Type: ShellUI"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 33554432 Then
+                                                           PS5GameLVItem.GameCategory = "Type: Daemon"
+                                                       ElseIf BackupInfos.ApplicationCategoryType = 67108864 Then
+                                                           PS5GameLVItem.GameCategory = "Type: ShellApp"
+                                                       Else
+                                                           PS5GameLVItem.GameCategory = "Type: Unknown"
+                                                       End If
 
-                                PS5GameLVItem.GameTitle = AppInfos.LocalizedParameters.EnUS.TitleName
-                                'PS5GameLVItem.GameContentID = AppInfos.ContentId
-                                'PS5GameLVItem.GameRegion = PS4Game.GetGameRegion(AppInfos.ContentId)
-                            End If
-                        End If
+                                                       Dim BackupSize As Long = conn.GetObjectInfo(item.FullName + "/sce_sys/param.json").Size
+                                                       PS5GameLVItem.GameSize = "Size: " + FormatNumber(BackupSize / 1073741824, 2) + " GB" 'Will only display correct if all files are present.
 
-                        'Add to the AppsListView
-                        If Dispatcher.CheckAccess() = False Then
-                            Await Dispatcher.BeginInvoke(Sub() AppsListView.Items.Add(PS5GameLVItem))
-                        Else
-                            AppsListView.Items.Add(PS5GameLVItem)
-                        End If
-                    End If
+                                                       If BackupInfos.ContentVersion IsNot Nothing Then
+                                                           PS5GameLVItem.GameVersion = "Version: " + BackupInfos.ContentVersion
+                                                       End If
+                                                       If BackupInfos.RequiredSystemSoftwareVersion IsNot Nothing Then
+                                                           PS5GameLVItem.GameRequiredFirmware = "Required Firmware: " + BackupInfos.RequiredSystemSoftwareVersion.Replace("0x", "").Insert(2, "."c).Insert(5, "."c).Insert(8, "."c).Remove(11, 8)
+                                                       End If
+                                                   Else
+                                                       Continue For
+                                                   End If
+                                               Else
+                                                   Continue For
+                                               End If
+                                           Else
+                                               Continue For
+                                           End If
 
-                Next
+                                           'Add to the NewGamesListView
+                                           Dispatcher.BeginInvoke(Sub() NewGamesListView.Items.Add(PS5GameLVItem))
+                                       End If
+                                   Next
 
-                'Disconnect
-                conn.Disconnect()
-            End Using
+                                   'Disconnect
+                                   conn.Disconnect()
+                               End Using
+                           End Sub)
+
+            NewLoadingWindow.Close()
 
             If URLs.Count > 0 Then
                 NewLoadingWindow.LoadStatusTextBlock.Text = "Getting " + URLs.Count.ToString() + " available covers"
@@ -729,8 +847,6 @@ Public Class PS5Library
 
             'Load library config
             If File.Exists(Environment.CurrentDirectory + "\psmt-config.ini") Then
-                Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
-
                 If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Library", "LoadIcons")) Then
                     If MainConfig.IniReadValue("PS5 Library", "LoadIcons") = "False" Then
                         LoadIcons = False
@@ -1321,6 +1437,64 @@ Public Class PS5Library
         End If
     End Sub
 
+    Private Sub GameLaunchMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles GameLaunchMenuItem.Click
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
+            If SelectedPS5Game.GameLocation = PS5Game.Location.Remote Then
+                Dim GameTitleID As String = SelectedPS5Game.GameID.Replace("Title ID: ", "").Trim
+                Dim HomebrewArgs As String
+                Dim HomebrewLoaderURL As String
+                Dim NewMsgBoxResult As MsgBoxResult = MsgBox("Is dump_runner.elf located at /data/homebrew ? Click 'No' if located on the USB or 'Cancel' to abort.", MsgBoxStyle.YesNoCancel)
+
+                If NewMsgBoxResult = MsgBoxResult.Yes Then
+                    HomebrewArgs = "/data/homebrew/dump_runner.elf+" + GameTitleID
+                    HomebrewLoaderURL = $"http://{ConsoleIP}:8080/hbldr?pipe=0&daemon=1&path=/data/homebrew/dump_runner.elf&args=" + HomebrewArgs + "&cwd=" + SelectedPS5Game.GameFileOrFolderPath
+                ElseIf NewMsgBoxResult = MsgBoxResult.No Then
+                    HomebrewArgs = "/mnt/usb0/homebrew/dump_runner.elf+" + GameTitleID
+                    HomebrewLoaderURL = $"http://{ConsoleIP}:8080/hbldr?pipe=0&daemon=1&path=/mnt/usb0/homebrew/dump_runner.elf&args=" + HomebrewArgs + "&cwd=" + SelectedPS5Game.GameFileOrFolderPath
+                Else
+                    MsgBox("Cancelled", MsgBoxStyle.Information)
+                    Exit Sub
+                End If
+
+                'Launch
+                NewPS5Menu.NavigateTowebMANWebSrvUrl(HomebrewLoaderURL)
+            End If
+        End If
+    End Sub
+
+    Private Sub GamesContextMenu_ContextMenuOpening(sender As Object, e As ContextMenuEventArgs) Handles GamesContextMenu.ContextMenuOpening
+        GamesContextMenu.Items.Clear()
+
+        If NewGamesListView.SelectedItem IsNot Nothing Then
+            Dim SelectedPS5Game As PS5Game = CType(NewGamesListView.SelectedItem, PS5Game)
+            If SelectedPS5Game.GameLocation = PS5Game.Location.Local Then
+                GamesContextMenu.Items.Add(GameOpenLocationMenuItem)
+                GamesContextMenu.Items.Add(GameCopyToMenuItem)
+                GamesContextMenu.Items.Add(GameBrowseAssetsMenuItem)
+                GamesContextMenu.Items.Add(GamePlayMenuItem)
+                GamesContextMenu.Items.Add(GameCheckForUpdatesMenuItem)
+
+                If SelectedPS5Game.GameBackupType = "Folder" Then
+                    GamesContextMenu.Items.Add(GamePackAsPKG)
+                End If
+
+                GamesContextMenu.Items.Add(New Separator())
+                GamesContextMenu.Items.Add(GameChangeTypeMenuItem)
+                GamesContextMenu.Items.Add(GameRenameMenuItem)
+                GamesContextMenu.Items.Add(GameChangeIconMenuItem)
+                GamesContextMenu.Items.Add(GameChangeBackgroundMenuItem)
+                GamesContextMenu.Items.Add(GameChangeSoundtrackMenuItem)
+            ElseIf SelectedPS5Game.GameLocation = PS5Game.Location.Remote Then
+                GamesContextMenu.Items.Add(GameLaunchMenuItem)
+            End If
+        End If
+    End Sub
+
+    Private Sub GamesContextMenu_ContextMenuClosing(sender As Object, e As ContextMenuEventArgs) Handles GamesContextMenu.ContextMenuClosing
+        GamesContextMenu.Items.Clear()
+    End Sub
+
 #End Region
 
 #Region "Apps Context Menu Actions"
@@ -1899,10 +2073,10 @@ Public Class PS5Library
             GameSizeTextBlock.Text = SelectedPS5Game.GameSize
             GameRequiredFirmwareTextBlock.Text = SelectedPS5Game.GameRequiredFirmware
 
-            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) Then
+            If Not String.IsNullOrEmpty(SelectedPS5Game.GameFileOrFolderPath) AndAlso SelectedPS5Game.GameLocation = PS5Game.Location.Local Then
                 GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(Path.GetDirectoryName(SelectedPS5Game.GameFileOrFolderPath)).Name
             Else
-                GameBackupFolderNameTextBlock.Text = "Backup Folder: " & New DirectoryInfo(SelectedPS5Game.GameFileOrFolderPath).Name
+                GameBackupFolderNameTextBlock.Text = "Backup Folder:" & SelectedPS5Game.GameFileOrFolderPath
             End If
 
             If SelectedPS5Game.GameBGSource IsNot Nothing Then
@@ -1940,10 +2114,6 @@ Public Class PS5Library
                 End If
             End If
 
-            If SelectedPS5Game.GameBackupType = "Folder" Then
-                GamePackAsPKG.Visibility = Visibility.Visible
-            End If
-
         Else
             'Hide values
             GameTitleTextBlock.Visibility = Visibility.Hidden
@@ -1955,7 +2125,6 @@ Public Class PS5Library
             GameSizeTextBlock.Visibility = Visibility.Hidden
             GameRequiredFirmwareTextBlock.Visibility = Visibility.Hidden
             GameBackupFolderNameTextBlock.Visibility = Visibility.Hidden
-            GamePackAsPKG.Visibility = Visibility.Collapsed
         End If
     End Sub
 

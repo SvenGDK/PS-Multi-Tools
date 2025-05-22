@@ -17,16 +17,18 @@
             <MenuItem Header="GP5 Project Creator" x:Name="OpenGP5ManagerMenuItem"/>
             <MenuItem Header="Manifest JSON Editor" x:Name="OpenManifestEditorMenuItem"/>
             <MenuItem Header="Param JSON Editor" x:Name="OpenParamEditorMenuItem"/>
+            <MenuItem Header="Payload Builder" x:Name="PayloadBuilderMenuItem"/>
             <MenuItem Header="Payload &amp; Mast1c0re PS2 Game Sender" x:Name="SenderMenuItem"/>
             <MenuItem Header="PKG Builder" x:Name="OpenPKGBuilderMenuItem"/>
             <MenuItem Header="PKG Merger" x:Name="OpenPKGMergerMenuItem"/>
             <MenuItem Header="PKG Reader (Viewer)" x:Name="OpenPKGReaderMenuItem"/>
             <MenuItem Header="PKG Sender" x:Name="OpenPKGSenderMenuItem"/>
             <MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem"/>
+            <MenuItem Header="SELF Decrypter" x:Name="OpenSELFDecrypterMenuItem"/>
             <MenuItem Header="Simple Shortcut PKG Creator" x:Name="OpenShortcutPKGCreatorMenuItem"/>
             <MenuItem Header="WAV &lt;-&gt; AT9 Converter" x:Name="OpenAudioConverterMenuItem"/>
         </MenuItem>
-        <MenuItem Header="PS5 - Requires running FTP server">
+        <MenuItem Header="PS5 - Requires a running FTP server">
             <MenuItem Header="Clear error history on PS5" x:Name="ClearErrorHistoryMenuItem"/>
             <MenuItem Header="Disc Info Reader" x:Name="OpenDiscParamReaderMenuItem"/>
             <MenuItem Header="Dump RCO files" x:Name="OpenRCODumperMenuItem"/>
@@ -36,11 +38,12 @@
             <MenuItem Header="Notifications Manager" x:Name="OpenNotificationManagerMenuItem"/>
             <MenuItem Header="Web Browser Installer" x:Name="OpenWebBrowserInstallerMenuItem"/>
         </MenuItem>
-        <MenuItem Header="PS5 - Requires running KLog server">
+        <MenuItem Header="PS5 - Requires a running KLog server">
             <MenuItem Header="Kernel Log Viewer" x:Name="OpenKLogViewerMenuItem"/>
         </MenuItem>
-        <MenuItem Header="PS5 - Requires a running exploit">
-            <MenuItem Header="[4.03] Spoof firmware to allow disc installation" x:Name="SpoofFWMenuItem"/>
+        <MenuItem Header="PS5 - Requires a running ELF loader">
+            <MenuItem Header="Spoof firmware to max version" x:Name="SpoofFWMenuItem"/>
+            <MenuItem Header="Toggle kstuff" x:Name="Togglekstuff"/>
         </MenuItem>
     </MenuItem>
     <MenuItem x:Name="ExploitsMenuItem" Header="Exploits">
@@ -499,8 +502,14 @@
         </MenuItem>
     </MenuItem>
     <MenuItem x:Name="SettingsMenuItem" Header="Settings">
-        <MenuItem x:Name="SettingsSetPS5IPMenuItem" Header="Set FTP IP address with port (IP:PORT) :">
-            <TextBox x:Name="FTPIPTextBox" Width="200"/>
+        <MenuItem x:Name="SettingsSetPS5IPMenuItem" Header="Set IP Address :">
+            <TextBox x:Name="IPTextBox" Width="200"/>
+        </MenuItem>
+        <MenuItem x:Name="SettingsSetPS5FTPPortMenuItem" Header="Set FTP Port :">
+            <TextBox x:Name="FTPPortTextBox" Width="100"/>
+        </MenuItem>
+        <MenuItem x:Name="SettingsSetPS5PayloadPortMenuItem" Header="Set Payload Port :">
+            <TextBox x:Name="PayloadPortTextBox" Width="100"/>
         </MenuItem>
     </MenuItem>
 

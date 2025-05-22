@@ -238,18 +238,10 @@ Public Class Downloader
                                 ArchiveExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
                                 ArchiveExtractor.StartInfo.Arguments = "x """ + Environment.CurrentDirectory + "\Downloads\" + DownloadFileName + """" +
                                     " -o""" + Environment.CurrentDirectory + "\Downloads\" + """"
-                                ArchiveExtractor.StartInfo.RedirectStandardOutput = True
                                 ArchiveExtractor.StartInfo.UseShellExecute = False
                                 ArchiveExtractor.StartInfo.CreateNoWindow = True
                                 ArchiveExtractor.Start()
                                 ArchiveExtractor.WaitForExit()
-
-                                'Read the output
-                                Dim OutputReader As StreamReader = ArchiveExtractor.StandardOutput
-                                Dim ProcessOutput As String = OutputReader.ReadToEnd()
-                                If ProcessOutput.Length > 0 Then
-                                    MsgBox(ProcessOutput)
-                                End If
                             End Using
 
                             If MsgBox("Extraction done!" + vbCrLf + "Do you want to open the Downloads folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then

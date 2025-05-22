@@ -8,12 +8,12 @@
     <UseWindowsForms>True</UseWindowsForms>
 	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <OptionStrict>On</OptionStrict>
-    <AssemblyVersion>15.4.0.0</AssemblyVersion>
-    <FileVersion>15.4.0.0</FileVersion>
+    <AssemblyVersion>15.5.0.0</AssemblyVersion>
+    <FileVersion>15.5.0.0</FileVersion>
     <ApplicationIcon>psicon.ico</ApplicationIcon>
 	<NoWarn>$(NoWarn);MSB3270</NoWarn>
 	<Title>PS Multi Tools</Title>
-	<Version>15.4.0</Version>
+	<Version>15.5.0</Version>
 	<Company>SvenGDK</Company>
 	<Copyright>Copyright © SvenGDK 2011-2025</Copyright>
 	<Product>PS Multi Tools</Product>
@@ -265,7 +265,8 @@
     <PackageReference Include="FluentFTP" Version="52.1.0" />
     <PackageReference Include="LTRData.DiscUtils.Iso9660" Version="1.0.55" />
     <PackageReference Include="LTRData.DiscUtils.Udf" Version="1.0.55" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.4" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.6.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.5" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />

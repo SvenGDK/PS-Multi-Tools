@@ -119,60 +119,54 @@ Public Class PS5Sender
         If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) AndAlso DownloadedPayloadsComboBox.SelectedItem IsNot Nothing Then
             MsgBox("To prevent sending 2 payloads at the same time you need to mnually remove the selected payload or downloaded payload.")
         Else
-            'Check if anything is selected
-            If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) Or DownloadedPayloadsComboBox.SelectedItem IsNot Nothing Then
-                'Check if an IP address was entered
-                If Not String.IsNullOrWhiteSpace(IPTextBox.Text) Then
 
-                    Dim DeviceIP As IPAddress
-                    Try
-                        DeviceIP = IPAddress.Parse(IPTextBox.Text)
-                    Catch ex As FormatException
-                        MsgBox("Could not send selected payload. Please check your IP.", MsgBoxStyle.Exclamation, "Error sending payload")
-                        Exit Sub
-                    End Try
-
-                    Dim SelectedPayload As String = ""
-                    If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) Then
-                        'Set payload to manually selected file
-                        SelectedPayload = SelectedELFTextBox.Text
-                    Else
-                        'Set payload to selected downloaded file
-                        If TypeOf DownloadedPayloadsComboBox.SelectedItem Is DownloadedPayloadItem Then
-                            SelectedPayload = CType(DownloadedPayloadsComboBox.SelectedItem, DownloadedPayloadItem).PayloadPath
-                        End If
-                    End If
-
-                    If Not String.IsNullOrEmpty(SelectedPayload) Then
-                        Dim ELFFileInfo As New FileInfo(SelectedPayload)
-
-                        SendButton.IsEnabled = False
-                        SendISOButton.IsEnabled = False
-                        BrowseButton.IsEnabled = False
-                        BrowseISOButton.IsEnabled = False
-
-                        'Set the progress bar maximum and TotalBytes to send
-                        SendProgressBar.Value = 0
-                        SendProgressBar.Maximum = CDbl(ELFFileInfo.Length)
-                        TotalBytes = CInt(ELFFileInfo.Length)
-
-                        'Start sending
-                        CurrentType = SendType.PAYLOAD
-                        If Not String.IsNullOrEmpty(PortTextBox.Text) Then
-                            Dim DevicePort As Integer = Integer.Parse(PortTextBox.Text)
-                            DefaultSenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedPayload, .DevicePort = DevicePort})
-                        Else
-                            SenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedPayload, .ChunkSize = 4096})
-                        End If
-                    Else
-                        'This should only happen if the selection of DownloadedPayloadsComboBox.SelectedItem is empty
-                        MsgBox("Please select a file first.", MsgBoxStyle.Exclamation, "No file selected")
-                    End If
-                Else
-                    MsgBox("No IP address was entered." + vbCrLf + "Please enter an IP address.", MsgBoxStyle.Exclamation, "No IP address")
+            Dim SelectedPayload As String = ""
+            If Not String.IsNullOrEmpty(SelectedELFTextBox.Text) Then
+                'Set payload to manually selected file
+                SelectedPayload = SelectedELFTextBox.Text
+            ElseIf DownloadedPayloadsComboBox.SelectedItem IsNot Nothing Then
+                'Set payload to selected downloaded file
+                If TypeOf DownloadedPayloadsComboBox.SelectedItem Is DownloadedPayloadItem Then
+                    SelectedPayload = CType(DownloadedPayloadsComboBox.SelectedItem, DownloadedPayloadItem).PayloadPath
                 End If
             Else
                 MsgBox("Please select a file first.", MsgBoxStyle.Exclamation, "No file selected")
+                Exit Sub
+            End If
+
+            'Check if an IP address was entered
+            If Not String.IsNullOrWhiteSpace(IPTextBox.Text) Then
+
+                Dim DeviceIP As IPAddress
+                Try
+                    DeviceIP = IPAddress.Parse(IPTextBox.Text)
+                Catch ex As FormatException
+                    MsgBox("Could not send selected payload. Please check your IP.", MsgBoxStyle.Exclamation, "Error sending payload")
+                    Exit Sub
+                End Try
+
+                Dim ELFFileInfo As New FileInfo(SelectedPayload)
+
+                SendButton.IsEnabled = False
+                SendISOButton.IsEnabled = False
+                BrowseButton.IsEnabled = False
+                BrowseISOButton.IsEnabled = False
+
+                'Set the progress bar maximum and TotalBytes to send
+                SendProgressBar.Value = 0
+                SendProgressBar.Maximum = CDbl(ELFFileInfo.Length)
+                TotalBytes = CInt(ELFFileInfo.Length)
+
+                'Start sending
+                CurrentType = SendType.PAYLOAD
+                If Not String.IsNullOrEmpty(PortTextBox.Text) Then
+                    Dim DevicePort As Integer = Integer.Parse(PortTextBox.Text)
+                    DefaultSenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedPayload, .DevicePort = DevicePort})
+                Else
+                    SenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedPayload, .ChunkSize = 4096})
+                End If
+            Else
+                MsgBox("No IP address was entered." + vbCrLf + "Please enter an IP address.", MsgBoxStyle.Exclamation, "No IP address")
             End If
         End If
     End Sub

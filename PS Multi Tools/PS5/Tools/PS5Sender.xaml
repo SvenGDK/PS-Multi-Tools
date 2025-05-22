@@ -14,10 +14,10 @@
         <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="415,156,0,0" VerticalAlignment="Top" Width="66"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,132,0,0"  Text="Select an ELF or BIN file :" VerticalAlignment="Top" FontSize="14" />
         <TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,339,0,0"  VerticalAlignment="Top" Width="400"/>
-        <Button x:Name="SendISOButton" Content="Send ISO" HorizontalAlignment="Left" Margin="245,373,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="SendISOButton" Content="Send ISO" HorizontalAlignment="Left" Margin="217,373,0,0" VerticalAlignment="Top" Width="80"/>
         <Button x:Name="BrowseISOButton" Content="Browse" HorizontalAlignment="Left" Margin="415,339,0,0" VerticalAlignment="Top" Width="66"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,315,0,0"  Text="Select an ISO file :" VerticalAlignment="Top" FontSize="14" />
-        <Button x:Name="SendConfigButton" Content="Send Config" HorizontalAlignment="Left" Margin="330,373,0,0" VerticalAlignment="Top" Width="80" IsEnabled="False"/>
+        <Button x:Name="SendConfigButton" Content="Send Config" HorizontalAlignment="Left" Margin="310,373,0,0" VerticalAlignment="Top" Width="100" IsEnabled="False"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,103,0,0"  Text="Send a Payload" VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,286,0,0"  Text="Send a PS2 Game" VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"/>
         <ProgressBar x:Name="SendProgressBar" HorizontalAlignment="Left" Margin="10,419,0,0" VerticalAlignment="Top" Width="471" Height="20"/>
@@ -26,8 +26,6 @@
         <TextBlock HorizontalAlignment="Left" Margin="265,39,0,0"  Text="Port :" VerticalAlignment="Top" FontSize="14" />
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Configuration" VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,190,0,0"  Text="Select from downloaded payloads :" VerticalAlignment="Top" FontSize="14" />
-        <ComboBox x:Name="DownloadedPayloadsComboBox" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top" Width="400">
-            <ComboBoxItem Content=""></ComboBoxItem>
-        </ComboBox>
+        <ComboBox x:Name="DownloadedPayloadsComboBox" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top" Width="400"/>
     </Grid>
 </Window>

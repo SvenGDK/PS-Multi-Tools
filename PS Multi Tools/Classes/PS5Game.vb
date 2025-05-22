@@ -22,6 +22,18 @@
     Private _DecFilesIncluded As String
     Private _GameContentIDs As String
     Private _GameBackupType As String
+    Private _GameLocation As Location
+    Private _GameRootLocation As RootLocation
+
+    Public Enum Location
+        Remote
+        Local
+    End Enum
+
+    Public Enum RootLocation
+        Internal
+        USB
+    End Enum
 
     Public Property GameTitle As String
         Get
@@ -218,6 +230,24 @@
         End Get
         Set
             _GameBackupType = Value
+        End Set
+    End Property
+
+    Public Property GameLocation As Location
+        Get
+            Return _GameLocation
+        End Get
+        Set
+            _GameLocation = Value
+        End Set
+    End Property
+
+    Public Property GameRootLocation As RootLocation
+        Get
+            Return _GameRootLocation
+        End Get
+        Set
+            _GameRootLocation = Value
         End Set
     End Property
 

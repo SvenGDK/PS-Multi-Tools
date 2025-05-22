@@ -1,0 +1,21 @@
+﻿<Window x:Class="PS5SELFDecrypter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PS5 SELF Decrypter GUI" Height="500" Width="1000" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,66,0,0"  Text="Log :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="ListeningLogTextBox"  VerticalAlignment="Top" Height="365" Margin="10,90,10,0" HorizontalAlignment="Center" Width="980"/>
+        <TextBox x:Name="IPAddressTextBox" HorizontalAlignment="Left" Margin="10,34,0,0"  VerticalAlignment="Top" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="PS5 IP :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="173,34,0,0"  VerticalAlignment="Top" Width="100"/>
+        <TextBlock HorizontalAlignment="Left" Margin="173,10,0,0"  Text="Payload Port :" VerticalAlignment="Top"  FontSize="14"/>
+        <Button x:Name="ListenButton" Content="Send Payload and Start Listening" HorizontalAlignment="Right" Margin="0,32,10,0" VerticalAlignment="Top" Width="225" FontWeight="Bold"/>
+        <TextBox x:Name="PayloadPathTextBox" HorizontalAlignment="Left" Margin="284,34,0,0"  VerticalAlignment="Top" Width="300"/>
+        <TextBlock HorizontalAlignment="Left" Margin="284,10,0,0"  Text="Payload Path :" VerticalAlignment="Top"  FontSize="14"/>
+        <Button x:Name="BrowsePayloadButton" Content="Browse" HorizontalAlignment="Left" Margin="595,33,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
+    </Grid>
+</Window>

@@ -1,20 +1,26 @@
-﻿Imports FluentFTP
-Imports Microsoft.Web.WebView2.Core
-Imports Newtonsoft.Json
-Imports PS_Multi_Tools.INI
-Imports System.IO
+﻿Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Security.Authentication
+Imports FluentFTP
+Imports Microsoft.Web.WebView2.Core
+Imports Newtonsoft.Json
+Imports PS_Multi_Tools.INI
 
 Public Class PS5Menu
 
-    Public SharedConsoleAddress As String = ""
+    Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
+
+    Public SharedIPAddress As String = ""
+    Public SharedFTPPort As String = ""
+    Public SharedPayloadPort As String = ""
 
     Private IswebMANWebSrvWebViewReady As Boolean = False
     Private IswebMANWebSrvCommandExecuted As Boolean = False
 
-    Public Shared ReadOnly IPChangedEvent As RoutedEvent = EventManager.RegisterRoutedEvent(name:="ConsoleAddressChanged", routingStrategy:=RoutingStrategy.Bubble, handlerType:=GetType(RoutedEventHandler), ownerType:=GetType(PS5Menu))
+    Public Shared ReadOnly IPChangedEvent As RoutedEvent = EventManager.RegisterRoutedEvent(name:="ConsoleIPChanged", routingStrategy:=RoutingStrategy.Bubble, handlerType:=GetType(RoutedEventHandler), ownerType:=GetType(PS5Menu))
+    Public Shared ReadOnly FTPPortChangedEvent As RoutedEvent = EventManager.RegisterRoutedEvent(name:="ConsoleFTPPortChanged", routingStrategy:=RoutingStrategy.Bubble, handlerType:=GetType(RoutedEventHandler), ownerType:=GetType(PS5Menu))
+    Public Shared ReadOnly PayloadPortChangedEvent As RoutedEvent = EventManager.RegisterRoutedEvent(name:="ConsolePayloadPortChanged", routingStrategy:=RoutingStrategy.Bubble, handlerType:=GetType(RoutedEventHandler), ownerType:=GetType(PS5Menu))
 
     Public Custom Event IPTextChanged As RoutedEventHandler
         AddHandler(value As RoutedEventHandler)
@@ -30,15 +36,67 @@ Public Class PS5Menu
         End RaiseEvent
     End Event
 
+    Public Custom Event FTPPortChanged As RoutedEventHandler
+        AddHandler(value As RoutedEventHandler)
+            [AddHandler](FTPPortChangedEvent, value)
+        End AddHandler
+
+        RemoveHandler(value As RoutedEventHandler)
+            [RemoveHandler](FTPPortChangedEvent, value)
+        End RemoveHandler
+
+        RaiseEvent(sender As Object, e As RoutedEventArgs)
+            [RaiseEvent](e)
+        End RaiseEvent
+    End Event
+
+    Public Custom Event PayloadPortChanged As RoutedEventHandler
+        AddHandler(value As RoutedEventHandler)
+            [AddHandler](PayloadPortChangedEvent, value)
+        End AddHandler
+
+        RemoveHandler(value As RoutedEventHandler)
+            [RemoveHandler](PayloadPortChangedEvent, value)
+        End RemoveHandler
+
+        RaiseEvent(sender As Object, e As RoutedEventArgs)
+            [RaiseEvent](e)
+        End RaiseEvent
+    End Event
+
     Private Sub RaiseIPTextChangedRoutedEvent()
         Dim routedEventArgs As New RoutedEventArgs(routedEvent:=IPChangedEvent)
         [RaiseEvent](routedEventArgs)
     End Sub
 
-    Private Sub FTPIPTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles FTPIPTextBox.TextChanged
-        If Not String.IsNullOrEmpty(FTPIPTextBox.Text) And FTPIPTextBox.Text.Contains(":"c) Then
-            SharedConsoleAddress = FTPIPTextBox.Text
+    Private Sub RaiseFTPPortChangedRoutedEvent()
+        Dim routedEventArgs As New RoutedEventArgs(routedEvent:=FTPPortChangedEvent)
+        [RaiseEvent](routedEventArgs)
+    End Sub
+
+    Private Sub RaisePayloadPortChangedEvent()
+        Dim routedEventArgs As New RoutedEventArgs(routedEvent:=PayloadPortChangedEvent)
+        [RaiseEvent](routedEventArgs)
+    End Sub
+
+    Private Sub IPTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles IPTextBox.TextChanged
+        If Not String.IsNullOrEmpty(IPTextBox.Text) Then
+            SharedIPAddress = IPTextBox.Text
             RaiseIPTextChangedRoutedEvent()
+        End If
+    End Sub
+
+    Private Sub FTPPortTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles FTPPortTextBox.TextChanged
+        If Not String.IsNullOrEmpty(FTPPortTextBox.Text) Then
+            SharedFTPPort = FTPPortTextBox.Text
+            RaiseIPTextChangedRoutedEvent()
+        End If
+    End Sub
+
+    Private Sub PayloadPortTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles PayloadPortTextBox.TextChanged
+        If Not String.IsNullOrEmpty(PayloadPortTextBox.Text) Then
+            SharedPayloadPort = PayloadPortTextBox.Text
+            RaisePayloadPortChangedEvent()
         End If
     End Sub
 
@@ -46,9 +104,13 @@ Public Class PS5Menu
         'Load config if exists
         If File.Exists(Environment.CurrentDirectory + "\psmt-config.ini") Then
             Try
-                Dim MainConfig As New IniFile(Environment.CurrentDirectory + "\psmt-config.ini")
-                SharedConsoleAddress = MainConfig.IniReadValue("PS5 Tools", "IP") + ":" + MainConfig.IniReadValue("PS5 Tools", "Port")
-                FTPIPTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "IP") + ":" + MainConfig.IniReadValue("PS5 Tools", "Port")
+                SharedIPAddress = MainConfig.IniReadValue("PS5 Tools", "IP")
+                SharedFTPPort = MainConfig.IniReadValue("PS5 Tools", "FTPPort")
+                SharedPayloadPort = MainConfig.IniReadValue("PS5 Tools", "PayloadPort")
+
+                IPTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "IP")
+                FTPPortTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "FTPPort")
+                PayloadPortTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "PayloadPort")
             Catch ex As FileNotFoundException
                 MsgBox("Could not find a valid config file.", MsgBoxStyle.Exclamation)
             End Try
@@ -61,20 +123,16 @@ Public Class PS5Menu
         Dim NewPS5Sender As New PS5Sender() With {.ShowActivated = True}
 
         'Set values if SharedConsoleAddress is set
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewPS5Sender.IPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
-            NewPS5Sender.PortTextBox.Text = SharedConsoleAddress.Split(":"c)(1)
-        End If
+        NewPS5Sender.IPTextBox.Text = SharedIPAddress
+        NewPS5Sender.PortTextBox.Text = SharedPayloadPort
 
         NewPS5Sender.Show()
     End Sub
 
     Private Sub OpenFTPBrowserMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFTPBrowserMenuItem.Click
         Dim NewFTPBrowser As New FTPBrowser() With {.ShowActivated = True, .FTPS5Mode = True}
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewFTPBrowser.ConsoleIPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
-            NewFTPBrowser.PortTextBox.Text = SharedConsoleAddress.Split(":"c)(1)
-        End If
+        NewFTPBrowser.ConsoleIPTextBox.Text = SharedIPAddress
+        NewFTPBrowser.PortTextBox.Text = SharedFTPPort
         NewFTPBrowser.Show()
     End Sub
 
@@ -84,29 +142,24 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenWebBrowserInstallerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenWebBrowserInstallerMenuItem.Click
-        Dim NewPS5WebBrowserAdder As New PS5WebBrowserAdder() With {.ShowActivated = True}
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewPS5WebBrowserAdder.ConsoleIP = SharedConsoleAddress.Split(":"c)(0)
-        End If
+        Dim NewPS5WebBrowserAdder As New PS5WebBrowserAdder With {.ShowActivated = True, .ConsoleIP = SharedIPAddress}
         NewPS5WebBrowserAdder.Show()
     End Sub
 
     Private Sub OpenNotificationManagerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenNotificationManagerMenuItem.Click
         Dim NewPS5NotificationsManager As New PS5Notifications() With {.ShowActivated = True}
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewPS5NotificationsManager.IPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
-            NewPS5NotificationsManager.PortTextBox.Text = SharedConsoleAddress.Split(":"c)(1)
-        End If
+        NewPS5NotificationsManager.IPTextBox.Text = SharedIPAddress
+        NewPS5NotificationsManager.PortTextBox.Text = SharedFTPPort
         NewPS5NotificationsManager.Show()
     End Sub
 
     Private Sub ClearErrorHistoryMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles ClearErrorHistoryMenuItem.Click
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
+        If Not String.IsNullOrEmpty(SharedIPAddress) AndAlso Not String.IsNullOrEmpty(SharedFTPPort) Then
 
             Cursor = Cursors.Wait
 
             Try
-                Using conn As New FtpClient(SharedConsoleAddress.Split(":"c)(0), "anonymous", "anonymous", 1337)
+                Using conn As New FtpClient(SharedIPAddress, "anonymous", "anonymous", CInt(SharedFTPPort))
 
                     'Configurate the FTP connection
                     conn.Config.EncryptionMode = FtpEncryptionMode.None
@@ -152,13 +205,7 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenRCODumperMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenRCODumperMenuItem.Click
-        Dim NewPS5RcoDumper As New PS5RcoDumper() With {.ShowActivated = True}
-
-        'Set values if SharedConsoleAddress is set
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewPS5RcoDumper.ConsoleIP = SharedConsoleAddress.Split(":"c)(0)
-        End If
-
+        Dim NewPS5RcoDumper As New PS5RcoDumper With {.ShowActivated = True, .ConsoleIP = SharedIPAddress}
         NewPS5RcoDumper.Show()
     End Sub
 
@@ -201,10 +248,7 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenFTPGrabberMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFTPGrabberMenuItem.Click
-        Dim NewFTPGrabber As New PS5FTPGrabber() With {.ShowActivated = True}
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewFTPGrabber.ConsoleIP = SharedConsoleAddress.Split(":"c)(0)
-        End If
+        Dim NewFTPGrabber As New PS5FTPGrabber With {.ShowActivated = True, .ConsoleIP = SharedIPAddress}
         NewFTPGrabber.Show()
     End Sub
 
@@ -219,16 +263,23 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenetaHENConfiguratorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenetaHENConfiguratorMenuItem.Click
-        Dim NewetaHENConfigurator As New PS5etaHENConfigurator() With {.ShowActivated = True}
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewetaHENConfigurator.ConsoleIP = SharedConsoleAddress.Split(":"c)(0)
-        End If
+        Dim NewetaHENConfigurator As New PS5etaHENConfigurator With {.ShowActivated = True, .ConsoleIP = SharedIPAddress}
         NewetaHENConfigurator.Show()
     End Sub
 
     Private Sub OpenShortcutPKGCreatorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenShortcutPKGCreatorMenuItem.Click
         Dim NewShortcutPKGCreator As New GP5PKGBuilder() With {.ShowActivated = True}
         NewShortcutPKGCreator.Show()
+    End Sub
+
+    Private Sub PayloadBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles PayloadBuilderMenuItem.Click
+        Dim NewPS5PayloadBuilder As New PS5PayloadBuilder() With {.ShowActivated = True}
+        NewPS5PayloadBuilder.Show()
+    End Sub
+
+    Private Sub OpenSELFDecrypterMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenSELFDecrypterMenuItem.Click
+        Dim NewPS5SELFDecrypter As New PS5SELFDecrypter() With {.ShowActivated = True, .PS5Host = SharedIPAddress, .PS5Port = SharedPayloadPort}
+        NewPS5SELFDecrypter.Show()
     End Sub
 
     Private Async Sub CheckForUpdatesMenuItems_Click(sender As Object, e As RoutedEventArgs) Handles CheckForUpdatesMenuItems.Click
@@ -242,11 +293,11 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenPKGSenderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGSenderMenuItem.Click
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            Dim NewPKGSender As New PS5PKGSender With {.ShowActivated = True, .ConsoleIP = SharedConsoleAddress.Split(":"c)(0)}
+        If Not String.IsNullOrEmpty(SharedIPAddress) Then
+            Dim NewPKGSender As New PS5PKGSender With {.ShowActivated = True, .ConsoleIP = SharedIPAddress}
             NewPKGSender.Show()
         Else
-            MsgBox("Please set your IP:Port in the settings first.", MsgBoxStyle.Information, "Cannot connect to the PS5")
+            MsgBox("Please set your IP in the settings first.", MsgBoxStyle.Information, "Cannot connect to the PS5")
         End If
     End Sub
 
@@ -257,9 +308,7 @@ Public Class PS5Menu
 
     Private Sub OpenKLogViewerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenKLogViewerMenuItem.Click
         Dim NewLogWindow As New PS5Log() With {.ShowActivated = True}
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewLogWindow.PS5IPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
-        End If
+        NewLogWindow.PS5IPTextBox.Text = SharedIPAddress
         NewLogWindow.Show()
     End Sub
 
@@ -269,10 +318,10 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenDiscParamReaderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenDiscParamReaderMenuItem.Click
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
+        If Not String.IsNullOrEmpty(SharedIPAddress) Then
             Try
                 Dim ParamJSONDownloaded As Boolean = False
-                Using NewFTPConnection As New FtpClient(SharedConsoleAddress.Split(":"c)(0), "anonymous", "anonymous", 1337)
+                Using NewFTPConnection As New FtpClient(SharedIPAddress, "anonymous", "anonymous", CInt(SharedFTPPort))
 
                     'Configurate the FTP connection
                     NewFTPConnection.Config.EncryptionMode = FtpEncryptionMode.None
@@ -341,11 +390,13 @@ Public Class PS5Menu
 
     Private Sub SpoofFWMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles SpoofFWMenuItem.Click
         'Check if an IP address was entered
-        If Not String.IsNullOrWhiteSpace(SharedConsoleAddress) Then
+        If Not String.IsNullOrWhiteSpace(SharedIPAddress) Then
             Dim DeviceIP As IPAddress
+            Dim DevicePort As Integer
 
             Try
-                DeviceIP = IPAddress.Parse(SharedConsoleAddress.Split(":"c)(0))
+                DeviceIP = IPAddress.Parse(SharedIPAddress)
+                DevicePort = Integer.Parse(SharedPayloadPort)
             Catch ex As FormatException
                 MsgBox("Could not parse the set console IP. Please check your IP in the settings.", MsgBoxStyle.Exclamation, "Error sending payload")
                 Exit Sub
@@ -356,18 +407,54 @@ Public Class PS5Menu
             Try
                 Using SenderSocket As New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) With {.ReceiveTimeout = 3000}
                     'Connect
-                    SenderSocket.Connect(DeviceIP, 9020)
+                    SenderSocket.Connect(DeviceIP, DevicePort)
                     'Send ELF
                     SenderSocket.SendFile(SelectedELF)
                     'Close the connection
                     SenderSocket.Close()
                 End Using
             Catch ex As SocketException
-                MsgBox("Could not send selected payload. Please make sure that your PS5 can receive payloads on port 9020.", MsgBoxStyle.Exclamation, "Error sending payload")
+                MsgBox("Could not send selected payload. Please make sure that your PS5 can receive payloads.", MsgBoxStyle.Exclamation, "Error sending payload")
                 Exit Sub
             End Try
 
             MsgBox("Spoofing payload has been sent" + vbCrLf + "You will need to eject and insert the disc back again to install it." + vbCrLf + "To reverse the firmware spoofing simply send this payload again.", MsgBoxStyle.Information)
+        Else
+            MsgBox("Please set your IP:Port in the settings first.", MsgBoxStyle.Information, "Cannot connect to the PS5")
+        End If
+    End Sub
+
+    Private Sub Togglekstuff_Click(sender As Object, e As RoutedEventArgs) Handles Togglekstuff.Click
+        'Check if an IP address was entered
+        If Not String.IsNullOrWhiteSpace(SharedIPAddress) Then
+            Dim DeviceIP As IPAddress
+            Dim DevicePort As Integer
+
+            Try
+                DeviceIP = IPAddress.Parse(SharedIPAddress)
+                DevicePort = Integer.Parse(SharedPayloadPort)
+            Catch ex As FormatException
+                MsgBox("Could not parse the set console IP. Please check your IP in the settings.", MsgBoxStyle.Exclamation, "Error sending payload")
+                Exit Sub
+            End Try
+
+            Dim SelectedELF As String = Environment.CurrentDirectory + "\Tools\PS5\kstuff-toggle.elf"
+            Dim ELFFileInfo As New FileInfo(SelectedELF)
+            Try
+                Using SenderSocket As New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) With {.ReceiveTimeout = 3000}
+                    'Connect
+                    SenderSocket.Connect(DeviceIP, DevicePort)
+                    'Send ELF
+                    SenderSocket.SendFile(SelectedELF)
+                    'Close the connection
+                    SenderSocket.Close()
+                End Using
+            Catch ex As SocketException
+                MsgBox("Could not send selected payload. Please make sure that your PS5 can receive payloads", MsgBoxStyle.Exclamation, "Error sending payload")
+                Exit Sub
+            End Try
+
+            MsgBox("kstuff toggled!" + vbCrLf + "To revert, simply click again.", MsgBoxStyle.Information)
         Else
             MsgBox("Please set your IP:Port in the settings first.", MsgBoxStyle.Information, "Cannot connect to the PS5")
         End If
@@ -945,7 +1032,7 @@ Public Class PS5Menu
 #Region "WebMAN WebSrv"
 
     Public Sub NavigateTowebMANWebSrvUrl(InputURL As String)
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
+        If Not String.IsNullOrEmpty(SharedIPAddress) Then
             If IswebMANWebSrvWebViewReady AndAlso IswebMANWebSrvCommandExecuted Then
                 IswebMANWebSrvCommandExecuted = False
                 webMANwebsrvWebView.CoreWebView2.Navigate(InputURL)
@@ -970,8 +1057,8 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenPS5WebSrvInterface_Click(sender As Object, e As RoutedEventArgs) Handles OpenPS5WebSrvInterface.Click
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            Dim NewwebMANMODWebGUI As New PS5webMANBrowser() With {.ShowActivated = True, .WebMANWebSrvAddress = "http://" & SharedConsoleAddress.Split(":"c)(0) + ":8080"}
+        If Not String.IsNullOrEmpty(SharedIPAddress) Then
+            Dim NewwebMANMODWebGUI As New PS5webMANBrowser() With {.ShowActivated = True, .WebMANWebSrvAddress = "http://" & SharedIPAddress + ":8080"}
             NewwebMANMODWebGUI.Show()
         Else
             MsgBox("Please set your PS5 IP address in the Settings.", MsgBoxStyle.Information, "No IP Address")
@@ -979,8 +1066,8 @@ Public Class PS5Menu
     End Sub
 
     Private Sub BrowsePS5FileSystem_Click(sender As Object, e As RoutedEventArgs) Handles BrowsePS5FileSystem.Click
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            Dim NewwebMANMODWebGUI As New PS5webMANBrowser() With {.ShowActivated = True, .WebMANWebSrvAddress = "http://" & SharedConsoleAddress.Split(":"c)(0) + ":8080/fs/"}
+        If Not String.IsNullOrEmpty(SharedIPAddress) Then
+            Dim NewwebMANMODWebGUI As New PS5webMANBrowser() With {.ShowActivated = True, .WebMANWebSrvAddress = "http://" & SharedIPAddress + ":8080/fs/"}
             NewwebMANMODWebGUI.Show()
         Else
             MsgBox("Please set your PS5 IP address in the Settings.", MsgBoxStyle.Information, "No IP Address")
@@ -989,24 +1076,13 @@ Public Class PS5Menu
 
     Private Sub ManagePS5Homebrew_Click(sender As Object, e As RoutedEventArgs) Handles ManagePS5Homebrew.Click
         Dim NewWebSrvHomebrewManager As New WebSrvHomebrewManager() With {.ShowActivated = True}
-
-        'Set values if SharedConsoleAddress is set
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewWebSrvHomebrewManager.PS5IPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
-        End If
-
+        NewWebSrvHomebrewManager.PS5IPTextBox.Text = SharedIPAddress
         NewWebSrvHomebrewManager.Show()
     End Sub
 
     Private Sub ManagePS5GameROMs_Click(sender As Object, e As RoutedEventArgs) Handles ManagePS5GameROMs.Click
-        'Will be replaced later
         Dim NewWebSrvHomebrewManager As New WebSrvHomebrewManager() With {.ShowActivated = True}
-
-        'Set values if SharedConsoleAddress is set
-        If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
-            NewWebSrvHomebrewManager.PS5IPTextBox.Text = SharedConsoleAddress.Split(":"c)(0)
-        End If
-
+        NewWebSrvHomebrewManager.PS5IPTextBox.Text = SharedIPAddress
         NewWebSrvHomebrewManager.Show()
     End Sub
 

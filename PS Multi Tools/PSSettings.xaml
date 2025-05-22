@@ -7,16 +7,18 @@
         mc:Ignorable="d"
         Title="PS Multi Tools Settings" Height="260" Width="680" ThemeMode="System" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="10,70,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock FontFamily="Calibri" FontSize="14" Text="Port :" Margin="45,105,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="84,70,0,0"  VerticalAlignment="Top" Width="250" FontFamily="Calibri" TextAlignment="Center"/>
-        <TextBox x:Name="PS5FTPPortTextBox" HorizontalAlignment="Left" Margin="84,105,0,0"  VerticalAlignment="Top" Width="250" FontFamily="Calibri" TextAlignment="Center"/>
-        <TextBlock FontFamily="Calibri" FontSize="16" Text="Set PS5 FTP IP &amp; Port for FTP Tools" Margin="10,44,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="22,70,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="FTP Port :" Margin="34,105,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="107,70,0,0"  VerticalAlignment="Top" Width="227" FontFamily="Calibri" TextAlignment="Center"/>
+        <TextBox x:Name="PS5FTPPortTextBox" HorizontalAlignment="Left" Margin="107,105,0,0"  VerticalAlignment="Top" Width="227" FontFamily="Calibri" TextAlignment="Center"/>
+        <TextBlock FontFamily="Calibri" FontSize="16" Text="Set PS5 Console IP / FTP Port / Payload Port" Margin="10,44,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
         <CheckBox x:Name="LoadIconCheckBox" Content="Load game &amp; app icons (icon0.png)" Margin="370,71,0,0" VerticalAlignment="Top"  FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
         <TextBlock FontFamily="Calibri" FontSize="16" Text="PS5 Library Options" Margin="370,44,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
         <CheckBox x:Name="LoadBackgroundCheckBox" Content="Load game &amp; app backgrounds (pic0.png)" Margin="370,105,0,0" VerticalAlignment="Top"  FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
         <CheckBox x:Name="SkipFileCheckCheckBox" Content="Skip file checks when loading backups" Margin="370,138,0,0" VerticalAlignment="Top"  FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
-        <Button x:Name="SavePS5AddressButton" Content="Save" Margin="462,175,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold" HorizontalAlignment="Left"/>
+        <Button x:Name="SaveConfigButton" Content="Save" Margin="462,175,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold" HorizontalAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="PS5 Library Settings" VerticalAlignment="Top"  FontFamily="Calibri" FontSize="24" FontWeight="Bold"/>
+        <TextBlock FontFamily="Calibri" FontSize="14" Text="Payload Port :" Margin="10,138,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="PS5PayloadPortTextBox" HorizontalAlignment="Left" Margin="107,138,0,0"  VerticalAlignment="Top" Width="227" FontFamily="Calibri" TextAlignment="Center"/>
     </Grid>
 </Window>
