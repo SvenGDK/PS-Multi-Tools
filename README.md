@@ -6,7 +6,7 @@
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
 <details>
-  <summary>v15.4 contains following tools</summary>
+  <summary>v15.5 contains following tools</summary>
   
 ## General:
 - FTP Browser
@@ -121,8 +121,10 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
   - Option to downgrade the SDK version
 - MANIFEST.JSON & PARAM.JSON File Creator & Editor
 - Mast1c0re ELF Payload & PS2 ISO Sender
+- Payload Builder
 - PKG Builder (requires prospero-pub-cmd at \Tools\PS5\ )
 - PKG Merger
+- SELF Decrypter GUI
 - Shortcut PKG Creator
 - RCO Dumper (requires running FTP server)
 - RCO Extractor
