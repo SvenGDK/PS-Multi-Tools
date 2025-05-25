@@ -3,8 +3,6 @@ Imports System.Windows.Forms
 
 Public Class PS5AT9Converter
 
-    Public AT9Tool As String = String.Empty
-
     Private Sub BrowseWavFileButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseWavFileButton.Click
         Dim OFD As New OpenFileDialog() With {.Filter = "WAV Files (*.wav)|*.wav", .Multiselect = False, .Title = "Select a .wav file."}
         If OFD.ShowDialog() = Forms.DialogResult.OK Then
@@ -99,7 +97,7 @@ Public Class PS5AT9Converter
 
             Try
                 Using PubCMD As New Process()
-                    PubCMD.StartInfo.FileName = AT9Tool
+                    PubCMD.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PS5\at9tool.exe"
 
                     If Not String.IsNullOrEmpty(EncodingOptions.ToString()) Then
                         PubCMD.StartInfo.Arguments = "-e " + EncodingOptions.ToString() + """" + InputWavTextBox.Text + """ """ + NewFilePath + """"
@@ -140,7 +138,7 @@ Public Class PS5AT9Converter
 
             Try
                 Using PubCMD As New Process()
-                    PubCMD.StartInfo.FileName = AT9Tool
+                    PubCMD.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PS5\at9tool.exe"
 
                     If Not String.IsNullOrEmpty(DecodeFormat) Then
                         PubCMD.StartInfo.Arguments = "-d " + DecodeFormat + " """ + InputAt9TextBox.Text + """ """ + NewFilePath + """"

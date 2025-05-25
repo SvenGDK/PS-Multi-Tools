@@ -22,7 +22,7 @@
                         </Rectangle.Effect>
                     </Rectangle>
 
-                    <TextBlock x:Name="GameTitleTextBlock" VerticalAlignment="Top" Text="GameTitle" FocusVisualStyle="{x:Null}" FontSize="48" FontWeight="Bold" Margin="0,410,0,0" HorizontalAlignment="Center" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                    <TextBlock x:Name="GameTitleTextBlock" VerticalAlignment="Top" Text="GameTitle" FocusVisualStyle="{x:Null}" FontSize="48" FontWeight="Bold" Margin="0,355,0,0" HorizontalAlignment="Center" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
@@ -41,32 +41,32 @@
                             </WrapPanel>
                         </TextBlock.ToolTip>
                     </TextBlock>
-                    <TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FocusVisualStyle="{x:Null}" FontSize="28" Margin="100,510,0,0" HorizontalAlignment="Left" Foreground="White" FontFamily="Calibri" Visibility="Hidden">
+                    <TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FocusVisualStyle="{x:Null}" FontSize="28" Margin="44,453,0,0" HorizontalAlignment="Left" Foreground="White" FontFamily="Calibri" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
                     </TextBlock>
-                    <TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="100,549,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                    <TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="44,492,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
                     </TextBlock>
-                    <TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="860,510,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                    <TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="44,609,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
                     </TextBlock>
-                    <TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="860,549,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                    <TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="44,648,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
                     </TextBlock>
-                    <TextBlock x:Name="GameVersionTextBlock" VerticalAlignment="Top" Text="GameVersion" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="100,588,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                    <TextBlock x:Name="GameContentVersionTextBlock" VerticalAlignment="Top" Text="GameContentVersion" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="44,531,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
                     </TextBlock>
-                    <TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="860,588,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                    <TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="760,453,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
@@ -76,7 +76,7 @@
                             </WrapPanel>
                         </TextBlock.ToolTip>
                  </TextBlock>
-                    <TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="100,627,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                    <TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="44,570,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
@@ -86,7 +86,28 @@
                             </WrapPanel>
                         </TextBlock.ToolTip>
                  </TextBlock>
-                    <TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="860,627,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                    <TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="760,648,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <TextBlock x:Name="GameSDKVersionTextBlock" VerticalAlignment="Top" Text="GameSDKVersion" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="760,531,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock x:Name="GamePubToolVersionTextBlock" VerticalAlignment="Top" Text="GamePubToolVersion" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="760,570,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock x:Name="GameVersionFileURITextBlock" VerticalAlignment="Top" Text="GameVersionFileURI" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="760,609,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="#FF0094EB" TextDecorations="Underline" Cursor="Hand" Visibility="Hidden">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock x:Name="GameMasterVersionTextBlock" VerticalAlignment="Top" Text="GameMasterVersion" FocusVisualStyle="{x:Null}" FontSize="28" TextAlignment="Left" Margin="760,492,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                         </TextBlock.Effect>
@@ -101,7 +122,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Width="275" Height="300" FocusVisualStyle="{x:Null}">
-                                    <Image Width="256" Height="256" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,15" >
+                                    <Image Width="256" Height="256" Source="{Binding GameCoverSource}" FocusVisualStyle="{x:Null}" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" >
                                         <Image.Effect>
                                             <DropShadowEffect/>
                                         </Image.Effect>
@@ -111,7 +132,7 @@
                                             </WrapPanel>
                                         </Image.ToolTip>
                                     </Image>
-                                    <TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14"  TextAlignment="Center" Margin="0,0,0,5"/>
+                                    <TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16"  TextAlignment="Center" Margin="0,0,0,5" FontWeight="Normal"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

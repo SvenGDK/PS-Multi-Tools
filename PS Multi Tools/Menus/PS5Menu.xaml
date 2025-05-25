@@ -20,9 +20,11 @@
             <MenuItem Header="Payload Builder" x:Name="PayloadBuilderMenuItem"/>
             <MenuItem Header="Payload &amp; Mast1c0re PS2 Game Sender" x:Name="SenderMenuItem"/>
             <MenuItem Header="PKG Builder" x:Name="OpenPKGBuilderMenuItem"/>
+            <MenuItem Header="PKG Extractor" x:Name="OpenPKGExtractorMenuItem"/>
             <MenuItem Header="PKG Merger" x:Name="OpenPKGMergerMenuItem"/>
             <MenuItem Header="PKG Reader (Viewer)" x:Name="OpenPKGReaderMenuItem"/>
             <MenuItem Header="PKG Sender" x:Name="OpenPKGSenderMenuItem"/>
+            <MenuItem Header="Port Checker" x:Name="OpenPortCheckerMenuItem"/>
             <MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem"/>
             <MenuItem Header="SELF Decrypter" x:Name="OpenSELFDecrypterMenuItem"/>
             <MenuItem Header="Simple Shortcut PKG Creator" x:Name="OpenShortcutPKGCreatorMenuItem"/>
@@ -119,16 +121,21 @@
         </MenuItem>
     </MenuItem>
     <MenuItem x:Name="WebManMenuItem" Header="webMAN for websrv">
-        <MenuItem Header="General">
-            <MenuItem Header="Open PS5 WebSrv Interface" x:Name="OpenPS5WebSrvInterface"/>
-            <MenuItem Header="Browse PS5 File System" x:Name="BrowsePS5FileSystem"/>
-            <MenuItem Header="Install or Remove Homebrew" x:Name="ManagePS5Homebrew"/>
-        </MenuItem>
-        <MenuItem Header="Game Utilities">
+        <TextBlock Text="Requires WebSrv running" FontWeight="Bold" TextDecorations="Underline"></TextBlock>
+        <MenuItem Header="Emulator Utilities">
             <MenuItem Header="Manage ROMs of Homebrew Emulators" x:Name="ManagePS5GameROMs"/>
         </MenuItem>
-        <MenuItem Header="Temperature Monitoring">
-            <MenuItem Header="Show system info on PS5" x:Name="ShowSystemInfoOnPS5"/>
+        <MenuItem Header="General Utilities">
+            <MenuItem Header="Open PS5 WebServer Interface" x:Name="OpenPS5WebSrvInterface"/>
+            <MenuItem Header="Browse PS5 File System" x:Name="BrowsePS5FileSystem"/>
+            <MenuItem Header="Manage installed Homebrew" x:Name="ManagePS5Homebrew"/>
+        </MenuItem>
+    </MenuItem>
+    <MenuItem x:Name="TelnetMenuItem" Header="Commands for shsrv">
+        <TextBlock Text="Requires ShSrv running" FontWeight="Bold" TextDecorations="Underline"></TextBlock>
+        <MenuItem Header="Read Console Information">
+            <MenuItem Header="Get Model, Serial Number, Software Version &amp; Temperatures" x:Name="GetConsoleInfo"/>
+            <MenuItem Header="Get AuthID" x:Name="GetAuthID"/>
         </MenuItem>
     </MenuItem>
     <MenuItem x:Name="DownloadsMenuItem" Header="Downloads">
@@ -236,6 +243,13 @@
         </MenuItem>
 
         <MenuItem Header="Payloads">
+            <MenuItem Header="Dump Runner by Echo Stretch">
+                <MenuItem Header="Download v0.01" x:Name="DownloadDumpRunner">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/download.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="ELFLdr by john-tornblom">
                 <MenuItem Header="Download v0.19" x:Name="DownloadELFLdr">
                     <MenuItem.Icon>
@@ -250,16 +264,6 @@
             </MenuItem>
             <MenuItem Header="etaHEN by LightningMods">
                 <MenuItem Header="Download v2.1b" x:Name="DownloadLatestetaHEN">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/download.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Download v2.0b" x:Name="DownloadetaHEN">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/download.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Download v2.0b (No Toolbox)" x:Name="DownloadetaHENNoToolbox">
                     <MenuItem.Icon>
                         <Image Source="/Images/download.png"/>
                     </MenuItem.Icon>

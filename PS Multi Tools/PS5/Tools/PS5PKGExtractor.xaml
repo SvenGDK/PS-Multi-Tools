@@ -1,0 +1,24 @@
+﻿<Window x:Class="PS5PKGExtractor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PS_Multi_Tools"
+        mc:Ignorable="d"
+        Title="PS5 PKG Extractor" Height="500" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ThemeMode="System">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Extract a PS5 PKG" VerticalAlignment="Top"  FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="NoWrap" Text="Select a .pkg file :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="NoWrap" Text="Enter the passcode :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="ExtractPasscodeTextBox" HorizontalAlignment="Left" Margin="165,110,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="510" MaxLength="32"/>
+        <TextBox x:Name="FileToExtractTextBox" HorizontalAlignment="Left" Margin="165,38,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="510"/>
+        <Button x:Name="BrowseFileToExtractButton" Content="Browse" HorizontalAlignment="Left" Margin="697,37,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="ExtractButton" Content="Extract" HorizontalAlignment="Left" Margin="697,108,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="NoWrap" Text="Extract to :" VerticalAlignment="Top"  FontSize="14"/>
+        <TextBox x:Name="ExtractToTextBox" HorizontalAlignment="Left" Margin="165,74,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="510"/>
+        <Button x:Name="BrowseExtractDestinationPathButton" Content="Browse" HorizontalAlignment="Left" Margin="697,73,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,281"  Text="Log :"  FontSize="14" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="ExtractionLogTextBox" Height="266" Margin="10,0,10,10" Width="780" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Window>

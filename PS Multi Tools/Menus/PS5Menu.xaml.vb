@@ -2,6 +2,7 @@
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Security.Authentication
+Imports System.Threading
 Imports FluentFTP
 Imports Microsoft.Web.WebView2.Core
 Imports Newtonsoft.Json
@@ -200,7 +201,7 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenGP5ManagerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenGP5ManagerMenuItem.Click
-        Dim NewGP5Creator As New GP5Creator() With {.PubToolsPath = Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe", .ShowActivated = True}
+        Dim NewGP5Creator As New GP5Creator() With {.ShowActivated = True}
         NewGP5Creator.Show()
     End Sub
 
@@ -220,20 +221,17 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenPKGBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGBuilderMenuItem.Click
-        Dim NewPKGBuilder As New PS5PKGBuilder() With {.PubToolsPath = Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe", .ShowActivated = True}
+        Dim NewPKGBuilder As New PS5PKGBuilder() With {.ShowActivated = True}
         NewPKGBuilder.Show()
+    End Sub
+
+    Private Sub OpenPKGExtractorMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPKGExtractorMenuItem.Click
+        Dim NewPS5PKGExtractor As New PS5PKGExtractor() With {.ShowActivated = True}
+        NewPS5PKGExtractor.Show()
     End Sub
 
     Private Sub OpenAudioConverterMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenAudioConverterMenuItem.Click
         Dim NewAudioConverter As New PS5AT9Converter() With {.ShowActivated = True}
-
-        If File.Exists(Environment.CurrentDirectory + "\Tools\PS5\at9tool.exe") Then
-            NewAudioConverter.AT9Tool = Environment.CurrentDirectory + "\Tools\PS5\at9tool.exe"
-        Else
-            NewAudioConverter.IsEnabled = False
-            MsgBox("Could not find the at9tool." + vbCrLf + "Please add it inside the 'Tools\PS5' folder inside PS Multi Tools.", MsgBoxStyle.Information, "at9tool not available")
-        End If
-
         NewAudioConverter.Show()
     End Sub
 
@@ -299,6 +297,11 @@ Public Class PS5Menu
         Else
             MsgBox("Please set your IP in the settings first.", MsgBoxStyle.Information, "Cannot connect to the PS5")
         End If
+    End Sub
+
+    Private Sub OpenPortCheckerMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPortCheckerMenuItem.Click
+        Dim NewPS5PortChecker As New PS5PortChecker() With {.ShowActivated = True, .PS5Host = SharedIPAddress}
+        NewPS5PortChecker.Show()
     End Sub
 
     Private Sub OpenPSClassicsfPKGBuilderMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenPSClassicsfPKGBuilderMenuItem.Click
@@ -466,6 +469,15 @@ Public Class PS5Menu
 
 #Region "Homebrew"
 
+    Private Async Sub DownloadDumpRunner_Click(sender As Object, e As RoutedEventArgs) Handles DownloadDumpRunner.Click
+        Dim NewDownloader As New Downloader() With {.ShowActivated = True}
+        NewDownloader.Show()
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/dump_runner.elf") = False Then
+            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
+            NewDownloader.Close()
+        End If
+    End Sub
+
     Private Async Sub DownloadAvatarChanger_Click(sender As Object, e As RoutedEventArgs) Handles DownloadAvatarChanger.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True}
         NewDownloader.Show()
@@ -550,7 +562,7 @@ Public Class PS5Menu
     Private Async Sub DownloadNewKStuff_Click(sender As Object, e As RoutedEventArgs) Handles DownloadNewKStuff.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_3xx-7xx_v1.5.elf") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff_v1.5.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -559,7 +571,7 @@ Public Class PS5Menu
     Private Async Sub DownloadKStuffToggle_Click(sender As Object, e As RoutedEventArgs) Handles DownloadKStuffToggle.Click
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff-toggle-0.2Beta.zip") = False Then
+        If Await NewDownloader.CreateNewDownload("http://X.X.X.X/ps5/hb/kstuff-toggle.elf") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -569,24 +581,6 @@ Public Class PS5Menu
         Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
         NewDownloader.Show()
         If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/2.1B/etaHEN.bin") = False Then
-            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
-            NewDownloader.Close()
-        End If
-    End Sub
-
-    Private Async Sub DownloadetaHEN_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHEN.Click
-        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
-        NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/2.0b/etaHEN-2.0b.bin") = False Then
-            MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
-            NewDownloader.Close()
-        End If
-    End Sub
-
-    Private Async Sub DownloadetaHENNoToolbox_Click(sender As Object, e As RoutedEventArgs) Handles DownloadetaHENNoToolbox.Click
-        Dim NewDownloader As New Downloader() With {.ShowActivated = True, .PackageConsole = "PS5"}
-        NewDownloader.Show()
-        If Await NewDownloader.CreateNewDownload("https://github.com/etaHEN/etaHEN/releases/download/2.0b/Payload.zip") = False Then
             MsgBox("Could not download the selected file.", MsgBoxStyle.Critical)
             NewDownloader.Close()
         End If
@@ -1052,10 +1046,6 @@ Public Class PS5Menu
         End If
     End Sub
 
-    Private Sub ShowSystemInfoOnPS5_Click(sender As Object, e As RoutedEventArgs) Handles ShowSystemInfoOnPS5.Click
-        MsgBox("Not ready yet.", MsgBoxStyle.Information)
-    End Sub
-
     Private Sub OpenPS5WebSrvInterface_Click(sender As Object, e As RoutedEventArgs) Handles OpenPS5WebSrvInterface.Click
         If Not String.IsNullOrEmpty(SharedIPAddress) Then
             Dim NewwebMANMODWebGUI As New PS5webMANBrowser() With {.ShowActivated = True, .WebMANWebSrvAddress = "http://" & SharedIPAddress + ":8080"}
@@ -1084,6 +1074,80 @@ Public Class PS5Menu
         Dim NewWebSrvHomebrewManager As New WebSrvHomebrewManager() With {.ShowActivated = True}
         NewWebSrvHomebrewManager.PS5IPTextBox.Text = SharedIPAddress
         NewWebSrvHomebrewManager.Show()
+    End Sub
+
+    Private Sub GetAuthID_Click(sender As Object, e As RoutedEventArgs) Handles GetAuthID.Click
+        Try
+            Dim NewTelnetClient As New TelnetClient(SharedIPAddress, 2323)
+
+            Thread.Sleep(20000) 'Wait 20sec until connected
+
+            'Get welcome message to check if connected successfully
+            Dim WelcomeMesssage As String = NewTelnetClient.Read()
+            If Not String.IsNullOrEmpty(WelcomeMesssage) Then
+
+                NewTelnetClient.Write("authid")
+
+                Thread.Sleep(500)
+
+                Dim RetrievedAuthID As String = NewTelnetClient.Read()
+                MsgBox("AuthID: ")
+            Else
+                MsgBox("ShSrv took to long to respond.", MsgBoxStyle.Critical, "Error reading output")
+                NewTelnetClient.Close()
+            End If
+
+            'Disconnect
+            NewTelnetClient.Close()
+        Catch ex As Exception
+            MsgBox("An error occurred: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub GetConsoleInfo_Click(sender As Object, e As RoutedEventArgs) Handles GetConsoleInfo.Click
+        Try
+            Dim NewTelnetClient As New TelnetClient(SharedIPAddress, 2323)
+
+            Thread.Sleep(20000) 'Wait 20sec until connected
+
+            'Get welcome message and split console information output to values
+            Dim WelcomeMesssage As String = NewTelnetClient.Read()
+            If Not String.IsNullOrEmpty(WelcomeMesssage) Then
+                Dim WelcomeData As New Dictionary(Of String, String)()
+                Dim SplittedLines() As String = WelcomeMesssage.Split(New String() {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
+
+                For Each Line As String In SplittedLines
+                    Dim LineParts() As String = Line.Split(":"c)
+                    If LineParts.Length >= 2 Then
+                        Dim DictKey As String = LineParts(0).Trim()
+                        Dim DictValue As String = LineParts(1).Trim()
+                        WelcomeData(DictKey) = DictValue
+                    End If
+                Next
+
+                Dim ConsoleModel As String = If(WelcomeData.ContainsKey("Model"), WelcomeData("Model"), String.Empty)
+                Dim ConsoleSerialNumber As String = If(WelcomeData.ContainsKey("S/N"), WelcomeData("S/N"), String.Empty)
+                Dim ConsoleSoftwareVersion As String = If(WelcomeData.ContainsKey("S/W"), WelcomeData("S/W"), String.Empty)
+                Dim ConsoleSoCTemp As String = If(WelcomeData.ContainsKey("SoC temp"), WelcomeData("SoC temp"), String.Empty)
+                Dim ConsoleCPUTemp As String = If(WelcomeData.ContainsKey("CPU temp"), WelcomeData("CPU temp"), String.Empty)
+                Dim ConsoleCPUFreq As String = If(WelcomeData.ContainsKey("CPU freq"), WelcomeData("CPU freq"), String.Empty)
+
+                MsgBox("Model Number: " & ConsoleModel & vbCrLf &
+                       "Serial Number: " & ConsoleSerialNumber & vbCrLf &
+                       "Software Version: " & ConsoleSoftwareVersion & vbCrLf &
+                       "SoC Temperature: " & ConsoleSoCTemp & vbCrLf &
+                       "CPU Temperature: " & ConsoleCPUTemp & vbCrLf &
+                       "CPU Frequency: " & ConsoleCPUFreq)
+            Else
+                MsgBox("ShSrv took to long to respond.", MsgBoxStyle.Critical, "Error reading output")
+                NewTelnetClient.Close()
+            End If
+
+            'Disconnect
+            NewTelnetClient.Close()
+        Catch ex As Exception
+            MsgBox("An error occurred: " & ex.Message)
+        End Try
     End Sub
 
 #End Region

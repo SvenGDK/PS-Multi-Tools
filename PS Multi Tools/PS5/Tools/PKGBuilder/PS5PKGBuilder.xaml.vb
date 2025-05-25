@@ -2,13 +2,12 @@
 
 Public Class PS5PKGBuilder
 
-    Public PubToolsPath As String
     Dim WithEvents PKGBuilder As New Process()
     Private Killed As Boolean = False
 
     Public Sub BuildPKG(ProjectPath As String, DestinationPath As String)
         PKGBuilder = New Process()
-        PKGBuilder.StartInfo.FileName = PubToolsPath
+        PKGBuilder.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"
         PKGBuilder.StartInfo.RedirectStandardOutput = True
         AddHandler PKGBuilder.OutputDataReceived, AddressOf OutputDataHandler
         PKGBuilder.StartInfo.UseShellExecute = False

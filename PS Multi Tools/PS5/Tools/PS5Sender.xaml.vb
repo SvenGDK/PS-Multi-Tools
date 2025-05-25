@@ -165,6 +165,9 @@ Public Class PS5Sender
                 Else
                     SenderWorker.RunWorkerAsync(New WorkerArgs() With {.DeviceIP = DeviceIP, .FileToSend = SelectedPayload, .ChunkSize = 4096})
                 End If
+
+                'Reset selected combobox item
+                DownloadedPayloadsComboBox.SelectedItem = Nothing
             Else
                 MsgBox("No IP address was entered." + vbCrLf + "Please enter an IP address.", MsgBoxStyle.Exclamation, "No IP address")
             End If

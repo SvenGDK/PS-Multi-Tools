@@ -24,6 +24,10 @@
     Private _GameBackupType As String
     Private _GameLocation As Location
     Private _GameRootLocation As RootLocation
+    Private _GameMasterVersion As String
+    Private _GameSDKVersion As String
+    Private _GamePubToolVersion As String
+    Private _GameVersionFileURI As String
 
     Public Enum Location
         Remote
@@ -248,6 +252,42 @@
         End Get
         Set
             _GameRootLocation = Value
+        End Set
+    End Property
+
+    Public Property GameMasterVersion As String
+        Get
+            Return _GameMasterVersion
+        End Get
+        Set
+            _GameMasterVersion = Value
+        End Set
+    End Property
+
+    Public Property GameSDKVersion As String
+        Get
+            Return _GameSDKVersion
+        End Get
+        Set
+            _GameSDKVersion = Value
+        End Set
+    End Property
+
+    Public Property GamePubToolVersion As String
+        Get
+            Return _GamePubToolVersion
+        End Get
+        Set
+            _GamePubToolVersion = Value
+        End Set
+    End Property
+
+    Public Property GameVersionFileURI As String
+        Get
+            Return _GameVersionFileURI
+        End Get
+        Set
+            _GameVersionFileURI = Value
         End Set
     End Property
 

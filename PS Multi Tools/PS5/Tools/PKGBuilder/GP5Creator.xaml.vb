@@ -3,38 +3,11 @@ Imports System.Windows.Forms
 
 Public Class GP5Creator
 
-    Public PubToolsPath As String = Nothing
-
-    Private Sub BrowseSavePathButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseSavePathButton.Click
-        Dim SFD As New SaveFileDialog() With {.Title = "Save your project.", .Filter = "GP5 Files (*.gp5)|*.gp5", .DefaultExt = ".gp5", .AddExtension = True, .SupportMultiDottedExtensions = False}
-        If SFD.ShowDialog() = Forms.DialogResult.OK Then
-            SaveToTextBox.Text = SFD.FileName
-        End If
-    End Sub
-
-    Private Sub CreateParamButton_Click(sender As Object, e As RoutedEventArgs) Handles CreateParamButton.Click
-        Dim NewParamEditor As New PS5ParamEditor() With {.ShowActivated = True}
-        NewParamEditor.Show()
-    End Sub
-
-    Private Sub BrowseFileToExtractButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseFileToExtractButton.Click
-        Dim OFD As New OpenFileDialog() With {.Filter = "PKG Files (*.pkg)|*.pkg", .Multiselect = False, .Title = "Select a .pkg file created for PS5."}
-        If OFD.ShowDialog() = Forms.DialogResult.OK Then
-            FileToExtractTextBox.Text = OFD.FileName
-        End If
-    End Sub
-
-    Private Sub BrowseExtractDestinationPathButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseExtractDestinationPathButton.Click
-        Dim FBD As New FolderBrowserDialog() With {.Description = "Select a destination path for the extraction", .ShowNewFolderButton = True}
-        If FBD.ShowDialog() = Forms.DialogResult.OK Then
-            ExtractToTextBox.Text = FBD.SelectedPath
-        End If
-    End Sub
-
     Private Sub BrowseFileSourcePathButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseFileSourcePathButton.Click
         Dim OFD As New OpenFileDialog() With {.Multiselect = False, .Title = "Select a file."}
         If OFD.ShowDialog() = Forms.DialogResult.OK Then
             FileFolderSourcePathTextBox.Text = OFD.FileName
+            FileFolderDestinationPathTextBox.Text = "\" & Path.GetFileName(OFD.FileName)
         End If
     End Sub
 
@@ -42,26 +15,8 @@ Public Class GP5Creator
         Dim FBD As New FolderBrowserDialog() With {.Description = "Select a folder"}
         If FBD.ShowDialog() = Forms.DialogResult.OK Then
             FileFolderSourcePathTextBox.Text = FBD.SelectedPath
+            FileFolderDestinationPathTextBox.Text = "\" & Path.GetDirectoryName(FBD.SelectedPath)
         End If
-    End Sub
-
-    Private Sub CreateProjectButton_Click(sender As Object, e As RoutedEventArgs) Handles CreateProjectButton.Click
-        Try
-            Dim DateAndTime As String = Date.Now.ToString("yyyy-MM-dd")
-
-            Using PubCMD As New Process()
-                PubCMD.StartInfo.FileName = PubToolsPath
-                PubCMD.StartInfo.Arguments = "gp5_proj_create --volume_type prospero_app --passcode " + PasscodeTextBox.Text + " --c_date " + DateAndTime + " """ + SaveToTextBox.Text + """"
-                PubCMD.StartInfo.UseShellExecute = False
-                PubCMD.StartInfo.CreateNoWindow = True
-                PubCMD.Start()
-            End Using
-
-            MsgBox("New gp5 project created at " + SaveToTextBox.Text, MsgBoxStyle.Information)
-        Catch ex As Exception
-            MsgBox("Could not create a gp5 project.", MsgBoxStyle.Critical, "Error")
-            MsgBox(ex.Message)
-        End Try
     End Sub
 
     Private Sub AddToChunkButton_Click(sender As Object, e As RoutedEventArgs) Handles AddToChunkButton.Click
@@ -74,7 +29,7 @@ Public Class GP5Creator
 
                         Try
                             Using PubCMD As New Process()
-                                PubCMD.StartInfo.FileName = PubToolsPath
+                                PubCMD.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"
 
                                 If Path.HasExtension(FileFolderSourcePathTextBox.Text) Then
                                     ChunkLvItem.ChunkType = "File"
@@ -90,7 +45,6 @@ Public Class GP5Creator
                             End Using
 
                             ChunkFilesFolderListView.Items.Add(ChunkLvItem)
-                            'ListOfChunks.Add(SelectedChunkTextBox.Text, ChunkLvItem)
 
                             MsgBox(FileFolderSourcePathTextBox.Text + " added.", MsgBoxStyle.Information, "Project updated")
                         Catch ex As Exception
@@ -112,47 +66,57 @@ Public Class GP5Creator
         End If
     End Sub
 
-    Private Sub ExtractButton_Click(sender As Object, e As RoutedEventArgs) Handles ExtractButton.Click
-        If Not String.IsNullOrEmpty(FileToExtractTextBox.Text) Then
-            If Not String.IsNullOrEmpty(ExtractPasscodeTextBox.Text) Then
-                If Not String.IsNullOrEmpty(ExtractToTextBox.Text) Then
-
-                    Try
-                        Using PubCMD As New Process()
-                            PubCMD.StartInfo.FileName = PubToolsPath
-                            PubCMD.StartInfo.Arguments = "img_extract --passcode " + ExtractPasscodeTextBox.Text + " """ + FileToExtractTextBox.Text + """ """ + ExtractToTextBox.Text + """"
-                            PubCMD.StartInfo.UseShellExecute = False
-                            PubCMD.StartInfo.CreateNoWindow = True
-                            PubCMD.Start()
-                        End Using
-
-                    Catch ex As Exception
-                        MsgBox("Could not extract the selected pkg file.", MsgBoxStyle.Critical, "Error")
-                        MsgBox(ex.Message)
-                    End Try
-
-                Else
-                    MsgBox("No destionation path set.", MsgBoxStyle.Exclamation)
-                End If
-            Else
-                MsgBox("No passcode entered.", MsgBoxStyle.Exclamation)
+    Private Sub NewGP5ProjectMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles NewGP5ProjectMenuItem.Click
+        Try
+            Dim SFD As New SaveFileDialog() With {.Title = "Select a save destination your GP5 project.", .Filter = "GP5 Files (*.gp5)|*.gp5", .DefaultExt = ".gp5", .AddExtension = True, .SupportMultiDottedExtensions = False}
+            If SFD.ShowDialog() = Forms.DialogResult.OK Then
+                SaveToTextBox.Text = SFD.FileName
             End If
-        Else
-            MsgBox("No pkg for extraction selected.", MsgBoxStyle.Exclamation)
+
+            Dim DateAndTime As String = Date.Now.ToString("yyyy-MM-dd")
+            Using PubCMD As New Process()
+                PubCMD.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\PS5\prospero-pub-cmd.exe"
+                PubCMD.StartInfo.Arguments = "gp5_proj_create --volume_type prospero_app --passcode " + PasscodeTextBox.Text + " --c_date " + DateAndTime + " """ + SFD.FileName + """"
+                PubCMD.StartInfo.UseShellExecute = False
+                PubCMD.StartInfo.CreateNoWindow = True
+                PubCMD.Start()
+                PubCMD.WaitForExit()
+            End Using
+
+            MsgBox("New gp5 project created at " + SaveToTextBox.Text, MsgBoxStyle.Information)
+        Catch ex As Exception
+            MsgBox("Could not create a gp5 project.", MsgBoxStyle.Critical, "Error")
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub LoadGP5ProjectMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles LoadGP5ProjectMenuItem.Click
+        Dim SFD As New SaveFileDialog() With {.Title = "Save your project.", .Filter = "GP5 Files (*.gp5)|*.gp5", .DefaultExt = ".gp5", .AddExtension = True, .SupportMultiDottedExtensions = False}
+        If SFD.ShowDialog() = Forms.DialogResult.OK Then
+            SaveToTextBox.Text = SFD.FileName
         End If
     End Sub
 
-    Private Sub BuildPKGButton_Click(sender As Object, e As RoutedEventArgs) Handles BuildPKGButton.Click
-        Dim NewPKGBuilder As New PS5PKGBuilder() With {.PubToolsPath = PubToolsPath}
-        If Not String.IsNullOrEmpty(SaveToTextBox.Text) Then
-            NewPKGBuilder.SelectedProjectTextBox.Text = SaveToTextBox.Text
-        End If
-        NewPKGBuilder.Show()
+#Region "Quick Tools"
+
+    Private Sub CreateParamButton_Click(sender As Object, e As RoutedEventArgs) Handles CreateParamButton.Click
+        Dim NewParamEditor As New PS5ParamEditor() With {.ShowActivated = True}
+        NewParamEditor.Show()
     End Sub
 
     Private Sub CreateManifestButton_Click(sender As Object, e As RoutedEventArgs) Handles CreateManifestButton.Click
         Dim NewManifestEditor As New PS5ManifestEditor() With {.ShowActivated = True}
         NewManifestEditor.Show()
     End Sub
+
+    Private Sub BuildPKGButton_Click(sender As Object, e As RoutedEventArgs) Handles BuildPKGButton.Click
+        Dim NewPKGBuilder As New PS5PKGBuilder() With {.ShowActivated = True}
+        If Not String.IsNullOrEmpty(SaveToTextBox.Text) Then
+            NewPKGBuilder.SelectedProjectTextBox.Text = SaveToTextBox.Text
+        End If
+        NewPKGBuilder.Show()
+    End Sub
+
+#End Region
 
 End Class
