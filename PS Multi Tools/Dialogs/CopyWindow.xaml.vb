@@ -18,7 +18,6 @@ Public Class CopyWindow
     End Structure
 
     Private Sub CopyWindow_ContentRendered(sender As Object, e As EventArgs) Handles Me.ContentRendered
-
         If GameIcon IsNot Nothing Then
             GameIconImage.Source = GameIcon
         End If

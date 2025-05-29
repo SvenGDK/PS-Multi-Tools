@@ -5,6 +5,8 @@ Public Class BINCUEConverter
 
     Public ConvertForPS1 As Boolean = False
     Public NewBaseName As String = ""
+    Dim CUEFile As String = ""
+    Dim BINFile As String = ""
 
     Private Sub BINCUEConverter_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If ConvertForPS1 Then
@@ -15,7 +17,24 @@ Public Class BINCUEConverter
     Private Sub BrowseCueButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseCueButton.Click
         Dim OFD As New OpenFileDialog() With {.CheckFileExists = True, .Filter = "CUE files (*.cue)|*.cue", .Multiselect = False}
         If OFD.ShowDialog() = Forms.DialogResult.OK Then
+
             SelectedCueTextBox.Text = OFD.FileName
+            CUEFile = OFD.FileName
+            NewBaseName = Path.GetFileNameWithoutExtension(CUEFile)
+
+            Dim CheckForBinFile As String = Path.GetDirectoryName(OFD.FileName) + "\" + Path.GetFileNameWithoutExtension(OFD.FileName) + ".bin"
+            If File.Exists(CheckForBinFile) Then
+                SelectedBinTextBox.Text = CheckForBinFile
+                BINFile = CheckForBinFile
+            End If
+        End If
+    End Sub
+
+    Private Sub BrowseBinButton_Click(sender As Object, e As RoutedEventArgs) Handles BrowseBinButton.Click
+        Dim OFD As New OpenFileDialog() With {.CheckFileExists = True, .Filter = "BIN files (*.bin)|*.bin", .Multiselect = False}
+        If OFD.ShowDialog() = Forms.DialogResult.OK Then
+            SelectedBinTextBox.Text = OFD.FileName
+            BINFile = OFD.FileName
         End If
     End Sub
 
@@ -27,13 +46,6 @@ Public Class BINCUEConverter
             Else
                 LogTextBox.Clear()
             End If
-
-            Dim CUEFile As String = SelectedCueTextBox.Text
-            Dim BINFile As String = Path.GetDirectoryName(SelectedCueTextBox.Text) + "\" + Path.GetFileNameWithoutExtension(SelectedCueTextBox.Text) + ".bin"
-
-            MsgBox(BINFile)
-
-            NewBaseName = Path.GetFileNameWithoutExtension(SelectedCueTextBox.Text)
 
             'Create Converted folder if not exists
             If Not Directory.Exists(Environment.CurrentDirectory + "\Converted") Then
@@ -85,7 +97,6 @@ Public Class BINCUEConverter
                     If MsgBox("Converted ! Do you want the open the folder containing the new ISO file ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
                         Process.Start("explorer", Environment.CurrentDirectory + "\Converted\ISO")
                     End If
-
                 Else
                     If MsgBox("Converted, but the file could not be found. Do you want to check the Tools folder ?", MsgBoxStyle.YesNo, "Completed") = MsgBoxResult.Yes Then
                         Process.Start("explorer", Environment.CurrentDirectory + "\Tools")
@@ -95,6 +106,5 @@ Public Class BINCUEConverter
 
         End If
     End Sub
-
 
 End Class

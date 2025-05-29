@@ -527,6 +527,69 @@ Public Class Structures
         End Property
     End Structure
 
+    Public Structure FTPListViewItem
+        Private _FileOrDirName As String
+        Private _FileOrDirType As String
+        Private _FileOrDirLastModified As String
+        Private _FileOrDirPermissions As String
+        Private _FileOrDirOwner As String
+        Private _FileOrDirSize As String
+
+        Public Property FileOrDirName As String
+            Get
+                Return _FileOrDirName
+            End Get
+            Set
+                _FileOrDirName = Value
+            End Set
+        End Property
+
+        Public Property FileOrDirType As String
+            Get
+                Return _FileOrDirType
+            End Get
+            Set
+                _FileOrDirType = Value
+            End Set
+        End Property
+
+        Public Property FileOrDirSize As String
+            Get
+                Return _FileOrDirSize
+            End Get
+            Set
+                _FileOrDirSize = Value
+            End Set
+        End Property
+
+        Public Property FileOrDirLastModified As String
+            Get
+                Return _FileOrDirLastModified
+            End Get
+            Set
+                _FileOrDirLastModified = Value
+            End Set
+        End Property
+
+        Public Property FileOrDirPermissions As String
+            Get
+                Return _FileOrDirPermissions
+            End Get
+            Set
+                _FileOrDirPermissions = Value
+            End Set
+        End Property
+
+        Public Property FileOrDirOwner As String
+            Get
+                Return _FileOrDirOwner
+            End Get
+            Set
+                _FileOrDirOwner = Value
+            End Set
+        End Property
+    End Structure
+
 End Class
 
 Public Class PS5ParamClass

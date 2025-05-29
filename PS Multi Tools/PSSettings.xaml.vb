@@ -68,8 +68,8 @@ Public Class PSSettings
             If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Tools", "IP")) Then
                 PS5IPTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "IP")
             End If
-            If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Tools", "Port")) Then
-                PS5FTPPortTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "Port")
+            If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Tools", "FTPPort")) Then
+                PS5FTPPortTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "FTPPort")
             End If
             If Not String.IsNullOrEmpty(MainConfig.IniReadValue("PS5 Tools", "PayloadPort")) Then
                 PS5PayloadPortTextBox.Text = MainConfig.IniReadValue("PS5 Tools", "PayloadPort")

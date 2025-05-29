@@ -807,15 +807,13 @@ Public Class PS3Menu
     Private Sub DownloadPKGFromURLToPS3_Click(sender As Object, e As RoutedEventArgs) Handles DownloadPKGFromURLToPS3.Click
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             If IswebMANMODWebViewReady AndAlso IswebMANMODCommandExecuted Then
-                Dim NewInputDialog As New InputDialog With {
-                    .Title = "Download a PKG to the PS3",
-                    .NewValueTextBox_Text = "",
-                    .InputDialogTitleTextBlock_Text = "Enter the PKG URL :",
-                    .ConfirmButton_Text = "Download"
-                }
+                Dim NewInputDialog As New InputDialog With {.Title = "Download a PKG to the PS3"}
+                NewInputDialog.NewValueTextBox.Text = ""
+                NewInputDialog.InputDialogTitleTextBlock.Text = "Enter the PKG URL :"
+                NewInputDialog.ConfirmButton.Content = "Download"
 
                 If NewInputDialog.ShowDialog() = True Then
-                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox_Text
+                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox.Text
                     IswebMANMODCommandExecuted = False
                     WebMANWebView.CoreWebView2.Navigate("http://" & SharedConsoleAddress.Split(":"c)(0) & "/xmb.ps3/download.ps3?url=" + InputDialogResult)
                 End If
@@ -830,23 +828,19 @@ Public Class PS3Menu
     Private Sub DownloadFileFromURLToPS3_Click(sender As Object, e As RoutedEventArgs) Handles DownloadFileFromURLToPS3.Click
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             If IswebMANMODWebViewReady AndAlso IswebMANMODCommandExecuted Then
-                Dim NewURLInputDialog As New InputDialog With {
-                    .Title = "Download a file to the PS3",
-                    .NewValueTextBox_Text = "",
-                    .InputDialogTitleTextBlock_Text = "Enter the file URL :",
-                    .ConfirmButton_Text = "Download"
-                }
+                Dim NewURLInputDialog As New InputDialog With {.Title = "Download a file to the PS3"}
+                NewURLInputDialog.NewValueTextBox.Text = ""
+                NewURLInputDialog.InputDialogTitleTextBlock.Text = "Enter the file URL :"
+                NewURLInputDialog.ConfirmButton.Content = "Download"
 
-                Dim NewDestinationInputDialog As New InputDialog With {
-                    .Title = "Download Destination",
-                    .NewValueTextBox_Text = "/dev_hdd0/FOLDER/FILENAME.EXTENSION",
-                    .InputDialogTitleTextBlock_Text = "Enter the destination path :",
-                    .ConfirmButton_Text = "Confirm"
-                }
+                Dim NewDestinationInputDialog As New InputDialog With {.Title = "Download Destination"}
+                NewDestinationInputDialog.NewValueTextBox.Text = "/dev_hdd0/FOLDER/FILENAME.EXTENSION"
+                NewDestinationInputDialog.InputDialogTitleTextBlock.Text = "Enter the destination path :"
+                NewDestinationInputDialog.ConfirmButton.Content = "Confirm"
 
                 If NewURLInputDialog.ShowDialog() = True AndAlso NewDestinationInputDialog.ShowDialog() = True Then
-                    Dim NewURLInputDialogResult As String = NewURLInputDialog.NewValueTextBox_Text
-                    Dim NewDestinationInputDialogResult As String = NewDestinationInputDialog.NewValueTextBox_Text
+                    Dim NewURLInputDialogResult As String = NewURLInputDialog.NewValueTextBox.Text
+                    Dim NewDestinationInputDialogResult As String = NewDestinationInputDialog.NewValueTextBox.Text
 
                     IswebMANMODCommandExecuted = False
                     WebMANWebView.CoreWebView2.Navigate("http://" & SharedConsoleAddress.Split(":"c)(0) & "/xmb.ps3/download.ps3?to=" + NewDestinationInputDialogResult + "&url=" + NewURLInputDialogResult)
@@ -862,15 +856,13 @@ Public Class PS3Menu
     Private Sub DownloadAndInstallPKGFromURL_Click(sender As Object, e As RoutedEventArgs) Handles DownloadAndInstallPKGFromURL.Click
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             If IswebMANMODWebViewReady AndAlso IswebMANMODCommandExecuted Then
-                Dim NewInputDialog As New InputDialog With {
-                    .Title = "Download & Install a PKG on the PS3",
-                    .NewValueTextBox_Text = "",
-                    .InputDialogTitleTextBlock_Text = "Enter the PKG URL :",
-                    .ConfirmButton_Text = "Install"
-                }
+                Dim NewInputDialog As New InputDialog With {.Title = "Download & Install a PKG on the PS3"}
+                NewInputDialog.NewValueTextBox.Text = ""
+                NewInputDialog.InputDialogTitleTextBlock.Text = "Enter the PKG URL :"
+                NewInputDialog.ConfirmButton.Content = "Install"
 
                 If NewInputDialog.ShowDialog() = True Then
-                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox_Text
+                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox.Text
                     IswebMANMODCommandExecuted = False
                     WebMANWebView.CoreWebView2.Navigate("http://" & SharedConsoleAddress.Split(":"c)(0) & "/xmb.ps3/install.ps3?url=" + InputDialogResult)
                 End If
@@ -911,15 +903,13 @@ Public Class PS3Menu
     Private Sub InstallPKGFromPS3HDD_Click(sender As Object, e As RoutedEventArgs) Handles InstallPKGFromPS3HDD.Click
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             If IswebMANMODWebViewReady AndAlso IswebMANMODCommandExecuted Then
-                Dim NewInputDialog As New InputDialog With {
-                    .Title = "Install a PKG",
-                    .NewValueTextBox_Text = "/dev_hdd0/packages/Homebrew.pkg",
-                    .InputDialogTitleTextBlock_Text = "Enter the full path to the .pkg file:",
-                    .ConfirmButton_Text = "Install"
-                }
+                Dim NewInputDialog As New InputDialog With {.Title = "Install a PKG"}
+                NewInputDialog.NewValueTextBox.Text = "/dev_hdd0/packages/Homebrew.pkg"
+                NewInputDialog.InputDialogTitleTextBlock.Text = "Enter the full path to the .pkg file:"
+                NewInputDialog.ConfirmButton.Content = "Install"
 
                 If NewInputDialog.ShowDialog() = True Then
-                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox_Text
+                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox.Text
                     IswebMANMODCommandExecuted = False
                     WebMANWebView.CoreWebView2.Navigate("http://" & SharedConsoleAddress.Split(":"c)(0) & "/install_ps3" + InputDialogResult)
                 End If
@@ -934,15 +924,13 @@ Public Class PS3Menu
     Private Sub InstallThemeFromPS3HDD_Click(sender As Object, e As RoutedEventArgs) Handles InstallThemeFromPS3HDD.Click
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             If IswebMANMODWebViewReady AndAlso IswebMANMODCommandExecuted Then
-                Dim NewInputDialog As New InputDialog With {
-                    .Title = "Install a Theme",
-                    .NewValueTextBox_Text = "/dev_hdd0/Themes/THEME.p3t",
-                    .InputDialogTitleTextBlock_Text = "Enter the full path to the .p3t file:",
-                    .ConfirmButton_Text = "Install"
-                }
+                Dim NewInputDialog As New InputDialog With {.Title = "Install a Theme"}
+                NewInputDialog.NewValueTextBox.Text = "/dev_hdd0/Themes/THEME.p3t"
+                NewInputDialog.InputDialogTitleTextBlock.Text = "Enter the full path to the .p3t file:"
+                NewInputDialog.ConfirmButton.Content = "Install"
 
                 If NewInputDialog.ShowDialog() = True Then
-                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox_Text
+                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox.Text
                     IswebMANMODCommandExecuted = False
                     WebMANWebView.CoreWebView2.Navigate("http://" & SharedConsoleAddress.Split(":"c)(0) & "/install.ps3" + InputDialogResult)
                 End If
@@ -957,20 +945,16 @@ Public Class PS3Menu
     Private Sub OpenPS3WebBrowserURL_Click(sender As Object, e As RoutedEventArgs) Handles OpenPS3WebBrowserURL.Click
         If Not String.IsNullOrEmpty(SharedConsoleAddress) Then
             If IswebMANMODWebViewReady AndAlso IswebMANMODCommandExecuted Then
-
-                Dim NewInputDialog As New InputDialog With {
-                    .Title = "Open PS3 Web Browser with URL",
-                    .NewValueTextBox_Text = "",
-                    .InputDialogTitleTextBlock_Text = "Enter an URL to browse :",
-                    .ConfirmButton_Text = "Open"
-                }
+                Dim NewInputDialog As New InputDialog With {.Title = "Open PS3 Web Browser with URL"}
+                NewInputDialog.NewValueTextBox.Text = ""
+                NewInputDialog.InputDialogTitleTextBlock.Text = "Enter an URL to browse :"
+                NewInputDialog.ConfirmButton.Content = "Open"
 
                 If NewInputDialog.ShowDialog() = True Then
                     IswebMANMODCommandExecuted = False
-                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox_Text
+                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox.Text
                     WebMANWebView.CoreWebView2.Navigate("http://" & SharedConsoleAddress.Split(":"c)(0) & "/browser.ps3?" + InputDialogResult)
                 End If
-
             Else
                 MsgBox("Please wait a couple seconds until WebView2 is ready.", MsgBoxStyle.Information, "webMAN MOD not ready")
             End If

@@ -528,7 +528,7 @@ Public Class PS5PayloadBuilder
                                             Using ArchiveExtractor As New Process()
                                                 ArchiveExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
                                                 ArchiveExtractor.StartInfo.Arguments = "x """ + Environment.CurrentDirectory + "\Downloads\ps5-self-decrypter-payload.zip""" +
-                                                " -o""" + Environment.CurrentDirectory + "\Downloads\" + """"
+                                                " -o""" + Environment.CurrentDirectory + "\Downloads\" + """ -y"
                                                 ArchiveExtractor.StartInfo.UseShellExecute = False
                                                 ArchiveExtractor.StartInfo.CreateNoWindow = True
                                                 ArchiveExtractor.Start()
@@ -757,7 +757,7 @@ Public Class PS5PayloadBuilder
                                                 Using ArchiveExtractor As New Process()
                                                     ArchiveExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
                                                     ArchiveExtractor.StartInfo.Arguments = "x """ + Environment.CurrentDirectory + "\Downloads\app_title_payload.zip""" +
-                                                        " -o""" + Environment.CurrentDirectory + "\Downloads\" + """"
+                                                        " -o""" + Environment.CurrentDirectory + "\Downloads\" + """ -y"
                                                     ArchiveExtractor.StartInfo.UseShellExecute = False
                                                     ArchiveExtractor.StartInfo.CreateNoWindow = True
                                                     ArchiveExtractor.Start()

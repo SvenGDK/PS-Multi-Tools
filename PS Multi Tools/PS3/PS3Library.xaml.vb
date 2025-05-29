@@ -1043,15 +1043,13 @@ Public Class PS3Library
                     Dim NewGameLoaderArgs As New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = ConsoleIP, .FolderPath = String.Empty}
                     ProcessBackups(NewGameLoaderArgs)
                 Else
-                    Dim NewInputDialog As New InputDialog With {
-                    .Title = "Enter PS3 IP Address",
-                    .NewValueTextBox_Text = "0.0.0.0",
-                    .InputDialogTitleTextBlock_Text = "Please enter your PS3 IP address :",
-                    .ConfirmButton_Text = "Confirm"
-                }
+                    Dim NewInputDialog As New InputDialog With {.Title = "Enter PS3 IP Address"}
+                    NewInputDialog.NewValueTextBox.Text = "0.0.0.0"
+                    NewInputDialog.InputDialogTitleTextBlock.Text = "Please enter your PS3 IP address :"
+                    NewInputDialog.ConfirmButton.Content = "Confirm"
 
                     If NewInputDialog.ShowDialog() = True Then
-                        Dim InputDialogResult As String = NewInputDialog.NewValueTextBox_Text
+                        Dim InputDialogResult As String = NewInputDialog.NewValueTextBox.Text
 
                         'Show the loading progress window
                         NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS3 files", .ShowActivated = True}
@@ -1077,15 +1075,13 @@ Public Class PS3Library
                 Dim NewGameLoaderArgs As New GameLoaderArgs() With {.Type = LoadType.FTP, .ConsoleIP = ConsoleIP, .FolderPath = String.Empty}
                 ProcessBackups(NewGameLoaderArgs)
             Else
-                Dim NewInputDialog As New InputDialog With {
-                .Title = "Enter PS3 IP Address",
-                .NewValueTextBox_Text = "0.0.0.0",
-                .InputDialogTitleTextBlock_Text = "Please enter your PS3 IP address :",
-                .ConfirmButton_Text = "Confirm"
-            }
+                Dim NewInputDialog As New InputDialog With {.Title = "Enter PS3 IP Address"}
+                NewInputDialog.NewValueTextBox.Text = "0.0.0.0"
+                NewInputDialog.InputDialogTitleTextBlock.Text = "Please enter your PS3 IP address :"
+                NewInputDialog.ConfirmButton.Content = "Confirm"
 
                 If NewInputDialog.ShowDialog() = True Then
-                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox_Text
+                    Dim InputDialogResult As String = NewInputDialog.NewValueTextBox.Text
 
                     'Show the loading progress window
                     NewLoadingWindow = New SyncWindow() With {.Title = "Loading PS3 files", .ShowActivated = True}

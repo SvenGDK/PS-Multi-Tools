@@ -90,7 +90,7 @@ Public Class PS5Menu
     Private Sub FTPPortTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles FTPPortTextBox.TextChanged
         If Not String.IsNullOrEmpty(FTPPortTextBox.Text) Then
             SharedFTPPort = FTPPortTextBox.Text
-            RaiseIPTextChangedRoutedEvent()
+            RaiseFTPPortChangedRoutedEvent()
         End If
     End Sub
 
@@ -131,9 +131,9 @@ Public Class PS5Menu
     End Sub
 
     Private Sub OpenFTPBrowserMenuItem_Click(sender As Object, e As RoutedEventArgs) Handles OpenFTPBrowserMenuItem.Click
-        Dim NewFTPBrowser As New FTPBrowser() With {.ShowActivated = True, .FTPS5Mode = True}
-        NewFTPBrowser.ConsoleIPTextBox.Text = SharedIPAddress
-        NewFTPBrowser.PortTextBox.Text = SharedFTPPort
+        Dim NewFTPBrowser As New FTPBrowser() With {.ShowActivated = True}
+        NewFTPBrowser.ConsoleIP = SharedIPAddress
+        NewFTPBrowser.ConsoleFTPPort = SharedFTPPort
         NewFTPBrowser.Show()
     End Sub
 

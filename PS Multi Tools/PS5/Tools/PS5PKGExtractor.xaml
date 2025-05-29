@@ -19,6 +19,7 @@
         <Button x:Name="BrowseExtractDestinationPathButton" Content="Browse" HorizontalAlignment="Left" Margin="697,73,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,0,0,281"  Text="Log :"  FontSize="14" VerticalAlignment="Bottom"/>
         <TextBox x:Name="ExtractionLogTextBox" Height="266" Margin="10,0,10,10" Width="780" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="UsePKGDec5CheckBox" Content="Use pkgdec5" HorizontalAlignment="Left" Margin="580,141,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

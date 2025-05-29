@@ -237,7 +237,7 @@ Public Class Downloader
                             Using ArchiveExtractor As New Process()
                                 ArchiveExtractor.StartInfo.FileName = Environment.CurrentDirectory + "\Tools\7z.exe"
                                 ArchiveExtractor.StartInfo.Arguments = "x """ + Environment.CurrentDirectory + "\Downloads\" + DownloadFileName + """" +
-                                    " -o""" + Environment.CurrentDirectory + "\Downloads\" + """"
+                                    " -o""" + Environment.CurrentDirectory + "\Downloads\" + """ -y"
                                 ArchiveExtractor.StartInfo.UseShellExecute = False
                                 ArchiveExtractor.StartInfo.CreateNoWindow = True
                                 ArchiveExtractor.Start()

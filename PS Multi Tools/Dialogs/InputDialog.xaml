@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PS_Multi_Tools"
              mc:Ignorable="d" 
-             Title="Please enter a new value" Height="130" Width="340" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ThemeMode="System">
+             Title="Please enter a new value" Height="150" Width="340" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ThemeMode="System">
     <Grid>
-        <TextBox x:Name="NewValueTextBox" HorizontalAlignment="Left" Margin="8,34,0,0" VerticalAlignment="Top" Width="300"/>
+        <TextBox x:Name="NewValueTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="300"/>
         <TextBlock x:Name="InputDialogTitleTextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Enter a new value :" VerticalAlignment="Top"  FontSize="14"/>
-        <Button x:Name="ConfirmButton" Content="Confirm" HorizontalAlignment="Left" Margin="208,65,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="ConfirmButton" Content="Confirm" HorizontalAlignment="Left" Margin="210,66,0,0" VerticalAlignment="Top" Width="100"/>
 
     </Grid>
 </Window>

@@ -8,12 +8,12 @@
     <UseWindowsForms>True</UseWindowsForms>
 	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <OptionStrict>On</OptionStrict>
-    <AssemblyVersion>15.5.1.0</AssemblyVersion>
-    <FileVersion>15.5.1.0</FileVersion>
+    <AssemblyVersion>15.6.0.0</AssemblyVersion>
+    <FileVersion>15.6.0.0</FileVersion>
     <ApplicationIcon>psicon.ico</ApplicationIcon>
 	<NoWarn>$(NoWarn);MSB3270</NoWarn>
 	<Title>PS Multi Tools</Title>
-	<Version>15.5.1</Version>
+	<Version>15.6.0</Version>
 	<Company>SvenGDK</Company>
 	<Copyright>Copyright © SvenGDK 2011-2025</Copyright>
 	<Product>PS Multi Tools</Product>
@@ -278,6 +278,9 @@
   <ItemGroup>
     <Reference Include="BigInteger">
       <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\BigInteger.dll</HintPath>
+    </Reference>
+    <Reference Include="EndianIOExtension">
+      <HintPath>..\..\EndianIOExtension\EndianIOExtension\bin\Release\net8.0-windows\EndianIOExtension.dll</HintPath>
     </Reference>
     <Reference Include="GameArchives">
       <HintPath>..\..\..\..\Desktop\PS Multi Tools v14.5\GameArchives.dll</HintPath>
