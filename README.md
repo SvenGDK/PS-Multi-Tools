@@ -123,7 +123,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - MANIFEST.JSON & PARAM.JSON File Creator & Editor
 - Mast1c0re ELF Payload & PS2 ISO Sender
 - Payload Builder
-  - Build paylods like SELF Decryptor & AppTitles with custom settings
+  - Build payloads like SELF Decryptor & AppTitles with custom settings
 - PKG Builder
 - PKG Merger
 - PKG Extractor
@@ -133,7 +133,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
   - Checks if any server (loaded by a payload) is running on the PS5
 - SELF Decrypter GUI
 - Shortcut PKG Creator
-  - Create simple debug PKGs that opens the WebBrowser with a website launches an internal URI
+  - Create simple debug PKGs that opens the WebBrowser with a website or launches an internal URI
 - RCO Dumper (requires running FTP server)
 - RCO Extractor
 
