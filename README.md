@@ -102,8 +102,8 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - Console Notifications Manager [NOTIFICATION2.DB] (requires running FTP server)
 - Content Manager for the PS5 WebSrv of john-tornblom
   - Homebrew Manager
-  - Game ROM Manager for games that use a roms folder
-  - Media Content Manager for homebrew that use a media folder
+  - Game ROM Manager for games that use a 'roms' folder
+  - Media Content Manager for homebrew that use a 'media' folder
 - etaHEN Configurator (requires running FTP server)
 - etaHEN Remote PKG Installer
 - FTP Grabber
@@ -115,6 +115,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - Game Patches Downloader
 - General ELF & BIN Payload Sender
 - GP5 Project Creator
+  - Create a PKG project that can be build afterwards
 - Kernel Log Viewer
 - Make fSELF tool to fake sign SELF files of created dumps
   - Based on EchoStretch's Make_FSELF_PY3.bat & LightningMods updated make_fself by Flatz
@@ -122,14 +123,17 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - MANIFEST.JSON & PARAM.JSON File Creator & Editor
 - Mast1c0re ELF Payload & PS2 ISO Sender
 - Payload Builder
-- PKG Builder (requires prospero-pub-cmd at \Tools\PS5\ )
+  - Build paylods like SELF Decryptor & AppTitles with custom settings
+- PKG Builder
 - PKG Merger
 - PKG Extractor
   - Requires password
-  - Extract sc package metadata using pkgdec5
+  - Extract 'sc' package metadata using pkgdec5
 - Port Checking Utility
+  - Checks if any server (loaded by a payload) is running on the PS5
 - SELF Decrypter GUI
 - Shortcut PKG Creator
+  - Create simple debug PKGs that opens the WebBrowser with a website launches an internal URI
 - RCO Dumper (requires running FTP server)
 - RCO Extractor
 
