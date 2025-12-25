@@ -5,6 +5,16 @@
 # PS Multi Tools
 All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
 
+## Upcoming changes to PS Multi Tools in v16.0
+- The entire source code will change to C# and the project type will change to Avalonia
+  - This makes it possible to deploy PS Multi Tools to additional platforms like Linux and macOS
+  - The OS specific "PS Mac Tools" build for macOS is now retired/archived
+  - Other OS specific tools like "PS Classics fPKG Builder" & "PS5PKGReader" are now retired/archived and will be included in PS Multi Tools v16
+- PS Multi Tools will now always run the included tools in their OS specific executable with the exception of PS4/PS5 PKG pub tools
+  - Those tools will require "Wine" to be installed on Linux and macOS, a message will appear to set it up if not installed
+- The UI of some windows will slightly change due to the new Avalonia UI elements & components
+- The main binary file will be renamed from "PS Multi Tools" to "PSMultiTools"
+
 <details>
   <summary>v15.6 contains following tools</summary>
   
