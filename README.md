@@ -193,7 +193,7 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `binmerge` | putnam | [https://github.com/putnam/binmerge](https://github.com/putnam/binmerge)
 | `CEX2DEX` |  | 
 | `costool` | naehrwert | 
-| `cue2toc` | Goatman13 & NRGDEAD | https://github.com/Goatman13/Cue2toc
+| `cue2toc` | Goatman13 & NRGDEAD | [https://github.com/Goatman13/Cue2toc](https://github.com/Goatman13/Cue2toc)
 | `dd` | John Newbigin | [http://www.chrysocome.net/dd](http://www.chrysocome.net/dd)
 | `dev_flash` | HSReina | 
 | `DiscUtils` | LTRData | [https://github.com/LTRData/DiscUtils](https://github.com/LTRData/DiscUtils)
@@ -203,7 +203,7 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `esrpatch` | ffgriever | [https://www.psx-place.com/threads/esr-by-ffgriever.19136/](https://www.psx-place.com/threads/esr-by-ffgriever.19136/)
 | `esrunpatch` | ffgriever | [https://www.psx-place.com/threads/esr-by-ffgriever.19136/](https://www.psx-place.com/threads/esr-by-ffgriever.19136/)
 | `ffplay` | FFmpeg | [https://github.com/FFmpeg/FFmpeg](https://github.com/FFmpeg/FFmpeg)
-| `fix_tar` | KaKaRoTo & cfwprpht | 
+| `fix_tar` | KaKaRoTo & cfwprpht | [https://github.com/omgneeq/ps3utils](https://github.com/omgneeq/ps3utils)
 | `FluentFTP` | robinrodricks | [https://github.com/robinrodricks/FluentFTP](https://github.com/robinrodricks/FluentFTP)
 | `fwpkg` | evilsperm | [https://github.com/evilsperm/fwtool](https://github.com/evilsperm/fwtool)
 | `GameArchives` | maxton | [https://ci.appveyor.com/project/maxton/gamearchives](https://ci.appveyor.com/project/maxton/gamearchives)
@@ -213,9 +213,9 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `ImageSharp` | SixLabors | [https://github.com/SixLabors/ImageSharp](https://github.com/SixLabors/ImageSharp)
 | `IsoPbpConverter` | LMAN | 
 | `kill_daemon` | illusion0001 | [https://github.com/illusion0001/libhijacker](https://github.com/illusion0001/libhijacker) | Python script -> single .exe
-| `klicencebruteforce` | MAGiC333X | 
+| `klicencebruteforce` | MAGiC333X | [https://www.mateogodlike.com/2012/10/ps3-klicense-brute-force-tool-by.html](https://www.mateogodlike.com/2012/10/ps3-klicense-brute-force-tool-by.html)
 | `Magick.NET` | dlemstra | [https://github.com/dlemstra/Magick.NET](https://github.com/dlemstra/Magick.NET)
-| `make_fself` | (PS3) | 
+| `make_fself` | (PS3) | [https://github.com/SophieGer/ps3tools](https://github.com/SophieGer/ps3tools)
 | `Make_FSELF_PY3` | EchoStretch |  | Batch script translated to VB
 | `make_fself_python3-1` | Flatz (updated by LightningMods) |  | Python script -> single .exe
 | `maxcso` | unknownbrackets | [https://github.com/unknownbrackets/maxcso](https://github.com/unknownbrackets/maxcso)
@@ -230,19 +230,19 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `pkg_merge` | aldo-o & Tustin | [https://github.com/aldo-o/pkg-merge](https://github.com/aldo-o/pkg-merge)
 | `pppwn` | TheOfficialFloW | [https://github.com/TheOfficialFloW/PPPwn](https://github.com/TheOfficialFloW/PPPwn) | Python script -> Single .exe
 | `ps3dec` | Redrrx | [https://github.com/Redrrx/ps3dec](https://github.com/Redrrx/ps3dec)
-| `ps3mca-ps1` | paolo-caroni | https://github.com/paolo-caroni/ps3mca-ps1
-| `ps3mca-tool` | jimmikaelkael | 
+| `ps3mca-ps1` | paolo-caroni | [https://github.com/paolo-caroni/ps3mca-ps1](https://github.com/paolo-caroni/ps3mca-ps1)
+| `ps3mca-tool` | jimmikaelkael | [https://github.com/jimmikaelkael/ps3mca-tool](https://github.com/jimmikaelkael/ps3mca-tool)
 | `ps3iso-utils` | bucanero | [https://github.com/bucanero/ps3iso-utils](https://github.com/bucanero/ps3iso-utils)
 | `PS4_Tools Library` | xXxTheDarkprogramerxXx | [https://github.com/xXxTheDarkprogramerxXx/PS4_Tools](https://github.com/xXxTheDarkprogramerxXx/PS4_Tools)
-| `pspdecrypt` | John-K | https://github.com/John-K/pspdecrypt
+| `pspdecrypt` | John-K | [https://github.com/John-K/pspdecrypt](https://github.com/John-K/pspdecrypt)
 | `PSN_get_pkg_info` | windsurfer1122 | [https://github.com/windsurfer1122/PSN_get_pkg_info](https://github.com/windsurfer1122/PSN_get_pkg_info) | Python script -> Single .exe
 | `psvpfstools` | motoharu-gosuto | [https://github.com/motoharu-gosuto/psvpfstools](https://github.com/motoharu-gosuto/psvpfstools)
 | `psxtract` | Hykem | [https://github.com/mrlucas84/psxtract](https://github.com/mrlucas84/psxtract)
 | `pup_unpacker` | Zer0xFF | [https://github.com/Zer0xFF/ps4-pup-unpacker](https://github.com/Zer0xFF/ps4-pup-unpacker)
-| `pupunpack` |  | 
-| `rcomage` | ZiNgA BuRgA | 
+| `pupunpack` | (PS3) | [https://github.com/SophieGer/ps3tools](https://github.com/SophieGer/ps3tools)
+| `rcomage` | ZiNgA BuRgA | [https://github.com/kakaroto/RCOMage](https://github.com/kakaroto/RCOMage)
 | `readself` | Team fail0verflow | [https://github.com/daryl317/fail0verflow-PS3-tools/tree/master](https://github.com/daryl317/fail0verflow-PS3-tools/tree/master)
-| `SCEDoormat_NoME` | krHACKen | 
+| `SCEDoormat_NoME` | krHACKen | [https://github.com/ps2dev-mirror/SCEDoormat_NoME/tree/master](https://github.com/ps2dev-mirror/SCEDoormat_NoME/tree/master)
 | `scetool` | naehrwert | [https://github.com/naehrwert/scetool](https://github.com/naehrwert/scetool) | 
 | `send_elf` | illusion0001 | [https://github.com/illusion0001/libhijacker](https://github.com/illusion0001/libhijacker) | Python script -> Single .exe
 | `sfo` | hippie68 | [https://github.com/hippie68/sfo](https://github.com/hippie68/sfo)
