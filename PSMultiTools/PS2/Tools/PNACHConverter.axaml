@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="250"
+		x:Class="PSMultiTools.PS2.Tools.PNACHConverter"
+		Title="PNACH Converter" Height="250" Width="600" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a PNACH file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedPNACHFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="481"/>
+		<Button x:Name="BrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="500,35,0,0" VerticalAlignment="Top" Width="74"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="Options :" VerticalAlignment="Top" FontSize="14"/>
+		<CheckBox x:Name="SkipGameTitleEntryCheckBox" Content="Skip the gametitle entry" HorizontalAlignment="Left" Margin="20,100,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="SkipBlankLinesCheckBox" Content="Skip blank lines" HorizontalAlignment="Left" Margin="20,130,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="MakeCheatsLowercaseCheckBox" Content="Make generated cheats lowercase (has priority)" HorizontalAlignment="Left" Margin="20,160,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="MakeCheatsUppercaseCheckBox" Content="Make generated cheats uppercase (lowercase has priority)" HorizontalAlignment="Left" Margin="20,190,0,0" VerticalAlignment="Top"/>
+	</Grid>
+</Window>

@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="460"
+		x:Class="PSMultiTools.PS5.Tools.PKGBuilder.PS5PKGBuilder"
+		Title="PKG Builder" Height="470" Width="780" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="PKG Builder Options" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,45,0,0" TextWrapping="NoWrap" Text="Select your GP5 project :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedProjectTextBox" HorizontalAlignment="Left" Margin="180,40,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="506"/>
+		<Button x:Name="BrowseProjectButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="690,40,0,0" VerticalAlignment="Top" Width="80" FontWeight="Bold" Click="BrowseProjectButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="NoWrap" Text="Save output PKG to :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SaveToTextBox" HorizontalAlignment="Left" Margin="180,80,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="506"/>
+		<Button x:Name="BrowseSavePathButton" Content="Browse" HorizontalContentAlignment="Center" Margin="690,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" FontWeight="Bold" Click="BrowseSavePathButton_Click"/>
+
+		<Button x:Name="BuildButton" Content="Build PKG" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="595,120,0,0" VerticalAlignment="Top" Width="91" FontWeight="Bold" Click="BuildButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,170,0,0" TextWrapping="NoWrap" Text="Build Log :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="BuildLogTextBox" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Width="750" Height="218"/>
+		<Button x:Name="CancelButton" Content="Cancel" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="670,420,0,0" VerticalAlignment="Top" Width="93" IsEnabled="False" FontWeight="Bold" Click="CancelButton_Click"/>
+	</Grid>
+</Window>

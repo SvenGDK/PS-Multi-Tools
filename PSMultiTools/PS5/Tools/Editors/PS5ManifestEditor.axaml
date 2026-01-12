@@ -1,0 +1,83 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="560"
+		x:Class="PSMultiTools.PS5.Tools.Editors.PS5ManifestEditor"
+		Title="PS5 Manifest Editor" Height="560" Width="1000" CanMinimize="True" CanResize="False" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Menu Height="20" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<MenuItem Header="File">
+				<MenuItem Header="New" x:Name="NewManifestParamMenuItem"/>
+				<MenuItem Header="Load manifest.json" x:Name="LoadManifestParamMenuItem"/>
+				<MenuItem Header="Save" x:Name="SaveMenuItem"/>
+			</MenuItem>
+		</Menu>
+		<TextBlock HorizontalAlignment="Left" Margin="10,30,0,0" Text="Current parameters" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="940" FontWeight="Bold"/>
+		<ListBox x:Name="ManifestParamListBox" Margin="10,60,10,0" Height="300" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="175"></ColumnDefinition>
+								<ColumnDefinition Width="175"></ColumnDefinition>
+								<ColumnDefinition Width="175"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center">Parameter</Label>
+							<Label Grid.Column="1" HorizontalContentAlignment="Center" VerticalAlignment="Center">Type</Label>
+							<Label Grid.Column="2" HorizontalContentAlignment="Center" VerticalAlignment="Center">Value</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="175"></ColumnDefinition>
+							<ColumnDefinition Width="175"></ColumnDefinition>
+							<ColumnDefinition Width="175"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding ParamName}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding ParamType}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding ParamValue}" Grid.Column="2"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<TextBlock HorizontalAlignment="Left" Margin="10,400,0,0" Text="Add a parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150" FontWeight="Bold"/>
+		<ComboBox x:Name="ManifestParamsComboBox" HorizontalAlignment="Left" Margin="165,430,0,0" VerticalAlignment="Top" Width="300">
+			<ComboBoxItem Content="applicationData"/>
+			<ComboBoxItem Content="applicationName"/>
+			<ComboBoxItem Content="applicationVersion"/>
+			<ComboBoxItem Content="bootAnimation"/>
+			<ComboBoxItem Content="commitHash"/>
+			<ComboBoxItem Content="enableAccessibility"/>
+			<ComboBoxItem Content="enableHttpCache"/>
+			<ComboBoxItem Content="reactNativePlaystationVersion"/>
+			<ComboBoxItem Content="repositoryUrl"/>
+			<ComboBoxItem Content="titleId"/>
+			<ComboBoxItem Content="twinTurbo"/>
+		</ComboBox>
+		<TextBlock HorizontalAlignment="Left" Margin="10,435,0,0" Text="Select param:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,475,0,0" Text="Set value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+		<TextBox x:Name="ManifestParamValueTextBox" HorizontalAlignment="Left" Margin="165,470,0,0" VerticalAlignment="Top" Width="300"/>
+		<TextBlock HorizontalAlignment="Left" Margin="525,400,0,0" Text="Modify selected parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="455" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="525,435,0,0" Text="Modify value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+		<TextBox x:Name="ModifyValueTextBox" HorizontalAlignment="Left" Margin="640,430,0,0" VerticalAlignment="Top" Width="330"/>
+
+		<Button x:Name="SaveModifiedValueButton" Content="Save changes" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="640,470,0,0" VerticalAlignment="Top" Width="125" IsEnabled="False" Click="SaveModifiedValueButton_Click"/>
+		<Button x:Name="AddManifestParamButton" Content="Add param" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="315,510,0,0" VerticalAlignment="Top" Width="150" IsEnabled="False" Click="AddManifestParamButton_Click"/>
+		<Button x:Name="RemoveManifestParamButton" Content="Remove param" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="845,470,0,0" VerticalAlignment="Top" Width="125" IsEnabled="False" Click="RemoveManifestParamButton_Click"/>
+		<Button x:Name="AdvancedEditorButton" Content="Open advanced param editor" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="640,510,0,0" VerticalAlignment="Top" Width="330" IsEnabled="False" Click="AdvancedEditorButton_Click"/>
+	</Grid>
+</Window>

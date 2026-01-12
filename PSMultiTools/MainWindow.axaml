@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="350"
+		x:Class="PSMultiTools.MainWindow"
+		Title="PS Multi Tools - Home" Height="350" Width="1000" CanResize="False" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="273,20,0,0" VerticalAlignment="Top" Text="Welcome to PS Multi Tools" FontSize="36" FontWeight="Bold"/>
+
+		<Image x:Name="PS1Image" HorizontalAlignment="Left" Height="84" Margin="39,96,0,0" VerticalAlignment="Top" Width="84" UseLayoutRounding="True" Cursor="Hand" Source="/Images/PS1.png" PointerPressed="PS1Image_PointerPressed"/>
+		<Image x:Name="PS2Image" HorizontalAlignment="Left" Height="84" Margin="159,96,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS2.png" UseLayoutRounding="True" Cursor="Hand" PointerPressed="PS2Image_PointerPressed"/>
+		<Image x:Name="PSXImage" HorizontalAlignment="Left" Height="84" Margin="283,96,0,0" VerticalAlignment="Top" Width="84" Source="/Images/psx.png" UseLayoutRounding="True" Cursor="Hand" PointerPressed="PSXImage_PointerPressed"/>
+		<Image x:Name="PS3Image" HorizontalAlignment="Left" Height="84" Margin="400,96,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS3.png" UseLayoutRounding="True" Cursor="Hand" PointerPressed="PS3Image_PointerPressed"/>
+		<Image x:Name="PS4Image" HorizontalAlignment="Left" Height="84" Margin="514,96,0,0" VerticalAlignment="Top" Width="84" Source="/Images/ps4.png" UseLayoutRounding="True" Cursor="Hand" PointerPressed="PS4Image_PointerPressed"/>
+		<Image x:Name="PS5Image" HorizontalAlignment="Left" Height="84" Margin="629,92,0,0" VerticalAlignment="Top" Width="84" Source="/Images/PS5.png" UseLayoutRounding="True" Cursor="Hand" PointerPressed="PS5Image_PointerPressed"/>
+		<Image x:Name="PSPImage" HorizontalAlignment="Left" Height="92" Margin="742,88,0,0" VerticalAlignment="Top" Width="92" Source="/Images/psp.png" UseLayoutRounding="True" Cursor="Hand" PointerPressed="PSPImage_PointerPressed"/>
+		<Image x:Name="PSVImage" HorizontalAlignment="Left" Height="43" Margin="865,113,0,0" VerticalAlignment="Top" Width="92" Source="/Images/PSV.png" UseLayoutRounding="True" Cursor="Hand" PointerPressed="PSVImage_PointerPressed"/>
+
+		<TextBlock x:Name="PS1TextBlock" HorizontalAlignment="Left" Margin="63,185,0,0" VerticalAlignment="Top" Text="PS1" FontSize="22" Cursor="Hand" PointerPressed="PS1TextBlock_PointerPressed"/>
+		<TextBlock x:Name="PS2TextBlock" HorizontalAlignment="Left" Margin="183,185,0,0" VerticalAlignment="Top" Text="PS2" FontSize="22" Cursor="Hand" PointerPressed="PS2TextBlock_PointerPressed"/>
+		<TextBlock x:Name="PSXTextBlock" HorizontalAlignment="Left" Margin="307,185,0,0" VerticalAlignment="Top" Text="PSX" FontSize="22" Cursor="Hand" PointerPressed="PSXTextBlock_PointerPressed"/>
+		<TextBlock x:Name="PS3TextBlock" HorizontalAlignment="Left" Margin="424,185,0,0" VerticalAlignment="Top" Text="PS3" FontSize="22" Cursor="Hand" PointerPressed="PS3TextBlock_PointerPressed"/>
+		<TextBlock x:Name="PS4TextBlock" HorizontalAlignment="Left" Margin="538,185,0,0" VerticalAlignment="Top" Text="PS4" FontSize="22" Cursor="Hand" PointerPressed="PS4TextBlock_PointerPressed"/>
+		<TextBlock x:Name="PS5TextBlock" HorizontalAlignment="Left" Margin="653,185,0,0" VerticalAlignment="Top" Text="PS5" FontSize="22" Cursor="Hand" PointerPressed="PS5TextBlock_PointerPressed"/>
+		<TextBlock x:Name="PSPTextBlock" HorizontalAlignment="Left" Margin="770,185,0,0" VerticalAlignment="Top" Text="PSP" FontSize="22" Cursor="Hand" PointerPressed="PSPTextBlock_PointerPressed"/>
+		<TextBlock x:Name="PSVTextBlock" HorizontalAlignment="Left" Margin="877,185,0,0" VerticalAlignment="Top" Text="PS Vita" FontSize="22" Cursor="Hand" PointerPressed="PSVTextBlock_PointerPressed"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="309,240,0,0"  VerticalAlignment="Top" Text="Select a console or handheld to continue" FontSize="20" FontWeight="Bold"/>
+
+		<Image x:Name="UpdateImage" HorizontalAlignment="Left" Height="24" Margin="25,290,0,0" VerticalAlignment="Top" Width="24" Source="/Images/refresh.png" UseLayoutRounding="True" Cursor="Hand" RenderTransformOrigin="0.5,0.5" PointerPressed="UpdateImage_PointerPressed">
+			<Image.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform Angle="30"/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</Image.RenderTransform>
+		</Image>
+		<TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Left" Margin="50,297,0,0" VerticalAlignment="Top" Text="Check for PS Multi Tools Updates" FontSize="14" Cursor="Hand" FontWeight="Bold" FontStyle="Italic" PointerPressed="UpdateTextBlock_PointerPressed"/>
+	</Grid>
+</Window>

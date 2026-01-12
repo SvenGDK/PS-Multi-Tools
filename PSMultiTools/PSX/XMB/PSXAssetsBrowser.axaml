@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+		x:Class="PSMultiTools.PSXAssetsBrowser"
+		Title="XMB Assets Browser" Height="720" Width="1280" CanMinimize="True" CanResize="True" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<ListBox x:Name="AssetFilesListView" Width="350" HorizontalAlignment="Left" Background="#FF474747" BorderBrush="Black" SelectionMode="Single" Foreground="White" Height="615" VerticalAlignment="Top" Margin="0,89,0,0">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel Orientation="Vertical"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Height="30">
+						<Image Height="16" VerticalAlignment="Top" Source="{Binding Icon}" Width="16" HorizontalAlignment="Left" Margin="0,5,0,0"/>
+						<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding AssetFileName}" TextWrapping="NoWrap" FontSize="14" TextAlignment="Left" HorizontalAlignment="Left" FontFamily="Calibri" Margin="20,0,0,0"/>
+						<TextBlock Height="10" VerticalAlignment="Top" Text="{Binding AssetFilePath}" TextWrapping="NoWrap" FontSize="8" TextAlignment="Left" HorizontalAlignment="Left" FontFamily="Calibri" Margin="20,20,0,0"/>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Image x:Name="ImageViewer" HorizontalAlignment="Left" Height="512" Margin="550,100,0,0" VerticalAlignment="Top" Width="512" IsVisible="False"/>
+		<TextBlock x:Name="FontPreviewTextBlock" HorizontalAlignment="Left" Margin="565,200,0,0" Text="Font Preview :&#10;&#10;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" VerticalAlignment="Top" Foreground="White" FontSize="36" Width="500" Height="300" TextAlignment="Center" IsVisible="False"/>
+
+		<Image x:Name="OpenFolderImage" HorizontalAlignment="Left" Height="48" Margin="34,10,0,0" VerticalAlignment="Top" Width="48" Source="/Images/open-folder.png" Cursor="Hand"/>
+		<TextBlock HorizontalAlignment="Left" Margin="15,63,0,0" Text="Open a folder" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+
+		<Image x:Name="OpenImageEditorImage" HorizontalAlignment="Left" Height="40" Margin="175,14,0,0" VerticalAlignment="Top" Width="40" Source="/Images/Image-Edit.png" Cursor="Hand" IsVisible="False"/>
+		<TextBlock x:Name="OpenImageEditorTextBlock" HorizontalAlignment="Left" Margin="122,63,0,0" Text="Open in Graphics Editor" VerticalAlignment="Top" Foreground="White" FontSize="14" IsVisible="False"/>
+	</Grid>
+</Window>

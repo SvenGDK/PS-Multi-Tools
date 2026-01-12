@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vlc="using:LibVLCSharp.Avalonia"
+		mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="720"
+		x:Class="PSMultiTools.PS5.Tools.PS5AssetsBrowser"
+		Title="PS5 Assets Browser" Height="720" Width="1300" CanResize="True" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<ListBox x:Name="AssetFilesListBox" Margin="0,0,810,0" Width="350" HorizontalAlignment="Left" Background="#FF474747" BorderBrush="Black" SelectionMode="Single" Foreground="White">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel Orientation="Vertical"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Height="30">
+						<Image Height="16" VerticalAlignment="Top" Source="{Binding Icon}" Width="16" HorizontalAlignment="Left" Margin="0,5,0,0"></Image>
+						<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding AssetFileName}" TextWrapping="NoWrap" FontSize="14" TextAlignment="Left" HorizontalAlignment="Left" FontFamily="Calibri" Margin="20,0,0,0" PointerPressed="AssetFilesListView_PointerPressed"/>
+						<TextBlock Height="10" VerticalAlignment="Top" Text="{Binding AssetFilePath}" TextWrapping="NoWrap" FontSize="8" TextAlignment="Left" HorizontalAlignment="Left" FontFamily="Calibri" Margin="20,20,0,0"/>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Image x:Name="ImageViewer" HorizontalAlignment="Left" Height="512" Margin="550,100,0,0" VerticalAlignment="Top" Width="512" IsVisible="False"/>
+		<TextBlock x:Name="FontPreviewTextBlock" HorizontalAlignment="Left" Margin="565,200,0,0" Text="Font Preview :&#10;&#10;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" VerticalAlignment="Top" Foreground="White" FontSize="36" Width="500" Height="300" TextAlignment="Center" IsVisible="False"/>
+		
+		<vlc:VideoView x:Name="AssetPlayer" MediaPlayer="{Binding MediaPlayer}" Height="700" Margin="350,0,0,0" MinHeight="680" MinWidth="950" IsVisible="False">
+			<Panel Name="ControlsPanel">
+				<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Background="#900000FF" Spacing="20">
+					<Button Margin="20" Click="PlayPauseMenuItem_Click">Play</Button>
+					<Button Margin="20" Click="StopMenuItem_Click">Stop</Button>
+				</StackPanel>
+			</Panel>
+		</vlc:VideoView>
+	</Grid>
+</Window>

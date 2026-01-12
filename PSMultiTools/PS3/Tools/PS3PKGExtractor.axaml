@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="330"
+		x:Class="PSMultiTools.PS3.Tools.PS3PKGExtractor"
+		Title="PS3 PKG Extractor" Height="330" Width="480" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a .pkg file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowsePKGButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="315,33,0,0" VerticalAlignment="Top" Width="74" Click="BrowsePKGButton_Click"/>
+		<Button x:Name="ExtractButton" Content="Extract" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="394,33,0,0" VerticalAlignment="Top" Width="74" Click="ExtractButton_Click"/>
+
+		<Image x:Name="PKGICONImage" HorizontalAlignment="Left" Height="176" Margin="100,79,0,0" VerticalAlignment="Top" Width="320"/>
+
+		<TextBlock x:Name="ExtractProgressTextBlock" HorizontalAlignment="Left" Margin="10,264,0,0" Text="Progress :" VerticalAlignment="Top" FontSize="14"/>
+		<ProgressBar x:Name="ExtractProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,288,0,0" VerticalAlignment="Top" Width="458"/>
+	</Grid>
+</Window>

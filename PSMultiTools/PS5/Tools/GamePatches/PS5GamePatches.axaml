@@ -1,0 +1,67 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1105" d:DesignHeight="600"
+		x:Class="PSMultiTools.PS5.Tools.GamePatches.PS5GamePatches"
+		Title="PS5 Game Patches" Height="600" Width="1105" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Search for available Game Patches" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="336" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="NoWrap" Text="Enter Game ID:" VerticalAlignment="Top" Foreground="White" FontSize="14" Width="100"/>
+		<TextBox x:Name="SearchGameIDTextBox" HorizontalAlignment="Left" Margin="120,40,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="200"/>
+		<Button x:Name="SearchButton" Content="Search" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="330,40,0,0" VerticalAlignment="Top" Width="76" Click="SearchButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,85,0,0" TextWrapping="NoWrap" Text="Patch Download Queue:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="1070" FontWeight="Bold"/>
+		<ListBox x:Name="DownloadQueueListBox" Margin="10,110,10,0" Height="400" HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="14">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="150"></ColumnDefinition>
+								<ColumnDefinition Width="400"></ColumnDefinition>
+								<ColumnDefinition Width="125"></ColumnDefinition>
+								<ColumnDefinition Width="150"></ColumnDefinition>
+								<ColumnDefinition Width="150"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label x:Name="GameIDLabel" Grid.Column="0" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center" PointerPressed="GameIDLabel_PointerPressed">Game ID</Label>
+							<Label x:Name="FileNameLabel" Grid.Column="1" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center" PointerPressed="FileNameLabel_PointerPressed">File Name</Label>
+							<Label x:Name="PKGSizeLabel" Grid.Column="2" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center" PointerPressed="PKGSizeLabel_PointerPressed">PKG Size</Label>
+							<Label x:Name="DownloadStateLabel" Grid.Column="3" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center" PointerPressed="DownloadStateLabel_PointerPressed">Download State</Label>
+							<Label x:Name="MergeStateLabel" Grid.Column="4" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center" PointerPressed="MergeStateLabel_PointerPressed">Merge State</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150"></ColumnDefinition>
+							<ColumnDefinition Width="400"></ColumnDefinition>
+							<ColumnDefinition Width="125"></ColumnDefinition>
+							<ColumnDefinition Width="150"></ColumnDefinition>
+							<ColumnDefinition Width="150"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding GameID}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding FileName}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding PKGSize}" Grid.Column="2"></TextBlock>
+						<TextBlock Text="{Binding DownloadState}" Grid.Column="3"></TextBlock>
+						<TextBlock Text="{Binding MergeState}" Grid.Column="4"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button x:Name="VisitButton" Content="Visit Prosperopatches" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,533,0,0" VerticalAlignment="Top" Width="200" Click="VisitButton_Click"/>
+		<Button x:Name="DownloadButton" Content="Download selected file(s)" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="800,533,0,0" VerticalAlignment="Top" Width="280" IsEnabled="False" Click="DownloadButton_Click"/>
+	</Grid>
+</Window>

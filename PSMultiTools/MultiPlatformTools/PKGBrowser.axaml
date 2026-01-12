@@ -1,0 +1,177 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:classes="using:PSMultiTools.Classes"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1325" d:DesignHeight="700"
+		x:Class="PSMultiTools.MultiPlatformTools.PKGBrowser"
+		Title="PKG Browser" Height="700" Width="1325" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+
+	<Window.Resources>
+		<classes:AnyBitmapToAvaloniaConverter x:Key="AnyToAvalonia"/>
+	</Window.Resources>
+
+	<Grid>
+		<TabControl x:Name="MainTabControl" Background="{x:Null}" FontSize="18" Margin="0,0,0,400" BorderThickness="0,1,0,0">
+			<TabItem Header="Games" Padding="25,5,25,5" FontSize="16" BorderBrush="{x:Null}">
+				<ToolTip.Tip>
+					Press in the middle of the empty list to load it.
+				</ToolTip.Tip>
+				<Grid Height="230">
+					<ListBox x:Name="GamesListBox" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid Width="135" Height="170">
+									<Image Width="128" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+									<TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextAlignment="Center"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Demos" Padding="25,5,25,5" FontSize="16" BorderBrush="{x:Null}">
+				<Grid Height="230">
+					<ListBox x:Name="DemosListBox" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid Width="135" Height="170">
+									<Image Width="128" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+									<TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextAlignment="Center"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</Grid>
+			</TabItem>
+			<TabItem Header="DLCs" Padding="25,5,25,5" FontSize="16" BorderBrush="{x:Null}">
+				<Grid Height="230">
+					<ListBox x:Name="DLCsListBox" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid Width="135" Height="170">
+									<Image Width="128" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+									<TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextAlignment="Center"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Themes" Padding="25,5,25,5" FontSize="16" BorderBrush="{x:Null}">
+				<Grid Height="230">
+					<ListBox x:Name="ThemesListBox" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid Width="135" Height="170">
+									<Image Width="128" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+									<TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextAlignment="Center"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Avatars" Padding="25,5,25,5" FontSize="16" BorderBrush="{x:Null}">
+				<Grid Height="230">
+					<ListBox x:Name="AvatarsListBox" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Visible" BorderThickness="0" SelectionMode="Single" Height="195" ScrollViewer.VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" >
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid Width="135" Height="170">
+									<Image Width="128" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" HorizontalAlignment="Center" Height="128" Margin="0,5,0,0" VerticalAlignment="Top" />
+									<TextBlock Text="{Binding PackageName}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" FontSize="10" Height="27" TextAlignment="Center"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</Grid>
+			</TabItem>
+		</TabControl>
+
+		<TextBlock HorizontalAlignment="Left" Margin="22,445,0,0" Text="Search for a Game" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="22,475,0,0" Text="By Name :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+		<TextBox x:Name="NameSearchTextBox" HorizontalAlignment="Left" Margin="22,500,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
+		<TextBlock HorizontalAlignment="Left" Margin="22,545,0,0" Text="By Title ID :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+		<TextBox x:Name="TitleIDSearchTextBox" HorizontalAlignment="Left" Margin="22,570,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
+		<TextBlock HorizontalAlignment="Left" Margin="22,615,0,0" Text="By Content ID :" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+		<TextBox x:Name="ContentIDSearchTextBox" HorizontalAlignment="Left" Margin="22,640,0,0" VerticalAlignment="Top" Width="250" FontSize="16"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="300,445,0,0" Text="Downloads" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+		<ListBox x:Name="DownloadsListBox" Margin="300,475,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1000" Height="150">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="150"></ColumnDefinition>
+								<ColumnDefinition Width="400"></ColumnDefinition>
+								<ColumnDefinition Width="125"></ColumnDefinition>
+								<ColumnDefinition Width="175"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Package Title ID</Label>
+							<Label Grid.Column="1" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Package Name</Label>
+							<Label Grid.Column="2" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">PKG Size</Label>
+							<Label Grid.Column="3" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Download State</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150"></ColumnDefinition>
+							<ColumnDefinition Width="400"></ColumnDefinition>
+							<ColumnDefinition Width="125"></ColumnDefinition>
+							<ColumnDefinition Width="175"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding PackageTitleID}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding PackageName}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding PackageSize}" Grid.Column="2"></TextBlock>
+						<TextBlock Text="{Binding PackageDownloadState}" Grid.Column="3"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<TextBlock x:Name="PKGTitleTextBlock" HorizontalAlignment="Center" Text="TITLE" VerticalAlignment="Top" Foreground="White" FontSize="24" FontWeight="Bold" Margin="0,269,0,0"/>
+		<TextBlock x:Name="TitleIDTextBlock" HorizontalAlignment="Center" Margin="0,306,0,0" Text="Title ID:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+		<TextBlock x:Name="ContentIDTextBlock" HorizontalAlignment="Center" Margin="0,335,0,0" Text="Content ID:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+		<TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Center" Margin="0,364,0,0" Text="Region:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+		<TextBlock x:Name="SizeTextBlock" HorizontalAlignment="Center" Margin="0,393,0,0" Text="Size:" VerticalAlignment="Top" Foreground="White" FontSize="18" FontWeight="Bold"/>
+
+		<Decorator x:Name="ContentWebViewWrapper" IsVisible="False"></Decorator>
+	</Grid>
+</Window>

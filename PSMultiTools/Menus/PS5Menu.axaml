@@ -1,0 +1,797 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="20"
+			 x:Class="PSMultiTools.Menus.PS5Menu" Height="20">
+	<Grid>
+		<Menu x:Name="MainMenu">
+			<MenuItem Header="Library"/>
+
+			<MenuItem x:Name="ToolsMenuItem" Header="Tools">
+				<MenuItem Header="PC Utilities">
+					<MenuItem Header="Appinfo Database Updater" x:Name="OpenAppInfoUpdaterMenuItem" Click="OpenAppInfoUpdaterMenuItem_Click">
+						<ToolTip.Tip>
+							Burn an ISO file to a Blu-Ray disc.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Blu-Ray Disc Burner" x:Name="OpenBDBurnerMenuItem" Click="OpenBDBurnerMenuItem_Click">
+						<ToolTip.Tip>
+							Burn an ISO file to a Blu-Ray disc.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems" Click="CheckForUpdatesMenuItems_Click">
+					</MenuItem>
+					<MenuItem Header="Extract RCO files" x:Name="OpenRCOExtractorMenuItem" Click="OpenRCOExtractorMenuItem_Click">
+						<ToolTip.Tip>
+							Extract a PSP, PS3, PS Vita, PS4 or PS5 Resource Container (*.rco).
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Fake sign SELF files" x:Name="OpenMakefSELFMenuItem" Click="OpenMakefSELFMenuItem_Click">
+						<ToolTip.Tip>
+							Fake sign executable ELF files of a dumped game or app (4.03 max.).
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="GP5 Project Creator" x:Name="OpenGP5ManagerMenuItem" Click="OpenGP5ManagerMenuItem_Click">
+						<ToolTip.Tip>
+							Create a PS5 Package Project (*.gp5).
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Manifest JSON Editor" x:Name="OpenManifestEditorMenuItem" Click="OpenManifestEditorMenuItem_Click">
+						<ToolTip.Tip>
+							Create/Modify a PS5 manifest.json file.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Param JSON Editor" x:Name="OpenParamEditorMenuItem" Click="OpenParamEditorMenuItem_Click">
+						<ToolTip.Tip>
+							Create/Modify a PS5 param.json file.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Payload Builder" x:Name="PayloadBuilderMenuItem" Click="PayloadBuilderMenuItem_Click">
+						<ToolTip.Tip>
+							Auto-Build ELF payloads for the PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Payload &amp; Mast1c0re PS2 Game Sender" x:Name="SenderMenuItem" Click="SenderMenuItem_Click">
+						<ToolTip.Tip>
+							Send ELF/BIN payloads or a PS2 game for Mast1c0re to an exploited PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="PKG Builder" x:Name="OpenPKGBuilderMenuItem" Click="OpenPKGBuilderMenuItem_Click">
+						<ToolTip.Tip>
+							Build a PKG file from a GP5 project file.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="PKG Extractor" x:Name="OpenPKGExtractorMenuItem" Click="OpenPKGExtractorMenuItem_Click">
+						<ToolTip.Tip>
+							Extract a PS5 PKG file using a passcode or integrated ps5dec (keys). Using 'ps5dec' requires an updated OS because the 'SHA3_256' function is not supported on every Operating System.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="PKG Merger" x:Name="OpenPKGMergerMenuItem" Click="OpenPKGMergerMenuItem_Click">
+						<ToolTip.Tip>
+							Merge multiple PKG files into a single PKG.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="PKG Reader (Viewer)" x:Name="OpenPKGReaderMenuItem" Click="OpenPKGReaderMenuItem_Click">
+						<ToolTip.Tip>
+							Show the content of a PS5 PKG file.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="PKG Sender" x:Name="OpenPKGSenderMenuItem" Click="OpenPKGSenderMenuItem_Click"/>
+					<MenuItem Header="Port Checker" x:Name="OpenPortCheckerMenuItem" Click="OpenPortCheckerMenuItem_Click">
+						<ToolTip.Tip>
+							Check which ports are open or closed the PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem" Click="OpenPSClassicsfPKGBuilderMenuItem_Click">
+						<ToolTip.Tip>
+							Build a PS4/PS5 compatible fPKG file from a PS1, PS2 or PSP game.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="SELF Decrypter" x:Name="OpenSELFDecrypterMenuItem" Click="OpenSELFDecrypterMenuItem_Click">
+						<ToolTip.Tip>
+							Send a backup or SELF dumper payload to the PS5 and watch the dump creation progress.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Simple Shortcut PKG Creator" x:Name="OpenShortcutPKGCreatorMenuItem" Click="OpenShortcutPKGCreatorMenuItem_Click">
+						<ToolTip.Tip>
+							Create a simple PS5 PKG file that opens a specific URL or action.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="WAV &lt;-&gt; AT9 Converter" x:Name="OpenAudioConverterMenuItem" Click="OpenAudioConverterMenuItem_Click">
+						<ToolTip.Tip>
+							Convert custom WAV to AT9 or convert AT9 soundtrack to WAV.
+						</ToolTip.Tip>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="PS5 - Requires a running FTP server">
+					<MenuItem Header="Clear the error history on PS5" x:Name="ClearErrorHistoryMenuItem" Click="ClearErrorHistoryMenuItem_Click"/>
+					<MenuItem Header="Disc Info Reader" x:Name="OpenDiscParamReaderMenuItem" Click="OpenDiscParamReaderMenuItem_Click">
+						<ToolTip.Tip>
+							Display information about the inserted disc in the PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Dump RCO files" x:Name="OpenRCODumperMenuItem" Click="OpenRCODumperMenuItem_Click">
+						<ToolTip.Tip>
+							Dump the Resource Container (*.rco) files from the PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="etaHEN Configurator" x:Name="OpenetaHENConfiguratorMenuItem" Click="OpenetaHENConfiguratorMenuItem_Click">
+						<ToolTip.Tip>
+							Configurate etaHEN options.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="FTP Browser" x:Name="OpenFTPBrowserMenuItem" Click="OpenFTPBrowserMenuItem_Click"/>
+					<MenuItem Header="FTP Grabber (Dumper)" x:Name="OpenFTPGrabberMenuItem" Click="OpenFTPGrabberMenuItem_Click">
+						<ToolTip.Tip>
+							Create a game/app backup using FTP. This will always take longer than directly dumping on the console but this option dumps directly on your PC in case you have no USB.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Notifications Manager" x:Name="OpenNotificationManagerMenuItem" Click="OpenNotificationManagerMenuItem_Click">
+						<ToolTip.Tip>
+							Manage your notifications on the PS5 and add custom shortcuts.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Web Browser Installer" x:Name="OpenWebBrowserInstallerMenuItem" Click="OpenWebBrowserInstallerMenuItem_Click">
+						<ToolTip.Tip>
+							Install the Web Browser app on the PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="PS5 - Requires a running KLog server">
+					<MenuItem Header="Kernel Log Viewer" x:Name="OpenKLogViewerMenuItem" Click="OpenKLogViewerMenuItem_Click">
+						<ToolTip.Tip>
+							Monitor the kernel log of the PS5 with the possibility to filter/colorize text.
+						</ToolTip.Tip>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="PS5 - Requires a running ELF loader">
+					<MenuItem Header="Spoof firmware to max version" x:Name="SpoofFWMenuItem" Click="SpoofFWMenuItem_Click">
+						<ToolTip.Tip>
+							This will send automatically a payload that spoofs the firmware to the max. version.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Toggle kstuff" x:Name="Togglekstuff" Click="Togglekstuff_Click">
+						<ToolTip.Tip>
+							This will send automatically the kstuff-toggle payload to the PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+				</MenuItem>
+			</MenuItem>
+
+			<MenuItem x:Name="ExploitsMenuItem" Header="Exploits">
+				<MenuItem Header="1.00 - 5.50">
+					<MenuItem Header="UMTX Jailbreak">
+						<MenuItem Header="Download v1.2" x:Name="DownloadUMTXJailbreak" Click="DownloadUMTXJailbreak_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Learn more at GitHub" x:Name="OpenUMTXJailbreakGitHub" Click="OpenUMTXJailbreakGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="3.00 - 4.51">
+					<MenuItem Header="PS5 IPV6 Kernel Exploit">
+						<MenuItem Header="Go to GitHub" x:Name="OpenKexGitHub" Click="OpenKexGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download v1.03" x:Name="DownloadPS5IPV6Expl" Click="DownloadPS5IPV6Expl_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="7.61 and below">
+					<MenuItem Header="Mast1c0re Exploit">
+						<MenuItem Header="Learn more at GitHub" x:Name="OpenMast1c0reGitHub" Click="OpenMast1c0reGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="BD-JB JAR Loader">
+						<MenuItem Header="Download v4.1.1" x:Name="DownloadJARLoader" Click="DownloadJARLoader_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Learn more at GitHub" x:Name="OpenJARLoaderGitHub" Click="OpenJARLoaderGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="All in One BD-JB">
+						<MenuItem Header="Download v23" x:Name="DownloadAiOBDJB" Click="DownloadAiOBDJB_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Learn more at GitHub" x:Name="OpenAiOBDJBGitHub" Click="OpenAiOBDJBGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Up to 10.01">
+					<MenuItem Header="YT2JB">
+						<MenuItem Header="Download v1.2.1 as System Backup" x:Name="DownloadYT2JBBackup" Click="DownloadYT2JBBackup_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download v1.2.1 download0.dat" x:Name="DownloadYT2JB0Dat" Click="DownloadYT2JB0Dat_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+							<ToolTip.Tip>
+								DOES NOT CONTAIN the Youtube update blocker!
+							</ToolTip.Tip>
+						</MenuItem>
+						<MenuItem Header="Learn more at GitHub" x:Name="OpenYT2JBGitHub" Click="OpenYT2JBGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="YT2JB Autoloader">
+						<MenuItem Header="Download v0.3 download0.dat" x:Name="DownloadYT2JBAutoloader" Click="DownloadYT2JBAutoloader_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+							<ToolTip.Tip>
+								For manual installation or update.
+							</ToolTip.Tip>
+						</MenuItem>
+						<MenuItem Header="Download v0.3 Update" x:Name="DownloadYT2JBAutoloaderUpdate" Click="DownloadYT2JBAutoloaderUpdate_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+							<ToolTip.Tip>
+								To use for the USB Update method.
+							</ToolTip.Tip>
+						</MenuItem>
+						<MenuItem Header="Learn more at GitHub" x:Name="OpenYT2JBAutoloaderGitHub" Click="OpenYT2JBAutoloaderGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Up to 12.XX">
+					<MenuItem Header="Netflix 'N Hack">
+						<MenuItem Header="Download Extended storage image for 256GB+ (USB)" x:Name="DownloadNFlix256GBUSB" Click="DownloadNFlix256GBUSB_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download Extended storage image for 256GB (Internal M.2)" x:Name="DownloadNFlix256GB" Click="DownloadNFlix256GB_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download Extended storage image for 500GB (Internal M.2)" x:Name="DownloadNFlix500GB" Click="DownloadNFlix500GB_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download Extended storage image for 1TB (Internal M.2)" x:Name="DownloadNFlix1TB" Click="DownloadNFlix1TB_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download Extended storage image for 2TB (Internal M.2)" x:Name="DownloadNFlix2TB" Click="DownloadNFlix2TB_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download Extended storage image for 2048GB (Internal M.2)" x:Name="DownloadNFlix2048GB" Click="DownloadNFlix2048GB_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download Extended storage image for 4TB (Internal M.2)" x:Name="DownloadNFlix4TB" Click="DownloadNFlix4TB_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download System Backup (Internal M.2)" x:Name="DownloadNFlixSystemBackup" Click="DownloadNFlixSystemBackup_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download Netflix v6 PKG" x:Name="DownloadNFlixV6PKG" Click="DownloadNFlixV6PKG_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Learn more at GitHub" x:Name="OpenNFlixGitHub" Click="OpenNFlixGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+			</MenuItem>
+
+			<MenuItem x:Name="HostsDNSMenuItem" Header="Hosts &amp; DNS">
+				<MenuItem Header="PS Multi Tools Host:">
+					<TextBox Text="http://87.106.5.21/ps5ex/"></TextBox>
+				</MenuItem>
+				<MenuItem Header="PKG-Zone Host:">
+					<TextBox Text="https://pkg-zone.com/exploit/PS5/index.html"></TextBox>
+				</MenuItem>
+				<MenuItem Header="Sleirsgoevy Host:">
+					<TextBox Text="https://sleirsgoevy.github.io/ps4jb2/ps5-403/index.html"></TextBox>
+				</MenuItem>
+				<MenuItem Header="Zecoxao Host:">
+					<TextBox Text="https://zecoxao.github.io/ps5jb/"></TextBox>
+				</MenuItem>
+				<Separator/>
+				<MenuItem Header="Al Azif DNS:">
+					<TextBox Text="192.241.221.79"></TextBox>
+				</MenuItem>
+				<MenuItem Header="Kameleon DNS:">
+					<TextBox Text="62.210.38.117"></TextBox>
+				</MenuItem>
+				<MenuItem Header="YT2JB Local DNS:">
+					<TextBox Text="127.0.0.2"></TextBox>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem x:Name="WebManMenuItem" Header="webMAN for websrv">
+				<TextBlock Text="Requires WebSrv running" FontWeight="Bold" TextDecorations="Underline">
+					<ToolTip.Tip>
+						In order to use any of these utilities you will need to send the WebSrv payload first to the PS5.
+					</ToolTip.Tip>
+				</TextBlock>
+				<MenuItem Header="Emulator Utilities">
+					<MenuItem Header="Manage ROMs of Homebrew Emulators" x:Name="ManagePS5GameROMs" Click="ManagePS5GameROMs_Click">
+						<ToolTip.Tip>
+							Allows to manage your game ROMs of any emulator that is placed in '/data/homebrew'.
+						</ToolTip.Tip>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="General Utilities">
+					<MenuItem Header="Open PS5 WebServer Interface" x:Name="OpenPS5WebSrvInterface" Click="OpenPS5WebSrvInterface_Click">
+						<ToolTip.Tip>
+							Opens a window with the WebSrv's homepage where you can view your installed homebrew and games and start them directly.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Browse PS5 File System" x:Name="BrowsePS5FileSystem" Click="BrowsePS5FileSystem_Click">
+						<ToolTip.Tip>
+							Shows an overwiew of the PS5 file system. The window is read-only and no modifications are possible.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Manage installed Homebrew" x:Name="ManagePS5Homebrew" Click="ManagePS5Homebrew_Click">
+						<ToolTip.Tip>
+							Allows to manage your installed homebrew '/data/homebrew'.
+						</ToolTip.Tip>
+					</MenuItem>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem x:Name="TelnetMenuItem" Header="Commands for shsrv">
+				<TextBlock Text="Requires ShSrv running" FontWeight="Bold" TextDecorations="Underline">
+					<ToolTip.Tip>
+						In order to use any of these utilities you will need to send the SHSrv payload first to the PS5.
+					</ToolTip.Tip>
+				</TextBlock>
+				<MenuItem Header="Read Console Information">
+					<MenuItem Header="Get Model, Serial Number, Software Version &amp; Temperatures" x:Name="GetConsoleInfo" Click="GetConsoleInfo_Click">
+						<ToolTip.Tip>
+							Display information about Model, Serial Number, Software Version &amp; Temperatures of the PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Get AuthID" x:Name="GetAuthID" Click="GetAuthID_Click"/>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem x:Name="DownloadsMenuItem" Header="Downloads">
+				<MenuItem Header="Firmwares">
+					<MenuItem Header="Recovery Firmware">
+						<MenuItem Header="Download 4.03" x:Name="DownloadRecoveryFW403" Click="DownloadRecoveryFW403_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 4.51" x:Name="DownloadRecoveryFW451" Click="DownloadRecoveryFW451_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 5.50" x:Name="DownloadRecoveryFW550" Click="DownloadRecoveryFW550_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 6.50" x:Name="DownloadRecoveryFW650" Click="DownloadRecoveryFW650_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 7.61" x:Name="DownloadRecoveryFW761" Click="DownloadRecoveryFW761_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 10.01" x:Name="DownloadRecoveryFW1001" Click="DownloadRecoveryFW1001_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="System Firmware">
+						<MenuItem Header="Download 4.03" x:Name="DownloadSystemFW403" Click="DownloadSystemFW403_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 4.51" x:Name="DownloadSystemFW451" Click="DownloadSystemFW451_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 5.50" x:Name="DownloadSystemFW550" Click="DownloadSystemFW550_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 6.50" x:Name="DownloadSystemFW650" Click="DownloadSystemFW650_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 7.61" x:Name="DownloadSystemFW761" Click="DownloadSystemFW761_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download 10.01" x:Name="DownloadSystemFW1001" Click="DownloadSystemFW1001_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+
+				<MenuItem Header="Homebrew">
+					<MenuItem Header="Avatar Changer by Lapy">
+						<MenuItem Header="Download v1.00 PKG" x:Name="DownloadAvatarChanger" Click="DownloadAvatarChanger_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Debug Settings PKG" x:Name="DownloadDebugPKG" Click="DownloadDebugPKG_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="FPKGi v1.01.1 by ItsJokerZz, Bucanero">
+						<MenuItem Header="Download v1.01.1" x:Name="DownloadFPKGiPKG" Click="DownloadFPKGiPKG_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Game Hub (Preview) PKG" x:Name="DownloadGameHubPreviewPKG" Click="DownloadGameHubPreviewPKG_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Homebrew Store by LightningMods">
+						<MenuItem Header="Download latest R2 PKG" x:Name="DownloadHomebrewStore" Click="DownloadHomebrewStore_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Internet Browser PKG" x:Name="DownloadInternetBrowserPKG" Click="DownloadInternetBrowserPKG_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Itemzflow by LightningMods">
+						<MenuItem Header="Download v1.14 PKG" x:Name="DownloadItemzflow" Click="DownloadItemzflow_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS Multi Tools Auto-Exploit Host PKG" x:Name="DownloadPSMTPKG" Click="DownloadPSMTPKG_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="PS5-Xplorer PKG by Lapy">
+						<MenuItem Header="Download v1.04" x:Name="DownloadPS5Xplorer" Click="DownloadPS5Xplorer_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Store (Preview) PKG" x:Name="DownloadStorePreviewPKG" Click="DownloadStorePreviewPKG_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+				</MenuItem>
+
+				<MenuItem Header="Payloads">
+					<MenuItem Header="App Dumper by Echo Stretch">
+						<MenuItem Header="Download v1.08 Beta" x:Name="DownloadAppDumper" Click="DownloadAppDumper_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Dump Runner by Echo Stretch">
+						<MenuItem Header="Download v1 Beta" x:Name="DownloadDumpRunner" Click="DownloadDumpRunner_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Dump Installer by Echo Stretch">
+						<MenuItem Header="Download v1 Beta" x:Name="DownloadDumpInstaller" Click="DownloadDumpInstaller_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ELFLdr by john-tornblom">
+						<MenuItem Header="latest version from GitHub" x:Name="DownloadELFLdrGitHub" Click="DownloadELFLdrGitHub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="etaHEN by LightningMods">
+						<MenuItem Header="Download v2.5B" x:Name="DownloadLatestetaHEN" Click="DownloadLatestetaHEN_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="FetchPKG by john-tornblom">
+						<MenuItem Header="Download latest Payload from GitHub" x:Name="DownloadFetchPKGPS5Github" Click="DownloadFetchPKGPS5Github_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download latest Windows Application from GitHub" x:Name="DownloadFetchPKGWinGithub" Click="DownloadFetchPKGWinGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download latest Linux Application from GitHub" x:Name="DownloadFetchPKGLinuxGithub" Click="DownloadFetchPKGLinuxGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="For Mast1c0re Exploit">
+						<MenuItem Header="Download latest PS2 Network ELF Loader VMC0 .card">
+							<MenuItem Header="PS5 6.50">
+								<MenuItem Header="Download" x:Name="DownloadPS5NetworkELFLoader650" Click="DownloadPS5NetworkELFLoader650_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Download latest PS2 Network Game Loader ELF">
+							<MenuItem Header="PS5 6.50">
+								<MenuItem Header="Download" x:Name="DownloadPS5NetworkGameLoader650" Click="DownloadPS5NetworkGameLoader650_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="FTPS5 by zecoxao">
+						<MenuItem Header="Download v1.4 (Contains both ELFs)" x:Name="DownloadFTPS5" Click="DownloadFTPS5_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="FTPSrv by john-tornblom">
+						<MenuItem Header="Download latest version from GitHub" x:Name="DownloadFTPSrvGithub" Click="DownloadFTPSrvGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="GDBSrv by john-tornblom">
+						<MenuItem Header="latest version from GitHub" x:Name="DownloadGDBSrvGithub" Click="DownloadGDBSrvGithub_Click" >
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="JAR Payloads for PlayStation 5 Remote JAR Loader">
+						<MenuItem Header="Byepervisor">
+							<MenuItem Header="Download v1.0" x:Name="DownloadByepervisor" Click="DownloadByepervisor_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Debug Settings">
+							<MenuItem Header="Download v1.0" x:Name="DownloadDebugSettings" Click="DownloadDebugSettings_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Dump Class Path">
+							<MenuItem Header="Download v1.0" x:Name="DownloadDumpClassPath" Click="DownloadDumpClassPath_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Dump Current Process">
+							<MenuItem Header="Download v1.0" x:Name="DownloadCurProc" Click="DownloadCurProc_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="FTP Server">
+							<MenuItem Header="Download v1.0" x:Name="DownloadJARFTPServer" Click="DownloadJARFTPServer_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Jailbreak">
+							<MenuItem Header="Download v1.0" x:Name="DownloadJailbreak" Click="DownloadJailbreak_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Kerneldump">
+							<MenuItem Header="Download v1.0" x:Name="DownloadKerneldump" Click="DownloadKerneldump_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Kernel Log Server">
+							<MenuItem Header="Download v1.0" x:Name="DownloadJARKlogSrv" Click="DownloadJARKlogSrv_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="List Directory Entries">
+							<MenuItem Header="Download v1.0" x:Name="DownloadListDirEnts" Click="DownloadListDirEnts_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="MiniTennis">
+							<MenuItem Header="Download v1.0" x:Name="DownloadMiniTennis" Click="DownloadMiniTennis_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Print System Properties">
+							<MenuItem Header="Download v1.0" x:Name="DownloadPrintSysProps" Click="DownloadPrintSysProps_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="UMTX 1">
+							<MenuItem Header="Download v1.0" x:Name="DownloadUMTX1" Click="DownloadUMTX1_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="UMTX 2">
+							<MenuItem Header="Download v1.0" x:Name="DownloadUMTX2" Click="DownloadUMTX2_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="KLogSrv by john-tornblom">
+						<MenuItem Header="latest version from GitHub" x:Name="DownloadKLogSrvGithub" Click="DownloadKLogSrvGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="kstuff">
+						<MenuItem Header="By sleirsgoevy &amp; EchoStretch for 3.00 - 10.01">
+							<MenuItem Header="Download v1.6.7" x:Name="DownloadNewKStuff" Click="DownloadKStuff_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="kstuff-Toggle by EchoStretch">
+						<MenuItem Header="Download v0.4 Beta" x:Name="DownloadKStuffToggle" Click="DownloadKStuffToggle_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="linkdev by john-tornblom">
+						<MenuItem Header="latest version from GitHub" x:Name="Downloadlinkdev" Click="DownloadLinkDevGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="OffAct by john-tornblom">
+						<MenuItem Header="latest version from GitHub" x:Name="DownloadOffActGithub" Click="DownloadOffActGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="SELF Decrypter by idlesauce &amp; EchoStretch">
+						<MenuItem Header="Download v0.4" x:Name="DownloadSELFDecrypter" Click="DownloadSELFDecrypter_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="SHSrv by john-tornblom">
+						<MenuItem Header="latest version from GitHub" x:Name="DownloadSHSrvGithub" Click="DownloadSHSrvGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="WebSrv by john-tornblom">
+						<MenuItem Header="latest version from GitHub" x:Name="DownloadWebSrvGithub" Click="DownloadWebSrvGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+
+				<MenuItem Header="Game/App Updates">
+					<MenuItem Header="Official Game/App Updates" x:Name="OpenGamePatchesMenuItem" Click="OpenGamePatchesMenuItem_Click">
+						<ToolTip.Tip>
+							Browse ProsperoPatches for the latest available game/app updates and download them directly within PS Multi Tools.
+						</ToolTip.Tip>
+					</MenuItem>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem x:Name="SettingsMenuItem" Header="Settings">
+				<MenuItem x:Name="SettingsSetPS5IPMenuItem" Header="Set IP Address :">
+					<TextBox x:Name="IPTextBox" Width="200"/>
+				</MenuItem>
+				<MenuItem x:Name="SettingsSetPS5FTPPortMenuItem" Header="Set FTP Port :">
+					<TextBox x:Name="FTPPortTextBox" Width="100"/>
+				</MenuItem>
+				<MenuItem x:Name="SettingsSetPS5PayloadPortMenuItem" Header="Set Payload Port :">
+					<TextBox x:Name="PayloadPortTextBox" Width="100"/>
+				</MenuItem>
+				<MenuItem x:Name="AllSettingsMenuItem" Header="All Settings" Click="SettingsMenuItem_Click"/>
+			</MenuItem>
+		</Menu>
+
+		<Decorator x:Name="WebMANWebViewWrapper" IsVisible="False"></Decorator>
+	</Grid>
+</UserControl>

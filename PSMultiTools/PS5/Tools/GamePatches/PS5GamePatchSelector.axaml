@@ -1,0 +1,12 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+		x:Class="PSMultiTools.PS5.Tools.GamePatches.PS5GamePatchSelector"
+		Title="PS5 Game Patch Selector" Height="700" Width="1000" CanResize="True" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock x:Name="LoadingTextBlock" HorizontalAlignment="Center" Text="Loading game patches for&#10;&#10;PPSA12345&#10;&#10;Please wait ..." VerticalAlignment="Center" Foreground="White" FontSize="64" FontFamily="Calibri" TextAlignment="Center"/>
+		<Decorator x:Name="GamePatchesWebViewWrapper" Margin="0,0,0,0" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Decorator>
+	</Grid>
+</Window>

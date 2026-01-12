@@ -1,0 +1,63 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1010" d:DesignHeight="550"
+		x:Class="PSMultiTools.PS3.Tools.PS3VirtualFolderManager"
+		Title="webMAN MOD Virtual Folder Manager" Height="550" Width="1010" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select Virtual Content Directory" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+
+		<Button x:Name="LoadGAMESButton" Content="Load GAMES.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="135" Click="LoadGAMESButton_Click"/>
+		<Button x:Name="LoadPS3ISOButton" Content="Load PS3ISO.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="150,36,0,0" VerticalAlignment="Top" Width="135" Click="LoadPS3ISOButton_Click"/>
+		<Button x:Name="LoadPS2ISOButton" Content="Load PS2ISO.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="290,36,0,0" VerticalAlignment="Top" Width="135" Click="LoadPS3ISOButton_Click"/>
+		<Button x:Name="LoadPSXISOButton" Content="Load PSXISO.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="430,36,0,0" VerticalAlignment="Top" Width="135" Click="LoadPSXISOButton_Click"/>
+		<Button x:Name="LoadPSPISOButton" Content="Load PSPISO.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="570,36,0,0" VerticalAlignment="Top" Width="135" Click="LoadPSPISOButton_Click"/>
+		<Button x:Name="LoadBDISOButton" Content="Load BDISO.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Width="135" Click="LoadBDISOButton_Click"/>
+		<Button x:Name="LoadDVDISOButton" Content="Load DVDISO.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="150,105,0,0" VerticalAlignment="Top" Width="135" Click="LoadDVDISOButton_Click"/>
+		<Button x:Name="LoadROMSButton" Content="Load ROMS.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="710,36,0,0" VerticalAlignment="Top" Width="135" Click="LoadROMSButton_Click"/>
+		<Button x:Name="LoadGAMEIButton" Content="Load GAMEI.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="850,36,0,0" VerticalAlignment="Top" Width="135" Click="LoadGAMEIButton_Click"/>
+		<Button x:Name="LoadPKGButton" Content="Load PKG.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="135" Click="LoadPKGButton_Click"/>
+		<Button x:Name="LoadMOVIESButton" Content="Load MOVIES.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="150,140,0,0" VerticalAlignment="Top" Width="135" Click="LoadMOVIESButton_Click"/>
+		<Button x:Name="LoadMUSICButton" Content="Load MUSIC.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="290,140,0,0" VerticalAlignment="Top" Width="135" Click="LoadMUSICButton_Click"/>
+		<Button x:Name="LoadPICTUREButton" Content="Load PICTURE.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="135" Click="LoadPICTUREButton_Click"/>
+		<Button x:Name="LoadREDKEYButton" Content="Load REDKEY.INI" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="150,70,0,0" VerticalAlignment="Top" Width="135" Click="LoadREDKEYButton_Click"/>
+
+		<TextBlock x:Name="DirectoriesInINITextBlock" HorizontalAlignment="Left" Margin="10,190,0,0" Text="Directories :" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+		<ListBox x:Name="VirtualContentListView" Margin="10,215,0,0" VerticalAlignment="Top" Height="250" HorizontalAlignment="Left" Width="975" FontSize="14">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label x:Name="GameIDLabel" Grid.Column="0" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Added Content Folder</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding FolderName}" TextAlignment="Left" Grid.Column="0"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button x:Name="AddNewFolderButton" Content="Add a new folder" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="630,500,0,0" VerticalAlignment="Top" Width="150" Click="AddNewFolderButton_Click"/>
+		<Button x:Name="RemoveSelectedFolderButton" Content="Remove selected folder" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="790,500,0,0" VerticalAlignment="Top" Width="200" Click="RemoveSelectedFolderButton_Click"/>
+	</Grid>
+</Window>

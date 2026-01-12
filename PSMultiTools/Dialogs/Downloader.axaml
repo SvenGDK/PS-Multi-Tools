@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="360"
+		x:Class="PSMultiTools.Dialogs.Downloader"
+		Title="Downloader" Height="360" Width="600" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<Image x:Name="DownloadImage" HorizontalAlignment="Center" Height="128" Margin="0,40,0,0" VerticalAlignment="Top" Width="128"/>
+
+		<TextBlock x:Name="FileToDownloadTB" HorizontalAlignment="Center" Margin="0,220,0,0" Text="Downloading ..." VerticalAlignment="Top" FontSize="14" Width="520"/>
+		<ProgressBar x:Name="DownloadProgressBar" HorizontalAlignment="Center" Height="25" Margin="0,248,0,0" VerticalAlignment="Top" Width="520"/>
+
+		<Grid HorizontalAlignment="Center" Height="70" Margin="0,285,0,0" VerticalAlignment="Top">
+			<TextBlock x:Name="DownloadSpeedTB" Margin="260,0,0,0" Text="0 kb/s" VerticalAlignment="Top" FontSize="14" TextAlignment="Right" HorizontalAlignment="Left" Width="260"/>
+			<TextBlock x:Name="DownloadETA" HorizontalAlignment="Center" Text="Time left:" VerticalAlignment="Center" FontSize="14" Width="520"/>
+			<TextBlock x:Name="DownloadFileSizeTB" Margin="0,0,300,0" Text="File Size:" VerticalAlignment="Top"  FontSize="14"/>
+		</Grid>
+	</Grid>
+</Window>

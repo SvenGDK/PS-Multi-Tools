@@ -1,0 +1,514 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="20"
+			 x:Class="PSMultiTools.Menus.PS3Menu" Height="20">
+	<Grid>
+		<Menu x:Name="MainMenu">
+			<MenuItem Header="Library"/>
+			<MenuItem Header="Tools">
+				<MenuItem Header="Batch Rename Utility" x:Name="BatchRenameMenuItem" Click="BatchRenameMenuItem_Click">
+					<ToolTip.Tip>
+						This utility allows you to easily rename folders, ISOs and PKG files with a simple click. This keeps your PS3 backups more organized and can help if it doesn't get detected by webMAN-MOD.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItem" Click="CheckForUpdatesMenuItems_Click"/>
+				<MenuItem Header="Core_OS Tools" x:Name="OpenCoreOSTools" Click="OpenCoreOSTools_Click">
+					<ToolTip.Tip>
+						Tool for decrypting/unpacking CoreOS-like images.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="Extract a PKG File" x:Name="OpenPKGExtractor" Click="OpenPKGExtractor_Click">
+					<ToolTip.Tip>
+						Extract a PS3 PKG file.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="Fix Tar" x:Name="OpenFixTar" Click="OpenFixTar_Click">
+					<ToolTip.Tip>
+						TAR fixer for PS3 packages.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="FTP Browser" x:Name="OpenFTPBrowser" Click="OpenFTPBrowser_Click"/>
+				<MenuItem Header="ISO Tools" x:Name="OpenISOTools" Click="OpenISOTools_Click">
+					<ToolTip.Tip>
+						Contains ISO utilities to create, extract, split and patch PS3 ISO files.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="PARAM.SFO Editor" x:Name="OpenSFOEditor" Click="OpenSFOEditor_Click"/>
+				<MenuItem Header="PUP Unpacker" x:Name="OpenPUPUnpacker" Click="OpenPUPUnpacker_Click">
+					<ToolTip.Tip>
+						Extract a PS3 firmware file.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="RCO Dumper" x:Name="OpenRCODumper" Click="OpenRCODumper_Click"/>
+				<MenuItem Header="SELF Reader" x:Name="OpenSELFReader" Click="OpenSELFReader_Click"/>
+			</MenuItem>
+			<MenuItem Header="Downloads">
+				<MenuItem Header="PS3NetSrv" x:Name="DownloadNetsrv" Click="DownloadNetsrv_Click"/>
+				<MenuItem Header=".key Files" x:Name="DownloadKeyFiles" Click="DownloadKeyFiles_Click"/>
+				<MenuItem Header=".dkey Files" x:Name="DownloadDKeyFiles" Click="DownloadDKeyFiles_Click"/>
+			</MenuItem>
+			<MenuItem Header="Homebrew">
+				<MenuItem Header="Applications">
+					<MenuItem Header="Advanced Power Options">
+						<MenuItem Header="Download" x:Name="DownloadAdvancedPowerOptions" Click="DownloadAdvancedPowerOptions_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Apollo Save Tool">
+						<MenuItem Header="Download v2.2.4" x:Name="DownloadApollo" Click="DownloadApollo_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download latest version from GitHub" x:Name="DownloadApolloGithub" Click="DownloadApolloGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ArtemisPS3">
+						<MenuItem Header="Download r6.3" x:Name="DownloadArtemis" Click="DownloadArtemis_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download latest version from GitHub" x:Name="DownloadArtemisGithub" Click="DownloadArtemisGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Comgenie Awesome Filemanager">
+						<MenuItem Header="Download for FW 3.14/3.41" x:Name="DownloadComgenieOld" Click="DownloadComgenieOld_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download for 3.55 Geohot CFW" x:Name="DownloadComgenieGeohot" Click="DownloadComgenieGeohot_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download for 4.21 or higher" x:Name="DownloadComgenieNew" Click="DownloadComgenieNew_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ManaGunZ Filemanager">
+						<MenuItem Header="Download v1.41" x:Name="DownloadManagunzFM" Click="DownloadManagunzFM_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="MovianM7">
+						<MenuItem Header="Download v7.0.231" x:Name="DownloadMovian" Click="DownloadMovian_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PKGi">
+						<MenuItem Header="Download v1.3.0" x:Name="DownloadPKGi" Click="DownloadPKGi_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download latest version from GitHub" x:Name="DownloadPKGiGithub" Click="DownloadPKGiGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS3 Unlock HDD Space">
+						<MenuItem Header="Download v1" x:Name="DownloadUnlockHDDSpace" Click="DownloadUnlockHDDSpace_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ReActPSN">
+						<MenuItem Header="Download v3.20+" x:Name="DownloadReact" Click="DownloadReact_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="SEN Enabler">
+						<MenuItem Header="Download v6.2.7" x:Name="DownloadSENEnabler" Click="DownloadSENEnabler_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Backup Managers">
+					<MenuItem Header="IRISMAN">
+						<MenuItem Header="Download v4.90" x:Name="DownloadIrisman" Click="DownloadIrisman_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download latest version from GitHub" x:Name="DownloadIrismanGithub" Click="DownloadIrismanGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ManaGunZ">
+						<MenuItem Header="Download v1.41" x:Name="DownloadManagunzBM" Click="DownloadManagunzBM_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="MultiMAN">
+						<MenuItem Header="Download 04.85.01" x:Name="DownloadMultiMAN" Click="DownloadMultiMAN_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="MultiMAN MOD">
+						<MenuItem Header="Download 04.85.01" x:Name="DownloadMultiMANMod" Click="DownloadMultiMANMod_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="webMAN MOD">
+						<MenuItem Header="Download 1.47.48n" x:Name="DownloadWebManMod" Click="DownloadWebManMod_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Developer Tools">
+					<MenuItem Header="Awesome MountPoint Manager">
+						<MenuItem Header="Download v1.1a" x:Name="DownloadAwesomeMPManager" Click="DownloadAwesomeMPManager_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="CCAPI">
+						<MenuItem Header="Download v2.80 Rev10" x:Name="DownloadCCAPI" Click="DownloadCCAPI_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS3 Advanced Tools">
+						<MenuItem Header="Download v1.0.1" x:Name="DownloadAdvancedTools" Click="DownloadAdvancedTools_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Emulators">
+					<MenuItem Header="RetroArch PSX-Place Community Edition">
+						<MenuItem Header="Download Beta4" x:Name="DownloadRetroArchCommunity" Click="DownloadRetroArchCommunity_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="RetroArch CE (WebMAN MOD) Edition">
+						<MenuItem Header="Download" x:Name="DownloadRetroArchWebMANMod" Click="DownloadRetroArchWebMANMod_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Toolboxes">
+					<MenuItem Header="Rebug Toolbox">
+						<MenuItem Header="Download 02.03.06 MULTI.16" x:Name="DownloadRebugToolbox" Click="DownloadRebugToolbox_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Ultimate Toolbox">
+						<MenuItem Header="Download v2.03" x:Name="DownloadUltimateToolbox" Click="DownloadUltimateToolbox_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="webMAN MOD Addons">
+					<MenuItem x:Name="DownloadCoversPackPS3" Header="Covers Pack for PS3 games" Click="DownloadCoversPackPS3_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem x:Name="DownloadCoversPackPSXPS2" Header="Covers Pack for PSX/PS2 games" Click="DownloadCoversPackPSXPS2_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="prepISO (Scans content stored in exFAT/NTFS/ext2/3/4 devices)" x:Name="DownloadPrepIso" Click="DownloadPrepIso_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="PS2CONFIG (Database of PS2 CONFIG files)" x:Name="DownloadPS2Config" Click="DownloadPS2Config_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="WM Themes (Customize the look of the XMB icons used by webMAN MOD)">
+						<MenuItem x:Name="DownloadColorfulWMTheme" Header="Colorful" Click="DownloadColorfulWMTheme_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem x:Name="DownloadFlowerificationWMTheme" Header="Flowerification" Click="DownloadFlowerificationWMTheme_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem x:Name="DownloadMetalificationWMTheme" Header="Metalification" Click="DownloadMetalificationWMTheme_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem x:Name="DownloadRebugificationWMTheme" Header="Rebugification" Click="DownloadRebugificationWMTheme_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem x:Name="DownloadStandardWMTheme" Header="Standard" Click="DownloadStandardWMTheme_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="webMAN MOD Launchers">
+					<MenuItem Header="Download PS2 Classics Launcher" x:Name="DownloadPS2ClassicsLauncher" Click="DownloadPS2ClassicsLauncher_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Download PSP Minis Launcher" x:Name="DownloadPSPMinisLauncher" Click="DownloadPSPMinisLauncher_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Download PSP Remasters Launcher" x:Name="DownloadPSPRemastersLauncher" Click="DownloadPSPRemastersLauncher_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="Firmwares">
+				<MenuItem Header="Custom Firmwares">
+					<MenuItem Header="3.55">
+						<MenuItem Header="3.55 DEX Downgrader" x:Name="Download355DexDowngrader" Click="Download355DexDowngrader_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Cobra 3.55" x:Name="DownloadCobra355" Click="DownloadCobra355_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="GeoHot 3.55" x:Name="DownloadGeoHot" Click="DownloadGeoHot_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Kmeaw 3.55" x:Name="DownloadKmeaw" Click="DownloadKmeaw_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="MiralaTijera 3.55" x:Name="DownloadMiralaTijera" Click="DownloadMiralaTijera_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="OTHEROS++ COLD-BOOT 3.55" x:Name="DownloadOTHEROSColdBoot" Click="DownloadOTHEROSColdBoot_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="OTHEROS++ SPECIAL 3.55" x:Name="DownloadOTHEROSSpecial" Click="DownloadOTHEROSSpecial_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="PS3ITA 3.55" x:Name="DownloadPS3ITA" Click="DownloadPS3ITA_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="PS3ULTIMATE 3.55" x:Name="DownloadPS3ULTIMATE" Click="DownloadPS3ULTIMATE_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="REBUG REX EDITION 3.55.4" x:Name="DownloadRebugRex" Click="DownloadRebugRex_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Rogero v3.7 3.55" x:Name="DownloadRogero" Click="DownloadRogero_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Waninkoko 3.55 v2" x:Name="DownloadWaninkoko" Click="DownloadWaninkoko_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Wutangrza 3.55" x:Name="DownloadWutangrza" Click="DownloadWutangrza_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="4.84" >
+						<MenuItem Header="REBUG D-REX EDITION 4.84.2" x:Name="DownloadREBUGDRex484" Click="DownloadREBUGDRex484_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="REBUG REX EDITION 4.84.2" x:Name="DownloadREBUGRex484" Click="DownloadREBUGRex484_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="4.90" >
+						<MenuItem Header="Evilnat Cobra 8.4 [CEX]" x:Name="DownloadEvilnatCobra490Cex" Click="DownloadEvilnatCobra490Cex_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Evilnat Cobra 8.4 [DEX]" x:Name="DownloadEvilnatCobra490Dex" Click="DownloadEvilnatCobra490Dex_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="4.92" >
+						<MenuItem Header="Evilnat Cobra 8.5 [PEX]" x:Name="DownloadEvilnatCobra492PEX" Click="DownloadEvilnatCobra492PEX_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Evilnat Cobra 8.5 [PEX] [OC]" x:Name="DownloadEvilnatCobra492PEXOC" Click="DownloadEvilnatCobra492PEXOC_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Evilnat Cobra 8.5 [PEX] [noBD]" x:Name="DownloadEvilnatCobra492PEXNoBD" Click="DownloadEvilnatCobra492PEXNoBD_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Evilnat Cobra 8.5 [PEX] [noBT]" x:Name="DownloadEvilnatCobra492PEXNoBT" Click="DownloadEvilnatCobra492PEXNoBT_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Evilnat Cobra 8.5 [PEX] [noBD]+[noBT]" x:Name="DownloadEvilnatCobra492PEXNoBDNoBT" Click="DownloadEvilnatCobra492PEXNoBDNoBT_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Official Firmwares">
+					<MenuItem Header="1.02" x:Name="DownloadOFW102" Click="DownloadOFW102_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="3.15" x:Name="DownloadOFW315" Click="DownloadOFW315_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="3.55" x:Name="DownloadOFW355" Click="DownloadOFW355_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="4.92" x:Name="DownloadOFW492" Click="DownloadOFW492_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="webMAN MOD">
+				<MenuItem Header="Open webMAN MOD Web Interface" x:Name="OpenwebMANMODWebGUI" Click="OpenwebMANMODWebGUI_Click"/>
+				<MenuItem Header="PS3NetSrv Utilities">
+					<MenuItem Header="Create folder structure (GAMES, PS3ISO, ...)" x:Name="CreateFolderStructure" Click="CreateFolderStructure_Click"/>
+					<MenuItem Header="Manage virtual folders for ps3netsrv" x:Name="ManageVirtualFolders" Click="ManageVirtualFolders_Click"/>
+					<Separator/>
+					<MenuItem Header="Share a single folder" x:Name="ShareASingleFolder" Click="ShareASingleFolder_Click"/>
+					<MenuItem Header="Share configured managed virtual folders" x:Name="ShareManagedFolders" Click="ShareManagedFolders_Click"/>
+				</MenuItem>
+				<MenuItem Header="Disc &amp; Game Utilities">
+					<MenuItem Header="Play inserted disc" x:Name="PlayDiscMenuItem" Click="PlayDiscMenuItem_Click"/>
+					<MenuItem Header="Eject inserted disc" x:Name="EjectDisc" Click="EjectDisc_Click"/>
+					<MenuItem Header="Insert disc in tray" x:Name="InsertDisc" Click="InsertDisc_Click"/>
+					<Separator/>
+					<MenuItem Header="Exit game to XMB" x:Name="ExitToXMB" Click="ExitToXMB_Click"/>
+					<MenuItem Header="Reload PS3 game" x:Name="ReloadGame" Click="ReloadGame_Click"/>
+					<MenuItem Header="Toggle video recording (in-game)" x:Name="ToggleVideoRecording" Click="ToggleVideoRecording_Click"/>
+					<MenuItem Header="Toggle in-game background music playback" x:Name="ToggleInGameBGMusicPlayback" Click="ToggleInGameBGMusicPlayback_Click"/>
+				</MenuItem>
+				<MenuItem Header="General Utilities">
+					<MenuItem Header="Rescan the games and refresh XML" x:Name="RescanGamesRefreshXML" Click="RescanGamesRefreshXML_Click"/>
+					<Separator/>
+					<MenuItem Header="Shutdown the PS3 console" x:Name="ShutdownPS3" Click="ShutdownPS3_Click"/>
+					<MenuItem Header="Restart the PS3 console" x:Name="RestartPS3" Click="RestartPS3_Click"/>
+					<MenuItem Header="Restart the PS3 console and allow scan content on startup" x:Name="RestartPS3WithContentScan" Click="RestartPS3WithContentScan_Click"/>
+					<MenuItem Header="Restart the PS3 console and show the min version" x:Name="RestartPS3ShowMinVersion" Click="RestartPS3ShowMinVersion_Click"/>
+					<MenuItem Header="Hard reboot" x:Name="HardRebootPS3" Click="HardRebootPS3_Click"/>
+					<MenuItem Header="Soft reboot" x:Name="SoftRebootPS3" Click="SoftRebootPS3_Click"/>
+					<MenuItem Header="Quick reboot" x:Name="QuickRebootPS3" Click="QuickRebootPS3_Click"/>
+					<MenuItem Header="Reboot using VSH command" x:Name="RebootPS3UsingVSH" Click="RebootPS3UsingVSH_Click"/>
+					<MenuItem Header="Open an URL on the PS3 web browser" x:Name="OpenPS3WebBrowserURL" Click="OpenPS3WebBrowserURL_Click"/>
+				</MenuItem>
+				<MenuItem Header="Download &amp; Installation Utilities">
+					<MenuItem Header="Download a PKG from an URL to the PS3 HDD" x:Name="DownloadPKGFromURLToPS3" Click="DownloadPKGFromURLToPS3_Click"/>
+					<MenuItem Header="Download a file from an URL to the PS3 HDD" x:Name="DownloadFileFromURLToPS3" Click="DownloadFileFromURLToPS3_Click"/>
+					<MenuItem Header="Download &amp; Install a PKG from an URL" x:Name="DownloadAndInstallPKGFromURL" Click="DownloadAndInstallPKGFromURL_Click"/>
+					<Separator/>
+					<MenuItem Header="Install a PKG from the PS3 HDD" x:Name="InstallPKGFromPS3HDD" Click="InstallPKGFromPS3HDD_Click"/>
+					<MenuItem Header="Install a theme from the PS3 HDD" x:Name="InstallThemeFromPS3HDD" Click="InstallThemeFromPS3HDD_Click"/>
+				</MenuItem>
+				<MenuItem Header="Temperature Monitoring">
+					<MenuItem Header="Show system info on PS3" x:Name="ShowSystemInfoOnPS3" Click="ShowSystemInfoOnPS3_Click"/>
+					<MenuItem Header="Web GUI for monitor temperatures in Celcius" x:Name="OpenWebGUICelcius" Click="OpenWebGUICelcius_Click"/>
+					<MenuItem Header="Web GUI for monitor temperatures in Fahrenheit" x:Name="OpenWebGUIFahrenheit" Click="OpenWebGUIFahrenheit_Click"/>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="Settings">
+				<MenuItem Header="FTP IP Address">
+					<TextBox x:Name="FTPIPTextBox" Width="250"></TextBox>
+				</MenuItem>
+				<MenuItem x:Name="AllSettingsMenuItem" Header="All Settings" Click="SettingsMenuItem_Click"/>
+			</MenuItem>
+		</Menu>
+
+		<Decorator x:Name="WebMANWebViewWrapper" IsVisible="False"></Decorator>
+	</Grid>
+</UserControl>

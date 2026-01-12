@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="880" d:DesignHeight="670"
+		x:Class="PSMultiTools.PS2.Tools.PAKerUtility"
+		Title="PAKerUtility GUI" Height="670" Width="880" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Create a PAK archive" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,35,0,0" Text="Select a manifest file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedManifestFileTextBox" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseManifestButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="320,60,0,0" VerticalAlignment="Top" Width="74" Click="BrowseManifestButton_Click"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,100,0,0" Text="Save PAK archive to :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedPAKSaveFolderTextBox" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="SavePAKFileBrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="320,125,0,0" VerticalAlignment="Top" Width="74" Click="SavePAKFileBrowseButton_Click"/>
+		<Button x:Name="CreatePAKButton" Content="Create" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="236,165,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Click="CreatePAKButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,205,0,0" Text="Extract a PAK archive" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,230,0,0" Text="Select a PAK file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedExtractPAKFileTextBox" HorizontalAlignment="Left" Margin="10,255,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseExtractPAKFileButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="320,255,0,0" VerticalAlignment="Top" Width="74" Click="BrowsePAKFileButton_Click"/>
+		<Button x:Name="ExtractPAKButton" Content="Extract" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="236,295,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Click="ExtractPAKFileButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="454,10,0,0" Text="List contents of a PAK archive" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="454,35,0,0" Text="Select a PAK file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedListPAKFileTextBox" HorizontalAlignment="Left" Margin="454,60,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseListPAKFileButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="765,60,0,0" VerticalAlignment="Top" Width="74" Click="BrowseListPAKFileButton_Click"/>
+		<Button x:Name="ListPAKContentButton" Content="List" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="680,100,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Click="ListPAKContentButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="454,165,0,0" Text="Create a manifest file" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="454,190,0,0" Text="Select a PAK file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedCreateManifestPAKFileTextBox" HorizontalAlignment="Left" Margin="454,215,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseCreateManifestPAKFileButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="765,215,0,0" VerticalAlignment="Top" Width="74" Click="BrowseCreateManifestPAKFileButton_Click"/>
+		<TextBlock HorizontalAlignment="Left" Margin="454,255,0,0" Text="Save manifest to :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedManifestSavePathTextBox" HorizontalAlignment="Left" Margin="454,280,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseManifestSavePathButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="765,280,0,0" VerticalAlignment="Top" Width="74" Click="BrowseManifestSavePathButton_Click"/>
+		<Button x:Name="CreateManifestButton" Content="Create" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="680,320,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Click="CreateManifestButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,0,0,280" Text="Log :" VerticalAlignment="Bottom" FontSize="14" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" VerticalAlignment="Bottom" Height="264" Margin="10,0,10,10"/>
+	</Grid>
+</Window>

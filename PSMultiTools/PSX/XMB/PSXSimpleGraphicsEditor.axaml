@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="PSMultiTools.PSXSimpleGraphicsEditor"
+		Title="Simple Graphics Editor" Height="600" Width="1000" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Menu VerticalAlignment="Top" Height="20">
+			<MenuItem Header="File">
+				<MenuItem Header="Load Image" x:Name="LoadImageMenuItem"></MenuItem>
+				<MenuItem Header="Save Image As..." x:Name="SaveImageMenuItem"></MenuItem>
+			</MenuItem>
+
+			<MenuItem Header="Edit" x:Name="EditMenuItem" IsEnabled="False">
+				<MenuItem Header="Undo" x:Name="UndoMenuItem" IsEnabled="False"></MenuItem>
+				<MenuItem Header="Redo" x:Name="RedoMenuItem" IsEnabled="False"></MenuItem>
+			</MenuItem>
+
+			<MenuItem Header="Image" x:Name="ImageMenuItem" IsEnabled="False">
+				<MenuItem Header="Adjustments">
+					<MenuItem Header="Replace Color" x:Name="ReplaceColorMenuItem"/>
+				</MenuItem>
+				<MenuItem Header="Color Picker" x:Name="PickColorFromImageMenuItem"/>
+			</MenuItem>
+
+			<MenuItem Header="Clipboard" x:Name="ClipboardMenuItem" IsEnabled="False">
+				<MenuItem Header="Picked Color: ">
+					<StackPanel Orientation="Horizontal">
+						<Rectangle Width="200" Height="15" x:Name="RectangleForPickedColor"></Rectangle>
+					</StackPanel>
+				</MenuItem>
+			</MenuItem>
+		</Menu>
+
+		<Image x:Name="LoadedImage" Source="/Images/nothing.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None"/>
+	</Grid>
+</Window>

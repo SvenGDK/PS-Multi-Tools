@@ -1,0 +1,86 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+		x:Class="PSMultiTools.PS5.Tools.PKGBuilder.GP5Creator"
+		Title="GP5 Creator" Height="700" Width="1000" CanResize="False"	CanMinimize="True" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Menu Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<MenuItem Header="File" FontWeight="Bold" Height="20">
+				<MenuItem Header="Create a new GP5 project" x:Name="NewGP5ProjectMenuItem" Click="NewGP5ProjectMenuItem_Click"/>
+				<MenuItem Header="Load a GP5 project" x:Name="LoadGP5ProjectMenuItem" Click="LoadGP5ProjectMenuItem_Click"/>
+			</MenuItem>
+		</Menu>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="NoWrap" Text="Create or modify a GP5 project" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,70,0,0" TextWrapping="NoWrap" Text="Loaded GP5 file :" VerticalAlignment="Top"/>
+		<TextBox x:Name="SaveToTextBox" HorizontalAlignment="Left" Margin="162,65,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="466" IsEnabled="False"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="NoWrap" Text="Passcode :" VerticalAlignment="Top"/>
+		<TextBox x:Name="PasscodeTextBox" HorizontalAlignment="Left" Margin="162,105,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="466" Text="00000000000000000000000000000000"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,170,0,0" TextWrapping="NoWrap" Text="Add a files &amp; folders to the GP5 project :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,205,0,0" TextWrapping="NoWrap" Text="File / Folder Path :" VerticalAlignment="Top"/>
+		<TextBox x:Name="FileFolderSourcePathTextBox" HorizontalAlignment="Left" Margin="162,200,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="466"/>
+
+		<Button x:Name="BrowseFileSourcePathButton" Content="Add a File" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="640,200,0,0" VerticalAlignment="Top" Width="125" Click="BrowseFileSourcePathButton_Click"/>
+		<Button x:Name="BrowseFolderSourcePathButton" Content="Add a Folder" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="770,200,0,0" VerticalAlignment="Top" Width="125" Click="BrowseFolderSourcePathButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,245,0,0" TextWrapping="NoWrap" Text="Set Destination Path :" VerticalAlignment="Top"/>
+		<TextBox x:Name="FileFolderDestinationPathTextBox" HorizontalAlignment="Left" Margin="162,240,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="466"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="413,285,0,0" TextWrapping="NoWrap" Text="Add to Chunk# :" VerticalAlignment="Top"/>
+		<TextBox x:Name="SelectedChunkTextBox" HorizontalAlignment="Left" Margin="528,280,0,0" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="100" TextAlignment="Center" IsEnabled="False"/>
+		<Button x:Name="AddToChunkButton" Content="Add to chunk" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="640,280,0,0" VerticalAlignment="Top" Width="125" Click="AddToChunkButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="675,25,0,0" TextWrapping="NoWrap" Text="Quick Utilities" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+		<Button x:Name="CreateParamButton" Content="Create a new param.json" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="685,65,0,0" VerticalAlignment="Top" Width="275" FontWeight="Bold" Click="CreateParamButton_Click"/>
+		<Button x:Name="CreateManifestButton" Content="Create a new manifest.json" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="685,100,0,0" VerticalAlignment="Top" Width="275" FontWeight="Bold" Click="CreateManifestButton_Click"/>
+		<Button x:Name="BuildPKGButton" Content="Build selected GP5 project as PKG" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="685,135,0,0" VerticalAlignment="Top" Width="275" FontWeight="Bold" Click="BuildPKGButton_Click"/>	
+
+		<TextBlock x:Name="CurrentChunkTextBlock" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Files &amp; folders inside Chunk#0 :" VerticalAlignment="Bottom" FontSize="16" Margin="10,0,0,340" FontWeight="Bold"/>
+		<ListBox x:Name="ChunkFilesFolderListBox" Margin="10,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="325">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="150"></ColumnDefinition>
+								<ColumnDefinition Width="350"></ColumnDefinition>
+								<ColumnDefinition Width="300"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center">Type</Label>
+							<Label Grid.Column="1" HorizontalContentAlignment="Center" VerticalAlignment="Center">Source Path</Label>
+							<Label Grid.Column="2" HorizontalContentAlignment="Center" VerticalAlignment="Center">Destination Path</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150"></ColumnDefinition>
+							<ColumnDefinition Width="350"></ColumnDefinition>
+							<ColumnDefinition Width="300"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding ChunkType}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding SourcePath}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding DestinationPath}" Grid.Column="2"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</Window>

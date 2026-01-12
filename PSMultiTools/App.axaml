@@ -1,0 +1,31 @@
+<Application xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 x:Class="PSMultiTools.App"
+			 RequestedThemeVariant="Dark">
+
+	<!--macOS App Menu-->
+	<NativeMenu.Menu>
+		<NativeMenu>
+			<NativeMenuItem Header="PS1 Library">
+				<NativeMenu>
+					<NativeMenuItem Header="Show backup Library"/>
+				</NativeMenu>
+			</NativeMenuItem>
+			<NativeMenuItem Header="PS2 Library"/>
+			<NativeMenuItem Header="PS3 Library"/>
+			<NativeMenuItem Header="PS4 Library"/>
+			<NativeMenuItem Header="PS5 Library"/>
+			<NativeMenuItem Header="PSP Library"/>
+			<NativeMenuItem Header="PS Vita Library"/>
+			<NativeMenuItem Header="General Settings"/>
+		</NativeMenu>
+	</NativeMenu.Menu>
+
+	<Application.Styles>
+		<FluentTheme />
+		<!--Additional ColorPicker control-->
+		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+		<!--Additional TextEditor control-->
+		<StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
+	</Application.Styles>
+</Application>

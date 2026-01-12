@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="200"
+		x:Class="PSMultiTools.PS2.Tools.DNASPatcher"
+		Title="DNAS Patcher" Height="200" Width="600" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select an ISO file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedFolderTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="481"/>
+		<Button x:Name="BrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="500,33,0,0" VerticalAlignment="Top" Width="74"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="Select a DNAS Patch Mode :" VerticalAlignment="Top" FontSize="14"/>
+		<ComboBox x:Name="ModeComboBox" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="481">
+			<ComboBoxItem Content="1 = sceDNAS2GetStatus injection -> fake deinit, error 0, status 5"/>
+			<ComboBoxItem Content="2 = sceDNAS2GetStatus injection -> status 5"/>
+			<ComboBoxItem Content="3 = SetStatus patch -> status 5 semi-forcing"/>
+			<ComboBoxItem Content="4 = SetStatus patch -> status 5 instead of 6 (DNASrep required)"/>
+			<ComboBoxItem Content="5 = MODE 1 &amp; MODE 3, scan-only, no patching, output codes when possible"/>
+		</ComboBox>
+		<Button x:Name="PatchButton" Content="Patch" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="417,140,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold"/>
+	</Grid>
+</Window>

@@ -1,0 +1,14 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="110"
+		x:Class="PSMultiTools.PS3.Tools.PS3FixTar"
+		Title="PS3 Fix Tar Tool" Height="110" Width="400" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Selected a .tar file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedTarFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseTarButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="315,33,0,0" VerticalAlignment="Top" Width="74" Click="BrowseTarButton_Click"/>
+		<Button x:Name="FixTarButton" Content="Fix" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="236,70,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Click="FixTarButton_Click"/>
+	</Grid>
+</Window>

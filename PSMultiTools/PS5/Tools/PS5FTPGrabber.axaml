@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="340"
+		x:Class="PSMultiTools.PS5.Tools.PS5FTPGrabber"
+		Title="FTP Grabber / Dumper" Height="340" Width="700" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Enter or select a folder to dump from :" VerticalAlignment="Top" FontSize="14"/>
+		<ComboBox x:Name="SelectedFolderComboBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="680" IsEditable="True">
+			<ComboBoxItem Content="/mnt/sandbox/pfsmnt/"/>
+			<ComboBoxItem Content="/mnt/disc/"/>
+		</ComboBox>
+		<TextBlock HorizontalAlignment="Center" Margin="0,75,0,0" TextWrapping="NoWrap" Text="Info: Selecting pfsmnt will automatically detect the mounted game." VerticalAlignment="Top" TextAlignment="Center" FontStyle="Italic"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="NoWrap" Text="Dump Options :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<CheckBox x:Name="FullDumpCheckBox" Content="Create a Full Dump" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" FontSize="14" IsEnabled="False"/>
+		<CheckBox x:Name="MetadataDumpCheckBox" Content="Dump Metadata only" HorizontalAlignment="Left" Margin="180,120,0,0" VerticalAlignment="Top" FontSize="14" IsEnabled="False"/>
+		<CheckBox x:Name="SELFDumpCheckBox" Content="Dump SELF files only" HorizontalAlignment="Left" Margin="360,120,0,0" VerticalAlignment="Top" FontSize="14" IsEnabled="False"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,155,0,0" Text="Save Dump to :" VerticalAlignment="Top" FontSize="14" />
+		<TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top" Width="594"/>
+		<Button x:Name="BrowseFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="609,180,0,0" VerticalAlignment="Top" Width="80" Click="BrowseFolderButton_Click"/>
+		<Button x:Name="DownloadButton" Content="Start Dumping" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="455,220,0,0" VerticalAlignment="Top" Width="150" Click="DownloadButton_Click"/>
+	
+		<TextBlock x:Name="ReceiveStatusTextBlock" HorizontalAlignment="Left" Margin="10,270,0,0" Text="Transfer Status :" VerticalAlignment="Top" />
+		<ProgressBar x:Name="ReceiveProgressBar" HorizontalAlignment="Left" Height="25" Margin="10,295,0,0" VerticalAlignment="Top" Width="680"/>
+	</Grid>
+</Window>

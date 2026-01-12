@@ -1,0 +1,167 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:classes="using:PSMultiTools.Classes"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:menus="using:PSMultiTools.Menus"
+		mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="700"
+		x:Class="PSMultiTools.PS4.PS4Library"
+		Title="PS4 Library" Height="700" Width="1350" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+
+	<Window.Resources>
+		<classes:AnyBitmapToAvaloniaConverter x:Key="AnyToAvalonia"/>
+	</Window.Resources>
+
+	<Grid>
+		<menus:PS4Menu x:Name="NewPS4Menu" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+		<TabControl Margin="0,25,0,0" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+			<TabItem Header="Games" FontSize="16" BorderBrush="{x:Null}">
+				<Grid>
+					<Rectangle x:Name="BlurringShape" Stretch="UniformToFill">
+						<Rectangle.Fill>
+							<ImageBrush Source="{Binding GameBackgroundSource, Converter={StaticResource AnyToAvalonia}}" Opacity="0.75" Stretch="UniformToFill"/>
+						</Rectangle.Fill>
+						<Rectangle.Effect>
+							<BlurEffect Radius="25" />
+						</Rectangle.Effect>
+					</Rectangle>
+
+					<ListBox x:Name="GamesListBox" Margin="0,5,0,0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" SelectionMode="Single" Height="320" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid Width="265" Height="290">
+									<Image Width="250" Height="250" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,15" VerticalAlignment="Center" >
+										<Image.Effect>
+											<DropShadowEffect/>
+										</Image.Effect>
+									</Image>
+									<TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0" FontSize="12"  TextAlignment="Center"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+
+					<TextBlock x:Name="GameTitleTextBlock" VerticalAlignment="Top" Text="GameTitle" FontSize="48" FontWeight="Bold" Margin="0,340,0,0" HorizontalAlignment="Center" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FontSize="24" Margin="100,410,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FontSize="24" TextAlignment="Left" Margin="100,440,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FontSize="24" TextAlignment="Left" Margin="100,470,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FontSize="24" TextAlignment="Left" Margin="100,500,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FontSize="24" TextAlignment="Left" Margin="904,410,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameVersionTextBlock" VerticalAlignment="Top" Text="GameVersion" FontSize="24" TextAlignment="Left" Margin="904,440,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FontSize="24" TextAlignment="Left" Margin="904,500,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameAppVersionTextBlock" VerticalAlignment="Top" Text="GameAppVersion" FontSize="24" TextAlignment="Left" Margin="904,470,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder :" FontSize="24" TextAlignment="Left" Margin="904,530,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Updates" FontSize="16" BorderBrush="{x:Null}">
+				<ListBox x:Name="UpdatesListBox" Margin="0,5,0,0" Background="{x:Null}" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectionMode="Single"  >
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid Width="455">
+								<Image Width="64" Height="64" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}"  FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}"  FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}"  FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}"  FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}"  FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+			<TabItem Header="DLCs" FontSize="16" BorderBrush="{x:Null}">
+				<ListBox x:Name="DLCsListBox" Margin="0,5,0,0" Background="{x:Null}" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectionMode="Single"  >
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid Width="455">
+								<Image Width="64" Height="64" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}"  FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}"  FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}"  FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}"  FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}"  FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+			<TabItem Header="Others" FontSize="16" BorderBrush="{x:Null}">
+				<ListBox x:Name="OthersListBox" Margin="0,5,0,0" Background="{x:Null}" BorderBrush="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" SelectionMode="Single"  >
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid Width="455">
+								<Image Width="64" Height="64" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}"  FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}"  FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}"  FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}"  FontSize="12" TextAlignment="Left" Margin="374,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}"  FontSize="12" TextAlignment="Left" Margin="374,55,0,0" HorizontalAlignment="Left"/>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+		</TabControl>
+	</Grid>
+</Window>

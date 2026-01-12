@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="690" d:DesignHeight="560"
+		x:Class="PSMultiTools.PS1.Tools.MergeBinTool"
+		Title="MergeBIN Tool" Height="560" Width="690" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select the .cue files of games that have multiple .bin (Track x) files" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<Button x:Name="BrowseCUEFilesButton" Content="Browse .cue files" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="150" FontWeight="Bold" Click="BrowseCUEFilesButton_Click"/>
+
+		<TextBlock x:Name="LockedTextBlock" HorizontalAlignment="Left" Margin="10,90,0,0" Text="Selected .cue files :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<ListBox x:Name="CUEsListView" Width="665" Height="200" Margin="10,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel Orientation="Vertical"></VirtualizingStackPanel>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding FileName}"></TextBlock>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button x:Name="MergeAllButton" Content="Merge all" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="395,320,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold" Click="MergeAllButton_Click"/>
+		<Button x:Name="MergeSelectedButton" Content="Merge only selected" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="500,320,0,0" VerticalAlignment="Top" Width="175" FontWeight="Bold" Click="MergeSelectedButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,360,0,0" Text="Merge Log :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,385,0,0" VerticalAlignment="Top" Width="665" Height="160"/>
+	</Grid>
+</Window>

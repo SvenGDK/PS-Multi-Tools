@@ -1,0 +1,248 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+		<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+		<Title>PS Multi Tools</Title>
+		<Version>16.0.0</Version>
+		<Company>SvenGDK</Company>
+		<Product>PS Multi Tools</Product>
+		<Description>Backup manager for PS1, PS2, PSX, PS3, PS4, PS5, PSP &amp; PS Vita, containing homebrews, firmwares &amp; tools.</Description>
+		<Copyright>Copyright © SvenGDK 2011-2025</Copyright>
+		<PackageProjectUrl>https://github.com/SvenGDK/PS-Multi-Tools</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/SvenGDK/PS-Multi-Tools.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>homebrew;ps1;ps4;ps3;toolset;psp;psx;backupmanager;ps2;psvita;sfo;param;ps5;firmwares</PackageTags>
+		<RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Images\Assets-icon.png" />
+		<None Remove="Images\av.png" />
+		<None Remove="Images\blankcover.png" />
+		<None Remove="Images\BlankPS1Cover.png" />
+		<None Remove="Images\BlankPS2Cover.png" />
+		<None Remove="Images\blu-ray.png" />
+		<None Remove="Images\change.png" />
+		<None Remove="Images\color-picker.cur" />
+		<None Remove="Images\controller.png" />
+		<None Remove="Images\convert.png" />
+		<None Remove="Images\copy-icon.png" />
+		<None Remove="Images\create.png" />
+		<None Remove="Images\de.png" />
+		<None Remove="Images\decrypt.png" />
+		<None Remove="Images\delete.png" />
+		<None Remove="Images\DIC-File.png" />
+		<None Remove="Images\disc.png" />
+		<None Remove="Images\download.png" />
+		<None Remove="Images\es.png" />
+		<None Remove="Images\eu.png" />
+		<None Remove="Images\extract.png" />
+		<None Remove="Images\Font-File.png" />
+		<None Remove="Images\fr.png" />
+		<None Remove="Images\gallery.png" />
+		<None Remove="Images\github.png" />
+		<None Remove="Images\HDD.png" />
+		<None Remove="Images\Image-Edit.png" />
+		<None Remove="Images\Image-File.png" />
+		<None Remove="Images\information.png" />
+		<None Remove="Images\iso.png" />
+		<None Remove="Images\isodisc.png" />
+		<None Remove="Images\it.png" />
+		<None Remove="Images\jp.png" />
+		<None Remove="Images\klog.png" />
+		<None Remove="Images\move.png" />
+		<None Remove="Images\Movie-File.png" />
+		<None Remove="Images\Music-File.png" />
+		<None Remove="Images\new-folder.png" />
+		<None Remove="Images\nothing.png" />
+		<None Remove="Images\open-folder.png" />
+		<None Remove="Images\patch.png" />
+		<None Remove="Images\pause.png" />
+		<None Remove="Images\PKG.png" />
+		<None Remove="Images\play.png" />
+		<None Remove="Images\PS1.png" />
+		<None Remove="Images\PS1Disc.png" />
+		<None Remove="Images\ps1mc.png" />
+		<None Remove="Images\PS2.png" />
+		<None Remove="Images\PS2Disc.png" />
+		<None Remove="Images\ps2mc.png" />
+		<None Remove="Images\PS3.png" />
+		<None Remove="Images\PS3Disc.png" />
+		<None Remove="Images\ps4.png" />
+		<None Remove="Images\PS5.png" />
+		<None Remove="Images\psp.png" />
+		<None Remove="Images\PSV.png" />
+		<None Remove="Images\psx.png" />
+		<None Remove="Images\PSXProjects.png" />
+		<None Remove="Images\refresh.png" />
+		<None Remove="Images\rename.png" />
+		<None Remove="Images\ResolutionsIcon.png" />
+		<None Remove="Images\send.png" />
+		<None Remove="Images\SoundFormatsIcon.png" />
+		<None Remove="Images\split.png" />
+		<None Remove="Images\stop.png" />
+		<None Remove="Images\UMD.png" />
+		<None Remove="Images\upload.png" />
+		<None Remove="Images\us.png" />
+		<None Remove="Images\Wrap.png" />
+		<None Remove="Images\XMBicons.png" />
+		<None Remove="Images\XML-File.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.3.10" />
+		<PackageReference Include="Avalonia.AvaloniaEdit" Version="11.3.0" />
+		<PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.3.10" />
+		<PackageReference Include="Avalonia.Desktop" Version="11.3.10" />
+		<PackageReference Include="Avalonia.Skia" Version="11.3.10" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.10" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.10" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.10">
+			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="CefGlue.Avalonia" Version="120.6099.211" />
+		<PackageReference Include="FluentFTP" Version="53.0.2" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
+		<PackageReference Include="ini-parser-netstandard" Version="2.5.3" />
+		<PackageReference Include="IronSoftware.System.Drawing" Version="2025.9.3" />
+		<PackageReference Include="LibVLCSharp.Avalonia" Version="3.9.5" />
+		<PackageReference Include="LTRData.DiscUtils.Iso9660" Version="1.0.73" />
+		<PackageReference Include="LTRData.DiscUtils.Udf" Version="1.0.73" />
+		<PackageReference Include="Magick.NET-Q8-x64" Version="14.10.1" />
+		<PackageReference Include="MessageBox.Avalonia" Version="3.3.1.1" />
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.2" />
+		<PackageReference Include="VideoLAN.LibVLC.Mac" Version="3.1.3.1" />
+		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.21" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AvaloniaResource Include="Images\Assets-icon.png" />
+		<AvaloniaResource Include="Images\av.png" />
+		<AvaloniaResource Include="Images\blankcover.png" />
+		<AvaloniaResource Include="Images\BlankPS1Cover.png" />
+		<AvaloniaResource Include="Images\BlankPS2Cover.png" />
+		<AvaloniaResource Include="Images\blu-ray.png" />
+		<AvaloniaResource Include="Images\change.png" />
+		<AvaloniaResource Include="Images\color-picker.cur" />
+		<AvaloniaResource Include="Images\controller.png" />
+		<AvaloniaResource Include="Images\convert.png" />
+		<AvaloniaResource Include="Images\copy-icon.png" />
+		<AvaloniaResource Include="Images\create.png" />
+		<AvaloniaResource Include="Images\de.png" />
+		<AvaloniaResource Include="Images\decrypt.png" />
+		<AvaloniaResource Include="Images\delete.png" />
+		<AvaloniaResource Include="Images\DIC-File.png" />
+		<AvaloniaResource Include="Images\disc.png" />
+		<AvaloniaResource Include="Images\download.png" />
+		<AvaloniaResource Include="Images\es.png" />
+		<AvaloniaResource Include="Images\eu.png" />
+		<AvaloniaResource Include="Images\extract.png" />
+		<AvaloniaResource Include="Images\Font-File.png" />
+		<AvaloniaResource Include="Images\fr.png" />
+		<AvaloniaResource Include="Images\gallery.png" />
+		<AvaloniaResource Include="Images\github.png" />
+		<AvaloniaResource Include="Images\HDD.png" />
+		<AvaloniaResource Include="Images\Image-Edit.png" />
+		<AvaloniaResource Include="Images\Image-File.png" />
+		<AvaloniaResource Include="Images\information.png" />
+		<AvaloniaResource Include="Images\iso.png" />
+		<AvaloniaResource Include="Images\isodisc.png" />
+		<AvaloniaResource Include="Images\it.png" />
+		<AvaloniaResource Include="Images\jp.png" />
+		<AvaloniaResource Include="Images\klog.png" />
+		<AvaloniaResource Include="Images\move.png" />
+		<AvaloniaResource Include="Images\Movie-File.png" />
+		<AvaloniaResource Include="Images\Music-File.png" />
+		<AvaloniaResource Include="Images\new-folder.png" />
+		<AvaloniaResource Include="Images\nothing.png" />
+		<AvaloniaResource Include="Images\open-folder.png" />
+		<AvaloniaResource Include="Images\patch.png" />
+		<AvaloniaResource Include="Images\pause.png" />
+		<AvaloniaResource Include="Images\PKG.png" />
+		<AvaloniaResource Include="Images\play.png" />
+		<AvaloniaResource Include="Images\PS1.png" />
+		<AvaloniaResource Include="Images\PS1Disc.png" />
+		<AvaloniaResource Include="Images\ps1mc.png" />
+		<AvaloniaResource Include="Images\PS2.png" />
+		<AvaloniaResource Include="Images\PS2Disc.png" />
+		<AvaloniaResource Include="Images\ps2mc.png" />
+		<AvaloniaResource Include="Images\PS3.png" />
+		<AvaloniaResource Include="Images\PS3Disc.png" />
+		<AvaloniaResource Include="Images\ps4.png" />
+		<AvaloniaResource Include="Images\PS5.png" />
+		<AvaloniaResource Include="Images\psp.png" />
+		<AvaloniaResource Include="Images\PSV.png" />
+		<AvaloniaResource Include="Images\psx.png" />
+		<AvaloniaResource Include="Images\PSXProjects.png" />
+		<AvaloniaResource Include="Images\refresh.png" />
+		<AvaloniaResource Include="Images\rename.png" />
+		<AvaloniaResource Include="Images\ResolutionsIcon.png" />
+		<AvaloniaResource Include="Images\send.png" />
+		<AvaloniaResource Include="Images\SoundFormatsIcon.png" />
+		<AvaloniaResource Include="Images\split.png" />
+		<AvaloniaResource Include="Images\stop.png" />
+		<AvaloniaResource Include="Images\UMD.png" />
+		<AvaloniaResource Include="Images\upload.png" />
+		<AvaloniaResource Include="Images\us.png" />
+		<AvaloniaResource Include="Images\Wrap.png" />
+		<AvaloniaResource Include="Images\XMBicons.png" />
+		<AvaloniaResource Include="Images\XML-File.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="icon.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Interop.IMAPI2">
+		  <HintPath>..\..\..\..\Documents\Interop.IMAPI2.dll</HintPath>
+		  <Private>True</Private>
+		</Reference>
+		<Reference Include="Interop.IMAPI2FS">
+		  <HintPath>..\..\..\..\Documents\Interop.IMAPI2FS.dll</HintPath>
+		  <Private>True</Private>
+		</Reference>
+		<Reference Include="LibOrbisPkg">
+		  <HintPath>..\..\..\..\Documents\GitHub\LibOrbisPkg\LibOrbisPkg\bin\Release\net9.0\LibOrbisPkg.dll</HintPath>
+		  <Private>True</Private>
+		</Reference>
+		<Reference Include="PARAM.SFO">
+		  <HintPath>..\..\..\..\Desktop\PS Multi Tools v15.6\PARAM.SFO.dll</HintPath>
+		  <Private>True</Private>
+		</Reference>
+		<Reference Include="PS4_Tools">
+		  <HintPath>..\..\PS4_Tools\PS4_Tools\bin\Release\net9.0\PS4_Tools.dll</HintPath>
+		  <Private>True</Private>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Menus\PS1Menu.axaml.cs">
+			<DependentUpon>PS1Menu.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Menus\PS2Menu.axaml.cs">
+			<DependentUpon>PS2Menu.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Menus\PS3Menu.axaml.cs">
+			<DependentUpon>PS3Menu.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Menus\PS4Menu.axaml.cs">
+			<DependentUpon>PS4Menu.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Menus\PSVMenu.axaml.cs">
+			<DependentUpon>PSVMenu.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Menus\PSPMenu.axaml.cs">
+			<DependentUpon>PSPMenu.axaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+</Project>

@@ -1,0 +1,18 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="490" d:DesignHeight="320"
+		x:Class="PSMultiTools.PS3.Tools.PS3ReadSELF"
+		Title="PS3 Read SELF Utility" Height="320" Width="490" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a .self file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="390"/>
+		<Button x:Name="BrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="405,34,0,0" VerticalAlignment="Top" Width="74" Click="BrowseButton_Click"/>
+
+		<Button x:Name="ReadSelfButton" Content="Read" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="326,75,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Click="ReadSelfButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,110,0,0" Text="Output :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="OutputTextBox" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="469" Height="175"/>
+	</Grid>
+</Window>

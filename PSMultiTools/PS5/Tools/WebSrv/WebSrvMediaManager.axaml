@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="290"
+		x:Class="PSMultiTools.PS5.Tools.WebSrv.WebSrvMediaManager"
+		Title="PS5 WebSrv Media Content Manager" Height="290" Width="1000" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Installed Media Files :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<ListBox x:Name="InstalledMediaListBox" HorizontalAlignment="Stretch" Height="192" Margin="10,35,10,0" VerticalAlignment="Top">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center">Remote File Path</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding RemoteFilePath}" TextAlignment="Left" Grid.Column="0"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<Button x:Name="AddContentButton" Content="Add Content" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="685,240,0,0" VerticalAlignment="Top" Width="115" FontWeight="Bold" Click="AddContentButton_Click"/>
+		<Button x:Name="RemoveContentButton" Content="Remove selected file" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="810,240,0,0" VerticalAlignment="Top" Width="175" FontWeight="Bold" Click="RemoveContentButton_Click"/>
+	</Grid>
+</Window>

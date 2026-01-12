@@ -1,0 +1,13 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="540" d:DesignHeight="300"
+		x:Class="PSMultiTools.InstallWindow"
+		Title="Installing" Height="300" Width="540" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<ProgressBar x:Name="InstallationProgressBar" Height="20" VerticalAlignment="Top" Margin="0,261,0,0" HorizontalAlignment="Center" Width="500"/>
+		<TextBlock x:Name="InstallationStatusTextBlock" HorizontalAlignment="Center" Text="Progress :" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" Width="500" Margin="0,234,0,0"/>
+		<Image x:Name="InstallImage" HorizontalAlignment="Center" Height="200" Margin="0,20,0,0" VerticalAlignment="Top" Width="140"/>
+	</Grid>
+</Window>

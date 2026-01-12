@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="220"
+		x:Class="PSMultiTools.PS2.Tools.STARExtractor"
+		Title="STAR File Extractor" Height="220" Width="580" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Extract a STAR archive" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,34,0,0" Text="Select a STAR file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedSTARFileTextBox" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="481"/>
+		<Button x:Name="BrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="500,60,0,0" VerticalAlignment="Top" Width="74" Click="BrowseSTARFileButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,100,0,0" Text="Select an output folder :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="481"/>
+		<Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="500,125,0,0" VerticalAlignment="Top" Width="74" Click="BrowseExtractionOutputFolderButton_Click"/>
+
+		<Button x:Name="ExtractButton" Content="Extract" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="417,170,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Click="ExtractSTARFileButton_Click"/>
+	</Grid>
+</Window>

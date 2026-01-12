@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="190"
+		x:Class="PSMultiTools.PS5.Tools.PS5WebBrowserAdder"
+		Title="PS5 Web Browser Installer" Height="190" Width="420" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" Text="This will add the Web Browser to your PS5 Home Screen" VerticalAlignment="Top" TextAlignment="Center" FontWeight="Bold" FontSize="14"/>
+		<TextBlock HorizontalAlignment="Center" Margin="0,40,0,0" Text="Please check your FTP connection with the button below." VerticalAlignment="Top" TextAlignment="Center"/>
+		<Button x:Name="CheckButton" Content="Check before install" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,65,0,0" VerticalAlignment="Top" Width="175" Click="CheckButtonC"/>
+		<TextBlock HorizontalAlignment="Center" Margin="0,105,0,0" Text="Install and update app.db with the button below." VerticalAlignment="Top" Width="324" TextAlignment="Center"/>
+		<Button x:Name="AddButton" Content="Add the Web Browser" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Width="175" IsEnabled="False" Click="AddButtonC"/>
+	</Grid>
+</Window>

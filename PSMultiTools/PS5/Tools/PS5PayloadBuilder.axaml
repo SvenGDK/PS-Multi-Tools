@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="375"
+		x:Class="PSMultiTools.PS5.Tools.PS5PayloadBuilder"
+		Title="PS5 Payload Builder" Height="375" Width="550" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Select a PS5 payload you want to build :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<ComboBox x:Name="SelectedPayloadComboBox" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="350">
+			<ComboBoxItem Content="PS5 SELF Decrypter"/>
+			<ComboBoxItem Content="App Titles"/>
+		</ComboBox>
+		<Button x:Name="BuildPayloadButton" Content="Build Payload" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="370,40,0,0" VerticalAlignment="Top" Width="150" FontWeight="Bold"/>
+
+		<Grid x:Name="SELFDecrypterOptionsGrid" Width="500" Margin="5,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="175" IsVisible="False">
+			<TextBlock HorizontalAlignment="Left" Text="Payload Settings" VerticalAlignment="Top" FontSize="14" Margin="10,10,0,0" FontWeight="Bold"/>
+			<TextBox x:Name="SELFDecrypterIPTextBox" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Width="180"/>
+			<TextBlock HorizontalAlignment="Left" Margin="10,34,0,0" Text="Set TCP Server IP :" VerticalAlignment="Top" FontSize="14"/>
+			<TextBox x:Name="SELFDecrypterPortTextBox" HorizontalAlignment="Left" Margin="205,58,0,0" VerticalAlignment="Top" Width="140"/>
+			<TextBlock HorizontalAlignment="Left" Margin="205,34,0,0" Text="Set TCP Server Port :" VerticalAlignment="Top" FontSize="14"/>
+			<CheckBox x:Name="SaveToUSBCheckBox" Content="Save files to USB" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top"/>
+			<CheckBox x:Name="SaveInternalCheckBox" Content="Save files to /data/dump" HorizontalAlignment="Left" Margin="175,95,0,0" VerticalAlignment="Top"/>
+			<CheckBox x:Name="FullDumpCheckBox" Content="Dump also kernel files &amp; libraries" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top"/>
+		</Grid>
+
+		<Grid x:Name="AppTitleOptionsGrid" Width="500" Margin="5,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="175" IsVisible="False">
+			<TextBlock HorizontalAlignment="Left" Text="Payload Settings" VerticalAlignment="Top" FontSize="14" Margin="10,10,0,0" FontWeight="Bold"/>
+			<CheckBox x:Name="SetFontSizeCheckBox" Content="Set Font Size :" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top"/>
+			<TextBox x:Name="FontSizeTextBox" HorizontalAlignment="Left" Margin="150,38,0,0" Text="60" VerticalAlignment="Top" Width="75" TextAlignment="Center"/>
+
+			<CheckBox x:Name="RestoreCheckBox" Content="Restore orignal icons" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
+
+			<CheckBox x:Name="ShowTextOnBottomCheckBox" Content="Show text on the bottom" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
+			<CheckBox x:Name="ShowTextOnTopCheckBox" Content="Show text on top" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top"/>
+			<CheckBox x:Name="ShowTextOnLeftCheckBox" Content="Show text on the left" HorizontalAlignment="Left" Margin="230,120,0,0" VerticalAlignment="Top"/>
+			<CheckBox x:Name="ShowTextOnRightCheckBox" Content="Show text on the right" HorizontalAlignment="Left" Margin="230,150,0,0" VerticalAlignment="Top"/>
+
+
+			<TextBox x:Name="PS5FTPIPTextBox" HorizontalAlignment="Left" Margin="230,80,0,0" Text="Enter PS5 IP" VerticalAlignment="Top" Width="150" TextAlignment="Center"/>
+			<TextBox x:Name="PS5FTPPortTextBox" HorizontalAlignment="Left" Margin="390,80,0,0" Text="Enter FTP Port" VerticalAlignment="Top" Width="125" TextAlignment="Center"/>
+		</Grid>
+
+		<TextBlock x:Name="PayloadBuildProgressStatusTextBlock" HorizontalAlignment="Left" Margin="15,275,0,0" TextWrapping="NoWrap" Text="Progress :" VerticalAlignment="Top" FontSize="14"/>
+		<ProgressBar x:Name="PayloadBuildProgressBar" HorizontalAlignment="Left" Height="20" Margin="15,305,0,0" VerticalAlignment="Top" Width="500"/>
+	</Grid>
+</Window>

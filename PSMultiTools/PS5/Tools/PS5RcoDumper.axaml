@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="370" d:DesignHeight="160"
+		x:Class="PSMultiTools.PS5.Tools.PS5RcoDumper"
+		Title="RCO Dumper" Height="160" Width="370" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" Text="Dump .rco files using FTP" VerticalAlignment="Top" FontSize="14" TextAlignment="Center" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,40,0,0" Text="Dump to :" VerticalAlignment="Top" />
+		<TextBox x:Name="SaveToTextBox" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="275"/>
+		<Button x:Name="BrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="295,65,0,0" VerticalAlignment="Top" Click="BrowseButton_Click"/>
+		<Button x:Name="LoadFilesButton" Content="Get files" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="350" FontWeight="Bold" Click="LoadFilesButton_Click"/>
+	</Grid>
+</Window>

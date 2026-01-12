@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="800"
+		x:Class="PSMultiTools.PS4.Tools.PPPwner"
+		Title="PPPwner GUI" Height="800" Width="1000" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="PPPwn Options" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="12,36,0,0" VerticalAlignment="Top" Text="Select your Ethernet Adapter :"/>
+		<ComboBox x:Name="EthernetInterfacesComboBox" HorizontalAlignment="Left" Margin="12,57,0,0" VerticalAlignment="Top" Width="400" DisplayMemberBinding="{Binding DisplayValue}"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="12,125,0,0" VerticalAlignment="Top" Text="Select your PS4 Firmware :"/>
+		<ComboBox x:Name="FirmwaresComboBox" HorizontalAlignment="Left" Margin="12,150,0,0" VerticalAlignment="Top" Width="400">
+			<ComboBoxItem Content="7.50 / 7.51 / 7.55"/>
+			<ComboBoxItem Content="8.00 / 8.01 / 8.03"/>
+			<ComboBoxItem Content="8.50 / 8.52"/>
+			<ComboBoxItem Content="9.00"/>
+			<ComboBoxItem Content="9.03 / 9.04"/>
+			<ComboBoxItem Content="9.50 / 9.51 / 9.60"/>
+			<ComboBoxItem Content="10.00 / 10.01"/>
+			<ComboBoxItem Content="10.50 / 10.70 / 10.71"/>
+			<ComboBoxItem Content="11.00"/>
+		</ComboBox>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,196,0,0" Text="Optional PPPwn Options" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<TextBlock Text="Customize (advanced)" VerticalAlignment="Top" Margin="560,10,0,0" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" />
+		<CheckBox VerticalAlignment="Top" x:Name="UseCustomStageFilesCheckBox" Margin="560,36,0,0" HorizontalAlignment="Left" Content="Use custom stage files"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="560,68,0,0" VerticalAlignment="Top" Text="Select a custom stage1 payload :"/>
+		<TextBox x:Name="CustomStage1PayloadTextBox" HorizontalAlignment="Left" Margin="560,90,0,0" VerticalAlignment="Top" Width="317"/>
+		<Button x:Name="BrowseStage1PayloadButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="890,90,0,0" VerticalAlignment="Top" Width="85" Click="BrowseStage1PayloadButton_Click"/>
+		<TextBlock HorizontalAlignment="Left" Margin="560,128,0,0" VerticalAlignment="Top" Text="Select a custom stage2 payload :"/>
+		<TextBox x:Name="CustomStage2PayloadTextBox" HorizontalAlignment="Left" Margin="560,150,0,0" VerticalAlignment="Top" Width="317"/>
+		<Button x:Name="BrowseStage2PayloadButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="890,150,0,0" VerticalAlignment="Top" Width="85" Click="BrowseStage2PayloadButton_Click"/>
+		
+		<TextBlock HorizontalAlignment="Left" Margin="560,196,0,0" Text="GoldHEN Options" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+		<Button x:Name="DownloadGoldHENButton" Content="Download latest GoldHEN to an USB drive" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="560,226,0,0" VerticalAlignment="Top" Width="420" FontWeight="Bold" Click="DownloadGoldHENButton_Click"/>
+		<Button x:Name="CopyGoldHENButton" Content="Copy cached goldhen.bin (v2.4b18.7) to an USB drive" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="560,265,0,0" VerticalAlignment="Top" Width="420" FontWeight="Bold" Click="CopyGoldHENButton_Click"/>
+
+		<CheckBox x:Name="AutoRetryCheckBox" Content="Enable Auto-Retry" HorizontalAlignment="Left" Margin="10,225,0,0" VerticalAlignment="Top" />
+
+		<CheckBox VerticalAlignment="Top" x:Name="UseResponseTimeoutCheckBox" Margin="10,260,0,0" HorizontalAlignment="Left" Content="Set timeout in seconds for PS4 response :"/>
+		<TextBox x:Name="ResponseTimeoutValueTextBox" HorizontalAlignment="Left" Margin="325,260,0,0" VerticalAlignment="Top" Width="30" Text="0" TextAlignment="Center"/>
+
+		<CheckBox VerticalAlignment="Top" x:Name="UsePinningWaitingTimeCheckBox" Margin="10,295,0,0" HorizontalAlignment="Left" Content="Specify waiting time in seconds after first round CPU pinning :"/>
+		<TextBox Width="30" VerticalAlignment="Top" Text="1" TextAlignment="Center" x:Name="PinningWaitingTimeValueTextBox" Margin="475,295,0,0" HorizontalAlignment="Left"/>
+
+		<CheckBox Content="Wait for 1ms every groom-delay rounds during Heap grooming :" VerticalAlignment="Top" x:Name="UseGroomDelayCheckBox" Margin="10,330,0,0" HorizontalAlignment="Left"/>
+		<TextBox Width="30" VerticalAlignment="Top" Text="4" TextAlignment="Center" x:Name="GroomDelayValueTextBox" Margin="475,330,0,0" HorizontalAlignment="Left"/>
+
+		<CheckBox Content="PCAP buffer size in bytes, less than 100 indicates default value :" VerticalAlignment="Top" x:Name="SpecifyPCAPBufferSizeCheckBox" Margin="10,365,0,0" HorizontalAlignment="Left"/>
+		<TextBox Width="40" VerticalAlignment="Top" Text="0" TextAlignment="Center" x:Name="PCAPBufferSizeValueTextBox" Margin="475,365,0,0" HorizontalAlignment="Left"/>
+
+		<CheckBox Content="Don't wait one more PADI before starting the exploit" VerticalAlignment="Top" x:Name="DontWaitPADICheckBox" Margin="10,400,0,0" HorizontalAlignment="Left"/>
+		<CheckBox Content="Use CPU for more precise sleep time" VerticalAlignment="Top" x:Name="UseCPUCheckBox" Margin="10,435,0,0" HorizontalAlignment="Left"/>
+			
+		<Button x:Name="StartPPPwnButton" Content="Start PPPwn" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="780,480,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" FontSize="16" Click="StartPPPwnButton_Click"/>
+
+		<TextBlock VerticalAlignment="Bottom" Text="PPPwn Log" Margin="10,0,0,250" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" />
+		<TextBox x:Name="LogTextBox" VerticalAlignment="Bottom" Margin="10,0,10,10" Height="230" HorizontalAlignment="Stretch"/>
+	</Grid>
+</Window>

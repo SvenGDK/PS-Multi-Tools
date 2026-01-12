@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
+		x:Class="PSMultiTools.PS5.Tools.PS5PKGExtractor"
+		Title="PS5 PKG Extractor" Height="500" Width="800" CanResize="False" CanMaximize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Extract a PS5 PKG" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,45,0,0" TextWrapping="NoWrap" Text="Select a .pkg file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="FileToExtractTextBox" HorizontalAlignment="Left" Margin="165,38,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="510"/>
+		<Button x:Name="BrowseFileToExtractButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="690,40,0,0" VerticalAlignment="Top" Width="90" Click="BrowseFileToExtractButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,80,0,0" TextWrapping="NoWrap" Text="Extract to :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="ExtractToTextBox" HorizontalAlignment="Left" Margin="165,74,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="510"/>
+		<Button x:Name="BrowseExtractDestinationPathButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="690,75,0,0" VerticalAlignment="Top" Width="90" Click="BrowseExtractDestinationPathButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,120,0,0" TextWrapping="NoWrap" Text="Enter the passcode :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="ExtractPasscodeTextBox" HorizontalAlignment="Left" Margin="165,110,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="510" MaxLength="32"/>
+		<Button x:Name="ExtractButton" Content="Extract" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="690,110,0,0" VerticalAlignment="Top" Width="90" FontWeight="Bold" Click="ExtractButton_Click"/>
+
+		<CheckBox x:Name="UsePKGDec5CheckBox" Content="Use pkgdec5" HorizontalAlignment="Left" Margin="560,150,0,0" VerticalAlignment="Top"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,0,0,295" Text="Log :" FontSize="14" VerticalAlignment="Bottom"/>
+		<TextBox x:Name="ExtractionLogTextBox" Height="270" Margin="10,0,10,10" Width="780" VerticalAlignment="Bottom"/>
+	</Grid>
+</Window>

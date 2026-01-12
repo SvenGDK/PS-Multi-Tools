@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="850"
+		x:Class="PSMultiTools.PS3.Tools.PS3ISOTools"
+		Title="PS3 ISO Tools" Height="850" Width="520" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Create a PS3 ISO" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="12,40,0,0" Text="Select a game backup folder :" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="SelectedGameBackupFolderTextBox" HorizontalAlignment="Left" Margin="12,65,0,0" VerticalAlignment="Top" Width="385"/>
+		<Button x:Name="BrowseBackupFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="405,65,0,0" VerticalAlignment="Top" Width="100" Click="BrowseBackupFolderButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="12,105,0,0" Text="Select an output folder :" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="SelectedISOOutputTextBox" HorizontalAlignment="Left" Margin="12,130,0,0" VerticalAlignment="Top" Width="385"/>
+		<Button x:Name="BrowseISOOutputFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="405,130,0,0" VerticalAlignment="Top" Width="100" Click="BrowseISOOutputFolderButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="12,175,0,0" Text="Options :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<CheckBox x:Name="SplitISOCheckBox" Content="Split" HorizontalAlignment="Left" Margin="20,195,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="Useps3netsrvCheckBox" Content="Use ps3netsrv" HorizontalAlignment="Left" Margin="90,195,0,0" VerticalAlignment="Top"/>
+		<Button x:Name="CreateISOButton" Content="Create ISO" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="255,195,0,0" VerticalAlignment="Top" Width="250" FontSize="16" FontWeight="Bold" Click="CreateISOButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,250,0,0" Text="Split / Patch / Extract / Decrypt a PS3 ISO" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="12,280,0,0" Text="Selected ISO file :" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="12,305,0,0" VerticalAlignment="Top" Width="400"/>
+		<Button x:Name="BrowseISOButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="425,305,0,0" VerticalAlignment="Top" Width="80" Click="BrowseISOButton_Click"/>
+		<TextBlock HorizontalAlignment="Center" Margin="0,350,0,0" Text="Select Option" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<CheckBox x:Name="PatchISOCheckBox" Content="Patch selected ISO" HorizontalAlignment="Left" Margin="20,370,0,0" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="110,400,0,0" Text="Version :" VerticalAlignment="Top" FontWeight="Bold"/>
+		<ComboBox x:Name="SelectedPatchVersionComboBox" HorizontalAlignment="Left" Margin="110,425,0,0" VerticalAlignment="Top" Width="395" SelectedIndex="0" HorizontalContentAlignment="Center">
+			<ComboBoxItem Content="4.21"/>
+			<ComboBoxItem Content="4.25"/>
+			<ComboBoxItem Content="4.30"/>
+			<ComboBoxItem Content="4.31"/>
+			<ComboBoxItem Content="4.40"/>
+			<ComboBoxItem Content="4.41"/>
+			<ComboBoxItem Content="4.46"/>
+			<ComboBoxItem Content="4.50"/>
+			<ComboBoxItem Content="4.53"/>
+			<ComboBoxItem Content="4.55"/>
+			<ComboBoxItem Content="4.60"/>
+		</ComboBox>
+
+		<CheckBox x:Name="ExtractISOCheckBox" Content="Extract selected ISO" HorizontalAlignment="Left" Margin="20,465,0,0" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="110,495,0,0" Text="Select output folder :" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="SelectedISOExtractionOutputFolderTextBox" HorizontalAlignment="Left" Margin="110,520,0,0" VerticalAlignment="Top" Width="310"/>
+		<Button x:Name="BrowseExtractionFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="425,520,0,0" VerticalAlignment="Top" Width="80" Click="BrowseExtractionFolderButton_Click"/>
+		<CheckBox x:Name="SplitLargeExtractedISOFilesCheckBox" Content="Split large extracted files" HorizontalAlignment="Left" Margin="220,555,0,0" VerticalAlignment="Top"/>
+	
+		<CheckBox x:Name="SplitCustomISOCheckBox" Content="Only split the selected ISO" HorizontalAlignment="Left" Margin="20,590,0,0" VerticalAlignment="Top"/>
+		
+		<CheckBox x:Name="DecryptISOCheckBox" Content="Decrypt selected ISO" HorizontalAlignment="Left" Margin="20,620,0,0" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="110,650,0,0" Text="Select an output folder (optional) :" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="SelectedISODecryptionFolderTextBox" HorizontalAlignment="Left" Margin="110,675,0,0" VerticalAlignment="Top" Width="310"/>
+		<Button x:Name="BrowseISODecryptionFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="425,675,0,0" VerticalAlignment="Top" Width="80" Click="BrowseISODecryptionFolderButton_Click"/>
+		<TextBlock HorizontalAlignment="Left" Margin="110,715,0,0" Text="Enter decryption key or select a DKEY file :" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="ISODecryptionKeyTextBox" HorizontalAlignment="Left" Margin="110,740,0,0" VerticalAlignment="Top" Width="310"/>
+		<Button x:Name="BrowseISODecryptionKeyButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="425,740,0,0" VerticalAlignment="Top" Width="80" Click="BrowseISODecryptionKeyButton_Click"/>
+
+		<Button x:Name="ModifyISOButton" Content="Modify ISO" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="500" FontSize="16" FontWeight="Bold" IsEnabled="False" Click="ModifyISOButton_Click"/>
+	</Grid>
+</Window>

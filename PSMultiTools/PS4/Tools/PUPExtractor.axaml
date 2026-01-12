@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+		x:Class="PSMultiTools.PS4.Tools.PUPExtractor"
+		Title="PS4 PUP.dec Extractor" Height="400" Width="600" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a decrypted PS4 Update File (PUP.dec) :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="500"/>
+		<Button x:Name="BrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="515,35,0,0" VerticalAlignment="Top" Width="75" Click="BrowseButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="Output Folder :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="500"/>
+		<Button x:Name="BrowseOutputButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="515,100,0,0" VerticalAlignment="Top" Width="75" Click="BrowseOutputButton_Click"/>
+
+		<Button x:Name="ExtractButton" Content="Unpack" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="435,140,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold" Click="ExtractButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,185,0,0" Text="Extraction Log :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Width="580" Height="173" FontSize="14"/>
+	</Grid>
+</Window>

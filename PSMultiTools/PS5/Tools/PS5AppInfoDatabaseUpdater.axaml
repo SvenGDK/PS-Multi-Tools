@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="350"
+		x:Class="PSMultiTools.PS5.Tools.PS5AppInfoDatabaseUpdater"
+		Title="PS5 AppInfo Database Updater" Height="350" Width="500" RequestedThemeVariant="Dark" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Button Margin="0,15,0,0" Content="Update a local appinfo.db file" HorizontalContentAlignment="Center" Width="400" HorizontalAlignment="Center" VerticalAlignment="Top" Click="UpdateLocalFile_Clicked"></Button>
+		<Button Margin="0,55,0,0" Content="Update appinfo.db over FTP" HorizontalContentAlignment="Center" Width="400" HorizontalAlignment="Center" VerticalAlignment="Top" Click="UpdateUsingFTP_Clicked"></Button>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,0,0,220" Text="Log :" VerticalAlignment="Bottom" FontSize="14"/>
+		<TextBox x:Name="LogTextBox" VerticalAlignment="Bottom" Height="205" Margin="10,0,10,10"/>
+	</Grid>
+</Window>

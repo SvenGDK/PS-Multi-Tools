@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="510" d:DesignHeight="510"
+		x:Class="PSMultiTools.PS5.Tools.PS5Sender"
+		Title="PS4 / PS5 Payload and PS5 Mast1c0re Game Sender" Height="510" Width="510" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Configuration" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,39,0,0" Text="Enter your PS4 / PS5 IP :" VerticalAlignment="Top" FontSize="14" />
+		<TextBox x:Name="IPTextBox" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Width="250"/>
+		<TextBlock HorizontalAlignment="Left" Margin="265,39,0,0" Text="Port :" VerticalAlignment="Top" FontSize="14" />
+		<TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="265,63,0,0" VerticalAlignment="Top" Width="145"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,110,0,0" Text="Send a Payload" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,140,0,0" Text="Select a custom ELF or BIN file :" VerticalAlignment="Top" FontSize="14" />
+		<TextBox x:Name="SelectedELFTextBox" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Width="400"/>
+		<Button x:Name="BrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="420,165,0,0" VerticalAlignment="Top" Width="75" Click="BrowseButton_Click"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,210,0,0" Text="Or select from downloaded payloads :" VerticalAlignment="Top" FontSize="14" />
+		<ComboBox x:Name="DownloadedPayloadsComboBox" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="400" DisplayMemberBinding="{Binding PayloadName}"/>
+		<Button x:Name="SendButton" Content="Send" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="300,275,0,0" VerticalAlignment="Top" Width="110" FontWeight="Bold" Click="SendButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,310,0,0" Text="Send a PS2 Game" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,340,0,0" Text="Selected ISO file :" VerticalAlignment="Top" FontSize="14" />
+		<TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,365,0,0" VerticalAlignment="Top" Width="400"/>
+		<Button x:Name="BrowseISOButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="420,365,0,0" VerticalAlignment="Top" Width="75" Click="BrowseISOButton_Click"/>
+		<Button x:Name="SendISOButton" Content="Send ISO" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="200,405,0,0" VerticalAlignment="Top" Width="100" Click="SendISOButton_Click"/>
+		<Button x:Name="SendConfigButton" Content="Send Config" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="305,405,0,0" VerticalAlignment="Top" Width="105" IsEnabled="False" Click="SendConfigButton_Click"/>
+
+		<TextBlock x:Name="SendStatusTextBlock" HorizontalAlignment="Left" Margin="10,445,0,0" Text="Send Status:" VerticalAlignment="Top" />
+		<ProgressBar x:Name="SendProgressBar" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="485" Height="20"/>
+	</Grid>
+</Window>

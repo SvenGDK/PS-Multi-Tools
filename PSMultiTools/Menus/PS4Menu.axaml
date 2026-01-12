@@ -1,0 +1,509 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="20"
+			 x:Class="PSMultiTools.Menus.PS4Menu" Height="20">
+	<Grid>
+		<Menu x:Name="MainMenu">
+			<MenuItem Header="Library"/>
+			<MenuItem Header="Tools">
+				<MenuItem Header="Check for PS Multi Tools updates" x:Name="CheckForUpdatesMenuItems" Click="CheckForUpdatesMenuItems_Click"/>
+				<MenuItem Header="Exploit USB Writer" x:Name="OpenUSBWriterMenuItem" Click="OpenUSBWriterMenuItem_Click">
+					<ToolTip.Tip>
+						Allows to write an IMG/ISO file to an USB drive. Warning: All data on the USB will be deleted when writing an image to it!
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="FTP Browser" x:Name="OpenFTPBrowserMenuItem" Click="OpenFTPBrowserMenuItem_Click"/>
+				<MenuItem Header="PARAM.SFO Editor" x:Name="OpenParamSFOEditorMenuItem" Click="OpenParamSFOEditorMenuItem_Click"/>
+				<MenuItem Header="Payload Sender" x:Name="OpenPayloadSenderMenuItem" Click="OpenPayloadSenderMenuItem_Click">
+					<ToolTip.Tip>
+						Send ELF/BIN payloads to an exploited PS4.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="PKG Extractor" x:Name="OpenPKGExtractorMenuItem" Click="OpenPKGExtractorMenuItem_Click">
+					<ToolTip.Tip>
+						Extract a PS4 fPKG file or a retail PKG using a passcode.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="PKG Merger" x:Name="OpenPKGMergerMenuItem" Click="OpenPKGMergerMenuItem_Click">
+					<ToolTip.Tip>
+						Merge multiple PKG files into a single PKG.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="PPPwner" x:Name="OpenPPPwnerMenuItem" Click="OpenPPPwnerMenuItem_Click">
+					<ToolTip.Tip>
+						The PPPwn utility allows you to exploit your PS4 from Firmware 7.00 up to 11.00.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem" Click="OpenPSClassicsfPKGBuilderMenuItem_Click">
+					<ToolTip.Tip>
+						Build a PS4/PS5 compatible fPKG file from a PS1, PS2 or PSP game.
+					</ToolTip.Tip>
+				</MenuItem>
+				<MenuItem Header="PUP Unpacker" x:Name="OpenPUPExtractorMenuItem" Click="OpenPUPExtractorMenuItem_Click">
+					<ToolTip.Tip>
+						Allows to extract a decrypted PS4 PUP (.dec) file.
+					</ToolTip.Tip>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="Downloads">
+				<MenuItem Header="Exploits">
+					<MenuItem Header="4.05" >
+						<MenuItem Header="Downloads" >
+							<MenuItem Header="Host Package Download" >
+								<MenuItem Header="Download latest" x:Name="Download405Host" Click="Download405Host_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="Download latest version from GitHub" x:Name="Download405HostGithub" Click="Download405HostGithub_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/github.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Hosts" >
+							<MenuItem Header="cthugha.exploit.menu"/>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="4.50-5.07" >
+						<MenuItem Header="Downloads" >
+							<MenuItem Header="5.05 Host Package" >
+								<MenuItem Header="Download latest" x:Name="Download505Host" Click="Download505Host_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="Download latest version from GitHub" x:Name="Download505HostGithub" Click="Download505HostGithub_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/github.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Hosts" >
+							<MenuItem Header="4.50-5.07: cthugha.exploit.menu"/>
+							<MenuItem Header="5.05: es7in1.site"/>
+							<MenuItem Header="5.05: wolf2022.ir"/>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="6.72" >
+						<MenuItem Header="Downloads" >
+							<MenuItem Header="PS4JB Host Download" >
+								<MenuItem Header="Download latest" x:Name="Download672Host" Click="Download672Host_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="Download latest version from GitHub" x:Name="Download672HostGithub" Click="Download672HostGithub_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/github.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Hosts" >
+							<MenuItem Header="cthugha.exploit.menu"/>
+							<MenuItem Header="es7in1.site"/>
+							<MenuItem Header="wolf2022.ir"/>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="7.50-7.55" >
+						<MenuItem Header="Downloads" >
+							<MenuItem Header="Host Package" >
+								<MenuItem Header="Download latest" x:Name="Download750Host" Click="Download750Host_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+							<MenuItem Header="Mira" >
+								<MenuItem Header="Download latest" x:Name="DownloadMira" Click="DownloadMira_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Hosts" >
+							<MenuItem Header="cthugha.exploit.menu"/>
+							<MenuItem Header="es7in1.site"/>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="9.00">
+						<MenuItem Header="Downloads">
+							<MenuItem Header="exfathax.img" >
+								<MenuItem Header="Download latest" x:Name="Download900Exfathax" Click="Download900Exfathax_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="Download latest version from GitHub" x:Name="Download900ExfathaxGithub" Click="Download900ExfathaxGithub_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/github.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+							<MenuItem Header="Host Package Download" >
+								<MenuItem Header="Download latest" x:Name="Download900Host" Click="Download900Host_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem Header="Download latest version from GitHub" x:Name="Download900Github" Click="Download900Github_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/github.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Hosts" >
+							<MenuItem Header="cthugha.exploit.menu"/>
+							<MenuItem Header="es7in1.site"/>
+							<MenuItem Header="kmeps4.site"/>
+							<MenuItem Header="wolf2022.ir"/>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Up to 11.00">
+						<MenuItem Header="PPPwn">
+							<MenuItem Header="Read more" x:Name="OpenPPPwnGitHub" Click="OpenPPPwnGitHub_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/github.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Open PPPwn Tool" x:Name="OpenPPPwnTool" Click="OpenPPPwnTool_Click"/>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Up to 12.52">
+						<MenuItem Header="Lapse + Poops (all in one)">
+							<MenuItem Header="GoldHEN AUTO-LOADER | Lapse + Poops v1.3" x:Name="DownloadGoldHENAutoloader" Click="DownloadGoldHENAutoloader_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Read more" x:Name="OpenLapsePoosGitHub" Click="OpenLapsePoosGitHub_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/github.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Emulators">
+					<MenuItem Header="Mednafen">
+						<MenuItem Header="Download v1" x:Name="DownloadMednafen" Click="DownloadMednafen_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="mGBA">
+						<MenuItem Header="Download v1" x:Name="DownloadmGBA" Click="DownloadmGBA_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PCSX-R" >
+						<MenuItem Header="Download v1" x:Name="DownloadPCSXR" Click="DownloadPCSXR_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="RetroArch" >
+						<MenuItem Header="Download r4" x:Name="DownloadRetroArchApp" Click="DownloadRetroArchApp_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download Cores" x:Name="DownloadRetroArchCores" Click="DownloadRetroArchCores_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="SNESStation">
+						<MenuItem Header="Download v1" x:Name="DownloadSnesStation" Click="DownloadSnesStation_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Yabause" >
+						<MenuItem Header="Download 1" x:Name="DownloadYabause" Click="DownloadYabause_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Firmwares">
+					<MenuItem Header="System Firmware 5.05" x:Name="DownloadSysFW505" Click="DownloadSysFW505_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Recovery Firmware 5.05" x:Name="DownloadRecFW505" Click="DownloadRecFW505_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<Separator/>
+					<MenuItem Header="System Firmware 6.72" x:Name="DownloadSysFW672" Click="DownloadSysFW672_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Recovery Firmware 6.72" x:Name="DownloadRecFW672" Click="DownloadRecFW672_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<Separator/>
+					<MenuItem Header="System Firmware 9.00" x:Name="DownloadSysFW900" Click="DownloadSysFW900_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Recovery Firmware 9.00" x:Name="DownloadRecFW900" Click="DownloadRecFW900_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<Separator/>
+					<MenuItem Header="System Firmware 11.00" x:Name="DownloadSysFW1100" Click="DownloadSysFW1100_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Recovery Firmware 11.00" x:Name="DownloadRecFW1100" Click="DownloadRecFW1100_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="System Firmware 12.50" x:Name="DownloadSysFW1250" Click="DownloadSysFW1250_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Recovery Firmware 12.50" x:Name="DownloadRecFW1250" Click="DownloadRecFW1250_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="System Firmware 12.52" x:Name="DownloadSysFW1252" Click="DownloadSysFW1252_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Recovery Firmware 12.52" x:Name="DownloadRecFW1252" Click="DownloadRecFW1252_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="System Firmware 13.00" x:Name="DownloadSysFW1300" Click="DownloadSysFW1300_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Recovery Firmware 13.00" x:Name="DownloadRecFW1300" Click="DownloadRecFW1300_Click">
+						<MenuItem.Icon>
+							<Image Source="/Images/download.png"/>
+						</MenuItem.Icon>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Homebrew &amp; Payloads">
+					<MenuItem Header="Apollo Save Tool by bucanero">
+						<MenuItem Header="Download v2.0.0" x:Name="DownloadApolloST" Click="DownloadApolloST_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Brew by Flatz &amp; TOXXIC407">
+						<MenuItem Header="Download v1.00" x:Name="DownloadBrew" Click="DownloadBrew_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ezRemote Client by cy33hc">
+						<MenuItem Header="Download v1.37" x:Name="DownloadezRemoteClient" Click="DownloadezRemoteClient_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="FPKGi by ItsJokerZz &amp; Bucanero">
+						<MenuItem Header="Download v0.87.7" x:Name="DownloadFPKGi" Click="DownloadFPKGi_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="FTP Client by cy33hc">
+						<MenuItem Header="Download v1.0.8" x:Name="DownloadFTPClient" Click="DownloadFTPClient_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="GoldHEN by SiSTRo">
+						<MenuItem Header="Download v2.4b18.7" x:Name="DownloadGoldHEN" Click="DownloadGoldHEN_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="GoldHEN Cheats Manager by bucanero" >
+						<MenuItem Header="Download v1.1.4" x:Name="DownloadGoldHENCM" Click="DownloadGoldHENCM_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Homebrew Store by LightningMods" >
+						<MenuItem Header="Download R2" x:Name="DownloadHomebrewStore" Click="DownloadHomebrewStore_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="IconMask by Lapy &amp; Anubis" >
+						<MenuItem Header="Download v1.16" x:Name="DownloadIconMask" Click="DownloadIconMask_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Itemzflow Game Manager by LightningMods" >
+						<MenuItem Header="Download v1.06" x:Name="DownloadItemzflowGM" Click="DownloadItemzflowGM_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="LogMeIn Hamachi by Sleirsgoevy" >
+						<MenuItem Header="Download v0.2.3" x:Name="DownloadHamachi" Click="DownloadHamachi_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="NoBDToolkit by LightningMods" >
+						<MenuItem Header="Download v2.04" x:Name="DownloadNoBDToolkit" Click="DownloadNoBDToolkit_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PayloadGuest by AlAzif" >
+						<MenuItem Header="Download v0.98" x:Name="DownloadPayloadGuest" Click="DownloadPayloadGuest_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download latest version from GitHub" x:Name="DownloadPayloadGuestGithub" Click="DownloadPayloadGuestGithub_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/github.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PKGi by ThoeryWrong" >
+						<MenuItem Header="Download v1" x:Name="DownloadPKGi" Click="DownloadPKGi_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS4 Player by Lapy" >
+						<MenuItem Header="Download v1.08" x:Name="DownloadPS4Player" Click="DownloadPS4Player_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS4 Player 3D by Lapy" >
+						<MenuItem Header="Download v1.01" x:Name="DownloadPS4Player3D" Click="DownloadPS4Player3D_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS4 Cheats Manager by bucanero" >
+						<MenuItem Header="Download v1.2.2" x:Name="DownloadPS4CheatsManager" Click="DownloadPS4CheatsManager_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS4 Toolset by Snake" >
+						<MenuItem Header="Download v2.20" x:Name="DownloadPS4ToolSet" Click="DownloadPS4ToolSet_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS4-Xplorer 2 by Lapy" >
+						<MenuItem Header="Download v2.04" x:Name="DownloadPS4Xplorer" Click="DownloadPS4Xplorer_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="RemotePKGInstaller by Flatz" >
+						<MenuItem Header="Download v1.02" x:Name="DownloadRemotePKGInstaller" Click="DownloadRemotePKGInstaller_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="SMB Client by cy33hc" >
+						<MenuItem Header="Download v1.10" x:Name="DownloadSMBClient" Click="DownloadSMBClient_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="WebDAV Client by cy33hc" >
+						<MenuItem Header="Download v1.04" x:Name="DownloadWebDAVClient" Click="DownloadWebDAVClient_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Other Tools" >
+					<MenuItem Header="PS4 Disc Dumper VTX" >
+						<MenuItem Header="Download for 4.05" x:Name="DownloadDiscDumperVTX405" Click="DownloadDiscDumperVTX405_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download for 4.55" x:Name="DownloadDiscDumperVTX455" Click="DownloadDiscDumperVTX455_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download for 5.05" x:Name="DownloadDiscDumperVTX505" Click="DownloadDiscDumperVTX505_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Saturn FPKG" >
+						<MenuItem Header="Download v1.1" x:Name="DownloadSaturnFPKG" Click="DownloadSaturnFPKG_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem x:Name="SettingsMenuItem" Header="Settings" Click="SettingsMenuItem_Click"/>
+		</Menu>
+	</Grid>
+</UserControl>

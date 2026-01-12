@@ -1,0 +1,194 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:classes="using:PSMultiTools.Classes"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:menus="using:PSMultiTools.Menus"
+		mc:Ignorable="d" d:DesignWidth="1435" d:DesignHeight="825"
+		x:Class="PSMultiTools.PS5.PS5Library"
+		Title="PS5 Library" Height="825" Width="1435" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+
+	<Window.Resources>
+		<classes:AnyBitmapToAvaloniaConverter x:Key="AnyToAvalonia"/>
+	</Window.Resources>
+
+	<Grid>
+		<menus:PS5Menu x:Name="NewPS5Menu" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+		<TabControl Margin="0,25,0,0" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+			<TabItem Header="Games" FontSize="16" BorderBrush="{x:Null}">
+				<Grid>
+					<Rectangle x:Name="BlurringShape" Stretch="UniformToFill">
+						<Rectangle.Fill>
+							<ImageBrush Source="{Binding GameBackgroundImageBrush}" Opacity="0.75" Stretch="UniformToFill" TileMode="None"/>
+						</Rectangle.Fill>
+						<Rectangle.Effect>
+							<BlurEffect Radius="25"/>
+						</Rectangle.Effect>
+					</Rectangle>
+
+					<ListBox x:Name="GamesListBox" Margin="0,5,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="325" Background="{x:Null}" BorderBrush="{x:Null}" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid Width="275" Height="300">
+									<Image Width="256" Height="256" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" >
+										<Image.Effect>
+											<DropShadowEffect/>
+										</Image.Effect>
+										<ToolTip.Tip>
+											<WrapPanel Orientation="Horizontal">
+												<TextBlock FontSize="16" FontFamily="Calibri" Text="{Binding DecFilesIncluded}"/>
+											</WrapPanel>
+										</ToolTip.Tip>
+									</Image>
+									<TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Normal" Text="{Binding GameTitle}"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+
+					<TextBlock x:Name="GameTitleTextBlock" VerticalAlignment="Top" Text="GameTitle" FontSize="48" FontWeight="Bold" Margin="0,355,0,0" HorizontalAlignment="Center" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+						<ToolTip.Tip>
+							<WrapPanel Orientation="Horizontal">
+								<Image Source="/Images/de.png" Width="25" Height="16"/>
+								<TextBlock Text="{Binding DEGameTitle}" FontSize="14" FontFamily="Calibri"/>
+								<Image Source="/Images/fr.png" Width="25" Height="16"/>
+								<TextBlock Text="{Binding FRGameTitle}" FontSize="14" FontFamily="Calibri"/>
+								<Image Source="/Images/it.png" Width="25" Height="16"/>
+								<TextBlock Text="{Binding ITGameTitle}" FontSize="14" FontFamily="Calibri"/>
+								<Image Source="/Images/es.png" Width="25" Height="16"/>
+								<TextBlock Text="{Binding ESGameTitle}" FontSize="14" FontFamily="Calibri"/>
+								<Image Source="/Images/jp.png" Width="25" Height="16"/>
+								<TextBlock Text="{Binding JPGameTitle}" FontSize="14" FontFamily="Calibri"/>
+							</WrapPanel>
+						</ToolTip.Tip>
+					</TextBlock>
+					<TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FontSize="24" Margin="44,453,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FontSize="24" TextAlignment="Left" Margin="44,492,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FontSize="24" TextAlignment="Left" Margin="44,609,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FontSize="24" TextAlignment="Left" Margin="44,648,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameContentVersionTextBlock" VerticalAlignment="Top" Text="GameContentVersion" FontSize="24" TextAlignment="Left" Margin="44,531,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FontSize="24" TextAlignment="Left" Margin="760,453,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+						<ToolTip.Tip>
+							<WrapPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding IsCompatibleFW}" FontSize="14" FontFamily="Calibri"/>
+							</WrapPanel>
+						</ToolTip.Tip>
+					</TextBlock>
+					<TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FontSize="24" TextAlignment="Left" Margin="44,570,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+						<ToolTip.Tip>
+							<WrapPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding GameContentIDs}" FontSize="14" FontFamily="Calibri"/>
+							</WrapPanel>
+						</ToolTip.Tip>
+					</TextBlock>
+					<TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder" FontSize="24" TextAlignment="Left" Margin="760,648,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameSDKVersionTextBlock" VerticalAlignment="Top" Text="GameSDKVersion" FontSize="24" TextAlignment="Left" Margin="760,531,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GamePubToolVersionTextBlock" VerticalAlignment="Top" Text="GamePubToolVersion" FontSize="24" TextAlignment="Left" Margin="760,570,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameVersionFileURITextBlock" VerticalAlignment="Top" Text="GameVersionFileURI" FontSize="24" TextAlignment="Left" Margin="760,609,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="#FF0094EB" TextDecorations="Underline" Cursor="Hand" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+					<TextBlock x:Name="GameMasterVersionTextBlock" VerticalAlignment="Top" Text="GameMasterVersion" FontSize="24" TextAlignment="Left" Margin="760,492,0,0" HorizontalAlignment="Left" FontFamily="Calibri" IsVisible="False">
+						<TextBlock.Effect>
+							<DropShadowEffect BlurRadius="3"/>
+						</TextBlock.Effect>
+					</TextBlock>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Applications" FontSize="16" BorderBrush="{x:Null}">
+				<ListBox x:Name="AppsListBox" Margin="0,5,0,0" HorizontalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}" SelectionMode="Single">
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid Width="455">
+								<Image Width="64" Height="64" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameCategory}" FontSize="12" TextAlignment="Left" Margin="311,35,0,0" HorizontalAlignment="Left" Width="134"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FontSize="12" TextAlignment="Left" Margin="311,55,0,0" HorizontalAlignment="Left" Width="134"/>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+			<TabItem Header="Patches" FontSize="16" BorderBrush="{x:Null}">
+				<ListBox x:Name="PatchesListBox" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" SelectionMode="Single">
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid Width="455">
+								<Image Width="64" Height="64" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameVersion}" FontSize="12" TextAlignment="Left" Margin="303,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FontSize="12" TextAlignment="Left" Margin="303,75,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameContentID}" FontSize="12" TextAlignment="Left" Margin="79,75,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRequiredFirmware}" FontSize="12" TextAlignment="Left" Margin="303,55,0,0" HorizontalAlignment="Left"/>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+		</TabControl>
+
+		<Decorator x:Name="ContentWebViewWrapper" IsVisible="False"></Decorator>
+	</Grid>
+</Window>

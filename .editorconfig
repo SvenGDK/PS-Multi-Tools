@@ -1,0 +1,10 @@
+﻿[*.cs]
+
+# CS0618: Type or member is obsolete (will be replaced when completely obsolete or not working as intended)
+dotnet_diagnostic.CS0618.severity = none
+
+# IDE1006: Naming rules (currently ignored for JSON)
+dotnet_diagnostic.IDE1006.severity = none
+
+# IDE0059: Unnecessary value assignment
+dotnet_diagnostic.IDE0059.severity = none

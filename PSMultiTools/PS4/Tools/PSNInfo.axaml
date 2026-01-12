@@ -1,0 +1,17 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="580"
+		x:Class="PSMultiTools.PS4.Tools.PSNInfo"
+		Title="PSN Info" Height="580" Width="1280" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<Image x:Name="GameImage" HorizontalAlignment="Left" Height="512" Margin="10,0,0,0" VerticalAlignment="Center" Width="512"/>
+		<TextBlock x:Name="GameTitleTextBlock" HorizontalAlignment="Left" Margin="532,10,0,0" Text="Title" VerticalAlignment="Top" FontSize="36"/>
+		<TextBlock x:Name="DescriptionTextBlock" HorizontalAlignment="Left" Margin="532,63,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" FontSize="18" Width="750"/>
+		<TextBlock x:Name="CategoryTextBlock" HorizontalAlignment="Left" Margin="532,467,0,55" Text="Full or Demo Version :" VerticalAlignment="Bottom" FontSize="18"/>
+		<TextBlock x:Name="GameCodeTextBlock" HorizontalAlignment="Left" Margin="532,0,0,25" Text="Game Code :" VerticalAlignment="Bottom" FontSize="18"/>
+
+		<Decorator x:Name="WebViewWrapper" IsVisible="False"></Decorator>
+	</Grid>
+</Window>

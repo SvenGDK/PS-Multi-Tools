@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="180"
+		x:Class="PSMultiTools.PS3.Tools.PS3PUPUnpacker"
+		Title="PS3 PUP Unpacker" Height="180" Width="400" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a PS3UPDAT.PUP file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedPUPTextBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowsePUPButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="315,32,0,0" VerticalAlignment="Top" Width="74" Click="BrowsePUPButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,71,0,0" Text="Selected an output folder :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseOutputButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="315,94,0,0" VerticalAlignment="Top" Width="74" Click="BrowseOutputButton_Click"/>
+
+		<Button x:Name="UnpackButton" Content="Unpack" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="236,135,0,0" VerticalAlignment="Top" Width="74" Click="UnpackButton_Click"/>
+	</Grid>
+</Window>

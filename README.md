@@ -3,24 +3,21 @@
 </p>
 
 # PS Multi Tools
-All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp; PS5, PSP &amp; PS Vita.</br>
-
-## Upcoming changes to PS Multi Tools in v16.0
-- The entire source code will change to C# and the project type will change to Avalonia
-  - This makes it possible to deploy PS Multi Tools to additional platforms like Linux and macOS
-  - The OS specific "PS Mac Tools" build for macOS is now retired/archived
-  - Other OS specific tools like "PS Classics fPKG Builder" & "PS5PKGReader" are now retired/archived and will be included in PS Multi Tools v16
-- PS Multi Tools will now always run the included tools in their OS specific executable with the exception of PS4/PS5 PKG pub tools
-  - Those tools will require "Wine" to be installed on Linux and macOS, a message will appear to set it up if not installed
-- The UI of some windows will slightly change due to the new Avalonia UI elements & components
-- The main binary file will be renamed from "PS Multi Tools" to "PSMultiTools"
+A Windows, Linux, macOS & FreeBSD desktop toolkit for PlayStation enthusiasts and modders.</br>
+Manage your backups, convert/extract/create/manage files, download official and custom firmwares, homebrew,</br>
+payloads and game patches - all from one open-source app.</br>
+Requires the .NET 9.0 desktop runtime and a few optional drivers for advanced features like Memory Card management or PSX related stuff.</br>
 
 <details>
-  <summary>v15.6 contains following tools</summary>
+  <summary>v16.0 contains following tools</summary>
   
 ## General:
 - FTP Browser
 - Downloader
+- Drag&Drop actions :
+  - Drag & drop any PlayStation .pkg file on PS Multi Tools to view PKG information
+  - Drag & drop a PS5 param.json or manifest.json file on PS Multi Tools to view or edit it directly
+  - Drag & drop an ELF or BIN payload on PS Multi Tools to open the Payload Sender directly
 
 ## PS1
 - Convert BIN/CUE to ISO
@@ -30,6 +27,8 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
 - Convert BIN/CUE to ISO
 - CUE2POPS Converter
 - ELF2KELF Wrapper
+- STAR Extractor
+- PAKerUtility GUI
 
 ## PSX
 - HDD Partition Manager (Create partition, Remove partition (destructive), Change partition visibility)
@@ -146,6 +145,7 @@ All-In-One Utility with tools & backup manager for PS1, PS2, PSX, PS3, PS4 &amp;
   - Create simple debug PKGs that opens the WebBrowser with a website or launches an internal URI
 - RCO Dumper (requires running FTP server)
 - RCO Extractor
+- appinfo.db Updater for local .db files or directly via FTP
 
 ## PSP
 - CSO Decompressor
@@ -188,9 +188,10 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 ## PS Multi Tools currently uses the following tools & libraries from other developers
 | Tool / Library | Created by | Repository | Info |
 | --- | --- | --- | --- |
-| `AvalonEdit` | icsharpcode | [https://github.com/icsharpcode/AvalonEdit](https://github.com/icsharpcode/AvalonEdit)
+| `AvaloniaEdit` | AvaloniaUI | [https://github.com/AvaloniaUI/AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit)
 | `bchunk` | extramaster | [https://github.com/extramaster/bchunk](https://github.com/extramaster/bchunk)
 | `binmerge` | putnam | [https://github.com/putnam/binmerge](https://github.com/putnam/binmerge)
+| `CefGlue` | OutSystems | [https://github.com/OutSystems/CefGlue](https://github.com/OutSystems/CefGlue)
 | `CEX2DEX` |  | 
 | `costool` | naehrwert | 
 | `cue2toc` | Goatman13 & NRGDEAD | [https://github.com/Goatman13/Cue2toc](https://github.com/Goatman13/Cue2toc)
@@ -211,15 +212,20 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `hexdump` | di-mgt | [https://www.di-mgt.com.au/hexdump-for-windows.html](https://www.di-mgt.com.au/hexdump-for-windows.html)
 | `HtmlAgilityPack` | ZZZ Projects | [https://html-agility-pack.net/](https://html-agility-pack.net/)
 | `ImageSharp` | SixLabors | [https://github.com/SixLabors/ImageSharp](https://github.com/SixLabors/ImageSharp)
+| `ini-parser` | rickyah | [https://github.com/rickyah/ini-parser](https://github.com/rickyah/ini-parser)
+| `IronSoftware.System.Drawing` | iron-software | [https://github.com/iron-software/IronSoftware.System.Drawing](https://github.com/iron-software/IronSoftware.System.Drawing)
 | `IsoPbpConverter` | LMAN | 
 | `kill_daemon` | illusion0001 | [https://github.com/illusion0001/libhijacker](https://github.com/illusion0001/libhijacker) | Python script -> single .exe
 | `klicencebruteforce` | MAGiC333X | [https://www.mateogodlike.com/2012/10/ps3-klicense-brute-force-tool-by.html](https://www.mateogodlike.com/2012/10/ps3-klicense-brute-force-tool-by.html)
+| `LibOrbisPkg` | OpenOrbis | [https://github.com/OpenOrbis/LibOrbisPkg](https://github.com/OpenOrbis/LibOrbisPkg)
+| `LibVLCSharp` | VLC | [https://code.videolan.org/videolan/LibVLCSharp](https://code.videolan.org/videolan/LibVLCSharp)
 | `Magick.NET` | dlemstra | [https://github.com/dlemstra/Magick.NET](https://github.com/dlemstra/Magick.NET)
 | `make_fself` | (PS3) | [https://github.com/SophieGer/ps3tools](https://github.com/SophieGer/ps3tools)
 | `Make_FSELF_PY3` | EchoStretch |  | Batch script translated to VB
 | `make_fself_python3-1` | Flatz (updated by LightningMods) |  | Python script -> single .exe
 | `maxcso` | unknownbrackets | [https://github.com/unknownbrackets/maxcso](https://github.com/unknownbrackets/maxcso)
 | `mCiso` | sindastra | [https://github.com/sindastra/psp-mciso](https://github.com/sindastra/psp-mciso)
+| `MessageBox.Avalonia` | AvaloniaCommunity | [https://github.com/AvaloniaCommunity/MessageBox.Avalonia](https://github.com/AvaloniaCommunity/MessageBox.Avalonia)
 | `Microsoft.Data.Sqlite` | Microsoft | [https://learn.microsoft.com/en-gb/dotnet/standard/data/sqlite/?tabs=net-cli](https://learn.microsoft.com/en-gb/dotnet/standard/data/sqlite/?tabs=net-cli)
 | `Newtonsoft.Json` | Newtonsoft | [https://www.newtonsoft.com/json](https://www.newtonsoft.com/json)
 | `nQuant` | matt wrock | [https://www.nuget.org/packages/nQuant](https://www.nuget.org/packages/nQuant)
@@ -248,9 +254,6 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 | `sfo` | hippie68 | [https://github.com/hippie68/sfo](https://github.com/hippie68/sfo)
 | `sngre` | cfwprophet | [https://github.com/cfwprpht/Simply_Vita_RCO_Extractor](https://github.com/cfwprpht/Simply_Vita_RCO_Extractor)
 | `strings` | Mark Russinovich | [https://learn.microsoft.com/en-us/sysinternals/downloads/strings](https://learn.microsoft.com/en-us/sysinternals/downloads/strings)
-| `WebView2` | Microsoft | [https://learn.microsoft.com/en-gb/microsoft-edge/webview2/](https://learn.microsoft.com/en-gb/microsoft-edge/webview2/)
-| `WinSCP` | WinSCP | [https://winscp.net/eng/docs/library](https://winscp.net/eng/docs/library)
-| `wpftoolkit` | xceedsoftware | [https://github.com/xceedsoftware/wpftoolkit](https://github.com/xceedsoftware/wpftoolkit)
 
 ## Recommended Version
 All builds below v15 have broken links & downloads, v15+ is recommended.</br>
@@ -262,4 +265,5 @@ Some builds can still be used while some do not start anymore and require updati
 - Added support for PS Vita around 2013-2015
 - Development stopped in late 2016 with still no real support for the PS4
 - Started from scratch early 2023 and added first support for PS4 & PS5
-- First release of v13 with source code
+- First release of v13 with source code in 2023
+- Switch to C# and Avalonia in late 2025 - beginning 2026 with release for macOS, Linux and FreeBSD

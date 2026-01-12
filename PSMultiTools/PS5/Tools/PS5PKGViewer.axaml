@@ -1,0 +1,341 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1080" d:DesignHeight="650"
+		x:Class="PSMultiTools.PS5.Tools.PS5PKGViewer"
+		Title="PS5 PKG Viewer" Height="650" Width="1080" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True">
+	<Grid>
+		<TextBox Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="940" Height="20"/>
+		<Button Name="BrowsePKGFileButton" Content="Browse" HorizontalAlignment="Left" Margin="960,35,0,0" VerticalAlignment="Top" Width="110" Click="BrowsePKGFileButton_Click"/>
+		<TextBlock HorizontalAlignment="Left" Text="Select a PS5 PKG file :" VerticalAlignment="Top" FontSize="16" Margin="10,10,0,0"/>
+		<TextBlock Name="CurrentListViewTitleTextBlock" HorizontalAlignment="Left" Text="PKG Entries :" VerticalAlignment="Top" FontSize="16" Margin="10,230,0,0"/>
+
+		<Image x:Name="PKGIconImage" HorizontalAlignment="Left" Height="128" Margin="25,85,0,0" VerticalAlignment="Top" Width="128"/>
+
+		<TextBlock Name="GameTitleTextBlock" HorizontalAlignment="Left" Text="GameTitle" VerticalAlignment="Top" FontSize="24" Margin="190,80,0,0"/>
+		<TextBlock Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" Margin="190,125,0,0" HorizontalAlignment="Left" FontSize="14"/>
+		<TextBlock Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" TextAlignment="Left" Margin="190,150,0,0" HorizontalAlignment="Left" FontSize="14"/>
+		<TextBlock Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" TextAlignment="Left" Margin="645,125,0,0" HorizontalAlignment="Left" FontSize="14"/>
+		<TextBlock Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" TextAlignment="Left" Margin="645,150,0,0" HorizontalAlignment="Left" FontSize="14"/>
+		<TextBlock Name="GameVersionTextBlock" VerticalAlignment="Top" Text="GameVersion" TextAlignment="Left" Margin="190,175,0,0" HorizontalAlignment="Left" FontSize="14"/>
+		<TextBlock Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" TextAlignment="Left" Margin="645,175,0,0" HorizontalAlignment="Left" FontSize="14"/>
+		<TextBlock Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" TextAlignment="Left" Margin="190,200,0,0" HorizontalAlignment="Left" FontSize="14"/>
+
+		<ListBox Name="PKGContentListBox" VerticalAlignment="Top" Margin="10,260,0,0" HorizontalAlignment="Left" Width="1060" Height="200" IsVisible="True">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="200"></ColumnDefinition>
+								<ColumnDefinition Width="200"></ColumnDefinition>
+								<ColumnDefinition Width="200"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Offset</Label>
+							<Label Grid.Column="1" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Size</Label>
+							<Label Grid.Column="2" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Name</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="200"></ColumnDefinition>
+							<ColumnDefinition Width="200"></ColumnDefinition>
+							<ColumnDefinition Width="200"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding EntryOffset}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding EntrySize}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding EntryName}" Grid.Column="2"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<ListBox Name="PKGScenariosListBox" VerticalAlignment="Top" Margin="10,260,0,0" HorizontalAlignment="Left" Width="1060" Height="200" IsVisible="False">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="200"></ColumnDefinition>
+								<ColumnDefinition Width="200"></ColumnDefinition>
+								<ColumnDefinition Width="200"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" FontSize="14">ID</Label>
+							<Label Grid.Column="1" FontSize="14">Type</Label>
+							<Label Grid.Column="2" FontSize="14">Name</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="200"></ColumnDefinition>
+							<ColumnDefinition Width="200"></ColumnDefinition>
+							<ColumnDefinition Width="200"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding ScenarioID}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding ScenarioType}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding ScenarioName}" Grid.Column="2"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<ListBox Name="PKGChunksListBox" VerticalAlignment="Top" Margin="10,260,0,0" HorizontalAlignment="Left" Width="1060" Height="200" IsVisible="False">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" FontSize="14">ID</Label>
+							<Label Grid.Column="1" FontSize="14">Flag</Label>
+							<Label Grid.Column="2" FontSize="14">Locus</Label>
+							<Label Grid.Column="3" FontSize="14">Language</Label>
+							<Label Grid.Column="4" FontSize="14">Disps</Label>
+							<Label Grid.Column="5" FontSize="14">Num</Label>
+							<Label Grid.Column="6" FontSize="14">Size</Label>
+							<Label Grid.Column="7" FontSize="14">Name</Label>
+							<Label Grid.Column="8" FontSize="14">Value</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding ChunkID}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding ChunkFlag}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding ChunkLocus}" Grid.Column="2"></TextBlock>
+						<TextBlock Text="{Binding ChunkLanguage}" Grid.Column="3"></TextBlock>
+						<TextBlock Text="{Binding ChunkDisps}" Grid.Column="4"></TextBlock>
+						<TextBlock Text="{Binding ChunkNum}" Grid.Column="5"></TextBlock>
+						<TextBlock Text="{Binding ChunkSize}" Grid.Column="6"></TextBlock>
+						<TextBlock Text="{Binding ChunkName}" Grid.Column="7"></TextBlock>
+						<TextBlock Text="{Binding ChunkValue}" Grid.Column="8"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<ListBox Name="PKGOutersListBox" VerticalAlignment="Top" Margin="10,260,0,0" HorizontalAlignment="Left" Width="1060" Height="200" IsVisible="False">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" FontSize="14">ID</Label>
+							<Label Grid.Column="1" FontSize="14">Image</Label>
+							<Label Grid.Column="2" FontSize="14">Offset</Label>
+							<Label Grid.Column="3" FontSize="14">Size</Label>
+							<Label Grid.Column="4" FontSize="14">Chunks</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding OuterID}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding OuterImage}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding OuterOffset}" Grid.Column="2"></TextBlock>
+						<TextBlock Text="{Binding OuterSize}" Grid.Column="3"></TextBlock>
+						<TextBlock Text="{Binding OuterChunks}" Grid.Column="4"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<ListBox Name="PKGImageFilesListBox" VerticalAlignment="Top" Margin="10,260,0,0" HorizontalAlignment="Left" Width="1060" Height="200" IsVisible="False">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" FontSize="14">File Size</Label>
+							<Label Grid.Column="1" FontSize="14">Plain</Label>
+							<Label Grid.Column="2" FontSize="14">File Compression</Label>
+							<Label Grid.Column="3" FontSize="14">File iMode</Label>
+							<Label Grid.Column="4" FontSize="14">File Index</Label>
+							<Label Grid.Column="5" FontSize="14">File iNode</Label>
+							<Label Grid.Column="6" FontSize="14">File Name</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding FileSize}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding FilePlain}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding FileCompression}" Grid.Column="2"></TextBlock>
+						<TextBlock Text="{Binding FileIMode}" Grid.Column="3"></TextBlock>
+						<TextBlock Text="{Binding FileIndex}" Grid.Column="4"></TextBlock>
+						<TextBlock Text="{Binding FileINode}" Grid.Column="5"></TextBlock>
+						<TextBlock Text="{Binding FileName}" Grid.Column="6"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<ListBox Name="PKGImageDirectoriesListBox" VerticalAlignment="Top" Margin="10,260,0,0" HorizontalAlignment="Left" Width="1060" Height="200" IsVisible="False">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+								<ColumnDefinition Width="100"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" FontSize="14">Directory Size</Label>
+							<Label Grid.Column="1" FontSize="14">Links</Label>
+							<Label Grid.Column="2" FontSize="14">Directory iMode</Label>
+							<Label Grid.Column="3" FontSize="14">Directory Index</Label>
+							<Label Grid.Column="4" FontSize="14">Directory iNode</Label>
+							<Label Grid.Column="5" FontSize="14">Directory Name</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding DirectorySize}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding DirectoryLinks}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding DirectoryIMode}" Grid.Column="2"></TextBlock>
+						<TextBlock Text="{Binding DirectoryIndex}" Grid.Column="3"></TextBlock>
+						<TextBlock Text="{Binding DirectoryINode}" Grid.Column="4"></TextBlock>
+						<TextBlock Text="{Binding DirectoryName}" Grid.Column="5"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button Name="ShowPKGPFSImageFilesButton" Content="Show PFS Image Files" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGPFSImageFilesButton_Click"/>
+		<Button Name="ShowPKGNestedImageFilesButton" Content="Show Nested Image Files" HorizontalAlignment="Left" Margin="260,470,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGNestedImageFilesButton_Click"/>
+		<Button Name="ShowPKGPFSImageDirectoriesButton" Content="Show PFS Image Directories" HorizontalAlignment="Left" Margin="10,505,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGPFSImageDirectoriesButton_Click"/>
+		<Button Name="ShowPKGNestedImageDirectoriesButton" Content="Show Nested Image Directories" HorizontalAlignment="Left" Margin="260,505,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGNestedImageDirectoriesButton_Click"/>
+
+		<Button Name="ShowPKGEntriesButton" Content="Show Entries" HorizontalAlignment="Left" Margin="510,470,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGEntriesButton_Click"/>
+		<Button Name="ShowPKGScenariosButton" Content="Show Scenarios" HorizontalAlignment="Left" Margin="510,505,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGScenariosButton_Click"/>
+		<Button Name="ShowPKGChunksButton" Content="Show Chunks" HorizontalAlignment="Left" Margin="510,540,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGChunksButton_Click"/>
+		<Button Name="ShowPKGOutersButton" Content="Show Outers" HorizontalAlignment="Left" Margin="510,575,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGOutersButton_Click"/>
+
+		<Button Name="ExportConfigurationXMLButton" Content="Export configuration XML" HorizontalAlignment="Left" Margin="660,470,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportConfigurationXMLButton_Click"/>
+		<Button Name="ExportParamJSONButton" Content="Export param JSON" HorizontalAlignment="Left" Margin="660,505,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportParamJSONButton_Click"/>
+		<Button Name="ExportIcon0PNGButton" Content="Export icon PNG" HorizontalAlignment="Left" Margin="870,470,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportIcon0PNGButton_Click"/>
+		<Button Name="ExportPic0Button" Content="Export background PNG" HorizontalAlignment="Left" Margin="870,505,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportPic0Button_Click"/>
+	</Grid>
+</Window>

@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="340"
+		x:Class="PSMultiTools.PSP.Tools.CISOConverter"
+		Title="ISO ~ CSO Converter" Height="340" Width="350" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Convert to CSO" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,36,0,0" Text="Select an .iso file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="250"/>
+		<Button x:Name="BrowseISOButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="265,60,0,0" VerticalAlignment="Top" Width="70" Click="BrowseISOButton_Click"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,100,0,0" Text="Compression level :" VerticalAlignment="Top" FontSize="14"/>
+		<ComboBox x:Name="CompressionLevelComboBox" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="105" SelectedIndex="6" HorizontalContentAlignment="Center">
+			<ComboBoxItem Content="1"/>
+			<ComboBoxItem Content="2"/>
+			<ComboBoxItem Content="3"/>
+			<ComboBoxItem Content="4"/>
+			<ComboBoxItem Content="5"/>
+			<ComboBoxItem Content="6"/>
+			<ComboBoxItem Content="7"/>
+			<ComboBoxItem Content="8"/>
+			<ComboBoxItem Content="9"/>
+		</ComboBox>
+		<Button x:Name="ConvertToCISOButton" Content="Convert to .cso" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="120,125,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ConvertToISOButton_Click"/>
+		<TextBlock x:Name="ConvertStatusTextBlock" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" FontSize="12" Width="325" Height="35"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,200,0,0" Text="Decompress to ISO" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,225,0,0" Text="Select a .cso file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedCISOTextBox" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Width="250"/>
+		<Button x:Name="BrowseCISOButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="265,250,0,0" VerticalAlignment="Top" Width="70" Click="BrowseCISOButton_Click"/>
+		<Button x:Name="ConvertToISOButton" Content="Decompress to .iso" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="110,290,0,0" VerticalAlignment="Top" Width="150" FontWeight="Bold" Click="ConvertToISOButton_Click"/>
+		<TextBlock x:Name="DecompressStatusTextBlock" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" FontSize="12" Width="325" Height="35"/>
+	</Grid>
+</Window>

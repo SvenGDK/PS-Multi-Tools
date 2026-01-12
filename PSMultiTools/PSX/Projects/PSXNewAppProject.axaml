@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="280"
+		x:Class="PSMultiTools.PSXNewAppProject"
+		Title="New Homebrew Project" Height="280" Width="800" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Project Name :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+		<TextBox x:Name="ProjectNameTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="300"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="Save Project at :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+		<TextBox x:Name="ProjectDirectoryTextBox" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseProjectPathButton" HorizontalContentAlignment="Center" Content="Browse" HorizontalAlignment="Left" Margin="315,100,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="80" FontFamily="Calibri"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,140,0,0" Text="Homebrew ELF file :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+		<TextBox x:Name="ProjectELFFileTextBox" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseELFButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="315,165,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="80" FontFamily="Calibri"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,205,0,0" Text="Homebrew Title :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+		<TextBox x:Name="ProjectTitleTextBox" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Width="300"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="410,10,0,0" Text="Homebrew subtitle (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+		<TextBox x:Name="ProjectSubTitleTextBox" HorizontalAlignment="Left" Margin="410,31,0,0" VerticalAlignment="Top" Width="380"/>
+		<TextBlock HorizontalAlignment="Left" Margin="410,75,0,0" Text="Uninstall message (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+		<TextBox x:Name="ProjectUninstallMsgTextBox" HorizontalAlignment="Left" Margin="410,100,0,0" VerticalAlignment="Top" Width="380"/>
+		<TextBlock HorizontalAlignment="Left" Margin="410,140,0,0" Text="Custom icon (optional) :" VerticalAlignment="Top" Width="300" Foreground="White"/>
+		<TextBox x:Name="ProjectIconPathTextBox" HorizontalAlignment="Left" Margin="410,165,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseIconButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="715,165,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="75" FontFamily="Calibri"/>
+
+		<Button x:Name="SaveProjectButton" Content="Save Homebrew Project" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="410,220,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" FontFamily="Calibri" FontSize="14"/>
+		<Button x:Name="EditResourcesButton" Content="Edit Homebrew Resources" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="610,220,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="180" FontFamily="Calibri" FontSize="14"/>
+	</Grid>
+</Window>

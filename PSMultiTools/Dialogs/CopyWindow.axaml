@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="310"
+        x:Class="PSMultiTools.Dialogs.CopyWindow"
+        Title="Copying" Height="310" Width="550" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+    <Grid>
+        <Image x:Name="GameIconImage" Height="176" HorizontalAlignment="Left" VerticalAlignment="Top" Width="320" Margin="0,0,0,0"/>
+
+        <TextBlock x:Name="StatusTextBlock" HorizontalAlignment="Left" Margin="10,203,0,0" Text="Please wait ..." VerticalAlignment="Top" FontSize="14" Width="520"/> 
+        <ProgressBar x:Name="CopyProgressBar" HorizontalAlignment="Left" Height="20" Margin="10,230,0,0" VerticalAlignment="Top" Width="520" />        
+        <TextBlock x:Name="StatusTextBlock2" HorizontalAlignment="Left" Margin="10,260,0,0" Text="Please wait ..." VerticalAlignment="Top" FontSize="14" Width="520"/>
+    </Grid>
+</Window>

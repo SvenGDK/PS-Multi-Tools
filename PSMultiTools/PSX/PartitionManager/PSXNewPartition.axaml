@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="200"
+		x:Class="PSMultiTools.PSXNewPartition"
+		Title="Create a new partition" Height="200" Width="425" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock Margin="10,10,15,0" Text="Please enter a name for the new partition :" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+		<TextBox x:Name="NewPartitionNameTextBox" Margin="10,35,15,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="400"/>
+		<TextBlock Margin="0,75,0,0" Text="Please enter the size of the new partition in MB (number only) :" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+		<TextBox x:Name="NewPartitionSizeTextBox" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="400"/>
+		<Button x:Name="CreatePartitionButton" Content="Create partition" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,15" VerticalAlignment="Bottom" Width="150" FontFamily="Calibri"/>
+	</Grid>
+</Window>

@@ -1,0 +1,76 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="750"
+		x:Class="PSMultiTools.PS5.Tools.WebSrv.WebSrvHomebrewManager"
+		Title="PS5 WebSrv Homebrew Manager" Height="750" Width="1000" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Enter your PS5 IP:" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Foreground="White"/>
+		<TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="ConnectButton" Content="Connect" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="315,35,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold" Click="ConnectButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="481,10,0,0" TextWrapping="NoWrap" Text="How to use :" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="14" />
+		<TextBlock HorizontalAlignment="Left" Margin="481,34,0,0" TextWrapping="NoWrap" Text="1. Send the FTPS5 or ftpsrv payload to the PS5" VerticalAlignment="Top" Foreground="White" />
+		<TextBlock HorizontalAlignment="Left" Margin="481,55,0,0" TextWrapping="NoWrap" Text="2. Click on connect" VerticalAlignment="Top" Foreground="White" />
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,80,0,0" TextWrapping="NoWrap" Text="Installed Homebrew on the websrv :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<ListBox x:Name="InstalledHomebrewListBox" HorizontalAlignment="Stretch" Height="225" Margin="10,105,10,0" VerticalAlignment="Top">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center">Homebrew Full Path</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding HomebrewPath}" TextAlignment="Left" Grid.Column="0"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button x:Name="AddHomebrewButton" Content="Add or update homebrew" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,410,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold" Click="AddHomebrewButton_Click"/>
+		<Button x:Name="RemoveHomebrewButton" Content="Remove selected homebrew" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="240,410,0,0" VerticalAlignment="Top" Width="225" FontWeight="Bold" Click="RemoveHomebrewButton_Click"/>
+		<Button x:Name="ManageROMsButton" Content="Manage ROMs" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="735,410,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold" IsVisible="True" Click="ManageROMsButton_Click"/>
+		<Button x:Name="ManageMediaButton" Content="Manage Media" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="865,410,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold" IsVisible="True" Click="ManageMediaButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,450,0,0" TextWrapping="NoWrap" Text="Selected Homebrew Details :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<Image x:Name="HomebrewImage" HorizontalAlignment="Left" Height="128" Margin="75,540,0,0" VerticalAlignment="Top" Width="128" Source="/Images/nothing.png" Cursor="Hand"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="275,475,0,0" TextWrapping="NoWrap" Text="Payload Name :" VerticalAlignment="Top" Foreground="White" />
+		<TextBox x:Name="HomebrewPayloadNameTextBox" HorizontalAlignment="Left" Margin="275,500,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+		<TextBlock HorizontalAlignment="Left" Margin="275,540,0,0" TextWrapping="NoWrap" Text="Payload Description :" VerticalAlignment="Top" Foreground="White" />
+		<TextBox x:Name="HomebrewPayloadDescriptionTextBox" HorizontalAlignment="Left" Margin="275,565,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+		<TextBlock HorizontalAlignment="Left" Margin="275,605,0,0" TextWrapping="NoWrap" Text="Payload Path :" VerticalAlignment="Top" Foreground="White" />
+		<TextBox x:Name="HomebrewPayloadPathTextBox" HorizontalAlignment="Left" Margin="275,630,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+		<TextBlock HorizontalAlignment="Left" Margin="275,670,0,0" TextWrapping="NoWrap" Text="Payload Arguments :" VerticalAlignment="Top" Foreground="White" />
+		<TextBox x:Name="HomebrewPayloadArgumentsTextBox" HorizontalAlignment="Left" Margin="275,695,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="600,475,0,0" TextWrapping="NoWrap" Text="Payload Environment Variables :" VerticalAlignment="Top" Foreground="White" />
+		<TextBox x:Name="HomebrewPayloadEnvironmentVariablesTextBox" HorizontalAlignment="Left" Margin="600,500,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+		<TextBlock HorizontalAlignment="Left" Margin="600,540,0,0" TextWrapping="NoWrap" Text="ROM Directory :" VerticalAlignment="Top" Foreground="White" />
+		<TextBox x:Name="HomebrewPayloadROMDirectoryTextBox" HorizontalAlignment="Left" Margin="600,565,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+		<TextBlock HorizontalAlignment="Left" Margin="600,605,0,0" TextWrapping="NoWrap" Text="Media Directory :" VerticalAlignment="Top" Foreground="White" />
+		<TextBox x:Name="HomebrewPayloadMediaDirectoryTextBox" HorizontalAlignment="Left" Margin="600,630,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="SaveChangesButton" Content="Save Changes" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="650,695,0,0" VerticalAlignment="Top" Width="200" FontSize="16" FontWeight="Bold" Click="SaveChangesButton_Click"/>
+	</Grid>
+</Window>

@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
+		x:Class="PSMultiTools.PS5.Tools.WebSrv.WebSrvROMManager"
+		Title="PS5 WebSrv Game ROM Manager" Height="500" Width="800" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="NoWrap" Text="Installed ROMs :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<ListBox x:Name="InstalledROMsListBox" HorizontalAlignment="Stretch" Height="192" Margin="10,35,10,0" VerticalAlignment="Top">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center">Remote File Path</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding RemoteFilePath}" TextAlignment="Left" Grid.Column="0"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<Button x:Name="AddROMsButton" Content="Add ROMs" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="468,240,0,0" VerticalAlignment="Top" Width="115" FontWeight="Bold" Click="AddROMsButton_Click"/>
+		<Button x:Name="RemoveROMButton" Content="Remove selected ROM" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="588,240,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="RemoveROMButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,280,0,0" TextWrapping="NoWrap" Text="Selected ROM Details :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<Image x:Name="ROMImage" HorizontalAlignment="Left" Height="128" Margin="31,330,0,0" VerticalAlignment="Top" Width="128" Source="/Images/nothing.png" Cursor="Hand"/>
+		<TextBlock HorizontalAlignment="Left" Margin="195,350,0,0" TextWrapping="NoWrap" Text="File Name :" VerticalAlignment="Top" Foreground="White" />
+		<TextBox x:Name="ROMFileNameTextBox" HorizontalAlignment="Left" Margin="195,380,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="300" IsEnabled="False"/>
+	</Grid>
+</Window>

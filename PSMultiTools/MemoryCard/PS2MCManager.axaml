@@ -1,0 +1,84 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="745" d:DesignHeight="520"
+		x:Class="PSMultiTools.MemoryCard.PS2MCManager"
+		Title="PS2 Memory Card Manager" Height="520" Width="745" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Image HorizontalAlignment="Left" Height="83" Margin="24,19,0,0" VerticalAlignment="Top" Width="63" Source="/Images/ps2mc.png"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="113,24,0,0" Text="Page Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="113,48,0,0" Text="Block Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="113,72,0,0" Text="MC Size :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock x:Name="PageSizeTextBlock" HorizontalAlignment="Left" Margin="190,24,0,0" Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
+		<TextBlock x:Name="BlockSizeTextBlock" HorizontalAlignment="Left" Margin="190,48,0,0" Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
+		<TextBlock x:Name="MCSizeTextBlock" HorizontalAlignment="Left" Margin="190,72,0,0" Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="320,24,0,0" Text="ECC Support :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="320,48,0,0" Text="Bad Blocks Management :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="320,72,0,0" Text="Erase Byte :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock x:Name="ECCSupportTextBlock" HorizontalAlignment="Left" Margin="415,24,0,0" Text="/" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="152"/>
+		<TextBlock x:Name="BBManagementTextBlock" HorizontalAlignment="Left" Margin="495,48,0,0" Text="/" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="72"/>
+		<TextBlock x:Name="EraseByteTextBlock" HorizontalAlignment="Left" Margin="400,72,0,0" Text="0" VerticalAlignment="Top" Foreground="White" FontSize="14" TextAlignment="Right" Width="167"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="610,39,0,0" Text="Available Space" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock x:Name="MCFreeSpaceTextBlock" HorizontalAlignment="Left" Margin="610,63,0,0" Text="0 KB" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold" Width="102" TextAlignment="Center" FontStyle="Italic"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="20,116,0,0" Text="Current MC Path :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBox x:Name="CurrentMCPathTextBox" HorizontalAlignment="Left" Margin="20,140,0,0" VerticalAlignment="Top" Width="605" TextAlignment="Center" Text="/"/>
+		<Button x:Name="OpenPathButton" Content="Open" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="640,140,0,0" VerticalAlignment="Top" Width="90" FontWeight="Bold"/>
+
+		<ListBox x:Name="MemoryCardContentListBox" Margin="20,180,20,0" VerticalAlignment="Top" Height="230" HorizontalAlignment="Stretch" >
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="30" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="250"></ColumnDefinition>
+								<ColumnDefinition Width="70"></ColumnDefinition>
+								<ColumnDefinition Width="250"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">File / Folder Name</Label>
+							<Label Grid.Column="1" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Type</Label>
+							<Label Grid.Column="2" FontSize="14" HorizontalContentAlignment="Center" VerticalAlignment="Center">Last Modification</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="250"></ColumnDefinition>
+							<ColumnDefinition Width="70"></ColumnDefinition>
+							<ColumnDefinition Width="250"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding FileName}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding FileType}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding LastModification}" Grid.Column="2"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button x:Name="InjectFileButton" Content="Add a new file" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,400,0,0" VerticalAlignment="Top" Width="150" FontWeight="Bold"/>
+		<Button x:Name="ExtractFileButton" Content="Extract selected file" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,435,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+		<Button x:Name="DeleteFileButton" Content="Delete selected file" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+
+		<Button x:Name="CreateDirectoryButton" Content="Create a new directory at current path" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="165,400,0,0" VerticalAlignment="Top" Width="300" FontWeight="Bold"/>
+		<Button x:Name="DeleteSelectedDirectoryButton" Content="Delete the selected directory" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="215,435,0,0" VerticalAlignment="Top" Width="250" FontWeight="Bold"/>
+
+		<Button x:Name="ReloadMCButton" Content="Reload Memory Card" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="515,400,0,0" VerticalAlignment="Top" Width="215" FontWeight="Bold"/>
+		<Button x:Name="FormatMCButton" Content="Format Memory Card" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="515,435,0,0" VerticalAlignment="Top" Width="215" FontWeight="Bold"/>
+		<Button x:Name="InstallFMCBButton" Content="Install FMCB v1.94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="515,470,0,0" VerticalAlignment="Top" Width="215" FontWeight="Bold"/>
+	</Grid>
+</Window>

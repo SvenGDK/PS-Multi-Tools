@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="500"
+		x:Class="PSMultiTools.PS2.Tools.ELFWrapper"
+		Title="ELF to KELF Wrapper GUI" Height="500" Width="520" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select an .ELF file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedELFTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="416"/>
+		<Button x:Name="BrowseELFButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="431,35,0,0" VerticalAlignment="Top" Width="80" Click="BrowseELFButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,72,0,0" Text="Select an output folder :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="KELFOutputFolderTextBox" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="416"/>
+		<Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="431,95,0,0" VerticalAlignment="Top" Width="80" Click="BrowseOutputFolderButton_Click"/>
+
+		<Button x:Name="WrapButton" Content="Wrap ELF" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="325,135,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold" Click="WrapButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,175,0,0" Text="Options (Optional) :" VerticalAlignment="Top" FontSize="14"/>
+		<CheckBox x:Name="ForRetailCheckBox" Content="For Retail PS2 (CEX Only)" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" />
+		<CheckBox x:Name="ForPSXCheckBox" Content="For PSX (DVR) - not MBR flagged" HorizontalAlignment="Left" Margin="10,225,0,0" VerticalAlignment="Top" />
+		<CheckBox x:Name="ForAllCheckBox" Content="For All - DNAS With HDD container" HorizontalAlignment="Left" Margin="10,255,0,0" VerticalAlignment="Top" />
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,300,0,0" Text="Log :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" Width="496" Height="160"/>
+	</Grid>
+</Window>

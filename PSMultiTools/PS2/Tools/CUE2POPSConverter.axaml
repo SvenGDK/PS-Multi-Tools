@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="530" d:DesignHeight="510"
+		x:Class="PSMultiTools.PS2.Tools.CUE2POPSConverter"
+		Title="Cue2POPS GUI" Height="510" Width="530" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a .cue file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedCueTextBox" HorizontalAlignment="Left" Margin="8,34,0,0" VerticalAlignment="Top" Width="420"/>
+		<Button x:Name="BrowseCueButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="440,33,0,0" VerticalAlignment="Top" Width="75" Click="BrowseCueButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,72,0,0" Text="Select an output folder :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="POPSOutputFolderTextBox" HorizontalAlignment="Left" Margin="8,95,0,0" VerticalAlignment="Top" Width="420"/>
+		<Button x:Name="BrowseOutputFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="440,95,0,0" VerticalAlignment="Top" Width="75" Click="BrowseOutputFolderButton_Click"/>
+
+		<Button x:Name="ConvertButton" Content="Convert" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="350,135,0,0" VerticalAlignment="Top" Width="80" FontWeight="Bold" Click="ConvertButton_Click"/>
+
+		<CheckBox x:Name="Add2SecToAllTrackIndexesCheckBox" Content="Add 2 seconds to all track indexes MSF" HorizontalAlignment="Left" Margin="8,181,0,0" VerticalAlignment="Top" />
+		<CheckBox x:Name="Sub2SecToAllTrackIndexesCheckBox" Content="Substract 2 seconds to all track indexes MSF" HorizontalAlignment="Left" Margin="8,210,0,0" VerticalAlignment="Top" />
+		<CheckBox x:Name="PatchVideoModeCheckBox" Content="Attempt to patch the video mode to NTSC and to fix the screen position" HorizontalAlignment="Left" Margin="8,240,0,0" VerticalAlignment="Top" />
+		<CheckBox x:Name="EnableCheatsCheckBox" Content="Enable cheats" HorizontalAlignment="Left" Margin="8,270,0,0" VerticalAlignment="Top" />
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,157,0,0" Text="Options (Optional) :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="LogTextBox" HorizontalAlignment="Left" Margin="10,330,0,0" VerticalAlignment="Top" Width="500" Height="160"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,306,0,0" Text="Log :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+	</Grid>
+</Window>

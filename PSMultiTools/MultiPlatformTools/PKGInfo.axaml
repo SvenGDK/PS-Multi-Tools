@@ -1,0 +1,180 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
+		x:Class="PSMultiTools.MultiPlatformTools.PKGInfo"
+		Title="PKG Info" Height="700" Width="1200" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Image x:Name="GameIcon" HorizontalAlignment="Left" Height="256" Margin="150,40,10,0" VerticalAlignment="Top" Width="256"/>
+		<Image x:Name="GameBackground" HorizontalAlignment="Left" Margin="600,40,0,0" VerticalAlignment="Top" Width="450" Height="300"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="15,350,0,0" Text="Package for :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGConsoleTextBlock" HorizontalAlignment="Left" Margin="200,350,0,0" Text="%Console%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="15,380,0,0" Text="Build Date :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGBuildDateTextBlock" HorizontalAlignment="Left" Margin="200,380,0,0" Text="%BuildDate%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="15,410,0,0" Text="PKG State :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGStateTextBlock" HorizontalAlignment="Left" Margin="200,410,0,0" Text="%State%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="15,440,0,0" Text="Type :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGTypeTextBlock" HorizontalAlignment="Left" Margin="200,440,0,0" Text="%Type%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="15,470,0,0" Text="Size :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGSizeTextBlock" HorizontalAlignment="Left" Margin="200,470,0,0" Text="%Size%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="15,500,0,0" Text="Content ID :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGContentIDTextBlock" HorizontalAlignment="Left" Margin="200,500,0,0" Text="%ContentID%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="15,530,0,0" Text="Firmware Version :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGFirmwareVersionTextBlock" HorizontalAlignment="Left" Margin="200,530,0,0" Text="%FirmwareVersion%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="15,560,0,0" Text="Region :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGRegionTextBlock" HorizontalAlignment="Left" Margin="200,560,0,0" Text="%Region%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="600,350,0,0" Text="Data Type :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGDataTypeTextBlock" HorizontalAlignment="Left" Margin="750,350,0,0" Text="%DataType%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="600,380,0,0" Text="Attributes :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGAttributesTextBlock" HorizontalAlignment="Left" Margin="750,380,0,0" Text="%Attributes%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="600,410,0,0" Text="Category :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGCategoryTextBlock" HorizontalAlignment="Left" Margin="750,410,0,0" Text="%Category%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="600,440,0,0" Text="App Ver :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGAppVerTextBlock" HorizontalAlignment="Left" Margin="750,440,0,0" Text="%AppVer%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="600,470,0,0" Text="Title :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGTitleTextBlock" HorizontalAlignment="Left" Margin="750,470,0,0" Text="%Title%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<TextBlock HorizontalAlignment="Left" Margin="600,500,0,0" Text="Title ID :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGTitleIDTextBlock" HorizontalAlignment="Left" Margin="750,500,0,0" Text="%TitleID%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock HorizontalAlignment="Left" Margin="600,530,0,0" Text="Version :" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="PKGVersionTextBlock" HorizontalAlignment="Left" Margin="750,530,0,0" Text="%Version%" VerticalAlignment="Top" FontSize="16" FontWeight="Bold">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="5"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<Button x:Name="SaveIconButton" Content="Save Icon" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="610,630,0,0" VerticalAlignment="Top" Width="175" Height="35" FontSize="16" IsEnabled="False" Click="SaveIconButton_Click"/>
+		<Button x:Name="SaveBackgroundButton" Content="Save Background" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="800,630,0,0" VerticalAlignment="Top" Width="175" Height="35" FontSize="16" IsEnabled="False" Click="SaveBackgroundButton_Click"/>
+		<Button x:Name="PlayStopButton" Content="Play Soundtrack" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="990,630,0,0" VerticalAlignment="Top" Width="175" Height="35" FontSize="16" IsEnabled="False" Click="PlayStopButton_Click"/>
+	</Grid>
+</Window>

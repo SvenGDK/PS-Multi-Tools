@@ -1,0 +1,125 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="685"
+		x:Class="PSMultiTools.PSXPartitionManager"
+		Title="Partition Manager" Height="685" Width="1000" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<Button x:Name="LoadPartitionsButton" Content="Load partitions on connected HDD" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="225" FontFamily="Calibri"/>
+		<Button x:Name="CreateNewPartitionButton" Content="Create a new partition" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Background="#FF00619C" Foreground="White" BorderBrush="{x:Null}" Width="175" FontFamily="Calibri"/>
+
+		<ListBox x:Name="PartitionsListView" Margin="15,76,15,0" Height="250" VerticalAlignment="Top">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+							</Grid.ColumnDefinitions>
+
+							<TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Type"/>
+							<TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Start"/>
+							<TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Parts"/>
+							<TextBlock Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Size"/>
+							<TextBlock Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Name"/>
+						</Grid>
+
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBlock Text="{Binding Type}" Grid.Column="0" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Start}" Grid.Column="1" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Parts}" Grid.Column="2" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Size}" Grid.Column="3" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Name}" Grid.Column="4" VerticalAlignment="Center" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<ListBox x:Name="GamesPartitionsListView" Margin="15,361,15,0" Height="250" VerticalAlignment="Top">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="150"/>
+								<ColumnDefinition Width="150"/>
+								<ColumnDefinition Width="150"/>
+								<ColumnDefinition Width="150"/>
+								<ColumnDefinition Width="150"/>
+								<ColumnDefinition Width="150"/>
+							</Grid.ColumnDefinitions>
+
+							<TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Type"/>
+							<TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Size"/>
+							<TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Flags"/>
+							<TextBlock Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Text="DMA"/>
+							<TextBlock Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Startup"/>
+							<TextBlock Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Name"/>
+						</Grid>
+
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBlock Text="{Binding Type}" Grid.Column="0" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Size}" Grid.Column="1" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Flags}" Grid.Column="2" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding DMA}" Grid.Column="3" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Startup}" Grid.Column="4" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding Name}" Grid.Column="5" VerticalAlignment="Center" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<TextBlock HorizontalAlignment="Left" Margin="15,335,0,0" Text="Installed PS2 Games on HDD :" VerticalAlignment="Top" FontSize="16" Foreground="White"/>
+		<TextBlock HorizontalAlignment="Left" Margin="15,50,0,0" Text="Partition List :" VerticalAlignment="Top" FontSize="16" Foreground="White"/>
+
+		<Menu Height="20" VerticalAlignment="Bottom" Margin="0,0,0,10">
+			<TextBlock x:Name="HDDSpaceTextBlock" Text="HDD Space :"/>
+		</Menu>
+	</Grid>
+</Window>

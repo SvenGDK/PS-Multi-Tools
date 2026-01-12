@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1500" d:DesignHeight="775"
+		x:Class="PSMultiTools.MultiPlatformTools.FTPBrowser"
+		Title="FTP Browser" Height="775" Width="1500" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Button x:Name="ConnectButton" Content="Connect and list content" HorizontalAlignment="Left" Margin="370,58,0,0" VerticalAlignment="Top" Width="190" FontWeight="Bold" Click="ConnectButton_Click"/>
+		<TextBox x:Name="ConsoleIPTextBox" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Width="250"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,35,0,0" Text="Console IP :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<ListBox x:Name="FTPItemsListBox" Margin="660,155,10,105" FontFamily="Calibri" FontSize="14" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+								<ColumnDefinition Width="175"/>
+							</Grid.ColumnDefinitions>
+
+							<TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Name"/>
+							<TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Size"/>
+							<TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Type"/>
+							<TextBlock Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Last Modified"/>
+							<TextBlock Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Permissions"/>
+							<TextBlock Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Owner"/>
+						</Grid>
+
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+							<ColumnDefinition Width="175"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBlock Text="{Binding FileOrDirName}" PointerPressed="FTPItemsListBox_PointerPressed" Grid.Column="0" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding FileOrDirSize}" Grid.Column="1" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding FileOrDirType}" Grid.Column="2" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding FileOrDirLastModified}" Grid.Column="3" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding FileOrDirPermissions}" Grid.Column="4" VerticalAlignment="Center" />
+						<TextBlock Text="{Binding FileOrDirOwner}" Grid.Column="5" VerticalAlignment="Center" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<TextBlock HorizontalAlignment="Left" Margin="10,131,0,0" Text="Local Explorer :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="265,59,0,0" VerticalAlignment="Top" Width="100"/>
+		<TextBlock HorizontalAlignment="Left" Margin="265,35,0,0" Text="FTP Port :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<TextBlock x:Name="CurrentDirTextBlock" HorizontalAlignment="Left" Margin="665,131,0,0" Text="Remote Explorer :" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="20,0,0,55" Text="Status :" VerticalAlignment="Bottom" Foreground="White" FontSize="14" FontWeight="Bold"/>
+		<TextBlock x:Name="FTPStatusTextBlock" Margin="75,0,15,55" VerticalAlignment="Bottom" Foreground="White" FontSize="14"/>
+		<ProgressBar x:Name="FTPTransferProgressBar" Height="20" Margin="75,0,15,30" VerticalAlignment="Bottom"/>
+		<TreeView x:Name="LocalTreeView" Margin="10,155,0,104" FontFamily="Calibri" FontSize="14" HorizontalAlignment="Left" Width="650"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="FTP Configuration" VerticalAlignment="Top" Foreground="White" FontSize="14" FontWeight="Bold"/>
+
+		<CheckBox x:Name="PS3ModeCheckBox" Content="PS3 webMAN FTP Mode" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="660,55,10,10"></CheckBox>
+	</Grid>
+</Window>

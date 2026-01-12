@@ -1,0 +1,23 @@
+{
+  "profiles": {
+    "PSMultiTools": {
+      "commandName": "Project"
+    },
+    "WSL : Debian 13.2": {
+      "commandName": "WSL2",
+      "distributionName": "Debian"
+    },
+    "WSL : Ubuntu 24.04": {
+      "commandName": "WSL2",
+      "distributionName": "Ubuntu"
+    },
+    "WSL : Fedora 43": {
+      "commandName": "WSL2",
+      "distributionName": "FedoraLinux-43"
+    },
+    "WSL : Arch": {
+      "commandName": "WSL2",
+      "distributionName": "archlinux"
+    }
+  }
+}

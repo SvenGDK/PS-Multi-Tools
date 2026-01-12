@@ -1,0 +1,135 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:classes="using:PSMultiTools.Classes"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:menus="using:PSMultiTools.Menus"
+		mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="750"
+		x:Class="PSMultiTools.PS3.PS3Library"
+		Title="PS3 Library" Height="750" Width="1350" RequestedThemeVariant="Dark" CanResize="False" CanMinimize="True">
+
+	<Window.Resources>
+		<classes:AnyBitmapToAvaloniaConverter x:Key="AnyToAvalonia"/>
+	</Window.Resources>
+
+	<Grid>
+		<Rectangle x:Name="BlurringShape">
+			<Rectangle.Fill>
+				<ImageBrush Source="{Binding GameBackgroundSource, Converter={StaticResource AnyToAvalonia}}" Opacity="0.75" />
+			</Rectangle.Fill>
+			<Rectangle.Effect>
+				<BlurEffect Radius="25" />
+			</Rectangle.Effect>
+		</Rectangle>
+
+		<menus:PS3Menu x:Name="NewPS3Menu" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+		<ListBox x:Name="GamesListBox" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" SelectionMode="Single" Height="255" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="5,35,5,0" >
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Width="{Binding GridWidth}" Height="{Binding GridHeight}">
+						<Image Width="{Binding ImageWidth}" Height="{Binding ImageHeight}" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" HorizontalAlignment="Left" Margin="0,0,0,0" >
+							<Image.Effect>
+								<DropShadowEffect/>
+							</Image.Effect>
+						</Image>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<TextBlock VerticalAlignment="Top" Text="Filter Games Library" FontSize="24" TextAlignment="Left" Margin="50,305,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<Button x:Name="FilterByBackupFoldersButton" Click="FilterByBackupFoldersButton_Click" Content="Filter by PS3 GAMES" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="50,340,0,0" VerticalAlignment="Top" Width="150" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+		<Button x:Name="FilterByPS3ISOButton" Click="FilterByPS3ISOButton_Click" Content="Filter by PS3ISO" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="205,340,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+		<Button x:Name="FilterByPS2ISOButton" Click="FilterByPS2ISOButton_Click" Content="Filter by PS2ISO" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="340,340,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+		<Button x:Name="FilterByPSXISOButton" Click="FilterByPSXISOButton_Click" Content="Filter by PSXISO" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="470,340,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+		<Button x:Name="FilterByPSPISOButton" Click="FilterByPSPISOButton_Click" Content="Filter by PSPISO" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="600,340,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+		<Button x:Name="FilterByPKGButton" Click="FilterByPKGButton_Click" Content="Filter by PKG" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="730,340,0,0" VerticalAlignment="Top" Width="125" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+		<Button x:Name="FilterByLocalGamesButton" Click="FilterByLocalGamesButton_Click" Content="Only local games" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="860,340,0,0" VerticalAlignment="Top" Width="140" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+		<Button x:Name="FilterByRemoteGamesButton" Click="FilterByRemoteGamesButton_Click" Content="Only remote games" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="1005,340,0,0" VerticalAlignment="Top" Width="140" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+		<Button x:Name="ShowAllButton" Click="ShowAllButton_Click" Content="Show all games" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="1150,340,0,0" VerticalAlignment="Top" Width="140" FontFamily="Calibri" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+
+		<TextBlock x:Name="GameTitleTextBlock" VerticalAlignment="Top" Text="GameTitle" FontSize="48" FontWeight="Bold" Margin="0,400,0,0" HorizontalAlignment="Center" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FontSize="24" Margin="100,465,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameContentIDTextBlock" VerticalAlignment="Top" Text="GameContentID" FontSize="24" TextAlignment="Left" Margin="100,500,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FontSize="24" TextAlignment="Left" Margin="100,535,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameCategoryTextBlock" VerticalAlignment="Top" Text="GameCategory" FontSize="24" TextAlignment="Left" Margin="100,570,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="SupportedResolutionsTextBlock" VerticalAlignment="Top" Text="Supported Resolutions :" FontSize="24" TextAlignment="Left" Margin="100,605,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="SupportedSoundFormatsTextBlock" VerticalAlignment="Top" Text="Supported Sound Formats :" FontSize="24" TextAlignment="Left" Margin="100,640,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<Image x:Name="ResolutionsImage" HorizontalAlignment="Left" Height="32" Margin="350,605,0,0" VerticalAlignment="Top" Width="32" Source="/Images/ResolutionsIcon.png" Cursor="Hand" IsVisible="False"/>
+		<Image x:Name="SoundFormatsImage" HorizontalAlignment="Left" Height="32" Margin="385,640,0,0" VerticalAlignment="Top" Width="32" Source="/Images/SoundFormatsIcon.png" Cursor="Hand" IsVisible="False"/>
+
+		<TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FontSize="24" TextAlignment="Left" Margin="913,465,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameVersionTextBlock" VerticalAlignment="Top" Text="GameVersion" FontSize="24" TextAlignment="Left" Margin="913,500,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameAppVersionTextBlock" VerticalAlignment="Top" Text="GameAppVersion" FontSize="24" TextAlignment="Left" Margin="913,535,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameRequiredFirmwareTextBlock" VerticalAlignment="Top" Text="GameRequiredFirmware" FontSize="24" TextAlignment="Left" Margin="913,570,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameBackupTypeTextBlock" VerticalAlignment="Top" Text="Backup Type:" FontSize="24" TextAlignment="Left" Margin="913,605,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder:" FontSize="24" TextAlignment="Left" Margin="913,640,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="ISOEncryptionStatusTextBlock" VerticalAlignment="Top" Text="ISO Status:" FontSize="24" TextAlignment="Left" Margin="913,675,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White" IsVisible="False">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+	</Grid>
+</Window>

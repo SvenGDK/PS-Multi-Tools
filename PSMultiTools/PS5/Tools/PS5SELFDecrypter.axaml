@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="510"
+		x:Class="PSMultiTools.PS5.Tools.PS5SELFDecrypter"
+		Title="PS5 SELF Decrypter GUI" Height="510" Width="1000" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="PS5 IP :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="IPAddressTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="150"/>
+		<TextBlock HorizontalAlignment="Left" Margin="173,10,0,0" Text="Payload Port :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="173,35,0,0" VerticalAlignment="Top" Width="100"/>
+		
+		<TextBlock HorizontalAlignment="Left" Margin="284,10,0,0" Text="Payload Path :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="PayloadPathTextBox" HorizontalAlignment="Left" Margin="284,35,0,0" VerticalAlignment="Top" Width="300"/>		
+		<Button x:Name="BrowsePayloadButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="595,35,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold" Click="BrowsePayloadButton_Click"/>
+
+		<Button x:Name="ListenButton" Content="Send Payload and Start Listening" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="10,35,10,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" Click="ListenButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,410" Text="Log :" FontSize="14"/>
+		<TextBox x:Name="ListeningLogTextBox" VerticalAlignment="Bottom" Height="390" Margin="10,0,10,10" HorizontalAlignment="Stretch" Width="980"/>
+	</Grid>
+</Window>

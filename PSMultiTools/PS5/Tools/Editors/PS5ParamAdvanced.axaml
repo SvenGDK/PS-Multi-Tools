@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="PSMultiTools.PS5.Tools.Editors.PS5ParamAdvanced"
+		Title="Advanced Param Editor" Height="410" Width="760" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Modifying ageLevel" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="699" FontWeight="Bold"/>
+		<ListBox x:Name="ParamsListBox" Margin="10,40,10,0" Height="220" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="275"></ColumnDefinition>
+								<ColumnDefinition Width="275"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center">Parameter</Label>
+							<Label Grid.Column="1" HorizontalContentAlignment="Center" VerticalAlignment="Center">Value</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="275"></ColumnDefinition>
+							<ColumnDefinition Width="275"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding ParamName}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding ParamValue}" Grid.Column="1"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<TextBlock HorizontalAlignment="Left" Margin="10,300,0,0" Text="Add a parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,335,0,0" Text="Enter param:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="110"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,375,0,0" Text="Set value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="110"/>
+		<TextBox x:Name="ParamValueTextBox" HorizontalAlignment="Left" Margin="125,330,0,0" VerticalAlignment="Top" Width="250"/>
+		<TextBlock HorizontalAlignment="Left" Margin="410,300,0,0" Text="Modify selected parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="320" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="410,335,0,0" Text="Modify value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="110"/>
+		<TextBox x:Name="ModifyValueTextBox" HorizontalAlignment="Left" Margin="525,330,0,0" VerticalAlignment="Top" Width="250"/>
+
+		<Button x:Name="SaveModifiedValueButton" Content="Save changes" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="650,375,0,0" VerticalAlignment="Top" Width="125" IsEnabled="False" Click="SaveModifiedValueButton_Click"/>
+		<Button x:Name="AddParamButton" Content="Add param" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="250,410,0,0" VerticalAlignment="Top" Width="125" IsEnabled="False" Click="AddParamButton_Click"/>
+		<Button x:Name="RemoveParamButton" Content="Remove param" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="650,410,0,0" VerticalAlignment="Top" Width="125" IsEnabled="False" Click="RemoveParamButton_Click"/>
+		<TextBox x:Name="NewParamTextBox" HorizontalAlignment="Left" Margin="125,370,0,0" VerticalAlignment="Top" Width="250"/>
+	</Grid>
+</Window>

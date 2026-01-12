@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
+		x:Class="PSMultiTools.MultiPlatformTools.BDBurner"
+		Title="Blu Ray Burner" Height="600" Width="500" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Check available Blu-Ray Disc Drive :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
+		<ComboBox x:Name="DiscDrivesComboBox" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="475" IsEditable="True"/>
+		<Button x:Name="CheckDiscButton" Content="Get Disc Info" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="360,75,0,0" VerticalAlignment="Top" Width="125" Click="CheckDiscButton_Click"/>
+		<Button x:Name="EraseDiscButton" Content="Erase Disc" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="225,75,0,0" VerticalAlignment="Top" Width="125" Click="CheckDiscButton_Click" IsEnabled="False" IsVisible="False"/>
+		<TextBlock x:Name="DiscInfoTextBlock" HorizontalAlignment="Left" Margin="10,125,0,0" Text="Disc info :" VerticalAlignment="Top" FontStyle="Italic"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,165,0,0" Text="Select an ISO file to burn on the disc :" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
+		<TextBox x:Name="SelectedISOTextBox" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="475"/>
+		<Button x:Name="BrowseISOButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="270,230,0,0" VerticalAlignment="Top" Width="100" Click="BrowseISOButton_Click"/>
+		<Button x:Name="BurnDiscButton" Content="Burn Disc" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="375,230,0,0" VerticalAlignment="Top" Width="110" Click="BurnDiscButton_Click"/>
+
+		<TextBlock x:Name="BurnStatusTextBlock" HorizontalAlignment="Left" Margin="10,285,0,0" Text="Burn Status :" VerticalAlignment="Top" FontWeight="Bold"/>
+		<ProgressBar x:Name="BurnProgressBar" HorizontalAlignment="Left" Height="28" Margin="10,310,0,0" VerticalAlignment="Top" Width="475"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,0,0,220" Text="Log :" VerticalAlignment="Bottom" FontSize="14" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" Margin="10,0,10,10" VerticalAlignment="Bottom" Height="200"/>
+	</Grid>
+</Window>

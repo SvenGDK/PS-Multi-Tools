@@ -1,0 +1,107 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="20"
+			 x:Class="PSMultiTools.Menus.PS1Menu" Height="20">
+	<Grid>
+		<Menu x:Name="MainMenu">
+			<MenuItem Header="Library"/>
+			<MenuItem Header="Tools">
+				<MenuItem Header="Merge .bin files" x:Name="OpenMergeBinTool" Click="OpenMergeBinTool_Click"/>
+				<MenuItem Header="Convert BIN/CUE to ISO" x:Name="OpenBINCUEConverter" Click="OpenBINCUEConverter_Click"/>
+			</MenuItem>
+			<MenuItem Header="Downloads">
+				<MenuItem Header="Exploits">
+					<MenuItem Header="FreePSXBoot">
+						<MenuItem Header="Download v2.1" x:Name="DownloadFreePSXBoot" Click="DownloadFreePSXBoot_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="TonyHax">
+						<MenuItem Header="Download v1.4.5" x:Name="DownloadTonyHax" Click="DownloadTonyHax_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="TonyHax International">
+						<MenuItem Header="Download v1.5.1" x:Name="DownloadTonyHaxInternational" Click="DownloadTonyHaxInternational_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Tools">
+					<MenuItem Header="Aprip">
+						<MenuItem Header="Download v1.0.9" x:Name="DownloadAprip" Click="DownloadAprip_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+
+					<MenuItem Header="EDCRE">
+						<MenuItem Header="Download v1.1.0">
+							<MenuItem Header="Windows" x:Name="DownloadEDCRE" Click="DownloadEDCRE_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Linux" x:Name="DownloadEDCRELinux" Click="DownloadEDCRELinux_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="macOS" x:Name="DownloadEDCREmacOS" Click="DownloadEDCREmacOS_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+
+					<MenuItem Header="LibCrypt Patcher">
+						<MenuItem Header="Download v1.0.9">
+							<MenuItem Header="Windows" x:Name="DownloadLibCryptPatcher" Click="DownloadLibCryptPatcher_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Linux" x:Name="DownloadLibCryptPatcherLinux" Click="DownloadLibCryptPatcherLinux_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="macOS" x:Name="DownloadLibCryptPatchermacOS" Click="DownloadLibCryptPatchermacOS_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+
+					<MenuItem Header="PSEXE2ROM">
+						<MenuItem Header="Download v1.0.2" x:Name="DownloadPSEXE2ROM" Click="DownloadPSEXE2ROM_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+
+					<MenuItem Header="PSX 80 Minute Patcher">
+						<MenuItem Header="Download v2.0" x:Name="DownloadPSX80MP" Click="DownloadPSX80MP_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+
+				</MenuItem>
+			</MenuItem>
+		</Menu>
+	</Grid>
+</UserControl>

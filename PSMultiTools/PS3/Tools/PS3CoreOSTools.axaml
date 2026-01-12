@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="735" d:DesignHeight="560"
+		x:Class="PSMultiTools.PS3.Tools.PS3CoreOSTools"
+		Title="PS3 CoreOS Tools" Height="560" Width="735" RequestedThemeVariant="Dark" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Decrypt Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,40,0,0" Text="Selected the core_os .pkg :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<TextBox x:Name="SelectedCoreOSPKGForDecTextBox" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseCoreOSPKGButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="230,105,0,0" VerticalAlignment="Top" Width="80" Click="BrowseCoreOSPKGButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="339,40,0,0" Text="Select a decryption output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<TextBox x:Name="SelectedOutputFolderForDecTextBox" HorizontalAlignment="Left" Margin="339,65,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseDecOutputFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="644,65,0,0" VerticalAlignment="Top" Width="80" Click="BrowseDecOutputFolderButton_Click"/>
+		<Button x:Name="DecryptButton" Content="Decrypt" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="560,105,0,0" VerticalAlignment="Top" Width="80" Click="DecryptButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,150,0,0" Text="Extract Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="185,175,0,0" Text="Selected the decrypted output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<TextBox x:Name="SelectedDecFolderForExtrTextBox" HorizontalAlignment="Left" Margin="185,200,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseExtrOutputFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="490,200,0,0" VerticalAlignment="Top" Width="80" Click="BrowseExtrOutputFolderButton_Click"/>
+		<Button x:Name="ExtractButton" Content="Extract" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="405,240,0,0" VerticalAlignment="Top" Width="80" Click="ExtractButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,280,0,0" Text="Encrypt Core_OS" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,310,0,0" Text="Selected the decrypted output folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<TextBox x:Name="SelectedDecFolderForEncTextBox" HorizontalAlignment="Left" Margin="10,335,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseDecFolderForEncButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="230,375,0,0" VerticalAlignment="Top" Width="80" Click="BrowseDecFolderForEncButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="339,310,0,0" Text="Select a new folder for the encryption :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<TextBox x:Name="SelectedNewFolderForEncTextBox" HorizontalAlignment="Left" Margin="339,335,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseOutFolderForEncButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="644,335,0,0" VerticalAlignment="Top" Width="80" Click="BrowseOutFolderForEncButton_Click"/>
+		<Button x:Name="EncryptButton" Content="Encrypt" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="560,375,0,0" VerticalAlignment="Top" Width="80" Click="EncryptButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,420,0,0" Text="Core_OS Image Info" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,445,0,0" Text="Select the core_os .pkg :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<TextBox x:Name="SelectedCoreOSPKGForReadTextBox" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="210"/>
+		<Button x:Name="BrowseReadButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="230,470,0,0" VerticalAlignment="Top" Width="80" Click="BrowseReadButton_Click"/>
+		<Button x:Name="ReadButton" Content="Read" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="230,510,0,0" VerticalAlignment="Top" Width="80" Click="ReadButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="339,420,0,0" Text="Core_OS Hex Dumper" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="339,445,0,0" Text="Selected an decrypted core_os folder :" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+		<TextBox x:Name="SelectedDecFolderForDumpTextBox" HorizontalAlignment="Left" Margin="339,470,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="BrowseDumpButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="644,470,0,0" VerticalAlignment="Top" Width="80" Click="BrowseDumpButton_Click"/>
+		<Button x:Name="DumpButton" Content="Dump" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="560,510,0,0" VerticalAlignment="Top" Width="80" Click="DumpButton_Click"/>
+	</Grid>
+</Window>

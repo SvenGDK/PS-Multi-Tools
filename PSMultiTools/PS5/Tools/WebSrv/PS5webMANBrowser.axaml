@@ -1,0 +1,11 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+		x:Class="PSMultiTools.PS5.Tools.WebSrv.PS5webMANBrowser"
+		Title="WebMAN WebSrv Interface" Height="720" Width="1280" RequestedThemeVariant="Dark">
+	<Grid>
+		<Decorator x:Name="WebMANWebSrvViewWrapper" Margin="0,0,0,0"></Decorator>
+	</Grid>
+</Window>

@@ -1,0 +1,91 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:classes="using:PSMultiTools.Classes"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:menus="using:PSMultiTools.Menus"
+		mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="650"
+		x:Class="PSMultiTools.PS1.PS1Library"
+		Title="PS1 Games Library" Height="650" Width="1350" RequestedThemeVariant="Dark">
+
+	<Window.Resources>
+		<classes:AnyBitmapToAvaloniaConverter x:Key="AnyToAvalonia"/>
+	</Window.Resources>
+
+	<Grid>
+		<menus:PS1Menu x:Name="NewPS1Menu" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+		<ListBox x:Name="GamesListBox" Margin="0,30,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="325" Background="{x:Null}" BorderBrush="{x:Null}" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Width="260" Height="290">
+						<Image Width="250" Height="250" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" >
+							<Image.Effect>
+								<DropShadowEffect/>
+							</Image.Effect>
+						</Image>
+						<TextBlock Text="{Binding GameTitle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,260,0,0" FontSize="12" TextAlignment="Center"/>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<TextBlock x:Name="GameTitleTextBlock" VerticalAlignment="Top" Text="GameTitle" FontSize="48" FontWeight="Bold" Margin="0,360,0,0" HorizontalAlignment="Center" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameIDTextBlock" VerticalAlignment="Top" Text="GameID" FontSize="24" Margin="117,420,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameRegionTextBlock" VerticalAlignment="Top" Text="GameRegion" FontSize="24" TextAlignment="Left" Margin="117,455,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameGenreTextBlock" VerticalAlignment="Top" Text="GameGenre" FontSize="24" TextAlignment="Left" Margin="117,490,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameSizeTextBlock" VerticalAlignment="Top" Text="GameSize" FontSize="24" TextAlignment="Left" Margin="904,420,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameBackupFolderNameTextBlock" VerticalAlignment="Top" Text="Backup Folder :" FontSize="24" TextAlignment="Left" Margin="904,525,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameDeveloperTextBlock" VerticalAlignment="Top" Text="GameDeveloper" FontSize="24" TextAlignment="Left" Margin="117,525,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GamePublisherTextBlock" VerticalAlignment="Top" Text="GamePublisher" FontSize="24" TextAlignment="Left" Margin="904,455,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameReleaseDateTextBlock" VerticalAlignment="Top" Text="GameReleaseDate" FontSize="24" TextAlignment="Left" Margin="904,490,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+		<TextBlock x:Name="GameDescriptionTextBlock" VerticalAlignment="Top" Text="GameDescription" FontSize="24" TextAlignment="Left" Margin="117,560,0,0" HorizontalAlignment="Left" FontFamily="Calibri" Foreground="White">
+			<TextBlock.Effect>
+				<DropShadowEffect BlurRadius="3"/>
+			</TextBlock.Effect>
+		</TextBlock>
+
+		<Decorator x:Name="PSXDatacenterBrowserWrapper" IsVisible="False"></Decorator>
+	</Grid>
+</Window>

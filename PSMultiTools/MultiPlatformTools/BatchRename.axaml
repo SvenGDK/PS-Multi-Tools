@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1160" d:DesignHeight="650"
+		x:Class="PSMultiTools.MultiPlatformTools.BatchRename"
+		Title="Batch Rename Utility" Height="650" Width="1160" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a backup folder :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedFolderTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="880"/>
+		<Button x:Name="BrowseFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="900,35,0,0" VerticalAlignment="Top" Width="80" Click="BrowseFolderButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,80,0,0" Text="Renaming Options :" VerticalAlignment="Top" FontSize="14"/>
+		<CheckBox x:Name="RenameOnlyFoldersCheckBox" Content="Rename only the backup folders names" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="RenameOnlyFilesCheckBox" Content="Rename only the file names" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="RenameOnlyPKGFilesCheckBox" Content="Only PKG files" HorizontalAlignment="Left" Margin="41,160,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="RenameOnlyISOFilesCheckBox" Content="Only ISO files" HorizontalAlignment="Left" Margin="41,190,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="RenameBothCheckBox" Content="Both" HorizontalAlignment="Left" Margin="175,175,0,0" VerticalAlignment="Top"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="315,80,0,0" Text="Renaming Scheme :" VerticalAlignment="Top" FontSize="14"/>
+		<CheckBox x:Name="UseDefaultFolderNameCheckBox" Content="Use GAMETITLE" HorizontalAlignment="Left" Margin="315,100,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="UseDefaultFolderNameWithGameIDCheckBox" Content="Use GAMETITLE [GAMEID]" HorizontalAlignment="Left" Margin="315,129,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="UseDefaultCheckBox" Content="Use GAMETITLE.EXTENSION" HorizontalAlignment="Left" Margin="315,158,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="UseWithGameIDCheckBox" Content="Use GAMETITLE [GAMEID].EXTENSION" HorizontalAlignment="Left" Margin="315,187,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="UseWithGameTitleCheckBox" Content="Use GAMEID-[GAMETITLE].EXTENSION" HorizontalAlignment="Left" Margin="315,216,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="UseWithBracketsCheckBox" Content="Use GAMETITLE (GAMEID).EXTENSION" HorizontalAlignment="Left" Margin="315,245,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="UseWithRegionLanguagesCheckBox" Content="Use GAMETITLE (REGION) (LANG1, LANG2, ...).EXTENSION" HorizontalAlignment="Left" Margin="315,274,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="UseCustomCheckBox" Content="Use Custom :" HorizontalAlignment="Left" Margin="315,306,0,0" VerticalAlignment="Top"/>
+		<TextBox x:Name="CustomRenamingSchemeTextBox" HorizontalAlignment="Left" Margin="440,305,0,0" VerticalAlignment="Top" Width="259" />
+
+		<TextBlock HorizontalAlignment="Left" Margin="750,107,0,0" Text="-&gt; Used for folders -&gt; E:\Backups\GameName" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="750,136,0,0" Text="-&gt; Used for folders -&gt; E:\Backups\GameName [BLUS12345]" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="750,165,0,0" Text="-&gt; Used for files -&gt; GameName.iso" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="750,194,0,0" Text="-&gt; Used for files -&gt; GameName [BLUS12345].iso" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="750,223,0,0" Text="-&gt; Used for files -&gt; BLUS12345-[GameName].iso" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="750,252,0,0" Text="-&gt; Used for files -&gt; GameName (BLUS12345).iso" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="750,281,0,0" Text="-&gt; Used for files -&gt; GameName (Region) (En, De, ...).iso" VerticalAlignment="Top"/>
+
+		<Button x:Name="StartButton" Content="Start Renaming" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="750,360,0,0" VerticalAlignment="Top" Width="390" FontWeight="Bold" FontSize="16" Click="StartButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,0,0,220" Text="Log :" VerticalAlignment="Bottom" FontSize="14"/>
+		<TextBox x:Name="RenameLogTextBox" VerticalAlignment="Bottom" Height="205" Margin="10,0,10,10"/>
+	</Grid>
+</Window>

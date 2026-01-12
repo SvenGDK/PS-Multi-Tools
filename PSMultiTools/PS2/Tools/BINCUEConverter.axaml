@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+		x:Class="PSMultiTools.PS1.Tools.BINCUEConverter"
+		Height="450" Width="600" RequestedThemeVariant="Dark" CanResize="False" CanMinimize="True" Title="BIN/CUE to ISO Converter" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBox x:Name="SelectedCueTextBox" HorizontalAlignment="Left" Margin="8,34,0,0" VerticalAlignment="Top" Width="477"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Select a .cue file :" VerticalAlignment="Top" FontSize="14"/>
+		<Button x:Name="BrowseCueButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="499,33,0,0" VerticalAlignment="Top" Width="85" Click="BrowseCueButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="Select a .bin file :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBox x:Name="SelectedBinTextBox" HorizontalAlignment="Left" Margin="8,100,0,0" VerticalAlignment="Top" Width="477"/>
+		<Button x:Name="BrowseBinButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="499,100,0,0" VerticalAlignment="Top" Width="85" Click="BrowseBinButton_Click"/>
+
+		<CheckBox x:Name="IsForPSXCheckBox" Content="Convert for PS1" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" />
+		<Button x:Name="ConvertButton" Content="Convert" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="405,140,0,0" VerticalAlignment="Top" Width="80" FontWeight="Bold" Click="ConvertButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,0,0,225" Text="Log :" VerticalAlignment="Bottom" FontSize="14" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" Margin="10,0,10,10" VerticalAlignment="Bottom" Height="210"/>
+	</Grid>
+</Window>

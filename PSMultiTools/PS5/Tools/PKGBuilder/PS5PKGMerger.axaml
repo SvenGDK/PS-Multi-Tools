@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+		x:Class="PSMultiTools.PS5.Tools.PKGBuilder.PS5PKGMerger"
+		Title="PS4 / PS5 PKG Merger" Height="400" Width="600" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Center" TextWrapping="NoWrap" Text="Merge PKG files into a single one" VerticalAlignment="Top" FontSize="18" Margin="0,10,0,0" FontFamily="Calibri" TextAlignment="Center" FontWeight="Bold"/>
+
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a folder containing all _x.pkg files :" VerticalAlignment="Top" FontSize="16" Margin="10,45,0,0" FontFamily="Calibri"/>
+		<TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="491"/>
+		<Button x:Name="BrowseFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="506,70,0,0" VerticalAlignment="Top" Width="80" Click="BrowseFolderButton_Click"/>
+		<Button x:Name="MergeButton" Content="Merge" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="420,110,0,0" VerticalAlignment="Top" Width="80" IsEnabled="False" FontWeight="Bold" Click="MergeButton_Click">
+			<ToolTip.Tip>
+				Remember to rename the _sc.pkg file before merging or it cannot be installed on the PS5! Example: If PACKAGE_4.pkg is the last PKG then rename PACKAGE_sc.pkg to PACKAGE_5.pkg
+			</ToolTip.Tip>
+		</Button>
+
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="PKG Merge Log :" VerticalAlignment="Bottom" FontSize="16" Margin="10,0,0,230" FontFamily="Calibri"/>
+		<TextBox x:Name="MergeLogTextBox" HorizontalAlignment="Left" Margin="10,174,0,10" VerticalAlignment="Bottom" Width="571" Height="213"/>
+	</Grid>
+</Window>

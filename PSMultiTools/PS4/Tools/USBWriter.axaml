@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="190"
+		x:Class="PSMultiTools.PS4.Tools.USBWriter"
+		Title="USB Writer" Height="190" Width="500" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0"  Text="Select your .img file :" VerticalAlignment="Top"  FontSize="14"/>
+		<TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0"  VerticalAlignment="Top" Width="400"/>
+		<Button x:Name="BrowseFileButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="415,35,0,0" VerticalAlignment="Top" Width="75" Click="BrowseFileButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,75,0,0"  Text="Select your USB drive :" VerticalAlignment="Top"  FontSize="14"/>
+		<ComboBox x:Name="DrivesComboBox" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="400"/>
+		<Button x:Name="RefreshButton" Content="Refresh" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="415,100,0,0" VerticalAlignment="Top" Width="75" Click="RefreshButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,140,0,0"  Text="Warning: All data on this drive will be deleted!&#x0a;Please close all programs that could access the drive." VerticalAlignment="Top" FontSize="11" FontStyle="Italic" Height="42" Width="320"/>
+		<Button x:Name="WriteButton" Content="Write" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="335,140,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold" Click="WriteButton_Click"/>
+	</Grid>
+</Window>

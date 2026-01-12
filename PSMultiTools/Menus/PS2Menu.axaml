@@ -1,0 +1,325 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="20"
+			 x:Class="PSMultiTools.Menus.PS2Menu" Height="20">
+	<Grid>
+		<Menu x:Name="MainMenu">
+			<MenuItem Header="Library"/>
+			<MenuItem Header="Tools">
+				<MenuItem Header="Convert BIN/CUE to ISO" x:Name="OpenBINCUEConverter" Click="OpenBINCUEConverter_Click"/>
+				<MenuItem Header="CUE2POPS Converter" x:Name="OpenCUE2POPSConverter" Click="OpenCUE2POPSConverter_Click"/>
+				<MenuItem Header="ELF to KELF Wrapper" x:Name="OpenELFtoKELFWrapper" Click="OpenELFtoKELFWrapper_Click"/>
+				<MenuItem Header="PAKerUtility" x:Name="OpenPAKerUtility" Click="OpenPAKerUtility_Click"/>
+				<MenuItem Header="PS2 Memory Card Manager" x:Name="OpenMCManager" Click="OpenMCManager_Click"/>
+				<MenuItem Header="STAR Extractor" x:Name="OpenStarExtractor" Click="OpenStarExtractor_Click"/>
+			</MenuItem>
+			<MenuItem Header="Downloads">
+				<MenuItem Header="Emulators">
+					<MenuItem Header="DaedalusX64 (experimental)">
+						<MenuItem Header="Download" x:Name="DownloadDaedalusX64" Click="DownloadDaedalusX64_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="FCEUmm">
+						<MenuItem Header="Download v0.3.3" x:Name="DownloadFCEUmm" Click="DownloadFCEUmm_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download v0.3.3 with CD/DVD support" x:Name="DownloadFCEUmmCDVD" Click="DownloadFCEUmmCDVD_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ReGBA + TempGBA">
+						<MenuItem Header="Download v1.45.5 Rev3 NTSC" x:Name="DownloadGBANTSC" Click="DownloadGBANTSC_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download v1.45.5 Rev3 PAL" x:Name="DownloadGBAPAL" Click="DownloadGBAPAL_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="RetroArch">
+						<MenuItem Header="Download v1.15" x:Name="DownloadRetroArch" Click="DownloadRetroArch_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="SnesStation">
+						<MenuItem Header="Download v024S" x:Name="DownloadSnesStation" Click="DownloadSnesStation_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Homebrew">
+					<MenuItem Header="CheatDevice">
+						<MenuItem Header="Download v1.7.5" x:Name="DownloadCheatDevice" Click="DownloadCheatDevice_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="FSCK Tool">
+						<MenuItem Header="Download c7679407 (latest)" x:Name="DownloadFSCK" Click="DownloadFSCK_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="GSM Selector">
+						<MenuItem Header="Download v0.37" x:Name="DownloadGSM" Click="DownloadGSM_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="HDDChecker">
+						<MenuItem Header="Download c7679407 (latest)" x:Name="DownloadHDDChecker" Click="DownloadHDDChecker_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="HDLGameInstaller">
+						<MenuItem Header="Download build 6e8d52aa (latest)" x:Name="DownloadHDLGameInstaller" Click="DownloadHDLGameInstaller_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="KELFBinder">
+						<MenuItem Header="Download build d53aba3 (latest)" x:Name="DownloadKELFBinder" Click="DownloadKELFBinder_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="MechaPwn">
+						<MenuItem Header="Download v3.0 RC4" x:Name="DownloadMechaPwn" Click="DownloadMechaPwn_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Memory Card Formatter">
+						<MenuItem Header="Download v1.2" x:Name="DownloadMCF" Click="DownloadMCF_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="OPL Launcher">
+						<MenuItem Header="Download latest" x:Name="DownloadOPLLauncher" Click="DownloadOPLLauncher_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download v1 ELF" x:Name="DownloadOPLLauncherELF" Click="DownloadOPLLauncherELF_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="Download v1 KELF" x:Name="DownloadOPLLauncherKELF" Click="DownloadOPLLauncherKELF_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Open PS2 Loader">
+						<MenuItem Header="v1.2.0-Beta-1987-1c5bc79">
+							<MenuItem Header="Download ELF" x:Name="DownloadOpenPS2LoaderLatestNormal" Click="DownloadOpenPS2LoaderLatestNormal_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Download Variants" x:Name="DownloadOpenPS2LoaderLatestVariants" Click="DownloadOpenPS2LoaderLatestVariants_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Download Languages and Fonts" x:Name="DownloadOpenPS2LoaderLatestLangs" Click="DownloadOpenPS2LoaderLatestLangs_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="v1.1.0">
+							<MenuItem Header="Download ELF" x:Name="DownloadOpenPS2LoaderNormal" Click="DownloadOpenPS2LoaderNormal_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Download Variants" x:Name="DownloadOpenPS2LoaderVariants" Click="DownloadOpenPS2LoaderVariants_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Download Languages and Fonts" x:Name="DownloadOpenPS2LoaderLangs" Click="DownloadOpenPS2LoaderLangs_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS2BBL">
+						<MenuItem Header="Download build 85373d3 (latest)" x:Name="DownloadPS2BBL" Click="DownloadPS2BBL_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="PS2Ident">
+						<MenuItem Header="Download 9032110d (latest)" x:Name="DownloadPS2Ident" Click="DownloadPS2Ident_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="SMS Media Player">
+						<MenuItem Header="Download v2.9 Rev4" x:Name="DownloadSMS" Click="DownloadSMS_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="VTSPS2 Homebrew Downloader">
+						<MenuItem Header="Download v0.34" x:Name="DownloadVTSPS2HBDL" Click="DownloadVTSPS2HBDL_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="wLaunchELF">
+						<MenuItem Header="Download 073dd41 (latest)" x:Name="DownloadwLaunchELF" Click="DownloadwLaunchELF_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="Tools">
+					<MenuItem Header="Bmp2Icon">
+						<MenuItem Header="Download v1.7.5" x:Name="DownloadBmp2Icon" Click="DownloadBmp2Icon_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="CodeSeek">
+						<MenuItem Header="Download v1.7.5" x:Name="DownloadCodeSeek" Click="DownloadCodeSeek_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="DiscPatcher">
+						<MenuItem Header="Download v1.7.5" x:Name="DownloadDiscPatcher" Click="DownloadDiscPatcher_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ELF Extract">
+						<MenuItem Header="Download v1.7.5" x:Name="DownloadELFExtract" Click="DownloadELFExtract_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="ESR disc patcher GUI">
+						<MenuItem Header="Download v1.7.5" x:Name="DownloadESRGUI" Click="DownloadESRGUI_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="FAT32 Format Tool">
+						<MenuItem Header="Download v1.7.5" x:Name="DownloadFAT32GUI" Click="DownloadFAT32GUI_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Mastercode Finder">
+						<MenuItem Header="Download v1.7.5" x:Name="DownloadMastercodeFinder" Click="DownloadMastercodeFinder_Click">
+							<MenuItem.Icon>
+								<Image Source="/Images/download.png"/>
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="PSX specific">
+					<MenuItem Header="XMB Translations">
+						<MenuItem Header="English">
+							<MenuItem Header="DESR-5500-5700-7500-7700 FW2.11">
+								<MenuItem Header="Download v1" x:Name="DownloadEnglishXMBTr" Click="DownloadEnglishXMBTr_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Français">
+							<MenuItem Header="DESR-5500-5700-7500-7700 FW2.10">
+								<MenuItem Header="Download" x:Name="DownloadFrenchXMBTr" Click="DownloadFrenchXMBTr_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Deutsch">
+							<MenuItem Header="DESR-5500-5700-7500-7700 FW2.11">
+								<MenuItem Header="Download v1" x:Name="DownloadGermanXMBTr" Click="DownloadGermanXMBTr_Click">
+									<MenuItem.Icon>
+										<Image Source="/Images/download.png"/>
+									</MenuItem.Icon>
+								</MenuItem>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="Update Discs">
+						<MenuItem Header="DESR-7000-5000-7100-5100 Update Disc Ver. 1.31">
+							<MenuItem Header="Download" x:Name="DownloadUpdate131" Click="DownloadUpdate131_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="DESR-7500-5500-7700-5700 Update Disc Ver. 2.11">
+							<MenuItem Header="Download" x:Name="DownloadUpdate211" Click="DownloadUpdate211_Click">
+								<MenuItem.Icon>
+									<Image Source="/Images/download.png"/>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+					</MenuItem>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="Exploits">
+				<MenuItem Header="Swap Magic" x:Name="OpenSwapGithub" Click="OpenSwapGithub_Click"/>
+				<MenuItem Header="PS2 Independence" x:Name="OpenIndependenceArchive" Click="OpenIndependenceArchive_Click"/>
+				<MenuItem Header="FreeDVDBoot" x:Name="OpenFreeDVDBootGithub" Click="OpenFreeDVDBootGithub_Click"/>
+				<MenuItem Header="FreeHDBoot" x:Name="OpenFreeHDBootGithub" Click="OpenFreeHDBootGithub_Click"/>
+				<MenuItem Header="FreeMCBoot" x:Name="OpenFreeMCBootGithub" Click="OpenFreeMCBootGithub_Click"/>
+				<MenuItem Header="OpenTuna" x:Name="OpenFortunaGithub" Click="OpenFortunaGithub_Click"/>
+				<MenuItem Header="Yabasic" x:Name="OpenYabasicGithub" Click="OpenYabasicGithub_Click"/>
+				<MenuItem Header="PSX specific">
+					<MenuItem Header="FreeMCBoot" x:Name="OpenFreeMCBootPSXGithub" Click="OpenFreeMCBootPSXGithub_Click"/>
+				</MenuItem>
+			</MenuItem>
+		</Menu>
+	</Grid>
+</UserControl>

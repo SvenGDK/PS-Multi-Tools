@@ -1,0 +1,99 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="560"
+		x:Class="PSMultiTools.PS5.Tools.Editors.PS5ParamEditor"
+		Title="PS5 Param Editor" Height="560" Width="1000" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<Menu Height="20" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<MenuItem Header="File">
+				<MenuItem Header="New param.json" x:Name="NewParamMenuItem"></MenuItem>
+				<MenuItem Header="Load param.json" x:Name="LoadParamMenuItem"></MenuItem>
+				<MenuItem Header="Save current param.json" x:Name="SaveMenuItem"></MenuItem>
+			</MenuItem>
+			<MenuItem Header="Help">
+				<MenuItem Header="PS5 Dev Wiki" x:Name="LoadPSDevWikiMenuItem"></MenuItem>
+			</MenuItem>
+		</Menu>
+		<TextBlock HorizontalAlignment="Left" Margin="10,30,0,0" Text="Current parameters" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="940" FontWeight="Bold"/>
+		<ListBox x:Name="ParamsListBox" Margin="10,60,10,0" Height="300" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.Template>
+				<ControlTemplate>
+					<DockPanel LastChildFill="True">
+						<Grid DockPanel.Dock="Top" Height="25" Background="Gray">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="175"></ColumnDefinition>
+								<ColumnDefinition Width="175"></ColumnDefinition>
+								<ColumnDefinition Width="175"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" HorizontalContentAlignment="Center" VerticalAlignment="Center">Parameter</Label>
+							<Label Grid.Column="1" HorizontalContentAlignment="Center" VerticalAlignment="Center">Type</Label>
+							<Label Grid.Column="2" HorizontalContentAlignment="Center" VerticalAlignment="Center">Value</Label>
+						</Grid>
+						<ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<ItemsPresenter />
+						</ScrollViewer>
+					</DockPanel>
+				</ControlTemplate>
+			</ListBox.Template>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="175"></ColumnDefinition>
+							<ColumnDefinition Width="175"></ColumnDefinition>
+							<ColumnDefinition Width="175"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<TextBlock Text="{Binding ParamName}" Grid.Column="0"></TextBlock>
+						<TextBlock Text="{Binding ParamType}" Grid.Column="1"></TextBlock>
+						<TextBlock Text="{Binding ParamValue}" Grid.Column="2"></TextBlock>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<TextBlock HorizontalAlignment="Left" Margin="10,400,0,0" Text="Add a parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150" FontWeight="Bold"/>
+		<ComboBox x:Name="ParamsComboBox" HorizontalAlignment="Left" Margin="165,430,0,0" VerticalAlignment="Top" Width="300">
+			<ComboBoxItem Content="AgeLevel"/>
+			<ComboBoxItem Content="ApplicationCategoryType"/>
+			<ComboBoxItem Content="ApplicationDrmType"/>
+			<ComboBoxItem Content="Asa"/>
+			<ComboBoxItem Content="Attribute"/>
+			<ComboBoxItem Content="Attribute2"/>
+			<ComboBoxItem Content="Attribute3"/>
+			<ComboBoxItem Content="BackgroundBasematType"/>
+			<ComboBoxItem Content="ContentBadgeType"/>
+			<ComboBoxItem Content="ContentId"/>
+			<ComboBoxItem Content="ContentVersion"/>
+			<ComboBoxItem Content="DeeplinkUri"/>
+			<ComboBoxItem Content="DownloadDataSize"/>
+			<ComboBoxItem Content="Kernel"/>
+			<ComboBoxItem Content="LocalizedParameters"/>
+			<ComboBoxItem Content="MasterVersion"/>
+			<ComboBoxItem Content="OriginContentVersion"/>
+			<ComboBoxItem Content="Pubtools"/>
+			<ComboBoxItem Content="RequiredSystemSoftwareVersion"/>
+			<ComboBoxItem Content="Savedata"/>
+			<ComboBoxItem Content="SdkVersion"/>
+			<ComboBoxItem Content="TargetContentVersion"/>
+			<ComboBoxItem Content="TitleId"/>
+			<ComboBoxItem Content="VersionFileUri"/>
+		</ComboBox>
+		<TextBlock HorizontalAlignment="Left" Margin="10,435,0,0" Text="Select param:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,475,0,0" Text="Set value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+		<TextBox x:Name="ParamValueTextBox" HorizontalAlignment="Left" Margin="165,470,0,0" VerticalAlignment="Top" Width="300"/>
+		<TextBlock HorizontalAlignment="Left" Margin="520,400,0,0" Text="Modify selected parameter" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="455" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="520,435,0,0" Text="Modify value:" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="150"/>
+		<TextBox x:Name="ModifyValueTextBox" HorizontalAlignment="Left" Margin="640,430,0,0" VerticalAlignment="Top" Width="330"/>
+
+		<Button x:Name="SaveModifiedValueButton" Content="Save changes" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="640,470,0,0" VerticalAlignment="Top" Width="125" IsEnabled="False" Click="SaveModifiedValueButton_Click"/>
+		<Button x:Name="AddParamButton" Content="Add param" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="315,510,0,0" VerticalAlignment="Top" Width="150" IsEnabled="False" Click="AddParamButton_Click"/>
+		<Button x:Name="RemoveParamButton" Content="Remove param" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="845,470,0,0" VerticalAlignment="Top" Width="125" IsEnabled="False" Click="RemoveParamButton_Click"/>
+		<Button x:Name="AdvancedEditorButton" Content="Open advanced param editor" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="640,510,0,0" VerticalAlignment="Top" Width="330" IsEnabled="False" Click="AdvancedEditorButton_Click"/>
+	</Grid>
+</Window>
