@@ -1,0 +1,70 @@
+;
+; Copyright (c) 2019 SUSE LLC
+;
+; Licensed under LGPL-2.1 (see LICENSE)
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=SCSIAdapter
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider=%wnbd%
+DriverVer = 12/12/2022,1.45.31.960
+CatalogFile = wnbd.cat
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 12
+wnbdSVM.ntamd64.Application = 11
+
+[Manufacturer]
+%wnbd%=wnbdSVM, NTamd64
+
+[wnbdSVM.NTamd64]
+%WNBDVMDeviceDesc%=wnbdSVM_Device, %rootstr%
+
+[wnbdSVM_Device]
+CopyFiles=@wnbd.sys
+
+[wnbdSVM_Device.HW]
+AddReg = wnbdSVM_Device_AddReg
+
+[wnbdSVM_Device_AddReg]
+HKR, "ScsiPort", "NeedsSystemShutdownNotification", 0x00010001, 1
+
+[wnbdSVM_Device.Services]
+AddService = wnbd, %SPSVCINST_ASSOCSERVICE%, wnbdSVM_Service_Inst
+
+[SourceDisksNames.amd64]
+0 = %DiskId1%,,,
+
+[SourceDisksFiles.amd64]
+wnbd.sys = 0
+
+[wnbdSVM_Service_Inst]
+DisplayName    = %WNBDVMDeviceDesc%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\wnbd.sys
+LoadOrderGroup = SCSI Miniport
+AddReg         = pnpsafe_isa_addreg
+
+[pnpsafe_isa_addreg]
+HKR, "Parameters", "BusType", %REG_DWORD%, 0x0000000A
+
+[Strings]
+wnbd                   = "SUSE LLC"
+SCSIClassName          = "SCSI and RAID controllers"
+WNBDVMDeviceDesc       = "WNBD SCSI Virtual Adapter"
+DiskId1                = "WNBD SCSI Virtual Adapter Device Installation Disk #1"
+rootstr                = "root\wnbd"
+
+SPSVCINST_ASSOCSERVICE = 0x00000002
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_BOOT_START     = 0
+SERVICE_ERROR_NORMAL   = 1
+
+REG_DWORD              = 0x00010001
+REG_BINARY             = 0x00000001
+REG_SZ                 = 0x00000000
