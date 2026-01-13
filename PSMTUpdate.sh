@@ -3,6 +3,7 @@ set -euo pipefail
 
 URL_LINUX="https://raw.githubusercontent.com/SvenGDK/PS-Multi-Tools/main/LinuxUpdate.zip"
 URL_MAC="https://raw.githubusercontent.com/SvenGDK/PS-Multi-Tools/main/macOSUpdate.zip"
+URL_FREEBSD="https://raw.githubusercontent.com/SvenGDK/PS-Multi-Tools/main/FreeBSDUpdate.zip"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 OS="$(uname -s)"
@@ -15,16 +16,16 @@ esac
 
 if [ "$PLATFORM" = "macos" ]; then
   URL="$URL_MAC"
+elif [ "$PLATFORM" = "freebsd" ]; then
+  URL="$URL_FREEBSD"
 else
   URL="$URL_LINUX"
 fi
 
 if [ "$PLATFORM" = "linux" ]; then
   TMP_ZIP="$(mktemp --tmpdir linuxupdate.XXXXXX)"
-elif [ "$PLATFORM" = "macos" ]; then
+elif [ "$PLATFORM" = "macos" ] || [ "$PLATFORM" = "freebsd" ]; then
   TMP_ZIP="$(mktemp -t linuxupdate)"
-elif [ "$PLATFORM" = "freebsd" ]; then
-  TMP_ZIP="$(mktemp /tmp/linuxupdate.XXXXXX)"
 else
   TMP_ZIP="$(mktemp)"
 fi
