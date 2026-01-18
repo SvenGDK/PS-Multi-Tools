@@ -9,9 +9,10 @@ payloads and game patches - all from one open-source app.</br>
 Requires the .NET 9.0 desktop runtime and a few optional drivers for advanced features like Memory Card management or PSX related stuff.</br>
 
 ## Requirements
-For a full installation following packages are required :
+Following packages are required to run PS Multi Tools including all tools :
 
-- Windows: [.NET 9.0 Desktop Runtime x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.23-windows-x64-installer)
+- Windows
+  - [.NET 9.0 Desktop Runtime x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.23-windows-x64-installer)
 - Debian/Mint/Ubuntu/...
   - ```sudo apt-get install dotnet-runtime-9.0 curl gpg wget libice6 libsm6 libx11-6 libfontconfig1 xorriso libusb-1.0-0 wine winetricks ufw```
 - Arch
@@ -27,6 +28,13 @@ For a full installation following packages are required :
 - macOS
   - [homebrew](https://brew.sh/) and [wine](https://gitlab.winehq.org/wine/wine/-/wikis/MacOS)
 - Additional for all Linux distros, FreeBSD & macOS: ```winetricks vcrun2008 vcrun2010 vcrun2012``` (not as root)
+
+> [!NOTE]
+> You can leave out the following packages :
+> - ```libisoburn``` if you don't want to burn discs using PS Multi Tools
+> - ```libusb``` if you don't want to use the PS2 Memory Card Manager
+> - ```wine, wine-gecko, wine-mono & winetricks``` if you don't want to create PKG files
+> - ```ufw``` if you don't want to send PKG files from your PC
 
 ## Screenshots
 <p align="center">
