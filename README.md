@@ -8,8 +8,40 @@ Manage your backups, convert/extract/create/manage files, download official and 
 payloads and game patches - all from one open-source app.</br>
 Requires the .NET 9.0 desktop runtime and a few optional drivers for advanced features like Memory Card management or PSX related stuff.</br>
 
+## Requirements
+For a full installation following packages are required :
+
+- Windows: [.NET 9.0 Desktop Runtime x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.23-windows-x64-installer)
+- Debian/Mint/Ubuntu/...
+  - ```sudo apt-get install dotnet-runtime-9.0 curl gpg wget libice6 libsm6 libx11-6 libfontconfig1 xorriso libusb-1.0-0 wine winetricks ufw```
+- Arch
+  - ```sudo pacman -Syu dotnet-runtime-9.0 awk wget libice libsm libx11 fontconfig freetype2 ttf-dejavu libglvnd libisoburn libusb wine wine-gecko wine-mono winetricks ufw```
+- Fedora
+  - ```sudo dnf install dotnet-runtime-9.0 awk curl gpg wget libICE libSM libX11 fontconfig freetype xorriso libusb1 wine winetricks ufw```
+- FreeBSD
+  - ```sudo pkg install libskiasharp-2.88.3_2 lang/dotnet devel/libepoll-shim x11/libICE x11/libSM x11-fonts/fontconfig x11-toolkits/libgdiplus xdg-utils wine wine-gecko wine-mono winetricks ufw```
+  - Enable Linux binary compatibility using
+    - ```sysrc linux_enable="YES"```
+    - ```service linux start```
+  - ```sudo pkg install linux_base-rl9 linux-rl9-icu-67.1_2 linux-rl9-fontconfig-2.14.0_2 linux-rl9-freetype-2.10.4_3 linux-rl9-wget-1.21.1_1 linux-rl9-ffmpeg-libs-5.1.6_3 linux-rl9-dbus-libs-1.12.20_3 linux-rl9-at-spi2-atk-2.38.0_1 linux-rl9-atk-2.36.0_1 linux-rl9-cups-libs-2.3.3_8 linux-rl9-libxkbcommon-1.0.3_2 linux-rl9-alsa-lib-1.2.13```
+- macOS
+  - [homebrew](https://brew.sh/) and [wine](https://gitlab.winehq.org/wine/wine/-/wikis/MacOS)
+- Additional for all Linux distros, FreeBSD & macOS: ```winetricks vcrun2008 vcrun2010 vcrun2012``` (not as root)
+
+## Screenshots
+<p align="center">
+<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/07f8bc89-2af0-40ef-b0ac-79bb84bb1894">
+<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/9dcd8156-61bb-4d6f-a9d7-ae571f50edb3">
+<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/13a5c33a-c185-4b73-ab98-1d499a02334d">
+<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/fa188a28-d565-42d1-ac73-1d44689e9829">
+<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/d8fc700b-0a1d-48a5-82b3-62438fccb089">
+<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/37f664d4-f59e-45e5-b87d-32ab66259bf1">
+<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/3b677d2a-92e2-4fe1-b8bc-c5dbaca8e672">
+</p>
+
+## Included Tools/Utilities
 <details>
-  <summary>v16.0 contains following tools</summary>
+  <summary>v16.1 contains</summary>
   
 ## General:
 - FTP Browser
@@ -170,17 +202,6 @@ Requires the .NET 9.0 desktop runtime and a few optional drivers for advanced fe
 - Remove files and directories
 
 </details>
-
-## Screenshots
-<p align="center">
-<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/07f8bc89-2af0-40ef-b0ac-79bb84bb1894">
-<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/9dcd8156-61bb-4d6f-a9d7-ae571f50edb3">
-<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/13a5c33a-c185-4b73-ab98-1d499a02334d">
-<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/fa188a28-d565-42d1-ac73-1d44689e9829">
-<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/d8fc700b-0a1d-48a5-82b3-62438fccb089">
-<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/37f664d4-f59e-45e5-b87d-32ab66259bf1">
-<img width="500" src="https://github.com/SvenGDK/PS-Multi-Tools/assets/84620/3b677d2a-92e2-4fe1-b8bc-c5dbaca8e672">
-</p>
 
 ## PS Multi Tools Covers
 All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored in the othe repository: [PSMT Covers](https://github.com/SvenGDK/PSMT-Covers)
