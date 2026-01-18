@@ -27,12 +27,15 @@ Following packages are required to run PS Multi Tools including all tools :
   - ```sudo pkg install linux_base-rl9 linux-rl9-icu-67.1_2 linux-rl9-fontconfig-2.14.0_2 linux-rl9-freetype-2.10.4_3 linux-rl9-wget-1.21.1_1 linux-rl9-ffmpeg-libs-5.1.6_3 linux-rl9-dbus-libs-1.12.20_3 linux-rl9-at-spi2-atk-2.38.0_1 linux-rl9-atk-2.36.0_1 linux-rl9-cups-libs-2.3.3_8 linux-rl9-libxkbcommon-1.0.3_2 linux-rl9-alsa-lib-1.2.13```
 - macOS
   - [homebrew](https://brew.sh/) and [wine](https://gitlab.winehq.org/wine/wine/-/wikis/MacOS)
-- Additional for all Linux distros, FreeBSD & macOS: ```winetricks vcrun2008 vcrun2010 vcrun2012``` (not as root)
+- Additional for all Linux distros, FreeBSD & macOS
+  - ```winetricks vcrun2008 vcrun2010 vcrun2012``` (not as root)
+  - ```sudo chmod -R a+wx *``` inside the extracted PS Multi Tools folder
+  - macOS: ```sudo xattr -rd com.apple.quarantine *``` OR ```sudo xattr -rd com.apple.quarantine PSMultiTools.app``` to remove quarantine
 
 > [!NOTE]
 > You can leave out the following packages :
-> - ```libisoburn``` if you don't want to burn discs using PS Multi Tools
-> - ```libusb``` if you don't want to use the PS2 Memory Card Manager
+> - ```libisoburn``` / ```xorriso``` if you don't want to burn discs using PS Multi Tools
+> - ```libusb``` / ```libusb1``` / ```libusb-1.0-0``` if you don't want to use the PS2 Memory Card Manager
 > - ```wine, wine-gecko, wine-mono & winetricks``` if you don't want to create PKG files
 > - ```ufw``` if you don't want to send PKG files from your PC
 
