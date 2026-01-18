@@ -30,7 +30,7 @@ public partial class PS5WebBrowserAdder : Window
         SQLitePCL.Batteries_V2.Init();
     }
 
-    private bool FTPS5_MountRW()
+    private bool FTP_MountRW()
     {
         using var conn = new FtpClient(ConsoleIP, "anonymous", "anonymous", Convert.ToInt32(ConsolePort));
         // Configurate the FTP connection
@@ -249,7 +249,7 @@ public partial class PS5WebBrowserAdder : Window
         }
     }
 
-    private async void CheckButtonC(object? sender, RoutedEventArgs e)
+    private async void CheckButton_Click(object? sender, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(ConsoleIP))
         {
@@ -263,7 +263,7 @@ public partial class PS5WebBrowserAdder : Window
                     if (await GetDatabaseOverFTPAsync() == true)
                     {
 
-                        if (FTPS5_MountRW() == true)
+                        if (FTP_MountRW() == true)
                         {
                             RWAccess = true;
                         }
@@ -287,7 +287,7 @@ public partial class PS5WebBrowserAdder : Window
         }
     }
 
-    private async void AddButtonC(object? sender, RoutedEventArgs e)
+    private async void AddButton_Click(object? sender, RoutedEventArgs e)
     {
         if (RWAccess == true)
         {
@@ -326,7 +326,6 @@ public partial class PS5WebBrowserAdder : Window
                 await box.ShowWindowAsync();
             }
         }
-
         else
         {
             // Add the values to app.db

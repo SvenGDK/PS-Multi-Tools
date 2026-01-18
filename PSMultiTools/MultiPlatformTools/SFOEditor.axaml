@@ -2,9 +2,9 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="1115" d:DesignHeight="685"
+		mc:Ignorable="d" d:DesignWidth="1115" d:DesignHeight="720"
 		x:Class="PSMultiTools.MultiPlatformTools.SFOEditor"
-		Title="PARAM.SFO Editor" Height="685" Width="1115" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+		Title="PARAM.SFO Editor" Height="720" Width="1115" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
 	<Grid>
 		<TextBlock Text="Game ID / Game Code" HorizontalAlignment="Left" Margin="23,193,0,0" VerticalAlignment="Top" Foreground="White"/>
 		<TextBox x:Name="IDTextBox" HorizontalAlignment="Left" Margin="23,217,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="275"/>
@@ -29,8 +29,8 @@
 			<ComboBoxItem Content="10"/>
 			<ComboBoxItem Content="11"/>
 		</ComboBox>
-		<Button x:Name="SaveSFOButton" Content="Save PARAM.SFO" HorizontalAlignment="Left" Margin="163,49,0,0" VerticalAlignment="Top" Width="135" Height="25" FontWeight="Bold"/>
-		<Button x:Name="LoadSFOButton" Content="Load PARAM.SFO" HorizontalAlignment="Left" Margin="23,49,0,0" VerticalAlignment="Top" Width="135" Height="25" FontWeight="Bold"/>
+		<Button x:Name="SaveSFOButton" Content="Save PARAM.SFO" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="163,49,0,0" VerticalAlignment="Top" Width="135" FontWeight="Bold"/>
+		<Button x:Name="LoadSFOButton" Content="Load PARAM.SFO" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="23,49,0,0" VerticalAlignment="Top" Width="135" FontWeight="Bold"/>
 		<TextBlock Text="Category" HorizontalAlignment="Left" Margin="23,497,0,0" VerticalAlignment="Top" Foreground="White"/>
 		<TextBox x:Name="CategoryTextBox" HorizontalAlignment="Left" Margin="23,521,0,0" VerticalAlignment="Top" Width="275" TextWrapping="NoWrap" Height="20"/>
 		<TabControl x:Name="ConsolesTabControl" Margin="320,10,0,0" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" Width="765" Height="627" VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -138,14 +138,14 @@
 				</Grid>
 			</TabItem>
 		</TabControl>
-		<Button x:Name="NewSFOButton" Content="Create a new PARAM.SFO file" HorizontalAlignment="Left" Margin="23,19,0,0" VerticalAlignment="Top" Width="275" Height="25" FontWeight="Bold" IsEnabled="False"/>
+		<Button x:Name="NewSFOButton" Content="Create a new PARAM.SFO file" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="23,19,0,0" VerticalAlignment="Top" Width="275" FontWeight="Bold" IsEnabled="False"/>
 		<TextBlock Text="System Version (Hex Value for PS4 &amp; Vita)" HorizontalAlignment="Left" Margin="23,546,0,0" VerticalAlignment="Top" Foreground="White"/>
 		<TextBox x:Name="SystemVersionTextBox" HorizontalAlignment="Left" Margin="23,570,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="275"/>
 		<TextBlock Text="Content ID" HorizontalAlignment="Left" Margin="23,243,0,0" VerticalAlignment="Top" Foreground="White"/>
 		<TextBox x:Name="ContentIDTextBox" HorizontalAlignment="Left" Margin="23,267,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="275"/>
-		<Button x:Name="PS3ParamHelpButton" Content="PS3 PARAM Help" HorizontalAlignment="Left" Margin="23,104,0,0" VerticalAlignment="Top" Width="135" Height="25" FontWeight="Bold"/>
-		<Button x:Name="PS4ParamHelpButton" Content="PS4 PARAM Help" HorizontalAlignment="Left" Margin="163,134,0,0" VerticalAlignment="Top" Width="135" Height="25" FontWeight="Bold"/>
-		<Button x:Name="PSVParamHelpButton" Content="PS Vita PARAM Help" HorizontalAlignment="Left" Margin="23,134,0,0" VerticalAlignment="Top" Width="135" Height="25" FontWeight="Bold"/>
-		<Button x:Name="PSPParamHelpButton" Content="PSP PARAM Help" HorizontalAlignment="Left" Margin="163,104,0,0" VerticalAlignment="Top" Width="135" Height="25" FontWeight="Bold"/>
+		<Button x:Name="PS3ParamHelpButton" Content="PS3 PARAM Help" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="23,104,0,0" VerticalAlignment="Top" Width="135" FontWeight="Bold"/>
+		<Button x:Name="PS4ParamHelpButton" Content="PS4 PARAM Help" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="163,134,0,0" VerticalAlignment="Top" Width="135" FontWeight="Bold"/>
+		<Button x:Name="PSVParamHelpButton" Content="PS Vita PARAM Help" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="23,134,0,0" VerticalAlignment="Top" Width="135" FontWeight="Bold"/>
+		<Button x:Name="PSPParamHelpButton" Content="PSP PARAM Help" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="163,104,0,0" VerticalAlignment="Top" Width="135" FontWeight="Bold"/>
 	</Grid>
 </Window>

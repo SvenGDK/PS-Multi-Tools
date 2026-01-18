@@ -474,10 +474,12 @@ public partial class PS5FTPGrabber : Window
                     WindowsCMD.StartInfo.UseShellExecute = false;
                     WindowsCMD.StartInfo.CreateNoWindow = true;
                     WindowsCMD.Start();
-                    WindowsCMD.WaitForExit();
 
                     var OutputReader = WindowsCMD.StandardOutput;
                     string[] ProcessOutput = OutputReader.ReadToEnd().Split([""], StringSplitOptions.RemoveEmptyEntries);
+
+                    await WindowsCMD.WaitForExitAsync();
+                    WindowsCMD.Close();
 
                     if (ProcessOutput.Length > -1)
                     {

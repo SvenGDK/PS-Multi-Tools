@@ -776,16 +776,14 @@ public partial class PS5PayloadBuilder : Window
                                     // Check and extract the downloaded archive into the downloads folder
                                     if (File.Exists(Path.Combine(Utils.GetDownloadsFolderPath(), "ps5-self-decrypter-payload.zip")))
                                     {
-
-                                        using (var ArchiveExtractor = new Process())
-                                        {
-                                            ArchiveExtractor.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "7z.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "7zz");
-                                            ArchiveExtractor.StartInfo.Arguments = $"x \"{Path.Combine(Utils.GetDownloadsFolderPath(), "ps5-self-decrypter-payload.zip")}\" -o\"{Utils.EnsureTrailingSeparator(Utils.GetDownloadsFolderPath())}\" -y";
-                                            ArchiveExtractor.StartInfo.UseShellExecute = false;
-                                            ArchiveExtractor.StartInfo.CreateNoWindow = true;
-                                            ArchiveExtractor.Start();
-                                            ArchiveExtractor.WaitForExit();
-                                        }
+                                        Process ArchiveExtractor = new();
+                                        ArchiveExtractor.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "7z.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "7zz");
+                                        ArchiveExtractor.StartInfo.Arguments = $"x \"{Path.Combine(Utils.GetDownloadsFolderPath(), "ps5-self-decrypter-payload.zip")}\" -o\"{Utils.EnsureTrailingSeparator(Utils.GetDownloadsFolderPath())}\" -y";
+                                        ArchiveExtractor.StartInfo.UseShellExecute = false;
+                                        ArchiveExtractor.StartInfo.CreateNoWindow = true;
+                                        ArchiveExtractor.Start();
+                                        await ArchiveExtractor.WaitForExitAsync();
+                                        ArchiveExtractor.Close();
 
                                         var box2 = MessageBoxManager.GetMessageBoxStandard("Completed", "Extraction done!" + Environment.NewLine + "Do you want to open the Downloads folder ?", ButtonEnum.YesNo, MsBox.Avalonia.Enums.Icon.Question);
                                         var boxresult2 = await box2.ShowWindowDialogAsync(this);
@@ -1068,16 +1066,14 @@ public partial class PS5PayloadBuilder : Window
                                         // Check and extract the downloaded archive into the downloads folder
                                         if (File.Exists(Path.Combine(Utils.GetDownloadsFolderPath(), "app_title_payload.zip")))
                                         {
-
-                                            using (var ArchiveExtractor = new Process())
-                                            {
-                                                ArchiveExtractor.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "7z.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "7zz");
-                                                ArchiveExtractor.StartInfo.Arguments = $"x \"{Path.Combine(Utils.GetDownloadsFolderPath(), "app_title_payload.zip")}\" -o\"{Utils.EnsureTrailingSeparator(Utils.GetDownloadsFolderPath())}\" -y";
-                                                ArchiveExtractor.StartInfo.UseShellExecute = false;
-                                                ArchiveExtractor.StartInfo.CreateNoWindow = true;
-                                                ArchiveExtractor.Start();
-                                                ArchiveExtractor.WaitForExit();
-                                            }
+                                            Process ArchiveExtractor = new();
+                                            ArchiveExtractor.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "7z.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "7zz");
+                                            ArchiveExtractor.StartInfo.Arguments = $"x \"{Path.Combine(Utils.GetDownloadsFolderPath(), "app_title_payload.zip")}\" -o\"{Utils.EnsureTrailingSeparator(Utils.GetDownloadsFolderPath())}\" -y";
+                                            ArchiveExtractor.StartInfo.UseShellExecute = false;
+                                            ArchiveExtractor.StartInfo.CreateNoWindow = true;
+                                            ArchiveExtractor.Start();
+                                            await ArchiveExtractor.WaitForExitAsync();
+                                            ArchiveExtractor.Close();
 
                                             var box2 = MessageBoxManager.GetMessageBoxStandard("Completed", "Extraction done!" + Environment.NewLine + "Do you want to open the Downloads folder ?", ButtonEnum.YesNo, MsBox.Avalonia.Enums.Icon.Question);
                                             var boxresult2 = await box2.ShowWindowDialogAsync(this);

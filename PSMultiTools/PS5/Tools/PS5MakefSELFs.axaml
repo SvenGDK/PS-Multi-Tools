@@ -2,22 +2,22 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
+		mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="550"
 		x:Class="PSMultiTools.PS5.Tools.PS5MakefSELFs"
-		Title="Make fakeSELFs" Height="550" Width="800" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+		Title="Make fakeSELFs" Height="550" Width="900" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
 	<Grid>
 		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a game backup folder :" VerticalAlignment="Top" FontSize="16" Margin="10,10,0,0" FontFamily="Calibri"/>
-		<TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="680"/>
-		<Button x:Name="BrowseFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="700,40,10,0" VerticalAlignment="Top" Width="80" Click="BrowseFolderButton_Click"/>
+		<TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="780"/>
+		<Button x:Name="BrowseFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="800,40,10,0" VerticalAlignment="Top" Width="80" Click="BrowseFolderButton_Click"/>
 
 		<Image x:Name="BackupIconImage" HorizontalAlignment="Left" Height="128" Margin="27,100,0,0" VerticalAlignment="Top" Width="128"/>
 
-		<TextBlock HorizontalAlignment="Left" Margin="465,90,0,0" Text="Options" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
-		<CheckBox x:Name="PatchSDKCheckBox" Content="Patch SDK Version" HorizontalAlignment="Left" Margin="465,110,0,0" VerticalAlignment="Top"/>
-		<CheckBox x:Name="CreateBackupCheckBox" Content="Create backup files" HorizontalAlignment="Left" Margin="630,110,0,0" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="565,90,0,0" Text="Options" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+		<CheckBox x:Name="PatchSDKCheckBox" Content="Patch SDK Version" HorizontalAlignment="Left" Margin="565,110,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="CreateBackupCheckBox" Content="Create backup files" HorizontalAlignment="Left" Margin="730,110,0,0" VerticalAlignment="Top"/>
 
-		<TextBlock HorizontalAlignment="Left" Margin="465,145,0,0" Text="Target SDK Version :" VerticalAlignment="Top"/>
-		<ComboBox x:Name="TargetSDKVersionComboBox" HorizontalAlignment="Left" Margin="465,170,0,0" VerticalAlignment="Top" Width="150" IsEditable="True" SelectedIndex="2">
+		<TextBlock HorizontalAlignment="Left" Margin="565,145,0,0" Text="Target SDK Version :" VerticalAlignment="Top"/>
+		<ComboBox x:Name="TargetSDKVersionComboBox" HorizontalAlignment="Left" Margin="565,170,0,0" VerticalAlignment="Top" Width="150" IsEditable="True" SelectedIndex="2">
 			<ComboBoxItem Content="0x02000000"/>
 			<ComboBoxItem Content="0x03000000"/>
 			<ComboBoxItem Content="0x04030000"/>
@@ -30,7 +30,7 @@
 		<TextBlock x:Name="SizeTextBlock" HorizontalAlignment="Left" Margin="165,170,0,0" VerticalAlignment="Top" Width="330"/>
 		<TextBlock x:Name="RegionTextBlock" HorizontalAlignment="Left" Margin="165,190,0,0" VerticalAlignment="Top" Width="330"/>
 
-		<Button x:Name="MakeButton" Content="Make" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0,0,50,350" VerticalAlignment="Bottom" Width="80" IsEnabled="False" Click="MakeButton_Click"/>
+		<Button x:Name="MakeButton" Content="Make" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="730,175,0,0" VerticalAlignment="Top" Width="150" IsEnabled="False" Click="MakeButton_Click"/>
 		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Log :" VerticalAlignment="Bottom" FontSize="16" Margin="10,0,0,310" FontFamily="Calibri"/>
 		<TextBox x:Name="MakeLogTextBox" VerticalAlignment="Bottom" Height="290" Margin="10,0,10,10"/>
 	</Grid>

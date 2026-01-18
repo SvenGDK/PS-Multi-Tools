@@ -405,7 +405,7 @@ public partial class PS3ISOTools : Window
                 makeps3iso.StartInfo = makeps3isoStartInfo;
                 makeps3iso.Start();
                 makeps3iso.BeginOutputReadLine();
-                makeps3iso.WaitForExit();
+                await makeps3iso.WaitForExitAsync();
             }
             else
             {
@@ -463,7 +463,7 @@ public partial class PS3ISOTools : Window
             };
 
             PS3NetSrvProcess.Start();
-            PS3NetSrvProcess.WaitForExit();
+            await PS3NetSrvProcess.WaitForExitAsync();
         }
         else
         {
@@ -542,7 +542,7 @@ public partial class PS3ISOTools : Window
                 patchps3iso.StartInfo = patchps3isoStartInfo;
                 patchps3iso.Start();
                 patchps3iso.BeginOutputReadLine();
-                patchps3iso.WaitForExit();
+                await patchps3iso.WaitForExitAsync();
             }
             else
             {
@@ -624,7 +624,7 @@ public partial class PS3ISOTools : Window
                 extractps3iso.StartInfo = extractps3isoStartInfo;
                 extractps3iso.Start();
                 extractps3iso.BeginOutputReadLine();
-                extractps3iso.WaitForExit();
+                await extractps3iso.WaitForExitAsync();
             }
             else
             {
@@ -698,7 +698,7 @@ public partial class PS3ISOTools : Window
                 splitps3iso.StartInfo = splitps3isoStartInfo;
                 splitps3iso.Start();
                 splitps3iso.BeginOutputReadLine();
-                splitps3iso.WaitForExit();
+                await splitps3iso.WaitForExitAsync();
             }
             else
             {
@@ -814,7 +814,7 @@ public partial class PS3ISOTools : Window
                 ps3dec.StartInfo = ps3decStartInfo;
                 ps3dec.Start();
                 ps3dec.BeginOutputReadLine();
-                ps3dec.WaitForExit();
+                await ps3dec.WaitForExitAsync();
             }
             else
             {

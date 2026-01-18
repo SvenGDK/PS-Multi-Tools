@@ -37,7 +37,8 @@ public partial class PS5AT9Converter : Window
                 BashProcess.StartInfo.UseShellExecute = false;
                 BashProcess.StartInfo.CreateNoWindow = false;
                 BashProcess.Start();
-                BashProcess.WaitForExit();
+                await BashProcess.WaitForExitAsync();
+                BashProcess.Close();
             }
 
             // Check if wine prefix is 64bit
@@ -196,7 +197,7 @@ public partial class PS5AT9Converter : Window
             {
                 if (OperatingSystem.IsWindows())
                 {
-                    using var NewProc = new Process();
+                    Process NewProc = new();
                     NewProc.StartInfo.FileName = Path.Combine(Environment.CurrentDirectory, "Tools", "PS5", "at9tool.exe");
 
                     if (!string.IsNullOrEmpty(EncodingOptions.ToString()))
@@ -211,6 +212,8 @@ public partial class PS5AT9Converter : Window
                     NewProc.StartInfo.UseShellExecute = false;
                     NewProc.StartInfo.CreateNoWindow = true;
                     NewProc.Start();
+                    await NewProc.WaitForExitAsync();
+                    NewProc.Close();
                 }
                 else
                 {
@@ -336,6 +339,8 @@ public partial class PS5AT9Converter : Window
                     NewProc.StartInfo.UseShellExecute = false;
                     NewProc.StartInfo.CreateNoWindow = true;
                     NewProc.Start();
+                    await NewProc.WaitForExitAsync();
+                    NewProc.Close();
                 }
                 else if (OperatingSystem.IsLinux())
                 {

@@ -24,7 +24,7 @@ public partial class PS3ReadSELF : Window
         }
     }
 
-    private void ReadSelfButton_Click(object? sender, RoutedEventArgs e)
+    private async void ReadSelfButton_Click(object? sender, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(SelectedFileTextBox.Text) && File.Exists(SelectedFileTextBox.Text))
         {
@@ -41,6 +41,9 @@ public partial class PS3ReadSELF : Window
                 // Read the output
                 var OutputReader = ReadSelf.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await ReadSelf.WaitForExitAsync();
+                ReadSelf.Close();
             }
 
             OutputTextBox.Text += ProcessOutput;

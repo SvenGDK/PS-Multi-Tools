@@ -18,6 +18,7 @@
 		<Button x:Name="BrowseButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="420,165,0,0" VerticalAlignment="Top" Width="75" Click="BrowseButton_Click"/>
 		<TextBlock HorizontalAlignment="Left" Margin="10,210,0,0" Text="Or select from downloaded payloads :" VerticalAlignment="Top" FontSize="14" />
 		<ComboBox x:Name="DownloadedPayloadsComboBox" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="400" DisplayMemberBinding="{Binding PayloadName}"/>
+		<CheckBox x:Name="SendWithMagicCheckBox" HorizontalAlignment="Left" Margin="10,270,0,0" VerticalAlignment="Top" Content="Send with Magic (mast1c0re)"></CheckBox>
 		<Button x:Name="SendButton" Content="Send" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="300,275,0,0" VerticalAlignment="Top" Width="110" FontWeight="Bold" Click="SendButton_Click"/>
 
 		<TextBlock HorizontalAlignment="Left" Margin="10,310,0,0" Text="Send a PS2 Game" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>

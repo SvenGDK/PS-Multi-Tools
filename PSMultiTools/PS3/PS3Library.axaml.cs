@@ -44,7 +44,7 @@ public partial class PS3Library : Window
     public bool AutoPlay = true;
 
     // Games context menu items
-    public ContextMenu NewContextMenu = new();
+    private ContextMenu NewContextMenu = new();
     private readonly MenuItem CopyToMenuItem = new() { Header = "Copy to", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/copy-icon.png"))) } };
     private readonly MenuItem UploadToPS3MenuItem = new() { Header = "Upload to PS3", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/upload.png"))) } };
     private readonly MenuItem ExtractPKGMenuItem = new() { Header = "Extract .pkg", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/extract.png"))) } };
@@ -414,6 +414,9 @@ public partial class PS3Library : Window
 
                                 var OutputReader = SFOReader.StandardOutput;
                                 ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                                SFOReader.WaitForExit();
+                                SFOReader.Close();
                             }
 
                             if (ProcessOutput.Length > 0)
@@ -886,24 +889,25 @@ public partial class PS3Library : Window
                             {
                                 NewPS3Game.GameFileType = PS3Game.GameFileTypes.PS2ISO;
 
-                                string? GameID = PS2Game.GetPS2GameID(GameISO).Replace(".", "").Replace("_", "-").Trim();
-                                if (!string.IsNullOrEmpty(GameID))
+                                string? GameID = await PS2Game.GetPS2GameIDAsync(GameISO);
+                                string? FixedGameID = GameID.Replace(".", "").Replace("_", "-").Trim();
+                                if (!string.IsNullOrEmpty(FixedGameID))
                                 {
-                                    NewPS3Game.GameID = GameID;
+                                    NewPS3Game.GameID = FixedGameID;
 
-                                    if (await Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg"))
+                                    if (await Utils.IsURLValid("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + FixedGameID + ".jpg"))
                                     {
                                         if (Dispatcher.UIThread.CheckAccess() == false)
                                         {
                                             await Dispatcher.UIThread.InvokeAsync(async () =>
                                             {
-                                                var TempBitmapImage = await AnyBitmap.FromUriAsync(new Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg"));
+                                                var TempBitmapImage = await AnyBitmap.FromUriAsync(new Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + FixedGameID + ".jpg"));
                                                 NewPS3Game.GameCoverSource = TempBitmapImage;
                                             });
                                         }
                                         else
                                         {
-                                            var TempBitmapImage = await AnyBitmap.FromUriAsync(new Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + GameID + ".jpg"));
+                                            var TempBitmapImage = await AnyBitmap.FromUriAsync(new Uri("https://raw.githubusercontent.com/SvenGDK/PSMT-Covers/main/PS2/" + FixedGameID + ".jpg"));
                                             NewPS3Game.GameCoverSource = TempBitmapImage;
                                         }
                                     }
@@ -918,7 +922,7 @@ public partial class PS3Library : Window
                             }
 
                             NewPS3Game.GameFilePath = GameISO;
-                            NewPS3Game.GameFileType = PS3Game.GameFileTypes.PSXISO;
+                            NewPS3Game.GameFileType = PS3Game.GameFileTypes.PS3ISO;
                             NewPS3Game.GameRootLocation = PS3Game.GameLocation.Local;
 
                             // Update progress
@@ -1715,76 +1719,68 @@ public partial class PS3Library : Window
 
     private void NewContextMenu_Opening(object? sender, System.ComponentModel.CancelEventArgs e)
     {
-        NewContextMenu.Items.Clear();
-        ISOToolsMenuItem.Items.Clear();
-
         if (GamesListBox.SelectedItem is not null)
         {
             PS3Game SelectedPS3Game = (PS3Game)GamesListBox.SelectedItem;
-
-            NewContextMenu.Items.Add(CopyToMenuItem);
-
-            switch (SelectedPS3Game.GameFileType)
+            if (SelectedPS3Game != null)
             {
-                case PS3Game.GameFileTypes.Backup:
-                    {
-                        NewContextMenu.Items.Add(PlayMenuItem);
-                        NewContextMenu.Items.Add(ISOToolsMenuItem);
-                        NewContextMenu.Items.Add(PlayGameMenuItem);
+                Trace.WriteLine(SelectedPS3Game.GameFileType.ToString());
+                NewContextMenu.Items.Add(CopyToMenuItem);
 
-                        ISOToolsMenuItem.Items.Add(CreateISOMenuItem);
-                        break;
-                    }
-                case PS3Game.GameFileTypes.PKG:
-                    {
-                        NewContextMenu.Items.Add(PKGInfoMenuItem);
-                        NewContextMenu.Items.Add(ExtractPKGMenuItem);
-                        NewContextMenu.Items.Add(PlayGameMenuItem);
-                        break;
-                    }
-                case PS3Game.GameFileTypes.PS3ISO:
-                    {
-                        if (SelectedPS3Game.GameRootLocation == PS3Game.GameLocation.WebMANMOD)
-                        {
-                            NewContextMenu.Items.Add(ISOToolsMenuItem);
-                            ISOToolsMenuItem.Items.Add(MountAndPlayISOMenuItem);
-                            ISOToolsMenuItem.Items.Add(MountISOMenuItem);
-                        }
-                        else
-                        {
-                            NewContextMenu.Items.Add(PlayMenuItem);
-                            NewContextMenu.Items.Add(ISOToolsMenuItem);
-                            NewContextMenu.Items.Add(PlayGameMenuItem);
-                            ISOToolsMenuItem.Items.Add(ExtractISOMenuItem);
-                            ISOToolsMenuItem.Items.Add(PatchISOMenuItem);
-                            ISOToolsMenuItem.Items.Add(SplitISOMenuItem);
+                if (SelectedPS3Game.GameFileType == PS3Game.GameFileTypes.Backup)
+                {
+                    NewContextMenu.Items.Add(PlayMenuItem);
+                    NewContextMenu.Items.Add(ISOToolsMenuItem);
+                    NewContextMenu.Items.Add(PlayGameMenuItem);
 
-                            if (SelectedPS3Game.ISOEncryption == "Encrypted")
-                            {
-                                ISOToolsMenuItem.Items.Add(DecryptISOMenuItem);
-                            }
-                        }
+                    ISOToolsMenuItem.Items.Add(CreateISOMenuItem);
+                }
+                else if (SelectedPS3Game.GameFileType == PS3Game.GameFileTypes.PKG)
+                {
+                    NewContextMenu.Items.Add(PKGInfoMenuItem);
+                    NewContextMenu.Items.Add(ExtractPKGMenuItem);
+                    NewContextMenu.Items.Add(PlayGameMenuItem);
+                }
+                else if (SelectedPS3Game.GameFileType == PS3Game.GameFileTypes.PS3ISO)
+                {
+                    Trace.WriteLine(SelectedPS3Game.GameFileType.ToString());
 
-                        break;
-                    }
-                case PS3Game.GameFileTypes.PS2ISO:
-                case PS3Game.GameFileTypes.PSXISO:
-                case PS3Game.GameFileTypes.PSPISO:
+                    if (SelectedPS3Game.GameRootLocation == PS3Game.GameLocation.WebMANMOD)
                     {
-                        NewContextMenu.Items.Add(PlayMenuItem);
                         NewContextMenu.Items.Add(ISOToolsMenuItem);
                         ISOToolsMenuItem.Items.Add(MountAndPlayISOMenuItem);
                         ISOToolsMenuItem.Items.Add(MountISOMenuItem);
-                        break;
                     }
-            }
+                    else if (SelectedPS3Game.GameRootLocation == PS3Game.GameLocation.Local)
+                    {
+                        NewContextMenu.Items.Add(PlayMenuItem);
+                        NewContextMenu.Items.Add(ISOToolsMenuItem);
+                        NewContextMenu.Items.Add(PlayGameMenuItem);
+                        ISOToolsMenuItem.Items.Add(ExtractISOMenuItem);
+                        ISOToolsMenuItem.Items.Add(PatchISOMenuItem);
+                        ISOToolsMenuItem.Items.Add(SplitISOMenuItem);
 
+                        if (SelectedPS3Game.ISOEncryption == "Encrypted")
+                        {
+                            ISOToolsMenuItem.Items.Add(DecryptISOMenuItem);
+                        }
+                    }
+                }
+                else if (SelectedPS3Game.GameFileType == PS3Game.GameFileTypes.PSPISO)
+                {
+                    NewContextMenu.Items.Add(PlayMenuItem);
+                    NewContextMenu.Items.Add(ISOToolsMenuItem);
+                    ISOToolsMenuItem.Items.Add(MountAndPlayISOMenuItem);
+                    ISOToolsMenuItem.Items.Add(MountISOMenuItem);
+                }
+            }
         }
     }
 
     private void NewContextMenu_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
         NewContextMenu.Items.Clear();
+        ISOToolsMenuItem.Items.Clear();
     }
 
     private void GamesListBox_PointerWheelChanged(object? sender, PointerWheelEventArgs e)

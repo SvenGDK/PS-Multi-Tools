@@ -150,7 +150,7 @@ public partial class MergeBinTool : Window
         }
     }
 
-    private void MergeAllButton_Click(object? sender, RoutedEventArgs e)
+    private async void MergeAllButton_Click(object? sender, RoutedEventArgs e)
     {
         if (!(CUEsListView.Items.Count == 0))
         {
@@ -246,7 +246,7 @@ public partial class MergeBinTool : Window
                 BinMerge.Start();
                 BinMerge.BeginOutputReadLine();
                 BinMerge.BeginErrorReadLine();
-                BinMerge.WaitForExit();
+                await BinMerge.WaitForExitAsync();
             }
 
             Cursor = new Cursor(StandardCursorType.Arrow);

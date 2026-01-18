@@ -120,7 +120,7 @@ public partial class PS4Library : Window
 
     #region Game Loader
 
-    private void GameLoaderWorker_DoWork(object? sender, DoWorkEventArgs e)
+    private async void GameLoaderWorker_DoWork(object? sender, DoWorkEventArgs e)
     {
 
         // PS4 PKGs
@@ -244,7 +244,7 @@ public partial class PS4Library : Window
         {
             var NewPS4Game = new PS4Game();
 
-            using var SFOReader = new Process();
+            Process SFOReader = new();
             SFOReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "sfo.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "sfo");
             SFOReader.StartInfo.Arguments = "\"" + Game + "\"";
             SFOReader.StartInfo.RedirectStandardOutput = true;
@@ -254,6 +254,10 @@ public partial class PS4Library : Window
 
             var OutputReader = SFOReader.StandardOutput;
             string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+            await SFOReader.WaitForExitAsync();
+            SFOReader.Close();
+
             if (ProcessOutput.Length > 0)
             {
 

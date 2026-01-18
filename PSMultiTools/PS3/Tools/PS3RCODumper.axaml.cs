@@ -74,6 +74,9 @@ public partial class PS3RCODumper : Window
                 // Read the output
                 var OutputReader = PS3RCOMage.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await PS3RCOMage.WaitForExitAsync();
+                PS3RCOMage.Close();
             }
 
             var box = MessageBoxManager.GetMessageBoxStandard("Output Info", ProcessOutput, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);

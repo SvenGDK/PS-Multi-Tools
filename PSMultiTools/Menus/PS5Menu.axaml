@@ -10,11 +10,6 @@
 
 			<MenuItem x:Name="ToolsMenuItem" Header="Tools">
 				<MenuItem Header="PC Utilities">
-					<MenuItem Header="Appinfo Database Updater" x:Name="OpenAppInfoUpdaterMenuItem" Click="OpenAppInfoUpdaterMenuItem_Click">
-						<ToolTip.Tip>
-							Burn an ISO file to a Blu-Ray disc.
-						</ToolTip.Tip>
-					</MenuItem>
 					<MenuItem Header="Blu-Ray Disc Burner" x:Name="OpenBDBurnerMenuItem" Click="OpenBDBurnerMenuItem_Click">
 						<ToolTip.Tip>
 							Burn an ISO file to a Blu-Ray disc.
@@ -101,6 +96,11 @@
 					<MenuItem Header="WAV &lt;-&gt; AT9 Converter" x:Name="OpenAudioConverterMenuItem" Click="OpenAudioConverterMenuItem_Click">
 						<ToolTip.Tip>
 							Convert custom WAV to AT9 or convert AT9 soundtrack to WAV.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="YT2JB Toolbox" x:Name="OpenYT2JBToolboxMenuItem" Click="OpenYT2JBToolboxMenuItem_Click">
+						<ToolTip.Tip>
+							Create a simple PS5 PKG file that opens a specific URL or action.
 						</ToolTip.Tip>
 					</MenuItem>
 				</MenuItem>
@@ -780,13 +780,25 @@
 			</MenuItem>
 			<MenuItem x:Name="SettingsMenuItem" Header="Settings">
 				<MenuItem x:Name="SettingsSetPS5IPMenuItem" Header="Set IP Address :">
-					<TextBox x:Name="IPTextBox" Width="200"/>
+					<TextBox x:Name="IPTextBox" Width="200">
+						<ToolTip.Tip>
+							Press and hold the left mouse button while editing. There's currently no workaround available.
+						</ToolTip.Tip>
+					</TextBox>
 				</MenuItem>
 				<MenuItem x:Name="SettingsSetPS5FTPPortMenuItem" Header="Set FTP Port :">
-					<TextBox x:Name="FTPPortTextBox" Width="100"/>
+					<TextBox x:Name="FTPPortTextBox" Width="80">
+						<ToolTip.Tip>
+							Press and hold the left mouse button while editing. There's currently no workaround available.
+						</ToolTip.Tip>
+					</TextBox>
 				</MenuItem>
 				<MenuItem x:Name="SettingsSetPS5PayloadPortMenuItem" Header="Set Payload Port :">
-					<TextBox x:Name="PayloadPortTextBox" Width="100"/>
+					<TextBox x:Name="PayloadPortTextBox" Width="80">
+						<ToolTip.Tip>
+							Press and hold the left mouse button while editing. There's currently no workaround available.
+						</ToolTip.Tip>
+					</TextBox>
 				</MenuItem>
 				<MenuItem x:Name="AllSettingsMenuItem" Header="All Settings" Click="SettingsMenuItem_Click"/>
 			</MenuItem>

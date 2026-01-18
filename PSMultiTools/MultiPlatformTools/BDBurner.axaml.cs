@@ -90,7 +90,7 @@ public partial class BDBurner : Window
         else if (OperatingSystem.IsLinux())
         {
             // Get disc drives using 'lsblk -I 11 --json -o NAME,TYPE,TRAN,MODEL'
-            string AvailableDrives = GetLinuxDiscDrives();
+            string AvailableDrives = await GetLinuxDiscDrivesAsync();
             List<LinuxLsblkBlockDevice> AvailableUSBDrives = ReturnDiscDrives(AvailableDrives);
 
             foreach (LinuxLsblkBlockDevice FoundDrive in AvailableUSBDrives)
@@ -101,7 +101,7 @@ public partial class BDBurner : Window
         else if (OperatingSystem.IsMacOS())
         {
             // Get disc drives using 'hdiutil burn -list'
-            string AvailableDrives = GetMacDiscDrives();
+            string AvailableDrives = await GetMacDiscDrivesAsync();
             var FormattedOutput = new List<string>();
             if (!string.IsNullOrEmpty(AvailableDrives))
             {
@@ -366,9 +366,9 @@ public partial class BDBurner : Window
 
     #region LinuxBurning
 
-    public static string GetLinuxDiscDrives()
+    public static async Task<string> GetLinuxDiscDrivesAsync()
     {
-        var (StdOut, StdErr) = RunCDDVDUtility("lsblk", "-I 11 --json -o NAME,TYPE,TRAN,MODEL");
+        var (StdOut, StdErr) = await RunCDDVDUtilityAsync("lsblk", "-I 11 --json -o NAME,TYPE,TRAN,MODEL");
         return StdOut + StdErr;
     }
 
@@ -399,7 +399,7 @@ public partial class BDBurner : Window
             CreateNoWindow = true
         };
 
-        var DiscBurner = new Process { StartInfo = psi, EnableRaisingEvents = true };
+        Process DiscBurner = new() { StartInfo = psi, EnableRaisingEvents = true };
         DiscBurner.OutputDataReceived += (s, e) => ProcessBurnLineLinux(e.Data!);
         DiscBurner.ErrorDataReceived += (s, e) => ProcessBurnLineLinux(e.Data!);
         DiscBurner.Exited += (s, e) => Dispatcher.UIThread.Invoke(() =>
@@ -434,9 +434,9 @@ public partial class BDBurner : Window
 
     #region macOSBurning
 
-    public static string GetMacDiscDrives()
+    public static async Task<string> GetMacDiscDrivesAsync()
     {
-        var (StdOut, StdErr) = RunCDDVDUtility("hdiutil", "burn -list");
+        var (StdOut, StdErr) = await RunCDDVDUtilityAsync("hdiutil", "burn -list");
         return StdOut + StdErr;
     }
 
@@ -457,7 +457,7 @@ public partial class BDBurner : Window
             selectedDrive = selectedDrive.Replace("'", "'\\''");
 
             var args = $"-c \"hdiutil burn '{isoPath}' -device '{selectedDrive}'\"";
-            var hdiutil = new Process
+            Process hdiutil = new()
             {
                 StartInfo = new ProcessStartInfo
                 {
@@ -839,7 +839,7 @@ public partial class BDBurner : Window
 
     #endregion
 
-    private static (string StdOut, string StdErr) RunCDDVDUtility(string fileName, string args)
+    private static async Task<(string StdOut, string StdErr)> RunCDDVDUtilityAsync(string fileName, string args)
     {
         using Process NewProc = new();
         NewProc.StartInfo.FileName = fileName;
@@ -851,7 +851,7 @@ public partial class BDBurner : Window
         NewProc.Start();
         string outp = NewProc.StandardOutput.ReadToEnd();
         string err = NewProc.StandardError.ReadToEnd();
-        NewProc.WaitForExit();
+        await NewProc.WaitForExitAsync();
         return (outp, err);
     }
 

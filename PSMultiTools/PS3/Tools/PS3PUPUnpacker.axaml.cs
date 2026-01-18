@@ -63,6 +63,9 @@ public partial class PS3PUPUnpacker : Window
                 // Read the output
                 var OutputReader = PUPUnpack.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await PUPUnpack.WaitForExitAsync();
+                PUPUnpack.Close();
             }
 
             var box = MessageBoxManager.GetMessageBoxStandard("Output Info", ProcessOutput, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);

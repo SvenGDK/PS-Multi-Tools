@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using PSMultiTools.Classes;
 using PSMultiTools.Dialogs;
+using PSMultiTools.MemoryCard;
 using PSMultiTools.PS1.Tools;
 using PSMultiTools.PS2.Tools;
 using System.Diagnostics;
@@ -543,8 +544,8 @@ public partial class PS2Menu : UserControl
 
     private void OpenMCManager_Click(object sender, RoutedEventArgs e)
     {
-        //var NewPS2MCManager = new MCManager() { ShowActivated = true };
-        //NewPS2MCManager.Show();
+        var NewPS2MCManager = new PS2MCManager() { ShowActivated = true };
+        NewPS2MCManager.Show();
     }
 
     private void OpenCUE2POPSConverter_Click(object sender, RoutedEventArgs e)

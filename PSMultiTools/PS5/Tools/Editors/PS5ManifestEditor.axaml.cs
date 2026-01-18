@@ -596,8 +596,8 @@ public partial class PS5ManifestEditor : Window
 
             var jsonFileFilter = new FileDialogFilter
             {
-                Name = "GP5 Project File",
-                Extensions = ["gp5"]
+                Name = "JSON File",
+                Extensions = ["json"]
             };
             var SFD = new SaveFileDialog() { Title = "Select a save location", DefaultExtension = ".json", Filters = { jsonFileFilter }, ShowOverwritePrompt = true };
             var SFDResult = await SFD.ShowAsync(this);

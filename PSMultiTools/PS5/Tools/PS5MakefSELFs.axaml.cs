@@ -25,8 +25,9 @@ public partial class PS5MakefSELFs : Window
     }
 
     // PS5 Make Fake Self Batch Script by EchoStretch
-    // PS5 SDK Patch (Auto_backport) Utility by Markus95
     // Translated C# code by SvenGDK
+    //
+    // PS5 SDK Patch (Auto_backport) Utility by Markus95
 
     private bool AlreadyPatched = false;
     private long TotalSize = 0L;
@@ -248,6 +249,7 @@ public partial class PS5MakefSELFs : Window
 
             // Collect all files that need to be signed
             var FilesToSign = Directory.EnumerateFiles(SelectedDirectoryTextBox.Text, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".prx") || s.EndsWith(".sprx") || s.EndsWith(".elf") || s.EndsWith(".self") || s.EndsWith(".bin"));
+
             // Fake sign each file with make_fself_python3-1
             foreach (var FileToSign in FilesToSign)
             {
@@ -260,17 +262,19 @@ public partial class PS5MakefSELFs : Window
 
                 using (var Make_fSELF = new Process())
                 {
-                    Make_fSELF.StartInfo.FileName = Environment.CurrentDirectory + @"\Tools\make_fself_python3-1.exe";
+                    Make_fSELF.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "make_fself_ps5.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "make_fself_ps5");
                     Make_fSELF.StartInfo.Arguments = $"\"{FileToSign}\" \"{FullTempFilePath}\"";
                     Make_fSELF.StartInfo.RedirectStandardOutput = true;
                     Make_fSELF.StartInfo.UseShellExecute = false;
                     Make_fSELF.StartInfo.CreateNoWindow = true;
                     Make_fSELF.Start();
-                    Make_fSELF.WaitForExit();
 
                     // Read the output
                     var OutputReader = Make_fSELF.StandardOutput;
                     string ProcessOutput = OutputReader.ReadToEnd();
+
+                    await Make_fSELF.WaitForExitAsync();
+                    Make_fSELF.Close();
 
                     if (!string.IsNullOrEmpty(ProcessOutput))
                     {

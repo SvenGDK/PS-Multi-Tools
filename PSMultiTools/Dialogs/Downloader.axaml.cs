@@ -207,7 +207,7 @@ public partial class Downloader : Window
 
                     using var NewFileStream = new FileStream(SavePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
                     var Buffer = new byte[8192];
-                    long TotalBytesRead = 0L;
+                    long TotalBytesRead = 0;
                     int BytesRead;
 
                     var NewStopwatch = new Stopwatch();
@@ -225,13 +225,13 @@ public partial class Downloader : Window
 
                         double ElapsedSeconds = NewStopwatch.Elapsed.TotalSeconds;
                         double DownloadSpeed = TotalBytesRead / ElapsedSeconds;
-                        double SpeedInKbps = DownloadSpeed / 1024d;
-                        double ETAInSeconds = TotalBytes > 0L ? (TotalBytes - TotalBytesRead) / DownloadSpeed : 0;
+                        double SpeedInKbps = DownloadSpeed / 1024;
+                        double ETAInSeconds = TotalBytes > 0 ? (TotalBytes - TotalBytesRead) / DownloadSpeed : 0;
 
                         // Display progress
-                        if (TotalBytes > 0L)
+                        if (TotalBytes > 0)
                         {
-                            double DLProgress = TotalBytesRead * 100L / (double)TotalBytes;
+                            double DLProgress = TotalBytesRead * 100 / (double)TotalBytes;
 
                             if (Dispatcher.UIThread.CheckAccess() == false)
                             {
@@ -285,7 +285,6 @@ public partial class Downloader : Window
                                             break;
                                         }
                                     }
-                                    break;
                                 }
                             }
                         }
@@ -300,7 +299,7 @@ public partial class Downloader : Window
                 IsDownloadClientBusy = false;
 
                 // Prompt for extracting a downloaded archive and opening the downloads folder
-                if (DownloadFileName.EndsWith(".zip") | DownloadFileName.EndsWith(".7z") | DownloadFileName.EndsWith(".rar"))
+                if (DownloadFileName.EndsWith(".zip") || DownloadFileName.EndsWith(".7z") || DownloadFileName.EndsWith(".rar"))
                 {
                     var box = MessageBoxManager.GetMessageBoxStandard("Extract download ?", "Download completed!" + Environment.NewLine + "The downloaded file is an archive that can be extracted, do you want to extract it now ?", ButtonEnum.YesNo, MsBox.Avalonia.Enums.Icon.Question);
                     var boxresult = await box.ShowWindowDialogAsync(this);
@@ -312,15 +311,14 @@ public partial class Downloader : Window
                         if (File.Exists(DownloadedFile))
                         {
 
-                            using (var ArchiveExtractor = new Process())
-                            {
-                                ArchiveExtractor.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "7z.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "7zz");
-                                ArchiveExtractor.StartInfo.Arguments = $"x \"{DownloadedFile}\" -o\"{Utils.EnsureTrailingSeparator(Utils.GetDownloadsFolderPath())}\" -y";
-                                ArchiveExtractor.StartInfo.UseShellExecute = false;
-                                ArchiveExtractor.StartInfo.CreateNoWindow = true;
-                                ArchiveExtractor.Start();
-                                ArchiveExtractor.WaitForExit();
-                            }
+                            Process ArchiveExtractor = new();
+                            ArchiveExtractor.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "7z.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "7zz");
+                            ArchiveExtractor.StartInfo.Arguments = $"x \"{DownloadedFile}\" -o\"{Utils.EnsureTrailingSeparator(Utils.GetDownloadsFolderPath())}\" -y";
+                            ArchiveExtractor.StartInfo.UseShellExecute = false;
+                            ArchiveExtractor.StartInfo.CreateNoWindow = true;
+                            ArchiveExtractor.Start();
+                            await ArchiveExtractor.WaitForExitAsync();
+                            ArchiveExtractor.Close();
 
                             var box2 = MessageBoxManager.GetMessageBoxStandard("Completed", "Extraction done!" + Environment.NewLine + "Do you want to open the Downloads folder ?", ButtonEnum.YesNo, MsBox.Avalonia.Enums.Icon.Question);
                             var boxresult2 = await box2.ShowWindowDialogAsync(this);

@@ -542,14 +542,6 @@ public partial class PS1Library : Window
     {
         if (e.HttpStatusCode == 200)
         {
-
-            Trace.WriteLine("OK");
-
-            if (PSXDatacenterBrowser.IsLoaded)
-            {
-                Trace.WriteLine("Loaded");
-            }
-
             try
             {
                 string CoverJSReturnValue = await PSXDatacenterBrowser.EvaluateJavaScript<string>("return document.getElementById('table2').getElementsByClassName('sectional')[1].querySelector('img').src");
@@ -612,7 +604,7 @@ public partial class PS1Library : Window
                                         }
                                         catch
                                         {
-                                            Trace.WriteLine("Could not set cover");
+
                                         }
                                     }
 

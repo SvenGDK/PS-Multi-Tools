@@ -20,11 +20,24 @@ public partial class PS5SELFDecrypter : Window
     public string PS5Host = "";
     public string PS5Port = "";
 
-    public TcpClient NewTcpClient = new();
+    public TcpClient? NewTcpClient;
 
     public PS5SELFDecrypter()
     {
         InitializeComponent();
+        Loaded += PS5SELFDecrypter_Loaded;
+    }
+
+    private void PS5SELFDecrypter_Loaded(object? sender, RoutedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(PS5Host))
+        {
+            IPAddressTextBox.Text = PS5Host;
+        }
+        if (!string.IsNullOrEmpty(PS5Port))
+        {
+            PortTextBox.Text = PS5Port;
+        }
     }
 
     private async void ListenButton_Click(object? sender, RoutedEventArgs e)
@@ -39,23 +52,21 @@ public partial class PS5SELFDecrypter : Window
                 PS5Port = PortTextBox.Text;
 
                 ListenButton.Content = "Stop Listening";
+                ListeningLogTextBox.Clear();
 
                 await SendPayloadAndReceiveAsync();
             }
             else
             {
-                if (NewTcpClient.Connected)
+                try
                 {
-                    try
-                    {
-                        NewTcpClient.Client.Shutdown(SocketShutdown.Both);
-                        NewTcpClient.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                        await box.ShowWindowAsync();
-                    }
+                    NewTcpClient?.Client.Shutdown(SocketShutdown.Both);
+                    NewTcpClient?.Close();
+                }
+                catch (Exception ex)
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
                 }
 
                 ListenButton.Content = "Send Payload and Start Listening";
@@ -72,6 +83,7 @@ public partial class PS5SELFDecrypter : Window
     {
         try
         {
+            NewTcpClient = new TcpClient();
             await NewTcpClient.ConnectAsync(PS5Host, Convert.ToInt32(PS5Port));
 
             using var NewNetworkStream = NewTcpClient.GetStream();
@@ -111,13 +123,12 @@ public partial class PS5SELFDecrypter : Window
 
             NewTcpClient.Client.Shutdown(SocketShutdown.Both);
             NewTcpClient.Close();
+            NewTcpClient.Dispose();
 
             await Dispatcher.UIThread.Invoke(async () =>
             {
                 if (ListeningLogTextBox.Text != null && ListeningLogTextBox.Text.Contains("Dump Complete!"))
                 {
-
-
                     ListenButton.Content = "Send Payload and Start Listening";
                     var box = MessageBoxManager.GetMessageBoxStandard("Done", "Success! Dump completed.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
                     await box.ShowWindowAsync();

@@ -21,7 +21,6 @@ public partial class PS3Menu : UserControl
 {
 
     private readonly AvaloniaCefBrowser WebMANWebView = new() { Address = "about:blank" };
-    private Process PS3NetSrvProcess = new();
 
     private bool IswebMANMODWebViewReady = false;
     private bool IswebMANMODCommandExecuted = false;
@@ -41,8 +40,6 @@ public partial class PS3Menu : UserControl
         WebMANWebView.LoadingStateChange += WebMANWebView_LoadingStateChange;
         var browserWrapper = this.FindControl<Decorator>("WebMANWebViewWrapper");
         browserWrapper!.Child = WebMANWebView;
-
-        PS3NetSrvProcess.Exited += PS3NetSrvProcess_Exited;
     }
 
     private void PS3Menu_Loaded(object? sender, RoutedEventArgs e)
@@ -1649,7 +1646,7 @@ public partial class PS3Menu : UserControl
         {
             case "Share a single folder":
                 {
-                    if (File.Exists(Environment.CurrentDirectory + @"\Tools\ps3netsrv\ps3netsrv.exe"))
+                    if (File.Exists(OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3netsrv", "ps3netsrv.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3netsrv", "ps3netsrv")))
                     {
                         var FBD = new OpenFolderDialog() { Title = "Select the folder you want to share" };
                         var AppLifetime = (Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)Avalonia.Application.Current!.ApplicationLifetime!;
@@ -1674,13 +1671,32 @@ public partial class PS3Menu : UserControl
                                             NewArgs = "\"" + FBDResult + "\"";
                                         }
 
-                                        PS3NetSrvProcess = new Process()
+                                        Process PS3NetSrvProcess = new()
                                         {
                                             EnableRaisingEvents = true,
                                             StartInfo = new ProcessStartInfo()
                                             {
                                                 Arguments = NewArgs,
-                                                FileName = Environment.CurrentDirectory + @"\Tools\ps3netsrv\ps3netsrv.exe"
+                                                FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3netsrv", "ps3netsrv.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3netsrv", "ps3netsrv")
+                                            }
+                                        };
+
+                                        PS3NetSrvProcess.Exited += (s, e) =>
+                                        {
+                                            PS3NetSrvProcess.Dispose();
+
+                                            if (Dispatcher.UIThread.CheckAccess() == false)
+                                            {
+                                                Dispatcher.UIThread.Invoke(() =>
+                                                {
+                                                    ShareASingleFolder.Header = "Share a single folder";
+                                                    ShareManagedFolders.Header = "Share configured managed virtual folders";
+                                                });
+                                            }
+                                            else
+                                            {
+                                                ShareASingleFolder.Header = "Share a single folder";
+                                                ShareManagedFolders.Header = "Share configured managed virtual folders";
                                             }
                                         };
 
@@ -1706,7 +1722,7 @@ public partial class PS3Menu : UserControl
                     }
                     else
                     {
-                        var box = MessageBoxManager.GetMessageBoxStandard("Cannot share without ps3netsrv", "Could not find " + Environment.CurrentDirectory + @"\Tools\ps3netsrv\ps3netsrv.exe", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        var box = MessageBoxManager.GetMessageBoxStandard("Cannot share without ps3netsrv", "Could not find ps3netsrv", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
                         await box.ShowWindowAsync();
                     }
 
@@ -1714,21 +1730,31 @@ public partial class PS3Menu : UserControl
                 }
             case "Stop sharing":
                 {
-                    if (PS3NetSrvProcess is not null)
+                    // Stop ps3netsrv
+                    foreach (var p in Process.GetProcessesByName("ps3netsrv"))
                     {
-                        if (PS3NetSrvProcess.HasExited == false)
+                        try
                         {
-                            PS3NetSrvProcess.Kill();
-
-                            if (Dispatcher.UIThread.CheckAccess() == false)
+                            if (!p.CloseMainWindow())
                             {
-                                Dispatcher.UIThread.Invoke(() => ShareASingleFolder.Header = "Share a single folder");
+                                p.Kill();
                             }
-                            else
-                            {
-                                ShareASingleFolder.Header = "Share a single folder";
-                            }
+                            p.WaitForExit(2500);
                         }
+                        catch { }
+                        finally
+                        {
+                            p.Dispose();
+                        }
+                    }
+
+                    if (Dispatcher.UIThread.CheckAccess() == false)
+                    {
+                        Dispatcher.UIThread.Invoke(() => ShareASingleFolder.Header = "Share a single folder");
+                    }
+                    else
+                    {
+                        ShareASingleFolder.Header = "Share a single folder";
                     }
 
                     break;
@@ -1742,11 +1768,11 @@ public partial class PS3Menu : UserControl
         {
             case "Share configured managed virtual folders":
                 {
-                    if (File.Exists(Environment.CurrentDirectory + @"\Tools\ps3netsrv\ps3netsrv.exe"))
+                    if (File.Exists(OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3netsrv", "ps3netsrv.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3netsrv", "ps3netsrv")))
                     {
-                        Directory.SetCurrentDirectory(Environment.CurrentDirectory + @"\Tools\ps3netsrv");
+                        Directory.SetCurrentDirectory(Path.Combine(Environment.CurrentDirectory, "Tools", "ps3netsrv"));
 
-                        PS3NetSrvProcess = new Process() { EnableRaisingEvents = true, StartInfo = new ProcessStartInfo() { Arguments = ".", FileName = "ps3netsrv.exe" } };
+                        Process PS3NetSrvProcess = new() { EnableRaisingEvents = true, StartInfo = new ProcessStartInfo() { Arguments = ".", FileName = OperatingSystem.IsWindows() ? "ps3netsrv.exe" : "ps3netsrv" } };
                         PS3NetSrvProcess.Start();
 
                         Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
@@ -1762,7 +1788,7 @@ public partial class PS3Menu : UserControl
                     }
                     else
                     {
-                        var box = MessageBoxManager.GetMessageBoxStandard("Cannot share without ps3netsrv", "Could not find " + Environment.CurrentDirectory + @"\Tools\ps3netsrv\ps3netsrv.exe", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        var box = MessageBoxManager.GetMessageBoxStandard("Cannot share without ps3netsrv", "Could not find ps3netsrv", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
                         await box.ShowWindowAsync();
                     }
 
@@ -1770,45 +1796,36 @@ public partial class PS3Menu : UserControl
                 }
             case "Stop sharing":
                 {
-                    if (PS3NetSrvProcess is not null)
+                    // Stop ps3netsrv
+                    foreach (var p in Process.GetProcessesByName("ps3netsrv"))
                     {
-                        if (PS3NetSrvProcess.HasExited == false)
+                        try
                         {
-                            PS3NetSrvProcess.Kill();
-
-                            if (Dispatcher.UIThread.CheckAccess() == false)
+                            if (!p.CloseMainWindow())
                             {
-                                Dispatcher.UIThread.Invoke(() => ShareASingleFolder.Header = "Share a single folder");
+                                p.Kill();
                             }
-                            else
-                            {
-                                ShareASingleFolder.Header = "Share a single folder";
-                            }
+                            p.WaitForExit(2500);
                         }
+                        catch { }
+                        finally
+                        {
+                            p.Dispose();
+                        }
+                    }
+
+                    if (Dispatcher.UIThread.CheckAccess() == false)
+                    {
+                        Dispatcher.UIThread.Invoke(() => ShareASingleFolder.Header = "Share a single folder");
+                    }
+                    else
+                    {
+                        ShareASingleFolder.Header = "Share a single folder";
                     }
 
                     break;
                 }
         }
-    }
-
-    private void PS3NetSrvProcess_Exited(object? sender, EventArgs e)
-    {
-        if (Dispatcher.UIThread.CheckAccess() == false)
-        {
-            Dispatcher.UIThread.Invoke(() =>
-            {
-                ShareASingleFolder.Header = "Share a single folder";
-                ShareManagedFolders.Header = "Share configured managed virtual folders";
-            });
-        }
-        else
-        {
-            ShareASingleFolder.Header = "Share a single folder";
-            ShareManagedFolders.Header = "Share configured managed virtual folders";
-        }
-
-        PS3NetSrvProcess.Dispose();
     }
 
     private static async void ShowWebMANReadyMessage()

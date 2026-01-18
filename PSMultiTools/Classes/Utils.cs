@@ -6,6 +6,7 @@ using Avalonia.VisualTree;
 using DiscUtils.Iso9660;
 using FluentFTP;
 using IronSoftware.Drawing;
+using Microsoft.Data.Sqlite;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using PSMultiTools.PS5.Tools.Editors;
@@ -773,15 +774,56 @@ namespace PSMultiTools.Classes
             return FolderSize;
         }
 
+        public static string GetPSMultiToolsVersion()
+        {
+            // Try different methods if one fails on a specific Linux distro, FreeBSD or in macOS
+            var GetAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+            try
+            {
+                var infoAttr = GetAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+                if (!string.IsNullOrWhiteSpace(infoAttr?.InformationalVersion))
+                    return infoAttr.InformationalVersion;
+            }
+            catch { }
+
+            try
+            {
+                var path = GetAssembly.Location;
+                if (string.IsNullOrWhiteSpace(path))
+                    path = Process.GetCurrentProcess().MainModule?.FileName;
+                if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
+                {
+                    var fvi = FileVersionInfo.GetVersionInfo(path);
+                    if (!string.IsNullOrWhiteSpace(fvi.ProductVersion))
+                        return fvi.ProductVersion;
+                }
+            }
+            catch { }
+
+            try
+            {
+                var asmVer = GetAssembly.GetName().Version;
+                if (asmVer != null)
+                    return asmVer.ToString();
+            }
+            catch { }
+
+            // Return current version if one of the methods above failed - Requires change every build!
+            return "16.1.0";
+        }
+
         public static async Task<bool> IsPSMultiToolsUpdateAvailable()
         {
             if (await IsURLValid("https://github.com/SvenGDK/PS-Multi-Tools/raw/main/LatestBuild.txt"))
             {
-                var GetAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
-                var PSMultiToolsVersion = GetAssembly?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+                var PSMultiToolsVersion = GetPSMultiToolsVersion();
+
+                Console.WriteLine($"Current version: " + PSMultiToolsVersion); // Output in terminal
 
                 using var VerCheckClient = new HttpClient();
                 string NewPSMultiToolsVersion = await VerCheckClient.GetStringAsync("https://github.com/SvenGDK/PS-Multi-Tools/raw/main/LatestBuild.txt");
+
+                Console.WriteLine($"Latest available version: " + NewPSMultiToolsVersion); // Output in terminal
 
                 if (string.Compare(PSMultiToolsVersion, NewPSMultiToolsVersion, false) < 0)
                 {
@@ -800,7 +842,7 @@ namespace PSMultiTools.Classes
 
         public static async void DownloadAndExecuteUpdater()
         {
-            // Check if updater exists
+            // Check if any updater exists
             if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "PSMT-Update.exe")) | !File.Exists(Path.Combine(Environment.CurrentDirectory, "PSMTUpdate.sh")))
             {
                 // Download if not exists
@@ -871,6 +913,71 @@ namespace PSMultiTools.Classes
                     Process.Start(PSI);
                     Environment.Exit(0);
                 }
+            }
+        }
+
+        #endregion
+
+        #region PS5 Related
+
+        public static int BlockAppOrGameUpdates(string connectionString, string titleId, string contentVersion, string versionFileUri)
+        {
+            using var connection = new SqliteConnection(connectionString);
+            connection.Open();
+
+            using var transaction = connection.BeginTransaction();
+            try
+            {
+                int totalRows = 0;
+
+                // Update JSON inside tbl_contentinfo.AppInfoJson using json_set
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.Transaction = transaction;
+                    cmd.CommandText = @"
+                    UPDATE tbl_contentinfo
+                    SET AppInfoJson = json_set(
+                        AppInfoJson,
+                        '$.CONTENT_VERSION', $contentVersion,
+                        '$.VERSION_FILE_URI', $versionFileUri
+                    )
+                    WHERE titleId = $titleId;
+                ";
+                    cmd.Parameters.AddWithValue("$contentVersion", contentVersion ?? string.Empty);
+                    cmd.Parameters.AddWithValue("$versionFileUri", versionFileUri ?? string.Empty);
+                    cmd.Parameters.AddWithValue("$titleId", titleId);
+
+                    totalRows += cmd.ExecuteNonQuery();
+                }
+
+                // Update tbl_appinfo columns
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.Transaction = transaction;
+                    cmd.CommandText = @"
+                    UPDATE tbl_appinfo
+                    SET VERSION_FILE_URI = $versionFileUri,
+                        CONTENT_VERSION   = $contentVersion
+                    WHERE titleId = $titleId;
+                ";
+                    cmd.Parameters.AddWithValue("$versionFileUri", versionFileUri ?? string.Empty);
+                    cmd.Parameters.AddWithValue("$contentVersion", contentVersion ?? string.Empty);
+                    cmd.Parameters.AddWithValue("$titleId", titleId);
+
+                    totalRows += cmd.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+                return totalRows;
+            }
+            catch
+            {
+                try { transaction.Rollback(); } catch { }
+                throw;
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace PSMultiTools.Classes
 {
@@ -198,50 +199,51 @@ namespace PSMultiTools.Classes
             }
         }
 
-        public static string GetPS2GameID(string GameISO)
+        public static async Task<string> GetPS2GameIDAsync(string GameISO)
         {
             string GameID = "";
 
             try
             {
-                using (var SevenZip = new Process())
+                Process SevenZip = new();
+                SevenZip.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "7z.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "7zz");
+                SevenZip.StartInfo.Arguments = "l -ba \"" + GameISO + "\"";
+                SevenZip.StartInfo.RedirectStandardOutput = true;
+                SevenZip.StartInfo.UseShellExecute = false;
+                SevenZip.StartInfo.CreateNoWindow = true;
+                SevenZip.Start();
+
+                // Read the output
+                var OutputReader = SevenZip.StandardOutput;
+                string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.None);
+
+                await SevenZip.WaitForExitAsync();
+                SevenZip.Close();
+
+                if (ProcessOutput.Length > 0)
                 {
-                    SevenZip.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "7z.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "7zz");
-                    SevenZip.StartInfo.Arguments = "l -ba \"" + GameISO + "\"";
-                    SevenZip.StartInfo.RedirectStandardOutput = true;
-                    SevenZip.StartInfo.UseShellExecute = false;
-                    SevenZip.StartInfo.CreateNoWindow = true;
-                    SevenZip.Start();
-
-                    // Read the output
-                    var OutputReader = SevenZip.StandardOutput;
-                    string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.None);
-
-                    if (ProcessOutput.Length > 0)
+                    foreach (string Line in ProcessOutput)
                     {
-                        foreach (string Line in ProcessOutput)
+                        if (Line.Contains("SLES_") | Line.Contains("SLUS_") | Line.Contains("SCES_") | Line.Contains("SCUS_"))
                         {
-                            if (Line.Contains("SLES_") | Line.Contains("SLUS_") | Line.Contains("SCES_") | Line.Contains("SCUS_"))
+                            if (Line.Contains("Volume:")) // ID found in the ISO Header
                             {
-                                if (Line.Contains("Volume:")) // ID found in the ISO Header
+                                if (Line.Split(["Volume: "], StringSplitOptions.RemoveEmptyEntries).Length > 0)
                                 {
-                                    if (Line.Split(["Volume: "], StringSplitOptions.RemoveEmptyEntries).Length > 0)
-                                    {
-                                        GameID = Line.Split(["Volume: "], StringSplitOptions.RemoveEmptyEntries)[1];
-                                        break;
-                                    }
-                                }
-                                else if (string.Join(" ", Line.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries)).Split(' ').Length > 4) // ID found in the ISO files
-                                {
-                                    GameID = string.Join(" ", Line.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries)).Split(' ')[5].Trim();
+                                    GameID = Line.Split(["Volume: "], StringSplitOptions.RemoveEmptyEntries)[1];
                                     break;
                                 }
+                            }
+                            else if (string.Join(" ", Line.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries)).Split(' ').Length > 4) // ID found in the ISO files
+                            {
+                                GameID = string.Join(" ", Line.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries)).Split(' ')[5].Trim();
+                                break;
                             }
                         }
                     }
                 }
             }
-            catch { }
+            catch { return ""; }
 
             return GameID;
         }

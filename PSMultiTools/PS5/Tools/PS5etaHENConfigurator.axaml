@@ -2,37 +2,84 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="440"
+		mc:Ignorable="d" d:DesignWidth="875" d:DesignHeight="770"
 		x:Class="PSMultiTools.PS5.Tools.PS5etaHENConfigurator"
-		Title="etaHEN Configurator" Height="440" Width="520" CanResize="False" CanMinimize="False" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+		Title="etaHEN Configurator" Height="770" Width="875" CanResize="False" CanMinimize="False" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
 	<Grid>
-		<TextBlock x:Name="ConfigStatusTextBlock" HorizontalAlignment="Left" Margin="10,15,0,0" Text="No local etaHEN config.ini found. Get it with 'Load config file from PS5'." VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" FontWeight="Bold"/>
-		<Button x:Name="GetConfigButton" Content="Load config file from PS5" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="195" FontWeight="Bold"/>
-		<Button x:Name="SaveAndUploadButton" Content="Upload updated config file back to PS5" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="210,41,0,0" VerticalAlignment="Top" Width="300" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,17,0,0" Text="PS5 IP Address:" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="IPAddressTextBox" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top" Width="200" TextAlignment="Center"/>
+		<TextBlock HorizontalAlignment="Left" Margin="345,17,0,0" Text="FTP Port:" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="FTPPortTextBox" HorizontalAlignment="Left" Margin="420,10,0,0" VerticalAlignment="Top" Width="125" TextAlignment="Center"/>
+		<Button x:Name="GetConfigButton" Content="Load etaHEN config" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top" Width="175" FontWeight="Bold" Click="GetConfigButton_Click"/>
+		<Button x:Name="SaveConfigButton" Content="Save config" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="740,10,0,0" VerticalAlignment="Top" Width="125" FontWeight="Bold" Click="SaveAndUploadButton_Click"/>
 
-		<TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" Text="Current etaHEN configuration :" VerticalAlignment="Top"  FontFamily="Calibri" FontSize="14" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" Text="Loaded etaHEN configuration :" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
 
-		<TextBlock HorizontalAlignment="Left" Margin="10,125,0,0" Text="Start Option :" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<ComboBox x:Name="StartupOptionComboBox" HorizontalAlignment="Left" Margin="96,115,0,0" VerticalAlignment="Top" Width="410">
+		<TextBlock HorizontalAlignment="Left" Margin="10,100,0,0" Text="Start Option :" VerticalAlignment="Top"/>
+		<ComboBox x:Name="StartupOptionComboBox" HorizontalAlignment="Left" Margin="110,95,0,0" VerticalAlignment="Top" Width="250">
 			<ComboBoxItem Content="None"/>
 			<ComboBoxItem Content="Home Menu"/>
 			<ComboBoxItem Content="Settings"/>
 			<ComboBoxItem Content="Toolbox"/>
 			<ComboBoxItem Content="Itemzflow"/>
 		</ComboBox>
+		<TextBlock HorizontalAlignment="Left" Margin="370,100,0,0" Text="Delay in sec. before patching ShellUI coming out rest mode :" VerticalAlignment="Top"/>
+		<TextBox x:Name="ShellUIPatchDelayTextBox" HorizontalAlignment="Left" Margin="780,95,0,0" VerticalAlignment="Top" Width="75" Text="0" TextAlignment="Center"/>
 
-		<TextBlock HorizontalAlignment="Left" Margin="10,160,0,0" Text="Delay in seconds before patching shellui coming out rest mode :" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<TextBox x:Name="ShellUIPatchDelayTextBox" HorizontalAlignment="Left" Margin="405,155,0,0" VerticalAlignment="Top" Width="100" Text="0" TextAlignment="Center"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,140,0,0" Text="Developer Settings" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="PS5DebugAutoLoadCheckBox" Content="PS5Debug auto load" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="TestkitCheckBox" Content="Testkit" HorizontalAlignment="Left" Margin="190,160,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="AllowDataInSandboxCheckBox" Content="Allow data in sandbox" HorizontalAlignment="Left" Margin="280,160,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="KernelLogCheckBox" Content="Kernel Log" HorizontalAlignment="Left" Margin="470,160,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="AppJailbreakDebugMessagesCheckBox" Content="App jailbreak debug messages" HorizontalAlignment="Left" Margin="585,160,0,0" VerticalAlignment="Top"/>
 
-		<CheckBox x:Name="PS5DebugAutoLoadCheckBox" Content="PS5Debug auto load" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="FTPCheckBox" Content="etaHEN built-in FTP" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="DiscordCheckBox" Content="Discord RPC server" HorizontalAlignment="Left" Margin="10,245,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="TestkitCheckBox" Content="Testkit" HorizontalAlignment="Left" Margin="10,275,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="AllowDataInSandboxCheckBox" Content="Allow data in sandbox" HorizontalAlignment="Left" Margin="10,305,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="DPIServiceCheckBox" Content="Direct PKG Installer service" HorizontalAlignment="Left" Margin="10,335,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="KernelLogCheckBox" Content="Kernel Log" HorizontalAlignment="Left" Margin="10,365,0,0" VerticalAlignment="Top"  FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="FTPDevAccessCheckBox" Content="FTP Developer Access" HorizontalAlignment="Left" Margin="165,215,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="KillUtilDaemonCheckBox" Content="Kill the util daemon during rest" HorizontalAlignment="Left" Margin="10,395,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-		<CheckBox x:Name="KillOpenGameCheckBox" Content="Kill the open game during rest" HorizontalAlignment="Left" Margin="230,395,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,200,0,0" Text="FTP Settings" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="FTPCheckBox" Content="etaHEN built-in FTP" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="FTPDevAccessCheckBox" Content="FTP Developer Access" HorizontalAlignment="Left" Margin="185,220,0,0" VerticalAlignment="Top"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,260,0,0" Text="Active Services" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="DPIServiceCheckBox" Content="Direct PKG Installer service" HorizontalAlignment="Left" Margin="10,280,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="DPIv2ServiceCheckBox" Content="Direct PKG Installer v2 service" HorizontalAlignment="Left" Margin="240,280,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="DiscordCheckBox" Content="Discord RPC server" HorizontalAlignment="Left" Margin="490,280,0,0" VerticalAlignment="Top"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,320,0,0" Text="Rest Mode Related Settings" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="KillUtilDaemonCheckBox" Content="Kill the util daemon during rest" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="KillOpenGameCheckBox" Content="Kill the open game during rest" HorizontalAlignment="Left" Margin="260,340,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="DisableToolboxAutostartforRestModeCheckBox" Content="Disable Toolbox autostart for rest mode" HorizontalAlignment="Left" Margin="505,340,0,0" VerticalAlignment="Top"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,380,0,0" Text="Display Overlay Settings" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="OverlayRAMCheckBox" Content="RAM usage overlay" HorizontalAlignment="Left" Margin="10,400,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="OverlayCPUCheckBox" Content="CPU usage overlay" HorizontalAlignment="Left" Margin="180,400,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="OverlayGPUCheckBox" Content="GPU usage overlay" HorizontalAlignment="Left" Margin="350,400,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="OverlayFPSCheckBox" Content="FPS overlay" HorizontalAlignment="Left" Margin="10,430,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="OverlayIPCheckBox" Content="IP overlay" HorizontalAlignment="Left" Margin="180,430,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="OverlayKstuffCheckBox" Content="Kstuff overlay" HorizontalAlignment="Left" Margin="350,430,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="DisplayTitleIDsCheckBox" Content="Display title IDs" HorizontalAlignment="Left" Margin="520,400,0,0" VerticalAlignment="Top"/>
+		<TextBlock Text="Overlay Position :" HorizontalAlignment="Left" Margin="548,440,0,0" VerticalAlignment="Top"></TextBlock>
+		<TextBox x:Name="OverlayPositionTextBox" HorizontalAlignment="Left" Margin="680,435,0,0" VerticalAlignment="Top"></TextBox>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,470,0,0" Text="Kstuff Related Settings" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="KstuffOnCloseCheckBox" Content="Enable kstuff on close" HorizontalAlignment="Left" Margin="10,490,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="PauseKstuffOnOpenCheckBox" Content="Pause kstuff on open" HorizontalAlignment="Left" Margin="200,490,0,0" VerticalAlignment="Top"/>
+		<TextBlock x:Name="PauseKstuffOnOpenSecsCheckBox" Text="Pause kstuff after" HorizontalAlignment="Left" Margin="10,535,0,0" VerticalAlignment="Top"/>
+		<TextBox x:Name="PauseKstuffOnTextBox" HorizontalAlignment="Left" Margin="137,525,0,0" VerticalAlignment="Top" Width="80" Text="0" TextAlignment="Center"/>
+		<TextBlock HorizontalAlignment="Left" Margin="225,535,0,0" Text="seconds." VerticalAlignment="Top"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,570,0,0" Text="All Other Settings" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="ToolboxAutostartCheckBox" Content="Toolbox Autostart" HorizontalAlignment="Left" Margin="10,590,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="etaHENGameOptionsCheckBox" Content="Enabe etaHEN game options" HorizontalAlignment="Left" Margin="170,590,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="AutoEjectDiscCheckBox" Content="Automatic disc ejection" HorizontalAlignment="Left" Margin="400,590,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="AutostartItemzflowCheckBox" Content="Autostart Itemzflow" HorizontalAlignment="Left" Margin="600,590,0,0" VerticalAlignment="Top"/>
+
+		<CheckBox x:Name="EnableFanSpeedCheckBox" Content="Enable fan speed" HorizontalAlignment="Left" Margin="10,620,0,0" VerticalAlignment="Top"/>
+		<TextBlock HorizontalAlignment="Left" Margin="60,660,0,0" Text="Fan Treshold :" VerticalAlignment="Top"/>
+		<TextBox x:Name="FanTresholdTextBox" HorizontalAlignment="Left" Margin="170,650,0,0" VerticalAlignment="Top" Width="100" Text="0" TextAlignment="Center"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,700,0,0" Text="Shortcuts Settings" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="CheatsShortcutCheckBox" Content="Cheats shortcut" HorizontalAlignment="Left" Margin="10,720,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="ToolboxShortcutCheckBox" Content="Toolbox shortcut" HorizontalAlignment="Left" Margin="160,720,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="GamesShortcutCheckBox" Content="Games shortcut" HorizontalAlignment="Left" Margin="310,720,0,0" VerticalAlignment="Top"/>
+		<CheckBox x:Name="KstuffShortcutCheckBox" Content="Kstuff shortcut" HorizontalAlignment="Left" Margin="460,720,0,0" VerticalAlignment="Top"/>
+
 	</Grid>
 </Window>

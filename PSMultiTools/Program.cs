@@ -8,7 +8,6 @@ namespace PSMultiTools
 {
     internal class Program
     {
-
         public static string CachePath = Path.Combine(Path.GetTempPath(), "CefGlue_" + Guid.NewGuid().ToString().Replace("-", null));
 
         [STAThread]
@@ -54,6 +53,5 @@ namespace PSMultiTools
             }
             catch { }
         }
-
     }
 }

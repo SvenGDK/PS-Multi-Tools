@@ -81,7 +81,8 @@ public partial class GP5PKGBuilder : Window
                 BashProcess.StartInfo.UseShellExecute = false;
                 BashProcess.StartInfo.CreateNoWindow = false;
                 BashProcess.Start();
-                BashProcess.WaitForExit();
+                await BashProcess.WaitForExitAsync();
+                BashProcess.Close();
             }
 
             // Check if wine prefix is 64bit

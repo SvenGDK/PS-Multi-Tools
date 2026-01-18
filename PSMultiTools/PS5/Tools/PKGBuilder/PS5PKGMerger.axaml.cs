@@ -16,9 +16,7 @@ namespace PSMultiTools.PS5.Tools.PKGBuilder;
 public partial class PS5PKGMerger : Window
 {
 
-    private Process PKGMerge = new();
     private string SelectedPath = "";
-
     public string MergeBaseName = "";
     public string MergeDownloadSourceFolder = "";
 
@@ -40,7 +38,7 @@ public partial class PS5PKGMerger : Window
                 BrowseFolderButton.IsEnabled = false;
             });
 
-            PKGMerge = new Process();
+            Process PKGMerge = new();
             PKGMerge.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "pkg_merge.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "pkg_merge");
             PKGMerge.StartInfo.Arguments = "\"" + MergeDownloadSourceFolder + "\"";
             PKGMerge.StartInfo.RedirectStandardOutput = true;
@@ -48,7 +46,69 @@ public partial class PS5PKGMerger : Window
             PKGMerge.StartInfo.CreateNoWindow = true;
             PKGMerge.EnableRaisingEvents = true;
 
-            PKGMerge.OutputDataReceived += PKGMergeDataRecieved;
+            PKGMerge.OutputDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+
+                    // Do not write every line or it will freeze
+                    if (e.Data.Contains("beginning"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("25%"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("50%"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("75%"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("100%"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("[success]"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+
+                }
+            };
 
             PKGMerge.Start();
             PKGMerge.BeginOutputReadLine();
@@ -85,7 +145,7 @@ public partial class PS5PKGMerger : Window
                 BrowseFolderButton.IsEnabled = false;
             });
 
-            PKGMerge = new Process();
+            Process PKGMerge = new();
             PKGMerge.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "pkg_merge.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "pkg_merge");
             PKGMerge.StartInfo.Arguments = "\"" + SelectedPath + "\"";
             PKGMerge.StartInfo.RedirectStandardOutput = true;
@@ -95,7 +155,126 @@ public partial class PS5PKGMerger : Window
             PKGMerge.StartInfo.CreateNoWindow = true;
             PKGMerge.EnableRaisingEvents = true;
 
-            PKGMerge.OutputDataReceived += PKGMergeDataRecieved;
+            PKGMerge.OutputDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+
+                    // Do not write every line or it will freeze
+                    if (e.Data.Contains("beginning"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("25%"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("50%"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("75%"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("100%"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+                    else if (e.Data.Contains("[success]"))
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            MergeLogTextBox.Text += (e.Data + "\r\n");
+                            ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        });
+                    }
+
+                }
+            };
+
+            PKGMerge.Exited += async (s, e) =>
+            {
+                PKGMerge.Dispose();
+
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    MergeButton.IsEnabled = true;
+                    SelectedDirectoryTextBox.IsEnabled = true;
+                    BrowseFolderButton.IsEnabled = true;
+
+                    // For PS5 game patches
+                    if (!string.IsNullOrEmpty(MergeBaseName))
+                    {
+                        // Update progress in PS5GamePatches (if open)
+                        var AppLifetime = (Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)Avalonia.Application.Current!.ApplicationLifetime!;
+                        foreach (Window OpenWin in AppLifetime.Windows)
+                        {
+                            if (OpenWin is PS5GamePatches PS5GamePatchesWindow)
+                            {
+                                PS5GamePatches OpenGamePatchesWindow = PS5GamePatchesWindow;
+                                foreach (var DownloadItem in OpenGamePatchesWindow.DownloadQueueListBox.Items)
+                                {
+                                    if (DownloadItem is DownloadQueueItem DownloadItemAsDownloadQueueItem)
+                                    {
+                                        if (DownloadItemAsDownloadQueueItem.FileName!.StartsWith(MergeBaseName)) // Mark every associated pkg of this patch as 'Merged'
+                                        {
+                                            DownloadItemAsDownloadQueueItem.MergeState = "Merged";
+                                            break;
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    var box = MessageBoxManager.GetMessageBoxStandard("Done merging", "Packages have been merged!" + Environment.NewLine + "Do you want to open the folder containing the merged PKG?", ButtonEnum.YesNo, MsBox.Avalonia.Enums.Icon.Question);
+                    var boxresult = await box.ShowWindowDialogAsync(this);
+                    if (boxresult == ButtonResult.Yes)
+                    {
+                        if (Dispatcher.UIThread.CheckAccess() == false)
+                        {
+                            Dispatcher.UIThread.Invoke(() => { if (!string.IsNullOrEmpty(MergeDownloadSourceFolder)) { Utils.OpenFolder(MergeDownloadSourceFolder); } else { Utils.OpenFolder(SelectedPath); } });
+                        }
+                        else if (!string.IsNullOrEmpty(MergeDownloadSourceFolder))
+                        {
+                            Utils.OpenFolder(MergeDownloadSourceFolder);
+                        }
+                        else
+                        {
+                            Utils.OpenFolder(SelectedPath);
+                        }
+                    }
+                });
+
+            };
 
             PKGMerge.Start();
             PKGMerge.BeginOutputReadLine();
@@ -104,127 +283,6 @@ public partial class PS5PKGMerger : Window
         {
             var box = MessageBoxManager.GetMessageBoxStandard("", "No folder selected!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning);
             await box.ShowWindowAsync();
-        }
-    }
-
-    private void PKGMergeDataRecieved(object sender, DataReceivedEventArgs e)
-    {
-        if (!string.IsNullOrEmpty(e.Data))
-        {
-
-            // Do not write every line or it will freeze
-            if (e.Data.Contains("beginning"))
-            {
-                Dispatcher.UIThread.Invoke(() =>
-                {
-                    MergeLogTextBox.Text += (e.Data + "\r\n");
-                    ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
-                    LogTextBoxScrollViewer?.ScrollToEnd();
-                });
-            }
-            else if (e.Data.Contains("25%"))
-            {
-                Dispatcher.UIThread.Invoke(() =>
-                {
-                    MergeLogTextBox.Text += (e.Data + "\r\n");
-                    ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
-                    LogTextBoxScrollViewer?.ScrollToEnd();
-                });
-            }
-            else if (e.Data.Contains("50%"))
-            {
-                Dispatcher.UIThread.Invoke(() =>
-                {
-                    MergeLogTextBox.Text += (e.Data + "\r\n");
-                    ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
-                    LogTextBoxScrollViewer?.ScrollToEnd();
-                });
-            }
-            else if (e.Data.Contains("75%"))
-            {
-                Dispatcher.UIThread.Invoke(() =>
-                {
-                    MergeLogTextBox.Text += (e.Data + "\r\n");
-                    ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
-                    LogTextBoxScrollViewer?.ScrollToEnd();
-                });
-            }
-            else if (e.Data.Contains("100%"))
-            {
-                Dispatcher.UIThread.Invoke(() =>
-                {
-                    MergeLogTextBox.Text += (e.Data + "\r\n");
-                    ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
-                    LogTextBoxScrollViewer?.ScrollToEnd();
-                });
-            }
-            else if (e.Data.Contains("[success]"))
-            {
-                Dispatcher.UIThread.Invoke(() =>
-                {
-                    MergeLogTextBox.Text += (e.Data + "\r\n");
-                    ScrollViewer? LogTextBoxScrollViewer = MergeLogTextBox.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
-                    LogTextBoxScrollViewer?.ScrollToEnd();
-                });
-            }
-
-        }
-    }
-
-    private async void PKGMerge_Exited(object sender, EventArgs e)
-    {
-        PKGMerge.CancelOutputRead();
-        PKGMerge.Dispose();
-
-        Dispatcher.UIThread.Invoke(() =>
-        {
-            MergeButton.IsEnabled = true;
-            SelectedDirectoryTextBox.IsEnabled = true;
-            BrowseFolderButton.IsEnabled = true;
-
-            // For PS5 game patches
-            if (!string.IsNullOrEmpty(MergeBaseName))
-            {
-                // Update progress in PS5GamePatches (if open)
-                var AppLifetime = (Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)Avalonia.Application.Current!.ApplicationLifetime!;
-                foreach (Window OpenWin in AppLifetime.Windows)
-                {
-                    if (OpenWin is PS5GamePatches PS5GamePatchesWindow)
-                    {
-                        PS5GamePatches OpenGamePatchesWindow = PS5GamePatchesWindow;
-                        foreach (var DownloadItem in OpenGamePatchesWindow.DownloadQueueListBox.Items)
-                        {
-                            if (DownloadItem is DownloadQueueItem DownloadItemAsDownloadQueueItem)
-                            {
-                                if (DownloadItemAsDownloadQueueItem.FileName!.StartsWith(MergeBaseName)) // Mark every associated pkg of this patch as 'Merged'
-                                {
-                                    DownloadItemAsDownloadQueueItem.MergeState = "Merged";
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-        });
-
-        var box = MessageBoxManager.GetMessageBoxStandard("Done merging", "Packages have been merged!" + Environment.NewLine + "Do you want to open the folder containing the merged PKG?", ButtonEnum.YesNo, MsBox.Avalonia.Enums.Icon.Question);
-        var boxresult = await box.ShowWindowDialogAsync(this);
-        if (boxresult == ButtonResult.Yes)
-        {
-            if (Dispatcher.UIThread.CheckAccess() == false)
-            {
-                Dispatcher.UIThread.Invoke(() => { if (!string.IsNullOrEmpty(MergeDownloadSourceFolder)) { Utils.OpenFolder(MergeDownloadSourceFolder); } else { Utils.OpenFolder(SelectedPath); } });
-            }
-            else if (!string.IsNullOrEmpty(MergeDownloadSourceFolder))
-            {
-                Utils.OpenFolder(MergeDownloadSourceFolder);
-            }
-            else
-            {
-                Utils.OpenFolder(SelectedPath);
-            }
         }
     }
 

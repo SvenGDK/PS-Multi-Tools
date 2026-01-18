@@ -115,7 +115,7 @@ public partial class PS2Library : Window
             foreach (var GameISO in Directory.GetFiles(FBDResult, "*.iso", SearchOption.AllDirectories))
             {
                 var NewPS2Game = new PS2Game();
-                string GameID = PS2Game.GetPS2GameID(GameISO);
+                string GameID = await PS2Game.GetPS2GameIDAsync(GameISO);
 
                 if (string.IsNullOrEmpty(GameID))
                 {
@@ -209,7 +209,7 @@ public partial class PS2Library : Window
             foreach (var GameCSO in Directory.GetFiles(FBDResult, "*.cso", SearchOption.AllDirectories))
             {
                 var NewPS2Game = new PS2Game();
-                string GameID = PS2Game.GetPS2GameID(GameCSO);
+                string GameID = await PS2Game.GetPS2GameIDAsync(GameCSO);
 
                 if (string.IsNullOrEmpty(GameID))
                 {
@@ -488,14 +488,6 @@ public partial class PS2Library : Window
     {
         if (e.HttpStatusCode == 200)
         {
-
-            Trace.WriteLine("OK");
-
-            if (PSXDatacenterBrowser.IsLoaded)
-            {
-                Trace.WriteLine("Loaded");
-            }
-
             try
             {
                 string CoverJSReturnValue = await PSXDatacenterBrowser.EvaluateJavaScript<string>("return document.getElementById('table2').getElementsByClassName('sectional')[1].querySelector('img').src");

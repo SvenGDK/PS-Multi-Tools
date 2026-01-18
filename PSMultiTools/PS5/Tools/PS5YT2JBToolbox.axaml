@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="730" d:DesignHeight="660"
+		x:Class="PSMultiTools.PS5.Tools.PS5YT2JBToolbox"
+		Title="PS5 YT2JB Toolbox" Height="660" Width="730" RequestedThemeVariant="Dark" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Text="Settings" FontSize="16" FontWeight="Bold"></TextBlock>
+		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,45,0,0" Text="PS5 IP Address :"></TextBlock>
+		<TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130,40,0,0" Width="200"></TextBox>
+		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="345,45,0,0" Text="FTP Port :"></TextBlock>
+		<TextBox x:Name="PS5FTPPortTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="420,40,0,0" Width="90"></TextBox>
+		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="520,45,0,0" Text="Payload Port :"></TextBlock>
+		<TextBox x:Name="PS5PayloadPortTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="625,40,0,0" Width="90"></TextBox>
+
+		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,0" Text="Utilities" FontSize="16" FontWeight="Bold"></TextBlock>
+		<Button x:Name="AutoReplaceDownload0dat" Margin="10,110,0,0" Content="Auto-Replace download0.dat" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="AutoReplaceDownload0dat_Click">
+			<ToolTip.Tip>
+				This option requires a running FTP server on the PS5 (ftpsrv 2121 or etaHEN 1337).
+			</ToolTip.Tip>
+		</Button>
+		<Button x:Name="InstallYouTubePKG" Margin="370,110,0,0" Content="Re-Install YouTube" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="InstallYouTubePKG_Click">
+			<ToolTip.Tip>
+				This option requires etaHEN running with Direct Package Installer V2 enabled in Services.
+			</ToolTip.Tip>
+		</Button>
+		<Button x:Name="UploadDownload0dat" Margin="10,150,0,0" Content="Upload download0.dat from PC" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="UploadDownload0dat_Click">
+			<ToolTip.Tip>
+				This option requires a running FTP server on the PS5 (ftpsrv 2121 or etaHEN 1337).
+			</ToolTip.Tip>
+		</Button>
+		<Button x:Name="SendetaHENPayload" Margin="370,150,0,0" Content="Send etaHEN Payload" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SendetaHENPayload_Click">
+			<ToolTip.Tip>
+				This option requires a running ELF payload loader (running exploit).
+			</ToolTip.Tip>
+		</Button>
+		<Button x:Name="ReplaceAutoloader" Margin="10,190,0,0" Content="Download latest y2jb_update.zip to USB" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ReplaceAutoloader_Click">
+			<ToolTip.Tip>
+				This option will download y2jb_update.zip to a selected USB drive.
+			</ToolTip.Tip>
+		</Button>
+		<Button x:Name="SendCustomPayload" Margin="370,190,0,0" Content="Send a custom Payload" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SendCustomPayload_Click">
+			<ToolTip.Tip>
+				This option requires a running ELF payload loader (running exploit).
+			</ToolTip.Tip>
+		</Button>
+		<Button x:Name="SendLapse" Margin="370,230,0,0" Content="Send Lapse Payload to port 50000" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SendLapse_Click">
+			<ToolTip.Tip>
+				This option requires you to run Y2JB first on the PS5 until you can send a payload to :50000.
+			</ToolTip.Tip>
+		</Button>
+
+		<TextBlock Margin="10,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Patching &amp; Blocking" FontSize="16" FontWeight="Bold"></TextBlock>
+		<Button x:Name="PatchLocalFiles" Margin="10,305,0,0" Content="Patch app.db, appinfo.db &amp; param.json on PC" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="PatchLocalFiles_Click">
+		</Button>
+		<Button x:Name="PatchFTPFiles" Margin="370,305,0,0" Content="Auto-Block over FTP" HorizontalContentAlignment="Center" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top" Click="PatchFTPFiles_Click">
+			<ToolTip.Tip>
+				This option requires a running FTP server on the PS5 (ftpsrv 2121 or etaHEN 1337). Please stay in the Settings on the PS5 before proceeding!
+			</ToolTip.Tip>
+		</Button>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,0,0,280" Text="Log :" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" VerticalAlignment="Bottom" Height="260" Margin="10,0,10,10"/>
+	</Grid>
+</Window>

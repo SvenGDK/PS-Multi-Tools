@@ -73,6 +73,8 @@ namespace PSMultiTools.Classes
 
         public string? GameVersionFileURI { get; set; }
 
+        public bool? IsInstalled { get; set; }
+
         public static string GetGameRegion(string GameID)
         {
             if (GameID.StartsWith("PPSA"))

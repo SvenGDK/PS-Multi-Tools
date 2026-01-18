@@ -27,7 +27,6 @@ public partial class PS5Sender : Window
         public string FileToSend { get; set; }
 
         public int ChunkSize { get; set; }
-
     }
 
     public struct DownloadedPayloadItem
@@ -85,15 +84,19 @@ public partial class PS5Sender : Window
         }
 
         // Check for downloaded payloads and add to DownloadedPayloadsComboBox
-        if (Directory.Exists(Utils.GetDownloadsFolderPath()))
+        try
         {
-            var PayloadList = Directory.EnumerateFiles(Utils.GetDownloadsFolderPath(), "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".elf") || s.EndsWith(".bin"));
-            foreach (var Payload in PayloadList)
+            if (Directory.Exists(Utils.GetDownloadsFolderPath()))
             {
-                var NewDownloadedPayloadItem = new DownloadedPayloadItem() { PayloadName = Path.GetFileName(Payload), PayloadPath = Payload };
-                DownloadedPayloadsComboBox.Items.Add(NewDownloadedPayloadItem);
+                var PayloadList = Directory.EnumerateFiles(Utils.GetDownloadsFolderPath(), "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".elf") || s.EndsWith(".bin") || s.EndsWith(".js"));
+                foreach (var Payload in PayloadList)
+                {
+                    var NewDownloadedPayloadItem = new DownloadedPayloadItem() { PayloadName = Path.GetFileName(Payload), PayloadPath = Payload };
+                    DownloadedPayloadsComboBox.Items.Add(NewDownloadedPayloadItem);
+                }
             }
         }
+        catch { }
     }
 
     private async void SendButton_Click(object? sender, RoutedEventArgs e)
@@ -106,7 +109,6 @@ public partial class PS5Sender : Window
         }
         else
         {
-
             string SelectedPayload = "";
             if (!string.IsNullOrEmpty(SelectedELFTextBox.Text))
             {
@@ -131,7 +133,6 @@ public partial class PS5Sender : Window
             // Check if an IP address was entered
             if (!string.IsNullOrWhiteSpace(IPTextBox.Text))
             {
-
                 IPAddress DeviceIP;
                 try
                 {
@@ -158,14 +159,18 @@ public partial class PS5Sender : Window
 
                 // Start sending
                 CurrentType = SendType.PAYLOAD;
+
                 if (!string.IsNullOrEmpty(PortTextBox.Text))
                 {
-                    int DevicePort = int.Parse(PortTextBox.Text);
-                    DefaultSenderWorker.RunWorkerAsync(new WorkerArgs() { DeviceIP = DeviceIP, FileToSend = SelectedPayload, DevicePort = DevicePort });
-                }
-                else
-                {
-                    SenderWorker.RunWorkerAsync(new WorkerArgs() { DeviceIP = DeviceIP, FileToSend = SelectedPayload, ChunkSize = 4096 });
+                    if (PortTextBox.Text == "9045") // Mast1c0re
+                    {
+                        SenderWorker.RunWorkerAsync(new WorkerArgs() { DeviceIP = DeviceIP, FileToSend = SelectedPayload, ChunkSize = 4096 });
+                    }
+                    else // Any other elf loader
+                    {
+                        int DevicePort = int.Parse(PortTextBox.Text);
+                        DefaultSenderWorker.RunWorkerAsync(new WorkerArgs() { DeviceIP = DeviceIP, FileToSend = SelectedPayload, DevicePort = DevicePort });
+                    }
                 }
 
                 // Reset selected combobox item
@@ -283,7 +288,6 @@ public partial class PS5Sender : Window
         // Open the file and read
         using (var SenderFileStream = new FileStream(CurrentWorkerArgs.FileToSend, FileMode.Open, FileAccess.Read))
         {
-
             do
             {
                 BytesRead = SenderFileStream.Read(Buffer, 0, Buffer.Length);
@@ -316,7 +320,6 @@ public partial class PS5Sender : Window
                 }
             }
             while (BytesRead > 0);
-
         }
 
         // Close the connection
@@ -326,7 +329,7 @@ public partial class PS5Sender : Window
     private async void SenderWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
     {
         SendStatusTextBlock.Text = "Status:";
-        SendProgressBar.Value = 0d;
+        SendProgressBar.Value = 0;
 
         if (!e.Cancelled)
         {
@@ -387,8 +390,13 @@ public partial class PS5Sender : Window
             Name = "BIN File",
             Extensions = ["bin"]
         };
+        var jsFileFilter = new FileDialogFilter
+        {
+            Name = "JavaScript File",
+            Extensions = ["js"]
+        };
 
-        var OFD = new OpenFileDialog() { Title = "Select an .elf or .bin file", Filters = { elfFileFilter, binFileFilter }, AllowMultiple = false };
+        var OFD = new OpenFileDialog() { Title = "Select an .elf or .bin file", Filters = { elfFileFilter, binFileFilter, jsFileFilter }, AllowMultiple = false };
         var OFDResult = await OFD.ShowAsync(this);
 
         if (OFDResult != null && OFDResult.Length > 0)
@@ -428,14 +436,31 @@ public partial class PS5Sender : Window
 
     private async void DefaultSenderWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
     {
-        SendConfigButton.IsEnabled = true;
-        SendButton.IsEnabled = true;
-        SendISOButton.IsEnabled = true;
-        BrowseButton.IsEnabled = true;
-        BrowseISOButton.IsEnabled = true;
+        if (Dispatcher.UIThread.CheckAccess() == false)
+        {
+            await Dispatcher.UIThread.InvokeAsync(async () =>
+            {
+                SendConfigButton.IsEnabled = true;
+                SendButton.IsEnabled = true;
+                SendISOButton.IsEnabled = true;
+                BrowseButton.IsEnabled = true;
+                BrowseISOButton.IsEnabled = true;
 
-        var box = MessageBoxManager.GetMessageBoxStandard("Success", "Successfully sent!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-        await box.ShowWindowAsync();
+                var box = MessageBoxManager.GetMessageBoxStandard("Success", "Successfully sent!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                await box.ShowWindowAsync();
+            });
+        }
+        else
+        {
+            SendConfigButton.IsEnabled = true;
+            SendButton.IsEnabled = true;
+            SendISOButton.IsEnabled = true;
+            BrowseButton.IsEnabled = true;
+            BrowseISOButton.IsEnabled = true;
+
+            var box = MessageBoxManager.GetMessageBoxStandard("Success", "Successfully sent!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+            await box.ShowWindowAsync();
+        }
     }
 
     private void PortTextBox_TextInput(object? sender, TextInputEventArgs e)

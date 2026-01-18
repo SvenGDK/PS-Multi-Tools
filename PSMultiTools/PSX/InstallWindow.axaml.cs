@@ -696,7 +696,7 @@ public partial class InstallWindow : Window
             PFSShellProcess.StartInfo.CreateNoWindow = true;
 
             PFSShellProcess.Start();
-            PFSShellProcess.WaitForExit();
+            await PFSShellProcess.WaitForExitAsync();
 
             var PFSShellReader = PFSShellProcess.StandardOutput;
             string ProcessOutput = PFSShellReader.ReadToEnd();
@@ -734,7 +734,7 @@ public partial class InstallWindow : Window
         }
     }
 
-    public void PS1AddFilesToPartition(string PartitionName)
+    public async void PS1AddFilesToPartition(string PartitionName)
     {
 
         // Switch to project directory and add the files
@@ -861,7 +861,7 @@ public partial class InstallWindow : Window
             PFSShellProcess.StartInfo.CreateNoWindow = true;
 
             PFSShellProcess.Start();
-            PFSShellProcess.WaitForExit();
+            await PFSShellProcess.WaitForExitAsync();
 
             var PFSShellReader = PFSShellProcess.StandardOutput;
             string ProcessOutput = PFSShellReader.ReadToEnd();

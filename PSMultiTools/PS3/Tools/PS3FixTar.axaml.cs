@@ -17,12 +17,7 @@ public partial class PS3FixTar : Window
 
     private async void BrowseTarButton_Click(object? sender, RoutedEventArgs e)
     {
-        var tarFileFilter = new FileDialogFilter
-        {
-            Name = "TAR File",
-            Extensions = ["tar"]
-        };
-        var OFD = new OpenFileDialog() { Filters = { tarFileFilter }, AllowMultiple = false };
+        var OFD = new OpenFileDialog() { AllowMultiple = false };
         var OFDResult = await OFD.ShowAsync(this);
         if (OFDResult != null && OFDResult.Length > 0)
         {
@@ -37,7 +32,7 @@ public partial class PS3FixTar : Window
             string ProcessOutput = "";
             using (Process FixTar = new())
             {
-                FixTar.StartInfo.FileName = Path.Combine(Environment.CurrentDirectory, "Tools", "fix_tar_v3.exe");
+                FixTar.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "fix_tar_v3.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "fix_tar");
                 FixTar.StartInfo.Arguments = "\"" + SelectedTarFileTextBox.Text + "\"";
                 FixTar.StartInfo.RedirectStandardOutput = true;
                 FixTar.StartInfo.UseShellExecute = false;
@@ -47,6 +42,9 @@ public partial class PS3FixTar : Window
                 // Read the output
                 var OutputReader = FixTar.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await FixTar.WaitForExitAsync();
+                FixTar.Close();
             }
 
             var box = MessageBoxManager.GetMessageBoxStandard("Output Info", ProcessOutput, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);

@@ -116,7 +116,7 @@ public partial class PSPLibrary : Window
         {
             var NewPSPGame = new PSPGame();
 
-            using var SFOReader = new Process();
+            Process SFOReader = new();
             SFOReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "sfo.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "sfo");
             SFOReader.StartInfo.Arguments = "\"" + Game + "\"";
             SFOReader.StartInfo.RedirectStandardOutput = true;
@@ -126,6 +126,9 @@ public partial class PSPLibrary : Window
 
             var OutputReader = SFOReader.StandardOutput;
             string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+            await SFOReader.WaitForExitAsync();
+            SFOReader.Close();
 
             if (ProcessOutput.Length > 0)
             {
@@ -254,7 +257,7 @@ public partial class PSPLibrary : Window
             if (Extracted)
             {
                 // Read PARAM.SFO
-                using var SFOReader = new Process();
+                Process SFOReader = new();
                 SFOReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "sfo.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "sfo");
                 SFOReader.StartInfo.Arguments = $"\"{Path.Combine(CachePath, ISOFileNameWithoutExt, "PSP_GAME", "PARAM.SFO")}\"";
                 SFOReader.StartInfo.RedirectStandardOutput = true;
@@ -264,6 +267,9 @@ public partial class PSPLibrary : Window
 
                 var OutputReader = SFOReader.StandardOutput;
                 string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                await SFOReader.WaitForExitAsync();
+                SFOReader.Close();
 
                 if (ProcessOutput.Length > 0)
                 {

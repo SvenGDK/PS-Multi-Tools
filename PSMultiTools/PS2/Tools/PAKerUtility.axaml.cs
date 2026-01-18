@@ -105,7 +105,7 @@ public partial class PAKerUtility : Window
         {
             Cursor = new Cursor(StandardCursorType.Wait);
 
-            var PAKer = new Process();
+            Process PAKer = new();
             PAKer.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "PAKerUtility.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "PAKerUtility");
             PAKer.StartInfo.Arguments = $"-m \"{SelectedCreateManifestPAKFileTextBox.Text}\" \"{SelectedManifestSavePathTextBox.Text}\"";
             PAKer.StartInfo.RedirectStandardOutput = true;
@@ -156,7 +156,7 @@ public partial class PAKerUtility : Window
         {
             Cursor = new Cursor(StandardCursorType.Wait);
 
-            var PAKer = new Process();
+            Process PAKer = new();
             PAKer.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "PAKerUtility.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "PAKerUtility");
             PAKer.StartInfo.Arguments = $"-l \"{SelectedListPAKFileTextBox.Text}\"";
             PAKer.StartInfo.RedirectStandardOutput = true;
@@ -207,7 +207,7 @@ public partial class PAKerUtility : Window
         {
             Cursor = new Cursor(StandardCursorType.Wait);
 
-            var PAKer = new Process();
+            Process PAKer = new();
             PAKer.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "PAKerUtility.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "PAKerUtility");
             PAKer.StartInfo.Arguments = $"-c \"{SelectedPAKSaveFolderTextBox.Text}\" \"{SelectedManifestFileTextBox.Text}\"";
             PAKer.StartInfo.RedirectStandardOutput = true;
@@ -258,7 +258,7 @@ public partial class PAKerUtility : Window
         {
             Cursor = new Cursor(StandardCursorType.Wait);
 
-            var PAKer = new Process();
+            Process PAKer = new();
             PAKer.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "PAKerUtility.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "PAKerUtility");
             PAKer.StartInfo.Arguments = $"-x \"{SelectedExtractPAKFileTextBox.Text}\"";
             PAKer.StartInfo.RedirectStandardOutput = true;

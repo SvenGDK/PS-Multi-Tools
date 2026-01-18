@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PSMultiTools.PS4.Tools;
 
@@ -74,7 +75,7 @@ public partial class USBWriter : Window
             }
             else
             {
-                string AvailableDrives = GetLinuxDisks();
+                string AvailableDrives = await GetLinuxDisksAsync();
                 List<LsblkBlockDevice> AvailableUSBDrives = ReturnUSBDrives(AvailableDrives);
 
                 foreach (LsblkBlockDevice FoundUSB in AvailableUSBDrives)
@@ -85,7 +86,7 @@ public partial class USBWriter : Window
         }
         else if (OperatingSystem.IsMacOS())
         {
-            string AvailableDrives = GetMacUSBDrives();
+            string AvailableDrives = await GetMacUSBDrivesAsync();
 
             if (AvailableDrives != null)
             {
@@ -110,7 +111,7 @@ public partial class USBWriter : Window
                 string SelectedDriveLetter = DrivesComboBox.SelectedItem.ToString()![..2];
                 string SelectedDriveDeviceID = string.Empty;
 
-                using (var WMIC = new Process())
+                using (Process WMIC = new())
                 {
                     WMIC.StartInfo.FileName = "wmic";
                     WMIC.StartInfo.Arguments = "volume get Driveletter,DeviceID";
@@ -122,6 +123,9 @@ public partial class USBWriter : Window
                     // Read the output
                     var OutputReader = WMIC.StandardOutput;
                     string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.None);
+
+                    WMIC.WaitForExit();
+                    WMIC.Close();
 
                     // Find the drive
                     foreach (string Line in ProcessOutput)
@@ -174,7 +178,7 @@ public partial class USBWriter : Window
         }
     }
 
-    private void RefreshButton_Click(object? sender, RoutedEventArgs e)
+    private async void RefreshButton_Click(object? sender, RoutedEventArgs e)
     {
         DrivesComboBox.Items.Clear();
 
@@ -191,7 +195,7 @@ public partial class USBWriter : Window
         }
         else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
         {
-            string AvailableDrives = GetLinuxDisks();
+            string AvailableDrives = await GetLinuxDisksAsync();
             List<LsblkBlockDevice> AvailableUSBDrives = ReturnUSBDrives(AvailableDrives);
 
             foreach (LsblkBlockDevice FoundUSB in AvailableUSBDrives)
@@ -201,7 +205,7 @@ public partial class USBWriter : Window
         }
         else if (OperatingSystem.IsMacOS())
         {
-            string AvailableDrives = GetMacUSBDrives();
+            string AvailableDrives = await GetMacUSBDrivesAsync();
 
             if (AvailableDrives != null)
             {
@@ -240,7 +244,8 @@ public partial class USBWriter : Window
                     var OutputReader = DD.StandardOutput;
                     var ErrorReader = DD.StandardError;
 
-                    DD.WaitForExit();
+                    await DD.WaitForExitAsync();
+                    DD.Close();
 
                     string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.None);
                     string[] ErrorOutput = ErrorReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.None);
@@ -277,7 +282,7 @@ public partial class USBWriter : Window
                 {
                     if (SelectedDrivePath != null)
                     {
-                        string AvailableDrives = GetLinuxDisks();
+                        string AvailableDrives = await GetLinuxDisksAsync();
                         List<LsblkBlockDevice> AvailableUSBDrives = ReturnUSBDrives(AvailableDrives);
 
                         foreach (LsblkBlockDevice FoundUSB in AvailableUSBDrives)
@@ -291,7 +296,7 @@ public partial class USBWriter : Window
                                     if (!string.IsNullOrEmpty(child.mountpoint))
                                     {
                                         string partitionPath = "/dev/" + child.name;
-                                        UnmountUSBLinux(partitionPath);
+                                        await UnmountUSBLinuxAsync(partitionPath);
                                     }
                                 }
 
@@ -302,10 +307,10 @@ public partial class USBWriter : Window
                         Thread.Sleep(2000);
 
                         // Write
-                        string WriteResult = WriteImage(SelectedFileTextBox.Text, SelectedDrivePath).Item2;
-                        if (WriteResult != null)
+                        var WriteResult = await WriteImageAsync(SelectedFileTextBox.Text, SelectedDrivePath);
+                        if (WriteResult.Item2 != null)
                         {
-                            var box2 = MessageBoxManager.GetMessageBoxStandard("Info", WriteResult, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                            var box2 = MessageBoxManager.GetMessageBoxStandard("Info", WriteResult.Item2, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
                             await box2.ShowWindowAsync();
                         }
                     }
@@ -320,15 +325,15 @@ public partial class USBWriter : Window
                     if (SelectedDrivePath != null)
                     {
                         // Unmount drive
-                        UnmountUSBMac(SelectedDrivePath);
+                        await UnmountUSBMacAsync(SelectedDrivePath);
 
                         Thread.Sleep(2000);
 
                         // Write
-                        string WriteResult = WriteImage(SelectedFileTextBox.Text, SelectedDrivePath).Item2;
-                        if (WriteResult != null)
+                        var WriteResult = await WriteImageAsync(SelectedFileTextBox.Text, SelectedDrivePath);
+                        if (WriteResult.Item2 != null)
                         {
-                            var box2 = MessageBoxManager.GetMessageBoxStandard("Info", WriteResult, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                            var box2 = MessageBoxManager.GetMessageBoxStandard("Info", WriteResult.Item2, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
                             await box2.ShowWindowAsync();
                         }
                     }
@@ -342,7 +347,7 @@ public partial class USBWriter : Window
         }
     }
 
-    private static (int ExitCode, string StdOut, string StdErr) RunUSBUtility(string fileName, string args)
+    private static async Task<(int ExitCode, string StdOut, string StdErr)> RunUSBUtilityAsync(string fileName, string args)
     {
         using Process NewProc = new();
         NewProc.StartInfo.FileName = fileName;
@@ -354,33 +359,34 @@ public partial class USBWriter : Window
         NewProc.Start();
         string outp = NewProc.StandardOutput.ReadToEnd();
         string err = NewProc.StandardError.ReadToEnd();
-        NewProc.WaitForExit();
+        await NewProc.WaitForExitAsync();
+        NewProc.Close();
         return (NewProc.ExitCode, outp, err);
     }
 
-    public static string GetMacUSBDrives()
+    public static async Task<string> GetMacUSBDrivesAsync()
     {
-        var (ExitCode, StdOut, StdErr) = RunUSBUtility("diskutil", "list external physical | grep -i /dev/disk");
+        var (ExitCode, StdOut, StdErr) = await RunUSBUtilityAsync("diskutil", "list external physical | grep -i /dev/disk");
         return StdOut + StdErr;
     }
 
-    public static string GetLinuxDisks()
+    public static async Task<string> GetLinuxDisksAsync()
     {
-        var (ExitCode, StdOut, StdErr) = RunUSBUtility("lsblk", "-J -o NAME,TRAN,RM,TYPE,MOUNTPOINT,SIZE,MODEL");
+        var (ExitCode, StdOut, StdErr) = await RunUSBUtilityAsync("lsblk", "-J -o NAME,TRAN,RM,TYPE,MOUNTPOINT,SIZE,MODEL");
         return StdOut + StdErr;
     }
 
-    public static (int, string, string) UnmountUSBMac(string diskIdentifier)
+    public static async Task<(int, string, string)> UnmountUSBMacAsync(string diskIdentifier)
     {
-        return RunUSBUtility("diskutil", $"unmountDisk /dev/{diskIdentifier}");
+        return await RunUSBUtilityAsync("diskutil", $"unmountDisk /dev/{diskIdentifier}");
     }
 
-    public static (int, string, string) UnmountUSBLinux(string devicePath)
+    public static async Task<(int, string, string)> UnmountUSBLinuxAsync(string devicePath)
     {
-        return RunUSBUtility("umount", devicePath + "*");
+        return await RunUSBUtilityAsync("umount", devicePath + "*");
     }
 
-    public static (int, string, string) WriteImage(string imagePath, string devicePath, string bs = "4M")
+    public static async Task<(int, string, string)> WriteImageAsync(string imagePath, string devicePath, string bs = "4M")
     {
         string args = $"if=\"{imagePath}\" of=\"{devicePath}\" bs={bs} conv=fsync status=progress";
 
@@ -399,12 +405,13 @@ public partial class USBWriter : Window
             NewProc.Start();
             string outp = NewProc.StandardOutput.ReadToEnd();
             string err = NewProc.StandardError.ReadToEnd();
-            NewProc.WaitForExit();
+            await NewProc.WaitForExitAsync();
+            NewProc.Close();
             return (NewProc.ExitCode, outp, err);
         }
         else
         {
-            return RunUSBUtility("dd", args);
+            return await RunUSBUtilityAsync("dd", args);
         }
     }
 

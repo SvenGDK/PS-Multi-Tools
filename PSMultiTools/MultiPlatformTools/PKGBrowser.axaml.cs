@@ -580,9 +580,6 @@ public partial class PKGBrowser : Window
             // Game Image
             string GameImageURL = await ContentWebView.EvaluateJavaScript<string>("return document.getElementsByClassName('frame lfloat')[0].getElementsByTagName('img')[0].src");
 
-            Trace.WriteLine(GameID);
-            Trace.WriteLine(GameImageURL);
-
             if (!(GameImageURL == "null") && !string.IsNullOrEmpty(GameID))
             {
 
@@ -744,9 +741,10 @@ public partial class PKGBrowser : Window
 
             if (!string.IsNullOrEmpty(SelectedDownload.PackageDownloadDestination))
             {
-                if (!File.Exists(Path.Combine(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination)!, "pkg2zip.exe")))
+                if (!File.Exists(Path.Combine(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination)!, "pkg2zip.exe")) || !File.Exists(Path.Combine(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination)!, "pkg2zip")))
                 {
-                    File.Copy(Path.Combine(Environment.CurrentDirectory, "Tools", "pkg2zip.exe"), Path.Combine(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination)!, "pkg2zip.exe"), true);
+                    File.Copy(OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "pkg2zip.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "pkg2zip"),
+                        Path.Combine(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination)!, OperatingSystem.IsWindows() ? "pkg2zip.exe" : "pkg2zip"), true);
                 }
             }
 
@@ -851,9 +849,8 @@ public partial class PKGBrowser : Window
 
                 if (!string.IsNullOrEmpty(SelectedDownload.PackageDownloadDestination) && File.Exists(SelectedDownload.PackageDownloadDestination))
                 {
-                    using var PKG2ZIP = new Process();
-
-                    PKG2ZIP.StartInfo.FileName = Path.Combine(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination)!, "pkg2zip.exe");
+                    Process PKG2ZIP = new();
+                    PKG2ZIP.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination)!, "pkg2zip.exe") : Path.Combine(Path.GetDirectoryName(SelectedDownload.PackageDownloadDestination)!, "pkg2zip");
                     PKG2ZIP.StartInfo.Arguments = "-x \"" + SelectedDownload.PackageDownloadDestination + "\" \"" + GamezRIF + "\"";
                     PKG2ZIP.StartInfo.RedirectStandardOutput = true;
                     PKG2ZIP.StartInfo.RedirectStandardError = true;
@@ -863,6 +860,9 @@ public partial class PKGBrowser : Window
 
                     var OutputReader = PKG2ZIP.StandardOutput;
                     string ProcessOutput = OutputReader.ReadToEnd();
+
+                    await PKG2ZIP.WaitForExitAsync();
+                    PKG2ZIP.Close();
 
                     if (ProcessOutput.Contains("done!"))
                     {

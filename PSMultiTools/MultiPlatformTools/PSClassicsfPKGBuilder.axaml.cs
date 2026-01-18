@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace PSMultiTools.MultiPlatformTools;
 
@@ -52,7 +53,8 @@ public partial class PSClassicsfPKGBuilder : Window
                 BashProcess.StartInfo.UseShellExecute = false;
                 BashProcess.StartInfo.CreateNoWindow = false;
                 BashProcess.Start();
-                BashProcess.WaitForExit();
+                await BashProcess.WaitForExitAsync();
+                BashProcess.Close();
             }
 
             // Check if wine prefix is 64bit
@@ -449,7 +451,8 @@ public partial class PSClassicsfPKGBuilder : Window
             CUE2TOCProcess.StartInfo.UseShellExecute = false;
             CUE2TOCProcess.StartInfo.CreateNoWindow = true;
             CUE2TOCProcess.Start();
-            CUE2TOCProcess.WaitForExit();
+            await CUE2TOCProcess.WaitForExitAsync();
+            CUE2TOCProcess.Close();
 
             // Move Disc TOC file
             if (!Directory.Exists(Path.Combine(GameCacheDirectory, "data")))
@@ -467,7 +470,8 @@ public partial class PSClassicsfPKGBuilder : Window
             NewProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             NewProcess.StartInfo.CreateNoWindow = true;
             NewProcess.Start();
-            NewProcess.WaitForExit();
+            await NewProcess.WaitForExitAsync();
+            NewProcess.Close();
 
             // Modify the GP4 project and add disc info
             var BaseFileNameWithExt = Path.GetFileName(PS1SelectedDisc1TextBox.Text);
@@ -533,7 +537,6 @@ public partial class PSClassicsfPKGBuilder : Window
             // Create the fPKG
             string PUBCMD = "wine \"c:\\PS4\\orbis-pub-cmd-3.38.exe\" img_create --oformat pkg --skip_digest --no_progress_bar \"c:\\Cache\\PS1fPKG.gp4\" \"c:\\fPKG\"";
             EscapedArgs = PUBCMD.Replace("\"", "\\\"");
-            string PKGBuilderProcessOutput;
             var PKGBuilderProcess = new Process();
             PKGBuilderProcess.StartInfo.FileName = OperatingSystem.IsMacOS() ? "/bin/sh" : "/bin/bash";
             PKGBuilderProcess.StartInfo.Arguments = $"-c \"{EscapedArgs}\"";
@@ -541,13 +544,13 @@ public partial class PSClassicsfPKGBuilder : Window
             PKGBuilderProcess.StartInfo.RedirectStandardOutput = true;
             PKGBuilderProcess.StartInfo.CreateNoWindow = true;
             PKGBuilderProcess.Start();
-            PKGBuilderProcess.WaitForExit();
 
-            // Read the process output
-            using (var NewStreamReader = PKGBuilderProcess.StandardOutput)
-            {
-                PKGBuilderProcessOutput = NewStreamReader.ReadToEnd();
-            }
+            var NewStreamReader = PKGBuilderProcess.StandardOutput;
+            string PKGBuilderProcessOutput = NewStreamReader.ReadToEnd();
+
+            PKGBuilderProcess.WaitForExit();
+            PKGBuilderProcess.Close();
+
             if (PKGBuilderProcessOutput.Contains("Create image Process finished with warning"))
             {
                 string PKGFileName = "UP9000-" + PS1NPTitleTextBox.Text + "_00-" + PS1NPTitleTextBox.Text + "PS1FPKG-A0100-V0100.pkg";
@@ -578,12 +581,12 @@ public partial class PSClassicsfPKGBuilder : Window
 
     }
 
-    public void ReadPS1BIN(string GameBIN)
+    public async void ReadPS1BIN(string GameBIN)
     {
         string GameID = "";
         string GameTitle = "";
 
-        using var Bash = new Process();
+        using Process Bash = new();
 
         var StringsCMD = $"strings \"{GameBIN}\" | fgrep BOOT";
         var EscapedArgs = StringsCMD.Replace("\"", "\\\"");
@@ -593,12 +596,14 @@ public partial class PSClassicsfPKGBuilder : Window
         Bash.StartInfo.RedirectStandardOutput = true;
         Bash.StartInfo.RedirectStandardError = true;
         Bash.StartInfo.UseShellExecute = false;
-        Bash.StartInfo.CreateNoWindow = false;
+        Bash.StartInfo.CreateNoWindow = true;
         Bash.Start();
-        Bash.WaitForExit();
 
         var OutputReader = Bash.StandardOutput;
         string[] ProcessOutput = OutputReader.ReadToEnd().Split(["\r\n"], StringSplitOptions.RemoveEmptyEntries);
+
+        await Bash.WaitForExitAsync();
+        Bash.Close();
 
         if (ProcessOutput.Length > 0)
         {
@@ -652,11 +657,11 @@ public partial class PSClassicsfPKGBuilder : Window
             return;
         if (selectedFile[0] is not null)
         {
-            string PS2GameID = PS2Game.GetPS2GameID(selectedFile[0]);
+            string PS2GameID = await PS2Game.GetPS2GameIDAsync(selectedFile[0]);
             string ExtractedPS2GameELFPath = GetELFfromISO(selectedFile[0], PS2GameID);
             CurrentPS2GameID = PS2GameID;
 
-            string PS2GameCRC = GetGameCRC(ExtractedPS2GameELFPath);
+            string PS2GameCRC = await GetGameCRCAsync(ExtractedPS2GameELFPath);
             PS2GameCRC = CRCRegex().Replace(PS2GameCRC, "");
             CurrentPS2GameCRC = PS2GameCRC;
 
@@ -1223,7 +1228,8 @@ public partial class PSClassicsfPKGBuilder : Window
             NewProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             NewProcess.StartInfo.CreateNoWindow = true;
             NewProcess.Start();
-            NewProcess.WaitForExit();
+            await NewProcess.WaitForExitAsync();
+            NewProcess.Close();
 
             // Modify the GP4 project and add disc info
             File.WriteAllText(Path.Combine(CacheDirectory, "PS2fPKG.gp4"), File.ReadAllText(Path.Combine(CacheDirectory, "PS2fPKG.gp4")).Replace("<?xml version=\"1.1\"", "<?xml version=\"1.0\""));
@@ -1308,7 +1314,7 @@ public partial class PSClassicsfPKGBuilder : Window
             // Create the fPKG
             string PUBCMD = "wine \"c:\\PS4\\orbis-pub-cmd-3.38.exe\" img_create --oformat pkg --skip_digest --no_progress_bar \"c:\\Cache\\PS2fPKG.gp4\" \"c:\\fPKG\"";
             EscapedArgs = PUBCMD.Replace("\"", "\\\"");
-            string PKGBuilderProcessOutput;
+
             Process PKGBuilderProcess = new();
             PKGBuilderProcess.StartInfo.FileName = OperatingSystem.IsMacOS() ? "/bin/sh" : "/bin/bash";
             PKGBuilderProcess.StartInfo.Arguments = $"-c \"{EscapedArgs}\"";
@@ -1316,13 +1322,13 @@ public partial class PSClassicsfPKGBuilder : Window
             PKGBuilderProcess.StartInfo.RedirectStandardOutput = true;
             PKGBuilderProcess.StartInfo.CreateNoWindow = true;
             PKGBuilderProcess.Start();
-            PKGBuilderProcess.WaitForExit();
 
-            // Read the process output
-            using (var NewStreamReader = PKGBuilderProcess.StandardOutput)
-            {
-                PKGBuilderProcessOutput = NewStreamReader.ReadToEnd();
-            }
+            var NewStreamReader = PKGBuilderProcess.StandardOutput;
+            string PKGBuilderProcessOutput = NewStreamReader.ReadToEnd();
+
+            await PKGBuilderProcess.WaitForExitAsync();
+            PKGBuilderProcess.Close();
+
             if (PKGBuilderProcessOutput.Contains("Create image Process finished with warning"))
             {
                 string PKGFileName = "UP9000-" + PS2NPTitleTextBox.Text + "_00-" + CurrentPS2GameID.Replace(".", "").Replace("_", "").Trim() + "0000001" + "-A0100-V0100.pkg";
@@ -1409,14 +1415,12 @@ public partial class PSClassicsfPKGBuilder : Window
         return ExtractedELFPath;
     }
 
-    private static string GetGameCRC(string PS2GamePath)
+    private static async Task<string> GetGameCRCAsync(string PS2GamePath)
     {
         // Get ELF crc
         string CRCCCMD = "\"" + Path.Combine(Environment.CurrentDirectory, "Tools", "crc") + "\" \"" + PS2GamePath + "\"";
         var EscapedArgs = CRCCCMD.Replace("\"", "\\\"");
         var CRCProcess = new Process();
-
-        Console.WriteLine(EscapedArgs);
 
         CRCProcess.StartInfo.FileName = OperatingSystem.IsMacOS() ? "/bin/sh" : "/bin/bash";
         CRCProcess.StartInfo.Arguments = $"-c \"{EscapedArgs}\"";
@@ -1424,7 +1428,8 @@ public partial class PSClassicsfPKGBuilder : Window
         CRCProcess.StartInfo.CreateNoWindow = true;
         CRCProcess.StartInfo.RedirectStandardOutput = true;
         CRCProcess.Start();
-        CRCProcess.WaitForExit();
+        await CRCProcess.WaitForExitAsync();
+        CRCProcess.Close();
 
         using var NewStreamReader = CRCProcess.StandardOutput;
         return NewStreamReader.ReadToEnd().Replace("crc:", "").Trim();
@@ -1658,7 +1663,8 @@ public partial class PSClassicsfPKGBuilder : Window
                 PSPDecryptProcess.StartInfo.Arguments = $"-c \"{EscapedArgs}\"";
                 PSPDecryptProcess.StartInfo.CreateNoWindow = true;
                 PSPDecryptProcess.Start();
-                PSPDecryptProcess.WaitForExit();
+                await PSPDecryptProcess.WaitForExitAsync();
+                PSPDecryptProcess.Close();
 
                 if (!Directory.Exists(Path.Combine(GameCacheDirectory, "data")))
                 {
@@ -1753,6 +1759,7 @@ public partial class PSClassicsfPKGBuilder : Window
             NewProcess.StartInfo.CreateNoWindow = true;
             NewProcess.Start();
             NewProcess.WaitForExit();
+            NewProcess.Close();
 
             // Modify the GP4 project
             File.WriteAllText(Path.Combine(CacheDirectory, "PSPfPKG.gp4"), File.ReadAllText(Path.Combine(CacheDirectory, "PSPfPKG.gp4").Replace("<?xml version=\"1.1\"", "<?xml version=\"1.0\"")));
@@ -1764,7 +1771,7 @@ public partial class PSClassicsfPKGBuilder : Window
             // Create the fPKG
             string PUBCMD = "wine \"c:\\PS4\\orbis-pub-cmd-3.38.exe\" img_create --oformat pkg --skip_digest --no_progress_bar \"c:\\Cache\\PSPfPKG.gp4\" \"c:\\fPKG\"";
             EscapedArgs2 = PUBCMD.Replace("\"", "\\\"");
-            string PKGBuilderProcessOutput;
+
             var PKGBuilderProcess = new Process();
             PKGBuilderProcess.StartInfo.FileName = OperatingSystem.IsMacOS() ? "/bin/sh" : "/bin/bash";
             PKGBuilderProcess.StartInfo.Arguments = $"-c \"{EscapedArgs2}\"";
@@ -1772,13 +1779,13 @@ public partial class PSClassicsfPKGBuilder : Window
             PKGBuilderProcess.StartInfo.RedirectStandardOutput = true;
             PKGBuilderProcess.StartInfo.CreateNoWindow = true;
             PKGBuilderProcess.Start();
-            PKGBuilderProcess.WaitForExit();
 
-            // Read the process output
-            using (var NewStreamReader = PKGBuilderProcess.StandardOutput)
-            {
-                PKGBuilderProcessOutput = NewStreamReader.ReadToEnd();
-            }
+            var NewStreamReader = PKGBuilderProcess.StandardOutput;
+            string PKGBuilderProcessOutput = NewStreamReader.ReadToEnd();
+
+            await PKGBuilderProcess.WaitForExitAsync();
+            PKGBuilderProcess.Close();
+
             if (PKGBuilderProcessOutput.Contains("Create image Process finished with warning"))
             {
                 string PKGFileName = "UP9000-" + PSPNPTitleTextBox.Text + "_00-" + PSPNPTitleTextBox.Text + "PSPFPKG-A0100-V0100.pkg";

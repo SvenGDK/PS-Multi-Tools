@@ -124,6 +124,9 @@ public partial class PS3CoreOSTools : Window
                 // Read the output
                 var OutputReader = FWPKG.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await FWPKG.WaitForExitAsync();
+                FWPKG.Close();
             }
             var box = MessageBoxManager.GetMessageBoxStandard("Output Info", ProcessOutput, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
             await box.ShowWindowAsync();
@@ -148,6 +151,9 @@ public partial class PS3CoreOSTools : Window
                 // Read the output
                 var OutputReader = Discore.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await Discore.WaitForExitAsync();
+                Discore.Close();
             }
             var box = MessageBoxManager.GetMessageBoxStandard("Output Info", ProcessOutput, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
             await box.ShowWindowAsync();
@@ -172,6 +178,9 @@ public partial class PS3CoreOSTools : Window
                 // Read the output
                 var OutputReader = FWPKG.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await FWPKG.WaitForExitAsync();
+                FWPKG.Close();
             }
             var box = MessageBoxManager.GetMessageBoxStandard("Output Info", ProcessOutput, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
             await box.ShowWindowAsync();
@@ -196,6 +205,9 @@ public partial class PS3CoreOSTools : Window
                 // Read the output
                 var OutputReader = COS.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await COS.WaitForExitAsync();
+                COS.Close();
             }
             var box = MessageBoxManager.GetMessageBoxStandard("Output Info", ProcessOutput, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
             await box.ShowWindowAsync();
@@ -224,6 +236,9 @@ public partial class PS3CoreOSTools : Window
                 // Read the output
                 var OutputReader = Hexdump.StandardOutput;
                 ProcessOutput = OutputReader.ReadToEnd();
+
+                await Hexdump.WaitForExitAsync();
+                Hexdump.Close();
             }
             var box = MessageBoxManager.GetMessageBoxStandard("Output Info", ProcessOutput, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
             await box.ShowWindowAsync();

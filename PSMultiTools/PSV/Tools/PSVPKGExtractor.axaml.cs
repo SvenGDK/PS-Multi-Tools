@@ -41,7 +41,7 @@ public partial class PSVPKGExtractor : Window
         {
             SelectedPKGTextBox.Text = OFDResult[0];
 
-            using var SFOReader = new Process();
+            Process SFOReader = new();
             SFOReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "PSN_get_pkg_info.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "PSN_get_pkg_info");
             SFOReader.StartInfo.Arguments = "\"" + OFDResult[0] + "\"";
             SFOReader.StartInfo.RedirectStandardOutput = true;
@@ -51,6 +51,9 @@ public partial class PSVPKGExtractor : Window
 
             var OutputReader = SFOReader.StandardOutput;
             string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+            await SFOReader.WaitForExitAsync();
+            SFOReader.Close();
 
             if (ProcessOutput.Length > 0)
             {

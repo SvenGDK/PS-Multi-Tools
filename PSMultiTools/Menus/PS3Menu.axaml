@@ -503,7 +503,11 @@
 			</MenuItem>
 			<MenuItem Header="Settings">
 				<MenuItem Header="FTP IP Address">
-					<TextBox x:Name="FTPIPTextBox" Width="250"></TextBox>
+					<TextBox x:Name="FTPIPTextBox" Width="250">
+						<ToolTip.Tip>
+							Press and hold the left mouse button while editing. There's currently no workaround available.
+						</ToolTip.Tip>
+					</TextBox>
 				</MenuItem>
 				<MenuItem x:Name="AllSettingsMenuItem" Header="All Settings" Click="SettingsMenuItem_Click"/>
 			</MenuItem>

@@ -142,15 +142,10 @@ public partial class PS5Menu : UserControl
 
     #region Tools
 
-    private void OpenAppInfoUpdaterMenuItem_Click(object? sender, RoutedEventArgs e)
+    private void OpenYT2JBToolboxMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        var NewPS5AppInfoDatabaseUpdater = new PS5AppInfoDatabaseUpdater()
-        {
-            ShowActivated = true,
-            ConsoleIP = SharedIPAddress,
-            ConsolePort = SharedFTPPort
-        };
-        NewPS5AppInfoDatabaseUpdater.Show();
+        var NewPS5YT2JBToolbox = new PS5YT2JBToolbox() { ConsoleIP = SharedIPAddress, ConsoleFTPPort = SharedFTPPort, ConsolePayloadPort = SharedPayloadPort, ShowActivated = true };
+        NewPS5YT2JBToolbox.Show();
     }
 
     private void SenderMenuItem_Click(object? sender, RoutedEventArgs e)
@@ -166,12 +161,7 @@ public partial class PS5Menu : UserControl
 
     private void OpenFTPBrowserMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        var NewFTPBrowser = new FTPBrowser()
-        {
-            ShowActivated = true,
-            ConsoleIP = SharedIPAddress,
-            ConsoleFTPPort = SharedFTPPort
-        };
+        var NewFTPBrowser = new FTPBrowser() { ShowActivated = true, ConsoleIP = SharedIPAddress, ConsoleFTPPort = SharedFTPPort };
         NewFTPBrowser.Show();
     }
 
@@ -199,14 +189,11 @@ public partial class PS5Menu : UserControl
     {
         if (!string.IsNullOrEmpty(SharedIPAddress) && !string.IsNullOrEmpty(SharedFTPPort))
         {
-
             Cursor = new Cursor(StandardCursorType.Wait);
-
             try
             {
                 using (var conn = new FtpClient(SharedIPAddress, "anonymous", "anonymous", Convert.ToInt32(SharedFTPPort)))
                 {
-
                     // Configurate the FTP connection
                     conn.Config.EncryptionMode = FtpEncryptionMode.None;
                     conn.Config.SslProtocols = SslProtocols.None;
@@ -370,17 +357,18 @@ public partial class PS5Menu : UserControl
         }
     }
 
-    private void OpenPKGSenderMenuItem_Click(object? sender, RoutedEventArgs e)
+    private async void OpenPKGSenderMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        //if (!string.IsNullOrEmpty(SharedIPAddress))
-        //{
-        //    var NewPKGSender = new PS5PKGSender() { ShowActivated = true, ConsoleIP = SharedIPAddress };
-        //    NewPKGSender.Show();
-        //}
-        //else
-        //{
-        //    MessageBox.Show("Please set your IP in the settings first.", "Cannot connect to the PS5", MessageBoxButton.OK, MessageBoxImage.Information);
-        //}
+        if (!string.IsNullOrEmpty(SharedIPAddress))
+        {
+            var NewPKGSender = new PS5PKGSender() { ShowActivated = true, ConsoleIP = SharedIPAddress };
+            NewPKGSender.Show();
+        }
+        else
+        {
+            var box = MessageBoxManager.GetMessageBoxStandard("Set IP Address first", "Please set your IP address in the settings first.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+            await box.ShowWindowAsync();
+        }
     }
 
     private void OpenPortCheckerMenuItem_Click(object? sender, RoutedEventArgs e)
@@ -432,7 +420,7 @@ public partial class PS5Menu : UserControl
                         if (NewFTPConnection.FileExists("/mnt/disc/bd/param.json"))
                         {
                             // Get the param.json file
-                            if (NewFTPConnection.DownloadFile(Environment.CurrentDirectory + @"\Cache\param.json", "/mnt/disc/bd/param.json", FtpLocalExists.Overwrite, FtpVerify.None, null) == FtpStatus.Success)
+                            if (NewFTPConnection.DownloadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), "/mnt/disc/bd/param.json", FtpLocalExists.Overwrite, FtpVerify.None, null) == FtpStatus.Success)
                             {
                                 ParamJSONDownloaded = true;
                             }
@@ -459,7 +447,7 @@ public partial class PS5Menu : UserControl
 
                 if (ParamJSONDownloaded)
                 {
-                    var ParamJSONData = System.IO.File.ReadAllLines(Environment.CurrentDirectory + @"\Cache\param.json").ToList();
+                    var ParamJSONData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json")).ToList();
 
                     // Remove unreadable stuff
                     ParamJSONData.RemoveRange(0, 6);
@@ -516,7 +504,6 @@ public partial class PS5Menu : UserControl
         {
             IPAddress DeviceIP;
             int DevicePort;
-
             try
             {
                 DeviceIP = IPAddress.Parse(SharedIPAddress);
@@ -529,8 +516,7 @@ public partial class PS5Menu : UserControl
                 return;
             }
 
-            string SelectedELF = Environment.CurrentDirectory + @"\Tools\PS5\spoof.elf";
-            //var ELFFileInfo = new FileInfo(SelectedELF);
+            string SelectedELF = Path.Combine(Environment.CurrentDirectory, "Tools", "PS5", "spoof.elf");
             try
             {
                 using var SenderSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) { ReceiveTimeout = 3000 };
@@ -578,7 +564,7 @@ public partial class PS5Menu : UserControl
                 return;
             }
 
-            string SelectedELF = Environment.CurrentDirectory + @"\Tools\PS5\kstuff-toggle.elf";
+            string SelectedELF = Path.Combine(Environment.CurrentDirectory, "Tools", "PS5", "kstuff-toggle.elf");
             //var ELFFileInfo = new FileInfo(SelectedELF);
             try
             {
@@ -597,7 +583,7 @@ public partial class PS5Menu : UserControl
                 return;
             }
 
-            var box3 = MessageBoxManager.GetMessageBoxStandard("Info", "kstuff toggled!" + Environment.NewLine + "To revert, simply click again.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+            var box3 = MessageBoxManager.GetMessageBoxStandard("Info", "kstuff toggled!\nTo revert, simply click again.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
             await box3.ShowWindowAsync();
         }
         else

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PSMultiTools.MemoryCard;
 
@@ -50,7 +51,7 @@ public partial class PS2MCManager : Window
     private async void LoadPS2MC()
     {
 
-        using (var PS2MCReader = new Process())
+        using (Process PS2MCReader = new())
         {
             // Read MC information
             PS2MCReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
@@ -59,10 +60,12 @@ public partial class PS2MCManager : Window
             PS2MCReader.StartInfo.UseShellExecute = false;
             PS2MCReader.StartInfo.CreateNoWindow = true;
             PS2MCReader.Start();
-            PS2MCReader.WaitForExit();
 
             var OutputReader = PS2MCReader.StandardOutput;
             string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+            await PS2MCReader.WaitForExitAsync();
+            PS2MCReader.Close();
 
             if (ProcessOutput.Length > 0)
             {
@@ -107,7 +110,7 @@ public partial class PS2MCManager : Window
         if (PS2MCCardConnectionSuccess)
         {
             // Get the free space on the MC
-            using (var PS2MCReader = new Process())
+            using (Process PS2MCReader = new())
             {
                 PS2MCReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
                 PS2MCReader.StartInfo.Arguments = "-f";
@@ -118,6 +121,9 @@ public partial class PS2MCManager : Window
 
                 var OutputReader = PS2MCReader.StandardOutput;
                 string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                await PS2MCReader.WaitForExitAsync();
+                PS2MCReader.Close();
 
                 if (ProcessOutput.Length > 0)
                 {
@@ -134,23 +140,25 @@ public partial class PS2MCManager : Window
         }
     }
 
-    private void LoadPS2MCDirectory(string SelectedPath)
+    private async void LoadPS2MCDirectory(string SelectedPath)
     {
         MemoryCardContentListBox.Items.Clear();
 
         if (!string.IsNullOrEmpty(SelectedPath))
         {
-            using var PS2MCReader = new Process();
+            Process PS2MCReader = new();
             PS2MCReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
             PS2MCReader.StartInfo.Arguments = "-ls " + SelectedPath;
             PS2MCReader.StartInfo.RedirectStandardOutput = true;
             PS2MCReader.StartInfo.UseShellExecute = false;
             PS2MCReader.StartInfo.CreateNoWindow = true;
             PS2MCReader.Start();
-            PS2MCReader.WaitForExit();
 
             var OutputReader = PS2MCReader.StandardOutput;
             string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+            await PS2MCReader.WaitForExitAsync();
+            PS2MCReader.Close();
 
             if (ProcessOutput.Length > 0)
             {
@@ -196,7 +204,7 @@ public partial class PS2MCManager : Window
                 string SelectedFileToInject = OFDResult[0];
                 string SelectedFileNameToInject = Path.GetFileName(OFDResult[0]);
 
-                using var PS2MCTool = new Process();
+                Process PS2MCTool = new();
                 PS2MCTool.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
 
                 // Set -in command
@@ -215,10 +223,12 @@ public partial class PS2MCManager : Window
                 PS2MCTool.StartInfo.UseShellExecute = false;
                 PS2MCTool.StartInfo.CreateNoWindow = true;
                 PS2MCTool.Start();
-                PS2MCTool.WaitForExit();
 
                 var OutputReader = PS2MCTool.StandardOutput;
                 string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                await PS2MCTool.WaitForExitAsync();
+                PS2MCTool.Close();
 
                 if (ProcessOutput.Length > 1)
                 {
@@ -283,7 +293,7 @@ public partial class PS2MCManager : Window
                     if (FBDResult != null)
                     {
 
-                        using var PS2MCTool = new Process();
+                        Process PS2MCTool = new();
                         PS2MCTool.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
 
                         // Set -x command
@@ -302,10 +312,12 @@ public partial class PS2MCManager : Window
                         PS2MCTool.StartInfo.UseShellExecute = false;
                         PS2MCTool.StartInfo.CreateNoWindow = true;
                         PS2MCTool.Start();
-                        PS2MCTool.WaitForExit();
 
                         var OutputReader = PS2MCTool.StandardOutput;
                         string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                        await PS2MCTool.WaitForExitAsync();
+                        PS2MCTool.Close();
 
                         if (ProcessOutput.Length > 1)
                         {
@@ -378,7 +390,7 @@ public partial class PS2MCManager : Window
                     if (boxresult == ButtonResult.Yes)
                     {
 
-                        using var PS2MCTool = new Process();
+                        Process PS2MCTool = new();
                         PS2MCTool.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
 
                         // Set -rm command
@@ -397,10 +409,12 @@ public partial class PS2MCManager : Window
                         PS2MCTool.StartInfo.UseShellExecute = false;
                         PS2MCTool.StartInfo.CreateNoWindow = true;
                         PS2MCTool.Start();
-                        PS2MCTool.WaitForExit();
 
                         var OutputReader = PS2MCTool.StandardOutput;
                         string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                        await PS2MCTool.WaitForExitAsync();
+                        PS2MCTool.Close();
 
                         if (ProcessOutput.Length > 1)
                         {
@@ -470,17 +484,19 @@ public partial class PS2MCManager : Window
             if (boxresult == ButtonResult.Yes)
             {
 
-                using var PS2MCTool = new Process();
+                Process PS2MCTool = new();
                 PS2MCTool.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
                 PS2MCTool.StartInfo.Arguments = "--mc-format";
                 PS2MCTool.StartInfo.RedirectStandardOutput = true;
                 PS2MCTool.StartInfo.UseShellExecute = false;
                 PS2MCTool.StartInfo.CreateNoWindow = true;
                 PS2MCTool.Start();
-                PS2MCTool.WaitForExit();
 
                 var OutputReader = PS2MCTool.StandardOutput;
                 string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                await PS2MCTool.WaitForExitAsync();
+                PS2MCTool.Close();
 
                 if (ProcessOutput.Length > 1)
                 {
@@ -548,7 +564,7 @@ public partial class PS2MCManager : Window
             {
                 if (!string.IsNullOrEmpty(CurrentMCPathTextBox.Text))
                 {
-                    using var PS2MCTool = new Process();
+                    Process PS2MCTool = new();
                     PS2MCTool.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
 
                     // Set mkdir command
@@ -565,10 +581,12 @@ public partial class PS2MCManager : Window
                     PS2MCTool.StartInfo.UseShellExecute = false;
                     PS2MCTool.StartInfo.CreateNoWindow = true;
                     PS2MCTool.Start();
-                    PS2MCTool.WaitForExit();
 
                     var OutputReader = PS2MCTool.StandardOutput;
                     string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                    await PS2MCTool.WaitForExitAsync();
+                    PS2MCTool.Close();
 
                     if (ProcessOutput.Length > 1)
                     {
@@ -636,7 +654,7 @@ public partial class PS2MCManager : Window
                     if (boxresult == ButtonResult.Yes)
                     {
 
-                        using var PS2MCTool = new Process();
+                        Process PS2MCTool = new();
                         PS2MCTool.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
 
                         // Set -rmdir command (SelectedMCContent.FileName = directory name)
@@ -655,10 +673,12 @@ public partial class PS2MCManager : Window
                         PS2MCTool.StartInfo.UseShellExecute = false;
                         PS2MCTool.StartInfo.CreateNoWindow = true;
                         PS2MCTool.Start();
-                        PS2MCTool.WaitForExit();
 
                         var OutputReader = PS2MCTool.StandardOutput;
                         string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                        await PS2MCTool.WaitForExitAsync();
+                        PS2MCTool.Close();
 
                         if (ProcessOutput.Length > 1)
                         {
@@ -739,65 +759,65 @@ public partial class PS2MCManager : Window
                 string FMCBBootInstallPath = Path.Combine(Environment.CurrentDirectory, "Tools", "PS2", "FMCB", "BOOT");
 
                 // Sign KELFs
-                ExecutionValues.Add(ExecutePS3MCACommand($"-k \"{Path.Combine(FMCBSystemInstallPath, "FMCB.XLF")}\" \"{Path.Combine(FMCBSystemInstallPath, "osdmain.elf")}\""));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-k \"{Path.Combine(FMCBSystemInstallPath, "OSD110.XLF")}\" \"{Path.Combine(FMCBSystemInstallPath, "osd110.elf")}\""));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-k \"{Path.Combine(FMCBSystemInstallPath, "OSDSYS.XLF")}\" \"{Path.Combine(FMCBSystemInstallPath, "osdsys.elf")}\""));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-k \"{Path.Combine(FMCBSystemInstallPath, "FMCB.XLF")}\" \"{Path.Combine(FMCBSystemInstallPath, "osdmain.elf")}\""));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-k \"{Path.Combine(FMCBSystemInstallPath, "OSD110.XLF")}\" \"{Path.Combine(FMCBSystemInstallPath, "osd110.elf")}\""));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-k \"{Path.Combine(FMCBSystemInstallPath, "OSDSYS.XLF")}\" \"{Path.Combine(FMCBSystemInstallPath, "osdsys.elf")}\""));
 
                 // Create required directories on the PS2 Memory Card
-                ExecutionValues.Add(ExecutePS3MCACommand("-mkdir /APPS"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-mkdir /BOOT"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-mkdir /BAEXEC-SYSTEM"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-mkdir /BCEXEC-SYSTEM"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-mkdir /BEEXEC-SYSTEM"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-mkdir /BIEXEC-SYSTEM"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-mkdir /SYS-CONF"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-mkdir /APPS"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-mkdir /BOOT"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-mkdir /BAEXEC-SYSTEM"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-mkdir /BCEXEC-SYSTEM"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-mkdir /BEEXEC-SYSTEM"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-mkdir /BIEXEC-SYSTEM"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-mkdir /SYS-CONF"));
 
                 // Copy signed KELFs to the PS2 Memory Card
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBSystemInstallPath, "osdmain.elf")}\" /BIEXEC-SYSTEM/osdmain.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBSystemInstallPath, "osd110.elf")}\" /BIEXEC-SYSTEM/osd110.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBSystemInstallPath, "osdsys.elf")}\" /BIEXEC-SYSTEM/osdsys.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBSystemInstallPath, "osdmain.elf")}\" /BIEXEC-SYSTEM/osdmain.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBSystemInstallPath, "osd110.elf")}\" /BIEXEC-SYSTEM/osd110.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBSystemInstallPath, "osdsys.elf")}\" /BIEXEC-SYSTEM/osdsys.elf"));
 
                 // Write required files on the PS2 Memory Card
                 // SYS-CONF
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "REEMCB.CNF")}\" /SYS-CONF/FREEMCB.CNF"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "FMCB_CFG.ELF")}\" /SYS-CONF/FMCB_CFG.ELF"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "USBD.IRX")}\" /SYS-CONF/USBD.IRX"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "USBHDFSD.IRX")}\" /SYS-CONF/USBHDFSD.IRX"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "icon.sys")}\" /SYS-CONF/icon.sys"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "sysconf.icn")}\" /SYS-CONF/sysconf.icn"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "REEMCB.CNF")}\" /SYS-CONF/FREEMCB.CNF"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "FMCB_CFG.ELF")}\" /SYS-CONF/FMCB_CFG.ELF"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "USBD.IRX")}\" /SYS-CONF/USBD.IRX"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "USBHDFSD.IRX")}\" /SYS-CONF/USBHDFSD.IRX"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "icon.sys")}\" /SYS-CONF/icon.sys"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBInstallPath, "SYS-CONF", "sysconf.icn")}\" /SYS-CONF/sysconf.icn"));
                 // SYSTEM
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBSystemInstallPath, "ATAD.IRX")}\" /SYSTEM/ATAD.IRX"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBSystemInstallPath, "HDDLOAD.IRX")}\" /SYSTEM/HDDLOAD.IRX"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBSystemInstallPath, "icon.sys")}\" /SYSTEM/icon.sys"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBSystemInstallPath, "FMCB.icn")}\" /SYSTEM/FMCB.icn"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBSystemInstallPath, "ATAD.IRX")}\" /SYSTEM/ATAD.IRX"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBSystemInstallPath, "HDDLOAD.IRX")}\" /SYSTEM/HDDLOAD.IRX"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBSystemInstallPath, "icon.sys")}\" /SYSTEM/icon.sys"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBSystemInstallPath, "FMCB.icn")}\" /SYSTEM/FMCB.icn"));
                 // APPS
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBInstallPath, "APPS", "icon.sys")}\" /APPS/icon.sys"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBInstallPath, "APPS", "FMCBapps.icn")}\" /APPS/FMCBapps.icn"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBInstallPath, "APPS", "icon.sys")}\" /APPS/icon.sys"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBInstallPath, "APPS", "FMCBapps.icn")}\" /APPS/FMCBapps.icn"));
                 // BOOT
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBBootInstallPath, "icon.sys")}\" /BOOT/icon.sys"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBBootInstallPath, "BOOT.icn")}\" /BOOT/BOOT.icn"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBBootInstallPath, "icon.sys")}\" /BOOT/icon.sys"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBBootInstallPath, "BOOT.icn")}\" /BOOT/BOOT.icn"));
 
                 // Write homebrew applications on the PS2 Memory Card
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBBootInstallPath, "BOOT.ELF")}\" /BOOT/BOOT.ELF"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBBootInstallPath, "ESR.ELF")}\" /BOOT/ESR.ELF"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBBootInstallPath, "ESRGUI.ELF")}\" /BOOT/ESRGUI.ELF"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBBootInstallPath, "OPL.ELF")}\" /BOOT/OPL.ELF"));
-                ExecutionValues.Add(ExecutePS3MCACommand($"-in \"{Path.Combine(FMCBBootInstallPath, "SMS.ELF")}\" /BOOT/SMS.ELF"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBBootInstallPath, "BOOT.ELF")}\" /BOOT/BOOT.ELF"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBBootInstallPath, "ESR.ELF")}\" /BOOT/ESR.ELF"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBBootInstallPath, "ESRGUI.ELF")}\" /BOOT/ESRGUI.ELF"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBBootInstallPath, "OPL.ELF")}\" /BOOT/OPL.ELF"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync($"-in \"{Path.Combine(FMCBBootInstallPath, "SMS.ELF")}\" /BOOT/SMS.ELF"));
 
                 // Cross-link files for multi region/model installation
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/osdmain.elf /BAEXEC-SYSTEM/osd120.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/osdmain.elf /BAEXEC-SYSTEM/osdmain.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/osdmain.elf /BCEXEC-SYSTEM/osdmain.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/osdmain.elf /BEEXEC-SYSTEM/osdmain.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/osdmain.elf /BEEXEC-SYSTEM/osd130.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/osdmain.elf /BIEXEC-SYSTEM/osd130.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/osdmain.elf /BAEXEC-SYSTEM/osd130.elf"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/icon.sys /BAEXEC-SYSTEM/icon.sys"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/icon.sys /BCEXEC-SYSTEM/icon.sys"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/icon.sys /BEEXEC-SYSTEM/icon.sys"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/FMCB.icn /BAEXEC-SYSTEM/FMCB.icn"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/FMCB.icn /BCEXEC-SYSTEM/FMCB.icn"));
-                ExecutionValues.Add(ExecutePS3MCACommand("-cl /BIEXEC-SYSTEM/FMCB.icn /BEEXEC-SYSTEM/FMCB.icn"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/osdmain.elf /BAEXEC-SYSTEM/osd120.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/osdmain.elf /BAEXEC-SYSTEM/osdmain.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/osdmain.elf /BCEXEC-SYSTEM/osdmain.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/osdmain.elf /BEEXEC-SYSTEM/osdmain.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/osdmain.elf /BEEXEC-SYSTEM/osd130.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/osdmain.elf /BIEXEC-SYSTEM/osd130.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/osdmain.elf /BAEXEC-SYSTEM/osd130.elf"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/icon.sys /BAEXEC-SYSTEM/icon.sys"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/icon.sys /BCEXEC-SYSTEM/icon.sys"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/icon.sys /BEEXEC-SYSTEM/icon.sys"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/FMCB.icn /BAEXEC-SYSTEM/FMCB.icn"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/FMCB.icn /BCEXEC-SYSTEM/FMCB.icn"));
+                ExecutionValues.Add(await ExecutePS3MCACommandAsync("-cl /BIEXEC-SYSTEM/FMCB.icn /BEEXEC-SYSTEM/FMCB.icn"));
 
                 // Delete temporary files
                 if (File.Exists(Path.Combine(FMCBInstallPath, "SYSTEM", "osdmain.elf")))
@@ -849,19 +869,21 @@ public partial class PS2MCManager : Window
         }
     }
 
-    private static bool ExecutePS3MCACommand(string Argument)
+    private static async Task<bool> ExecutePS3MCACommandAsync(string Argument)
     {
-        using var PS2MCTool = new Process();
+        Process PS2MCTool = new();
         PS2MCTool.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "ps3mca-tool");
         PS2MCTool.StartInfo.Arguments = Argument;
         PS2MCTool.StartInfo.RedirectStandardOutput = true;
         PS2MCTool.StartInfo.UseShellExecute = false;
         PS2MCTool.StartInfo.CreateNoWindow = true;
         PS2MCTool.Start();
-        PS2MCTool.WaitForExit();
 
         var OutputReader = PS2MCTool.StandardOutput;
         string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+        await PS2MCTool.WaitForExitAsync();
+        PS2MCTool.Close();
 
         if (ProcessOutput.Length > 1)
         {

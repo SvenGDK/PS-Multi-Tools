@@ -85,7 +85,7 @@ public partial class PUPExtractor : Window
 
             PUPUnpacker.Start();
             PUPUnpacker.BeginOutputReadLine();
-            PUPUnpacker.WaitForExit();
+            await PUPUnpacker.WaitForExitAsync();
         }
         else
         {

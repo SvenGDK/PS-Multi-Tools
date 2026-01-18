@@ -74,8 +74,6 @@ public partial class PS5Library : Window
     private readonly MenuItem GameBrowseAssetsMenuItem = new() { Header = "Browse assets", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/open-folder.png"))) } };
     private readonly MenuItem GamePackAsPKG = new() { Header = "Pack as PS5 PKG", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/PKG.png"))) } };
 
-    // Remote context menu options
-    private readonly MenuItem GameLaunchMenuItem = new() { Header = "Launch on PS5", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/play.png"))) } };
     private readonly MenuItem GameChangeTypeMenuItem = new() { Header = "Change game type", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/rename.png"))) } };
     private readonly MenuItem GameChangeToGameMenuItem = new() { Header = "To Game App" };
     private readonly MenuItem GameChangeToNativeMediaMenuItem = new() { Header = "To Native Media App" };
@@ -90,6 +88,11 @@ public partial class PS5Library : Window
     private readonly MenuItem GameChangeIconMenuItem = new() { Header = "Change game icon", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/change.png"))) } };
     private readonly MenuItem GameChangeBackgroundMenuItem = new() { Header = "Change game background", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/change.png"))) } };
     private readonly MenuItem GameChangeSoundtrackMenuItem = new() { Header = "Change game soundtrack", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/change.png"))) } };
+
+    // Remote context menu options
+    private readonly MenuItem GameInstallMenuItem = new() { Header = "Install on PS5", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/play.png"))) } };
+    //private readonly MenuItem GameLaunchMenuItem = new() { Header = "Launch on PS5", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/play.png"))) } };
+
     #endregion
 
     #region App Context Menu Items
@@ -165,7 +168,8 @@ public partial class PS5Library : Window
         GameOpenLocationMenuItem.Click += GameOpenLocationMenuItem_Click;
         GameBrowseAssetsMenuItem.Click += GameBrowseAssetsMenuItem_Click;
         GamePackAsPKG.Click += GamePackAsPKG_Click;
-        GameLaunchMenuItem.Click += GameLaunchMenuItem_Click;
+        //GameLaunchMenuItem.Click += GameLaunchMenuItem_Click;
+        GameInstallMenuItem.Click += GameInstallMenuItem_Click;
 
         AppCopyToMenuItem.Click += AppCopyToMenuItem_Click;
         AppPlayMenuItem.Click += AppPlayMenuItem_Click;
@@ -386,7 +390,6 @@ public partial class PS5Library : Window
         if (FBDResult != null)
         {
             SelectedPath = FBDResult;
-            Trace.WriteLine(FBDResult);
 
             bool LoadIcons = true;
             bool LoadBackgrounds = true;
@@ -925,6 +928,17 @@ public partial class PS5Library : Window
                                         {
                                             PS5GameLVItem.GameVersionFileURI = BackupInfos.VersionFileUri;
                                         }
+
+                                        // Check if game is installed
+                                        if (conn.GetObjectInfo("/user/app/" + BackupInfos.TitleId + "/mount.lnk") is not null && conn.GetObjectInfo("/system_ex/app/" + BackupInfos.TitleId + "/sce_sys/param.json") is not null)
+                                        {
+                                            PS5GameLVItem.IsInstalled = true;
+                                        }
+                                        else
+                                        {
+                                            PS5GameLVItem.IsInstalled = false;
+                                        }
+
                                     }
                                     else
                                     {
@@ -1075,6 +1089,16 @@ public partial class PS5Library : Window
                                         {
                                             PS5GameLVItem.GameVersionFileURI = BackupInfos.VersionFileUri;
                                         }
+
+                                        // Check if game is installed
+                                        if (conn.GetObjectInfo("/user/app/" + BackupInfos.TitleId + "/mount.lnk") is not null && conn.GetObjectInfo("/system_ex/app/" + BackupInfos.TitleId + "/sce_sys/param.json") is not null)
+                                        {
+                                            PS5GameLVItem.IsInstalled = true;
+                                        }
+                                        else
+                                        {
+                                            PS5GameLVItem.IsInstalled = false;
+                                        }
                                     }
                                     else
                                     {
@@ -1224,6 +1248,16 @@ public partial class PS5Library : Window
                                         {
                                             PS5GameLVItem.GameVersionFileURI = BackupInfos.VersionFileUri;
                                         }
+
+                                        // Check if game is installed
+                                        if (conn.GetObjectInfo("/user/app/" + BackupInfos.TitleId + "/mount.lnk") is not null && conn.GetObjectInfo("/system_ex/app/" + BackupInfos.TitleId + "/sce_sys/param.json") is not null)
+                                        {
+                                            PS5GameLVItem.IsInstalled = true;
+                                        }
+                                        else
+                                        {
+                                            PS5GameLVItem.IsInstalled = false;
+                                        }
                                     }
                                     else
                                     {
@@ -1303,8 +1337,8 @@ public partial class PS5Library : Window
 
                 TotalSize = 0L;
 
-                using var PARAMReader = new Process();
-                PARAMReader.StartInfo.FileName = Environment.CurrentDirectory + @"\Tools\ps5_pkg.exe";
+                Process PARAMReader = new();
+                PARAMReader.StartInfo.FileName = Path.Combine(Environment.CurrentDirectory, "Tools", "ps5_pkg.exe");
                 PARAMReader.StartInfo.Arguments = "--psmtparam file:\"" + PatchSCPKG + "\"";
                 PARAMReader.StartInfo.RedirectStandardOutput = true;
                 PARAMReader.StartInfo.UseShellExecute = false;
@@ -1313,6 +1347,9 @@ public partial class PS5Library : Window
 
                 var OutputReader = PARAMReader.StandardOutput;
                 string ProcessOutput = OutputReader.ReadToEnd();
+
+                await PARAMReader.WaitForExitAsync();
+                PARAMReader.Close();
 
                 if (ProcessOutput.Length > 0)
                 {
@@ -1456,7 +1493,14 @@ public partial class PS5Library : Window
             }
             else if (SelectedPS5Game.GameLocation == PS5Game.Location.Remote)
             {
-                GamesContextMenu.Items.Add(GameLaunchMenuItem);
+                if (SelectedPS5Game.IsInstalled == true)
+                {
+                    //GamesContextMenu.Items.Add(GameLaunchMenuItem);
+                }
+                else
+                {
+                    GamesContextMenu.Items.Add(GameInstallMenuItem);
+                }
 
                 // Add correct move options
                 if (SelectedPS5Game.GameRootLocation == PS5Game.RootLocation.Internal)
@@ -2064,34 +2108,42 @@ public partial class PS5Library : Window
         if (GamesListBox.SelectedItem is not null)
         {
             PS5Game SelectedPS5Game = (PS5Game)GamesListBox.SelectedItem;
-            if (SelectedPS5Game.GameLocation == PS5Game.Location.Remote)
+            string GameTitleID = SelectedPS5Game.GameID!.Replace("Title ID: ", "").Trim();
+
+        }
+    }
+
+    private async void GameInstallMenuItem_Click(object? sender, RoutedEventArgs e)
+    {
+        if (GamesListBox.SelectedItem is not null)
+        {
+            PS5Game SelectedPS5Game = (PS5Game)GamesListBox.SelectedItem;
+
+            string GameTitleID = SelectedPS5Game.GameID!.Replace("Title ID: ", "").Trim();
+            string HomebrewArgs;
+            string HomebrewLoaderURL;
+            var box = MessageBoxManager.GetMessageBoxStandard("Dump Runner Payload", "Is dump_runner.elf located at /data/homebrew ? Click 'No' if located on the USB or 'Cancel' to abort.", ButtonEnum.YesNo);
+            var boxresult = await box.ShowWindowDialogAsync(this);
+
+            if (boxresult == ButtonResult.Yes)
             {
-                string GameTitleID = SelectedPS5Game.GameID!.Replace("Title ID: ", "").Trim();
-                string HomebrewArgs;
-                string HomebrewLoaderURL;
-                var box = MessageBoxManager.GetMessageBoxStandard("Dump Runner Payload", "Is dump_runner.elf located at /data/homebrew ? Click 'No' if located on the USB or 'Cancel' to abort.", ButtonEnum.YesNo);
-                var boxresult = await box.ShowWindowDialogAsync(this);
-
-                if (boxresult == ButtonResult.Yes)
-                {
-                    HomebrewArgs = "/data/homebrew/dump_runner.elf+" + GameTitleID;
-                    HomebrewLoaderURL = $"http://{ConsoleIP}:8080/hbldr?pipe=0&daemon=1&path=/data/homebrew/dump_runner.elf&args=" + HomebrewArgs + "&cwd=" + SelectedPS5Game.GameFileOrFolderPath;
-                }
-                else if (boxresult == ButtonResult.No)
-                {
-                    HomebrewArgs = "/mnt/usb0/homebrew/dump_runner.elf+" + GameTitleID;
-                    HomebrewLoaderURL = $"http://{ConsoleIP}:8080/hbldr?pipe=0&daemon=1&path=/mnt/usb0/homebrew/dump_runner.elf&args=" + HomebrewArgs + "&cwd=" + SelectedPS5Game.GameFileOrFolderPath;
-                }
-                else
-                {
-                    box = MessageBoxManager.GetMessageBoxStandard("Aborted", "Aborted", ButtonEnum.Ok);
-                    await box.ShowWindowAsync();
-                    return;
-                }
-
-                // Launch
-                NewPS5Menu.NavigateTowebMANWebSrvUrl(HomebrewLoaderURL);
+                HomebrewArgs = "/data/homebrew/dump_runner.elf+" + GameTitleID;
+                HomebrewLoaderURL = $"http://{ConsoleIP}:8080/hbldr?pipe=0&daemon=1&path=/data/homebrew/dump_runner.elf&args=" + HomebrewArgs + "&cwd=" + SelectedPS5Game.GameFileOrFolderPath;
             }
+            else if (boxresult == ButtonResult.No)
+            {
+                HomebrewArgs = "/mnt/usb0/homebrew/dump_runner.elf+" + GameTitleID;
+                HomebrewLoaderURL = $"http://{ConsoleIP}:8080/hbldr?pipe=0&daemon=1&path=/mnt/usb0/homebrew/dump_runner.elf&args=" + HomebrewArgs + "&cwd=" + SelectedPS5Game.GameFileOrFolderPath;
+            }
+            else
+            {
+                box = MessageBoxManager.GetMessageBoxStandard("Aborted", "Aborted", ButtonEnum.Ok);
+                await box.ShowWindowAsync();
+                return;
+            }
+
+            // Install
+            NewPS5Menu.NavigateTowebMANWebSrvUrl(HomebrewLoaderURL);
         }
     }
 
@@ -3010,6 +3062,13 @@ public partial class PS5Library : Window
     private void ExitMenuItem_Click(object? sender, RoutedEventArgs e)
     {
         Close();
+    }
+
+    private static long GetFTPDirectorySize(FtpClient client, string path)
+    {
+        var items = client.GetListing(path, FtpListOption.Recursive);
+        return items.Where(i => i.Type == FtpObjectType.File)
+                    .Sum(i => i.Size);
     }
 
 }

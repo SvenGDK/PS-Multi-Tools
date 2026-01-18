@@ -7,7 +7,8 @@
 		<AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
 		<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
 		<Title>PS Multi Tools</Title>
-		<Version>16.0.0</Version>
+		<Version>16.1.0</Version>
+		<InformationalVersion>16.1.0</InformationalVersion>
 		<Company>SvenGDK</Company>
 		<Product>PS Multi Tools</Product>
 		<Description>Backup manager for PS1, PS2, PSX, PS3, PS4, PS5, PSP &amp; PS Vita, containing homebrews, firmwares &amp; tools.</Description>
@@ -209,6 +210,10 @@
 		</Reference>
 		<Reference Include="Interop.IMAPI2FS">
 		  <HintPath>..\..\..\..\Documents\Interop.IMAPI2FS.dll</HintPath>
+		  <Private>True</Private>
+		</Reference>
+		<Reference Include="Interop.NetFwTypeLib">
+		  <HintPath>..\..\..\..\Documents\Interop.NetFwTypeLib.dll</HintPath>
 		  <Private>True</Private>
 		</Reference>
 		<Reference Include="LibOrbisPkg">

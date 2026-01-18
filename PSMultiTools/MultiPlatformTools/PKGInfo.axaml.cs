@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using static PSMultiTools.PS5.Tools.PS5PKGViewer;
 
@@ -40,17 +41,17 @@ public partial class PKGInfo : Window
         PKGWorker.DoWork += PKGWorker_DoWork;
     }
 
-    private void PKGInfo_Loaded(object? sender, RoutedEventArgs e)
+    private async void PKGInfo_Loaded(object? sender, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(SelectedPKG))
         {
             //Try to detect the console/platform of the selected PKG if Console is not known
             if (string.IsNullOrEmpty(Console))
             {
-                Console = TryPKGAsync(SelectedPKG);
+                Console = await TryPKGAsync(SelectedPKG);
 
                 var box = MessageBoxManager.GetMessageBoxStandard("Info", Console, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                box.ShowWindowDialogAsync(this);
+                await box.ShowWindowDialogAsync(this);
             }
 
             PKGWorker.RunWorkerAsync();
@@ -1095,7 +1096,7 @@ public partial class PKGInfo : Window
             Dispatcher.UIThread.Invoke(() => PKGConsoleTextBlock.Text = "PS Vita");
             Dispatcher.UIThread.Invoke(() => PKGSizeTextBlock.Text = Utils.HumanReadableBytes(PKGFileInfo.Length));
 
-            using (var SFOReader = new Process())
+            using (Process SFOReader = new())
             {
                 SFOReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "PSN_get_pkg_info.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "PSN_get_pkg_info");
                 SFOReader.StartInfo.Arguments = "\"" + SelectedPKG + "\"";
@@ -1106,6 +1107,9 @@ public partial class PKGInfo : Window
 
                 var OutputReader = SFOReader.StandardOutput;
                 string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                await SFOReader.WaitForExitAsync();
+                SFOReader.Close();
 
                 if (ProcessOutput.Length > 0)
                 {
@@ -1443,7 +1447,7 @@ public partial class PKGInfo : Window
         }
     }
 
-    private static string TryPKGAsync(string PKGPath)
+    private static async Task<string> TryPKGAsync(string PKGPath)
     {
         string DetectedConsole = "";
 
@@ -1468,12 +1472,12 @@ public partial class PKGInfo : Window
         // Try as Vita PKG & get package (sfo) name
         try
         {
-            using var PKG2ZIP = new Process();
+            Process PKG2ZIP = new();
             PKG2ZIP.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "pkg2zip.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "pkg2zip");
             PKG2ZIP.StartInfo.Arguments = $"-l \"{PKGPath}\"";
             PKG2ZIP.StartInfo.RedirectStandardOutput = true;
             PKG2ZIP.StartInfo.RedirectStandardError = true;
-            PKG2ZIP.StartInfo.CreateNoWindow = false;
+            PKG2ZIP.StartInfo.CreateNoWindow = true;
             PKG2ZIP.Start();
 
             var OutputReader = PKG2ZIP.StandardOutput;
@@ -1481,7 +1485,8 @@ public partial class PKGInfo : Window
             string ProcessOutput = OutputReader.ReadToEnd();
             string ProcessErrors = ErrorReader.ReadToEnd();
 
-            PKG2ZIP.WaitForExit();
+            await PKG2ZIP.WaitForExitAsync();
+            PKG2ZIP.Close();
 
             if (ProcessOutput != null && ProcessOutput.Length > 0)
             {
@@ -1530,7 +1535,7 @@ public partial class PKGInfo : Window
         catch (Exception ex)
         {
             var box = MessageBoxManager.GetMessageBoxStandard("Info", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-            box.ShowWindowAsync();
+            await box.ShowWindowAsync();
             Trace.WriteLine("No PS3/PSP PKG");
         }
 

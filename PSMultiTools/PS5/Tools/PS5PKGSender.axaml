@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="610" d:DesignHeight="550"
+		x:Class="PSMultiTools.PS5.Tools.PS5PKGSender"
+		Title="PS5 PKG Sender" Width="610" Height="550" CanResize="False" CanMinimize="False" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Install a PKG from an URL link" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,40,0,0" Text="Enter the .pkg URL file link to install :" VerticalAlignment="Top" Foreground="White"/>
+		<TextBox x:Name="PKGFileURLTextBox" HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="500"/>
+		<CheckBox x:Name="UseDPICheckBox" Content="Use DPI" HorizontalAlignment="Left" Margin="300,100,0,0" VerticalAlignment="Top"></CheckBox>
+		<CheckBox x:Name="UseDPIv2CheckBox" Content="Use DPI v2" HorizontalAlignment="Left" Margin="400,100,0,0" VerticalAlignment="Top"></CheckBox>
+		<Button x:Name="SendPKGFromURLButton" Content="Send" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="520,60,0,0" VerticalAlignment="Top" Width="80" FontWeight="Bold" Click="SendPKGFromURLButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,150,0,0" Text="Install a PKG from PC (Unstable)" VerticalAlignment="Top" Foreground="White" FontSize="16" FontWeight="Bold"/>
+		<Button x:Name="StartWebServerButton" Content="Start local Web Server" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="10,240,10,0" VerticalAlignment="Top" FontWeight="Bold" Click="StartWebServerButton_Click"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,180,0,0" Text="Select a .pkg file to install :" VerticalAlignment="Top" Foreground="White"/>
+		<TextBox x:Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,200,0,0" VerticalAlignment="Top" Width="500"/>	
+		<Button x:Name="BrowsePKGButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="520,200,0,0" VerticalAlignment="Top" Width="80" Click="BrowsePKGButton_Click"/>
+		<Button x:Name="SendPKGFromPCButton" Content="Send" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="520,280,0,0" VerticalAlignment="Top" Width="80" FontWeight="Bold" Click="SendPKGFromPCButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,0,0,220" Text="Log :" VerticalAlignment="Bottom" Foreground="White" FontWeight="Bold" FontSize="16"/>
+		<TextBox x:Name="LogTextBox" HorizontalAlignment="Stretch" Margin="10,0,10,10" VerticalAlignment="Bottom" Height="200"/>
+	</Grid>
+</Window>

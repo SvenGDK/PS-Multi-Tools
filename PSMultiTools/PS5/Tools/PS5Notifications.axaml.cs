@@ -250,7 +250,6 @@ public partial class PS5Notifications : Window
 
     private async void AddDebugSettingsButton_Click(object? sender, RoutedEventArgs e)
     {
-
         // Add to the notification2.db
         if (File.Exists(NotificationsDB2Path))
         {

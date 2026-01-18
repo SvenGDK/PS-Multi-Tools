@@ -479,7 +479,7 @@ public partial class PSVLibrary : Window
                 foreach (var Game in Directory.GetFiles(FBDResult, "*.sfo", SearchOption.AllDirectories))
                 {
                     var NewPSVGame = new PSVGame() { GridWidth = 125, GridHeight = 175, ImageWidth = 100, ImageHeight = 128 };
-                    using var SFOReader = new Process();
+                    Process SFOReader = new();
                     SFOReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "sfo.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "sfo");
                     SFOReader.StartInfo.Arguments = "\"" + Game + "\"";
                     SFOReader.StartInfo.RedirectStandardOutput = true;
@@ -489,6 +489,10 @@ public partial class PSVLibrary : Window
 
                     var OutputReader = SFOReader.StandardOutput;
                     string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                    await SFOReader.WaitForExitAsync();
+                    SFOReader.Close();
+
                     if (ProcessOutput.Length > 0)
                     {
 
@@ -582,7 +586,7 @@ public partial class PSVLibrary : Window
                     var NewPSVGame = new PSVGame() { GridWidth = 125, GridHeight = 175, ImageWidth = 100, ImageHeight = 128 };
                     var GameInfo = new FileInfo(GamePKG);
 
-                    using var SFOReader = new Process();
+                    Process SFOReader = new();
                     SFOReader.StartInfo.FileName = OperatingSystem.IsWindows() ? Path.Combine(Environment.CurrentDirectory, "Tools", "PSN_get_pkg_info.exe") : Path.Combine(Environment.CurrentDirectory, "Tools", "PSN_get_pkg_info");
                     SFOReader.StartInfo.Arguments = "\"" + GamePKG + "\"";
                     SFOReader.StartInfo.RedirectStandardOutput = true;
@@ -592,6 +596,9 @@ public partial class PSVLibrary : Window
 
                     var OutputReader = SFOReader.StandardOutput;
                     string[] ProcessOutput = OutputReader.ReadToEnd().Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+
+                    await SFOReader.WaitForExitAsync();
+                    SFOReader.Close();
 
                     if (ProcessOutput.Length > 0)
                     {
