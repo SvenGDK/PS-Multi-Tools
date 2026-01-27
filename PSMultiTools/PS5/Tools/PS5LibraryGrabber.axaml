@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="750" d:DesignHeight="450"
+		x:Class="PSMultiTools.PS5.Tools.PS5LibraryGrabber"
+		Title="PS5LibraryGrabber" Width="750" Height="450" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,15,0,0" Text="Enter PS5 IP Address :"></TextBlock>
+		<TextBox x:Name="PS5IPTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,10,0,0" Width="200"></TextBox>
+		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="395,15,0,0" Text="Enter FTP Port :"></TextBlock>
+		<TextBox x:Name="PS5FTPPortTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="520,10,0,0" Width="90"></TextBox>
+
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Save decrypted files to :" VerticalAlignment="Top" Margin="10,55,0,0"/>
+		<TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="600"/>
+		<Button x:Name="BrowseFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="620,80,10,0" VerticalAlignment="Top" Width="120" Click="BrowseFolderButton_Click"/>
+
+		<Button x:Name="GrabButton" Content="Get files" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="490,120,10,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" Click="GrabButton_Click">
+			<ToolTip.Tip>
+				In some cases this can cause a crash on the PS5 - Simply retry, already downloaded files will be skipped.
+			</ToolTip.Tip>
+		</Button>
+
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Log :" VerticalAlignment="Bottom" Margin="10,0,0,270" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" VerticalAlignment="Bottom" Height="250" Margin="10,0,10,10"/>
+	</Grid>
+</Window>

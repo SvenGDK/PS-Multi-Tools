@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using FluentFTP;
 using IniParser;
 using IniParser.Model;
@@ -75,9 +76,7 @@ public partial class PS5Menu : UserControl
                 FTPPortTextBox.Text = PSMTConfigData["PS5 Tools"]["FTPPort"];
                 PayloadPortTextBox.Text = PSMTConfigData["PS5 Tools"]["PayloadPort"];
             }
-            catch (Exception)
-            {
-            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
     }
 
@@ -141,6 +140,30 @@ public partial class PS5Menu : UserControl
     #endregion
 
     #region Tools
+
+    private void OpenLibraryGrabberMenuItem_Click(object? sender, RoutedEventArgs e)
+    {
+        var NewPS5LibraryGrabber = new PS5LibraryGrabber() { ConsoleIP = SharedIPAddress, ConsoleFTPPort = SharedFTPPort, ShowActivated = true };
+        NewPS5LibraryGrabber.Show();
+    }
+
+    private void PayloadDispatcherMenuItem_Click(object? sender, RoutedEventArgs e)
+    {
+        var NewPayloadDispatcher = new PayloadDispatcher() { ConsoleIP = SharedIPAddress, ShowActivated = true };
+        NewPayloadDispatcher.Show();
+    }
+
+    private void OpenROMPatcherMenuItem_Click(object? sender, RoutedEventArgs e)
+    {
+        var NewPS5ROMPatcher = new PS5ROMPatcher() { ShowActivated = true };
+        NewPS5ROMPatcher.Show();
+    }
+
+    private void OpenBackporterMenuItem_Click(object? sender, RoutedEventArgs e)
+    {
+        var NewPS5Backporter = new PS5Backporter() { ShowActivated = true };
+        NewPS5Backporter.Show();
+    }
 
     private void OpenYT2JBToolboxMenuItem_Click(object? sender, RoutedEventArgs e)
     {
@@ -403,7 +426,7 @@ public partial class PS5Menu : UserControl
             try
             {
                 bool ParamJSONDownloaded = false;
-                using (var NewFTPConnection = new FtpClient(SharedIPAddress, "anonymous", "anonymous", Convert.ToInt32(SharedFTPPort)))
+                using (var NewFTPConnection = new FtpClient(SharedIPAddress, "anonymous", "anonymous", int.Parse(SharedFTPPort)))
                 {
 
                     // Configurate the FTP connection
@@ -1621,13 +1644,20 @@ public partial class PS5Menu : UserControl
                 Thread.Sleep(500);
 
                 string RetrievedAuthID = NewTelnetClient.Read();
-                var box = MessageBoxManager.GetMessageBoxStandard("Info", "AuthID: " + RetrievedAuthID, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                await box.ShowWindowAsync();
+
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Info", "AuthID: " + RetrievedAuthID, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box.ShowWindowAsync();
+                });
             }
             else
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error reading output", "ShSrv took to long to respond.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error reading output", "ShSrv took to long to respond.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
+                });
                 NewTelnetClient.Close();
             }
 
@@ -1636,8 +1666,11 @@ public partial class PS5Menu : UserControl
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "An error occurred: " + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "An error occurred: " + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });     
         }
     }
 
@@ -1674,21 +1707,24 @@ public partial class PS5Menu : UserControl
                 string ConsoleCPUTemp = WelcomeData.TryGetValue("CPU temp", out var value1) ? value1 : "";
                 string ConsoleCPUFreq = WelcomeData.TryGetValue("CPU freq", out var value) ? value : "";
 
-                var box = MessageBoxManager.GetMessageBoxStandard("Info", "Model Number: " + ConsoleModel + Environment.NewLine +
-                    "Serial Number: " + ConsoleSerialNumber + Environment.NewLine +
-                    "Software Version: " + ConsoleSoftwareVersion + Environment.NewLine +
-                    "SoC Temperature: " + ConsoleSoCTemp + Environment.NewLine +
-                    "CPU Temperature: " + ConsoleCPUTemp + Environment.NewLine +
-                    "CPU Frequency: " + ConsoleCPUFreq,
-                    ButtonEnum.Ok,
-                    MsBox.Avalonia.Enums.Icon.Info);
-
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Info", "Model Number: " + ConsoleModel + Environment.NewLine +
+                        "Serial Number: " + ConsoleSerialNumber + Environment.NewLine +
+                        "Software Version: " + ConsoleSoftwareVersion + Environment.NewLine +
+                        "SoC Temperature: " + ConsoleSoCTemp + Environment.NewLine +
+                        "CPU Temperature: " + ConsoleCPUTemp + Environment.NewLine +
+                        "CPU Frequency: " + ConsoleCPUFreq, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box.ShowWindowAsync();
+                });
             }
             else
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error reading output", "ShSrv took to long to respond.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error reading output", "ShSrv took to long to respond.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
+                });
                 NewTelnetClient.Close();
             }
 
@@ -1697,11 +1733,13 @@ public partial class PS5Menu : UserControl
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "An error occurred: " + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "An error occurred: " + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });  
         }
     }
-
 
     #endregion
 

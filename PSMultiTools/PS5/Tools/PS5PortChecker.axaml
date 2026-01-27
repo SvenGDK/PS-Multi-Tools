@@ -2,16 +2,16 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="380" d:DesignHeight="390"
+		mc:Ignorable="d" d:DesignWidth="380" d:DesignHeight="410"
 		x:Class="PSMultiTools.PS5.Tools.PS5PortChecker"
-		Title="PS5 Port Checker" Height="390" Width="380" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True">
+		Title="PS5 Port Checker" Height="410" Width="380" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True">
 	<Grid>
 		<TextBlock HorizontalAlignment="Left" Text="Check a Port manually" VerticalAlignment="Top" FontSize="14" Margin="10,10,0,0" FontWeight="Bold"/>
 		<TextBox x:Name="IPAddressTextBox" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Width="150"/>
 		<TextBlock HorizontalAlignment="Left" Margin="10,34,0,0" Text="PS5 IP :" VerticalAlignment="Top" FontSize="14"/>
 		<TextBox x:Name="PortTextBox" HorizontalAlignment="Left" Margin="173,58,0,0" VerticalAlignment="Top" Width="100"/>
 		<TextBlock HorizontalAlignment="Left" Margin="173,34,0,0" Text="Port to check :" VerticalAlignment="Top" FontSize="14"/>
-		<Button x:Name="CheckPortButton" Content="Check" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="290,57,0,0" VerticalAlignment="Top" Width="75" FontWeight="Bold" Click="CheckPortButton_Click"/>
+		<Button x:Name="CheckPortButton" Content="Check" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="285,57,0,0" VerticalAlignment="Top" Width="80" FontWeight="Bold" Click="CheckPortButton_Click"/>
 
 		<TextBlock HorizontalAlignment="Left" Text="Detected open Ports on the PS5" VerticalAlignment="Top" FontSize="14" Margin="10,100,0,0" FontWeight="Bold"/>
 		<TextBlock HorizontalAlignment="Left" Margin="10,125,0,0" Text="ELF Loader Ports :" VerticalAlignment="Top" FontSize="14"/>
@@ -22,6 +22,7 @@
 		<TextBlock HorizontalAlignment="Left" Margin="10,250,0,0" Text="Direct PKG installer service Port :" VerticalAlignment="Top" FontSize="14"/>
 		<TextBlock HorizontalAlignment="Left" Margin="10,275,0,0" Text="SH Server Port :" VerticalAlignment="Top" FontSize="14"/>
 		<TextBlock HorizontalAlignment="Left" Margin="10,300,0,0" Text="Web Server Port :" VerticalAlignment="Top" FontSize="14"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,325,0,0" Text="Default Lapse Port :" VerticalAlignment="Top" FontSize="14"/>
 
 		<TextBlock x:Name="Port9020TextBlock" HorizontalAlignment="Left" Margin="265,125,0,0" Text="9020" VerticalAlignment="Top" FontSize="14"/>
 		<TextBlock x:Name="Port1337TextBlock" HorizontalAlignment="Left" Margin="265,150,0,0" Text="1337" VerticalAlignment="Top" FontSize="14"/>
@@ -31,11 +32,12 @@
 		<TextBlock x:Name="Port9090TextBlock" HorizontalAlignment="Left" Margin="265,250,0,0" Text="9090" VerticalAlignment="Top" FontSize="14"/>
 		<TextBlock x:Name="Port2323TextBlock" HorizontalAlignment="Left" Margin="265,275,0,0" Text="2323" VerticalAlignment="Top" FontSize="14"/>
 		<TextBlock x:Name="Port8080TextBlock" HorizontalAlignment="Left" Margin="265,300,0,0" Text="8080" VerticalAlignment="Top" FontSize="14"/>
+		<TextBlock x:Name="Port50000TextBlock" HorizontalAlignment="Left" Margin="265,325,0,0" Text="50000" VerticalAlignment="Top" FontSize="14"/>
 
 		<TextBlock x:Name="Port9021TextBlock" HorizontalAlignment="Left" Margin="325,125,0,0" Text="9021" VerticalAlignment="Top" FontSize="14"/>
 		<TextBlock x:Name="Port2121TextBlock" HorizontalAlignment="Left" Margin="325,150,0,0" Text="2121" VerticalAlignment="Top" FontSize="14"/>
 		<TextBlock x:Name="Port9081TextBlock" HorizontalAlignment="Left" Margin="325,175,0,0" Text="9081" VerticalAlignment="Top" FontSize="14"/>
 
-		<Button x:Name="ReloadButton" Content="Reload" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,340,0,0" VerticalAlignment="Top" Width="76" FontWeight="Bold" Click="ReloadButton_Click"/>
+		<Button x:Name="ReloadButton" Content="Reload" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,365,0,0" VerticalAlignment="Top" Width="100" FontWeight="Bold" Click="ReloadButton_Click"/>
 	</Grid>
 </Window>

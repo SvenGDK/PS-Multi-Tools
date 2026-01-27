@@ -51,127 +51,129 @@ public partial class PS5YT2JBToolbox : Window
 
     private async void PatchLocalFiles_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        var FBD = new OpenFolderDialog() { Title = "Select a folder that contains app.db, appinfo.db and param.json" };
-        var FBDResult = await FBD.ShowAsync(this);
-
-        if (FBDResult != null)
+        if (!string.IsNullOrEmpty(YTTitleIDTextBox.Text))
         {
-            int totalRows = 0;
-            LogTextBox.Clear();
+            var FBD = new OpenFolderDialog() { Title = "Select a folder that contains app.db, appinfo.db and param.json" };
+            var FBDResult = await FBD.ShowAsync(this);
 
-            try
+            if (FBDResult != null)
             {
-                if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Cache")))
-                    Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Cache"));
-            }
-            catch (Exception ex) { LogTextBox.Text += $"Error while creating the Cache folder!\n{ex.Message}\nTask stopped."; return; }
+                int totalRows = 0;
+                LogTextBox.Clear();
 
-            if (File.Exists(Path.Combine(FBDResult, "appinfo.db")))
-            {
-                LogTextBox.Text += "Creating a backup of appinfo.db ...\n";
-                File.Copy(Path.Combine(FBDResult, "appinfo.db"), Path.Combine(Environment.CurrentDirectory, "Cache", "appinfo_backup.db"), true);
-                LogTextBox.Text += "Backup of appinfo.db done!\n";
-
-                LogTextBox.Text += "Starting to patch appinfo.db ...";
-                LogTextBoxScrollViewer?.ScrollToEnd();
-
-                // Patch appinfo.db
-                using var connection = new SqliteConnection($"Data Source={Path.Combine(FBDResult, "appinfo.db")}");
-                connection.Open();
-
-                using var transaction = connection.BeginTransaction();
                 try
                 {
-                    // Update tbl_appinfo columns
-                    using (var cmd = connection.CreateCommand())
-                    {
-                        cmd.Transaction = transaction;
+                    if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Cache")))
+                        Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Cache"));
+                }
+                catch (Exception ex) { LogTextBox.Text += $"Error while creating the Cache folder!\n{ex.Message}\nTask stopped."; return; }
 
-                        cmd.CommandText = @"
+                if (File.Exists(Path.Combine(FBDResult, "appinfo.db")))
+                {
+                    LogTextBox.Text += "Creating a backup of appinfo.db ...\n";
+                    File.Copy(Path.Combine(FBDResult, "appinfo.db"), Path.Combine(Environment.CurrentDirectory, "Cache", "appinfo_backup.db"), true);
+                    LogTextBox.Text += "Backup of appinfo.db done!\n";
+
+                    LogTextBox.Text += "Starting to patch appinfo.db ...";
+                    LogTextBoxScrollViewer?.ScrollToEnd();
+
+                    // Patch appinfo.db
+                    using var connection = new SqliteConnection($"Data Source={Path.Combine(FBDResult, "appinfo.db")}");
+                    connection.Open();
+
+                    using var transaction = connection.BeginTransaction();
+                    try
+                    {
+                        // Update tbl_appinfo columns
+                        using (var cmd = connection.CreateCommand())
+                        {
+                            cmd.Transaction = transaction;
+
+                            cmd.CommandText = @"
                     UPDATE tbl_appinfo 
                     SET val = $contentVersion 
                     WHERE titleId = $titleId 
                     AND key = 'CONTENT_VERSION';
                 ";
-                        cmd.Parameters.AddWithValue("$contentVersion", "99.999.999");
-                        cmd.Parameters.AddWithValue("$titleId", "PPSA01650");
+                            cmd.Parameters.AddWithValue("$contentVersion", "99.999.999");
+                            cmd.Parameters.AddWithValue("$titleId", YTTitleIDTextBox.Text);
 
-                        totalRows += cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
+                            totalRows += cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
 
-                        cmd.CommandText = @"
+                            cmd.CommandText = @"
                     UPDATE tbl_appinfo 
                     SET val = $versionFileUri 
                     WHERE titleId = $titleId 
                     AND key = 'VERSION_FILE_URI';
                 ";
-                        cmd.Parameters.AddWithValue("$versionFileUri", "http://127.0.0.2");
-                        cmd.Parameters.AddWithValue("$titleId", "PPSA01650");
+                            cmd.Parameters.AddWithValue("$versionFileUri", "http://127.0.0.2");
+                            cmd.Parameters.AddWithValue("$titleId", YTTitleIDTextBox.Text);
 
-                        totalRows += cmd.ExecuteNonQuery();
+                            totalRows += cmd.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        try
+                        {
+                            LogTextBox.Text += "An error occured, rolling back changes made to appinfo.db\n";
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                            transaction.Rollback();
+                        }
+                        catch
+                        {
+                            LogTextBox.Text += "Failed to rollback appinfo.db changes!\n";
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        }
                     }
 
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
                     try
                     {
-                        LogTextBox.Text += "An error occured, rolling back changes made to appinfo.db\n";
-                        LogTextBoxScrollViewer?.ScrollToEnd();
-                        transaction.Rollback();
+                        // Dispose transaction & connection & make sure access to file is released
+                        transaction.Dispose();
+                        connection.Close();
+                        SqliteConnection.ClearPool(connection);
+                        connection.Dispose();
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
                     }
-                    catch
-                    {
-                        LogTextBox.Text += "Failed to rollback appinfo.db changes!\n";
-                        LogTextBoxScrollViewer?.ScrollToEnd();
-                    }
+                    catch (Exception ex) { LogTextBox.Text += $"WARNING: Could not close the appinfo.db connection.\n{ex.Message}\n"; }
+
+                    LogTextBox.Text += $"appinfo.db patched - {totalRows} changes done.\n";
+                    LogTextBoxScrollViewer?.ScrollToEnd();
+                }
+                else
+                {
+                    LogTextBox.Text += "File: appinfo.db not found and will not be patched!\n";
+                    LogTextBoxScrollViewer?.ScrollToEnd();
                 }
 
-                try
+                totalRows = 0;
+
+                if (File.Exists(Path.Combine(FBDResult, "app.db")))
                 {
-                    // Dispose transaction & connection & make sure access to file is released
-                    transaction.Dispose();
-                    connection.Close();
-                    SqliteConnection.ClearPool(connection);
-                    connection.Dispose();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                }
-                catch (Exception ex) { LogTextBox.Text += $"WARNING: Could not close the appinfo.db connection.\n{ex.Message}\n"; }
+                    LogTextBox.Text += "Creating a backup of app.db ...\n";
+                    File.Copy(Path.Combine(FBDResult, "app.db"), Path.Combine(Environment.CurrentDirectory, "Cache", "app_backup.db"), true);
+                    LogTextBox.Text += "Backup of app.db done!\n";
 
-                LogTextBox.Text += $"appinfo.db patched - {totalRows} changes done.\n";
-                LogTextBoxScrollViewer?.ScrollToEnd();
-            }
-            else
-            {
-                LogTextBox.Text += "File: appinfo.db not found and will not be patched!\n";
-                LogTextBoxScrollViewer?.ScrollToEnd();
-            }
+                    LogTextBox.Text += "Starting to patch app.db ...\n";
+                    LogTextBoxScrollViewer?.ScrollToEnd();
 
-            totalRows = 0;
+                    // Patch app.db
+                    using var NewConnection = new SqliteConnection($"Data Source={Path.Combine(FBDResult, "app.db")}");
+                    NewConnection.Open();
 
-            if (File.Exists(Path.Combine(FBDResult, "app.db")))
-            {
-                LogTextBox.Text += "Creating a backup of app.db ...\n";
-                File.Copy(Path.Combine(FBDResult, "app.db"), Path.Combine(Environment.CurrentDirectory, "Cache", "app_backup.db"), true);
-                LogTextBox.Text += "Backup of app.db done!\n";
-
-                LogTextBox.Text += "Starting to patch app.db ...\n";
-                LogTextBoxScrollViewer?.ScrollToEnd();
-
-                // Patch app.db
-                using var NewConnection = new SqliteConnection($"Data Source={Path.Combine(FBDResult, "app.db")}");
-                NewConnection.Open();
-
-                using var NewTransaction = NewConnection.BeginTransaction();
-                try
-                {
-                    // Update JSON inside tbl_contentinfo.AppInfoJson using json_set
-                    using (var NewCMD = NewConnection.CreateCommand())
+                    using var NewTransaction = NewConnection.BeginTransaction();
+                    try
                     {
-                        NewCMD.Transaction = NewTransaction;
-                        NewCMD.CommandText = @"
+                        // Update JSON inside tbl_contentinfo.AppInfoJson using json_set
+                        using (var NewCMD = NewConnection.CreateCommand())
+                        {
+                            NewCMD.Transaction = NewTransaction;
+                            NewCMD.CommandText = @"
                     UPDATE tbl_contentinfo
                     SET AppInfoJson = json_set(
                         AppInfoJson,
@@ -180,111 +182,117 @@ public partial class PS5YT2JBToolbox : Window
                     )
                     WHERE titleId = $titleId;
                 ";
-                        NewCMD.Parameters.AddWithValue("$contentVersion", "99.999.999");
-                        NewCMD.Parameters.AddWithValue("$versionFileUri", "http://127.0.0.2");
-                        NewCMD.Parameters.AddWithValue("$titleId", "PPSA01650");
+                            NewCMD.Parameters.AddWithValue("$contentVersion", "99.999.999");
+                            NewCMD.Parameters.AddWithValue("$versionFileUri", "http://127.0.0.2");
+                            NewCMD.Parameters.AddWithValue("$titleId", YTTitleIDTextBox.Text);
 
-                        totalRows += NewCMD.ExecuteNonQuery();
+                            totalRows += NewCMD.ExecuteNonQuery();
+                        }
+
+                        NewTransaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        try
+                        {
+                            LogTextBox.Text += "An error occured, rolling back changes made to app.db\n";
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                            NewTransaction.Rollback();
+                        }
+                        catch
+                        {
+                            LogTextBox.Text += "Failed to rollback app.db changes!\n";
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        }
                     }
 
-                    NewTransaction.Commit();
-                }
-                catch (Exception)
-                {
                     try
                     {
-                        LogTextBox.Text += "An error occured, rolling back changes made to app.db\n";
-                        LogTextBoxScrollViewer?.ScrollToEnd();
-                        NewTransaction.Rollback();
+                        // Dispose transaction & connection & make sure access to file is released
+                        NewTransaction.Dispose();
+                        NewConnection.Close();
+                        SqliteConnection.ClearPool(NewConnection);
+                        NewConnection.Dispose();
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                    }
+                    catch (Exception ex) { LogTextBox.Text += $"WARNING: Could not close the app.db connection.\n{ex.Message}\n"; }
+
+                    LogTextBox.Text += $"app.db patched - {totalRows} changes done.\n";
+                    LogTextBoxScrollViewer?.ScrollToEnd();
+                }
+                else
+                {
+                    LogTextBox.Text += "File: app.db not found and will not be patched!\n";
+                    LogTextBoxScrollViewer?.ScrollToEnd();
+                }
+
+                // Patch param.json
+                if (File.Exists(Path.Combine(FBDResult, "param.json")))
+                {
+                    LogTextBox.Text += "Creating a backup of param.json ...\n";
+                    File.Copy(Path.Combine(FBDResult, "param.json"), Path.Combine(Environment.CurrentDirectory, "Cache", "param_backup.json"), true);
+                    LogTextBox.Text += "Backup of param.json done!\n";
+
+                    LogTextBox.Text += "Starting to patch param.json ...\n";
+                    LogTextBoxScrollViewer?.ScrollToEnd();
+                    try
+                    {
+                        string JSONData = File.ReadAllText(Path.Combine(FBDResult, "param.json"));
+                        if (JSONData != null)
+                        {
+                            PS5Param ParamData = JsonConvert.DeserializeObject<PS5Param>(JSONData)!;
+
+                            ParamData.ContentVersion = "99.999.999";
+                            ParamData.VersionFileUri = "http://127.0.0.2";
+
+                            string RawDataJSON = JsonConvert.SerializeObject(ParamData, Formatting.Indented, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+                            File.WriteAllText(Path.Combine(FBDResult, "param.json"), RawDataJSON);
+                        }
+                        else
+                        {
+                            LogTextBox.Text += "Could not read param.json!\n";
+                            LogTextBoxScrollViewer?.ScrollToEnd();
+                        }
                     }
                     catch
                     {
-                        LogTextBox.Text += "Failed to rollback app.db changes!\n";
+                        LogTextBox.Text += "Failed to modify param.json!\n";
                         LogTextBoxScrollViewer?.ScrollToEnd();
                     }
                 }
-
-                try
+                else
                 {
-                    // Dispose transaction & connection & make sure access to file is released
-                    NewTransaction.Dispose();
-                    NewConnection.Close();
-                    SqliteConnection.ClearPool(NewConnection);
-                    NewConnection.Dispose();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                }
-                catch (Exception ex) { LogTextBox.Text += $"WARNING: Could not close the app.db connection.\n{ex.Message}\n"; }
-
-                LogTextBox.Text += $"app.db patched - {totalRows} changes done.\n";
-                LogTextBoxScrollViewer?.ScrollToEnd();
-            }
-            else
-            {
-                LogTextBox.Text += "File: app.db not found and will not be patched!\n";
-                LogTextBoxScrollViewer?.ScrollToEnd();
-            }
-
-            // Patch param.json
-            if (File.Exists(Path.Combine(FBDResult, "param.json")))
-            {
-                LogTextBox.Text += "Creating a backup of param.json ...\n";
-                File.Copy(Path.Combine(FBDResult, "param.json"), Path.Combine(Environment.CurrentDirectory, "Cache", "param_backup.json"), true);
-                LogTextBox.Text += "Backup of param.json done!\n";
-
-                LogTextBox.Text += "Starting to patch param.json ...\n";
-                LogTextBoxScrollViewer?.ScrollToEnd();
-                try
-                {
-                    string JSONData = File.ReadAllText(Path.Combine(FBDResult, "param.json"));
-                    if (JSONData != null)
-                    {
-                        PS5Param ParamData = JsonConvert.DeserializeObject<PS5Param>(JSONData)!;
-
-                        ParamData.ContentVersion = "99.999.999";
-                        ParamData.VersionFileUri = "http://127.0.0.2";
-
-                        string RawDataJSON = JsonConvert.SerializeObject(ParamData, Formatting.Indented, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
-                        File.WriteAllText(Path.Combine(FBDResult, "param.json"), RawDataJSON);
-                    }
-                    else
-                    {
-                        LogTextBox.Text += "Could not read param.json!\n";
-                        LogTextBoxScrollViewer?.ScrollToEnd();
-                    }
-                }
-                catch
-                {
-                    LogTextBox.Text += "Failed to modify param.json!\n";
+                    LogTextBox.Text += "File: param.json not found and will not be patched!\n";
                     LogTextBoxScrollViewer?.ScrollToEnd();
                 }
+
+                LogTextBox.Text += "Done! All found files have been patched and ready to use.\n";
+                LogTextBoxScrollViewer?.ScrollToEnd();
             }
             else
             {
-                LogTextBox.Text += "File: param.json not found and will not be patched!\n";
+                LogTextBox.Text += "No folder selected.\n";
                 LogTextBoxScrollViewer?.ScrollToEnd();
             }
-
-            LogTextBox.Text += "Done! All found files have been patched and ready to use.\n";
-            LogTextBoxScrollViewer?.ScrollToEnd();
         }
         else
         {
-            LogTextBox.Text += "No folder selected.\n";
+            LogTextBox.Text += "No YouTube title ID specified.\n";
             LogTextBoxScrollViewer?.ScrollToEnd();
         }
     }
 
     private async void PatchFTPFiles_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(PS5IPTextBox.Text) && !string.IsNullOrEmpty(PS5FTPPortTextBox.Text))
+        if (!string.IsNullOrEmpty(PS5IPTextBox.Text) && !string.IsNullOrEmpty(PS5FTPPortTextBox.Text) && !string.IsNullOrEmpty(YTTitleIDTextBox.Text))
         {
             LogTextBox.Clear();
 
             LogTextBox.Text += "Getting :\n";
             LogTextBox.Text += "/system_data/priv/mms/appinfo.db\n";
             LogTextBox.Text += "/system_data/priv/mms/app.db\n";
-            LogTextBox.Text += "/user/appmeta/PPSA01650/param.json\n";
+            LogTextBox.Text += $"/user/appmeta/{YTTitleIDTextBox.Text}/ param.json\n";
             LogTextBox.Text += "Please wait ...\n";
             LogTextBoxScrollViewer?.ScrollToEnd();
 
@@ -297,11 +305,7 @@ public partial class PS5YT2JBToolbox : Window
 
             try
             {
-                IEnumerable<string> RemoteFiles = [
-                    "/system_data/priv/mms/appinfo.db",
-                        "/system_data/priv/mms/app.db",
-                        "/user/appmeta/PPSA01650/param.json"
-                    ];
+                IEnumerable<string> RemoteFiles = ["/system_data/priv/mms/appinfo.db", "/system_data/priv/mms/app.db", $"/user/appmeta/{YTTitleIDTextBox.Text}/param.json" ];
 
                 // Configurate AsyncFtpClient
                 using var conn = new AsyncFtpClient(PS5IPTextBox.Text, "anonymous", "anonymous", int.Parse(PS5FTPPortTextBox.Text));
@@ -360,7 +364,7 @@ public partial class PS5YT2JBToolbox : Window
                     AND key = 'CONTENT_VERSION'
                 ";
                     cmd.Parameters.AddWithValue("$contentVersion", "99.999.999");
-                    cmd.Parameters.AddWithValue("$titleId", "PPSA01650");
+                    cmd.Parameters.AddWithValue("$titleId", YTTitleIDTextBox.Text);
 
                     totalRows += cmd.ExecuteNonQuery();
                     cmd.Parameters.Clear();
@@ -372,7 +376,7 @@ public partial class PS5YT2JBToolbox : Window
                     AND key = 'VERSION_FILE_URI'
                 ";
                     cmd.Parameters.AddWithValue("$versionFileUri", "http://127.0.0.2");
-                    cmd.Parameters.AddWithValue("$titleId", "PPSA01650");
+                    cmd.Parameters.AddWithValue("$titleId", YTTitleIDTextBox.Text);
 
                     totalRows += cmd.ExecuteNonQuery();
                 }
@@ -436,7 +440,7 @@ public partial class PS5YT2JBToolbox : Window
                 ";
                     NewCMD.Parameters.AddWithValue("$contentVersion", "99.999.999");
                     NewCMD.Parameters.AddWithValue("$versionFileUri", "http://127.0.0.2");
-                    NewCMD.Parameters.AddWithValue("$titleId", "PPSA01650");
+                    NewCMD.Parameters.AddWithValue("$titleId", YTTitleIDTextBox.Text);
 
                     totalRows += NewCMD.ExecuteNonQuery();
                 }
@@ -523,8 +527,8 @@ public partial class PS5YT2JBToolbox : Window
                     // Upload and replace all files
                     await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "appinfo.db"), "/system_data/priv/mms/appinfo.db", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
                     await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "app.db"), "/system_data/priv/mms/app.db", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
-                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), "/system_data/priv/appmeta/PPSA01650/param.json", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
-                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), "/user/appmeta/PPSA01650/param.json", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
+                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), $"/system_data/priv/appmeta/{YTTitleIDTextBox.Text}/param.json", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
+                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), $"/user/appmeta/{YTTitleIDTextBox.Text}/param.json", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
                 }
                 catch (Exception)
                 {
@@ -532,13 +536,13 @@ public partial class PS5YT2JBToolbox : Window
                     // Delete first
                     await conn.DeleteFile("/system_data/priv/mms/appinfo.db");
                     await conn.DeleteFile("/system_data/priv/mms/app.db");
-                    await conn.DeleteFile("/system_data/priv/appmeta/PPSA01650/param.json");
-                    await conn.DeleteFile("/user/appmeta/PPSA01650/param.json");
+                    await conn.DeleteFile($"/system_data/priv/appmeta/{YTTitleIDTextBox.Text}/param.json");
+                    await conn.DeleteFile($"/user/appmeta/{YTTitleIDTextBox.Text}/param.json");
                     // Upload new files
                     await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "appinfo.db"), "/system_data/priv/mms/appinfo.db", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
                     await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "app.db"), "/system_data/priv/mms/app.db", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
-                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), "/system_data/priv/appmeta/PPSA01650/param.json", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
-                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), "/user/appmeta/PPSA01650/param.json", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
+                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), $"/system_data/priv/appmeta/{YTTitleIDTextBox.Text}/param.json", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
+                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "param.json"), $"/user/appmeta/{YTTitleIDTextBox.Text}/param.json", FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
                 }
 
                 // Disconnect
@@ -555,14 +559,14 @@ public partial class PS5YT2JBToolbox : Window
         }
         else
         {
-            LogTextBox.Text += "Please enter an IP Address and FTP Port first.\n";
+            LogTextBox.Text += "Please enter an IP Address, FTP Port and YouTube title ID first.\n";
             LogTextBoxScrollViewer?.ScrollToEnd();
         }
     }
 
     private async void AutoReplaceDownload0dat_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(PS5IPTextBox.Text) && !string.IsNullOrEmpty(PS5FTPPortTextBox.Text))
+        if (!string.IsNullOrEmpty(PS5IPTextBox.Text) && !string.IsNullOrEmpty(PS5FTPPortTextBox.Text) && !string.IsNullOrEmpty(YTTitleIDTextBox.Text))
         {
             LogTextBox.Clear();
             LogTextBox.Text += "Getting latest download0.dat ...\n";
@@ -586,7 +590,7 @@ public partial class PS5YT2JBToolbox : Window
             {
                 // Download download0.dat file (v1.3)
                 using (var http = new HttpClient())
-                using (var response = await http.GetAsync("http://87.106.5.21/ps5/hb/download0.dat", HttpCompletionOption.ResponseHeadersRead, default))
+                using (var response = await http.GetAsync("http://X.X.X.X/ps5/hb/download0.dat", HttpCompletionOption.ResponseHeadersRead, default))
                 {
                     response.EnsureSuccessStatusCode();
 
@@ -613,23 +617,23 @@ public partial class PS5YT2JBToolbox : Window
 
                 // Check if download0.dat still exists and pass download0datDidNotExist for conn.UploadFile's createRemoteDir = true if not
                 bool download0datDidNotExist = true;
-                if (await conn.GetObjectInfo("/user/download/PPSA01650/download0.dat") is not null)
+                if (await conn.GetObjectInfo($"/user/download/{YTTitleIDTextBox.Text}/download0.dat") is not null)
                 {
                     // Remove the old download0.dat
-                    await conn.DeleteFile("/user/download/PPSA01650/download0.dat");
+                    await conn.DeleteFile($"/user/download/{YTTitleIDTextBox.Text}/download0.dat");
                     download0datDidNotExist = false;
                 }
 
                 try
                 {
                     // Upload new download0.dat file
-                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "download0.dat"), "/user/download/PPSA01650/download0.dat", FtpRemoteExists.OverwriteInPlace, download0datDidNotExist, FtpVerify.None);
+                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "download0.dat"), $"/user/download/{YTTitleIDTextBox.Text}/download0.dat", FtpRemoteExists.OverwriteInPlace, download0datDidNotExist, FtpVerify.None);
                 }
                 catch (Exception)
                 {
                     // Try old method if OverwriteInPlace failed
-                    await conn.DeleteFile("/user/download/PPSA01650/download0.dat");
-                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "download0.dat"), "/user/download/PPSA01650/download0.dat", FtpRemoteExists.NoCheck, false, FtpVerify.None);
+                    await conn.DeleteFile($"/user/download/{YTTitleIDTextBox.Text}/download0.dat");
+                    await conn.UploadFile(Path.Combine(Environment.CurrentDirectory, "Cache", "download0.dat"), $"/user/download/{YTTitleIDTextBox.Text}/download0.dat", FtpRemoteExists.NoCheck, false, FtpVerify.None);
                 }
 
                 // Disconnect
@@ -653,7 +657,7 @@ public partial class PS5YT2JBToolbox : Window
 
     private async void UploadDownload0dat_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(PS5IPTextBox.Text) && !string.IsNullOrEmpty(PS5FTPPortTextBox.Text))
+        if (!string.IsNullOrEmpty(PS5IPTextBox.Text) && !string.IsNullOrEmpty(PS5FTPPortTextBox.Text) && !string.IsNullOrEmpty(YTTitleIDTextBox.Text))
         {
             var datFileFilter = new FileDialogFilter
             {
@@ -682,23 +686,23 @@ public partial class PS5YT2JBToolbox : Window
 
                     // Check if download0.dat still exists and pass download0datDidNotExist for conn.UploadFile's createRemoteDir = true if not
                     bool download0datDidNotExist = true;
-                    if (await conn.GetObjectInfo("/user/download/PPSA01650/download0.dat") is not null)
+                    if (await conn.GetObjectInfo($"/user/download/{YTTitleIDTextBox.Text}/download0.dat") is not null)
                     {
                         // Remove the old download0.dat
-                        await conn.DeleteFile("/user/download/PPSA01650/download0.dat");
+                        await conn.DeleteFile($"/user/download/{YTTitleIDTextBox.Text}/download0.dat");
                         download0datDidNotExist = false;
                     }
 
                     try
                     {
                         // Upload new download0.dat file
-                        await conn.UploadFile(OFDResult[0], "/user/download/PPSA01650/download0.dat", FtpRemoteExists.OverwriteInPlace, download0datDidNotExist, FtpVerify.None);
+                        await conn.UploadFile(OFDResult[0], $"/user/download/{YTTitleIDTextBox.Text}/download0.dat", FtpRemoteExists.OverwriteInPlace, download0datDidNotExist, FtpVerify.None);
                     }
                     catch (Exception)
                     {
                         // Try old method if OverwriteInPlace failed
-                        await conn.DeleteFile("/user/download/PPSA01650/download0.dat");
-                        await conn.UploadFile(OFDResult[0], "/user/download/PPSA01650/download0.dat", FtpRemoteExists.NoCheck, false, FtpVerify.None);
+                        await conn.DeleteFile($"/user/download/{YTTitleIDTextBox.Text}/download0.dat");
+                        await conn.UploadFile(OFDResult[0], $"/user/download/{YTTitleIDTextBox.Text}/download0.dat", FtpRemoteExists.NoCheck, false, FtpVerify.None);
                     }
 
                     // Disconnect
@@ -716,7 +720,7 @@ public partial class PS5YT2JBToolbox : Window
         }
         else
         {
-            LogTextBox.Text += "Please enter an IP Address and FTP Port first.\n";
+            LogTextBox.Text += "Please enter an IP Address, FTP Port and YouTube title ID first.\n";
             LogTextBoxScrollViewer?.ScrollToEnd();
         }
     }
@@ -755,7 +759,7 @@ public partial class PS5YT2JBToolbox : Window
 
                 try
                 {
-                    string YTPKGURL = "http://87.106.5.21/ps5/hb/UP4381-PPSA01650_00-YOUTUBESIEA00000.pkg";
+                    string YTPKGURL = "http://X.X.X.X/ps5/hb/UP4381-PPSA01650_00-YOUTUBESIEA00000.pkg";
                     using var NewHttpClient = new HttpClient { Timeout = TimeSpan.FromMinutes(10) };
                     var PS5RequestURL = $"http://{PS5IPTextBox.Text}:12800/upload";
                     var Boundary = "----DirectPackageInstallerBoundary";

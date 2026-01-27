@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using FluentFTP;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
@@ -60,8 +61,11 @@ public partial class WebSrvMediaManager : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
         }
     }
 
@@ -84,15 +88,21 @@ public partial class WebSrvMediaManager : Window
                 {
                     await NewFtpClient.UploadFiles(OFDResult, MediaPath, FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None, FtpError.None);
 
-                    var box = MessageBoxManager.GetMessageBoxStandard("Success", "Files uploaded with success!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                    await box.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Success", "Files uploaded with success!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                        await box.ShowWindowAsync();
+                    });      
                 }
                 else
                 {
                     await NewFtpClient.UploadFile(OFDResult[0], MediaPath, FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
 
-                    var box = MessageBoxManager.GetMessageBoxStandard("Success", "File uploaded with success!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                    await box.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Success", "File uploaded with success!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                        await box.ShowWindowAsync();
+                    });         
                 }
 
                 // Disonnect
@@ -100,8 +110,11 @@ public partial class WebSrvMediaManager : Window
             }
             catch (Exception ex)
             {
-                var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box2.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box2.ShowWindowAsync();
+                });    
             }
 
             // Refresh
@@ -135,12 +148,18 @@ public partial class WebSrvMediaManager : Window
                 }
                 catch (Exception ex)
                 {
-                    var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box2.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box2.ShowWindowAsync();
+                    });     
                 }
 
-                var box3 = MessageBoxManager.GetMessageBoxStandard("Success", "File removed from the WebSrv.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                await box3.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box3 = MessageBoxManager.GetMessageBoxStandard("Success", "File removed from the WebSrv.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box3.ShowWindowAsync();
+                });
 
                 // Refresh
                 ListMediaFiles();

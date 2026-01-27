@@ -6,7 +6,6 @@ using Avalonia.VisualTree;
 using DiscUtils.Iso9660;
 using FluentFTP;
 using IronSoftware.Drawing;
-using Microsoft.Data.Sqlite;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using PSMultiTools.PS5.Tools.Editors;
@@ -22,6 +21,7 @@ using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -42,7 +42,7 @@ namespace PSMultiTools.Classes
 
         private static Process? currentffplayProc;
         private static CancellationTokenSource? currentffplayCts;
-        private static readonly Lock ffplayprocLock = new();
+        private static readonly object ffplayprocLock = new();
 
         private static readonly HttpClient NewhttpClient = new() { Timeout = Timeout.InfiniteTimeSpan };
 
@@ -167,7 +167,7 @@ namespace PSMultiTools.Classes
                     {
                         if (!proc.HasExited)
                         {
-                            proc.WaitForExit(2000);
+                            await proc.WaitForExitAsync();
                         }
                     }
                     catch (Exception ex)
@@ -809,7 +809,7 @@ namespace PSMultiTools.Classes
             catch { }
 
             // Return current version if one of the methods above failed - Requires change every build!
-            return "16.1.0";
+            return "16.2.0";
         }
 
         public static async Task<bool> IsPSMultiToolsUpdateAvailable()
@@ -913,71 +913,6 @@ namespace PSMultiTools.Classes
                     Process.Start(PSI);
                     Environment.Exit(0);
                 }
-            }
-        }
-
-        #endregion
-
-        #region PS5 Related
-
-        public static int BlockAppOrGameUpdates(string connectionString, string titleId, string contentVersion, string versionFileUri)
-        {
-            using var connection = new SqliteConnection(connectionString);
-            connection.Open();
-
-            using var transaction = connection.BeginTransaction();
-            try
-            {
-                int totalRows = 0;
-
-                // Update JSON inside tbl_contentinfo.AppInfoJson using json_set
-                using (var cmd = connection.CreateCommand())
-                {
-                    cmd.Transaction = transaction;
-                    cmd.CommandText = @"
-                    UPDATE tbl_contentinfo
-                    SET AppInfoJson = json_set(
-                        AppInfoJson,
-                        '$.CONTENT_VERSION', $contentVersion,
-                        '$.VERSION_FILE_URI', $versionFileUri
-                    )
-                    WHERE titleId = $titleId;
-                ";
-                    cmd.Parameters.AddWithValue("$contentVersion", contentVersion ?? string.Empty);
-                    cmd.Parameters.AddWithValue("$versionFileUri", versionFileUri ?? string.Empty);
-                    cmd.Parameters.AddWithValue("$titleId", titleId);
-
-                    totalRows += cmd.ExecuteNonQuery();
-                }
-
-                // Update tbl_appinfo columns
-                using (var cmd = connection.CreateCommand())
-                {
-                    cmd.Transaction = transaction;
-                    cmd.CommandText = @"
-                    UPDATE tbl_appinfo
-                    SET VERSION_FILE_URI = $versionFileUri,
-                        CONTENT_VERSION   = $contentVersion
-                    WHERE titleId = $titleId;
-                ";
-                    cmd.Parameters.AddWithValue("$versionFileUri", versionFileUri ?? string.Empty);
-                    cmd.Parameters.AddWithValue("$contentVersion", contentVersion ?? string.Empty);
-                    cmd.Parameters.AddWithValue("$titleId", titleId);
-
-                    totalRows += cmd.ExecuteNonQuery();
-                }
-
-                transaction.Commit();
-                return totalRows;
-            }
-            catch
-            {
-                try { transaction.Rollback(); } catch { }
-                throw;
-            }
-            finally
-            {
-                connection.Close();
             }
         }
 
@@ -1613,6 +1548,92 @@ namespace PSMultiTools.Classes
         private static partial Regex IsHexRegex();
         [GeneratedRegex(@"\d+")]
         private static partial Regex GetIntRegex();
+
+        #endregion
+
+        #region FileHashCalculators
+
+        public static string CRC32Hex(uint crc) => crc.ToString("X8");
+        public static readonly uint[] CRCTable = MakeCRCTable();
+
+        public static uint ComputeCRC32(Stream stream)
+        {
+            var table = CRCTable;
+            uint crc = 0xFFFFFFFFu;
+            int b;
+            while ((b = stream.ReadByte()) != -1)
+            {
+                crc = (crc >> 8) ^ table[(crc ^ (byte)b) & 0xFF];
+            }
+            return crc ^ 0xFFFFFFFFu;
+        }
+
+        public static string ComputeMD5Hex(Stream stream)
+        {
+            using var md5 = MD5.Create();
+            var hash = md5.ComputeHash(stream);
+            return ToHex(hash);
+        }
+
+        public static string ComputeSHA1Hex(Stream stream)
+        {
+            using var sha1 = SHA1.Create();
+            var hash = sha1.ComputeHash(stream);
+            return ToHex(hash);
+        }
+
+        public static uint ComputeCRC32(string filePath)
+        {
+            using var fs = File.OpenRead(filePath);
+            return ComputeCRC32(fs);
+        }
+
+        public static string ComputeMD5Hex(string filePath)
+        {
+            using var fs = File.OpenRead(filePath);
+            return ComputeMD5Hex(fs);
+        }
+
+        public static string ComputeSHA1Hex(string filePath)
+        {
+            using var fs = File.OpenRead(filePath);
+            return ComputeSHA1Hex(fs);
+        }
+
+        public static (uint sourceCrc, uint targetCrc, uint patchCrc) ReadBPSFooterCRCs(string patchPath)
+        {
+            byte[] footer = new byte[12];
+            using var fs = File.OpenRead(patchPath);
+            if (fs.Length < 12) throw new InvalidDataException("Patch file too small to contain footer CRCs");
+            fs.Seek(-12, SeekOrigin.End);
+            int read = fs.Read(footer, 0, 12);
+            if (read != 12) throw new IOException("Failed to read footer");
+            uint src = BitConverter.ToUInt32(footer, 0);
+            uint tgt = BitConverter.ToUInt32(footer, 4);
+            uint pch = BitConverter.ToUInt32(footer, 8);
+            return (src, tgt, pch);
+        }
+
+        static string ToHex(byte[] bytes)
+        {
+            var sb = new StringBuilder(bytes.Length * 2);
+            foreach (var b in bytes) sb.Append(b.ToString("X2"));
+            return sb.ToString();
+        }
+
+        static uint[] MakeCRCTable()
+        {
+            const uint poly = 0xEDB88320u;
+            var table = new uint[256];
+            for (uint i = 0; i < 256; i++)
+            {
+                uint v = i;
+                for (int j = 0; j < 8; j++)
+                    v = (v & 1) != 0 ? (poly ^ (v >> 1)) : (v >> 1);
+                table[i] = v;
+            }
+            return table;
+        }
 
         #endregion
 

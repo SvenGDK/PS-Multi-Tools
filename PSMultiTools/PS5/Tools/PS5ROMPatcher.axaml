@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="750" d:DesignHeight="570"
+		x:Class="PSMultiTools.PS5.Tools.PS5ROMPatcher"
+		Title="PS5 S/PRX ROM Patcher" Width="750" Height="570" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a decrypted library to patch :" VerticalAlignment="Top" FontSize="16" Margin="10,10,0,0"/>
+		<TextBox x:Name="SelectedFileTextBox" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="600"/>
+		<Button x:Name="BrowseFileButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="620,40,10,0" VerticalAlignment="Top" Width="120" Click="BrowseFileButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a patch to apply :" VerticalAlignment="Top" FontSize="16" Margin="10,80,0,0"/>
+		<TextBox x:Name="SelectedPatchTextBox" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="600"/>
+		<Button x:Name="BrowsePatchButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="620,110,10,0" VerticalAlignment="Top" Width="120" Click="BrowsePatchButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Save patched file to :" VerticalAlignment="Top" FontSize="16" Margin="10,150,0,0"/>
+		<TextBox x:Name="OutputPathTextBox" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top" Width="600"/>
+		<Button x:Name="BrowseOutputPathButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="620,180,10,0" VerticalAlignment="Top" Width="120" Click="BrowseOutputPathButton_Click"/>
+
+		<Button x:Name="PatchLibcButton" Content="Apply libc.prx patch for 6.XX" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,220,10,0" VerticalAlignment="Top" Width="250" FontWeight="Bold" Click="PatchLibcButton_Click"/>
+		<Button x:Name="PatchButton" Content="Patch selected file" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="270,220,10,0" VerticalAlignment="Top" Width="160" FontWeight="Bold" Click="PatchButton_Click"/>
+		<CheckBox x:Name="CreateBackupCheckBox" HorizontalAlignment="Left" Margin="440,220,10,0" VerticalAlignment="Top" Content="Create a backup file" IsChecked="True"/>
+
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Log :" VerticalAlignment="Bottom" FontSize="16" Margin="10,0,0,280" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" VerticalAlignment="Bottom" Height="260" Margin="10,0,10,10"/>
+	</Grid>
+</Window>

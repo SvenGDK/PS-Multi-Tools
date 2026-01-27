@@ -7,7 +7,7 @@
 		Title="PS5 PKG Viewer" Height="650" Width="1080" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True">
 	<Grid>
 		<TextBox Name="SelectedPKGFileTextBox" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="940" Height="20"/>
-		<Button Name="BrowsePKGFileButton" Content="Browse" HorizontalAlignment="Left" Margin="960,35,0,0" VerticalAlignment="Top" Width="110" Click="BrowsePKGFileButton_Click"/>
+		<Button Name="BrowsePKGFileButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="960,35,0,0" VerticalAlignment="Top" Width="110" Click="BrowsePKGFileButton_Click"/>
 		<TextBlock HorizontalAlignment="Left" Text="Select a PS5 PKG file :" VerticalAlignment="Top" FontSize="16" Margin="10,10,0,0"/>
 		<TextBlock Name="CurrentListViewTitleTextBlock" HorizontalAlignment="Left" Text="PKG Entries :" VerticalAlignment="Top" FontSize="16" Margin="10,230,0,0"/>
 
@@ -323,19 +323,19 @@
 			</ListBox.ItemTemplate>
 		</ListBox>
 
-		<Button Name="ShowPKGPFSImageFilesButton" Content="Show PFS Image Files" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGPFSImageFilesButton_Click"/>
-		<Button Name="ShowPKGNestedImageFilesButton" Content="Show Nested Image Files" HorizontalAlignment="Left" Margin="260,470,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGNestedImageFilesButton_Click"/>
-		<Button Name="ShowPKGPFSImageDirectoriesButton" Content="Show PFS Image Directories" HorizontalAlignment="Left" Margin="10,505,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGPFSImageDirectoriesButton_Click"/>
-		<Button Name="ShowPKGNestedImageDirectoriesButton" Content="Show Nested Image Directories" HorizontalAlignment="Left" Margin="260,505,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGNestedImageDirectoriesButton_Click"/>
+		<Button Name="ShowPKGPFSImageFilesButton" Content="Show PFS Image Files" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGPFSImageFilesButton_Click"/>
+		<Button Name="ShowPKGNestedImageFilesButton" Content="Show Nested Image Files" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="260,470,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGNestedImageFilesButton_Click"/>
+		<Button Name="ShowPKGPFSImageDirectoriesButton" Content="Show PFS Image Directories" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,505,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGPFSImageDirectoriesButton_Click"/>
+		<Button Name="ShowPKGNestedImageDirectoriesButton" Content="Show Nested Image Directories" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="260,505,0,0" VerticalAlignment="Top" Width="240" FontWeight="Bold" Click="ShowPKGNestedImageDirectoriesButton_Click"/>
 
-		<Button Name="ShowPKGEntriesButton" Content="Show Entries" HorizontalAlignment="Left" Margin="510,470,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGEntriesButton_Click"/>
-		<Button Name="ShowPKGScenariosButton" Content="Show Scenarios" HorizontalAlignment="Left" Margin="510,505,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGScenariosButton_Click"/>
-		<Button Name="ShowPKGChunksButton" Content="Show Chunks" HorizontalAlignment="Left" Margin="510,540,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGChunksButton_Click"/>
-		<Button Name="ShowPKGOutersButton" Content="Show Outers" HorizontalAlignment="Left" Margin="510,575,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGOutersButton_Click"/>
+		<Button Name="ShowPKGEntriesButton" Content="Show Entries" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="510,470,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGEntriesButton_Click"/>
+		<Button Name="ShowPKGScenariosButton" Content="Show Scenarios" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="510,505,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGScenariosButton_Click"/>
+		<Button Name="ShowPKGChunksButton" Content="Show Chunks" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="510,540,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGChunksButton_Click"/>
+		<Button Name="ShowPKGOutersButton" Content="Show Outers" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="510,575,0,0" VerticalAlignment="Top" Width="140" FontWeight="Bold" Click="ShowPKGOutersButton_Click"/>
 
-		<Button Name="ExportConfigurationXMLButton" Content="Export configuration XML" HorizontalAlignment="Left" Margin="660,470,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportConfigurationXMLButton_Click"/>
-		<Button Name="ExportParamJSONButton" Content="Export param JSON" HorizontalAlignment="Left" Margin="660,505,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportParamJSONButton_Click"/>
-		<Button Name="ExportIcon0PNGButton" Content="Export icon PNG" HorizontalAlignment="Left" Margin="870,470,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportIcon0PNGButton_Click"/>
-		<Button Name="ExportPic0Button" Content="Export background PNG" HorizontalAlignment="Left" Margin="870,505,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportPic0Button_Click"/>
+		<Button Name="ExportConfigurationXMLButton" Content="Export configuration XML" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="660,470,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportConfigurationXMLButton_Click"/>
+		<Button Name="ExportParamJSONButton" Content="Export param JSON" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="660,505,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportParamJSONButton_Click"/>
+		<Button Name="ExportIcon0PNGButton" Content="Export icon PNG" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="870,470,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportIcon0PNGButton_Click"/>
+		<Button Name="ExportPic0Button" Content="Export background PNG" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="870,505,0,0" VerticalAlignment="Top" Width="200" FontWeight="Bold" Click="ExportPic0Button_Click"/>
 	</Grid>
 </Window>

@@ -103,9 +103,12 @@ public partial class STARExtractor : Window
         }
         catch (Exception ex)
         {
-            await Dispatcher.UIThread.InvokeAsync(() => Cursor = new Cursor(StandardCursorType.Arrow));
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", $"Failed to start process: {ex.Message}", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowDialogAsync(this);
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                Cursor = new Cursor(StandardCursorType.Arrow);
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", $"Failed to start process: {ex.Message}", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowDialogAsync(this);
+            });
             return;
         }
 

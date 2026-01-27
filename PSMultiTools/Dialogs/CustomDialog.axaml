@@ -1,22 +1,22 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="405" d:DesignHeight="120"
-        x:Class="PSMultiTools.Dialogs.CustomDialog"
-        Title="Dialog Title" Height="120" Width="405" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
-    <Grid>
-        <Grid x:Name="TextInputGrid" IsVisible="False">
-            <TextBlock x:Name="TextInputTitle" HorizontalAlignment="Left" Margin="10,15,0,0" Text="Text" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
-            <TextBox x:Name="TextInputTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" FontFamily="Calibri" FontSize="14" Margin="10,37,0,0"/>
-            <Button x:Name="TextInputCancelButton" Content="Cancel" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="240,75,0,0" VerticalAlignment="Top" Width="70" FontFamily="Calibri" FontSize="14" Click="TextInputCancelButton_Click"/>
-            <Button x:Name="TextInputOKButton" Content="OK" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="320,75,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold" FontFamily="Calibri" FontSize="14" Click="TextInputOKButton_Click"/>
-        </Grid>
-        <Grid x:Name="ButtonsGrid" IsVisible="False">
-            <TextBlock x:Name="ButtonsTitleTextBlock" HorizontalAlignment="Left" Margin="10,20,0,0" Text="Text" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" Width="375" FontWeight="Bold"/>
-            <Button x:Name="ButtonsAddButton" Content="Add another backup folder" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="175" FontFamily="Calibri" FontSize="14" Click="ButtonsAddButton_Click"/>
-            <Button x:Name="ButtonsLoadNewButton" Content="Load a new folder" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="190,50,0,0" VerticalAlignment="Top" Width="124" FontFamily="Calibri" FontSize="14" Click="ButtonsLoadNewButton_Click"/>
-            <Button x:Name="ButtonsCancelButton" Content="Cancel" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="320,50,0,0" VerticalAlignment="Top" Width="75" FontFamily="Calibri" FontSize="14" Click="ButtonsCancelButton_Click"/>       
-        </Grid>
-    </Grid>
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="405" d:DesignHeight="120"
+		x:Class="PSMultiTools.Dialogs.CustomDialog"
+		Title="Dialog Title" Height="120" Width="405" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<Grid x:Name="TextInputGrid" IsVisible="False">
+			<TextBlock x:Name="TextInputTitle" HorizontalAlignment="Left" Margin="10,15,0,0" Text="Text" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14"/>
+			<TextBox x:Name="TextInputTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" FontFamily="Calibri" FontSize="14" Margin="10,37,0,0"/>
+			<Button x:Name="TextInputCancelButton" Content="Cancel" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="240,75,0,0" VerticalAlignment="Top" Width="70" FontFamily="Calibri" FontSize="14" Click="TextInputCancelButton_Click"/>
+			<Button x:Name="TextInputOKButton" Content="OK" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="320,75,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold" FontFamily="Calibri" FontSize="14" Click="TextInputOKButton_Click"/>
+		</Grid>
+		<Grid x:Name="ButtonsGrid" IsVisible="False">
+			<TextBlock x:Name="ButtonsTitleTextBlock" HorizontalAlignment="Left" Margin="10,20,0,0" Text="Text" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" Width="375" FontWeight="Bold"/>
+			<Button x:Name="ButtonsAddButton" Content="Add another backup folder" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="175" FontFamily="Calibri" FontSize="14" Click="ButtonsAddButton_Click"/>
+			<Button x:Name="ButtonsLoadNewButton" Content="Load a new folder" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="190,50,0,0" VerticalAlignment="Top" Width="124" FontFamily="Calibri" FontSize="14" Click="ButtonsLoadNewButton_Click"/>
+			<Button x:Name="ButtonsCancelButton" Content="Cancel" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="320,50,0,0" VerticalAlignment="Top" Width="75" FontFamily="Calibri" FontSize="14" Click="ButtonsCancelButton_Click"/>
+	</Grid>
+	</Grid>
 </Window>

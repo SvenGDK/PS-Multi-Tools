@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using PSMultiTools.Classes;
@@ -66,8 +67,11 @@ public partial class PS5RcoExtractor : Window
                 }
                 catch (Exception ex)
                 {
-                    var box = MessageBoxManager.GetMessageBoxStandard("Error trying to extract", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Error trying to extract", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box.ShowWindowAsync();
+                    });
                 }
             }
             else
@@ -83,8 +87,11 @@ public partial class PS5RcoExtractor : Window
                     }
                     catch (Exception ex)
                     {
-                        var box = MessageBoxManager.GetMessageBoxStandard($"Error trying to extract {RCOFile}", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                        await box.ShowWindowAsync();
+                        await Dispatcher.UIThread.Invoke(async () =>
+                        {
+                            var box = MessageBoxManager.GetMessageBoxStandard($"Error trying to extract {RCOFile}", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                            await box.ShowWindowAsync();
+                        });
                     }
                 }
             }

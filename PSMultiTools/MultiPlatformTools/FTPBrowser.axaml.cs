@@ -11,9 +11,11 @@ using MsBox.Avalonia.Enums;
 using PSMultiTools.Classes;
 using PSMultiTools.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Authentication;
+using System.Threading;
 using System.Threading.Tasks;
 using static PSMultiTools.Classes.Structures;
 
@@ -25,12 +27,11 @@ public partial class FTPBrowser : Window
     public string ConsoleFTPPort = "";
     public string CurrentPath = "";
 
-    public bool IsConnected = false;
+    public bool FTPConnected = false;
     public FtpConfig NewFtpConfig = new() { EncryptionMode = FtpEncryptionMode.None, SslProtocols = SslProtocols.None, DataConnectionEncryption = false, ValidateAnyCertificate = true };
 
+    bool IsDragging = false;
     public Point DragStartPoint;
-    bool IsDragging;
-    int MousePointerID;
 
     public MenuItem DownloadMenuItem = new() { Header = "Download selected file or folder", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/download.png"))) } };
     public MenuItem UploadFileMenuItem = new() { Header = "Upload a file", Icon = new Image() { Width = 16, Height = 16, Source = new Bitmap(AssetLoader.Open(new Uri("avares://PSMultiTools/Images/upload.png"))) } };
@@ -54,7 +55,14 @@ public partial class FTPBrowser : Window
 
         LocalTreeView.PointerPressed += LocalTreeView_PointerPressed;
         LocalTreeView.PointerMoved += LocalTreeView_PointerMoved;
-        LocalTreeView.PointerReleased += LocalTreeView_PointerReleased;
+
+        DragDrop.SetAllowDrop(LocalTreeView, true);
+        DragDrop.SetAllowDrop(FTPItemsListBox, true);
+
+        DragDrop.AddDragOverHandler(LocalTreeView, LocalTreeView_OnDragOver);
+
+        DragDrop.AddDragEnterHandler(FTPItemsListBox, FTPItemsListView_DragEnter);
+        DragDrop.AddDropHandler(FTPItemsListBox, FTPItemsListView_Drop);
 
         FTPItemsListBox.PointerPressed += FTPItemsListBox_PointerPressed;
     }
@@ -109,11 +117,11 @@ public partial class FTPBrowser : Window
             }
 
             // Connect & list
-            if (ConnectButton.Content!.ToString() == "Connect and list content")
+            if (ConnectButton.Content!.ToString() == "Connect")
             {
                 if (await ListDirectoryContent("/"))
                 {
-                    IsConnected = true;
+                    FTPConnected = true;
                     ConnectButton.Content = "Disconnect";
                     CurrentPath = "/";
                     CurrentDirTextBlock.Text = "Current directory : " + CurrentPath;
@@ -121,9 +129,9 @@ public partial class FTPBrowser : Window
             }
             else
             {
-                IsConnected = false;
+                FTPConnected = false;
                 FTPItemsListBox.Items.Clear();
-                ConnectButton.Content = "Connect and list content";
+                ConnectButton.Content = "Connect";
                 FTPStatusTextBlock.Text = "";
                 CurrentPath = "/";
                 CurrentDirTextBlock.Text = "Current directory : " + CurrentPath;
@@ -141,14 +149,14 @@ public partial class FTPBrowser : Window
             // Connect
             await NewFtpClient.Connect();
 
-            // Upload progress
+            // Setup upload progress
             var UPProgress = new Progress<FtpProgress>(p =>
             {
-                if (p.Progress == 100d)
+                if (p.Progress == 100)
                 {
                     Dispatcher.UIThread.Invoke(() =>
                     {
-                        FTPTransferProgressBar.Value = 0d;
+                        FTPTransferProgressBar.Value = 0;
                         FTPStatusTextBlock.Text = "Uploading finished";
                     });
                 }
@@ -162,7 +170,12 @@ public partial class FTPBrowser : Window
                 }
             });
 
-            await NewFtpClient.UploadFile(LocalFilePath, RemoteDestinationPath, FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None, UPProgress);
+            // Delete if already exists (FtpRemoteExists.OverwriteInPlace is not working)
+            if (await NewFtpClient.GetObjectInfo(RemoteDestinationPath) != null)
+                await NewFtpClient.DeleteFile(RemoteDestinationPath);
+
+            // Upload
+            await NewFtpClient.UploadFile(LocalFilePath, RemoteDestinationPath, FtpRemoteExists.NoCheck, false, FtpVerify.None, UPProgress);
 
             // Disconnect
             await NewFtpClient.Disconnect();
@@ -170,8 +183,11 @@ public partial class FTPBrowser : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not upload the selected file." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not upload the selected file." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return false;
         }
     }
@@ -187,11 +203,11 @@ public partial class FTPBrowser : Window
             // Upload progress
             var UPProgress = new Progress<FtpProgress>(p =>
             {
-                if (p.Progress == 100d)
+                if (p.Progress == 100)
                 {
                     Dispatcher.UIThread.Invoke(() =>
                     {
-                        FTPTransferProgressBar.Value = 0d;
+                        FTPTransferProgressBar.Value = 0;
                         FTPStatusTextBlock.Text = "Uploading finished";
                     });
                 }
@@ -205,7 +221,12 @@ public partial class FTPBrowser : Window
                 }
             });
 
-            await NewFtpClient.UploadDirectory(LocalDirectoryPath, RemoteDestinationPath, FtpFolderSyncMode.Update, FtpRemoteExists.OverwriteInPlace, FtpVerify.None, null, UPProgress);
+            // Delete if already exists (FtpRemoteExists.OverwriteInPlace is not working)
+            if (await NewFtpClient.GetObjectInfo(RemoteDestinationPath) != null)
+                await NewFtpClient.DeleteDirectory(RemoteDestinationPath);
+
+            // Upload files & folders
+            await NewFtpClient.UploadDirectory(LocalDirectoryPath, RemoteDestinationPath, FtpFolderSyncMode.Update, FtpRemoteExists.NoCheck, FtpVerify.None, null, UPProgress);
 
             // Disconnect
             await NewFtpClient.Disconnect();
@@ -213,8 +234,11 @@ public partial class FTPBrowser : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not upload the selected folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not upload the selected folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return false;
         }
     }
@@ -234,11 +258,11 @@ public partial class FTPBrowser : Window
             // Download progress
             var DLProgress = new Progress<FtpProgress>(p =>
             {
-                if (p.Progress == 1d)
+                if (p.Progress == 100)
                 {
                     Dispatcher.UIThread.Invoke(() =>
                     {
-                        FTPTransferProgressBar.Value = 0d;
+                        FTPTransferProgressBar.Value = 0;
                         FTPStatusTextBlock.Text = "Download finished";
                     });
                 }
@@ -246,12 +270,13 @@ public partial class FTPBrowser : Window
                 {
                     Dispatcher.UIThread.Invoke(() =>
                     {
-                        FTPTransferProgressBar.Value = p.Progress * 100d;
+                        FTPTransferProgressBar.Value = p.Progress * 100;
                         FTPStatusTextBlock.Text = "Downloading - " + (p.Progress * 100d).ToString("F0") + "%";
                     });
                 }
             });
 
+            //Download from FTP server
             await NewFtpClient.DownloadFile(LocalFilePath, RemoteFilePath, FtpLocalExists.Overwrite, FtpVerify.None, DLProgress);
 
             // Disconnect
@@ -260,8 +285,11 @@ public partial class FTPBrowser : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not download the selected file." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not download the selected file." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return false;
         }
     }
@@ -277,11 +305,11 @@ public partial class FTPBrowser : Window
             // Download progress
             var DLProgress = new Progress<FtpProgress>(p =>
             {
-                if (p.Progress == 100d)
+                if (p.Progress == 100)
                 {
                     Dispatcher.UIThread.Invoke(() =>
                     {
-                        FTPTransferProgressBar.Value = 0d;
+                        FTPTransferProgressBar.Value = 0;
                         FTPStatusTextBlock.Text = "Download finished";
                     });
                 }
@@ -295,6 +323,7 @@ public partial class FTPBrowser : Window
                 }
             });
 
+            // Download directory from FTP server using FtpFolderSyncMode.Update safe method
             await NewFtpClient.DownloadDirectory(LocalDirectoryPath, RemoteDirectoryPath, FtpFolderSyncMode.Update, FtpLocalExists.Overwrite, FtpVerify.None, null, DLProgress);
 
             // Disconnect
@@ -303,8 +332,11 @@ public partial class FTPBrowser : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not download the selected folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not download the selected folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return false;
         }
     }
@@ -315,7 +347,7 @@ public partial class FTPBrowser : Window
 
     private async void RenameMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        if (FTPItemsListBox.SelectedItem is not null)
+        if (FTPConnected && FTPItemsListBox.SelectedItem is not null)
         {
             FTPListViewItem SelectedFTPLVItem = (FTPListViewItem)FTPItemsListBox.SelectedItem;
 
@@ -356,7 +388,7 @@ public partial class FTPBrowser : Window
 
     private async void DownloadMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        if (FTPItemsListBox.SelectedItem is not null)
+        if (FTPConnected && FTPItemsListBox.SelectedItem is not null)
         {
             FTPListViewItem SelectedFTPLVItem = (FTPListViewItem)FTPItemsListBox.SelectedItem;
             var FBD = new OpenFolderDialog() { Title = "Select a folder where the file/folder should be downloaded." };
@@ -390,7 +422,7 @@ public partial class FTPBrowser : Window
 
     private async void UploadFileMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        if (IsConnected)
+        if (FTPConnected)
         {
             var OFD = new OpenFileDialog() { AllowMultiple = true };
             var OFDResult = await OFD.ShowAsync(this);
@@ -441,7 +473,7 @@ public partial class FTPBrowser : Window
 
     private async void UploadFolderMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        if (IsConnected)
+        if (FTPConnected)
         {
             var FBD = new OpenFolderDialog();
             var FBDResult = await FBD.ShowAsync(this);
@@ -473,30 +505,25 @@ public partial class FTPBrowser : Window
 
     private async void NewDirectoryMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        if (IsConnected && FTPItemsListBox.SelectedItem != null)
+        if (FTPConnected)
         {
-            FTPListViewItem SelectedFTPLVItem = (FTPListViewItem)FTPItemsListBox.SelectedItem;
+            var NewInputDialog = new InputDialog() { Title = "FTP Browser" };
+            NewInputDialog.InputDialogTitleTextBlock.Text = "New folder name:";
+            var NewFolderName = await NewInputDialog.ShowDialog<string>(this);
 
-            if (!(SelectedFTPLVItem.FileOrDirName == ".."))
+            if (NewFolderName != null)
             {
-                var NewInputDialog = new InputDialog() { Title = "FTP Browser" };
-                NewInputDialog.InputDialogTitleTextBlock.Text = "New folder name:";
-                var NewFolderName = await NewInputDialog.ShowDialog<string>(this);
-
-                if (NewFolderName != null)
                 {
+                    if (CurrentPath == "/")
                     {
-                        if (CurrentPath == "/")
-                        {
-                            await CreateDirectory(CurrentPath + NewFolderName);
-                        }
-                        else
-                        {
-                            await CreateDirectory(CurrentPath + "/" + NewFolderName);
-                        }
-
-                        await ListDirectoryContent(CurrentPath + "/");
+                        await CreateDirectory(CurrentPath + NewFolderName);
                     }
+                    else
+                    {
+                        await CreateDirectory(CurrentPath + "/" + NewFolderName);
+                    }
+
+                    await ListDirectoryContent(CurrentPath + "/");
                 }
             }
         }
@@ -504,7 +531,7 @@ public partial class FTPBrowser : Window
 
     private async void DeleteMenuItem_Click(object? sender, RoutedEventArgs e)
     {
-        if (FTPItemsListBox.SelectedItem is not null)
+        if (FTPConnected && FTPItemsListBox.SelectedItem is not null)
         {
             FTPListViewItem SelectedFTPLVItem = (FTPListViewItem)FTPItemsListBox.SelectedItem;
 
@@ -606,8 +633,11 @@ public partial class FTPBrowser : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not list the remote content." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not list the remote content." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return false;
         }
     }
@@ -637,8 +667,11 @@ public partial class FTPBrowser : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not rename the selected file or folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not rename the selected file or folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return false;
         }
     }
@@ -667,8 +700,11 @@ public partial class FTPBrowser : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not create the directory " + DirectoryName + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not create the directory " + DirectoryName + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return false;
         }
     }
@@ -699,10 +735,81 @@ public partial class FTPBrowser : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not delete the selected file or folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not delete the selected file or folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return false;
         }
+    }
+
+    private static async Task<long> GetFTPDirectorySizeAsync(AsyncFtpClient conn, string remotePath)
+    {
+        var items = await conn.GetListing(remotePath, FtpListOption.Recursive);
+        return items.Where(i => i.Type == FtpObjectType.File)
+                    .Sum(i => i.Size);
+    }
+
+    private static async Task<long> GetFTPDirectorySizeAsync(AsyncFtpClient conn, string remotePath, int maxConcurrency = 8)
+    {
+        var total = 0L;
+        var stack = new Stack<string>();
+        stack.Push(remotePath);
+
+        var NewSemaphoreSlim = new SemaphoreSlim(maxConcurrency);
+
+        while (stack.Count > 0)
+        {
+            var dir = stack.Pop();
+            FtpListItem[] items;
+            try
+            {
+                items = await conn.GetListing(dir);
+            }
+            catch
+            {
+                continue;
+            }
+
+            var tasks = new List<Task>();
+
+            foreach (var item in items)
+            {
+                if (item.Type == FtpObjectType.Directory)
+                {
+                    stack.Push(item.FullName);
+                }
+                else if (item.Type == FtpObjectType.File)
+                {
+                    if (item.Size >= 0)
+                    {
+                        Interlocked.Add(ref total, item.Size);
+                    }
+                    else
+                    {
+                        await NewSemaphoreSlim.WaitAsync();
+                        tasks.Add(Task.Run(async () =>
+                        {
+                            try
+                            {
+                                var size = await conn.GetFileSize(item.FullName);
+                                if (size >= 0) Interlocked.Add(ref total, size);
+                            }
+                            finally
+                            {
+                                NewSemaphoreSlim.Release();
+                            }
+                        }));
+                    }
+                }
+            }
+
+            if (tasks.Count > 0)
+                await Task.WhenAll(tasks);
+        }
+
+        return total;
     }
 
     #endregion
@@ -726,23 +833,62 @@ public partial class FTPBrowser : Window
 
     private async void FTPItemsListView_Drop(object? sender, DragEventArgs e)
     {
-
-        var formats = e.Data.GetDataFormats();
-        if (formats.Contains(DataFormat.File.Identifier))
+        if (FTPConnected)
         {
-            string[] DroppedFilesOrFolders = (string[])e.Data.Get(DataFormats.Files)!;
-
-            LockUI();
-
-            if (DroppedFilesOrFolders.Length > 1)
+            var formats = e.Data.GetDataFormats();
+            if (formats.Contains(DataFormat.File.Identifier))
             {
-                // Mulitple files/folders
-                foreach (string DroppedFileOrFolder in DroppedFilesOrFolders)
+                string[] DroppedFilesOrFolders = (string[])e.Data.Get(DataFormats.Files)!;
+
+                LockUI();
+
+                if (DroppedFilesOrFolders.Length > 1)
                 {
-                    var DroppedAttr = File.GetAttributes(DroppedFileOrFolder);
+                    // Mulitple files/folders
+                    foreach (string DroppedFileOrFolder in DroppedFilesOrFolders)
+                    {
+                        var DroppedAttr = File.GetAttributes(DroppedFileOrFolder);
+                        if ((DroppedAttr & FileAttributes.Directory) == FileAttributes.Directory)
+                        {
+                            string FolderName = Path.GetFileName(DroppedFileOrFolder);
+                            string DestinationPath;
+
+                            if (CurrentPath.EndsWith('/'))
+                            {
+                                DestinationPath = CurrentPath + FolderName;
+                            }
+                            else
+                            {
+                                DestinationPath = CurrentPath + "/" + FolderName;
+                            }
+
+                            await UploadFolderAsync(DroppedFileOrFolder, DestinationPath);
+                        }
+                        else
+                        {
+                            string FileName = Path.GetFileName(DroppedFileOrFolder);
+                            string DestinationPath;
+
+                            if (CurrentPath.EndsWith('/'))
+                            {
+                                DestinationPath = CurrentPath + FileName;
+                            }
+                            else
+                            {
+                                DestinationPath = CurrentPath + "/" + FileName;
+                            }
+
+                            await UploadFileAsync(DroppedFileOrFolder, DestinationPath);
+                        }
+                    }
+                }
+                else
+                {
+                    // Single file/folder
+                    var DroppedAttr = File.GetAttributes(DroppedFilesOrFolders[0]);
                     if ((DroppedAttr & FileAttributes.Directory) == FileAttributes.Directory)
                     {
-                        string FolderName = Path.GetFileName(DroppedFileOrFolder);
+                        string FolderName = Path.GetFileName(DroppedFilesOrFolders[0]);
                         string DestinationPath;
 
                         if (CurrentPath.EndsWith('/'))
@@ -754,11 +900,11 @@ public partial class FTPBrowser : Window
                             DestinationPath = CurrentPath + "/" + FolderName;
                         }
 
-                        await UploadFolderAsync(DroppedFileOrFolder, DestinationPath);
+                        await UploadFolderAsync(DroppedFilesOrFolders[0], DestinationPath);
                     }
                     else
                     {
-                        string FileName = Path.GetFileName(DroppedFileOrFolder);
+                        string FileName = Path.GetFileName(DroppedFilesOrFolders[0]);
                         string DestinationPath;
 
                         if (CurrentPath.EndsWith('/'))
@@ -770,126 +916,94 @@ public partial class FTPBrowser : Window
                             DestinationPath = CurrentPath + "/" + FileName;
                         }
 
-                        await UploadFileAsync(DroppedFileOrFolder, DestinationPath);
+                        await UploadFileAsync(DroppedFilesOrFolders[0], DestinationPath);
                     }
                 }
+
+                // Reload current directory and unlock UI
+                await ListDirectoryContent(CurrentPath + "/");
+                LockUI();
             }
-            else
+            else if (formats.Contains("TreeViewItem"))
             {
-                // Single file/folder
-                var DroppedAttr = File.GetAttributes(DroppedFilesOrFolders[0]);
-                if ((DroppedAttr & FileAttributes.Directory) == FileAttributes.Directory)
+                TreeViewItem DroppedTreeViewItem = (TreeViewItem)e.Data.Get("TreeViewItem")!;
+                string DroppedFileOrFolderName = DroppedTreeViewItem.Header!.ToString()!;
+                string DroppedFileOrFolderPath = DroppedTreeViewItem.Tag!.ToString()!;
+                var DroppedAttr = File.GetAttributes(DroppedFileOrFolderPath);
+
+                string DestinationPath;
+                if (CurrentPath.EndsWith('/'))
                 {
-                    string FolderName = Path.GetFileName(DroppedFilesOrFolders[0]);
-                    string DestinationPath;
-
-                    if (CurrentPath.EndsWith('/'))
-                    {
-                        DestinationPath = CurrentPath + FolderName;
-                    }
-                    else
-                    {
-                        DestinationPath = CurrentPath + "/" + FolderName;
-                    }
-
-                    await UploadFolderAsync(DroppedFilesOrFolders[0], DestinationPath);
+                    DestinationPath = CurrentPath + DroppedFileOrFolderName;
                 }
                 else
                 {
-                    string FileName = Path.GetFileName(DroppedFilesOrFolders[0]);
-                    string DestinationPath;
-
-                    if (CurrentPath.EndsWith('/'))
-                    {
-                        DestinationPath = CurrentPath + FileName;
-                    }
-                    else
-                    {
-                        DestinationPath = CurrentPath + "/" + FileName;
-                    }
-
-                    await UploadFileAsync(DroppedFilesOrFolders[0], DestinationPath);
+                    DestinationPath = CurrentPath + "/" + DroppedFileOrFolderName;
                 }
-            }
 
-            // Reload current directory and unlock UI
-            await ListDirectoryContent(CurrentPath + "/");
-            LockUI();
-        }
-        else if (formats.Contains("TreeViewItem"))
-        {
-            TreeViewItem DroppedTreeViewItem = (TreeViewItem)e.Data.Get("TreeViewItem")!;
-            string DroppedFileOrFolderName = DroppedTreeViewItem.Header!.ToString()!;
-            string DroppedFileOrFolderPath = DroppedTreeViewItem.Tag!.ToString()!;
-            var DroppedAttr = File.GetAttributes(DroppedFileOrFolderPath);
+                LockUI();
 
-            string DestinationPath;
-            if (CurrentPath.EndsWith('/'))
-            {
-                DestinationPath = CurrentPath + DroppedFileOrFolderName;
-            }
-            else
-            {
-                DestinationPath = CurrentPath + "/" + DroppedFileOrFolderName;
-            }
-
-            LockUI();
-
-            if ((DroppedAttr & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-                await UploadFolderAsync(DroppedFileOrFolderPath, DestinationPath);
-            }
-            else
-            {
-                await UploadFileAsync(DroppedFileOrFolderPath, DestinationPath);
-            }
-
-            // Reload current directory and unlock UI
-            await ListDirectoryContent(CurrentPath + "/");
-            LockUI();
-        }
-    }
-
-    private void LocalTreeView_PointerReleased(object? sender, PointerReleasedEventArgs e)
-    {
-        IsDragging = false;
-        MousePointerID = 0;
-    }
-
-    private void LocalTreeView_PointerMoved(object? sender, PointerEventArgs e)
-    {
-        var p = e.GetCurrentPoint((Visual?)(sender as IInputElement));
-        if (p.Pointer.Id != MousePointerID) return;
-        if (!p.Properties.IsLeftButtonPressed) return;
-
-        var control = sender as IInputElement;
-        var top = GetTopLevel(control as Visual);
-        var tapSize = top?.PlatformSettings!.GetTapSize(PointerType.Mouse) ?? new Size(4, 4);
-
-        if (!IsDragging && (Math.Abs(p.Position.X - DragStartPoint.X) > tapSize.Width || Math.Abs(p.Position.Y - DragStartPoint.Y) > tapSize.Height))
-        {
-            IsDragging = true;
-
-            if (LocalTreeView.SelectedItem != null)
-            {
-                TreeViewItem? SelectedTreeViewItem = LocalTreeView.SelectedItem as TreeViewItem;
-                if (SelectedTreeViewItem is not null)
+                if ((DroppedAttr & FileAttributes.Directory) == FileAttributes.Directory)
                 {
-                    var NewDataObject = new DataObject();
-                    NewDataObject.Set("TreeViewItem", SelectedTreeViewItem);
-                    DragDrop.DoDragDrop(e, NewDataObject, DragDropEffects.Copy);
+                    await UploadFolderAsync(DroppedFileOrFolderPath, DestinationPath);
                 }
+                else
+                {
+                    await UploadFileAsync(DroppedFileOrFolderPath, DestinationPath);
+                }
+
+                // Reload current directory and unlock UI
+                await ListDirectoryContent(CurrentPath + "/");
+                LockUI();
             }
         }
     }
 
     private async void LocalTreeView_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        var p = e.GetCurrentPoint((Visual?)(sender as IInputElement));
-        if (p.Properties.IsLeftButtonPressed)
+        DragStartPoint = e.GetPosition(LocalTreeView);
+    }
+
+    private async void LocalTreeView_PointerMoved(object? sender, PointerEventArgs e)
+    {
+        if (e.Properties.IsLeftButtonPressed && LocalTreeView.SelectedItem != null && IsDragging == false)
         {
-            DragStartPoint = p.Position;
-            MousePointerID = p.Pointer.Id;
+            var CurrentPosition = e.GetPosition(LocalTreeView);
+            var DragStartPointX = CurrentPosition.X - DragStartPoint.X;
+            var DragStartPointY = CurrentPosition.Y - DragStartPoint.Y;
+            if (DragStartPointX * DragStartPointX + DragStartPointY * DragStartPointY > 36)
+            {
+                IsDragging = true;
+                try
+                {
+                    TreeView TargetTreeView = (TreeView)sender!;
+                    TreeViewItem SelectedTreeViewItem = (TreeViewItem)TargetTreeView.SelectedItem!;
+                    if (SelectedTreeViewItem is not null)
+                    {
+                        var NewDataObject = new DataObject();
+                        NewDataObject.Set("TreeViewItem", SelectedTreeViewItem);
+                        await DragDrop.DoDragDrop(e, NewDataObject, DragDropEffects.Copy);
+                    }
+                }
+                catch { }
+                finally
+                {
+                    IsDragging = false;
+                }
+            }
+        }
+    }
+
+    void LocalTreeView_OnDragOver(object? s, DragEventArgs e)
+    {
+        var formats = e.Data.GetDataFormats();
+        if (formats.Contains(DataFormat.File.Identifier) || formats.Contains("TreeViewItem"))
+        {
+            e.DragEffects = DragDropEffects.Move;
+        }
+        else
+        {
+            e.DragEffects = DragDropEffects.None;
         }
     }
 
@@ -942,8 +1056,11 @@ public partial class FTPBrowser : Window
             }
             catch (Exception ex)
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
+                });
             }
         }
     }

@@ -147,6 +147,16 @@ public partial class PS5PortChecker : Window
                 Port2323TextBlock.Foreground = Brushes.Red;
             }
 
+            // Lapse
+            if (CheckPort(IPAddressTextBox.Text, 50000, 1000))
+            {
+                Port50000TextBlock.Foreground = Brushes.Green;
+            }
+            else
+            {
+                Port50000TextBlock.Foreground = Brushes.Red;
+            }
+
             if (Dispatcher.UIThread.CheckAccess() == false)
             {
                 Dispatcher.UIThread.Invoke(() => Cursor = new Cursor(StandardCursorType.Arrow));

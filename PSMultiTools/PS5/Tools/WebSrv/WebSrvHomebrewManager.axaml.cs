@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using Avalonia.Threading;
 using FluentFTP;
 using FluentFTP.Exceptions;
 using IronSoftware.Drawing;
@@ -130,8 +131,11 @@ public partial class WebSrvHomebrewManager : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                await box.ShowWindowAsync();
+            });
         }
     }
 
@@ -415,18 +419,26 @@ public partial class WebSrvHomebrewManager : Window
             }
             catch (Exception ex)
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error uploading changes", "Could not upload any changes to the PS5." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error uploading changes", "Could not upload any changes to the PS5." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
+                });
             }
         }
         else
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error uploading changes", "Could not find " + Path.Combine(Environment.CurrentDirectory, "Cache", "homebrew.js"), ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error uploading changes", "Could not find " + Path.Combine(Environment.CurrentDirectory, "Cache", "homebrew.js"), ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
         }
-
-        var box2 = MessageBoxManager.GetMessageBoxStandard("Info", "Homebrew information updated & saved!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-        await box2.ShowWindowAsync();
+        await Dispatcher.UIThread.Invoke(async () =>
+        {
+            var box2 = MessageBoxManager.GetMessageBoxStandard("Info", "Homebrew information updated & saved!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+            await box2.ShowWindowAsync();
+        });
     }
 
     private void ManageROMsButton_Click(object? sender, RoutedEventArgs e)
@@ -497,23 +509,32 @@ public partial class WebSrvHomebrewManager : Window
                             // Disconnect
                             await NewFtpClient.Disconnect();
 
-                            var box2 = MessageBoxManager.GetMessageBoxStandard("Info", "Homebrew updated on the WebSrv.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                            await box2.ShowWindowAsync();
+                            await Dispatcher.UIThread.Invoke(async () =>
+                            {
+                                var box2 = MessageBoxManager.GetMessageBoxStandard("Info", "Homebrew updated on the WebSrv.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                                await box2.ShowWindowAsync();
+                            });
                         }
                     }
                     catch (Exception ex)
                     {
-                        var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not add the selected homebrew." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                        await box.ShowWindowAsync();
-                    }
+                        await Dispatcher.UIThread.Invoke(async () =>
+                        {
+                            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not add the selected homebrew." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                            await box.ShowWindowAsync();
+                        });
 
+                    }
                     // Refresh
                     ListHomebrew();
                 }
                 else
                 {
-                    var box = MessageBoxManager.GetMessageBoxStandard("Incompatible homebrew", "This folder is missing a homebrew.js file that is required by the WebSrv and cannot be added.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Incompatible homebrew", "This folder is missing a homebrew.js file that is required by the WebSrv and cannot be added.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box.ShowWindowAsync();
+                    });
                 }
 
             }
@@ -547,12 +568,18 @@ public partial class WebSrvHomebrewManager : Window
                 }
                 catch (Exception ex)
                 {
-                    var box2 = MessageBoxManager.GetMessageBoxStandard("Error", "Could not delete the selected homebrew." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box2.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box2 = MessageBoxManager.GetMessageBoxStandard("Error", "Could not delete the selected homebrew." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box2.ShowWindowAsync();
+                    });
                 }
 
-                var box3 = MessageBoxManager.GetMessageBoxStandard("Info", "Homebrew removed from the WebSrv.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                await box3.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box3 = MessageBoxManager.GetMessageBoxStandard("Info", "Homebrew removed from the WebSrv.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box3.ShowWindowAsync();
+                });
 
                 // Clear homebrew information
                 HomebrewPayloadPathTextBox.Text = "";
@@ -609,8 +636,11 @@ public partial class WebSrvHomebrewManager : Window
                     }
                     catch (Exception ex)
                     {
-                        var box2 = MessageBoxManager.GetMessageBoxStandard("Error", "Could not upload the selected icon." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                        await box2.ShowWindowAsync();
+                        await Dispatcher.UIThread.Invoke(async () =>
+                        {
+                            var box2 = MessageBoxManager.GetMessageBoxStandard("Error", "Could not upload the selected icon." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                            await box2.ShowWindowAsync();
+                        });       
                     }
 
                     // Refresh icon
@@ -637,8 +667,11 @@ public partial class WebSrvHomebrewManager : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not upload the selected folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not upload the selected folder." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });    
             return false;
         }
     }

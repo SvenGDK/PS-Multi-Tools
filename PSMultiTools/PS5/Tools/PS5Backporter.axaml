@@ -1,0 +1,79 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="500"
+		x:Class="PSMultiTools.PS5.Tools.PS5Backporter"
+		Title="PS5 Backporter" Width="850" Height="500" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Select a game backup or a folder containing decrypted files :" VerticalAlignment="Top" FontSize="16" Margin="10,10,0,0"/>
+		<TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="700"/>
+		<Button x:Name="BrowseFolderButton" Content="Browse" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="720,40,10,0" VerticalAlignment="Top" Width="120" Click="BrowseFolderButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" Margin="10,85,0,0" Text="Options" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+		<TextBlock HorizontalAlignment="Left" Margin="10,110,0,0" Text="Target SDK Version :" VerticalAlignment="Top"/>
+		<ComboBox x:Name="TargetSDKVersionComboBox" HorizontalAlignment="Left" Margin="160,103,0,0" VerticalAlignment="Top" IsEditable="True" SelectedIndex="6">
+			<ComboBoxItem Content="1">
+				<ToolTip.Tip>
+					PS5: 0x01000050 / PS4: 0x07590001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="2">
+				<ToolTip.Tip>
+					PS5: 0x02000009 / PS4: 0x08050001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="3">
+				<ToolTip.Tip>
+					PS5: 0x03000027 / PS4: 0x08540001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="4">
+				<ToolTip.Tip>
+					PS5: 0x04000031 / PS4: 0x09040001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="5">
+				<ToolTip.Tip>
+					PS5: 0x05000033 / PS4: 0x09590001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="6">
+				<ToolTip.Tip>
+					PS5: 0x06000038 / PS4: 0x10090001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="7">
+				<ToolTip.Tip>
+					PS5: 0x07000038 / PS4: 0x10590001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="8">
+				<ToolTip.Tip>
+					PS5: 0x08000041 / PS4: 0x11090001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="9">
+				<ToolTip.Tip>
+					PS5: 0x09000040 / PS4: 0x11590001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+			<ComboBoxItem Content="10">
+				<ToolTip.Tip>
+					PS5: 0x10000040 / PS4: 0x12090001
+				</ToolTip.Tip>
+			</ComboBoxItem>
+		</ComboBox>
+		<CheckBox x:Name="CreateBackupCheckBox" Content="Create backup files" HorizontalAlignment="Left" Margin="270,103,0,0" VerticalAlignment="Top" IsChecked="True"/>
+		<CheckBox x:Name="AutoPatchAndSignCheckBox" Content="Auto-Patch &amp; fake sign into /fakelib" HorizontalAlignment="Left" Margin="440,103,0,0" VerticalAlignment="Top">
+			<ToolTip.Tip>
+				Automatically patch and fake sign .prx libraries after downgrading the SDK.
+			</ToolTip.Tip>
+		</CheckBox>
+			
+		<Button x:Name="BackportButton" Content="Backport" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="720,103,10,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" Click="BackportButton_Click"/>
+
+		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Log :" VerticalAlignment="Bottom" FontSize="16" Margin="10,0,0,320" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" VerticalAlignment="Bottom" Height="300" Margin="10,0,10,10"/>
+	</Grid>
+</Window>

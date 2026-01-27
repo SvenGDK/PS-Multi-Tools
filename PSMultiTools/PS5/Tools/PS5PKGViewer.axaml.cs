@@ -5,10 +5,12 @@ using Newtonsoft.Json;
 using PSMultiTools.Classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using static PSMultiTools.Classes.PS5ParamClass;
 
 namespace PSMultiTools.PS5.Tools;
 
@@ -111,11 +113,11 @@ public partial class PS5PKGViewer : Window
 
                 using (var PKGReader = new FileStream(selectedFile[0], FileMode.Open, FileAccess.Read))
                 {
-                    var buffer = new byte[4097];
+                    var buffer = new byte[4096];
                     long fileLength = PKGReader.Length;
                     long totalBytesRead = fileLength;
 
-                    while (totalBytesRead > 0L)
+                    while (totalBytesRead > 0)
                     {
                         int bytesRead = (int)Math.Min(buffer.Length, totalBytesRead);
                         PKGReader.Seek(totalBytesRead - bytesRead, SeekOrigin.Begin);
@@ -149,6 +151,7 @@ public partial class PS5PKGViewer : Window
                     }
                 }
 
+                // A problem here is that the found offsets values are around the actual param.json because the PKG is not propperly read. However, with some fixes it will actually parse.
                 if (startOffset != -1 && endOffset != -1 && endOffset > startOffset)
                 {
                     string FinalParamJSONString = "";
@@ -160,25 +163,69 @@ public partial class PS5PKGViewer : Window
                         var NewParamData = new byte[((int)ParamDataSize)];
                         ParamJSONFileStream.ReadExactly(NewParamData, 0, (int)ParamDataSize);
 
-                        string ExtractedData = Encoding.UTF8.GetString(NewParamData);
-                        var ParamJSONData = ExtractedData.Split(["\r\n"], StringSplitOptions.None).ToList();
+                        var NewUTF8Encoding = new UTF8Encoding(false, false);
+                        string ExtractedData = NewUTF8Encoding.GetString(NewParamData);
+                        List<string> ParamJSONData = [.. ExtractedData.Split(["\r\n"], StringSplitOptions.None)];
 
-                        // Adjust the output
-                        ParamJSONData.RemoveAt(0);
-                        ParamJSONData.Insert(0, "{");
-                        ParamJSONData[^1] += "\"";
-                        ParamJSONData.Add("}");
+                        if (ParamDataSize > 5000) // Occurs in PKGs that have multiple param.json - get only 1
+                        {
+                            // Pick only the first param.json
+                            string versionFileUriMark = "versionFileUri";
+                            int versionFileUriLine = ParamJSONData.FindIndex(line => line != null && line.Contains(versionFileUriMark, StringComparison.OrdinalIgnoreCase));
+                            if (versionFileUriLine >= 0)
+                            {
+                                int ClosingLineIndex = ParamJSONData.FindIndex(versionFileUriLine, line => line != null && line.Trim() == "}");
+                                ParamJSONData = [.. ParamJSONData.Take(ClosingLineIndex + 1)];
+                            }
+                        }
 
-                        FinalParamJSONString = string.Join(Environment.NewLine, ParamJSONData);
+                        //Remove any unwanted unicode characters
+                        //for (int i = 0; i < ParamJSONData.Count; i++)
+                        //{
+                        //    ParamJSONData[i] = Regex.Replace(ParamJSONData[i], @"[^\t\r\n -~]", "");
+                        //}
+
+                        if (ParamDataSize > 5000)
+                        {
+                            //Adjust the output
+                            ParamJSONData.RemoveAt(0);
+                            ParamJSONData.Insert(0, "{");
+                            ParamJSONData[^1] += "\"";
+
+                            // Additional cleanup for previously cutted param.json
+                            string versionFileUriMark = "versionFileUri";
+                            int RecheckedversionFileUriLine = ParamJSONData.FindIndex(line => line != null && line.Contains(versionFileUriMark, StringComparison.OrdinalIgnoreCase));
+                            if (RecheckedversionFileUriLine >= 0)
+                            {
+                                int ClosingLineIndex = ParamJSONData.FindIndex(RecheckedversionFileUriLine, line => line != null && line.Trim() == "}");
+                                ParamJSONData[RecheckedversionFileUriLine] = ParamJSONData[RecheckedversionFileUriLine].Replace("\"\"", "\"");
+                            }
+                        }
+                        else
+                        {
+                            //Adjust the output
+                            ParamJSONData.RemoveAt(0);
+                            ParamJSONData.Insert(0, "{");
+                            ParamJSONData[^1] += "\"";
+                            ParamJSONData.Add("}");
+                        }
+
+                        FinalParamJSONString = string.Join("\n", ParamJSONData);
                     }
 
                     if (!string.IsNullOrEmpty(FinalParamJSONString))
                     {
+                        // Extra JSON cleanup
+                        FinalParamJSONString = FinalParamJSONString.Trim();
+                        int lastBrace = FinalParamJSONString.LastIndexOf('}');
+                        if (lastBrace > 0)
+                            FinalParamJSONString = FinalParamJSONString[..(lastBrace + 1)].Trim();
+
                         CurrentParamJSON = FinalParamJSONString;
 
                         // Display pkg information
-                        var ParamData = JsonConvert.DeserializeObject<PS5ParamClass.PS5Param>(FinalParamJSONString);
-                        var NewPS5Game = new PS5Game() { GameBackupType = "PKG" };
+                        var ParamData = JsonConvert.DeserializeObject<PS5Param>(FinalParamJSONString);
+                        var NewPS5Game = new PS5Game() { GameBackupType = PS5Game.BackupType.LocalPKG };
                         if (ParamData is not null)
                         {
                             if (ParamData.TitleId is not null)
@@ -187,9 +234,14 @@ public partial class PS5PKGViewer : Window
                                 NewPS5Game.GameRegion = "Region: " + PS5Game.GetGameRegion(ParamData.TitleId);
                             }
 
+                            bool NonENUSTitle = false;
                             if (ParamData.LocalizedParameters!.EnUS is not null)
                             {
                                 NewPS5Game.GameTitle = ParamData.LocalizedParameters.EnUS.TitleName;
+                            }
+                            else
+                            {
+                                NonENUSTitle = true;
                             }
                             if (ParamData.LocalizedParameters.DeDE is not null)
                             {
@@ -210,6 +262,10 @@ public partial class PS5PKGViewer : Window
                             if (ParamData.LocalizedParameters.JaJP is not null)
                             {
                                 NewPS5Game.JPGameTitle = ParamData.LocalizedParameters.JaJP.TitleName;
+                            }
+                            if (NonENUSTitle)
+                            {
+                                NewPS5Game.GameTitle = GetAlternativeGameTitle(ParamData);
                             }
 
                             if (ParamData.ContentId is not null)
@@ -277,9 +333,7 @@ public partial class PS5PKGViewer : Window
                             GameRequiredFirmwareTextBlock.Text = NewPS5Game.GameRequiredFirmware;
                         }
                     }
-
                 }
-
                 return;
             }
 
@@ -766,8 +820,8 @@ public partial class PS5PKGViewer : Window
                         if (!string.IsNullOrWhiteSpace(Encoding.UTF8.GetString(ParamFileBuffer)))
                         {
                             CurrentParamJSON = Encoding.UTF8.GetString(ParamFileBuffer);
-                            var ParamData = JsonConvert.DeserializeObject<PS5ParamClass.PS5Param>(Encoding.UTF8.GetString(ParamFileBuffer));
-                            var NewPS5Game = new PS5Game() { GameBackupType = "PKG" };
+                            var ParamData = JsonConvert.DeserializeObject<PS5Param>(Encoding.UTF8.GetString(ParamFileBuffer));
+                            var NewPS5Game = new PS5Game() { GameBackupType = PS5Game.BackupType.LocalPKG };
 
                             if (ParamData is not null)
                             {
@@ -1131,6 +1185,21 @@ public partial class PS5PKGViewer : Window
         }
 
         return true;
+    }
+
+    private static string? GetAlternativeGameTitle(PS5Param ParamFile)
+    {
+        var Languages = ParamFile.LocalizedParameters;
+        if (Languages == null) return null;
+
+        if (Languages.EnGB != null) return Languages.EnGB.TitleName;
+        if (Languages.JaJP != null) return Languages.JaJP.TitleName;
+        if (Languages.KoKR != null) return Languages.KoKR.TitleName;
+        if (Languages.ZhHant != null) return Languages.ZhHant.TitleName;
+        if (Languages.ZhHans != null) return Languages.ZhHans.TitleName;
+        if (Languages.ArAE != null) return Languages.ArAE.TitleName;
+
+        return null;
     }
 
     #region Structures & Classes

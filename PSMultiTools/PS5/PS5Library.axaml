@@ -164,7 +164,7 @@
 					</ListBox.ItemTemplate>
 				</ListBox>
 			</TabItem>
-			<TabItem Header="Patches" FontSize="16" BorderBrush="{x:Null}">
+			<TabItem Header="Updates &amp; Additional Content" FontSize="16" BorderBrush="{x:Null}">
 				<ListBox x:Name="PatchesListBox" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" SelectionMode="Single">
 					<ListBox.ItemsPanel>
 						<ItemsPanelTemplate>
@@ -173,22 +173,21 @@
 					</ListBox.ItemsPanel>
 					<ListBox.ItemTemplate>
 						<DataTemplate>
-							<Grid Width="455">
+							<Grid Width="650">
 								<Image Width="64" Height="64" Source="{Binding GameCoverSource, Converter={StaticResource AnyToAvalonia}}" Stretch="Uniform" Margin="10,0,0,0" HorizontalAlignment="Left"/>
-								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FontSize="14" FontWeight="Bold" Margin="79,10,0,0" HorizontalAlignment="Left"/>
-								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FontSize="12" Margin="79,35,0,0" HorizontalAlignment="Left"/>
-								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FontSize="12" TextAlignment="Left" Margin="79,55,0,0" HorizontalAlignment="Left"/>
-								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameVersion}" FontSize="12" TextAlignment="Left" Margin="303,35,0,0" HorizontalAlignment="Left"/>
-								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FontSize="12" TextAlignment="Left" Margin="303,75,0,0" HorizontalAlignment="Left"/>
-								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameContentID}" FontSize="12" TextAlignment="Left" Margin="79,75,0,0" HorizontalAlignment="Left"/>
-								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRequiredFirmware}" FontSize="12" TextAlignment="Left" Margin="303,55,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameTitle}" FontSize="14" FontWeight="Bold" Margin="80,10,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameID}" FontSize="12" Margin="80,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRegion}" FontSize="12" TextAlignment="Left" Margin="80,55,0,0" HorizontalAlignment="Left"/>			
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameContentID}" FontSize="12" TextAlignment="Left" Margin="80,75,0,0" HorizontalAlignment="Left"/>
+
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameVersion}" FontSize="12" TextAlignment="Left" Margin="450,35,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameSize}" FontSize="12" TextAlignment="Left" Margin="450,75,0,0" HorizontalAlignment="Left"/>
+								<TextBlock Height="20" VerticalAlignment="Top" Text="{Binding GameRequiredFirmware}" FontSize="12" TextAlignment="Left" Margin="450,55,0,0" HorizontalAlignment="Left"/>
 							</Grid>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 				</ListBox>
 			</TabItem>
 		</TabControl>
-
-		<Decorator x:Name="ContentWebViewWrapper" IsVisible="False"></Decorator>
 	</Grid>
 </Window>

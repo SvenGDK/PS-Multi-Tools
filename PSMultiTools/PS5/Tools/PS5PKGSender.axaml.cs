@@ -2,6 +2,8 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 using Newtonsoft.Json;
 using PSMultiTools.Classes;
 using System;
@@ -400,7 +402,10 @@ public partial class PS5PKGSender : Window
             }
             catch (Exception ex)
             {
-                LogTextBox.Text += "Error trying to stop the web server :\n" + ex.Message;
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    LogTextBox.Text += "Error trying to stop the web server :\n" + ex.Message;
+                });
             }
         }
         else
@@ -596,7 +601,7 @@ public partial class PS5PKGSender : Window
         try { response.Close(); } catch { }
     }
 
-    private void OpenPortForWebServer()
+    private async void OpenPortForWebServer()
     {
         if (OperatingSystem.IsWindows())
         {
@@ -630,7 +635,10 @@ public partial class PS5PKGSender : Window
             }
             catch (Exception ex)
             {
-                LogTextBox.Text += ex.Message;
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    LogTextBox.Text += ex.Message;
+                });
             }
         }
         else if (OperatingSystem.IsMacOS())
@@ -656,7 +664,7 @@ public partial class PS5PKGSender : Window
         }
     }
 
-    private void ClosePortForWebServer()
+    private async void ClosePortForWebServer()
     {
         if (OperatingSystem.IsWindows())
         {
@@ -682,7 +690,10 @@ public partial class PS5PKGSender : Window
             }
             catch (Exception ex)
             {
-                LogTextBox.Text += ex.Message;
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    LogTextBox.Text += ex.Message;
+                });
             }
         }
         else if (OperatingSystem.IsMacOS())

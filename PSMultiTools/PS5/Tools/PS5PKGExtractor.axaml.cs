@@ -194,13 +194,19 @@ public partial class PS5PKGExtractor : Window
                             i += 1;
                         }
 
-                        var box = MessageBoxManager.GetMessageBoxStandard("Info", "Done!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                        await box.ShowWindowAsync();
+                        await Dispatcher.UIThread.Invoke(async () =>
+                        {
+                            var box = MessageBoxManager.GetMessageBoxStandard("Info", "Done!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                            await box.ShowWindowAsync();
+                        });
                     }
                     catch (Exception ex)
                     {
-                        var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                        await box.ShowWindowAsync();
+                        await Dispatcher.UIThread.Invoke(async () =>
+                        {
+                            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                            await box.ShowWindowAsync();
+                        });
                     }
                 }
             }

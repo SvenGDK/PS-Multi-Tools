@@ -1,13 +1,13 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="340" d:DesignHeight="150"
-        x:Class="PSMultiTools.Dialogs.InputDialog"
-        Title="Please enter a new value" Height="150" Width="340" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
-    <Grid>
-        <TextBlock x:Name="InputDialogTitleTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0" Text="Enter a new value :" VerticalAlignment="Top"  FontSize="14"/>
-        <TextBox x:Name="NewValueTextBox" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Width="300"/>
-        <Button x:Name="ConfirmButton" Content="Confirm" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="220,100,0,0" VerticalAlignment="Top" Width="100" Click="ConfirmButton_Click"/>
-    </Grid>
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="340" d:DesignHeight="150"
+		x:Class="PSMultiTools.Dialogs.InputDialog"
+		Title="Please enter a new value" Height="150" Width="340" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock x:Name="InputDialogTitleTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0" Text="Enter a new value :" VerticalAlignment="Top"  FontSize="14"/>
+		<TextBox x:Name="NewValueTextBox" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Width="300"/>
+		<Button x:Name="ConfirmButton" Content="Confirm" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="220,100,0,0" VerticalAlignment="Top" Width="100" Click="ConfirmButton_Click"/>
+	</Grid>
 </Window>

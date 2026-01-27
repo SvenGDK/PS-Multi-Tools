@@ -65,8 +65,11 @@ public partial class PS5SELFDecrypter : Window
                 }
                 catch (Exception ex)
                 {
-                    var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box.ShowWindowAsync();
+                    });
                 }
 
                 ListenButton.Content = "Send Payload and Start Listening";
@@ -74,8 +77,11 @@ public partial class PS5SELFDecrypter : Window
         }
         else
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Please check your input.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Please check your input.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
         }
     }
 
@@ -137,7 +143,10 @@ public partial class PS5SELFDecrypter : Window
         }
         catch (Exception ex)
         {
-            ListeningLogTextBox.Text += ("An error occurred: " + ex.Message);
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                ListeningLogTextBox.Text += "An error occurred: " + ex.Message;
+            });
         }
     }
 

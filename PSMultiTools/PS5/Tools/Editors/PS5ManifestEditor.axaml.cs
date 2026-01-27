@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using Newtonsoft.Json;
@@ -608,13 +609,19 @@ public partial class PS5ManifestEditor : Window
                     string RawDataJSON = JsonConvert.SerializeObject(CurrentManifestJson, Formatting.Indented, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
                     File.WriteAllText(SFDResult, RawDataJSON);
 
-                    var box = MessageBoxManager.GetMessageBoxStandard("Param Editor", "File saved!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                    await box.ShowWindowDialogAsync(this);
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Param Editor", "File saved!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                        await box.ShowWindowDialogAsync(this);
+                    });            
                 }
                 catch (Exception ex)
                 {
-                    var box = MessageBoxManager.GetMessageBoxStandard("Param Editor", "Cannot save the manifest.json file, please report the error." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box.ShowWindowDialogAsync(this);
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Param Editor", "Cannot save the manifest.json file, please report the error." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box.ShowWindowDialogAsync(this);
+                    });
                     return;
                 }
             }

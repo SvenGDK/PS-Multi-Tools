@@ -552,20 +552,29 @@ public partial class PKGBrowser : Window
                 for (int index = 0, loopTo = (int)Math.Round(RAP.Length / 2d - 1d); index <= loopTo; index++)
                     bytes[index] = Convert.ToByte(RAP.Substring(index * 2, 2), 16);
                 File.WriteAllBytes(Path.Combine(Utils.GetDownloadsFolderPath(), "PS3", "exdata", ContentID + ".rap"), bytes);
-
-                var box = MessageBoxManager.GetMessageBoxStandard("Info", ContentID + ".rap file created!" + Environment.NewLine + @"You can find it in the 'Downloads\PS3\exdata' folder.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                await box.ShowWindowAsync();
+       
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Info", ContentID + ".rap file created!" + Environment.NewLine + @"You can find it in the 'Downloads\PS3\exdata' folder.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box.ShowWindowAsync();
+                });
             }
             else
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Info", "This package requires no .rap file. Simply activate it with ReactPSN.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Info", "This package requires no .rap file. Simply activate it with ReactPSN.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box.ShowWindowAsync();
+                });          
             }
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Error creating RAP file: " + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Error creating RAP file: " + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
         }
     }
 

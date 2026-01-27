@@ -13,8 +13,17 @@ namespace PSMultiTools.Classes
 
         public enum RootLocation
         {
-            Internal,
-            USB
+            InternalStorage,
+            InternalExtendedStorage,
+            AttachedUSB
+        }
+
+        public enum BackupType
+        {
+            LocalFolder,
+            LocalPKG,
+            FTPFolder,
+            FTPPKG
         }
 
         public string? GameTitle { get; set; }
@@ -59,7 +68,7 @@ namespace PSMultiTools.Classes
 
         public string? GameContentIDs { get; set; }
 
-        public string? GameBackupType { get; set; }
+        public BackupType? GameBackupType { get; set; }
 
         public Location GameLocation { get; set; }
 
@@ -74,6 +83,10 @@ namespace PSMultiTools.Classes
         public string? GameVersionFileURI { get; set; }
 
         public bool? IsInstalled { get; set; }
+
+        public bool? DecryptedFilesExist { get; set; }
+
+        public bool? FakelibFilesExist { get; set; }
 
         public static string GetGameRegion(string GameID)
         {

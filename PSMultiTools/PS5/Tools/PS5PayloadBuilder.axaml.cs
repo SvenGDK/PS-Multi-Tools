@@ -648,8 +648,11 @@ public partial class PS5PayloadBuilder : Window
                 }
                 catch (Exception ex)
                 {
-                    var box = MessageBoxManager.GetMessageBoxStandard("Error", "Error checking workflow status: " + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Error", "Error checking workflow status: " + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box.ShowWindowAsync();
+                    });
                 }
                 await Task.Delay(8000); // Check every 8secs until the run is completed
             }
@@ -678,8 +681,11 @@ public partial class PS5PayloadBuilder : Window
 
             catch (Exception ex)
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Error retrieving or downloading artifacts: " + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error", "Error retrieving or downloading artifacts: " + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
+                });
                 return "";
             }
         }
@@ -925,8 +931,11 @@ public partial class PS5PayloadBuilder : Window
                                     }
                                     catch (Exception ex)
                                     {
-                                        var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                                        await box.ShowWindowAsync();
+                                        await Dispatcher.UIThread.Invoke(async () =>
+                                        {
+                                            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                                            await box.ShowWindowAsync();
+                                        });
                                     }
                                 }
                                 else
@@ -1227,8 +1236,11 @@ public partial class PS5PayloadBuilder : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
         }
     }
 
@@ -1255,8 +1267,11 @@ public partial class PS5PayloadBuilder : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
             return "";
         }
     }

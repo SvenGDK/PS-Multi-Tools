@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="650" d:DesignHeight="330"
+		x:Class="PSMultiTools.Dialogs.Uploader"
+		Title="Uploader" Width="650" Height="330" CanResize="False" CanMinimize="True" WindowStartupLocation="CenterScreen" RequestedThemeVariant="Dark">
+	<Grid>
+		<Image x:Name="BackupIconImage" Height="128" HorizontalAlignment="Center" VerticalAlignment="Top" Width="128" Margin="0,30,0,0" Source="/Images/PKG.png"/>
+
+		<TextBlock x:Name="UploadProgressTextBlock" HorizontalAlignment="Left" Margin="15,200,0,0" Text="Uploading ..." VerticalAlignment="Top" Width="520"/>
+		<ProgressBar x:Name="UploadTotalProgressBar" HorizontalAlignment="Stretch" Height="20" Margin="15,230,15,0" VerticalAlignment="Top" />
+		<TextBlock x:Name="UploadCurrentFileStatusTextBlock" HorizontalAlignment="Left" Margin="15,260,0,0" Text="Uploading ..." VerticalAlignment="Top" Width="520"/>
+		<ProgressBar x:Name="UploadCurrentFileProgressBar" HorizontalAlignment="Stretch" Height="20" Margin="15,290,15,0" VerticalAlignment="Top" />
+	</Grid>
+</Window>

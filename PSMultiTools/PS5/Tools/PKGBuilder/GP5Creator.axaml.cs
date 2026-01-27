@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using PSMultiTools.Classes;
@@ -75,43 +76,64 @@ public partial class GP5Creator : Window
                                 ChunkFilesFolderListBox.Items.Add(ChunkLvItem); // Add to list
                                 LoadedGP5Project.Save(LoadedGP5ProjectPath); // Save changes
 
-                                var box = MessageBoxManager.GetMessageBoxStandard("Project updated", FileFolderSourcePathTextBox.Text + " added.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                                await box.ShowWindowDialogAsync(this);
+                                await Dispatcher.UIThread.Invoke(async () =>
+                                {
+                                    var box = MessageBoxManager.GetMessageBoxStandard("Project updated", FileFolderSourcePathTextBox.Text + " added.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                                    await box.ShowWindowDialogAsync(this);
+                                });
                             }
                             catch (Exception ex)
                             {
-                                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not add to gp5 project." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                                await box.ShowWindowDialogAsync(this);
+                                await Dispatcher.UIThread.Invoke(async () =>
+                                {
+                                    var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not add to gp5 project." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                                    await box.ShowWindowDialogAsync(this);
+                                });     
                             }
                         }
                         else
                         {
-                            var box = MessageBoxManager.GetMessageBoxStandard("Error", "No GP5 project loaded.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                            await box.ShowWindowDialogAsync(this);
+                            await Dispatcher.UIThread.Invoke(async () =>
+                            {
+                                var box = MessageBoxManager.GetMessageBoxStandard("Error", "No GP5 project loaded.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                                await box.ShowWindowDialogAsync(this);
+                            });
                         }
                     }
                     else
                     {
-                        var box = MessageBoxManager.GetMessageBoxStandard("Error", "No chunk set.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                        await box.ShowWindowDialogAsync(this);
+                        await Dispatcher.UIThread.Invoke(async () =>
+                        {
+                            var box = MessageBoxManager.GetMessageBoxStandard("Error", "No chunk set.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                            await box.ShowWindowDialogAsync(this);
+                        });
                     }
                 }
                 else
                 {
-                    var box = MessageBoxManager.GetMessageBoxStandard("Error", "No destination path set.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box.ShowWindowDialogAsync(this);
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Error", "No destination path set.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box.ShowWindowDialogAsync(this);
+                    });
                 }
             }
             else
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error", "No source path selected.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowDialogAsync(this);
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error", "No source path selected.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowDialogAsync(this);
+                });
             }
         }
         else
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "No project save path selected.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowDialogAsync(this);
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "No project save path selected.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowDialogAsync(this);
+            });
         }
     }
 
@@ -149,14 +171,20 @@ public partial class GP5Creator : Window
                 LoadedGP5Project = NewGP5Project;
                 LoadedGP5ProjectPath = SFDResult;
 
-                var box = MessageBoxManager.GetMessageBoxStandard("Info", "New gp5 project created at " + SFDResult, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                await box.ShowWindowDialogAsync(this);
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Info", "New gp5 project created at " + SFDResult, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box.ShowWindowDialogAsync(this);
+                });
             }
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not create a gp5 project." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowDialogAsync(this);
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not create a gp5 project." + Environment.NewLine + ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowDialogAsync(this);
+            });
         }
     }
 

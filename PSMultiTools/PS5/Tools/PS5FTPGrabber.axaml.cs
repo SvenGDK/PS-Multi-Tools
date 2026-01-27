@@ -278,11 +278,13 @@ public partial class PS5FTPGrabber : Window
             // Disonnect
             await NewFtpClient.Disconnect();
         }
-
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });       
         }
 
         if (string.IsNullOrEmpty(App0RemoteFolder))
@@ -307,8 +309,11 @@ public partial class PS5FTPGrabber : Window
             }
             catch (Exception ex)
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
+                });     
             }
 
             return true;
@@ -376,8 +381,11 @@ public partial class PS5FTPGrabber : Window
 
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });      
         }
 
         if (!string.IsNullOrEmpty(AppMetadataRemoteFolder))
@@ -401,8 +409,11 @@ public partial class PS5FTPGrabber : Window
             }
             catch (Exception ex)
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
+                });
             }
 
             return true;

@@ -10,6 +10,11 @@
 
 			<MenuItem x:Name="ToolsMenuItem" Header="Tools">
 				<MenuItem Header="PC Utilities">
+					<MenuItem Header="Backporter" x:Name="OpenBackporterMenuItem" Click="OpenBackporterMenuItem_Click">
+						<ToolTip.Tip>
+							Downgrade (backport) the required game/app SDK to make it run on older firmwares.
+						</ToolTip.Tip>
+					</MenuItem>
 					<MenuItem Header="Blu-Ray Disc Burner" x:Name="OpenBDBurnerMenuItem" Click="OpenBDBurnerMenuItem_Click">
 						<ToolTip.Tip>
 							Burn an ISO file to a Blu-Ray disc.
@@ -22,9 +27,9 @@
 							Extract a PSP, PS3, PS Vita, PS4 or PS5 Resource Container (*.rco).
 						</ToolTip.Tip>
 					</MenuItem>
-					<MenuItem Header="Fake sign SELF files" x:Name="OpenMakefSELFMenuItem" Click="OpenMakefSELFMenuItem_Click">
+					<MenuItem Header="Fake sign ELF files" x:Name="OpenMakefSELFMenuItem" Click="OpenMakefSELFMenuItem_Click">
 						<ToolTip.Tip>
-							Fake sign executable ELF files of a dumped game or app (4.03 max.).
+							Fake sign executable ELF files of a dumped game or app.
 						</ToolTip.Tip>
 					</MenuItem>
 					<MenuItem Header="GP5 Project Creator" x:Name="OpenGP5ManagerMenuItem" Click="OpenGP5ManagerMenuItem_Click">
@@ -45,6 +50,11 @@
 					<MenuItem Header="Payload Builder" x:Name="PayloadBuilderMenuItem" Click="PayloadBuilderMenuItem_Click">
 						<ToolTip.Tip>
 							Auto-Build ELF payloads for the PS5.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Payload Dispatcher" x:Name="PayloadDispatcherMenuItem" Click="PayloadDispatcherMenuItem_Click">
+						<ToolTip.Tip>
+							Dispatch payloads in desired seconds to specific ports.
 						</ToolTip.Tip>
 					</MenuItem>
 					<MenuItem Header="Payload &amp; Mast1c0re PS2 Game Sender" x:Name="SenderMenuItem" Click="SenderMenuItem_Click">
@@ -81,6 +91,11 @@
 					<MenuItem Header="PS Classics fPKG Builder" x:Name="OpenPSClassicsfPKGBuilderMenuItem" Click="OpenPSClassicsfPKGBuilderMenuItem_Click">
 						<ToolTip.Tip>
 							Build a PS4/PS5 compatible fPKG file from a PS1, PS2 or PSP game.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="S/PRX ROM Patcher" x:Name="OpenROMPatcherMenuItem" Click="OpenROMPatcherMenuItem_Click">
+						<ToolTip.Tip>
+							Apply .bps patches to PRX libraries.
 						</ToolTip.Tip>
 					</MenuItem>
 					<MenuItem Header="SELF Decrypter" x:Name="OpenSELFDecrypterMenuItem" Click="OpenSELFDecrypterMenuItem_Click">
@@ -125,6 +140,11 @@
 					<MenuItem Header="FTP Grabber (Dumper)" x:Name="OpenFTPGrabberMenuItem" Click="OpenFTPGrabberMenuItem_Click">
 						<ToolTip.Tip>
 							Create a game/app backup using FTP. This will always take longer than directly dumping on the console but this option dumps directly on your PC in case you have no USB.
+						</ToolTip.Tip>
+					</MenuItem>
+					<MenuItem Header="Library Grabber" x:Name="OpenLibraryGrabberMenuItem" Click="OpenLibraryGrabberMenuItem_Click">
+						<ToolTip.Tip>
+							Download decrypted SPRX libraries over FTP to PC. In some cases this can cause a crash on the PS5 - Simply retry, already downloaded files will be skipped.
 						</ToolTip.Tip>
 					</MenuItem>
 					<MenuItem Header="Notifications Manager" x:Name="OpenNotificationManagerMenuItem" Click="OpenNotificationManagerMenuItem_Click">
@@ -324,7 +344,7 @@
 
 			<MenuItem x:Name="HostsDNSMenuItem" Header="Hosts &amp; DNS">
 				<MenuItem Header="PS Multi Tools Host:">
-					<TextBox Text="http://87.106.5.21/ps5ex/"></TextBox>
+					<TextBox Text="http://X.X.X.X/ps5ex/"></TextBox>
 				</MenuItem>
 				<MenuItem Header="PKG-Zone Host:">
 					<TextBox Text="https://pkg-zone.com/exploit/PS5/index.html"></TextBox>

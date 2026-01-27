@@ -94,7 +94,6 @@ public partial class PPPwner : Window
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Failed to stop pppwn - {p.Id}: {ex.Message}");
-                        Trace.WriteLine($"Failed to stop pppwn - {p.Id}: {ex.Message}");
                     }
                     finally
                     {

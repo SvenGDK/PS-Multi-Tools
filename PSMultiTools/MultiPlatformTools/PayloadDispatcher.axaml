@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="500"
+		x:Class="PSMultiTools.MultiPlatformTools.PayloadDispatcher"
+		Title="Payload Dispatcher" Width="900" Height="500" WindowStartupLocation="CenterScreen" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark">
+	<Grid>
+		<TextBlock FontSize="16" Text="Set IP &amp; Payload Port" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBlock FontSize="14" Text="IP Address :" Margin="10,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="IPAddressTextBox" HorizontalAlignment="Left" Margin="120,40,0,0" VerticalAlignment="Top" Width="215" TextAlignment="Center"/>
+
+		<TextBlock FontSize="16" Text="After Dispatching" Margin="10,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="OpenWebSrvCheckBox" Margin="10,120,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Open PS5 WebSrv Browser"/>
+		<CheckBox x:Name="OpenSELFDecrypterheckBox" Margin="10,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Open PS5 SELF Decrypter"/>
+		<CheckBox x:Name="OpenKlogViewerCheckBox" Margin="10,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Open PS5 Kernel Log Viewer"/>
+
+		<TextBlock FontSize="16" Text="Log :" Margin="10,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBox x:Name="LogTextBox" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="230" Width="320" Margin="10,0,0,10"/>
+
+		<TextBlock FontSize="16" Text="Set Payloads &amp; Dispatch Options" Margin="350,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBlock FontSize="14" Text="Set Payload 1 :" Margin="350,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="Payload1PathTextBox" HorizontalAlignment="Left" Margin="490,40,0,0" VerticalAlignment="Top" Width="300" TextAlignment="Center"/>
+		<Button x:Name="BrowsePayload1Button" HorizontalAlignment="Left" Margin="800,40,0,0" VerticalAlignment="Top" Width="80" Content="Browse" HorizontalContentAlignment="Center" Click="BrowsePayload1Button_Click"/>
+		<TextBlock FontSize="14" Text="Send in (seconds) :" Margin="350,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload1InTextBox" HorizontalAlignment="Left" Margin="490,80,0,0" VerticalAlignment="Top" Width="80" TextAlignment="Center"/>
+		<TextBlock FontSize="14" Text="Send on Port :" Margin="580,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload1OnPortTextBox" HorizontalAlignment="Left" Margin="690,80,0,0" VerticalAlignment="Top" Width="100" TextAlignment="Center"/>
+
+		<TextBlock FontSize="14" Text="Set Payload 2 :" Margin="350,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="Payload2PathTextBox" HorizontalAlignment="Left" Margin="490,120,0,0" VerticalAlignment="Top" Width="300" TextAlignment="Center"/>
+		<Button x:Name="BrowsePayload2Button" HorizontalAlignment="Left" Margin="800,120,0,0" VerticalAlignment="Top" Width="80" Content="Browse" HorizontalContentAlignment="Center" Click="BrowsePayload2Button_Click"/>
+		<TextBlock FontSize="14" Text="Send in (seconds) :" Margin="350,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload2InTextBox" HorizontalAlignment="Left" Margin="490,160,0,0" VerticalAlignment="Top" Width="80" TextAlignment="Center"/>
+		<TextBlock FontSize="14" Text="Send on Port :" Margin="580,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload2OnPortTextBox" HorizontalAlignment="Left" Margin="690,160,0,0" VerticalAlignment="Top" Width="100" TextAlignment="Center"/>
+
+		<TextBlock FontSize="14" Text="Set Payload 3 :" Margin="350,205,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="Payload3PathTextBox" HorizontalAlignment="Left" Margin="490,200,0,0" VerticalAlignment="Top" Width="300" TextAlignment="Center"/>
+		<Button x:Name="BrowsePayload3Button" HorizontalAlignment="Left" Margin="800,200,0,0" VerticalAlignment="Top" Width="80" Content="Browse" HorizontalContentAlignment="Center" Click="BrowsePayload3Button_Click"/>
+		<TextBlock FontSize="14" Text="Send in (seconds) :" Margin="350,245,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload3InTextBox" HorizontalAlignment="Left" Margin="490,240,0,0" VerticalAlignment="Top" Width="80" TextAlignment="Center"/>
+		<TextBlock FontSize="14" Text="Send on Port :" Margin="580,245,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload3OnPortTextBox" HorizontalAlignment="Left" Margin="690,240,0,0" VerticalAlignment="Top" Width="100" TextAlignment="Center"/>
+
+		<TextBlock FontSize="14" Text="Set Payload 4 :" Margin="350,285,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="Payload4PathTextBox" HorizontalAlignment="Left" Margin="490,280,0,0" VerticalAlignment="Top" Width="300" TextAlignment="Center"/>
+		<Button x:Name="BrowsePayload4utton" HorizontalAlignment="Left" Margin="800,280,0,0" VerticalAlignment="Top" Width="80" Content="Browse" HorizontalContentAlignment="Center" Click="BrowsePayload4Button_Click"/>
+		<TextBlock FontSize="14" Text="Send in (seconds) :" Margin="350,325,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload4InTextBox" HorizontalAlignment="Left" Margin="490,320,0,0" VerticalAlignment="Top" Width="80" TextAlignment="Center"/>
+		<TextBlock FontSize="14" Text="Send on Port :" Margin="580,325,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload4OnPortTextBox" HorizontalAlignment="Left" Margin="690,320,0,0" VerticalAlignment="Top" Width="100" TextAlignment="Center"/>
+
+		<TextBlock FontSize="14" Text="Set Payload 5 :" Margin="350,365,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="Payload5PathTextBox" HorizontalAlignment="Left" Margin="490,360,0,0" VerticalAlignment="Top" Width="300" TextAlignment="Center"/>
+		<Button x:Name="BrowsePayload5Button" HorizontalAlignment="Left" Margin="800,360,0,0" VerticalAlignment="Top" Width="80" Content="Browse" HorizontalContentAlignment="Center" Click="BrowsePayload5Button_Click"/>
+		<TextBlock FontSize="14" Text="Send in (seconds) :" Margin="350,405,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload5InTextBox" HorizontalAlignment="Left" Margin="490,400,0,0" VerticalAlignment="Top" Width="80" TextAlignment="Center"/>
+		<TextBlock FontSize="14" Text="Send on Port :" Margin="580,405,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="DispatchPayload5OnPortTextBox" HorizontalAlignment="Left" Margin="690,400,0,0" VerticalAlignment="Top" Width="100" TextAlignment="Center"/>
+
+		<Button x:Name="DispatchPayloadsButton" HorizontalAlignment="Left" Margin="490,440,0,0" VerticalAlignment="Top" Width="300" Content="Dispatch Payloads" HorizontalContentAlignment="Center" FontWeight="Bold" Click="DispatchPayloadsButton_Click"/>
+	</Grid>
+</Window>

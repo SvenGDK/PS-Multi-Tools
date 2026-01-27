@@ -52,6 +52,12 @@ public partial class PS4Menu : UserControl
         NewSFOEditor.Show();
     }
 
+    private void PayloadDispatcherMenuItem_Click(object? sender, RoutedEventArgs e)
+    {
+        var NewPayloadDispatcher = new PayloadDispatcher() { ShowActivated = true };
+        NewPayloadDispatcher.Show();
+    }
+
     private void OpenPKGMergerMenuItem_Click(object? sender, RoutedEventArgs e)
     {
         var NewPS4PKGMerger = new PS5PKGMerger() { ShowActivated = true };

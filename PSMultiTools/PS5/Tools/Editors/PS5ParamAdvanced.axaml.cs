@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using PSMultiTools.Classes;
@@ -343,8 +344,11 @@ public partial class PS5ParamAdvanced : Window
 
         catch (Exception ex)
         {
-            var box2 = MessageBoxManager.GetMessageBoxStandard("Param Editor", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box2.ShowWindowDialogAsync(this);
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box2 = MessageBoxManager.GetMessageBoxStandard("Param Editor", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box2.ShowWindowDialogAsync(this);
+            });
         }
     }
 

@@ -2,9 +2,9 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="680" d:DesignHeight="280"
+		mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="350"
 		x:Class="PSMultiTools.PSSettings"
-		Title="PS Multi Tools Settings" Height="280" Width="680" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
+		Title="PS Multi Tools Settings" Height="350" Width="1000" CanResize="False" CanMinimize="True" RequestedThemeVariant="Dark" WindowStartupLocation="CenterScreen">
 	<Grid>
 		<TextBlock FontFamily="Calibri" FontSize="16" Text="Set PS5 Console IP / FTP Port / Payload Port" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
 		<TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="22,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -14,18 +14,24 @@
 		<TextBlock FontFamily="Calibri" FontSize="14" Text="Payload Port :" Margin="10,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 		<TextBox x:Name="PS5PayloadPortTextBox" HorizontalAlignment="Left" Margin="107,120,0,0" VerticalAlignment="Top" Width="227" FontFamily="Calibri" TextAlignment="Center"/>
 
-		<TextBlock FontFamily="Calibri" FontSize="16" Text="Set PS3 Console IP" Margin="10,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-		<TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="22,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-		<TextBox x:Name="PS3IPTextBox" HorizontalAlignment="Left" Margin="107,230,0,0" VerticalAlignment="Top" Width="227" FontFamily="Calibri" TextAlignment="Center"/>
+		<TextBlock FontFamily="Calibri" FontSize="16" Text="Set PS3 Console IP" Margin="10,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBlock FontFamily="Calibri" FontSize="14" Text="IP Address :" Margin="22,225,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBox x:Name="PS3IPTextBox" HorizontalAlignment="Left" Margin="107,220,0,0" VerticalAlignment="Top" Width="227" FontFamily="Calibri" TextAlignment="Center"/>
 
-		<TextBlock FontFamily="Calibri" FontSize="16" Text="PS5 Library Options" Margin="370,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+		<TextBlock FontFamily="Calibri" FontSize="16" Text="PS5 Library Options (Local)" Margin="370,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
 		<CheckBox x:Name="LoadIconCheckBox" Content="Load game &amp; app icons (icon0.png)" Margin="370,40,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
 		<CheckBox x:Name="LoadBackgroundCheckBox" Content="Load game &amp; app backgrounds (pic0.png)" Margin="370,70,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
 		<CheckBox x:Name="SkipFileCheckCheckBox" Content="Skip file checks when loading backups" Margin="370,100,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
 		<TextBlock FontFamily="Calibri" FontSize="14" Text="Scan Threads :" Margin="370,145,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-		<NumericUpDown x:Name="ScanThreadsCount" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="470,135,0,0" Height="25" Width="150" HorizontalContentAlignment="Center" Increment="1" FormatString="0"></NumericUpDown>
+		<NumericUpDown x:Name="ScanThreadsCount" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="470,135,0,0" Height="25" Width="150" HorizontalContentAlignment="Center" Increment="1" FormatString="0"/>
 
-		<TextBlock FontFamily="Calibri" FontSize="16" Text="General" Margin="370,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-		<CheckBox x:Name="LibraryMusicCheckBox" HorizontalAlignment="Left" Margin="370,225,0,0" VerticalAlignment="Top" Width="227" FontFamily="Calibri" Content="Automatically play library music"/>
+		<TextBlock FontFamily="Calibri" FontSize="16" Text="PS5 Library Options (FTP)" Margin="670,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="LoadFTPIconsCheckBox" Content="Load game &amp; app icons (icon0.png) via FTP" Margin="670,40,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
+		<CheckBox x:Name="LoadFTPBackgroundsCheckBox" Content="Load game &amp; app backgrounds (pic0.png) via FTP" Margin="670,70,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
+		<CheckBox x:Name="ScanAllUSBCheckBox" Content="Scan /mnt/usb2-7 too" Margin="670,100,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
+		<CheckBox x:Name="Scanext0CheckBox" Content="Scan /mnt/ext0" Margin="670,130,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="14" IsChecked="False" HorizontalAlignment="Left" />
+
+		<TextBlock FontFamily="Calibri" FontSize="16" Text="General" Margin="670,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+		<CheckBox x:Name="LibraryMusicCheckBox" HorizontalAlignment="Left" Margin="670,280,0,0" VerticalAlignment="Top" Width="227" FontFamily="Calibri" Content="Automatically play library music"/>
 	</Grid>
 </Window>

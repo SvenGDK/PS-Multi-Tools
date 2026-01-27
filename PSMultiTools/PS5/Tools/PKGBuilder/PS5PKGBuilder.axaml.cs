@@ -113,10 +113,13 @@ public partial class PS5PKGBuilder : Window
                 }
                 catch (Exception ex)
                 {
-                    var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not build pkg.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box.ShowWindowAsync();
-                    await box2.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Error", "Could not build pkg.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box.ShowWindowAsync();
+                        await box2.ShowWindowAsync();
+                    });
                 }
             }
         }
@@ -132,7 +135,7 @@ public partial class PS5PKGBuilder : Window
                 {
                     p.Kill();
                 }
-                p.WaitForExit(2500);
+                await p.WaitForExitAsync();
 
                 Killed = true;
 
@@ -153,7 +156,6 @@ public partial class PS5PKGBuilder : Window
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to stop the PKG Builder - {p.Id}: {ex.Message}");
-                Trace.WriteLine($"Failed to stop the PKG Builder - {p.Id}: {ex.Message}");
             }
             finally
             {

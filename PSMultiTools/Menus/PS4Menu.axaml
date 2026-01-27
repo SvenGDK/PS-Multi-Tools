@@ -16,6 +16,11 @@
 				</MenuItem>
 				<MenuItem Header="FTP Browser" x:Name="OpenFTPBrowserMenuItem" Click="OpenFTPBrowserMenuItem_Click"/>
 				<MenuItem Header="PARAM.SFO Editor" x:Name="OpenParamSFOEditorMenuItem" Click="OpenParamSFOEditorMenuItem_Click"/>
+				<MenuItem Header="Payload Dispatcher" x:Name="PayloadDispatcherMenuItem" Click="PayloadDispatcherMenuItem_Click">
+					<ToolTip.Tip>
+						Dispatch payloads in desired seconds to specific ports.
+					</ToolTip.Tip>
+				</MenuItem>
 				<MenuItem Header="Payload Sender" x:Name="OpenPayloadSenderMenuItem" Click="OpenPayloadSenderMenuItem_Click">
 					<ToolTip.Tip>
 						Send ELF/BIN payloads to an exploited PS4.

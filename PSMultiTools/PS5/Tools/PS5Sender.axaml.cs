@@ -396,7 +396,7 @@ public partial class PS5Sender : Window
             Extensions = ["js"]
         };
 
-        var OFD = new OpenFileDialog() { Title = "Select an .elf or .bin file", Filters = { elfFileFilter, binFileFilter, jsFileFilter }, AllowMultiple = false };
+        var OFD = new OpenFileDialog() { Title = "Select an .elf, .bin or .js file", Filters = { elfFileFilter, binFileFilter, jsFileFilter }, AllowMultiple = false };
         var OFDResult = await OFD.ShowAsync(this);
 
         if (OFDResult != null && OFDResult.Length > 0)
@@ -428,7 +428,7 @@ public partial class PS5Sender : Window
         using var SenderSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) { ReceiveTimeout = 3000 };
         // Connect
         SenderSocket.Connect(CurrentWorkerArgs.DeviceIP, CurrentWorkerArgs.DevicePort);
-        // Send ELF
+        // Send payload
         SenderSocket.SendFile(CurrentWorkerArgs.FileToSend);
         // Close the connection
         SenderSocket.Close();

@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using Avalonia.Threading;
 using FluentFTP;
 using IronSoftware.Drawing;
 using MsBox.Avalonia;
@@ -70,8 +71,11 @@ public partial class WebSrvROMManager : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });
         }
     }
 
@@ -137,8 +141,11 @@ public partial class WebSrvROMManager : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            await box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                await box.ShowWindowAsync();
+            });    
         }
     }
 
@@ -160,15 +167,21 @@ public partial class WebSrvROMManager : Window
                 {
                     await NewFtpClient.UploadFiles(OFDResult, ROMPath, FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None, FtpError.None);
 
-                    var box = MessageBoxManager.GetMessageBoxStandard("Success", "Files uploaded with success!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                    await box.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Success", "Files uploaded with success!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                        await box.ShowWindowAsync();
+                    });   
                 }
                 else
                 {
                     await NewFtpClient.UploadFile(OFDResult[0], ROMPath, FtpRemoteExists.OverwriteInPlace, false, FtpVerify.None);
 
-                    var box = MessageBoxManager.GetMessageBoxStandard("Success", "File uploaded with success!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                    await box.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box = MessageBoxManager.GetMessageBoxStandard("Success", "File uploaded with success!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                        await box.ShowWindowAsync();
+                    });
                 }
 
                 // Disonnect
@@ -176,8 +189,11 @@ public partial class WebSrvROMManager : Window
             }
             catch (Exception ex)
             {
-                var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                await box.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                    await box.ShowWindowAsync();
+                });
             }
 
             // Refresh
@@ -211,12 +227,18 @@ public partial class WebSrvROMManager : Window
                 }
                 catch (Exception ex)
                 {
-                    var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                    await box2.ShowWindowAsync();
+                    await Dispatcher.UIThread.Invoke(async () =>
+                    {
+                        var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                        await box2.ShowWindowAsync();
+                    });
                 }
 
-                var box3 = MessageBoxManager.GetMessageBoxStandard("Success", "ROM removed from the WebSrv.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                await box3.ShowWindowAsync();
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box3 = MessageBoxManager.GetMessageBoxStandard("Success", "ROM removed from the WebSrv.", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box3.ShowWindowAsync();
+                });
 
                 // Refresh
                 ListROMs();
@@ -272,13 +294,19 @@ public partial class WebSrvROMManager : Window
                         // Disonnect
                         await NewFtpClient.Disconnect();
 
-                        var box2 = MessageBoxManager.GetMessageBoxStandard("Success", "Icon replaced!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                        await box2.ShowWindowAsync();
+                        await Dispatcher.UIThread.Invoke(async () =>
+                        {
+                            var box2 = MessageBoxManager.GetMessageBoxStandard("Success", "Icon replaced!", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                            await box2.ShowWindowAsync();
+                        });          
                     }
                     catch (Exception ex)
                     {
-                        var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                        await box2.ShowWindowAsync();
+                        await Dispatcher.UIThread.Invoke(async () =>
+                        {
+                            var box2 = MessageBoxManager.GetMessageBoxStandard("Error", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                            await box2.ShowWindowAsync();
+                        }); 
                     }
 
                     // Refresh icon for selected ROM

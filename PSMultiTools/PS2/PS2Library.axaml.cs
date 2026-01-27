@@ -563,7 +563,11 @@ public partial class PS2Library : Window
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(ex.ToString());
+                await Dispatcher.UIThread.Invoke(async () =>
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("Info", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                    await box.ShowWindowAsync();
+                });
             }
 
             if (CurrentURL < URLs.Count)

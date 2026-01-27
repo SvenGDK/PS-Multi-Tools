@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using PS4_Tools;
 using PSMultiTools.Classes;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -49,11 +50,7 @@ public partial class PKGInfo : Window
             if (string.IsNullOrEmpty(Console))
             {
                 Console = await TryPKGAsync(SelectedPKG);
-
-                var box = MessageBoxManager.GetMessageBoxStandard("Info", Console, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-                await box.ShowWindowDialogAsync(this);
             }
-
             PKGWorker.RunWorkerAsync();
         }
     }
@@ -104,7 +101,7 @@ public partial class PKGInfo : Window
         }
     }
 
-    private void LoadPS3Info()
+    private async void LoadPS3Info()
     {
         try
         {
@@ -181,8 +178,11 @@ public partial class PKGInfo : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Info", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-            box.ShowWindowAsync();
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Info", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                await box.ShowWindowAsync();
+            });
         }
     }
 
@@ -602,6 +602,7 @@ public partial class PKGInfo : Window
                     }
                 }
 
+                // A problem here is that the found offsets values are around the actual param.json because the PKG is not propperly read. However, with some fixes it will actually parse.
                 if (startOffset != -1 && endOffset != -1 && endOffset > startOffset)
                 {
                     string FinalParamJSONString = "";
@@ -610,19 +611,59 @@ public partial class PKGInfo : Window
                         long ParamDataSize = endOffset - startOffset;
                         ParamJSONFileStream.Seek(startOffset, SeekOrigin.Begin);
 
+                        Trace.WriteLine(ParamDataSize);
+
                         var NewParamData = new byte[((int)ParamDataSize)];
                         ParamJSONFileStream.ReadExactly(NewParamData, 0, (int)ParamDataSize);
 
-                        string ExtractedData = Encoding.UTF8.GetString(NewParamData);
-                        var ParamJSONData = ExtractedData.Split(["\r\n"], StringSplitOptions.None).ToList();
+                        var NewUTF8Encoding = new UTF8Encoding(false, false);
+                        string ExtractedData = NewUTF8Encoding.GetString(NewParamData);
+                        List<string> ParamJSONData = [.. ExtractedData.Split(["\r\n"], StringSplitOptions.None)];
 
-                        // Adjust the output
-                        ParamJSONData.RemoveAt(0);
-                        ParamJSONData.Insert(0, "{");
-                        ParamJSONData[^1] += "\"";
-                        ParamJSONData.Add("}");
+                        if (ParamDataSize > 5000) // Occurs in PKGs that have multiple param.json - get only 1
+                        {
+                            // Pick only the first param.json
+                            string versionFileUriMark = "versionFileUri";
+                            int versionFileUriLine = ParamJSONData.FindIndex(line => line != null && line.Contains(versionFileUriMark, StringComparison.OrdinalIgnoreCase));
+                            if (versionFileUriLine >= 0)
+                            {
+                                int ClosingLineIndex = ParamJSONData.FindIndex(versionFileUriLine, line => line != null && line.Trim() == "}");
+                                ParamJSONData = [.. ParamJSONData.Take(ClosingLineIndex + 1)];
+                            }
+                        }
 
-                        FinalParamJSONString = string.Join(Environment.NewLine, ParamJSONData);
+                        //Remove any unwanted unicode characters
+                        //for (int i = 0; i < ParamJSONData.Count; i++)
+                        //{
+                        //    ParamJSONData[i] = Regex.Replace(ParamJSONData[i], @"[^\t\r\n -~]", "");
+                        //}
+
+                        if (ParamDataSize > 5000)
+                        {
+                            //Adjust the output
+                            ParamJSONData.RemoveAt(0);
+                            ParamJSONData.Insert(0, "{");
+                            ParamJSONData[^1] += "\"";
+
+                            // Additional cleanup for previously cutted param.json
+                            string versionFileUriMark = "versionFileUri";
+                            int RecheckedversionFileUriLine = ParamJSONData.FindIndex(line => line != null && line.Contains(versionFileUriMark, StringComparison.OrdinalIgnoreCase));
+                            if (RecheckedversionFileUriLine >= 0)
+                            {
+                                int ClosingLineIndex = ParamJSONData.FindIndex(RecheckedversionFileUriLine, line => line != null && line.Trim() == "}");
+                                ParamJSONData[RecheckedversionFileUriLine] = ParamJSONData[RecheckedversionFileUriLine].Replace("\"\"", "\"");
+                            }
+                        }
+                        else
+                        {
+                            //Adjust the output
+                            ParamJSONData.RemoveAt(0);
+                            ParamJSONData.Insert(0, "{");
+                            ParamJSONData[^1] += "\"";
+                            ParamJSONData.Add("}");
+                        }
+
+                        FinalParamJSONString = string.Join("\n", ParamJSONData);
                     }
 
                     if (!string.IsNullOrEmpty(FinalParamJSONString))
@@ -1504,14 +1545,10 @@ public partial class PKGInfo : Window
                     DetectedConsole = "PSV";
                     return DetectedConsole;
                 }
-                else
-                {
-                    Trace.WriteLine("No PS Vita PKG");
-                }
             }
 
         }
-        catch (Exception) { Trace.WriteLine("No PS Vita PKG"); }
+        catch (Exception) { }
 
         //Try as PS3/PSP PKG
         try
@@ -1534,9 +1571,11 @@ public partial class PKGInfo : Window
         }
         catch (Exception ex)
         {
-            var box = MessageBoxManager.GetMessageBoxStandard("Info", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
-            await box.ShowWindowAsync();
-            Trace.WriteLine("No PS3/PSP PKG");
+            await Dispatcher.UIThread.Invoke(async () =>
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Info", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info);
+                await box.ShowWindowAsync();
+            });
         }
 
         // Try as PS5 PKG
@@ -1666,7 +1705,7 @@ public partial class PKGInfo : Window
             }
 
         }
-        catch (Exception) { Trace.WriteLine("No PS5 PKG"); }
+        catch (Exception) { }
 
         return DetectedConsole;
     }
