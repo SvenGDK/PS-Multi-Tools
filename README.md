@@ -291,6 +291,14 @@ All covers for PS1, PS2 & PS Vita that are applied in PS Multi Tools are stored 
 All builds below v15 have broken links & downloads, v15+ is recommended.</br>
 Some builds can still be used while some do not start anymore and require updating the live menu (old PSMT Library).</br>
 
+## AI Scraping, Training & Cloning Restrictions
+
+This repository contains over a decade of custom and specific PlayStation-related source code. All rights regarding artificial intelligence utilization are strictly reserved by the repository maintainer(s).
+
+- **No Unauthorized Training:** Permission is NOT granted for any third party to use this software as training data for machine learning models, large language models (LLMs), or automated code synthesis tools. This right is exclusively reserved for the official repository maintainer(s).
+- **No Unauthorized Agentic Cloning:** Third-party AI agents, automated scrapers, and autonomous code-generation bots are strictly forbidden from scraping, indexing, or cloning this repository. Automated scraping and cloning access is restricted solely to tools explicitly authorized or operated by the repository maintainer(s).
+- **Enforcement & AGPLv3 Compliance:** Any third-party commercial AI tool or LLM service found serving, generating, or suggesting code snippets derived from or trained on this repository will be considered in violation of the AGPLv3 derivative works clause. Non-compliance will be treated as an unlicenced distribution of modified AGPLv3 software.
+
 ## History of PS(3) Multi Tools
 - Started in late 2010 as not open source project called "PS3 Multi Tools" (for PS3 only)
 - Added support for PS2 & PSP later around 2011-2013
