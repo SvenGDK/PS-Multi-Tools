@@ -661,11 +661,10 @@ public partial class PSClassicsfPKGBuilder : Window
             string ExtractedPS2GameELFPath = GetELFfromISO(selectedFile[0], PS2GameID);
             CurrentPS2GameID = PS2GameID;
 
-            string PS2GameCRC = await GetGameCRCAsync(ExtractedPS2GameELFPath);
-            PS2GameCRC = CRCRegex().Replace(PS2GameCRC, "");
+            string PS2GameCRC = await Task.Run(() => GetGameCRC(ExtractedPS2GameELFPath));
             CurrentPS2GameCRC = PS2GameCRC;
 
-            if (!string.IsNullOrEmpty(PS2GameID) && !string.IsNullOrEmpty(PS2GameCRC))
+            if (!string.IsNullOrEmpty(PS2GameID))
             {
                 // Check for existing TXT config in DB
                 if (IsConfigAvailable(PS2GameID, Environment.CurrentDirectory + @"/Tools/PS4/ps2-configs/configs_txt.dat"))
@@ -701,7 +700,7 @@ public partial class PSClassicsfPKGBuilder : Window
                     PS2AddPS3ConfigFromDatabaseCheckBox.IsVisible = false;
                 }
                 // Check for existing Widescreen patch in DB
-                if (IsConfigAvailable(PS2GameCRC + ".lua", Environment.CurrentDirectory + @"/Tools/PS4/ps2-configs/widescreen.dat"))
+                if (!string.IsNullOrEmpty(PS2GameCRC) && IsConfigAvailable(PS2GameCRC + ".lua", Environment.CurrentDirectory + @"/Tools/PS4/ps2-configs/widescreen.dat"))
                 {
                     PS2UseWidescreenPatchCheckBox.IsChecked = true;
                     PS2UseWidescreenPatchCheckBox.IsEnabled = true;
@@ -718,7 +717,7 @@ public partial class PSClassicsfPKGBuilder : Window
             else
             {
                 var NoGameIDMessage = MessageBoxManager.GetMessageBoxStandard("PS Classics fPKG Builder", "Could not find the PS2 game ID within the ISO file.\r\nDo you want to use this file anyway ?", ButtonEnum.YesNo);
-                if (NoGameIDMessage.ShowWindowDialogAsync(window).Result == ButtonResult.Yes)
+                if (await NoGameIDMessage.ShowWindowDialogAsync(window) == ButtonResult.Yes)
                 {
                     SelectedDisc1TextBox.Text = selectedFile[0];
                 }
@@ -813,7 +812,7 @@ public partial class PSClassicsfPKGBuilder : Window
 
         if (selectedFile[0] is not null)
         {
-            SelectedDisc5TextBox.Text = selectedFile[0];
+            SelectedPS2TXTConfigTextBox.Text = selectedFile[0];
         }
     }
 
@@ -830,7 +829,7 @@ public partial class PSClassicsfPKGBuilder : Window
 
         if (selectedFile[0] is not null)
         {
-            SelectedDisc5TextBox.Text = selectedFile[0];
+            SelectedPS2LUAConfigTextBox.Text = selectedFile[0];
         }
     }
 
@@ -847,7 +846,7 @@ public partial class PSClassicsfPKGBuilder : Window
 
         if (selectedFile[0] is not null)
         {
-            SelectedDisc5TextBox.Text = selectedFile[0];
+            SelectedPS2MemoryCardTextBox.Text = selectedFile[0];
         }
     }
 
@@ -977,21 +976,17 @@ public partial class PSClassicsfPKGBuilder : Window
             {
                 Directory.CreateDirectory(Path.Combine(GameCacheDirectory, "sce_sys"));
             }
-            if (!string.IsNullOrEmpty(SelectedPS1IconTextBox.Text))
+            if (!string.IsNullOrEmpty(SelectedIconTextBox.Text))
             {
-                var IconBytes = File.ReadAllBytes(SelectedPS1IconTextBox.Text);
+                var IconBytes = File.ReadAllBytes(SelectedIconTextBox.Text);
                 var ConvertedIcon = Utils.ConvertTo24bppPNG(IconBytes, 512, 512);
                 ConvertedIcon.Save(Path.Combine(GameCacheDirectory, "sce_sys", "icon0.png"));
-
-                //File.Copy(SelectedPS1IconTextBox.Text, GameCacheDirectory + @"/sce_sys/icon0.png", true);
             }
-            if (!string.IsNullOrEmpty(SelectedPS1BGTextBox.Text))
+            if (!string.IsNullOrEmpty(SelectedStartupImageTextBox.Text))
             {
-                var BGBytes = File.ReadAllBytes(SelectedPS1BGTextBox.Text);
+                var BGBytes = File.ReadAllBytes(SelectedStartupImageTextBox.Text);
                 var ConvertedBG = Utils.ConvertTo24bppPNG(BGBytes, 1920, 1080);
                 ConvertedBG.Save(Path.Combine(GameCacheDirectory, "sce_sys", "pic0.png"));
-
-                //File.Copy(SelectedPS1BGTextBox.Text, GameCacheDirectory + @"/sce_sys/pic0.png", true);
             }
 
             // Create a new PARAM.SFO file
@@ -1014,7 +1009,7 @@ public partial class PSClassicsfPKGBuilder : Window
 
             // Create a new PS2 emulator configuration file
             string UprenderValue = "";
-            if (PS2EmulatorComboBox.SelectedItem is ComboBoxItem UprenderComboBoxItem)
+            if (PS2UprenderComboBox.SelectedItem is ComboBoxItem UprenderComboBoxItem)
             {
                 if (UprenderComboBoxItem.Content != null)
                 {
@@ -1022,19 +1017,19 @@ public partial class PSClassicsfPKGBuilder : Window
                 }
             }
             string UpscalingValue = "";
-            if (PS2EmulatorComboBox.SelectedItem is ComboBoxItem UpscalingComboBoxItem)
+            if (PS2UpscalingComboBox.SelectedItem is ComboBoxItem UpscalingComboBoxItem)
             {
                 if (UpscalingComboBoxItem.Content != null)
                 {
-                    UprenderValue = UpscalingComboBoxItem.Content.ToString() ?? "";
+                    UpscalingValue = UpscalingComboBoxItem.Content.ToString() ?? "";
                 }
             }
             string DisplayModeValue = "";
-            if (PS2EmulatorComboBox.SelectedItem is ComboBoxItem DisplayModeComboBoxItem)
+            if (PS2DisplayModeComboBox.SelectedItem is ComboBoxItem DisplayModeComboBoxItem)
             {
                 if (DisplayModeComboBoxItem.Content != null)
                 {
-                    UprenderValue = DisplayModeComboBoxItem.Content.ToString() ?? "";
+                    DisplayModeValue = DisplayModeComboBoxItem.Content.ToString() ?? "";
                 }
             }
 
@@ -1129,7 +1124,7 @@ public partial class PSClassicsfPKGBuilder : Window
             // Check for LUA config
             if (!string.IsNullOrEmpty(SelectedPS2LUAConfigTextBox.Text))
             {
-                NewPS2EmulatorConfigContent += "\r\n--path-patches=\"/app0/patches";
+                NewPS2EmulatorConfigContent += "\r\n--path-patches=\"/app0/patches\"";
 
                 // Create patches directory if it doesn't exist yet
                 if (!Directory.Exists(Path.Combine(GameCacheDirectory, "patches", FullPS2GameID)))
@@ -1143,7 +1138,7 @@ public partial class PSClassicsfPKGBuilder : Window
             {
                 if (IsConfigAvailable(CurrentPS2GameID, Path.Combine(Environment.CurrentDirectory, "Tools", "PS4", "ps2-configs", "configs_lua.dat")))
                 {
-                    NewPS2EmulatorConfigContent += "\r\n--path-patches=\"/app0/patches";
+                    NewPS2EmulatorConfigContent += "\r\n--path-patches=\"/app0/patches\"";
 
                     if (!Directory.Exists(Path.Combine(GameCacheDirectory, "patches", FullPS2GameID)))
                     {
@@ -1158,7 +1153,7 @@ public partial class PSClassicsfPKGBuilder : Window
             string PS2EmulatorFixes = "";
             if (PS2ImproveSpeedCheckBox.IsChecked == true)
             {
-                PS2EmulatorFixes += "\r\n#Improve Speed\r\n-vu0-opt-flags=1\r\n--vu1-opt-flags=1\r\n--cop2-opt-flags=1\r\n--vu0-const-prop=0\r\n--vu1-const-prop=0\r\n--vu1-jr-cache-policy=newprog\r\n--vu1-jalr-cache-policy=newprog\r\n--vu0-jr-cache-policy=newprog\r\n--vu0-jalr-cache-policy=newprog";
+                PS2EmulatorFixes += "\r\n#Improve Speed\r\n--vu0-opt-flags=1\r\n--vu1-opt-flags=1\r\n--cop2-opt-flags=1\r\n--vu0-const-prop=0\r\n--vu1-const-prop=0\r\n--vu1-jr-cache-policy=newprog\r\n--vu1-jalr-cache-policy=newprog\r\n--vu0-jr-cache-policy=newprog\r\n--vu0-jalr-cache-policy=newprog";
             }
             if (PS2FixGraphicsCheckBox.IsChecked == true)
             {
@@ -1395,11 +1390,12 @@ public partial class PSClassicsfPKGBuilder : Window
         try
         {
             using var NewFileStream = new FileStream(GameISOFile, FileMode.Open, FileAccess.Read);
-            var NewCDReader = new DiscUtils.Iso9660.CDReader(NewFileStream, true);
+            using var NewCDReader = new DiscUtils.Iso9660.CDReader(NewFileStream, true);
             try
             {
-                var ELFExtractionFileStream = new FileStream(Path.Combine(CacheDir, GameELFName), FileMode.Create);
-                NewCDReader.OpenFile(GameELFName, FileMode.Open).CopyTo(ELFExtractionFileStream);
+                using var ELFExtractionFileStream = new FileStream(Path.Combine(CacheDir, GameELFName), FileMode.Create);
+                using var ELFSourceStream = NewCDReader.OpenFile(GameELFName, FileMode.Open);
+                ELFSourceStream.CopyTo(ELFExtractionFileStream);
 
                 ExtractedELFPath = Path.Combine(CacheDir, GameELFName);
             }
@@ -1415,24 +1411,20 @@ public partial class PSClassicsfPKGBuilder : Window
         return ExtractedELFPath;
     }
 
-    private static async Task<string> GetGameCRCAsync(string PS2GamePath)
+    private static string GetGameCRC(string PS2GamePath)
     {
-        // Get ELF crc
-        string CRCCCMD = "\"" + Path.Combine(Environment.CurrentDirectory, "Tools", "crc") + "\" \"" + PS2GamePath + "\"";
-        var EscapedArgs = CRCCCMD.Replace("\"", "\\\"");
-        var CRCProcess = new Process();
+        if (string.IsNullOrEmpty(PS2GamePath) || !File.Exists(PS2GamePath))
+            return "";
 
-        CRCProcess.StartInfo.FileName = OperatingSystem.IsMacOS() ? "/bin/sh" : "/bin/bash";
-        CRCProcess.StartInfo.Arguments = $"-c \"{EscapedArgs}\"";
-        CRCProcess.StartInfo.UseShellExecute = false;
-        CRCProcess.StartInfo.CreateNoWindow = true;
-        CRCProcess.StartInfo.RedirectStandardOutput = true;
-        CRCProcess.Start();
-        await CRCProcess.WaitForExitAsync();
-        CRCProcess.Close();
+        uint CRC = 0;
+        using var ELFStream = File.OpenRead(PS2GamePath);
+        using var ELFReader = new BinaryReader(ELFStream);
+        while (ELFStream.Position + sizeof(uint) <= ELFStream.Length)
+        {
+            CRC ^= ELFReader.ReadUInt32();
+        }
 
-        using var NewStreamReader = CRCProcess.StandardOutput;
-        return NewStreamReader.ReadToEnd().Replace("crc:", "").Trim();
+        return CRC.ToString("X8");
     }
 
     private static string ExtractFileFromISO(string GameISOFile, string FileToExtract, string FileDestinationPath)
@@ -1573,7 +1565,7 @@ public partial class PSClassicsfPKGBuilder : Window
 
         if (selectedFile[0] is not null)
         {
-            SelectedDisc5TextBox.Text = selectedFile[0];
+            SelectedPSPConfigTextBox.Text = selectedFile[0];
         }
     }
 
@@ -1762,8 +1754,11 @@ public partial class PSClassicsfPKGBuilder : Window
             NewProcess.Close();
 
             // Modify the GP4 project
-            File.WriteAllText(Path.Combine(CacheDirectory, "PSPfPKG.gp4"), File.ReadAllText(Path.Combine(CacheDirectory, "PSPfPKG.gp4").Replace("<?xml version=\"1.1\"", "<?xml version=\"1.0\"")));
-            File.WriteAllText(Path.Combine(CacheDirectory, "PSPfPKG.gp4"), File.ReadAllText(Path.Combine(CacheDirectory, "PSPfPKG.gp4").Replace("<scenarios default_id=\"1\">", "<scenarios default_id=\"0\">")));
+            string PSPGP4Path = Path.Combine(CacheDirectory, "PSPfPKG.gp4");
+            string PSPGP4Content = File.ReadAllText(PSPGP4Path)
+                .Replace("<?xml version=\"1.1\"", "<?xml version=\"1.0\"")
+                .Replace("<scenarios default_id=\"1\">", "<scenarios default_id=\"0\">");
+            File.WriteAllText(PSPGP4Path, PSPGP4Content);
 
             var DebugMessageBox = MessageBoxManager.GetMessageBoxStandard("PS fPKG Classics Builder", "All files ready! \r\n fPKG can be build.", ButtonEnum.Ok);
             await DebugMessageBox.ShowWindowDialogAsync(window);
@@ -1979,9 +1974,6 @@ public partial class PSClassicsfPKGBuilder : Window
     #endregion
 
     #region RegexStuff
-
-    [GeneratedRegex("[^a-zA-Z0-9]")]
-    private static partial Regex CRCRegex();
 
     [GeneratedRegex(@"\((.*?)\)")]
     private static partial Regex PSPTitleRegex1();
