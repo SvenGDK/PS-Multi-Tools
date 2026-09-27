@@ -11,6 +11,9 @@ Requires the .NET 9.0 desktop runtime and a few optional drivers for advanced fe
 ## Requirements
 Following packages are required to run PS Multi Tools including all tools :
 
+> [!NOTE]
+> The Windows tools package includes the OpenSSL 1.1.1w runtime DLLs (`libcrypto-1_1-x64.dll` and `libssl-1_1-x64.dll`) required by the affected utilities. They are bundled in `Tools/Windows` so a fresh Windows installation does not fail because these dependencies are missing. The corresponding OpenSSL license is included alongside them.
+
 - Windows
   - [.NET 9.0 Desktop Runtime x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.23-windows-x64-installer)
 - Debian/Mint/Ubuntu/...
